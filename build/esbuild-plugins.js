@@ -278,10 +278,97 @@ function umd(moduleName) {
   };
 }
 
+/**
+ * @param {string} id
+ * @return {string}
+ */
+function generateAuditShim(id) {
+  return `
+import {Audit} from './audit.js';
+class ShimAudit extends Audit {
+  static get meta() {
+    return {
+      id: '${id}',
+      title: 'Shim Audit',
+      description: 'This audit was filtered out and is not available in this bundle.',
+      scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
+      requiredArtifacts: [],
+    };
+  }
+  static audit() {
+    return {score: null, scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE};
+  }
+}
+export default ShimAudit;
+`;
+}
+
+/**
+ * @param {string} id
+ * @return {string}
+ */
+function generateGathererShim(id) {
+  return `
+import BaseGatherer from '../base-gatherer.js';
+class ShimGatherer extends BaseGatherer {
+  meta = {supportedModes: ['navigation', 'timespan', 'snapshot']};
+  static getDefaultTraceCategories() { return []; }
+  getArtifact() {
+    return undefined;
+  }
+}
+export default ShimGatherer;
+`;
+}
+
+/**
+ * @param {{
+ *   includedAudits?: string[],
+ *   includedGatherers?: string[],
+ * }} options
+ * @return {esbuild.Plugin}
+ */
+function lighthouseShimPlugin(options) {
+  const {includedAudits = [], includedGatherers = []} = options;
+
+  return {
+    name: 'lh-shim',
+    setup(build) {
+      // Intercept audits
+      build.onResolve({filter: /core\/audits\/.*\.js$/}, args => {
+        const fileName = path.basename(args.path, '.js');
+        const isIncluded = includedAudits.some(p => args.path.includes(p));
+        if (isIncluded || args.path.endsWith('audit.js')) return;
+
+        return {path: args.path, namespace: 'lh-audit-shim'};
+      });
+
+      build.onLoad({filter: /.*/, namespace: 'lh-audit-shim'}, args => {
+        const id = path.basename(args.path, '.js');
+        return {contents: generateAuditShim(id), loader: 'js', resolveDir: path.dirname(args.path)};
+      });
+
+      // Intercept gatherers
+      build.onResolve({filter: /core\/gather\/gatherers\/.*\.js$/}, args => {
+        const isIncluded = includedGatherers.some(p => args.path.includes(p));
+        if (isIncluded) return;
+
+        return {path: args.path, namespace: 'lh-gatherer-shim'};
+      });
+
+      build.onLoad({filter: /.*/, namespace: 'lh-gatherer-shim'}, args => {
+        const id = path.basename(args.path, '.js');
+        return {contents: generateGathererShim(id), loader: 'js', resolveDir: path.dirname(args.path)};
+      });
+    },
+  };
+}
+
 export {
   partialLoaders,
   bulkLoader,
   replaceModules,
   ignoreBuiltins,
   umd,
+  lighthouseShimPlugin,
 };

@@ -77,12 +77,8 @@ async function buildBundle(entryPath, distPath) {
 
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
-  /** @type {Array<string>} */
   const includedGatherers = allGatherers.filter(gatherer => gatherer === 'snapshot' || gatherer === 'accessibility.js');
-  /** @type {Array<string>} */
-  const includedAudits = allAudits.filter(audit => {
-    return audit.includes('accessibility');
-  });
+  const includedAudits = allAudits.filter(audit => audit.includes('accessibility'));
 
   const dynamicModulePaths = [
     ...includedGatherers.map(gatherer => `../gather/gatherers/${gatherer}`),
@@ -99,17 +95,17 @@ async function buildBundle(entryPath, distPath) {
     dynamicModulePaths.push(softNavAudit);
   });
 
-  // Get filtered-out gatherers and audits for shimming
-  const filteredOutGatherers = allGatherers.filter(gatherer => !includedGatherers.includes(gatherer));
-  const filteredOutAudits = allAudits.filter(audit => !includedAudits.includes(audit));
-
-  // Add filtered-out modules to dynamicModulePaths so they're in the bundledModules map
-  // They will be replaced by shims during bundling via replaceModules plugin
-  filteredOutGatherers.forEach(gatherer => {
-    dynamicModulePaths.push(`../gather/gatherers/${gatherer}`);
+  // Add all other audits and gatherers to dynamicModulePaths so they're in the bundledModules map.
+  // They will be shimmed by lighthouseShimPlugin.
+  allGatherers.forEach(gatherer => {
+    if (!includedGatherers.includes(gatherer)) {
+      dynamicModulePaths.push(`../gather/gatherers/${gatherer}`);
+    }
   });
-  filteredOutAudits.forEach(audit => {
-    dynamicModulePaths.push(`../audits/${audit}`);
+  allAudits.forEach(audit => {
+    if (!includedAudits.includes(audit)) {
+      dynamicModulePaths.push(`../audits/${audit}`);
+    }
   });
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
@@ -120,14 +116,18 @@ async function buildBundle(entryPath, distPath) {
   /** @type {Record<string, string>} */
   const shimsObj = {
     // zlib's decompression code is very large and we don't need it.
-    // We export empty functions, instead of an empty module, simply to silence warnings
-    // about no exports.
     '__zlib-lib/inflate': `
       export function inflateInit2() {};
       export function inflate() {};
       export function inflateEnd() {};
       export function inflateReset() {};
     `,
+    // Don't include the stringified report in DevTools - see devtools-report-assets.js
+    [`${LH_ROOT}/report/generator/report-assets.js`]: 'export const reportAssets = {}',
+    // Don't include locales in DevTools.
+    [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
+    // Don't bundle third-party-web (CDT provides its own copy).
+    'third-party-web/nostats-subset.js': 'export default {};',
   };
 
   const modulesToIgnore = [
@@ -136,103 +136,49 @@ async function buildBundle(entryPath, distPath) {
     'source-map',
     'ws',
   ];
-
-  // Don't include the stringified report in DevTools - see devtools-report-assets.js
-  // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
-  shimsObj[`${LH_ROOT}/report/generator/report-assets.js`] =
-    'export const reportAssets = {}';
-
-  // Don't include locales in DevTools.
-  shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
-
-  // Don't bundle third-party-web (CDT provides its own copy). This prevents duplications of 40+ KB.
-  shimsObj['third-party-web/nostats-subset.js'] = 'export default {};';
-
-  for (const modulePath of modulesToIgnore) {
-    shimsObj[modulePath] = 'export default {}';
-  }
+  for (const modulePath of modulesToIgnore) shimsObj[modulePath] = 'export default {}';
 
   // Shim speedline-core to prevent fs require issues (it's only used by non-accessibility audits)
-  const speedlineCoreShim = `
-    export default function speedline() {
-      throw new Error('speedline-core is not available in this bundle');
-    }
-  `;
-  shimsObj['speedline-core'] = speedlineCoreShim;
+  shimsObj['speedline-core'] = `export default function speedline() {
+    throw new Error('speedline-core is not available in this bundle');
+  }`;
 
-  // Shim computed metrics that depend on speedline-core (only used by filtered-out audits)
-  // Add both with and without .js extension to ensure replaceModules plugin catches them
+  // Shim computed metrics that depend on speedline-core or traces.
   const speedlineShim = `
     import {makeComputedArtifact} from './computed-artifact.js';
     import {LighthouseError} from '../lib/lh-error.js';
-    class Speedline {
-      static async compute_() {
-        throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
-      }
+    export class Speedline {
+      static async compute_() { throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES); }
     }
-    const SpeedlineComputed = makeComputedArtifact(Speedline, null);
-    export {SpeedlineComputed as Speedline};
+    export const SpeedlineComputed = makeComputedArtifact(Speedline, null);
+    export {SpeedlineComputed as Speedline_}; // HACK: avoid export conflict if needed
   `;
-  shimsObj['../computed/speedline.js'] = speedlineShim;
-  shimsObj['../computed/speedline'] = speedlineShim;
-  // Also add absolute path version
+  // We use the new declarative plugin for these too if we wanted, but keeping them here for now
+  // is fine as they are specific logic shims, not just boilerplate class shims.
   shimsObj[`${LH_ROOT}/core/computed/speedline.js`] = speedlineShim;
-
-  const timingSummaryShim = `
+  shimsObj[`${LH_ROOT}/core/computed/metrics/timing-summary.js`] = `
     import {makeComputedArtifact} from '../computed-artifact.js';
-    class TimingSummary {
-      static async compute_() {
-        return {
-          metrics: {},
-          debugInfo: {},
-        };
-      }
-    }
-    const TimingSummaryComputed = makeComputedArtifact(TimingSummary, null);
-    export {TimingSummaryComputed as TimingSummary};
+    export class TimingSummary { static async compute_() { return {metrics: {}, debugInfo: {}}; } }
+    export const TimingSummaryComputed = makeComputedArtifact(TimingSummary, null);
   `;
-  shimsObj['../computed/metrics/timing-summary.js'] = timingSummaryShim;
-  shimsObj['../computed/metrics/timing-summary'] = timingSummaryShim;
-  // Also add absolute path version
-  shimsObj[`${LH_ROOT}/core/computed/metrics/timing-summary.js`] = timingSummaryShim;
-
-  const entityClassificationShim = `
+  shimsObj[`${LH_ROOT}/core/computed/entity-classification.js`] = `
     import {makeComputedArtifact} from './computed-artifact.js';
-    class EntityClassification {
-      static async compute_() {
-        return {
-          entityByUrl: new Map(),
-          urlsByEntity: new Map(),
-          firstParty: undefined,
-          isFirstParty: () => false,
-        };
-      }
-    }
-    const EntityClassificationComputed = makeComputedArtifact(EntityClassification, null);
-    export {EntityClassificationComputed as EntityClassification};
+    export class EntityClassification { static async compute_() { return {entityByUrl: new Map(), urlsByEntity: new Map(), isFirstParty: () => false}; } }
+    export const EntityClassificationComputed = makeComputedArtifact(EntityClassification, null);
   `;
-  shimsObj['../computed/entity-classification.js'] = entityClassificationShim;
-  shimsObj['../computed/entity-classification'] = entityClassificationShim;
-  shimsObj[`${LH_ROOT}/core/computed/entity-classification.js`] = entityClassificationShim;
-
-  const traceEngineResultShim = `
+  shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = `
     import {makeComputedArtifact} from './computed-artifact.js';
-    class TraceEngineResult {
-      static async compute_() {
-        return {
-          data: {},
-          insights: new Map(),
-        };
-      }
-    }
-    const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
-    export {TraceEngineResultComputed as TraceEngineResult};
+    export class TraceEngineResult { static async compute_() { return {data: {}, insights: new Map()}; } }
+    export const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
   `;
-  shimsObj['../computed/trace-engine-result.js'] = traceEngineResultShim;
-  shimsObj['../computed/trace-engine-result'] = traceEngineResultShim;
-  shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = traceEngineResultShim;
 
-  shimsObj['@paulirish/trace_engine'] = 'export const LanternComputationData = {};';
+  shimsObj['@paulirish/trace_engine'] = `
+    export const LanternComputationData = {};
+    export const Processor = {TraceProcessor: class {}};
+    export const Handlers = {ModelHandlers: {}};
+    export const Insights = {};
+    export const Helpers = {};
+  `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/lantern.js'] = `
     import * as Core from "./core/core.js";
     import * as Graph from "./graph/graph.js";
@@ -241,10 +187,17 @@ async function buildBundle(entryPath, distPath) {
     import * as Types from "./types/types.js";
     export {Core, Graph, Metrics, Simulation, Types};
   `;
-  // Ensure the sub-paths also exist or are shimmed with necessary named exports
   shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = 'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}}; export const LanternError = class extends Error {};';
   shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = 'export const PageDependencyGraph = {getNetworkInitiators: () => []}; export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = 'export default {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = `
+    export class FirstContentfulPaint {}
+    export class Interactive {}
+    export class SpeedIndex {}
+    export class LargestContentfulPaint {}
+    export class FirstMeaningfulPaint {}
+    export class TotalBlockingTime {}
+    export class MaxPotentialFID {}
+  `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = `
     export const Constants = {
       throttling: {
@@ -259,62 +212,6 @@ async function buildBundle(entryPath, distPath) {
   `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = 'export default {};';
 
-  // Create shims for filtered-out gatherers to prevent dynamic import failures
-  for (const gatherer of filteredOutGatherers) {
-    const gathererPath = path.resolve(LH_ROOT, 'core/gather/gatherers', gatherer);
-    let relativeBaseGatherer = path.relative(path.dirname(gathererPath), path.resolve(LH_ROOT, 'core/gather/base-gatherer.js'));
-    if (!relativeBaseGatherer.startsWith('.')) relativeBaseGatherer = './' + relativeBaseGatherer;
-
-    const shimCode = `
-      import BaseGatherer from '${relativeBaseGatherer}';
-      class ShimGatherer extends BaseGatherer {
-        meta = {supportedModes: ['navigation', 'timespan', 'snapshot']};
-        static getDefaultTraceCategories() { return []; }
-        getArtifact() {
-          return undefined;
-        }
-      }
-      export default ShimGatherer;
-    `;
-    shimsObj[gathererPath] = shimCode;
-  }
-
-  // Create shims for filtered-out audits to prevent dynamic import failures
-  for (const audit of filteredOutAudits) {
-    const auditPath = path.resolve(LH_ROOT, 'core/audits', audit);
-    let relativeAuditBase = path.relative(path.dirname(auditPath), path.resolve(LH_ROOT, 'core/audits/audit.js'));
-    if (!relativeAuditBase.startsWith('.')) relativeAuditBase = './' + relativeAuditBase;
-
-    // Extract audit ID from path (e.g., 'accessibility/image-alt.js' -> 'image-alt')
-    const auditId = audit.replace(/^.*\//, '').replace('.js', '');
-    const shimCode = `
-      import {Audit} from '${relativeAuditBase}';
-      class ShimAudit extends Audit {
-        static get meta() {
-          return {
-            id: '${auditId}',
-            title: 'Shim Audit',
-            description: 'This audit was filtered out and is not available in this bundle.',
-            scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
-            requiredArtifacts: [],
-          };
-        }
-        static audit() {
-          return {score: null, scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE};
-        }
-      }
-      export default ShimAudit;
-    `;
-    shimsObj[auditPath] = shimCode;
-  }
-
-  // console.log('shims');
-  // Object.entries(shimsObj).forEach(([key, value]) => {
-  //   console.log(`- ${key.padEnd(50)}: ${value.length} chars`, value.slice(0, 60).replace(/\n/g, '') + (value.length > 60 ? '...' : ''));
-  // });
-
-  // console.log('shims: ', Object.keys(shimsObj));
-
   await esbuild.build({
     entryPoints: [entryPath],
     outfile: distPath,
@@ -328,13 +225,20 @@ async function buildBundle(entryPath, distPath) {
     platform: 'node',
     banner: {js: banner},
     lineLimit: 1000,
-    // Because of page-functions!
     keepNames: true,
     inject: ['./build/process-global.js'],
     legalComments: 'inline',
     external: ['debug', 'puppeteer-core'],
+    alias: {
+      'debug': require.resolve('debug/src/browser.js'),
+      'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
+    },
     /** @type {esbuild.Plugin[]} */
     plugins: [
+      plugins.lighthouseShimPlugin({
+        includedAudits,
+        includedGatherers,
+      }),
       plugins.replaceModules({
         ...shimsObj,
         'url': `
@@ -343,75 +247,36 @@ async function buildBundle(entryPath, distPath) {
           export default {URL, fileURLToPath};
         `,
         'module': `
-          export const createRequire = () => {
-            return {
-              resolve() {
-                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
-              },
-            };
-          };
+          export const createRequire = () => ({
+            resolve() { throw new Error('createRequire.resolve is not supported'); },
+          });
         `,
       }, {
-        // buildBundle is used in a lot of different contexts. Some share the same modules
-        // that need to be replaced, but others don't use those modules at all.
         disableUnusedError: true,
       }),
       plugins.bulkLoader([
-        // TODO: when we used rollup, various things were tree-shaken out before inlineFs did its
-        // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it
-        // did before. Some of those new cases emit warnings. Safe to ignore, but should be
-        // resolved eventually.
-        plugins.partialLoaders.inlineFs({
-          verbose: Boolean(process.env.DEBUG),
-        }),
+        plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
-          // By default esbuild converts `import.meta` to an empty object.
-          // We need at least the url property for i18n things.
           /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
       {
-        name: 'alias',
-        setup({onResolve}) {
-          onResolve({filter: /\.*/}, (args) => {
-            /** @type {Record<string, string>} */
-            const entries = {
-              'debug': require.resolve('debug/src/browser.js'),
-              'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
-            };
-            if (args.path in entries) {
-              return {path: entries[args.path]};
-            }
-          });
-        },
-      },
-      {
         name: 'postprocess',
         setup({onEnd}) {
           onEnd(async (result) => {
-            if (result.errors.length) {
-              return;
-            }
-
+            if (result.errors.length) return;
             const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
             const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
-            if (!codeFile) {
-              throw new Error('missing output');
-            }
+            if (!codeFile) throw new Error('missing output');
 
-            // Just make sure the above shimming worked.
             let code = codeFile.text;
-            if (code.includes('inflate_fast')) {
-              throw new Error('Expected zlib inflate code to have been removed');
-            }
+            if (code.includes('inflate_fast')) throw new Error('Expected zlib inflate code to have been removed');
 
             await fs.promises.writeFile(codeFile.path, code);
-            if (mapFile) {
-              await fs.promises.writeFile(mapFile.path, mapFile.text);
-            }
+            if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
           });
         },
       },
