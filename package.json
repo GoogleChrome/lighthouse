@@ -15,7 +15,7 @@
   "scripts": {
     "prepack": "yarn build-report --standalone --flow --esm && yarn build-types",
     "postpack": "yarn clean-types",
-    "build-all": "yarn build-report && yarn build-cdt-strings && yarn build-devtools && concurrently 'yarn build-extension' 'yarn build-lr' 'yarn build-viewer' 'yarn build-treemap' 'yarn build-smokehouse-bundle' 'yarn build-legacy-javascript' && yarn build-pack",
+    "build-all": "yarn build-report && yarn build-cdt-strings && yarn build-devtools && concurrently 'yarn build-extension' 'yarn build-lr' 'yarn build-viewer' 'yarn build-treemap' 'yarn build-smokehouse-bundle' 'yarn build-legacy-javascript' 'yarn build-devtools-mcp' && yarn build-pack",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
     "build-cdt-strings": "node ./build/build-cdt-strings.js",
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
@@ -23,6 +23,7 @@
     "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-legacy-javascript": "node ./build/build-legacy-javascript.js",
+    "build-devtools-mcp": "node ./build/build-bundle-mcp.js clients/devtools-mcp/devtools-mcp-entry.js dist/lighthouse-devtools-mcp-bundle.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node --max-old-space-size=4096 ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
