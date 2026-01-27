@@ -8,8 +8,8 @@ import lighthouse, {navigation, snapshot, generateReport} from '../../core/index
 
 // Export main Lighthouse functionality for MCP usage
 // Note: timespan and user flow functionality are excluded from MCP bundle
-export default lighthouse;
 export {
+  lighthouse,
   navigation,
   snapshot,
   generateReport,
