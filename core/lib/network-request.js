@@ -66,6 +66,16 @@ const HEADER_TOTAL = 'X-TotalMs';
 const HEADER_FETCHED_SIZE = 'X-TotalFetchedSize';
 const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
 
+// CDP uses PascalCase (M145+), Lantern uses snake_case.
+/** @type {Record<LH.Crdp.Network.RenderBlockingBehavior, Lantern.Types.RenderBlocking>} */
+const CDP_TO_LANTERN_RENDER_BLOCKING = {
+  'NonBlocking': 'non_blocking',
+  'Blocking': 'blocking',
+  'InBodyParserBlocking': 'in_body_parser_blocking',
+  'PotentiallyBlocking': 'potentially_blocking',
+  'NonBlockingDynamic': 'dynamically_injected_non_blocking',
+};
+
 /**
  * @typedef HeaderEntry
  * @property {string} name
@@ -187,6 +197,8 @@ class NetworkRequest {
     this.sessionTargetType = undefined;
     this.fromWorker = false;
     this.isLinkPreload = false;
+    /** @type {Lantern.Types.RenderBlocking|undefined} */
+    this.renderBlocking = undefined;
   }
 
   /**
@@ -239,6 +251,11 @@ class NetworkRequest {
 
     this.frameId = data.frameId;
     this.isLinkPreload = data.initiator.type === 'preload' || !!data.request.isLinkPreload;
+    // M145+ provides renderBlockingBehavior in CDP
+    const renderBlockingBehavior = data.renderBlockingBehavior;
+    if (renderBlockingBehavior) {
+      this.renderBlocking = CDP_TO_LANTERN_RENDER_BLOCKING[renderBlockingBehavior];
+    }
     this.isValid = true;
   }
 
