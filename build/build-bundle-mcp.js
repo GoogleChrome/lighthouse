@@ -124,8 +124,23 @@ async function buildBundle(entryPath, distPath) {
       export function inflateEnd() {};
       export function inflateReset() {};
     `,
-    // Don't include the stringified report in DevTools - see devtools-report-assets.js
-    [`${LH_ROOT}/report/generator/report-assets.js`]: 'export const reportAssets = {}',
+    // MCP bundle needs generateReport: inline report assets at build time.
+    // Requires dist/report/standalone.js (run build-report first).
+    [`${LH_ROOT}/report/generator/report-assets.js`]: (() => {
+      const templatePath = path.join(LH_ROOT, 'report/assets/standalone-template.html');
+      const standalonePath = path.join(LH_ROOT, 'dist/report/standalone.js');
+      if (!fs.existsSync(standalonePath)) {
+        throw new Error(
+          'dist/report/standalone.js not found. Run `yarn build-report` before building the MCP bundle.'
+        );
+      }
+      const REPORT_TEMPLATE = fs.readFileSync(templatePath, 'utf8');
+      const REPORT_JAVASCRIPT = fs.readFileSync(standalonePath, 'utf8');
+      return `export const reportAssets = {
+  REPORT_TEMPLATE: ${JSON.stringify(REPORT_TEMPLATE)},
+  REPORT_JAVASCRIPT: ${JSON.stringify(REPORT_JAVASCRIPT)},
+};`;
+    })(),
     // Don't include locales in DevTools.
     [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
     // Don't bundle third-party-web (CDT provides its own copy).

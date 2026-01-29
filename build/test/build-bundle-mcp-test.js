@@ -9,7 +9,7 @@ import fs from 'fs';
 
 import {LH_ROOT} from '../../shared/root.js';
 
-const A11Y_TEST_HTML = `
+const TEST_HTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head><title>A11y Test</title></head>
@@ -35,14 +35,14 @@ describe('MCP Bundle build', () => {
     expect(typeof mcpBundle.generateReport).toBe('function');
   });
 
-  describe('accessibility snapshot', () => {
+  describe('snapshot', () => {
     it('successfully runs snapshot on a local page', async () => {
       const {snapshot} = await import(bundlePath);
       const puppeteer = (await import('puppeteer')).default;
 
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
-      await page.setContent(A11Y_TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
       const result = await snapshot(page, {
         config: {
@@ -64,7 +64,7 @@ describe('MCP Bundle build', () => {
   });
 
   describe('navigation', () => {
-    it('successfully runs navigation with temp file', async () => {
+    it('successfully runs navigation', async () => {
       const {navigation} = await import(bundlePath);
       const puppeteer = (await import('puppeteer')).default;
       const {Server} = await import('../../cli/test/fixtures/static-server.js');
@@ -74,7 +74,7 @@ describe('MCP Bundle build', () => {
         fs.mkdirSync(testPageDir, {recursive: true});
       }
       const testPagePath = path.join(testPageDir, 'a11y-test.html');
-      fs.writeFileSync(testPagePath, A11Y_TEST_HTML);
+      fs.writeFileSync(testPagePath, TEST_HTML);
 
       const server = new Server(0);
       server.baseDir = testPageDir;
@@ -104,6 +104,59 @@ describe('MCP Bundle build', () => {
         await server.close();
         if (fs.existsSync(testPagePath)) fs.unlinkSync(testPagePath);
       }
+    });
+  });
+
+  describe('generateReport', () => {
+    it('generates HTML report from LHR result', async () => {
+      const {snapshot, generateReport} = await import(bundlePath);
+      const puppeteer = (await import('puppeteer')).default;
+
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+
+      const result = await snapshot(page, {
+        config: {
+          extends: 'lighthouse:default',
+          settings: {
+            onlyCategories: ['accessibility'],
+          },
+        },
+      });
+
+      await browser.close();
+
+      const html = generateReport(result.lhr, 'html');
+      expect(typeof html).toBe('string');
+      expect(html).toContain('Lighthouse');
+      expect(html.length).toBeGreaterThan(1000);
+    });
+
+    it('generates JSON report from LHR result', async () => {
+      const {snapshot, generateReport} = await import(bundlePath);
+      const puppeteer = (await import('puppeteer')).default;
+
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+
+      const result = await snapshot(page, {
+        config: {
+          extends: 'lighthouse:default',
+          settings: {
+            onlyCategories: ['accessibility'],
+          },
+        },
+      });
+
+      await browser.close();
+
+      const json = generateReport(result.lhr, 'json');
+      expect(typeof json).toBe('string');
+      const parsed = JSON.parse(json);
+      expect(parsed).toHaveProperty('categories');
+      expect(parsed.categories.accessibility).toBeDefined();
     });
   });
 });
