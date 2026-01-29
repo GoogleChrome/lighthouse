@@ -8,6 +8,7 @@ import path from 'path';
 import fs from 'fs';
 
 import {LH_ROOT} from '../../shared/root.js';
+import {buildBundle} from '../build-bundle-mcp.js';
 
 const TEST_HTML = `
 <!DOCTYPE html>
@@ -26,6 +27,11 @@ const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices'];
 
 describe('MCP Bundle build', () => {
   const bundlePath = `${LH_ROOT}/dist/lighthouse-devtools-mcp-bundle.js`;
+  const entryPath = path.join(LH_ROOT, 'clients/devtools-mcp/devtools-mcp-entry.js');
+
+  before(async () => {
+    await buildBundle(entryPath, bundlePath);
+  });
 
   it('bundle exists', () => {
     expect(fs.existsSync(bundlePath)).toBe(true);
