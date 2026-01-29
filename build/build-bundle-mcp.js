@@ -1,12 +1,11 @@
 /**
  * @license
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
- * @fileoverview Script to bundle lighthouse entry points so that they can be run
- * in the browser (as long as they have access to a debugger protocol Connection).
+ * @fileoverview Script to run Lighthouse in Chrome DevTools MCP.
  */
 
 import fs from 'fs';
@@ -20,10 +19,63 @@ import SoftNavPlugin from 'lighthouse-plugin-soft-navigation';
 
 import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
+import defaultConfig from '../core/config/default-config.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
+
+/** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices. */
+const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices'];
+
+/**
+ * Audit IDs from default config for MCP categories (accessibility, seo, best-practices).
+ * @return {Set<string>}
+ */
+function getMcpCategoryAuditIds() {
+  const ids = new Set();
+  for (const categoryId of MCP_CATEGORY_IDS) {
+    const category = defaultConfig.categories?.[categoryId];
+    if (!category?.auditRefs) continue;
+    for (const ref of category.auditRefs) {
+      ids.add(ref.id);
+    }
+  }
+  return ids;
+}
+
+/**
+ * Gatherer names (config keys, e.g. 'accessibility', 'seo/robots-txt') that produce artifacts
+ * required by audits in MCP categories. Derived from default config artifacts.
+ * @return {Set<string>}
+ */
+function getMcpRequiredGathererNames() {
+  // We need gatherers for all artifacts that might be required by a11y/seo/best-practices audits.
+  // From default config, these artifacts (and their gatherers) are used by those categories.
+  const artifactToGatherer = new Map();
+  for (const artifact of defaultConfig.artifacts || []) {
+    if (artifact.gatherer) {
+      artifactToGatherer.set(artifact.id, artifact.gatherer);
+    }
+  }
+  const gathererNames = new Set();
+  // Required artifacts for SEO audits (from audit requiredArtifacts).
+  const seoArtifacts = [
+    'MetaElements', 'RobotsTxt', 'URL', 'DevtoolsLog', 'LinkElements',
+    'AnchorElements', 'GatherContext', 'Accessibility',
+  ];
+  const bestPracticesArtifacts = [
+    'DevtoolsLog', 'InspectorIssues', 'URL', 'ConsoleMessages', 'SourceMaps',
+    'Scripts', 'Inputs', 'ImageElements', 'ViewportDimensions', 'Doctype',
+    'MainDocumentContent', 'MetaElements', 'Stacks',
+  ];
+  const a11yArtifacts = ['Accessibility'];
+  for (const id of [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts]) {
+    const g = artifactToGatherer.get(id);
+    if (g) gathererNames.add(g);
+  }
+  return gathererNames;
+}
 
 /**
  * The git tag for the current HEAD (if HEAD is itself a tag),
@@ -74,13 +126,22 @@ async function buildBundle(entryPath, distPath) {
   const allGatherers = Runner.getGathererList();
   const allAudits = Runner.getAuditList();
 
+  const mcpAuditIds = getMcpCategoryAuditIds();
+  const mcpGathererNames = getMcpRequiredGathererNames();
+
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
+  // Includes gatherers/audits for accessibility, SEO, and Best practices (as in DevTools).
   /** @type {string[]} */
-  const includedGatherers = allGatherers.filter(gatherer =>
-    gatherer === 'snapshot' || gatherer === 'accessibility.js');
+  const includedGatherers = allGatherers.filter(gatherer => {
+    const name = gatherer.replace(/\.js$/, '');
+    return mcpGathererNames.has(name);
+  });
   /** @type {string[]} */
-  const includedAudits = allAudits.filter(audit => audit.includes('accessibility'));
+  const includedAudits = allAudits.filter(audit => {
+    const auditId = path.basename(audit, '.js');
+    return mcpAuditIds.has(auditId);
+  });
 
   const dynamicModulePaths = [
     ...includedGatherers.map(gatherer => `../gather/gatherers/${gatherer}`),
@@ -131,7 +192,8 @@ async function buildBundle(entryPath, distPath) {
       const standalonePath = path.join(LH_ROOT, 'dist/report/standalone.js');
       if (!fs.existsSync(standalonePath)) {
         throw new Error(
-          'dist/report/standalone.js not found. Run `yarn build-report` before building the MCP bundle.'
+          'dist/report/standalone.js not found. Run `yarn build-report` ' +
+          'before building the MCP bundle.'
         );
       }
       const REPORT_TEMPLATE = fs.readFileSync(templatePath, 'utf8');

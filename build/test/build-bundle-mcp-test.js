@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -20,6 +20,9 @@ const TEST_HTML = `
 </body>
 </html>
 `;
+
+/** Categories included in the MCP bundle (accessibility, SEO, Best practices). */
+const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices'];
 
 describe('MCP Bundle build', () => {
   const bundlePath = `${LH_ROOT}/dist/lighthouse-devtools-mcp-bundle.js`;
@@ -48,7 +51,7 @@ describe('MCP Bundle build', () => {
         config: {
           extends: 'lighthouse:default',
           settings: {
-            onlyCategories: ['accessibility'],
+            onlyCategories: MCP_CATEGORIES,
           },
         },
       });
@@ -56,8 +59,12 @@ describe('MCP Bundle build', () => {
       await browser.close();
 
       expect(result).toBeDefined();
-      expect(result.lhr.categories.accessibility).toBeDefined();
-      // The page has 1 failing audit (button name), so score should be < 1.0
+      // All requested categories are present in the results
+      for (const categoryId of MCP_CATEGORIES) {
+        expect(result.lhr.categories).toHaveProperty(categoryId);
+        expect(result.lhr.categories[categoryId]).toHaveProperty('score');
+      }
+      // The page has 1 failing a11y audit (button name), so accessibility score should be < 1.0
       expect(result.lhr.categories.accessibility.score).toBeLessThan(1.0);
       expect(result.lhr.categories.accessibility.score).toBeGreaterThan(0.5);
     });
@@ -89,7 +96,7 @@ describe('MCP Bundle build', () => {
           config: {
             extends: 'lighthouse:default',
             settings: {
-              onlyCategories: ['accessibility'],
+              onlyCategories: MCP_CATEGORIES,
             },
           },
         });
@@ -97,7 +104,11 @@ describe('MCP Bundle build', () => {
         await browser.close();
 
         expect(result).toBeDefined();
-        expect(result?.lhr.categories.accessibility).toBeDefined();
+        // All requested categories are present in the results
+        for (const categoryId of MCP_CATEGORIES) {
+          expect(result?.lhr.categories).toHaveProperty(categoryId);
+          expect(result?.lhr.categories[categoryId]).toHaveProperty('score');
+        }
         expect(result?.lhr.categories.accessibility.score).toBeLessThan(1.0);
         expect(result?.lhr.categories.accessibility.score).toBeGreaterThan(0.5);
       } finally {
@@ -120,7 +131,7 @@ describe('MCP Bundle build', () => {
         config: {
           extends: 'lighthouse:default',
           settings: {
-            onlyCategories: ['accessibility'],
+            onlyCategories: MCP_CATEGORIES,
           },
         },
       });
@@ -145,7 +156,7 @@ describe('MCP Bundle build', () => {
         config: {
           extends: 'lighthouse:default',
           settings: {
-            onlyCategories: ['accessibility'],
+            onlyCategories: MCP_CATEGORIES,
           },
         },
       });
@@ -156,7 +167,10 @@ describe('MCP Bundle build', () => {
       expect(typeof json).toBe('string');
       const parsed = JSON.parse(json);
       expect(parsed).toHaveProperty('categories');
-      expect(parsed.categories.accessibility).toBeDefined();
+      // All requested categories are present in the results
+      for (const categoryId of MCP_CATEGORIES) {
+        expect(parsed.categories).toHaveProperty(categoryId);
+      }
     });
   });
 });
