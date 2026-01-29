@@ -11,6 +11,7 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {createTestTrace, rootFrame} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {MainThreadTasks} from '../../computed/main-thread-tasks.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 const trace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
 const devtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
@@ -32,25 +33,28 @@ describe('TBTImpactTasks', () => {
     let metricComputationData;
 
     beforeEach(() => {
+      /** @type {Partial<LH.Artifacts.NetworkRequest>} */
+      const mainDocumentRequest = {
+        requestId: '1',
+        priority: 'High',
+        networkRequestTime: 0,
+        networkEndTime: 500,
+        transferSize: 400,
+        url: mainDocumentUrl,
+        frameId: rootFrame,
+      };
       metricComputationData = {
         trace: createTestTrace({
           largestContentfulPaint: 15,
           traceEnd: 10_000,
           frameUrl: mainDocumentUrl,
+          networkRecords: [Object.assign(new NetworkRequest(), mainDocumentRequest)],
           topLevelTasks: [
             // Add long task to defer TTI
             {ts: 1000, duration: 1000},
           ],
         }),
-        devtoolsLog: networkRecordsToDevtoolsLog([{
-          requestId: '1',
-          priority: 'High',
-          networkRequestTime: 0,
-          networkEndTime: 500,
-          transferSize: 400,
-          url: mainDocumentUrl,
-          frameId: rootFrame,
-        }]),
+        devtoolsLog: networkRecordsToDevtoolsLog([mainDocumentRequest]),
         URL: {
           requestedUrl: mainDocumentUrl,
           mainDocumentUrl,
@@ -266,7 +270,7 @@ describe('TBTImpactTasks', () => {
       expect(tasksWithNoChildren).toEqual(tasksWithAllSelfImpact);
 
       const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
-      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999545`);
+      expect(totalSelfImpact).toBeCloseTo(2820, 6);
 
       // Total self blocking time is just the total self impact without factoring in the TBT
       // bounds, so it should always be greater than or equal to the total TBT self impact.
