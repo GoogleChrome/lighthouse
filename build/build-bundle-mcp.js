@@ -22,7 +22,6 @@ import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
-import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const require = createRequire(import.meta.url);
 
@@ -78,7 +77,8 @@ async function buildBundle(entryPath, distPath) {
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
   /** @type {string[]} */
-  const includedGatherers = allGatherers.filter(gatherer => gatherer === 'snapshot' || gatherer === 'accessibility.js');
+  const includedGatherers = allGatherers.filter(gatherer =>
+    gatherer === 'snapshot' || gatherer === 'accessibility.js');
   /** @type {string[]} */
   const includedAudits = allAudits.filter(audit => audit.includes('accessibility'));
 
@@ -150,7 +150,9 @@ async function buildBundle(entryPath, distPath) {
     import {makeComputedArtifact} from './computed-artifact.js';
     import {LighthouseError} from '../lib/lh-error.js';
     export class Speedline {
-      static async compute_() { throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES); }
+      static async compute_() {
+        throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
+      }
     }
     export const SpeedlineComputed = makeComputedArtifact(Speedline, null);
   `;
@@ -164,7 +166,15 @@ async function buildBundle(entryPath, distPath) {
   `;
   shimsObj[`${LH_ROOT}/core/computed/entity-classification.js`] = `
     import {makeComputedArtifact} from './computed-artifact.js';
-    export class EntityClassification { static async compute_() { return {entityByUrl: new Map(), urlsByEntity: new Map(), isFirstParty: () => false}; } }
+    export class EntityClassification {
+      static async compute_() {
+        return {
+          entityByUrl: new Map(),
+          urlsByEntity: new Map(),
+          isFirstParty: () => false,
+        };
+      }
+    }
     export const EntityClassificationComputed = makeComputedArtifact(EntityClassification, null);
   `;
   shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = `
@@ -191,8 +201,13 @@ async function buildBundle(entryPath, distPath) {
     import * as Types from "./types/types.js";
     export {Core, Graph, Metrics, Simulation, Types};
   `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = 'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}, resolveRedirects: r => r, findMainResource: r => r[0]}; export const LanternError = class extends Error {};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = 'export const PageDependencyGraph = {getNetworkInitiators: () => []}; export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] =
+    'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}, ' +
+    'resolveRedirects: r => r, findMainResource: r => r[0]}; ' +
+    'export const LanternError = class extends Error {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] =
+    'export const PageDependencyGraph = {getNetworkInitiators: () => []}; ' +
+    'export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
   shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = `
     export class FirstContentfulPaint {}
     export class Interactive {}
@@ -206,8 +221,14 @@ async function buildBundle(entryPath, distPath) {
   shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = `
     export const Constants = {
       throttling: {
-        mobileSlow4G: {rttMs: 150, throughputKbps: 1638.4, requestLatencyMs: 562.5, downloadThroughputKbps: 1474.56, uploadThroughputKbps: 675, cpuSlowdownMultiplier: 4},
-        desktopDense4G: {rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1, requestLatencyMs: 0, downloadThroughputKbps: 0, uploadThroughputKbps: 0},
+        mobileSlow4G: {
+          rttMs: 150, throughputKbps: 1638.4, requestLatencyMs: 562.5,
+          downloadThroughputKbps: 1474.56, uploadThroughputKbps: 675, cpuSlowdownMultiplier: 4,
+        },
+        desktopDense4G: {
+          rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1,
+          requestLatencyMs: 0, downloadThroughputKbps: 0, uploadThroughputKbps: 0,
+        },
       }
     };
     export class Simulator {
@@ -278,7 +299,9 @@ async function buildBundle(entryPath, distPath) {
             if (!codeFile) throw new Error('missing output');
 
             const code = codeFile.text;
-            if (code.includes('inflate_fast')) throw new Error('Expected zlib inflate code to have been removed');
+            if (code.includes('inflate_fast')) {
+              throw new Error('Expected zlib inflate code to have been removed');
+            }
 
             await fs.promises.writeFile(codeFile.path, code);
             if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
