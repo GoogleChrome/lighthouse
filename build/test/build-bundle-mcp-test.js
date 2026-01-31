@@ -7,6 +7,10 @@
 import path from 'path';
 import fs from 'fs';
 
+import puppeteer from 'puppeteer-core';
+import {getChromePath} from 'chrome-launcher';
+
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {buildBundle} from '../build-bundle-mcp.js';
 
@@ -47,9 +51,9 @@ describe('MCP Bundle build', () => {
   describe('snapshot', () => {
     it('successfully runs snapshot on a local page', async () => {
       const {snapshot} = await import(bundlePath);
-      const puppeteer = (await import('puppeteer')).default;
-
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        executablePath: getChromePath(),
+      });
       const page = await browser.newPage();
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
@@ -79,8 +83,6 @@ describe('MCP Bundle build', () => {
   describe('navigation', () => {
     it('successfully runs navigation', async () => {
       const {navigation} = await import(bundlePath);
-      const puppeteer = (await import('puppeteer')).default;
-      const {Server} = await import('../../cli/test/fixtures/static-server.js');
 
       const testPageDir = path.join(LH_ROOT, '.tmp');
       if (!fs.existsSync(testPageDir)) {
@@ -95,7 +97,9 @@ describe('MCP Bundle build', () => {
       const testUrl = `http://localhost:${server.getPort()}/${path.basename(testPagePath)}`;
 
       try {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+          executablePath: getChromePath(),
+        });
         const page = await browser.newPage();
 
         const result = await navigation(page, testUrl, {
@@ -127,9 +131,10 @@ describe('MCP Bundle build', () => {
   describe('generateReport', () => {
     it('generates HTML report from LHR result', async () => {
       const {snapshot, generateReport} = await import(bundlePath);
-      const puppeteer = (await import('puppeteer')).default;
 
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        executablePath: getChromePath(),
+      });
       const page = await browser.newPage();
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
@@ -152,9 +157,10 @@ describe('MCP Bundle build', () => {
 
     it('generates JSON report from LHR result', async () => {
       const {snapshot, generateReport} = await import(bundlePath);
-      const puppeteer = (await import('puppeteer')).default;
 
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        executablePath: getChromePath(),
+      });
       const page = await browser.newPage();
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
