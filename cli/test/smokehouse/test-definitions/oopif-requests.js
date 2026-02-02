@@ -64,8 +64,6 @@ const expectations = {
 
               // Disqus iframe (OOPIF)
               {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
-              // Disqus subframe (that's a new OOPIF)
-              {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
             ],
           },
         },
