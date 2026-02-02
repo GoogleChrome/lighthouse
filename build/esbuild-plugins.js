@@ -381,6 +381,50 @@ function lighthouseShimPlugin(options) {
   };
 }
 
+/**
+ * @param {{removeExtraLicenses?: boolean}} options
+ * @return {esbuild.Plugin}
+ */
+function postprocess(options = {}) {
+  return {
+    name: 'postprocess',
+    setup({onEnd}) {
+      onEnd(async (result) => {
+        if (result.errors.length) return;
+
+        const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
+        const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
+        if (!codeFile) throw new Error('missing output');
+
+        // Just make sure the shimming worked.
+        let code = codeFile.text;
+        if (code.includes('inflate_fast')) {
+          throw new Error('Expected zlib inflate code to have been removed');
+        }
+
+        if (options.removeExtraLicenses) {
+          // Get rid of our extra license comments.
+          // All comments would have been moved to the end of the file, so removing some will not break
+          // source maps.
+          // https://stackoverflow.com/a/35923766
+          const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
+          let hasSeenFirst = false;
+          code = code.replace(re, (match) => {
+            if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
+              if (hasSeenFirst) return '';
+              hasSeenFirst = true;
+            }
+            return match;
+          });
+        }
+
+        await fs.promises.writeFile(codeFile.path, code);
+        if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
+      });
+    },
+  };
+}
+
 export {
   partialLoaders,
   bulkLoader,
@@ -388,4 +432,5 @@ export {
   ignoreBuiltins,
   umd,
   lighthouseShimPlugin,
+  postprocess,
 };
