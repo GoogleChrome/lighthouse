@@ -60,7 +60,7 @@ const expectations = {
               // FYI: Youtube has a ServiceWorker which sometimes cancels the document request. As a result, there will sometimes be multiple requests for this file.
               {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
               {url: /^https:\/\/www\.youtube\.com\/.*?player.*?css/, finished: true, statusCode: 200, resourceType: 'Stylesheet'},
-              {url: /^https:\/\/www\.youtube\.com\/.*?\/embed.js/, finished: true, statusCode: 200, resourceType: 'Script', experimentalFromMainFrame: undefined},
+              {url: /^https:\/\/www\.youtube\.com\/.*?\/(?:embed|www-embed-player).*?\.js/, finished: true, statusCode: 200, resourceType: 'Script', experimentalFromMainFrame: undefined},
 
               // Disqus iframe (OOPIF)
               {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
