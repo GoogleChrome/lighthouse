@@ -43,7 +43,6 @@ describe('Main Bundle build', () => {
   it('bundle can run in a browser', async () => {
     const browser = await puppeteer.launch({
       executablePath: getChromePath(),
-      headless: 'new',
     });
     const page = await browser.newPage();
     await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
@@ -59,6 +58,7 @@ describe('Main Bundle build', () => {
     // Verify Lighthouse is available on the window
     // devtools-entry.js sets self.snapshot (and others) in worker/non-worker environments.
     const isLighthouseAvailable = await page.evaluate(() => {
+      // @ts-expect-error
       return typeof globalThis.snapshot === 'function';
     });
 
