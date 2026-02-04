@@ -9,7 +9,6 @@
  * in the browser (as long as they have access to a debugger protocol Connection).
  */
 
-import fs from 'fs';
 import path from 'path';
 import {execSync} from 'child_process';
 import {createRequire} from 'module';
