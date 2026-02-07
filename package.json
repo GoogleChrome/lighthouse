@@ -33,7 +33,6 @@
     "build-viewer": "node ./build/build-viewer.js",
     "build-types": "yarn type-check && rsync -a .tmp/tsbuildinfo/ ./ --include='*.d.ts' --include='*.d.cts' --exclude='*.map' --exclude='*.tsbuildinfo'",
     "reset-link": "(yarn unlink || true) && yarn link && yarn link lighthouse",
-    "c8": "bash core/scripts/c8.sh",
     "clean": "rm -r dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json shared/localization/locales/*.ctc.json || true",
     "clean-types": "git clean -xfq '*.d.ts' '*.d.cts' -e 'node_modules/' -e 'dist/' -e '.tmp/' -e '**/types/'",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
@@ -64,9 +63,6 @@
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
     "watch": "yarn unit-core --watch",
-    "unit:cicoverage": "yarn c8 --all yarn unit:ci && yarn c8 --all yarn unit-lantern-trace:ci",
-    "coverage": "yarn unit:cicoverage && c8 report --reporter html",
-    "coverage:smoke": "yarn c8 yarn smoke -j=1 && c8 report --reporter html",
     "devtools": "bash core/scripts/roll-to-devtools.sh",
     "chrome": "node core/scripts/manual-chrome-launcher.js",
     "fast": "node ./cli/index.js --preset=desktop --throttlingMethod=provided",
@@ -139,7 +135,6 @@
     "angular": "^1.7.4",
     "archiver": "^7.0.1",
     "builtin-modules": "^3.3.0",
-    "c8": "^7.11.3",
     "chalk": "^2.4.1",
     "chrome-devtools-frontend": "1.0.1526630",
     "colors": "^1.4.0",
@@ -210,7 +205,8 @@
   },
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.1527314",
-    "puppeteer-core/**/devtools-protocol": "0.0.1527314"
+    "puppeteer-core/**/devtools-protocol": "0.0.1527314",
+    "cross-spawn": "^7.0.6"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
