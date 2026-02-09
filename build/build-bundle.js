@@ -9,7 +9,6 @@
  * in the browser (as long as they have access to a debugger protocol Connection).
  */
 
-import fs from 'fs';
 import path from 'path';
 import {execSync} from 'child_process';
 import {createRequire} from 'module';
@@ -159,6 +158,10 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     // Because of page-functions!
     keepNames: true,
     inject: ['./build/process-global.js'],
+    alias: {
+      'debug': require.resolve('debug/src/browser.js'),
+      'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
+    },
     /** @type {esbuild.Plugin[]} */
     plugins: [
       plugins.replaceModules({
@@ -203,66 +206,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      {
-        name: 'alias',
-        setup({onResolve}) {
-          onResolve({filter: /\.*/}, (args) => {
-            /** @type {Record<string, string>} */
-            const entries = {
-              'debug': require.resolve('debug/src/browser.js'),
-              'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
-            };
-            if (args.path in entries) {
-              return {path: entries[args.path]};
-            }
-          });
-        },
-      },
-      {
-        name: 'postprocess',
-        setup({onEnd}) {
-          onEnd(async (result) => {
-            if (result.errors.length) {
-              return;
-            }
-
-            const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
-            const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
-            if (!codeFile) {
-              throw new Error('missing output');
-            }
-
-            // Just make sure the above shimming worked.
-            let code = codeFile.text;
-            if (code.includes('inflate_fast')) {
-              throw new Error('Expected zlib inflate code to have been removed');
-            }
-
-            // Get rid of our extra license comments.
-            // All comments would have been moved to the end of the file, so removing some will not break
-            // source maps.
-            // https://stackoverflow.com/a/35923766
-            const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
-            let hasSeenFirst = false;
-            code = code.replace(re, (match) => {
-              if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
-                if (hasSeenFirst) {
-                  return '';
-                }
-
-                hasSeenFirst = true;
-              }
-
-              return match;
-            });
-
-            await fs.promises.writeFile(codeFile.path, code);
-            if (mapFile) {
-              await fs.promises.writeFile(mapFile.path, mapFile.text);
-            }
-          });
-        },
-      },
+      plugins.postprocess({removeExtraLicenses: true}),
     ],
   });
 }

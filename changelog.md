@@ -1,3 +1,45 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+Alex Rudenko @OrKoN
+Lusa Zhan @lusayaa
+Atakan Demircioğlu @atakde
+Mimori @Mimori256
+Denis @filchakov
+_ @Lulucmy
+ <a name="13.0.2"></a>
+# 13.0.2 (2026-02-06)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.1...v13.0.2)
+
+We expect this release to ship in the DevTools of [Chrome 146](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* hreflang: update valid-langs.js ([#16829](https://github.com/GoogleChrome/lighthouse/pull/16829))
+* robots-txt: add `Content-Signal` directive ([#16767](https://github.com/GoogleChrome/lighthouse/pull/16767))
+
+## Report
+
+* fix focus in devtools, and in 3-dot menu ([#16802](https://github.com/GoogleChrome/lighthouse/pull/16802))
+* tooltip: fix tooltip positioning in devtools ([#16844](https://github.com/GoogleChrome/lighthouse/pull/16844))
+
+## Docs
+
+* readme: add FERU to services list ([#16791](https://github.com/GoogleChrome/lighthouse/pull/16791))
+* readme: add LightKeeper to the list of Web Perf services ([#16830](https://github.com/GoogleChrome/lighthouse/pull/16830))
+
+## Tests
+
+* align expected a11y contrast failure with reality ([#16824](https://github.com/GoogleChrome/lighthouse/pull/16824))
+* skip 'issueAdded types' ([#16804](https://github.com/GoogleChrome/lighthouse/pull/16804))
+* devtools: sync e2e ([#16803](https://github.com/GoogleChrome/lighthouse/pull/16803))
+* smoke: deflake devtools smoke tests ([#16875](https://github.com/GoogleChrome/lighthouse/pull/16875))
+
+## Misc
+
+* build: build-bundle to share esbuild-plugins ([#16876](https://github.com/GoogleChrome/lighthouse/pull/16876))
+* build: create a bundle for devtools-mcp ([#16858](https://github.com/GoogleChrome/lighthouse/pull/16858))
+* ci: disable nightly publish schedule ([#16825](https://github.com/GoogleChrome/lighthouse/pull/16825))
+* strings: fix i18n README typo ([#16792](https://github.com/GoogleChrome/lighthouse/pull/16792))
+
 <a name="13.0.1"></a>
 # 13.0.1 (2025-10-22)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.0...v13.0.1)
@@ -18,7 +60,7 @@ We expect this release to ship in the DevTools of [Chrome 143](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - Benjamin R Gibson @brgibson
 - Leonardo Poletto @leopoletto
@@ -114,7 +156,7 @@ We expect this release to ship in the DevTools of [Chrome 141](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - uthem150 @uthem150
 - Nirav Gondaliya @niravzxv
@@ -161,7 +203,7 @@ We expect this release to ship in the DevTools of [Chrome 140](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - Boluwatife Omosowon @bolu-tife
 - Jonas Thelemann @dargmuesli
@@ -231,7 +273,7 @@ We expect this release to ship in the DevTools of [Chrome 140](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - demostanis @demostanis
 - OronW @OronW

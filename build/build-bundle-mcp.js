@@ -366,25 +366,7 @@ async function buildBundle(entryPath, distPath) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      {
-        name: 'postprocess',
-        setup({onEnd}) {
-          onEnd(async (result) => {
-            if (result.errors.length) return;
-            const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
-            const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
-            if (!codeFile) throw new Error('missing output');
-
-            const code = codeFile.text;
-            if (code.includes('inflate_fast')) {
-              throw new Error('Expected zlib inflate code to have been removed');
-            }
-
-            await fs.promises.writeFile(codeFile.path, code);
-            if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
-          });
-        },
-      },
+      plugins.postprocess(),
     ],
   });
 }
