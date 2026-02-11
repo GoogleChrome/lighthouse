@@ -1,15 +1,24 @@
+ <a name="13.0.3"></a>
+# 13.0.3 (2026-02-11)
+
+Fix npm package publish of 13.0.2. Refer to https://github.com/GoogleChrome/lighthouse/releases/tag/v13.0.2.
+
+We expect this release to ship in the DevTools of [Chrome 146](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+ <a name="13.0.2"></a>
+# 13.0.2 (2026-02-06)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.1...v13.0.2)
+
+We expect this release to ship in the DevTools of [Chrome 146](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
 Thanks to our new contributors 👽🐷🐰🐯🐻!
+
 Alex Rudenko @OrKoN
 Lusa Zhan @lusayaa
 Atakan Demircioğlu @atakde
 Mimori @Mimori256
 Denis @filchakov
 _ @Lulucmy
- <a name="13.0.2"></a>
-# 13.0.2 (2026-02-06)
-[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.1...v13.0.2)
-
-We expect this release to ship in the DevTools of [Chrome 146](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
 ## Core
 
