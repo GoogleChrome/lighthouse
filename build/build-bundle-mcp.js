@@ -280,7 +280,9 @@ async function buildBundle(entryPath, distPath) {
   `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] =
     'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}, ' +
-    'resolveRedirects: r => r, findMainResource: r => r[0]}; ' +
+    'resolveRedirects: r => r, findMainResource: r => r[0], ' +
+    `findLastDocumentForUrl: (records, url) =>
+      records.slice().reverse().find(r => r.url === url)}; ` +
     'export const LanternError = class extends Error {};';
   shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] =
     'export const PageDependencyGraph = {getNetworkInitiators: () => []}; ' +
