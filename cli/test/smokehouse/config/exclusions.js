@@ -31,6 +31,37 @@ const exclusions = {
     // Disabled because is timing out.
     'oopif-scripts',
   ],
+  'devtools-mcp': [
+    // Disabled because performance tracing related audits are not supported.
+    'byte-efficiency',
+    'byte-gzip',
+    'fps-max',
+    'fps-max-passive',
+    'fps-overflow-x',
+    'lantern-fetch',
+    'lantern-idle-callback-long',
+    'lantern-idle-callback-short',
+    'lantern-online',
+    'lantern-set-timeout',
+    'lantern-xhr',
+    'metrics-debugger',
+    'metrics-delayed-fcp',
+    'metrics-delayed-lcp',
+    'metrics-tricky-tti',
+    'metrics-tricky-tti-late-fcp',
+    'perf-debug',
+    'perf-diagnostics-animations',
+    'perf-diagnostics-unsized-images',
+    'perf-fonts',
+    'perf-frame-metrics',
+    'perf-preload',
+    'perf-trace-elements',
+    'screenshot',
+    'shift-attribution',
+    'legacy-javascript',
+    'source-maps',
+    'timing',
+  ],
 };
 
 for (const array of Object.values(exclusions)) {
