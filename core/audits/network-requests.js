@@ -70,6 +70,8 @@ class NetworkRequests extends Audit {
         url: UrlUtils.elideDataURI(record.url),
         sessionTargetType: record.sessionTargetType,
         protocol: record.protocol,
+        cache: record.fromDiskCache ? 'disk' :
+               record.fromMemoryCache ? 'memory' : record.fromPrefetchCache ? 'prefetch' : 'none',
         rendererStartTime: normalizeTime(record.rendererStartTime),
         networkRequestTime: normalizeTime(record.networkRequestTime),
         networkEndTime: normalizeTime(record.networkEndTime),
