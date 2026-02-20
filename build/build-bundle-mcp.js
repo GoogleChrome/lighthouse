@@ -263,58 +263,6 @@ async function buildBundle(entryPath, distPath) {
     export const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
   `;
 
-  shimsObj['@paulirish/trace_engine'] = `
-    export const LanternComputationData = {};
-    export const Processor = {TraceProcessor: class {}};
-    export const Handlers = {ModelHandlers: {}};
-    export const Insights = {};
-    export const Helpers = {};
-  `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/lantern.js'] = `
-    import * as Core from "./core/core.js";
-    import * as Graph from "./graph/graph.js";
-    import * as Metrics from "./metrics/metrics.js";
-    import * as Simulation from "./simulation/simulation.js";
-    import * as Types from "./types/types.js";
-    export {Core, Graph, Metrics, Simulation, Types};
-  `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] =
-    'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}, ' +
-    'resolveRedirects: r => r, findMainResource: r => r[0]}; ' +
-    'export const LanternError = class extends Error {};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] =
-    'export const PageDependencyGraph = {getNetworkInitiators: () => []}; ' +
-    'export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = `
-    export class FirstContentfulPaint {}
-    export class Interactive {}
-    export class SpeedIndex {}
-    export class LargestContentfulPaint {}
-    export class FirstMeaningfulPaint {}
-    export class TotalBlockingTime {}
-    export class MaxPotentialFID {}
-    export const TBTUtils = {calculateSumOfBlockingTime: () => 0};
-  `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = `
-    export const Constants = {
-      throttling: {
-        mobileSlow4G: {
-          rttMs: 150, throughputKbps: 1638.4, requestLatencyMs: 562.5,
-          downloadThroughputKbps: 1474.56, uploadThroughputKbps: 675, cpuSlowdownMultiplier: 4,
-        },
-        desktopDense4G: {
-          rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1,
-          requestLatencyMs: 0, downloadThroughputKbps: 0, uploadThroughputKbps: 0,
-        },
-      }
-    };
-    export class Simulator {
-      static createSimulator() { return new Simulator(); }
-      static get allNodeTimings() { return new Map(); }
-    }
-  `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = 'export default {};';
-
   const result = await esbuild.build({
     entryPoints: [entryPath],
     outfile: distPath,
