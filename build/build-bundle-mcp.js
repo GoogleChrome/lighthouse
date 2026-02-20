@@ -315,7 +315,7 @@ async function buildBundle(entryPath, distPath) {
   `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = 'export default {};';
 
-  await esbuild.build({
+  const result = await esbuild.build({
     entryPoints: [entryPath],
     outfile: distPath,
     write: false,
@@ -324,6 +324,7 @@ async function buildBundle(entryPath, distPath) {
     bundle: true,
     minify: false,
     treeShaking: true,
+    metafile: true,
     sourcemap: 'linked',
     platform: 'node',
     banner: {js: banner},
@@ -369,6 +370,78 @@ async function buildBundle(entryPath, distPath) {
       plugins.postprocess(),
     ],
   });
+  generateThirdPartyNotices(result.metafile);
+}
+
+/**
+ * @param {import('esbuild').BuildResult['metafile']} metafile
+ */
+function generateThirdPartyNotices(metafile) {
+  const paths = Object.keys(metafile?.inputs ?? {});
+  const nodeModules = new Map();
+  for (const path of paths) {
+    if (path.startsWith('replace-modules:')) {
+      continue;
+    }
+    const nodeModulesPathPart = 'node_modules/';
+    const nodeModulesPartIdx = path.lastIndexOf(nodeModulesPathPart);
+    if (nodeModulesPartIdx === -1) {
+      continue;
+    }
+    let nextPartIdx = path.indexOf('/', nodeModulesPartIdx + nodeModulesPathPart.length);
+    if (nextPartIdx === -1) {
+      nextPartIdx = path.length;
+    }
+    let nodeModulePath = path.substring(0, nextPartIdx);
+    let nodeModule = path.substring(nodeModulesPartIdx + nodeModulesPathPart.length, nextPartIdx);
+    // for org packages, like @x/y
+    if (nodeModule.startsWith('@')) {
+      let secondPartIdx = path.indexOf('/', nextPartIdx + 1);
+      if (secondPartIdx === -1) {
+        secondPartIdx = path.length;
+      }
+      nodeModulePath = path.substring(0, secondPartIdx);
+      nodeModule = path.substring(nodeModulesPartIdx + nodeModulesPathPart.length, secondPartIdx);
+    }
+    nodeModules.set(nodeModule, nodeModulePath);
+  }
+  const divider =
+              '\n\n-------------------- DEPENDENCY DIVIDER --------------------\n\n';
+
+  const stringifiedDependencies = Array.from(
+    nodeModules.keys()
+  ).map(name => {
+    const nodeModulePath = nodeModules.get(name);
+    const dependency = JSON.parse(
+      fs.readFileSync(path.join(nodeModulePath, 'package.json'), 'utf-8'));
+    const licenseFilePaths = [
+      path.join(nodeModulePath, 'LICENSE'),
+      path.join(nodeModulePath, 'LICENSE.txt'),
+      path.join(nodeModulePath, 'LICENSE.md'),
+    ];
+    for (const licenseFile of licenseFilePaths) {
+      if (fs.existsSync(licenseFile)) {
+        dependency.licenseText = fs.readFileSync(licenseFile, 'utf-8');
+        break;
+      }
+    }
+    const parts = [];
+    parts.push(`Name: ${dependency.name ?? 'N/A'}`);
+    let url = dependency.homepage ?? dependency.repository;
+    if (url) {
+      url = url.url;
+    }
+    parts.push(`URL: ${url ?? 'N/A'}`);
+    parts.push(`Version: ${dependency.version ?? 'N/A'}`);
+    parts.push(`License: ${dependency.license ?? 'N/A'}`);
+    if (dependency.licenseText) {
+      parts.push('');
+      parts.push(dependency.licenseText.replaceAll('\r', ''));
+    }
+    return parts.join('\n');
+  }).join(divider);
+
+  fs.writeFileSync('dist/LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES', stringifiedDependencies);
 }
 
 /**
