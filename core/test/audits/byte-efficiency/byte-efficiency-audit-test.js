@@ -235,7 +235,7 @@ describe('Byte efficiency base audit', () => {
       {computedCache: new Map()}
     );
 
-    assert.equal(result.numericValue, 160);
+    assert.equal(result.numericValue, 0);
   });
 
   it('should create load simulator with the specified settings', async () => {
@@ -263,14 +263,14 @@ describe('Byte efficiency base audit', () => {
     let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
-    expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`1220`);
+    expect(result.numericValue).toBeLessThan(500);
+    expect(result.numericValue).toMatchInlineSnapshot(`160`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
-    // expect lots of savings
-    expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`13580`);
+    // expect more savings
+    expect(result.numericValue).not.toBeLessThan(500);
+    expect(result.numericValue).toMatchInlineSnapshot(`1740`);
   });
 
   it('should compute savings with throughput in timespan mode', async () => {
