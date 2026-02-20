@@ -5,7 +5,6 @@
  */
 
 import {Audit} from '../audit.js';
-import UrlUtils from '../../lib/url-utils.js';
 import {MainResource} from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
@@ -90,12 +89,26 @@ class Canonical extends Audit {
         // Links that don't have an href aren't canonical references for SEO, skip them
         if (!link.hrefRaw) continue;
 
-        // Links that had an hrefRaw but didn't have a valid href were invalid, flag them
-        if (!link.href) invalidCanonicalLink = link;
-        // Links that had a valid href but didn't have a valid hrefRaw must have been relatively resolved, flag them
-        else if (!UrlUtils.isValid(link.hrefRaw)) relativeCanonicallink = link;
-        // Otherwise, it was a valid canonical URL
-        else uniqueCanonicalURLs.add(link.href);
+        // Links that don't have an href are invalid, flag them
+        if (!link.href) {
+          invalidCanonicalLink = link;
+          continue;
+        }
+
+        if (URL.parse(link.hrefRaw, 'https://example.com') === null) {
+          // Links that are syntactically INVALID with a base, flag them
+          invalidCanonicalLink = link;
+        } else {
+          // Links that are syntactically VALID with a base:
+          if (URL.parse(link.hrefRaw) === null) {
+            // Links that are INVALID without a base must be relative, flag them
+            relativeCanonicallink = link;
+          } else {
+            // Links that are valid without a base are absolute
+            uniqueCanonicalURLs.add(link.href);
+          }
+        }
+
       } else if (link.rel === 'alternate') {
         if (link.href && link.hreflang) hreflangURLs.add(link.href);
       }
@@ -154,7 +167,7 @@ class Canonical extends Audit {
    * @return {LH.Audit.Product|undefined}
    */
   static findCommonCanonicalURLMistakes(canonicalURLData, canonicalURL, baseURL) {
-    const {hreflangURLs} = canonicalURLData;
+    const { hreflangURLs } = canonicalURLData;
 
     // cross-language or cross-country canonicals are a common issue
     if (
@@ -189,7 +202,7 @@ class Canonical extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.DevtoolsLog;
 
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const mainResource = await MainResource.request({ devtoolsLog, URL: artifacts.URL }, context);
     const baseURL = new URL(mainResource.url);
     const canonicalURLData = Canonical.collectCanonicalURLs(artifacts.LinkElements);
 

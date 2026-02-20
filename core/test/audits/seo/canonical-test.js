@@ -63,25 +63,46 @@ describe('SEO: Document has valid canonical link', () => {
     });
   });
 
-  it('fails when canonical url is invalid', () => {
-    const mainDocumentUrl = 'http://www.example.com';
-    const mainResource = {url: mainDocumentUrl};
-    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = {
-      DevtoolsLog: devtoolsLog,
-      URL: {mainDocumentUrl},
-      LinkElements: [
-        link({rel: 'canonical', source: 'head', href: null, hrefRaw: 'https:// example.com'}),
-      ],
-    };
+it('fails for a URL with a space in the host (simulating a permissive parser)', () => {
+  const mainDocumentUrl = 'http://www.example.com';
+  const mainResource = {url: mainDocumentUrl};
+  const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+  const artifacts = {
+    DevtoolsLog: devtoolsLog,
+    URL: {mainDocumentUrl},
+    LinkElements: [
+      link({rel: 'canonical', source: 'head', href: 'https://%20example.com', hrefRaw: 'https:// example.com'}),
+    ],
+  };
 
-    const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      const {score, explanation} = auditResult;
-      assert.equal(score, 0);
-      expect(explanation).toBeDisplayString('Invalid URL (https:// example.com)');
-    });
+  const context = {computedCache: new Map()};
+  return CanonicalAudit.audit(artifacts, context).then(auditResult => {
+    const {score, explanation} = auditResult;
+    assert.equal(score, 0);
+    expect(explanation).toBeDisplayString('Invalid URL (https:// example.com)');
   });
+});
+
+it('fails for a URL invalid, the parser returns null', () => {
+  const mainDocumentUrl = 'http://www.example.com';
+  const mainResource = {url: mainDocumentUrl};
+  const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+  const artifacts = {
+    DevtoolsLog: devtoolsLog,
+    URL: {mainDocumentUrl},
+    LinkElements: [
+      link({rel: 'canonical', source: 'head', href: null, hrefRaw: 'I am not a URL'}),
+    ],
+  };
+
+  const context = {computedCache: new Map()};
+  return CanonicalAudit.audit(artifacts, context).then(auditResult => {
+    const {score, explanation} = auditResult;
+    assert.equal(score, 0);
+    expect(explanation).toBeDisplayString('Invalid URL (I am not a URL)');
+  });
+});
+  
 
   it('fails when canonical url is relative', () => {
     const mainDocumentUrl = 'https://example.com/de/';
