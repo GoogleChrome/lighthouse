@@ -68,6 +68,9 @@ class Trace extends BaseGatherer {
       // a trace collected by Lighthouse (e.g. "View Trace" workflow in DevTools)
       // TODO: Re-enable after investigating b/325659693
       // 'disabled-by-default-v8.cpu_profiler',
+
+      // Required for Baseline Audit to detect feature usage.
+      'blink.webdx_feature_usage',
     ];
   }
 
