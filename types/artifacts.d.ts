@@ -139,6 +139,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceError: Trace;
   /** Elements associated with metrics (ie: Largest Contentful Paint element). */
   TraceElements: Artifacts.TraceElement[];
+  /** Baseline feature usage information. */
+  BaselineFeatureUsage: Artifacts.BaselineFeatureUsage[];
 }
 
 declare module Artifacts {
@@ -914,3 +916,15 @@ declare module Trace {
  * A record of DevTools Debugging Protocol events.
  */
 export type DevtoolsLog = Array<Protocol.RawEventMessage>;
+
+/**
+ * Represents a baseline feature usage artifact.
+ */
+export interface BaselineFeatureUsage {
+  featureId: string;
+  location: {
+    url: string;
+    line?: number;
+    col?: number;
+  };
+}
