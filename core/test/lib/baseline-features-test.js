@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { getFeatureStatus } from '../../lib/baseline/baseline-features.js';
+import {getFeatureStatus} from '../../lib/baseline/baseline-features.js';
 
 describe('baseline-features', () => {
   describe('getFeatureStatus', () => {

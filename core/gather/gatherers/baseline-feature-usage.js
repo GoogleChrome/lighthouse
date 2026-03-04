@@ -32,7 +32,9 @@ class BaselineFeatureUsage extends BaseGatherer {
         event.name === 'WebDXFeatureUsage' &&
         event.args?.feature
       ) {
-        const { feature, url, lineNumber, columnNumber } = /** @type {any} */ (event.args);
+        const {feature, url, lineNumber, columnNumber} = /** @type {any} */ (
+          event.args
+        );
         features.push({
           featureId: feature,
           location: {
