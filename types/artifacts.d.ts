@@ -144,6 +144,15 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
 }
 
 declare module Artifacts {
+  interface BaselineFeatureUsage {
+    featureId: string;
+    location: {
+      url: string;
+      line?: number;
+      col?: number;
+    };
+  }
+
   type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
