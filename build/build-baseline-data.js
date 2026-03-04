@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { features } from "web-features";
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+import {features} from 'web-features';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,10 +27,10 @@ function buildBaselineData(featuresArg = features) {
   const leanData = {};
 
   for (const [id, data] of Object.entries(featuresArg)) {
-    if (data.kind !== "feature") continue;
+    if (data.kind !== 'feature') continue;
 
     const status = data.status || {};
-    if ("baseline" in status) {
+    if ('baseline' in status) {
       leanData[id] = {
         status: status.baseline,
       };
@@ -47,11 +48,14 @@ function buildBaselineData(featuresArg = features) {
 
 function saveBaselineData() {
   const leanData = buildBaselineData();
-  const outputPath = path.resolve(__dirname, "../core/lib/baseline/baseline-features.json");
+  const outputPath = path.resolve(
+    __dirname,
+    '../core/lib/baseline/baseline-features.json'
+  );
 
   const dir = path.dirname(outputPath);
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+    fs.mkdirSync(dir, {recursive: true});
   }
 
   fs.writeFileSync(outputPath, JSON.stringify(leanData));
@@ -61,4 +65,4 @@ if (process.argv[1] === __filename) {
   saveBaselineData();
 }
 
-export { buildBaselineData, saveBaselineData };
+export {buildBaselineData, saveBaselineData};
