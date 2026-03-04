@@ -10,8 +10,8 @@ describe('Baseline Compatibility Audit', () => {
   it('should return a passing score when no features are used', async () => {
     const artifacts = {
       Trace: {
-        BaselineFeatureArtifact: []
-      }
+        BaselineFeatureArtifact: [],
+      },
     };
 
     const result = await BaselineCompatibility.audit(artifacts);
@@ -21,7 +21,7 @@ describe('Baseline Compatibility Audit', () => {
 
   it('should return a passing score when trace has no custom artifact', async () => {
     const artifacts = {
-      Trace: {}
+      Trace: {},
     };
 
     const result = await BaselineCompatibility.audit(artifacts);
@@ -33,13 +33,25 @@ describe('Baseline Compatibility Audit', () => {
     const artifacts = {
       Trace: {
         BaselineFeatureArtifact: [
-          { featureId: 'a', source: 'http://example.com/index.html', line: 12 },
-          { featureId: 'abortsignal-any', source: 'http://example.com/app.js', line: 42 },
-          { featureId: 'accelerometer', source: 'http://example.com/sensor.js', line: 100 },
-          { featureId: 'missing-in-json', source: 'http://example.com/missing.js', line: 1 },
-          { featureId: 'a' } // missing source/line
-        ]
-      }
+          {featureId: 'a', source: 'http://example.com/index.html', line: 12},
+          {
+            featureId: 'abortsignal-any',
+            source: 'http://example.com/app.js',
+            line: 42,
+          },
+          {
+            featureId: 'accelerometer',
+            source: 'http://example.com/sensor.js',
+            line: 100,
+          },
+          {
+            featureId: 'missing-in-json',
+            source: 'http://example.com/missing.js',
+            line: 1,
+          },
+          {featureId: 'a'}, // missing source/line
+        ],
+      },
     };
 
     const result = await BaselineCompatibility.audit(artifacts);
@@ -59,12 +71,16 @@ describe('Baseline Compatibility Audit', () => {
         url: 'http://example.com/index.html',
         urlProvider: 'network',
         line: 12,
-        column: 0
-      }
+        column: 0,
+      },
     });
 
-    expect(result.details.items[1].displayStatus).toEqual('Newly Available (2024-03-19)');
-    expect(result.details.items[2].displayStatus).toEqual('Limited Availability');
+    expect(result.details.items[1].displayStatus).toEqual(
+      'Newly Available (2024-03-19)'
+    );
+    expect(result.details.items[2].displayStatus).toEqual(
+      'Limited Availability'
+    );
 
     // Check fallback for missing source
     expect(result.details.items[3].source).toEqual('Unknown');
