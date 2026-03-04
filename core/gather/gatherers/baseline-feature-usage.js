@@ -32,14 +32,11 @@ class BaselineFeatureUsage extends BaseGatherer {
         event.name === 'WebDXFeatureUsage' &&
         event.args?.feature
       ) {
-        // @ts-expect-error - feature usage events have these props
         const {feature, url, lineNumber, columnNumber} = event.args;
         features.push({
           featureId: feature,
           location: {
             url: url || '',
-            // Trace events are often 1-indexed for lines, but let's keep it raw for now
-            // or normalize if we know for sure. The sample showed lineNumber: 1.
             line: lineNumber === -1 ? undefined : lineNumber,
             col: columnNumber === -1 ? undefined : columnNumber,
           },
