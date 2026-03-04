@@ -85,11 +85,11 @@ describe('BaselineFeatureUsage gatherer', () => {
       },
     ];
 
-    const context = {
+    const context = /** @type {any} */ ({
       dependencies: {
         Trace: {traceEvents},
       },
-    };
+    });
 
     const artifact = await gatherer.getArtifact(context);
 
@@ -139,11 +139,11 @@ describe('BaselineFeatureUsage gatherer', () => {
       },
     ];
 
-    const context = {
+    const context = /** @type {any} */ ({
       dependencies: {
         Trace: {traceEvents},
       },
-    };
+    });
 
     const artifact = await gatherer.getArtifact(context);
     expect(artifact).toEqual([]);
