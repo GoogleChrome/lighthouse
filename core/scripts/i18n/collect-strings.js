@@ -741,6 +741,8 @@ function checkKnownFixedCollisions(strings) {
       'Failing Elements',
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: $ICU_0$)',
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: $ICU_0$)',
+      'Line',
+      'Line',
       'Name',
       'Name',
       'No $MARKDOWN_SNIPPET_0$ directive found',
