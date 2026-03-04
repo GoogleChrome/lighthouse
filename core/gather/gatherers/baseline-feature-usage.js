@@ -16,7 +16,7 @@ class BaselineFeatureUsage extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.Context<'Trace'>} context
-   * @return {Promise<LH.Artifacts.BaselineFeatureUsage[]}
+   * @return {Promise<LH.Artifacts.BaselineFeatureUsage[]>}
    */
   async getArtifact(context) {
     const trace = context.dependencies.Trace;
@@ -32,7 +32,7 @@ class BaselineFeatureUsage extends BaseGatherer {
         event.name === 'WebDXFeatureUsage' &&
         event.args?.feature
       ) {
-        const {feature, url, lineNumber, columnNumber} = event.args;
+        const { feature, url, lineNumber, columnNumber } = /** @type {any} */ (event.args);
         features.push({
           featureId: feature,
           location: {
