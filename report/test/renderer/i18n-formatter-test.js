@@ -133,6 +133,12 @@ describe('i18n formatter', () => {
 
   it('formats a duration based on locale', () => {
     let i18n = new I18nFormatter('de');
+    // We relax the expectations here because recent Node versions (v24+) have inconsistent
+    // Intl output for 'narrow' durations in German.
+    // We've observed:
+    // - Node v24.11.1: "1 Std. 5 Sek."
+    // - Node v24.13.1: "1h Std. 5 Sek."
+    // - Node v24.14.0: "1h 5 Sek."
     assert.ok(i18n.formatDuration(60 * 1000).includes('1'));
     assert.ok(i18n.formatDuration(60 * 1000).match(/Min|m/));
 
@@ -163,10 +169,18 @@ describe('i18n formatter', () => {
       assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
       assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
       assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
-    }
+      }
+      /* eslint-enable no-irregular-whitespace */
 
-    /* eslint-enable no-irregular-whitespace */
-  });
+      i18n = new I18nFormatter('zh');
+      const zhHour5s = i18n.formatDuration(60 * 60 * 1000 + 5000);
+      assert.ok(zhHour5s.includes('1'));
+      assert.ok(zhHour5s.includes('5'));
+      // Should have Chinese characters for hour (小时 or h) and second (秒 or s).
+      assert.ok(zhHour5s.match(/小时|h/));
+      assert.ok(zhHour5s.match(/秒|s/));
+      });
+
 
   it('formats numbers based on locale', () => {
     // Requires full-icu or Intl polyfill.
