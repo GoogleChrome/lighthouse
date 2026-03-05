@@ -249,11 +249,17 @@ Array [
 
       // Check that TargetManager is getting execution context created events even if connecting
       // to the page after they already exist.
-      // There are two execution contexts, one for the main frame and one for the iframe of
+      // there are two execution contexts, one for the main frame and one for the iframe of
       // the same origin.
+      // We only care about default execution contexts. Recent Chromium versions can
+      // create many isolated contexts (e.g. for Puppeteer utility worlds or Lighthouse).
       const contextCreatedMainFrameCalls =
-        spy.mock.calls.filter(call => call[0].context.origin === 'http://localhost:10200');
+        spy.mock.calls.filter(call => {
+          return call[0].context.origin === 'http://localhost:10200' &&
+            call[0].context.auxData && call[0].context.auxData.isDefault;
+        });
       // For some reason, puppeteer gives us two created events for every uniqueId,
+
       // so using Set here to ignore that detail.
       expect(new Set(contextCreatedMainFrameCalls.map(call => call[0].context.uniqueId)).size)
         .toEqual(2);
