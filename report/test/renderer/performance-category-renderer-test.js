@@ -8,6 +8,7 @@ import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 import {DOM} from '../../renderer/dom.js';
@@ -30,7 +31,7 @@ describe('PerfCategoryRenderer', () => {
       reportJson: null,
     });
 
-    const window = new jsdom.JSDOM().window;
+    const window = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()}).window;
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
     global.CustomEvent = window.CustomEvent;
