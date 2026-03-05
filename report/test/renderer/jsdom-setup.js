@@ -16,7 +16,6 @@ export function createQuietConsole() {
   // We suppress these errors because they create a lot of noise and don't fail the tests.
   virtualConsole.on('error', (err) => {
     if (err.message && err.message.includes('Could not parse CSS stylesheet')) return;
-    // eslint-disable-next-line no-console
     console.error(err);
   });
   return virtualConsole;

@@ -51,7 +51,9 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    const document = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATE, {virtualConsole: createQuietConsole()});
+    const document = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATE, {
+      virtualConsole: createQuietConsole(),
+    });
     global.self = document.window;
     global.self.matchMedia = function() {
       return {
