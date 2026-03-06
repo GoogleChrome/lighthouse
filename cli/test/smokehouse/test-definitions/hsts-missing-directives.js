@@ -18,11 +18,10 @@ const expectations = {
         details: {
           items: [
             {
-              'directive': 'includeSubDomains',
-              'description': 'No `includeSubDomains` directive found',
-              'severity': 'Medium',
+              directive: 'includeSubDomains',
+              description: 'No `includeSubDomains` directive found',
+              severity: 'Medium',
             },
-
             {
               directive: 'preload',
               description: 'No `preload` directive found',
