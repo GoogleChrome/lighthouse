@@ -10,18 +10,13 @@
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'https://m.youtube.com/',
-    finalDisplayedUrl: 'https://m.youtube.com/',
+    requestedUrl: 'https://hsts.badssl.com/',
+    finalDisplayedUrl: 'https://hsts.badssl.com/',
     audits: {
       'has-hsts': {
         score: 1,
         details: {
           items: [
-            {
-              directive: 'includeSubDomains',
-              description: 'No `includeSubDomains` directive found',
-              severity: 'Medium',
-            },
             {
               directive: 'preload',
               description: 'No `preload` directive found',
