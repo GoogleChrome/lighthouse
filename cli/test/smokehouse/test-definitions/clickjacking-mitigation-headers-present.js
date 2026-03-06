@@ -15,7 +15,7 @@ function headersParam(headers) {
 
 const clickjackingMitigationCsp = headersParam([[
   'Content-Security-Policy',
-  "frame-ancestors 'self'",
+  'frame-ancestors \'self\'',
 ]]);
 
 /**
