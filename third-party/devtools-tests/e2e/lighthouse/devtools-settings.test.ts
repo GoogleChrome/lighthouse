@@ -6,7 +6,7 @@ import * as path from 'node:path';
 
 import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
-import {openDeviceToolbar, selectDevice} from '../helpers/emulation-helpers.js';
+import {getZoom, openDeviceToolbar, selectDevice, selectZoomLevel} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,
   getTargetViewport,
@@ -95,10 +95,7 @@ describe('DevTools', function() {
       await selectDevice('iPad Mini', devToolsPage);
       const rotateButton = await devToolsPage.waitForAria('Rotate');
       await rotateButton.click();
-      const zoomButton = await devToolsPage.waitForAria('Zoom');
-      await zoomButton.click();
-      const zoom75 = await devToolsPage.waitForElementWithTextContent('75%');
-      await zoom75.click();
+      await selectZoomLevel(devToolsPage, '75%');
 
       assert.deepEqual(await getTargetViewport(inspectedPage), IPAD_MINI_LANDSCAPE_VIEWPORT_DIMENSIONS);
 
@@ -115,7 +112,7 @@ describe('DevTools', function() {
         devicePixelRatio: 1.75,
       });
 
-      const zoomText = await zoomButton.evaluate(zoomButtonEl => zoomButtonEl.textContent);
+      const zoomText = await getZoom(devToolsPage);
       assert.strictEqual(zoomText, '75%');
       assert.deepEqual(await getTargetViewport(inspectedPage), IPAD_MINI_LANDSCAPE_VIEWPORT_DIMENSIONS);
     });
