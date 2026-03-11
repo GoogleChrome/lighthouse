@@ -114,7 +114,6 @@ const defaultConfig = {
 
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'AnchorElements', gatherer: 'anchor-elements'},
-    {id: 'BaselineFeatureUsage', gatherer: 'baseline-feature-usage'},
     {id: 'ConsoleMessages', gatherer: 'console-messages'},
     {id: 'CSSUsage', gatherer: 'css-usage'},
     {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
