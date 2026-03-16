@@ -65,7 +65,7 @@ function getMcpRequiredGathererNames() {
   const bestPracticesArtifacts = [
     'DevtoolsLog', 'InspectorIssues', 'URL', 'ConsoleMessages', 'SourceMaps',
     'Scripts', 'Inputs', 'ImageElements', 'ViewportDimensions', 'Doctype',
-    'MainDocumentContent', 'MetaElements', 'Stacks',
+    'MainDocumentContent', 'MetaElements', 'Stacks', 'Trace',
   ];
   const a11yArtifacts = ['Accessibility'];
   for (const id of [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts]) {

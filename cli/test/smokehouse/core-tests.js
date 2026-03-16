@@ -5,6 +5,7 @@
  */
 
 import a11y from './test-definitions/a11y.js';
+import baseline from './test-definitions/baseline.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
 import clickjackingMissingHeaders from './test-definitions/clickjacking-missing-headers.js';
@@ -69,6 +70,7 @@ import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-ty
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
   a11y,
+  baseline,
   byteEfficiency,
   byteGzip,
   clickjackingMissingHeaders,

@@ -115,23 +115,6 @@ describe('Baseline Audit', () => {
     expect(result.details.items[2]).toEqual({
       featureId: {
         type: 'link',
-        text: 'accelerometer',
-        url: 'https://webstatus.dev/features/accelerometer',
-      },
-      displayStatus: 'Limited Availability',
-      source: {
-        type: 'source-location',
-        url: 'https://example.com/sensors.js',
-        urlProvider: 'network',
-        line: 9,
-        column: 1,
-        original: undefined,
-      },
-    });
-
-    expect(result.details.items[3]).toEqual({
-      featureId: {
-        type: 'link',
         text: 'abortsignal-any',
         url: 'https://webstatus.dev/features/abortsignal-any',
       },
@@ -142,6 +125,23 @@ describe('Baseline Audit', () => {
         urlProvider: 'network',
         line: 19,
         column: 7,
+        original: undefined,
+      },
+    });
+
+    expect(result.details.items[3]).toEqual({
+      featureId: {
+        type: 'link',
+        text: 'accelerometer',
+        url: 'https://webstatus.dev/features/accelerometer',
+      },
+      displayStatus: 'Limited Availability',
+      source: {
+        type: 'source-location',
+        url: 'https://example.com/sensors.js',
+        urlProvider: 'network',
+        line: 9,
+        column: 1,
         original: undefined,
       },
     });

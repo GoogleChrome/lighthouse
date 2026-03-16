@@ -4387,6 +4387,105 @@
         ]
       }
     },
+    "baseline": {
+      "id": "baseline",
+      "title": "Baseline Features",
+      "description": "Lists web features used on the page and their Baseline status. [Learn more about Baseline](https://webstatus.dev/).",
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "featureId",
+            "valueType": "link",
+            "label": "Web-features"
+          },
+          {
+            "key": "displayStatus",
+            "valueType": "text",
+            "label": "Baseline Status"
+          },
+          {
+            "key": "source",
+            "valueType": "source-location",
+            "label": "Source"
+          }
+        ],
+        "items": [
+          {
+            "featureId": {
+              "type": "link",
+              "text": "request-animation-frame",
+              "url": "https://webstatus.dev/features/request-animation-frame"
+            },
+            "displayStatus": "Widely Available (2015-07-29)",
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 412,
+              "column": 2
+            }
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "intersection-observer",
+              "url": "https://webstatus.dev/features/intersection-observer"
+            },
+            "displayStatus": "Widely Available (2019-03-25)",
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+              "urlProvider": "network",
+              "line": 969,
+              "column": 23
+            }
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "template",
+              "url": "https://webstatus.dev/features/template"
+            },
+            "displayStatus": "Widely Available (2015-11-12)"
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "js-modules",
+              "url": "https://webstatus.dev/features/js-modules"
+            },
+            "displayStatus": "Widely Available (2018-05-09)"
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "slot",
+              "url": "https://webstatus.dev/features/slot"
+            },
+            "displayStatus": "Widely Available (2020-01-15)"
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "not",
+              "url": "https://webstatus.dev/features/not"
+            },
+            "displayStatus": "Widely Available (2021-01-21)"
+          },
+          {
+            "featureId": {
+              "type": "link",
+              "text": "fetch-priority",
+              "url": "https://webstatus.dev/features/fetch-priority"
+            },
+            "displayStatus": "Newly Available (2024-10-29)"
+          }
+        ]
+      }
+    },
     "meta-description": {
       "id": "meta-description",
       "title": "Document does not have a meta description",
@@ -6600,6 +6699,11 @@
         {
           "id": "charset",
           "weight": 1,
+          "group": "best-practices-browser-compat"
+        },
+        {
+          "id": "baseline",
+          "weight": 0,
           "group": "best-practices-browser-compat"
         },
         {
@@ -9541,6 +9645,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:baseline",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:meta-description",
         "duration": 100,
         "entryType": "measure"
@@ -9914,6 +10024,7 @@
         "audits.deprecations.details.headings[1].label",
         "audits[geolocation-on-start].details.headings[0].label",
         "audits[notification-on-start].details.headings[0].label",
+        "audits.baseline.details.headings[2].label",
         "audits[forced-reflow-insight].details.items[0].headings[0].label"
       ],
       "core/lib/i18n/i18n.js | columnDescription": [
@@ -10827,6 +10938,18 @@
       ],
       "core/audits/dobetterweb/paste-preventing-inputs.js | description": [
         "audits[paste-preventing-inputs].description"
+      ],
+      "core/audits/baseline.js | title": [
+        "audits.baseline.title"
+      ],
+      "core/audits/baseline.js | description": [
+        "audits.baseline.description"
+      ],
+      "core/audits/baseline.js | columnFeature": [
+        "audits.baseline.details.headings[0].label"
+      ],
+      "core/audits/baseline.js | columnStatus": [
+        "audits.baseline.details.headings[1].label"
       ],
       "core/audits/seo/meta-description.js | failureTitle": [
         "audits[meta-description].title"

@@ -11,10 +11,10 @@ import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of the Baseline audit. Shown when the page is compatible with the target baseline. */
-  title: 'Baseline',
+  title: 'Baseline Features',
   /** Description of the Baseline audit. */
   description:
-    'Returns a list of web features used on the page and their Baseline status.' +
+    'Lists web features used on the page and their Baseline status. ' +
     '[Learn more about Baseline](https://webstatus.dev/).',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
@@ -58,8 +58,8 @@ class Baseline extends Audit {
     );
 
     for (const event of dxEvents) {
-      const key = `${event.args.feature}|${event.args.url ||
-          ''}|${event.args.lineNumber || ''}|${event.args.columnNumber || ''}`;
+      const key = `${event.args.feature}`;
+
       if (featuresMap.has(key)) continue;
 
       /** @type {LH.Audit.Details.SourceLocationValue | undefined} */
@@ -130,7 +130,43 @@ class Baseline extends Audit {
       },
     ];
 
-    const details = Audit.makeTableDetails(headings, baselineStatus);
+    /**
+     * Determines the sorting rank of a baseline status.
+     * @param {string} status The display status string.
+     * @return {number} The numerical rank (1 is the highest priority).
+     */
+    const getStatusRank = (status) => {
+      if (status.startsWith('Widely')) {
+        return 1;
+      }
+      if (status.startsWith('Newly')) {
+        return 2;
+      }
+      if (status.startsWith('Limited')) {
+        return 3;
+      }
+      return 4;
+    };
+
+    const sortedStatuses = baselineStatus.sort((featureA, featureB) => {
+      const rankA = getStatusRank(featureA.displayStatus);
+      const rankB = getStatusRank(featureB.displayStatus);
+
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+
+      const hasSourceA = !!featureA.source;
+      const hasSourceB = !!featureB.source;
+
+      if (hasSourceA !== hasSourceB) {
+        return hasSourceA ? -1 : 1;
+      }
+
+      return 0;
+    });
+
+    const details = Audit.makeTableDetails(headings, sortedStatuses);
 
     return {
       score: 1,
