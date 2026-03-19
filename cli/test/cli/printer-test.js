@@ -54,14 +54,14 @@ describe('Printer', () => {
     const report = JSON.stringify(sampleResults);
     const dir = path.dirname(dirPath);
     if (fs.existsSync(dir)) {
-      fs.rmdirSync(dir, {recursive: true});
+      fs.rmSync(dir, {recursive: true});
     }
     return Printer.write(report, 'json', dirPath).then(_ => {
       assert.ok(fs.existsSync(dir), `Directory ${dir} should exist now`);
       const fileContents = fs.readFileSync(dirPath, 'utf8');
       assert.ok(/lighthouseVersion/gim.test(fileContents));
       fs.unlinkSync(dirPath);
-      fs.rmdirSync(dir, {recursive: true});
+      fs.rmSync(dir, {recursive: true});
     });
   });
 });
