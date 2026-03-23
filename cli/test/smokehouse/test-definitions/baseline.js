@@ -39,11 +39,19 @@ const expectations = {
             _includes: [
               {
                 featureId: {text: 'grid'},
-                displayStatus: /^Widely Available/,
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
               },
               {
                 featureId: {text: 'flexbox'},
-                displayStatus: /^Widely Available/,
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
               },
             ],
           },

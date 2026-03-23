@@ -195,10 +195,10 @@ declare namespace Details {
   }
 
   /** String enum of possible types of values found within table items. */
-  type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+  type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url' | 'baseline-status';
 
   /** Possible types of values found within table items. */
-  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems;
+  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems | BaselineStatusValue;
 
   interface TableColumnHeading {
     /**
@@ -362,6 +362,12 @@ declare namespace Details {
   interface TextValue {
     type: 'text',
     value: IcuMessage | string,
+  }
+
+  interface BaselineStatusValue {
+    type: 'baseline-status',
+    status: 'high' | 'low' | 'limited' | string,
+    displayString: IcuMessage | string,
   }
 }
 

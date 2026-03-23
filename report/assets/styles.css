@@ -156,6 +156,10 @@
   --error-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 15"><title>error</title><path d="M0 15H 3V 12H 0V" fill="%23FF4E42"/><path d="M0 9H 3V 0H 0V" fill="%23FF4E42"/></svg>');
 
   --swap-locale-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="%23000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>');
+  
+  --baseline-high-icon-url: url("data:image/svg+xml;utf8,<svg width='18' height='10' viewBox='0 0 540 300' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M420 30L390 60L480 150L390 240L330 180L300 210L390 300L540 150L420 30Z' fill='%23C4EED0'/> <path d='M150 0L30 120L60 150L150 60L210 120L240 90L150 0Z' fill='%23C4EED0'/> <path d='M390 0L420 30L150 300L0 150L30 120L150 240L390 0Z' fill='%231EA446'/> </svg>");
+  --baseline-low-icon-url: url("data:image/svg+xml;utf8,<svg width='18' height='10' viewBox='0 0 540 300' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M150 0L180 30L150 60L120 30L150 0Z' fill='%23A8C7FA'/> <path d='M210 60L240 90L210 120L180 90L210 60Z' fill='%23A8C7FA'/> <path d='M450 60L480 90L450 120L420 90L450 60Z' fill='%23A8C7FA'/> <path d='M510 120L540 150L510 180L480 150L510 120Z' fill='%23A8C7FA'/> <path d='M450 180L480 210L450 240L420 210L450 180Z' fill='%23A8C7FA'/> <path d='M390 240L420 270L390 300L360 270L390 240Z' fill='%23A8C7FA'/> <path d='M330 180L360 210L330 240L300 210L330 180Z' fill='%23A8C7FA'/> <path d='M90 60L120 90L90 120L60 90L90 60Z' fill='%23A8C7FA'/> <path d='M390 0L420 30L150 300L0 150L30 120L150 240L390 0Z' fill='%231B6EF3'/> </svg>");
+  --baseline-limited-icon-url: url("data:image/svg+xml;utf8,<svg width='18' height='10' viewBox='0 0 540 300' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M150 0L240 90L210 120L120 30L150 0Z' fill='%23F09409'/> <path d='M420 30L540 150L420 270L390 240L480 150L390 60L420 30Z' fill='%23C6C6C6'/> <path d='M330 180L300 210L390 300L420 270L330 180Z' fill='%23F09409'/> <path d='M120 30L150 60L60 150L150 240L120 270L0 150L120 30Z' fill='%23C6C6C6'/> <path d='M390 0L420 30L150 300L120 270L390 0Z' fill='%23F09409'/> </svg>");
 }
 
 @media not print {
@@ -574,6 +578,30 @@
 
 .lh-checklist-item {
   margin: 10px 0 10px 0;
+}
+
+/* Baseline Status */
+.lh-baseline-status {
+  display: flex;
+  align-items: center;
+}
+.lh-baseline-status::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 10px;
+  margin-right: 6px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.lh-baseline-status--high::before {
+  background-image: var(--baseline-high-icon-url);
+}
+.lh-baseline-status--low::before {
+  background-image: var(--baseline-low-icon-url);
+}
+.lh-baseline-status--limited::before {
+  background-image: var(--baseline-limited-icon-url);
 }
 
 /* Score */

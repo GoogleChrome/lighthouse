@@ -93,11 +93,14 @@ class Baseline extends Audit {
       }
 
       let displayStatus = 'Limited Availability';
+      let baselineTier = 'limited';
 
       if (featureData.status.baseline === 'high') {
         displayStatus = `Widely Available (${featureData.status.baseline_low_date})`;
+        baselineTier = 'high';
       } else if (featureData.status.baseline === 'low') {
         displayStatus = `Newly Available (${featureData.status.baseline_low_date})`;
+        baselineTier = 'low';
       }
 
       baselineStatus.push({
@@ -106,7 +109,11 @@ class Baseline extends Audit {
           text: feature.featureId,
           url: `https://webstatus.dev/features/${feature.featureId}`,
         },
-        displayStatus,
+        displayStatus: {
+          type: /** @type {const} */ ('baseline-status'),
+          status: baselineTier,
+          displayString: displayStatus,
+        },
         source: feature.source,
       });
     }
@@ -120,7 +127,7 @@ class Baseline extends Audit {
       },
       {
         key: 'displayStatus',
-        valueType: 'text',
+        valueType: 'baseline-status',
         label: str_(UIStrings.columnStatus),
       },
       {
@@ -136,21 +143,21 @@ class Baseline extends Audit {
      * @return {number} The numerical rank (1 is the highest priority).
      */
     const getStatusRank = (status) => {
-      if (status.startsWith('Widely')) {
+      if (status.startsWith('Limited')) {
         return 1;
       }
       if (status.startsWith('Newly')) {
         return 2;
       }
-      if (status.startsWith('Limited')) {
+      if (status.startsWith('Widely')) {
         return 3;
       }
       return 4;
     };
 
     const sortedStatuses = baselineStatus.sort((featureA, featureB) => {
-      const rankA = getStatusRank(featureA.displayStatus);
-      const rankB = getStatusRank(featureB.displayStatus);
+      const rankA = getStatusRank(featureA.displayStatus.displayString);
+      const rankB = getStatusRank(featureB.displayStatus.displayString);
 
       if (rankA !== rankB) {
         return rankA - rankB;

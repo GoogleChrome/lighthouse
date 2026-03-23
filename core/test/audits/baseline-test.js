@@ -86,39 +86,35 @@ describe('Baseline Audit', () => {
     expect(result.details.items[0]).toEqual({
       featureId: {
         type: 'link',
-        text: 'forced-colors',
-        url: 'https://webstatus.dev/features/forced-colors',
+        text: 'accelerometer',
+        url: 'https://webstatus.dev/features/accelerometer',
       },
-      displayStatus: 'Widely Available (2022-09-12)',
+      displayStatus: {
+        type: 'baseline-status',
+        status: 'limited',
+        displayString: 'Limited Availability',
+      },
       source: {
         type: 'source-location',
-        url: 'https://example.com/app.js',
+        url: 'https://example.com/sensors.js',
         urlProvider: 'network',
-        line: 41,
-        column: 14,
+        line: 9,
+        column: 1,
         original: undefined,
       },
     });
 
-    expect(result.details.items[1].displayStatus).toEqual(
-      'Widely Available (2019-03-25)'
-    );
-    expect(result.details.items[1].source).toEqual({
-      type: 'source-location',
-      url: 'https://example.com/index.html',
-      urlProvider: 'network',
-      line: 99,
-      column: 4,
-      original: undefined,
-    });
-
-    expect(result.details.items[2]).toEqual({
+    expect(result.details.items[1]).toEqual({
       featureId: {
         type: 'link',
         text: 'abortsignal-any',
         url: 'https://webstatus.dev/features/abortsignal-any',
       },
-      displayStatus: 'Newly Available (2024-03-19)',
+      displayStatus: {
+        type: 'baseline-status',
+        status: 'low',
+        displayString: 'Newly Available (2024-03-19)',
+      },
       source: {
         type: 'source-location',
         url: 'https://example.com/async.js',
@@ -129,19 +125,44 @@ describe('Baseline Audit', () => {
       },
     });
 
+    expect(result.details.items[2]).toEqual({
+      featureId: {
+        type: 'link',
+        text: 'forced-colors',
+        url: 'https://webstatus.dev/features/forced-colors',
+      },
+      displayStatus: {
+        type: 'baseline-status',
+        status: 'high',
+        displayString: 'Widely Available (2022-09-12)',
+      },
+      source: {
+        type: 'source-location',
+        url: 'https://example.com/app.js',
+        urlProvider: 'network',
+        line: 41,
+        column: 14,
+        original: undefined,
+      },
+    });
+
     expect(result.details.items[3]).toEqual({
       featureId: {
         type: 'link',
-        text: 'accelerometer',
-        url: 'https://webstatus.dev/features/accelerometer',
+        text: 'aborting',
+        url: 'https://webstatus.dev/features/aborting',
       },
-      displayStatus: 'Limited Availability',
+      displayStatus: {
+        type: 'baseline-status',
+        status: 'high',
+        displayString: 'Widely Available (2019-03-25)',
+      },
       source: {
         type: 'source-location',
-        url: 'https://example.com/sensors.js',
+        url: 'https://example.com/index.html',
         urlProvider: 'network',
-        line: 9,
-        column: 1,
+        line: 99,
+        column: 4,
         original: undefined,
       },
     });
