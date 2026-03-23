@@ -7,7 +7,7 @@
 import {Result as AuditResult} from './audit-result.js';
 import {Locale} from './settings.js';
 
-declare module Treemap {
+declare namespace Treemap {
   interface Options {
     lhr: {
       mainDocumentUrl?: string;

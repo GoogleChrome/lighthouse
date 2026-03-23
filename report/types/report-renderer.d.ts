@@ -6,7 +6,7 @@
 
 import { Result as AuditResult } from "../../types/lhr/audit-result";
 
-declare module Renderer {
+declare namespace Renderer {
   function renderReport(lhr: AuditResult, options?: Options): HTMLElement;
 
   interface Options {

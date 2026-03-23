@@ -6,7 +6,7 @@
 
 import Result from './lhr.js';
 
-declare module FlowResult {
+declare namespace FlowResult {
   interface Step {
     /** Lighthouse report for this flow step. */
     lhr: Result;

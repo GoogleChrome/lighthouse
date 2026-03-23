@@ -26,7 +26,7 @@ type Details =
   Details.Table;
 
 // Details namespace.
-declare module Details {
+declare namespace Details {
   type NetworkNode = {
     [id: string]: {
       url: string;
@@ -97,7 +97,7 @@ declare module Details {
   // NOTE: any `Details` type *should* be usable in `items`, but check
   // styles/report-ui-features are good before adding.
   type ListableDetail = Table | Checklist | NetworkTree | NodeValue | TextValue | DebugData;
-  
+
   interface ListSectionItem {
     type: 'list-section';
     title?: IcuMessage | string;

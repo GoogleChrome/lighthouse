@@ -141,7 +141,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceElements: Artifacts.TraceElement[];
 }
 
-declare module Artifacts {
+declare namespace Artifacts {
   type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
@@ -876,7 +876,7 @@ export interface TraceEvent {
   };
 }
 
-declare module Trace {
+declare namespace Trace {
   /**
    * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
    * needed.

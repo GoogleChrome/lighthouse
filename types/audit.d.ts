@@ -13,7 +13,7 @@ import {IcuMessage} from './lhr/i18n.js';
 import * as AuditResult from './lhr/audit-result.js';
 import Util from './utility-types.js';
 
-declare module Audit {
+declare namespace Audit {
   export import Details = AuditDetails;
   export type Result = AuditResult.Result;
   export type ScoreDisplayMode = AuditResult.ScoreDisplayMode;
