@@ -7,9 +7,11 @@
 /** @type {LH.Config} */
 const config = {
   extends: 'lighthouse:default',
-  audits: [
-    'baseline',
-  ],
+  settings: {
+    onlyAudits: [
+      'baseline',
+    ],
+  },
   categories: {
     // @ts-expect-error: `title` is required in CategoryJson but we rely on the default config to provide it.
     'best-practices': {
