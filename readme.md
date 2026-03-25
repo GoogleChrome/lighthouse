@@ -12,6 +12,7 @@
     * [Online Viewer](#online-viewer)
   - [Docs & Recipes](#docs--recipes)
   - [Developing Lighthouse](#develop)
+    * [PreSetup](#presetup)
     * [Setup](#setup)
     * [Run](#run)
     * [Tests](#tests)
