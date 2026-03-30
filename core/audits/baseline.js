@@ -13,15 +13,20 @@ import * as i18n from '../lib/i18n/i18n.js';
 const UIStrings = {
   /** Title of the Baseline audit. Shown when the page is compatible with the target baseline. */
   title: 'Baseline Features',
-  /** Description of the Baseline audit. */
+  /**
+   * @description Description of the Baseline audit.
+   */
   description:
-    'Lists web features used on the page and their Baseline status ' +
-    'based on [web-features {version} ({date})](https://github.com/web-platform-dx/web-features/releases/tag/v{version}). ' +
+    'Lists web features used on the page and their Baseline status. ' +
     '[Learn more about Baseline](https://webstatus.dev/). ',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
-  /** Label for the column displaying the feature\'s baseline status. */
-  columnStatus: 'Baseline Status',
+  /**
+   * @description Label for the column displaying the feature\'s baseline status.
+   * @example {3.21.0} version
+   * @example {2026-03-30} date
+  */
+  columnStatus: 'Baseline Status (web-features {version} {date})',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -39,7 +44,7 @@ class Baseline extends Audit {
       id: 'baseline',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
-      description: str_(UIStrings.description, {version: metadata.version, date: metadata.date}),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['Trace'],
     };
   }
@@ -123,7 +128,7 @@ class Baseline extends Audit {
       {
         key: 'displayStatus',
         valueType: 'text',
-        label: str_(UIStrings.columnStatus),
+        label: str_(UIStrings.columnStatus, {version: metadata.version, date: metadata.date}),
       },
       {
         key: 'source',
