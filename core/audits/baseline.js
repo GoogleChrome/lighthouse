@@ -13,7 +13,7 @@ import * as i18n from '../lib/i18n/i18n.js';
 const UIStrings = {
   /** Title of the Baseline audit. Shown when the page is compatible with the target baseline. */
   title: 'Baseline Features',
-  /** @description Description of the Baseline audit. */
+  /** Description of the Baseline audit. */
   description:
     'Lists web features used on the page and their Baseline status. ' +
     '[Learn more about Baseline](https://webstatus.dev/).',
