@@ -343,7 +343,11 @@ export class CategoryRenderer {
    */
   renderCategoryScore(category, groupDefinitions, options) {
     let categoryScore;
-    if (options && ReportUtils.shouldDisplayAsFraction(options.gatherMode)) {
+    if (options &&
+      (ReportUtils.shouldDisplayAsFraction(options.gatherMode) ||
+      // For fractional categories, use the existing fractional rendering for now.
+      // We may update this with further UX review.
+      category.displayAs === 'fraction')) {
       categoryScore = this.renderCategoryFraction(category);
     } else {
       categoryScore = this.renderScoreGauge(category, groupDefinitions);

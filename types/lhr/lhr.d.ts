@@ -112,6 +112,8 @@ declare namespace Result {
     auditRefs: AuditRef[];
     /** An array of all the modes supported by the category. */
     supportedModes?:  Result.GatherMode[];
+    /** How to display the category score. */
+    displayAs?: 'fraction';
   }
 
   interface AuditRef {
