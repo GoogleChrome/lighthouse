@@ -382,6 +382,8 @@ function waitForLoadEvent(session, pauseAfterLoadMs) {
  * @return {Promise<boolean>}
  */
 async function isPageHung(session) {
+  // eslint-disable-next-line no-console
+  console.error('isPageHung: checking...');
   try {
     session.setNextProtocolTimeout(1000);
     await session.sendCommand('Runtime.evaluate', {
@@ -389,19 +391,31 @@ async function isPageHung(session) {
       returnByValue: true,
     });
 
+    // eslint-disable-next-line no-console
+    console.error('isPageHung: evaluate succeeded, NOT hung');
     return false;
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`isPageHung evaluate failed: code=${err.code}, message=${err.message}`);
     // If the session has crashed, we want to rethrow that error instead of assuming it's a hang.
     // session.sendCommand normally handles this, but if PROTOCOL_TIMEOUT wins the race,
     // we might have missed the TARGET_CRASHED error.
     try {
       // Check if it's already crashed.
-      await Promise.race([session.onCrashPromise(), Promise.resolve()]);
+      await Promise.race([session.onCrashPromise(), Promise.resolve('not crashed yet')]);
+      // eslint-disable-next-line no-console
+      console.error('isPageHung: crash promise did not reject');
     } catch (crashErr) {
+      // eslint-disable-next-line no-console
+      console.error(`isPageHung crash promise REJECTED: code=${crashErr.code}`);
       if (crashErr.code === 'TARGET_CRASHED') throw crashErr;
     }
 
-    if (err.code === 'TARGET_CRASHED') throw err;
+    if (err.code === 'TARGET_CRASHED') {
+      // eslint-disable-next-line no-console
+      console.error('isPageHung: evaluate err.code was TARGET_CRASHED');
+      throw err;
+    }
     return true;
   }
 }
