@@ -79,7 +79,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
         path: .tmp/smokehouse-failures/
@@ -122,7 +122,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Smokehouse (windows)
         path: .tmp/smokehouse-failures/
@@ -170,7 +170,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Smokehouse (bundled)
         path: .tmp/smokehouse-failures/
@@ -218,7 +218,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Smokehouse (devtools-mcp) ${{ matrix.smoke-test-shard }}
         path: .tmp/smokehouse-failures/
