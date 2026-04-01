@@ -391,6 +391,7 @@ async function isPageHung(session) {
 
     return false;
   } catch (err) {
+    log.error('isPageHung', `Error code: ${err.code}, message: ${err.message}`);
     if (err.code === 'TARGET_CRASHED') throw err;
     return true;
   }
