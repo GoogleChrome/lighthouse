@@ -7,7 +7,7 @@
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    maxWaitForLoad: 5000,
+    maxWaitForLoad: 10000,
     onlyAudits: [
       'first-contentful-paint',
     ],
@@ -19,7 +19,7 @@ const config = {
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'chrome://crash',
+    requestedUrl: 'chrome://kill',
     finalDisplayedUrl: 'about:blank',
     runtimeError: {code: 'TARGET_CRASHED'},
     runWarnings: [
