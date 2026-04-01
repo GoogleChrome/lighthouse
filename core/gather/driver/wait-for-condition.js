@@ -387,11 +387,11 @@ async function isPageHung(session) {
     await session.sendCommand('Runtime.evaluate', {
       expression: '"ping"',
       returnByValue: true,
-      timeout: 1000,
     });
 
     return false;
   } catch (err) {
+    if (err.code === 'TARGET_CRASHED') throw err;
     return true;
   }
 }
