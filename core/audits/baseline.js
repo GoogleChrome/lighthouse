@@ -7,14 +7,18 @@
 import data from 'web-features/data.json' with {type: 'json'};
 
 import {Audit} from './audit.js';
+import metadata from '../lib/baseline/web-features-metadata.json' with {type: 'json'};
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of the Baseline audit. Shown when the page is compatible with the target baseline. */
   title: 'Baseline Features',
-  /** Description of the Baseline audit. */
+  /**
+   * @description Description of the Baseline audit.
+   * @example {2026-03-18} date
+   */
   description:
-    'Lists web features used on the page and their Baseline status. ' +
+    'Lists web features used on the page and their Baseline status as of {date}. ' +
     '[Learn more about Baseline](https://webstatus.dev/).',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
@@ -37,7 +41,7 @@ class Baseline extends Audit {
       id: 'baseline',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
-      description: str_(UIStrings.description),
+      description: str_(UIStrings.description, {date: metadata.date}),
       requiredArtifacts: ['Trace'],
     };
   }
