@@ -279,7 +279,7 @@ describe('Lighthouse Viewer', () => {
       const firstLogPromise =
         new Promise(resolve => savedPage.once('console', e => resolve(e.text())));
       await savedPage.goto(`file://${tmpDir}/${filename}`);
-      expect(await firstLogPromise).toEqual('window.__LIGHTHOUSE_JSON__ JSHandle@object');
+      expect(await firstLogPromise).toEqual('window.__LIGHTHOUSE_JSON__ [object Object]');
       if (savedPageErrors.length) {
         assert.fail('errors from page:\n\n' + savedPageErrors.map(e => e.toString()).join('\n\n'));
       }
