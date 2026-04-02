@@ -29,8 +29,10 @@ class MainResource {
     // document request, we should return the last candidate here. Besides, the browser
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
     // of this computed artifact) attempts to fetch the contents, resulting in a protocol error.
-    const mainResource =
-      Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(records.map(NetworkRequest.asLanternNetworkRequest), mainDocumentUrl);
+    const mainResource = Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(
+      records.map(NetworkRequest.asLanternNetworkRequest),
+      mainDocumentUrl
+    );
     if (!mainResource?.rawRequest) {
       throw new Error('Unable to identify the main resource');
     }

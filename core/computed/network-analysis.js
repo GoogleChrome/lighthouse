@@ -19,7 +19,9 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const analysis = Lantern.Core.NetworkAnalyzer.analyze(records.map(NetworkRequest.asLanternNetworkRequest));
+    const analysis = Lantern.Core.NetworkAnalyzer.analyze(
+      records.map(NetworkRequest.asLanternNetworkRequest)
+    );
     if (!analysis) {
       log.error('NetworkAnalysis', 'Network analysis failed due to lack of transfer data');
       return {
