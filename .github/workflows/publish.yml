@@ -52,6 +52,7 @@ jobs:
 
       - name: Publish to npm
         run: |
+          npm install -g npm@latest
           bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
           npm publish --provenance --tag next
         env:
