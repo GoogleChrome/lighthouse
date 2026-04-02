@@ -54,6 +54,6 @@ jobs:
         run: |
           npm install -g npm@latest
           bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
-          npm publish --provenance --tag next
+          npm publish --provenance --access public --registry https://registry.npmjs.org/ --tag next
         env:
           CI: true
