@@ -7,6 +7,7 @@
 import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
+import {NetworkRequest} from '../lib/network-request.js';
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -29,12 +30,12 @@ class MainResource {
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
     // of this computed artifact) attempts to fetch the contents, resulting in a protocol error.
     const mainResource =
-      Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(records, mainDocumentUrl);
-    if (!mainResource) {
+      Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(records.map(NetworkRequest.asLanternNetworkRequest), mainDocumentUrl);
+    if (!mainResource?.rawRequest) {
       throw new Error('Unable to identify the main resource');
     }
 
-    return mainResource;
+    return mainResource.rawRequest;
   }
 }
 
