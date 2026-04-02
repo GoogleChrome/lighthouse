@@ -592,7 +592,7 @@ class NetworkRequest {
 
     record.fromWorker = record.sessionTargetType === 'worker';
 
-    // @ts-expect-error - POJO fails to satisfy Lantern.Types.NetworkRequest due to missing methods and type mismatches.
+    // @ts-expect-error - trace engine types for InitiatorType are outdated
     return {
       rawRequest: record,
       ...record,

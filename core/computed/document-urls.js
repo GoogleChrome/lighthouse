@@ -8,7 +8,6 @@ import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
 import {ProcessedTrace} from './processed-trace.js';
-import {NetworkRequest} from '../lib/network-request.js';
 
 /**
  * @fileoverview Compute the navigation specific URLs `requestedUrl` and `mainDocumentUrl` in situations where
@@ -43,7 +42,8 @@ class DocumentUrls {
     if (!requestedUrl || !mainDocumentUrl) throw new Error('No main frame navigations found');
 
     const initialRequest = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
-      networkRecords.map(NetworkRequest.asLanternNetworkRequest),
+      // @ts-expect-error - trace engine types for InitiatorType are outdated
+      networkRecords,
       requestedUrl
     );
     if (initialRequest?.redirects?.length) requestedUrl = initialRequest.redirects[0].url;
