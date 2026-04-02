@@ -9,7 +9,7 @@ import Config from './config.js';
 import {Flags} from './externs.js';
 import {Artifacts} from './artifacts.js';
 
-declare module UserFlow {
+declare namespace UserFlow {
   export interface FlowArtifacts {
     gatherSteps: GatherStep[];
     name?: string;

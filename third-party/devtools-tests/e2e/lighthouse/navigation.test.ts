@@ -79,7 +79,7 @@ describe('Navigation', function() {
       // 1 refresh after auditing to reset state
       assert.strictEqual(numNavigations, 5);
 
-      assert.strictEqual(lhr.lighthouseVersion, '13.0.1');
+      assert.strictEqual(lhr.lighthouseVersion, '13.0.3');
       assert.match(lhr.finalUrl, /^https:\/\/localhost:[0-9]+\/test\/e2e\/resources\/lighthouse\/hello.html/);
 
       assert.strictEqual(lhr.configSettings.throttlingMethod, 'simulate');
@@ -105,7 +105,7 @@ describe('Navigation', function() {
       });
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, ['max-potential-fid']);
-      assert.lengthOf(auditResults, 151);
+      assert.lengthOf(auditResults, 152);
       assert.deepEqual(erroredAudits, []);
       assert.deepEqual(failedAudits.map(audit => audit.id), [
         'document-title',
@@ -198,7 +198,7 @@ describe('Navigation', function() {
       ];
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, flakyAudits);
-      assert.lengthOf(auditResults, 151);
+      assert.lengthOf(auditResults, 152);
       assert.deepEqual(erroredAudits, []);
       assert.deepEqual(failedAudits.map(audit => audit.id), [
         'document-title',

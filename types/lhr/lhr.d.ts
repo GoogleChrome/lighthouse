@@ -70,7 +70,7 @@ interface Result {
 }
 
 // Result namespace
-declare module Result {
+declare namespace Result {
   interface Environment {
     /** The user agent string of the version of Chrome used. */
     hostUserAgent: string;

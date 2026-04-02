@@ -8,7 +8,7 @@ import fs from 'fs';
 import {MessageChannel} from 'worker_threads';
 
 import jestMock from 'jest-mock';
-import {JSDOM} from 'jsdom';
+import {JSDOM, VirtualConsole} from 'jsdom';
 import * as preact from 'preact';
 
 import {LH_ROOT} from '../../../shared/root.js';
@@ -27,8 +27,17 @@ const rootHooks = {
     global.React = preact;
   },
   beforeEach() {
+    const virtualConsole = new VirtualConsole();
+    // jsdom 12 is old and cannot parse modern CSS (e.g. @container, cqi).
+    // We suppress these errors because they create a lot of noise and don't fail the tests.
+    virtualConsole.on('error', (err) => {
+      if (err.message && err.message.includes('Could not parse CSS stylesheet')) return;
+      console.error(err);
+    });
+
     const {window} = new JSDOM(undefined, {
       url: 'file:///Users/example/report.html/',
+      virtualConsole,
     });
     global.window = window as any;
     global.document = window.document;

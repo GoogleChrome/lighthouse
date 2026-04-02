@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -34,7 +35,7 @@ describe('ReportRenderer', () => {
       };
     };
 
-    const {window} = new jsdom.JSDOM();
+    const {window} = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()});
     global.self = window;
     global.HTMLElement = window.HTMLElement;
     global.CustomEvent = window.CustomEvent;

@@ -174,3 +174,51 @@ jobs:
       with:
         name: Smokehouse (bundled)
         path: .tmp/smokehouse-failures/
+
+  smoke-devtools-mcp:
+    strategy:
+      matrix:
+        smoke-test-shard: [1, 2, 3]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
+      # The total number of shards. Set dynamically when length of *single* matrix variable is
+      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
+      SHARD_TOTAL: 3
+      FORCE_COLOR: true
+    name: DevTools MCP Lighthouse ${{ matrix.smoke-test-shard }}/3
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 22.19
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.19'
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn build-devtools-mcp
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    - name: Install Chrome ToT
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
+    - name: yarn test-devtools-mcp
+      run: yarn smoke --runner devtools-mcp --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --retries=2
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smokehouse (devtools-mcp) ${{ matrix.smoke-test-shard }}
+        path: .tmp/smokehouse-failures/

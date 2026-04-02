@@ -28,7 +28,7 @@ interface Config {
   plugins?: Array<string>;
 }
 
-declare module Config {
+declare namespace Config {
   /**
    * The normalized and fully resolved config.
    */

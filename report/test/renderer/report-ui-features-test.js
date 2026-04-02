@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {reportAssets} from '../../generator/report-assets.js';
 import {ReportUtils, UIStrings} from '../../renderer/report-utils.js';
 import {DOM} from '../../renderer/dom.js';
@@ -50,7 +51,9 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    const document = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATE);
+    const document = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATE, {
+      virtualConsole: createQuietConsole(),
+    });
     global.self = document.window;
     global.self.matchMedia = function() {
       return {

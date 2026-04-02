@@ -266,6 +266,7 @@ const defaultConfig = {
     'dobetterweb/js-libraries',
     'dobetterweb/notification-on-start',
     'dobetterweb/paste-preventing-inputs',
+    'baseline',
     'seo/meta-description',
     'seo/http-status-code',
     'seo/link-text',
@@ -559,6 +560,7 @@ const defaultConfig = {
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
+        {id: 'baseline', weight: 0, group: 'best-practices-browser-compat'},
         // General Group
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 5, group: 'best-practices-general'},

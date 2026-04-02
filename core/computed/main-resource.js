@@ -23,7 +23,7 @@ class MainResource {
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl must exist to get the main resource');
     const records = await NetworkRecords.request(data.devtoolsLog, context);
 
-    // We could have more than one record matching the main doucment url,
+    // We could have more than one record matching the main document url,
     // if the page did `location.reload()`. Since `mainDocumentUrl` refers to the _last_
     // document request, we should return the last candidate here. Besides, the browser
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
