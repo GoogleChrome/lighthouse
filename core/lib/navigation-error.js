@@ -166,6 +166,8 @@ function getPageLoadError(navigationError, context) {
 
   const networkError = getNetworkError(mainRecord, context);
   const interstitialError = getInterstitialError(mainRecord, networkRecords);
+  // @ts-expect-error - finalRecord may be a Lantern request, which is compatible enough
+  // for getNonHtmlError.
   const nonHtmlError = getNonHtmlError(finalRecord);
 
   // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618
