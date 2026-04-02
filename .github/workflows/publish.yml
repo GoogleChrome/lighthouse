@@ -36,6 +36,9 @@ jobs:
       github.event_name != 'schedule' ||
       (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -49,9 +52,7 @@ jobs:
 
       - name: Publish to npm
         run: |
-          npm whoami
           bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
-          npm publish --tag next
+          npm publish --provenance --tag next
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           CI: true
