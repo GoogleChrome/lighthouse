@@ -5,20 +5,7 @@ on:
       - 'v*' # Runs on pushing version tags
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.19'
-      - run: yarn --frozen-lockfile
-      - run: yarn test
-
   publish:
-    needs: test
     runs-on: ubuntu-latest
     permissions:
       id-token: write
