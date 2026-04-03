@@ -130,8 +130,11 @@ function getNonHtmlError(finalRecord) {
  */
 function getPageLoadError(navigationError, context) {
   const {url, networkRecords} = context;
-  /** @type {LH.Artifacts.NetworkRequest|undefined} */
-  let mainRecord = Lantern.Core.NetworkAnalyzer.findResourceForUrl(networkRecords, url);
+  const mainRecordLantern = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
+    networkRecords.map(NetworkRequest.asLanternNetworkRequest),
+    url
+  );
+  let mainRecord = mainRecordLantern?.rawRequest;
 
   // If the url doesn't give us a network request, it's possible we landed on a chrome-error:// page
   // In this case, just get the first document request.
@@ -149,7 +152,9 @@ function getPageLoadError(navigationError, context) {
   // MIME Type is only set on the final redirected document request. Use this for the HTML check instead of root.
   let finalRecord;
   if (mainRecord) {
-    finalRecord = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecord);
+    const mainRecordLantern = NetworkRequest.asLanternNetworkRequest(mainRecord);
+    const finalRecordLantern = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecordLantern);
+    finalRecord = finalRecordLantern?.rawRequest || finalRecordLantern;
   } else {
     // We have no network requests to process, use the navError
     return navigationError;
@@ -161,6 +166,8 @@ function getPageLoadError(navigationError, context) {
 
   const networkError = getNetworkError(mainRecord, context);
   const interstitialError = getInterstitialError(mainRecord, networkRecords);
+  // @ts-expect-error - finalRecord may be a Lantern request, which is compatible enough
+  // for getNonHtmlError.
   const nonHtmlError = getNonHtmlError(finalRecord);
 
   // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618

@@ -592,6 +592,7 @@ class NetworkRequest {
 
     record.fromWorker = record.sessionTargetType === 'worker';
 
+    // @ts-expect-error - trace engine types for InitiatorType are outdated
     return {
       rawRequest: record,
       ...record,
