@@ -1,3 +1,59 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Iaroslav Shvets @iaroslavshvets
+ <a name="13.1.0"></a>
+# 13.1.0 (2026-04-03)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.3...v13.1.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## New Audits
+
+* baseline: implement baseline compatibility audit ([#16904](https://github.com/GoogleChrome/lighthouse/pull/16904))
+
+## Core
+
+* baseline: add baseline icons to baseline audit lighthouse report ([#16927](https://github.com/GoogleChrome/lighthouse/pull/16927))
+* baseline: add web-feature version to audit description ([#16937](https://github.com/GoogleChrome/lighthouse/pull/16937))
+* baseline: add baseline compatibility audit to default config ([#16910](https://github.com/GoogleChrome/lighthouse/pull/16910))
+* trace: add WebDX feature usage trace category ([#16899](https://github.com/GoogleChrome/lighthouse/pull/16899))
+
+## Deps
+
+* upgrade deps ([#16943](https://github.com/GoogleChrome/lighthouse/pull/16943))
+* dependabot: less noisy PRs ([#16919](https://github.com/GoogleChrome/lighthouse/pull/16919))
+
+## Clients
+
+* build: include missing 3P notices in MCP bundle ([#16917](https://github.com/GoogleChrome/lighthouse/pull/16917))
+
+## Docs
+
+* fix jsdoc link ([#16896](https://github.com/GoogleChrome/lighthouse/pull/16896))
+
+## Tests
+
+* lantern trace data must now be downloaded manually ([#16789](https://github.com/GoogleChrome/lighthouse/pull/16789))
+* fix CI failures and modernize documentation links ([#16939](https://github.com/GoogleChrome/lighthouse/pull/16939))
+* refresh sample artifacts ([#16916](https://github.com/GoogleChrome/lighthouse/pull/16916))
+* fix smoke tests relying on mozilla.org ([#16901](https://github.com/GoogleChrome/lighthouse/pull/16901))
+* fix CI. execContext count, i18n ICU breakage, loud jsdom parse output ([#16898](https://github.com/GoogleChrome/lighthouse/pull/16898))
+* devtools: sync e2e tests from devtools-frontend ([#16908](https://github.com/GoogleChrome/lighthouse/pull/16908))
+* smoke: smoke tests for the mcp bundle ([#16883](https://github.com/GoogleChrome/lighthouse/pull/16883))
+* smokehouse: fix baseline config to use onlyAudits ([#16931](https://github.com/GoogleChrome/lighthouse/pull/16931))
+
+## Misc
+
+* fix TS7 compatibility issue (declare module syntax) ([#16926](https://github.com/GoogleChrome/lighthouse/pull/16926))
+* build: shim puppeteer-core in the mcp bundle ([#16895](https://github.com/GoogleChrome/lighthouse/pull/16895))
+* build: remove soft nav from mcp bundle ([#16888](https://github.com/GoogleChrome/lighthouse/pull/16888))
+* build: fix mcp bundle shims ([#16882](https://github.com/GoogleChrome/lighthouse/pull/16882))
+* build: generate third party notices file ([#16887](https://github.com/GoogleChrome/lighthouse/pull/16887))
+
  <a name="13.0.3"></a>
 # 13.0.3 (2026-02-11)
 
