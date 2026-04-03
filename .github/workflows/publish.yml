@@ -1,41 +1,26 @@
-name: Publish nightly
+name: Publish
 on:
-# Recurring publish disabled as tokens were revoked https://github.com/orgs/community/discussions/179562 and this is not a big priority. 
-#   schedule:
-#     - cron: '0 5 * * *'
   workflow_dispatch: {}
 
 jobs:
-  check_date:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      should_run: ${{ steps.should_run.outputs.should_run }}
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: print latest_commit
-        run: echo ${{ github.sha }}
-
-      - id: should_run
-        continue-on-error: true
-        if: ${{ github.event_name == 'schedule' }}
-        run: |
-          commit_count=$(git rev-list --count --after="1 day" ${{ github.sha }})
-
-          if [[ "$commit_count" -gt 0 ]]; then
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          else
-            echo "should_run=false" >> $GITHUB_OUTPUT
-          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19'
+      - run: yarn --frozen-lockfile
+      - run: yarn test
 
   publish:
-    # Prevent scheduled job from running if...
-    # 1) this is a fork
-    # 2) there has not been a change in the last day
-    needs: check_date
-    if: |
-      github.event_name != 'schedule' ||
-      (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
+    needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,15 +28,9 @@ jobs:
           node-version: '22.19'
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
-
-      # Build report bundles needed for publishing.
-      - run: yarn build-report
-
       - name: Publish to npm
         run: |
-          npm whoami
-          bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
-          npm publish --tag next
+          npm install -g npm@latest
+          npm publish --provenance --access public --registry https://registry.npmjs.org/ --dry-run
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           CI: true
