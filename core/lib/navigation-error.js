@@ -131,10 +131,11 @@ function getNonHtmlError(finalRecord) {
 function getPageLoadError(navigationError, context) {
   const {url, networkRecords} = context;
   const mainRecordLantern = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
-    networkRecords.map(NetworkRequest.asLanternNetworkRequest),
+    // @ts-expect-error - trace engine types for InitiatorType are outdated
+    networkRecords,
     url
   );
-  let mainRecord = mainRecordLantern?.rawRequest;
+  let mainRecord = mainRecordLantern;
 
   // If the url doesn't give us a network request, it's possible we landed on a chrome-error:// page
   // In this case, just get the first document request.
@@ -143,6 +144,7 @@ function getPageLoadError(navigationError, context) {
       record.resourceType === NetworkRequest.TYPES.Document
     );
     if (documentRequests.length) {
+      // @ts-expect-error - mainRecord is inferred as a Lantern request from findResourceForUrl, but we assign a raw record here.
       mainRecord = documentRequests.reduce((min, r) => {
         return r.networkRequestTime < min.networkRequestTime ? r : min;
       });
@@ -152,9 +154,7 @@ function getPageLoadError(navigationError, context) {
   // MIME Type is only set on the final redirected document request. Use this for the HTML check instead of root.
   let finalRecord;
   if (mainRecord) {
-    const mainRecordLantern = NetworkRequest.asLanternNetworkRequest(mainRecord);
-    const finalRecordLantern = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecordLantern);
-    finalRecord = finalRecordLantern?.rawRequest || finalRecordLantern;
+    finalRecord = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecord);
   } else {
     // We have no network requests to process, use the navError
     return navigationError;
@@ -164,7 +164,9 @@ function getPageLoadError(navigationError, context) {
     context.warnings.push(str_(UIStrings.warningXhtml));
   }
 
+  // @ts-expect-error - mainRecord may be typed as a Lantern request, but functions expect a raw record.
   const networkError = getNetworkError(mainRecord, context);
+  // @ts-expect-error - mainRecord may be typed as a Lantern request, but functions expect a raw record.
   const interstitialError = getInterstitialError(mainRecord, networkRecords);
   // @ts-expect-error - finalRecord may be a Lantern request, which is compatible enough
   // for getNonHtmlError.

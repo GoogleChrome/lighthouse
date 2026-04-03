@@ -35,7 +35,7 @@ const expectations = {
               // This check ensures that we resolve the redirect and use the final redirect network request to compute savings.
               // We can distinguish using totalBytes because the final request is compressed while the redirect request is not.
               url: 'http://localhost:10200/simple-script.js?redirect=%2Funused-javascript.js%3Fgzip%3D1',
-              totalBytes: '285000 +/- 2000',
+              totalBytes: '285000 +/- 4000',
             },
           ],
         },

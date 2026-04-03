@@ -9,7 +9,6 @@ import log from 'lighthouse-logger';
 import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
-import {NetworkRequest} from '../lib/network-request.js';
 
 class NetworkAnalysis {
   /**
@@ -20,7 +19,8 @@ class NetworkAnalysis {
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
     const analysis = Lantern.Core.NetworkAnalyzer.analyze(
-      records.map(NetworkRequest.asLanternNetworkRequest)
+      // @ts-expect-error - trace engine types for InitiatorType are outdated
+      records
     );
     if (!analysis) {
       log.error('NetworkAnalysis', 'Network analysis failed due to lack of transfer data');
