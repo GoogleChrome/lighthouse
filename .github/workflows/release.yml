@@ -1,0 +1,36 @@
+name: Release to npm
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19'
+      - run: yarn --frozen-lockfile
+      - run: yarn test
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19'
+          registry-url: https://registry.npmjs.org/
+      - run: yarn --frozen-lockfile
+      # Build report bundles needed for publishing.
+      - run: yarn build-report
+      - name: Publish to npm
+        run: |
+          npm install -g npm@latest
+          npm publish --provenance --access public --registry https://registry.npmjs.org/
+        env:
+          CI: true
