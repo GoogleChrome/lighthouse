@@ -1,15 +1,14 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Iaroslav Shvets @iaroslavshvets
- <a name="13.1.0"></a>
+<a name="13.1.0"></a>
 # 13.1.0 (2026-04-03)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.3...v13.1.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 148](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
-## Notable Changes
-~~ TODO: Move notable changes here ~~
+## New contributors
 
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Iaroslav Shvets @iaroslavshvets
 
 ## New Audits
 
