@@ -7,7 +7,6 @@
 import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
-import {NetworkRequest} from '../lib/network-request.js';
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -30,14 +29,16 @@ class MainResource {
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
     // of this computed artifact) attempts to fetch the contents, resulting in a protocol error.
     const mainResource = Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(
-      records.map(NetworkRequest.asLanternNetworkRequest),
+      // @ts-expect-error - trace engine types for InitiatorType are outdated
+      records,
       mainDocumentUrl
     );
-    if (!mainResource?.rawRequest) {
+    if (!mainResource) {
       throw new Error('Unable to identify the main resource');
     }
 
-    return mainResource.rawRequest;
+    // @ts-expect-error - Return type is typed as Lantern request by trace engine, but it is a raw record at runtime since we passed raw records.
+    return mainResource;
   }
 }
 
