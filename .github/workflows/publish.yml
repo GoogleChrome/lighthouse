@@ -3,7 +3,6 @@ on:
   push:
     tags:
       - 'v*' # Runs on pushing version tags
-  pull_request: {} # Temporary for testing
   workflow_dispatch: {} # Manual run
 
 jobs:
@@ -23,6 +22,6 @@ jobs:
       - name: Publish to npm
         run: |
           npm install -g npm@latest
-          npm publish --provenance --access public --registry https://registry.npmjs.org/ --dry-run
+          npm publish --provenance --access public --registry https://registry.npmjs.org/
         env:
           CI: true
