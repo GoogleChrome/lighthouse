@@ -1,6 +1,8 @@
 name: Publish
 on:
-  workflow_dispatch: {}
+  push:
+    tags:
+      - 'v*' # Runs on pushing version tags
 
 jobs:
   test:
@@ -28,6 +30,7 @@ jobs:
           node-version: '22.19'
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
+      - run: yarn build-all
       - name: Publish to npm
         run: |
           npm install -g npm@latest
