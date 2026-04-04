@@ -19,6 +19,7 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 * baseline: add baseline icons to baseline audit lighthouse report ([#16927](https://github.com/GoogleChrome/lighthouse/pull/16927))
 * baseline: add web-feature version to audit description ([#16937](https://github.com/GoogleChrome/lighthouse/pull/16937))
 * baseline: add baseline compatibility audit to default config ([#16910](https://github.com/GoogleChrome/lighthouse/pull/16910))
+* network: revert strict wrapping of network requests ([#16949](https://github.com/GoogleChrome/lighthouse/pull/16949))
 * trace: add WebDX feature usage trace category ([#16899](https://github.com/GoogleChrome/lighthouse/pull/16899))
 
 ## Deps
