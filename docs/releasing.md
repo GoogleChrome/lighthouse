@@ -55,7 +55,8 @@ fix in Lighthouse.
 
 For more, see the internal README for updating Lighthouse: go/lightrider-doc-landing
 
-Hold on submitting a CL to Lightrider stable until after cutting a release.
+Hold on submitting a CL to Lightrider canary until after cutting a release or
+wait until the next cron run.
 
 ### Open the PR
 
