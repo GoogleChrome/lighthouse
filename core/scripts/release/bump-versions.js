@@ -25,7 +25,7 @@ const ignore = [
   'docs/recipes/integration-test/package.json',
 ];
 
-for (const file of glob.sync('**/{package.json,*.md,*-expected.txt,navigation_test.ts}', {ignore})) { // eslint-disable-line max-len
+for (const file of glob.sync('**/{package.json,*.md,*-expected.txt,navigation.test.ts}', {ignore})) { // eslint-disable-line max-len
   let text;
   if (file === 'package.json') {
     const pkg = readJson(file);
