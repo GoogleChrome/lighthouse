@@ -58,15 +58,16 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
-  const insight = insights.model[insightName];
-  if (insight instanceof Error) {
+  const error = insights.modelErrors[insightName];
+  if (error) {
     return {
-      errorMessage: insight.message,
-      errorStack: insight.stack,
+      errorMessage: error.message,
+      errorStack: error.stack,
       score: null,
     };
   }
 
+  const insight = insights.model[insightName];
   if (!insight) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
