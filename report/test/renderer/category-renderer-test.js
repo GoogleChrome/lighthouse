@@ -328,8 +328,8 @@ describe('CategoryRenderer', () => {
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
       assert.equal(
         gauge.textContent.trim(),
-        "14/20",
-        "fraction is included via categoryScoreDisplayMode",
+        '14/20',
+        'fraction is included via categoryScoreDisplayMode'
       );
     });
 
