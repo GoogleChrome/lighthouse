@@ -316,9 +316,9 @@ describe('CategoryRenderer', () => {
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     });
 
-    it('renders the category header with fraction via displayAs', () => {
+    it('renders the category header with fraction via categoryScoreDisplayMode', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
-      categoryClone.displayAs = 'fraction';
+      categoryClone.categoryScoreDisplayMode = 'fraction';
       const categoryDOM = renderer.render(
         categoryClone,
         sampleResults.categoryGroups,
@@ -326,7 +326,11 @@ describe('CategoryRenderer', () => {
       );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
-      assert.equal(gauge.textContent.trim(), '14/20', 'fraction is included via displayAs');
+      assert.equal(
+        gauge.textContent.trim(),
+        "14/20",
+        "fraction is included via categoryScoreDisplayMode",
+      );
     });
 
     it('renders the failed audits grouped by group', () => {

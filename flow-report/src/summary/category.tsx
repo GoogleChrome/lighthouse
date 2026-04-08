@@ -107,7 +107,7 @@ const SummaryTooltip: FunctionComponent<{
   } = ReportUtils.calculateCategoryFraction(category);
 
   const i18n = useI18n();
-  const displayAsFraction = ReportUtils.shouldDisplayAsFraction(gatherMode);
+  const displayAsFraction = ReportUtils.shouldDisplayAsFraction(gatherMode, category);
   const score = displayAsFraction ?
     numPassed / numPassableAudits :
     category.score;

@@ -24,7 +24,7 @@ const config = {
       title: str_(UIStrings.agenticBrowsingCategoryTitle),
       description: str_(UIStrings.agenticBrowsingCategoryDescription),
       supportedModes: ['navigation', 'snapshot'],
-      displayAs: 'fraction',
+      categoryScoreDisplayMode: 'fraction',
       auditRefs: [
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
       ],

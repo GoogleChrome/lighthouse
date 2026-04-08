@@ -97,6 +97,15 @@ declare namespace Result {
     gather?: boolean;
   }
 
+  interface CategoryScoreDisplayModes {
+    /** Scores of 0-1 (map to displayed scores of 0-100). */
+    GAUGE: 'gauge';
+    /** Display as a fraction (x/y). */
+    FRACTION: 'fraction';
+  }
+
+  type CategoryScoreDisplayMode = CategoryScoreDisplayModes[keyof CategoryScoreDisplayModes];
+
   interface Category {
     /** The string identifier of the category. */
     id: string;
@@ -113,7 +122,7 @@ declare namespace Result {
     /** An array of all the modes supported by the category. */
     supportedModes?:  Result.GatherMode[];
     /** How to display the category score. */
-    displayAs?: 'fraction';
+    categoryScoreDisplayMode?: CategoryScoreDisplayMode;
   }
 
   interface AuditRef {
