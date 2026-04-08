@@ -73,7 +73,7 @@ class LayoutShifts extends Audit {
       layoutShifts: new Map(),
     };
     for (const insightSet of traceEngineResult.insights.values()) {
-      for (const [shift, reasons] of insightSet.model.CLSCulprits.shifts) {
+      for (const [shift, reasons] of insightSet.model.CLSCulprits?.shifts ?? []) {
         allRootCauses.layoutShifts.set(shift, reasons);
       }
     }

@@ -53,7 +53,7 @@ class TimeToFirstByte extends NavigationMetric {
     const lcpBreakdown = navInsights.model.LCPBreakdown;
 
     // Defer to LCP breakdown, but if there's no LCP fallback to manual calculation.
-    if (!(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
+    if (lcpBreakdown && !(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
       return {
         timing: lcpBreakdown.subparts.ttfb.range / 1000,
         timestamp: lcpBreakdown.subparts.ttfb.max,

@@ -131,7 +131,6 @@ function getNonHtmlError(finalRecord) {
 function getPageLoadError(navigationError, context) {
   const {url, networkRecords} = context;
   const mainRecordLantern = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
-    // @ts-expect-error - trace engine types for InitiatorType are outdated
     networkRecords,
     url
   );
@@ -144,7 +143,6 @@ function getPageLoadError(navigationError, context) {
       record.resourceType === NetworkRequest.TYPES.Document
     );
     if (documentRequests.length) {
-      // @ts-expect-error - mainRecord is inferred as a Lantern request from findResourceForUrl, but we assign a raw record here.
       mainRecord = documentRequests.reduce((min, r) => {
         return r.networkRequestTime < min.networkRequestTime ? r : min;
       });
@@ -164,12 +162,8 @@ function getPageLoadError(navigationError, context) {
     context.warnings.push(str_(UIStrings.warningXhtml));
   }
 
-  // @ts-expect-error - mainRecord may be typed as a Lantern request, but functions expect a raw record.
   const networkError = getNetworkError(mainRecord, context);
-  // @ts-expect-error - mainRecord may be typed as a Lantern request, but functions expect a raw record.
   const interstitialError = getInterstitialError(mainRecord, networkRecords);
-  // @ts-expect-error - finalRecord may be a Lantern request, which is compatible enough
-  // for getNonHtmlError.
   const nonHtmlError = getNonHtmlError(finalRecord);
 
   // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618

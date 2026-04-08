@@ -19,7 +19,6 @@ class NetworkAnalysis {
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
     const analysis = Lantern.Core.NetworkAnalyzer.analyze(
-      // @ts-expect-error - trace engine types for InitiatorType are outdated
       records
     );
     if (!analysis) {
