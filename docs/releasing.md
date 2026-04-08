@@ -39,7 +39,6 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 In general, Lighthouse should be using the latest version of its critical dependencies. These are listed in the following script. It's ok to not be on the very latest, use your judgement.
 
 ```sh
-# first, ask Paul to publish chrome-devtools-frontend
 bash core/scripts/upgrade-deps.sh
 ```
 
@@ -52,11 +51,12 @@ and that no new PRs should be merged until you are done.
 
 There is a cron that rolls the latest Lighthouse to the Lightrider canary feed.
 Make sure it has run recently, and there were no errors that require an upstream
-fix in Lighthouse
+fix in Lighthouse.
 
-For more, see the internal README for updating Lighthouse: go/lightrider-doc
+For more, see the internal README for updating Lighthouse: go/lightrider-doc-landing
 
-Hold on submitting a CL until after cutting a release.
+Hold on submitting a CL to Lightrider canary until after cutting a release or
+wait until the next cron run.
 
 ### Open the PR
 
@@ -94,6 +94,10 @@ npm publish
 yarn deploy-viewer
 yarn deploy-treemap
 ```
+
+# Create a release on GitHub.
+Go to https://github.com/GoogleChrome/lighthouse/releases and create a new release from the tag.
+Include the changelog.
 
 ### Extensions
 
@@ -135,6 +139,16 @@ git new-branch rls
 git commit -am "[Lighthouse] Roll Lighthouse x.x.x"
 git cl upload -b 40543651
 ```
+
+### DevTools MCP Roll
+
+Update Lighthouse in the [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) repo. See [instructions](https://github.com/ChromeDevTools/chrome-devtools-mcp/pull/1825/changes#r3046586581).
+
+From the `chrome-devtools-mcp` repo:
+1. Update version in `package.json` and run `npm install`.
+2. Checkout corresponding LH revision to sibling `../lighthouse`.
+3. Run `npm run update-lighthouse`.
+4. Commit the bundle. Update `tests/third_party_notices.test.ts` if new dependencies are added.
 
 ### Lightrider
 
