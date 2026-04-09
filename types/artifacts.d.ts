@@ -122,6 +122,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   FullPageScreenshot: LHResult.FullPageScreenshot | null;
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
+  /** The tools registered via WebMCP. */
+  WebMCPTools: Artifacts.WebMCPTool[];
   /** JS coverage information for code used during audit. Keyed by script id. */
   // 'url' is excluded because it can be overridden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
   JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
@@ -639,6 +641,16 @@ declare module Artifacts {
     observedLastVisualChangeTs: number;
     observedSpeedIndex: number;
     observedSpeedIndexTs: number;
+  }
+
+  interface WebMCPTool {
+    name: string;
+    description: string;
+    inputSchema: Record<string, any>;
+    frameId: string;
+    backendNodeId?: number;
+    stackTrace?: any;
+    nodeDetails?: NodeDetails;
   }
 
   interface FormElement {

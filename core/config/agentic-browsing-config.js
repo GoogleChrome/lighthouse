@@ -19,6 +19,12 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /** @type {LH.Config} */
 const config = {
   extends: 'lighthouse:default',
+  audits: [
+    'webmcp-registered-tools',
+  ],
+  artifacts: [
+    {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
+  ],
   categories: {
     'agentic-browsing': {
       title: str_(UIStrings.agenticBrowsingCategoryTitle),
@@ -26,6 +32,7 @@ const config = {
       supportedModes: ['navigation', 'snapshot'],
       categoryScoreDisplayMode: 'fraction',
       auditRefs: [
+        {id: 'webmcp-registered-tools', weight: 1},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
       ],
     },
