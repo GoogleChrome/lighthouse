@@ -12,6 +12,10 @@ const UIStrings = {
   /** Description of the Agentic Browsing category. */
   agenticBrowsingCategoryDescription: 'These checks ensure high-quality, ' +
   'browsable websites for AI agents and validate the correctness of WebMCP integrations.',
+  /** Title of the WebMCP group of audits. */
+  webmcpGroupTitle: 'WebMCP',
+  /** Description of the WebMCP group. */
+  webmcpGroupDescription: 'Audits validating WebMCP integration.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -19,6 +23,15 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /** @type {LH.Config} */
 const config = {
   extends: 'lighthouse:default',
+  audits: [
+    'webmcp-form-coverage',
+  ],
+  groups: {
+    'webmcp': {
+      title: str_(UIStrings.webmcpGroupTitle),
+      description: str_(UIStrings.webmcpGroupDescription),
+    },
+  },
   categories: {
     'agentic-browsing': {
       title: str_(UIStrings.agenticBrowsingCategoryTitle),
@@ -26,6 +39,7 @@ const config = {
       supportedModes: ['navigation', 'snapshot'],
       categoryScoreDisplayMode: 'fraction',
       auditRefs: [
+        {id: 'webmcp-form-coverage', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
       ],
     },
