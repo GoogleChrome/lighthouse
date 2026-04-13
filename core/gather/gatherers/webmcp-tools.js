@@ -62,6 +62,7 @@ class WebMCPTools extends BaseGatherer {
   /**
    * @param {{tools: WebMCPTool[]}} event
    */
+  // TODO: Handle WebMCP tools per frame.
   onToolsAdded(event) {
     // Note there is a bug right now in WebMCP.enable CDP where on newly registered tools
     // while WebMCP is enabled, the schema is empty. We will have to address that

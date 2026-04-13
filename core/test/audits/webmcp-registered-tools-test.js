@@ -52,8 +52,25 @@ describe('WebMCPRegisteredTools Audit', () => {
     expect(result.score).toEqual(1);
     expect(result.details.items).toHaveLength(2);
 
-    // Verify declarative tool
-    expect(result.details.items[0]).toMatchObject({
+    // Verify Imperative Tools section
+    expect(result.details.items[0].title.formattedDefault).toEqual('Imperative Tools');
+    expect(result.details.items[0].value.items).toHaveLength(1);
+    expect(result.details.items[0].value.items[0]).toMatchObject({
+      tool: 'get_weather',
+      description: 'Get current weather.',
+      source: {
+        type: 'source-location',
+        url: 'https://example.com/mcp.js',
+        line: 34,
+        column: 0,
+        urlProvider: 'network',
+      },
+    });
+
+    // Verify Declarative Tools section
+    expect(result.details.items[1].title.formattedDefault).toEqual('Declarative Tools');
+    expect(result.details.items[1].value.items).toHaveLength(1);
+    expect(result.details.items[1].value.items[0]).toMatchObject({
       tool: 'book_table_le_petit_bistro',
       description: 'Creates a confirmed dining reservation at Le Petit Bistro.',
       element: {
@@ -66,23 +83,6 @@ describe('WebMCPRegisteredTools Audit', () => {
         nodeLabel: 'Reservation Div',
       },
     });
-
-    // Verify imperative tool
-    expect(result.details.items[1]).toMatchObject({
-      tool: 'get_weather',
-      description: 'Get current weather.',
-      source: {
-        type: 'source-location',
-        url: 'https://example.com/mcp.js',
-        line: 34,
-        column: 0,
-        urlProvider: 'network',
-      },
-    });
-
-    // Verify headings
-    expect(result.details.headings).toHaveLength(5);
-    expect(result.details.headings[0].key).toEqual('tool');
   });
 
   it('handles empty tools list', async () => {
@@ -93,6 +93,6 @@ describe('WebMCPRegisteredTools Audit', () => {
     const result = await WebMCPRegisteredTools.audit(artifacts);
 
     expect(result.score).toEqual(1);
-    expect(result.details.items).toHaveLength(0);
+    expect(result.details).toBeUndefined();
   });
 });
