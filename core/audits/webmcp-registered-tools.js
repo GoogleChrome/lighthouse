@@ -101,6 +101,7 @@ class WebMCPRegisteredTools extends Audit {
     const list = [];
 
     if (imperativeResults.length > 0) {
+      /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'tool', valueType: 'text', label: str_(UIStrings.columnTool)},
         {key: 'description', valueType: 'text', label: str_(UIStrings.columnDescription)},
@@ -113,6 +114,7 @@ class WebMCPRegisteredTools extends Audit {
     }
 
     if (declarativeResults.length > 0) {
+      /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'tool', valueType: 'text', label: str_(UIStrings.columnTool)},
         {key: 'description', valueType: 'text', label: str_(UIStrings.columnDescription)},
