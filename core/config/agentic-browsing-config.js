@@ -30,6 +30,9 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'webmcp-registered-tools',
+    'accessibility/autocomplete-valid',
+    'accessibility/presentation-role-conflict',
+    'accessibility/svg-img-alt',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
@@ -83,6 +86,9 @@ const config = {
         {id: 'definition-list', weight: 1, group: 'agent-accessibility'},
         {id: 'table-duplicate-name', weight: 1, group: 'agent-accessibility'},
         {id: 'tabindex', weight: 1, group: 'agent-accessibility'},
+        {id: 'autocomplete-valid', weight: 1, group: 'agent-accessibility'},
+        {id: 'presentation-role-conflict', weight: 1, group: 'agent-accessibility'},
+        {id: 'svg-img-alt', weight: 1, group: 'agent-accessibility'},
       ],
     },
   },
