@@ -9,10 +9,10 @@ import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that lists forms found in the page for WebMCP coverage. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
-  title: 'Forms without declarative WebMCP tools',
+  title: 'WebMCP form coverage',
   /** Description of a Lighthouse audit that lists forms found in the page and indicates whether they have WebMCP declarative tool annotations. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
-  description: 'Consider exposing these forms as WebMCP tools to help AI agents fill them out ' +
-  'more reliably.', // TODO: add a learn more link once available
+  description: 'Consider adding WebMCP annotations to the forms listed below. This helps AI ' +
+  'agents identify and interact with these forms more reliably.', // TODO: add a learn more link once available
   /** [ICU Syntax] Label for the audit identifying the number of forms missing annotations. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   displayValue: `{itemCount, plural,
     =1 {1 form missing annotations}
