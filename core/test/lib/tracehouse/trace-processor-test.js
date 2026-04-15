@@ -585,6 +585,36 @@ Object {
         assert.ok(!navigation.lcpInvalidated);
       });
 
+
+      it('falls back to UKM invalidate event if no candidates found', () => {
+        const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+        const cat = 'loading';
+        testTrace.traceEvents.push(
+          {
+            name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM',
+            cat,
+            ph: 'I',
+            ts: 1500,
+            args: {
+              main_frame_tree_node_id: 2,
+            },
+          },
+          {
+            name: 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM',
+            cat,
+            ph: 'I',
+            ts: 1600,
+            args: {
+              main_frame_tree_node_id: 2,
+            },
+          }
+        );
+        const trace = TraceProcessor.processTrace(testTrace);
+        const navigation = TraceProcessor.processNavigation(trace);
+        assert.equal(navigation.timestamps.largestContentfulPaint, 1600);
+        assert.equal(navigation.largestContentfulPaintEvt.args.data.size, 1);
+      });
+
       it('invalidates if last event is ::Invalidate', () => {
         const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
         const frame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;

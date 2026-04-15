@@ -344,9 +344,14 @@ class ReportUtils {
 
   /**
    * @param {LH.Result.GatherMode} gatherMode
+   * @param {LH.Result.Category=} category
    */
-  static shouldDisplayAsFraction(gatherMode) {
-    return gatherMode === 'timespan' || gatherMode === 'snapshot';
+  static shouldDisplayAsFraction(gatherMode, category) {
+    return (
+      gatherMode === 'timespan' ||
+      gatherMode === 'snapshot' ||
+      category?.categoryScoreDisplayMode === 'fraction'
+    );
   }
 }
 
