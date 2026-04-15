@@ -30,9 +30,6 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'webmcp-registered-tools',
-    'accessibility/autocomplete-valid',
-    'accessibility/presentation-role-conflict',
-    'accessibility/svg-img-alt',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
