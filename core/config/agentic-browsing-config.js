@@ -31,9 +31,11 @@ const config = {
   audits: [
     'webmcp-registered-tools',
     'webmcp-form-coverage',
+    'agentic/llms-txt',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
+    {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
   ],
   groups: {
     'webmcp': {
@@ -88,6 +90,7 @@ const config = {
         {id: 'autocomplete-valid', weight: 1, group: 'agent-accessibility'},
         {id: 'presentation-role-conflict', weight: 1, group: 'agent-accessibility'},
         {id: 'svg-img-alt', weight: 1, group: 'agent-accessibility'},
+        {id: 'llms-txt', weight: 1, group: 'agent-accessibility'},
       ],
     },
   },

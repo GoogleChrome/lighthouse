@@ -131,6 +131,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   NetworkUserAgent: string;
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: { status: number | null, content: string | null, errorMessage?: string };
+  /** Information on fetching and the content of the /llm.txt file. */
+  LlmsTxt: { status: number | null, content: string | null, errorMessage?: string };
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
