@@ -57,6 +57,8 @@ const modifications = [
       // eslint-disable-next-line max-len
       'Root.Runtime.experiments.isEnabled(Root.Runtime.ExperimentName.USE_SOURCE_MAP_SCOPES)': 'false',
       'Common.Base64.BASE64_CODES': 'BASE64_CODES',
+      // Guard against out-of-bounds sourceIndex when source maps have empty/malformed sources.
+      'this.#sourceInfos[sourceIndex].sourceURL': 'this.#sourceInfos[sourceIndex]?.sourceURL',
       '* Implements Source Map V3 model.': [
         '* @param {string} compiledURL',
         '* @param {string} sourceMappingURL',
@@ -160,7 +162,7 @@ function doModification(modification) {
   // First pass - do raw string replacements.
   let modifiedCode = code;
   for (const [code, replacement] of Object.entries(rawCodeToReplace)) {
-    modifiedCode = modifiedCode.replace(code, replacement);
+    modifiedCode = modifiedCode.replaceAll(code, replacement);
   }
 
   const codeTranspiledToCommonJS = ts.transpileModule(modifiedCode, {
