@@ -254,6 +254,9 @@ const defaultConfig = {
     'accessibility/manual/offscreen-content-hidden',
     'accessibility/manual/use-landmarks',
     'accessibility/manual/visual-order-follows-dom',
+    'accessibility/autocomplete-valid',
+    'accessibility/presentation-role-conflict',
+    'accessibility/svg-img-alt',
     'byte-efficiency/total-byte-weight',
     'byte-efficiency/unminified-css',
     'byte-efficiency/unminified-javascript',
@@ -515,6 +518,9 @@ const defaultConfig = {
         {id: 'valid-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2aa
         {id: 'video-caption', weight: 10, group: 'a11y-audio-video'}, // Critical, wcag2a
         {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'}, // Moderate, best-practice
+        {id: 'autocomplete-valid', weight: 1, group: 'a11y-best-practices'}, // Informational
+        {id: 'presentation-role-conflict', weight: 1, group: 'a11y-best-practices'}, // Informational
+        {id: 'svg-img-alt', weight: 1, group: 'a11y-best-practices'}, // Informational
         // Manual audits
         {id: 'focusable-controls', weight: 0},
         {id: 'interactive-element-affordance', weight: 0},

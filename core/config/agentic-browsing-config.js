@@ -31,9 +31,6 @@ const config = {
   audits: [
     'webmcp-registered-tools',
     'webmcp-form-coverage',
-    'accessibility/autocomplete-valid',
-    'accessibility/presentation-role-conflict',
-    'accessibility/svg-img-alt',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
