@@ -188,7 +188,7 @@ describe('WebMCPTools Gatherer', () => {
       .mockResponse('WebMCP.enable')
       .mockResponse('DOM.resolveNode', {object: {objectId: 'remote-obj-1'}})
       .mockResponse('Runtime.callFunctionOn',
-        {result: {value: {node: {snippet: '<div></div>', selector: 'div'}}}})
+        {result: {value: {snippet: '<div></div>', selector: 'div'}}})
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
