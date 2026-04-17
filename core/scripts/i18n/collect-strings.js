@@ -739,6 +739,7 @@ function checkKnownFixedCollisions(strings) {
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Element',
       'Element',
+      'Element',
       'Est Savings',
       'Est Savings',
       'Failing Elements',
