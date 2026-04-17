@@ -28,7 +28,7 @@ function writeFile(name, content) {
 fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report-generator.mjs.d.ts', 'export {}');
+writeFile('report-generator.d.mts', 'export {}');
 
 async function buildReportGenerator() {
   await esbuild.build({

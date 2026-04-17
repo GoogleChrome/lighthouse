@@ -33,6 +33,8 @@ function collectElements() {
       autocomplete: formEl.autocomplete,
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(formEl),
+      webMcpToolname: formEl.getAttribute('toolname'),
+      webMcpTooldescription: formEl.getAttribute('tooldescription'),
     });
   }
 

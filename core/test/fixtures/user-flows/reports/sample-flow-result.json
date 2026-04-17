@@ -2643,6 +2643,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
@@ -3984,6 +4050,21 @@
               {
                 "id": "landmark-one-main",
                 "weight": 3,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
                 "group": "a11y-best-practices"
               },
               {
@@ -6042,246 +6123,264 @@
             },
             {
               "startTime": 194,
-              "name": "lh:audit:total-byte-weight",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 195,
-              "name": "lh:audit:unminified-css",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 196,
-              "name": "lh:audit:unminified-javascript",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 197,
-              "name": "lh:audit:unused-css-rules",
+              "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 198,
-              "name": "lh:audit:unused-javascript",
+              "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 199,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 200,
-              "name": "lh:audit:charset",
+              "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 201,
-              "name": "lh:audit:geolocation-on-start",
+              "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 202,
-              "name": "lh:audit:inspector-issues",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 203,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:charset",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 204,
-              "name": "lh:audit:notification-on-start",
+              "name": "lh:audit:geolocation-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 205,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 206,
-              "name": "lh:audit:baseline",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 207,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 208,
-              "name": "lh:audit:http-status-code",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 209,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:baseline",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 210,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 211,
-              "name": "lh:audit:is-crawlable",
+              "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 212,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 213,
-              "name": "lh:audit:hreflang",
+              "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 214,
-              "name": "lh:audit:canonical",
+              "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 215,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 216,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 217,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 218,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 219,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 220,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 221,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 222,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 223,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 224,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:inp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:lcp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:legacy-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 232,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 233,
+              "name": "lh:audit:render-blocking-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 234,
+              "name": "lh:audit:third-parties-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 235,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 236,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 234
+          "total": 237
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -6987,6 +7086,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -7354,6 +7456,24 @@
             ],
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
             ],
             "core/audits/byte-efficiency/total-byte-weight.js | title": [
               "audits[total-byte-weight].title"
@@ -13666,6 +13786,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
@@ -14483,6 +14669,21 @@
               {
                 "id": "landmark-one-main",
                 "weight": 3,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
                 "group": "a11y-best-practices"
               },
               {
@@ -16088,60 +16289,78 @@
             },
             {
               "startTime": 99,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 100,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 101,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 102,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 103,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 104,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 105,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 106,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 107,
+              "name": "lh:audit:crawlable-anchors",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 108,
+              "name": "lh:audit:robots-txt",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 109,
+              "name": "lh:audit:structured-data",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 110,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 108
+          "total": 111
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -16282,6 +16501,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -16649,6 +16871,24 @@
             ],
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
             ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
@@ -19675,6 +19915,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
@@ -20982,6 +21288,21 @@
               {
                 "id": "landmark-one-main",
                 "weight": 3,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
                 "group": "a11y-best-practices"
               },
               {
@@ -23097,246 +23418,264 @@
             },
             {
               "startTime": 193,
-              "name": "lh:audit:total-byte-weight",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 194,
-              "name": "lh:audit:unminified-css",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 195,
-              "name": "lh:audit:unminified-javascript",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 196,
-              "name": "lh:audit:unused-css-rules",
+              "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 197,
-              "name": "lh:audit:unused-javascript",
+              "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 198,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 199,
-              "name": "lh:audit:charset",
+              "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 200,
-              "name": "lh:audit:geolocation-on-start",
+              "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 201,
-              "name": "lh:audit:inspector-issues",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 202,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:charset",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 203,
-              "name": "lh:audit:notification-on-start",
+              "name": "lh:audit:geolocation-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 204,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 205,
-              "name": "lh:audit:baseline",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 206,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 207,
-              "name": "lh:audit:http-status-code",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 208,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:baseline",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 209,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 210,
-              "name": "lh:audit:is-crawlable",
+              "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 211,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 212,
-              "name": "lh:audit:hreflang",
+              "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 213,
-              "name": "lh:audit:canonical",
+              "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 214,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 215,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 216,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 217,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 218,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 219,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 220,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 221,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 222,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 223,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 224,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:inp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:lcp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:legacy-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 232,
+              "name": "lh:audit:render-blocking-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 233,
+              "name": "lh:audit:third-parties-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 234,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 235,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 233
+          "total": 236
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -24042,6 +24381,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -24409,6 +24751,24 @@
             ],
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
             ],
             "core/audits/byte-efficiency/total-byte-weight.js | title": [
               "audits[total-byte-weight].title"

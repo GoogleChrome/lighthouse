@@ -30,9 +30,7 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'webmcp-registered-tools',
-    'accessibility/autocomplete-valid',
-    'accessibility/presentation-role-conflict',
-    'accessibility/svg-img-alt',
+    'webmcp-form-coverage',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
@@ -54,6 +52,7 @@ const config = {
       supportedModes: ['navigation', 'snapshot'],
       categoryScoreDisplayMode: 'fraction',
       auditRefs: [
+        {id: 'webmcp-form-coverage', weight: 1, group: 'webmcp'},
         {id: 'webmcp-registered-tools', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
         {id: 'button-name', weight: 1, group: 'agent-accessibility'},

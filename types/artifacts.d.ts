@@ -658,6 +658,8 @@ declare module Artifacts {
     name: string;
     autocomplete: string;
     node: NodeDetails;
+    webMcpToolname?: string | null;
+    webMcpTooldescription?: string | null;
   }
 
   /** Attributes collected for every input element in the inputs array from the forms interface. */
