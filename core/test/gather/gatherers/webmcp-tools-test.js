@@ -188,7 +188,7 @@ describe('WebMCPTools Gatherer', () => {
       .mockResponse('WebMCP.enable')
       .mockResponse('DOM.resolveNode', {object: {objectId: 'remote-obj-1'}})
       .mockResponse('Runtime.callFunctionOn',
-        {result: {value: {snippet: '<div></div>', selector: 'div'}}})
+        {result: {value: {snippet: '<form></form>', selector: 'form'}}})
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
@@ -199,6 +199,6 @@ describe('WebMCPTools Gatherer', () => {
 
     assert.equal(artifact.length, 1);
     assert.equal(artifact[0].name, 'declarative_tool');
-    assert.deepEqual(artifact[0].nodeDetails, {snippet: '<div></div>', selector: 'div'});
+    assert.deepEqual(artifact[0].nodeDetails, {snippet: '<form></form>', selector: 'form'});
   });
 });
