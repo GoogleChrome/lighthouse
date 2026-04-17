@@ -58,7 +58,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
-  const error = insights.modelErrors[insightName];
+  const error = insights.modelErrors?.[insightName];
   if (error) {
     return {
       errorMessage: error.message,
