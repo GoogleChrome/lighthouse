@@ -31,9 +31,14 @@ const config = {
   audits: [
     'webmcp-registered-tools',
     'webmcp-form-coverage',
+    'webmcp-schema-validity',
+    'accessibility/autocomplete-valid',
+    'accessibility/presentation-role-conflict',
+    'accessibility/svg-img-alt',
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
+    {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
   ],
   groups: {
     'webmcp': {
@@ -54,6 +59,7 @@ const config = {
       auditRefs: [
         {id: 'webmcp-form-coverage', weight: 1, group: 'webmcp'},
         {id: 'webmcp-registered-tools', weight: 1, group: 'webmcp'},
+        {id: 'webmcp-schema-validity', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
         {id: 'button-name', weight: 1, group: 'agent-accessibility'},
         {id: 'input-button-name', weight: 1, group: 'agent-accessibility'},

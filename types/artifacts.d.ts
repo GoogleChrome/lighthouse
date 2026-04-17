@@ -124,6 +124,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   InspectorIssues: Artifacts.InspectorIssues;
   /** The tools registered via WebMCP. */
   WebMCPTools: Artifacts.WebMCPTool[];
+  /** The WebMCP schema validation issues. */
+  WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */
   // 'url' is excluded because it can be overridden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
   JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
@@ -144,6 +146,16 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
 }
 
 declare module Artifacts {
+  interface WebMcpSchemaIssue {
+    errorType: string;
+    violatingNodeId?: number;
+    nodeDetails?: NodeDetails;
+    formToolName?: string | null;
+    formToolDescription?: string | null;
+    paramName?: string | null;
+    paramDescription?: string | null;
+  }
+
   type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;

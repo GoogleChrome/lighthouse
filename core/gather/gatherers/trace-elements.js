@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* global getNodeDetails */
-
 /**
  * @fileoverview
  * This gatherer identifies elements that contribrute to metrics in the trace (LCP, CLS, etc.).
@@ -27,26 +25,6 @@ import SourceMaps from './source-maps.js';
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
 
 const MAX_LAYOUT_SHIFTS = 15;
-
-/**
- * @this {HTMLElement}
- */
-/* c8 ignore start */
-function getNodeDetailsData() {
-  /** @type {Element|null} */
-  let elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
-  if (!elem && this instanceof ShadowRoot) {
-    elem = this.host;
-  }
-
-  let traceElement;
-  if (elem) {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    traceElement = {node: getNodeDetails(elem)};
-  }
-  return traceElement;
-}
-/* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
@@ -301,14 +279,14 @@ class TraceElements extends BaseGatherer {
 
       const deps = ExecutionContext.serializeDeps([
         pageFunctions.getNodeDetails,
-        getNodeDetailsData,
+        pageFunctions.getNodeDetailsData,
       ]);
       return await session.sendCommand('Runtime.callFunctionOn', {
         objectId,
         functionDeclaration: `function () {
-          ${deps}
-          return getNodeDetailsData.call(this);
-        }`,
+                ${deps}
+                return getNodeDetailsData(this);
+              }`,
         returnByValue: true,
         awaitPromise: true,
       });

@@ -28,7 +28,7 @@ import {Util} from '../../shared/util.js';
  * @typedef {import('typed-query-selector/parser').ParseSelector<T>} ParseSelector
  */
 
-/* global window document Node ShadowRoot HTMLElement */
+/* global window document Node ShadowRoot HTMLElement Element */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -506,6 +506,19 @@ function getNodeDetails(element) {
 }
 
 /**
+ * Resolves non-element nodes and shadow roots to elements for getNodeDetails.
+ * @param {Node} node
+ * @return {LH.Artifacts.NodeDetails | null}
+ */
+function getNodeDetailsData(node) {
+  let elem = node instanceof Element ? node : node.parentElement;
+  if (!elem && node instanceof ShadowRoot) {
+    elem = node.host;
+  }
+  return elem ? getNodeDetails(elem) : null;
+}
+
+/**
  *
  * @param {string} string
  * @param {number} characterLimit
@@ -628,6 +641,7 @@ export const pageFunctions = {
   getOuterHTMLSnippet,
   computeBenchmarkIndex,
   getNodeDetails,
+  getNodeDetailsData,
   getNodePath,
   getNodeSelector,
   getNodeLabel,

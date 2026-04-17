@@ -23,28 +23,6 @@ import {ExecutionContext} from '../driver/execution-context.js';
  * @property {any} [stackTrace]
  * @property {LH.Artifacts.NodeDetails} [nodeDetails]
  */
-
-/* global getNodeDetails */
-/* c8 ignore start */
-/**
- * @param {Node} node
- */
-function getNodeDetailsData(node) {
-  /** @type {Element|null} */
-  let elem = node instanceof Element ? node : node.parentElement;
-  if (!elem && node instanceof ShadowRoot) {
-    elem = node.host;
-  }
-
-  let traceElement;
-  if (elem) {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    traceElement = {node: getNodeDetails(elem)};
-  }
-  return traceElement;
-}
-/* c8 ignore stop */
-
 class WebMCPTools extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
@@ -133,7 +111,7 @@ class WebMCPTools extends BaseGatherer {
           if (objectId) {
             const deps = ExecutionContext.serializeDeps([
               pageFunctions.getNodeDetails,
-              getNodeDetailsData,
+              pageFunctions.getNodeDetailsData,
             ]);
             const response = await session.sendCommand('Runtime.callFunctionOn', {
               objectId,
@@ -145,7 +123,7 @@ class WebMCPTools extends BaseGatherer {
               awaitPromise: true,
             });
             if (response && response.result && response.result.value) {
-              tool.nodeDetails = response.result.value.node;
+              tool.nodeDetails = response.result.value;
             }
           }
         } catch (err) {
