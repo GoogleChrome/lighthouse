@@ -42,7 +42,6 @@ class DocumentUrls {
     if (!requestedUrl || !mainDocumentUrl) throw new Error('No main frame navigations found');
 
     const initialRequest = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
-      // @ts-expect-error - trace engine types for InitiatorType are outdated
       networkRecords,
       requestedUrl
     );

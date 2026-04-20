@@ -142,7 +142,7 @@ class TraceElements extends BaseGatherer {
     }, new Set());
 
     // TODO: handle digging into Map in recursiveObjectEnumerate.
-    for (const shift of insightSet.model.CLSCulprits.shifts.values()) {
+    for (const shift of insightSet.model.CLSCulprits?.shifts.values() ?? []) {
       nodeIds.push(...shift.unsizedImages.map(s => s.backendNodeId));
     }
 

@@ -1835,6 +1835,9 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse user flow report"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AttributionReporting": {
+    "message": "Attribution reporting has been deprecated and will be removed. See https://goo.gle/ps-status for details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
     "message": "Authorisation will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
   },
@@ -1856,9 +1859,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
     "message": "chrome.loadTimes() is deprecated. Instead, use standardised API: nextHopProtocol in Navigation Timing 2."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
-    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
     "message": "Relaxing the same-origin policy by setting document.domain is deprecated, and will be disabled by default. This deprecation warning is for a cross-origin access that was enabled by setting document.domain."
   },
@@ -1871,14 +1871,20 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
+    "message": "This is an example for showing the code required for a browser process reported deprecation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
+    "message": "The Protected Audience API has been deprecated and will be removed in a future release."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
-    "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "getCurrentPosition() and watchPosition() are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "getCurrentPosition() and watchPosition() are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
-    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is deprecated. Please use RTCPeerConnectionIceErrorEvent.address or RTCPeerConnectionIceErrorEvent.port instead."
@@ -1895,20 +1901,35 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator is deprecated. Please use Intl.Segmenter instead."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelParams": {
+    "message": "LanguageModel.params() is deprecated and now only available in extension contexts. The topK and temperature related fields within its result are also deprecated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTemperature": {
+    "message": "The 'temperature' parameter/attribute for LanguageModel is deprecated. It is only functional within extensions and may be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTopK": {
+    "message": "The 'topK' parameter/attribute for LanguageModel is deprecated. It is only functional within extensions and may be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputQuota": {
+    "message": "LanguageModel.inputQuota is deprecated. Please use LanguageModel.contextWindow instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputUsage": {
+    "message": "LanguageModel.inputUsage is deprecated. Please use LanguageModel.contextUsage instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_MeasureInputUsage": {
+    "message": "LanguageModel.measureInputUsage() is deprecated. Please use LanguageModel.measureContextUsage() instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_OnQuotaOverflow": {
+    "message": "LanguageModel.onquotaoverflow is deprecated. Please use LanguageModel.oncontextoverflow instead. The LanguageModel.onquotaoverflow alias is only available in extensions."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
     "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
-    "message": "Using SourceBuffer.abort() to abort remove()'s asynchronous range removal is deprecated due to specification change. Support will be removed in the future. You should listen to the updateend event instead. abort() is intended to only abort an asynchronous media append or reset parser state."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
     "message": "Web MIDI will ask permission to use even if the sysex is not specified in the MIDIOptions."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
-    "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "The notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
     "message": "Permission for the Notification API may no longer be requested from a cross-origin iframe. You should consider requesting permission from a top-level frame or opening a new window instead."
@@ -1961,9 +1982,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
-    "message": "We're deprecating the API chrome.privacy.websites.privacySandboxEnabled, though it will remain active for backward compatibility until release M113. Instead, please use chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled and chrome.privacy.websites.adMeasurementEnabled. See https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "The constraint DtlsSrtpKeyAgreement is removed. You have specified a false value for this constraint, which is interpreted as an attempt to use the removed SDES key negotiation method. This functionality is removed; use a service that supports DTLS key negotiation instead."
   },
@@ -1976,6 +1994,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
     "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
+    "message": "Related Website Sets is deprecated and will be removed. See https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ for more details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
   },
@@ -1985,8 +2006,17 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
     "message": "SharedArrayBuffer will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedStorage": {
+    "message": "The Shared Storage API is deprecated and will be removed in a future release."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | StorageAccessAPI_requestStorageAccessFor_Method": {
+    "message": "document.requestStorageAccessFor is deprecated and will be removed. See https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ for more details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
     "message": "speechSynthesis.speak() without user activation is deprecated and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Topics": {
+    "message": "The Topics API has been deprecated and will be removed in a future release."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
     "message": "Unload event listeners are deprecated and will be removed."
@@ -1994,17 +2024,23 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt in to cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
+    "message": "BluetoothRemoteGATTCharacteristic.writeValue() is deprecated. Use writeValueWithResponse() or writeValueWithoutResponse() instead."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response JSON in XMLHttpRequest"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
     "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects on the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XSLT": {
+    "message": "XSLTProcessor and XSLT processing instructions have been deprecated by all browsers. These features will be removed from this browser soon."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
     "message": "Animation"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
-    "message": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed or their fonts changing as the page loads."
+    "message": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://developer.chrome.com/docs/performance/insights/cls-culprit), such as elements being added, removed or their fonts changing as the page loads."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
     "message": "Injected iframe"
@@ -2040,7 +2076,7 @@
     "message": "Cache TTL"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
-    "message": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/)."
+    "message": "A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
     "message": "No requests with inefficient cache policies"
@@ -2055,7 +2091,7 @@
     "message": "Use efficient cache lifetimes"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+    "message": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/performance/insights/dom-size)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
     "message": "Duration"
@@ -2091,7 +2127,7 @@
     "message": "Value"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
-    "message": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response and enabling text compression."
+    "message": "Your first network request is the most important. [Reduce its latency](https://developer.chrome.com/docs/performance/insights/document-latency) by avoiding redirects, ensuring a fast server response and enabling text compression."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
     "message": "Had redirects ({PH1} redirects, +{PH2})"
@@ -2130,13 +2166,13 @@
     "message": "Source"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity."
+    "message": "Remove large, [duplicate JavaScript modules](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) from bundles to reduce unnecessary bytes consumed by network activity."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "Duplicated JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
-    "message": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure that text is consistently visible. swap can be further optimised to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks)."
+    "message": "Consider setting [font-display](https://developer.chrome.com/docs/performance/insights/font-display) to swap or optional to ensure that text is consistently visible. swap can be further optimised to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Font"
@@ -2151,10 +2187,10 @@
     "message": "(anonymous)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and possible mitigations."
+    "message": "A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
-    "message": "Stack trace"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | reflowCallFrames": {
+    "message": "Call frames that trigger reflow"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
     "message": "Forced reflow"
@@ -2169,7 +2205,7 @@
     "message": "[unattributed]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "Start investigating with the longest sub-part. [Delays can be minimised](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimise the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS."
+    "message": "Start investigating [how to improve INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) by looking at the longest subpart."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "Duration"
@@ -2193,7 +2229,7 @@
     "message": "INP breakdown"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimising image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+    "message": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimising image size](https://developer.chrome.com/docs/performance/insights/image-delivery)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (est {PH2})"
@@ -2223,7 +2259,7 @@
     "message": "Using video formats instead of GIFs can improve the download size of animated content."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
-    "message": "Each [sub-part has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays."
+    "message": "Each [sub-part has specific improvement strategies](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
     "message": "Duration"
@@ -2253,7 +2289,7 @@
     "message": "LCP breakdown"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
-    "message": "Optimise LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately and [avoiding lazy loading](https://web.dev/articles/lcp-lazy-loading)"
+    "message": "[Optimise LCP](https://developer.chrome.com/docs/performance/insights/lcp-discovery) by making the LCP image discoverable from the HTML immediately, and avoiding lazy loading"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
     "message": "fetchpriority=high applied"
@@ -2286,13 +2322,13 @@
     "message": "Wasted bytes"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know that you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know that you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Legacy JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
-    "message": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+    "message": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/performance/insights/modern-http)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
     "message": "No requests used HTTP/1.1, or its current use of HTTP/1.1 does not present a significant optimisation opportunity. HTTP/1.1 requests are only flagged if six or more static assets originate from the same origin, and they are not served from a local development environment or a third-party source."
@@ -2325,7 +2361,7 @@
     "message": "Unused preconnect. Check that the crossorigin attribute is used properly."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources or deferring the download of unnecessary resources to improve page load."
+    "message": "[Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources or deferring the download of unnecessary resources to improve page load."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
     "message": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4."
@@ -2364,22 +2400,22 @@
     "message": "Avoid chaining critical requests by reducing the length of chains, reducing the download size of resources or deferring the download of unnecessary resources to improve page load."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path."
+    "message": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Duration"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
-    "message": "No render blocking requests for this navigation"
+    "message": "No render-blocking requests for this navigation"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
     "message": "Request"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
-    "message": "Render blocking requests"
+    "message": "Render-blocking requests"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "If Recalculate Style costs remain high, selector optimisation can reduce them. [Optimise the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both a high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM and a shallower DOM will all reduce matching costs."
+    "message": "If Recalculate Style costs remain high, selector optimisation can reduce them. [Optimise the selectors](https://developer.chrome.com/docs/performance/insights/slow-css-selector) with both a high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM and a shallower DOM will all reduce matching costs."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "Elapsed time"
@@ -2418,7 +2454,7 @@
     "message": "Transfer size"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Third-party code can significantly impact load performance. [Reduce and defer loading of third-party code](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) to prioritise your page's content."
+    "message": "Third-party code can significantly impact load performance. [Reduce and defer loading of third-party code](https://developer.chrome.com/docs/performance/insights/third-parties) to prioritise your page's content."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "No third parties found"
@@ -2427,7 +2463,7 @@
     "message": "Third parties"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimised for mobile."
+    "message": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimised for mobile."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "Mobile tap delay"

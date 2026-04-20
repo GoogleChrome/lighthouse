@@ -62,7 +62,7 @@ class LCPBreakdown {
       throw new LighthouseError(LighthouseError.errors.NO_LCP, {}, {cause: lcpBreakdown});
     }
 
-    if (!lcpBreakdown.subparts) {
+    if (!lcpBreakdown || !lcpBreakdown.subparts) {
       throw new LighthouseError(LighthouseError.errors.NO_LCP);
     }
 

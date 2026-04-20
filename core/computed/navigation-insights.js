@@ -26,7 +26,8 @@ class NavigationInsights {
     const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
     if (!navigationId) throw new Error('No navigationId found');
 
-    const navInsights = traceEngineResult.insights.get(navigationId);
+    const navInsights = [...traceEngineResult.insights.values()]
+        .find(insightSet => insightSet.navigation?.args.data?.navigationId === navigationId);
     if (!navInsights) throw new Error('No navigations insights found');
 
     return navInsights;

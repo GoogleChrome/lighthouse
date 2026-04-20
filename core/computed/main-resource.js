@@ -29,7 +29,6 @@ class MainResource {
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
     // of this computed artifact) attempts to fetch the contents, resulting in a protocol error.
     const mainResource = Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(
-      // @ts-expect-error - trace engine types for InitiatorType are outdated
       records,
       mainDocumentUrl
     );
@@ -37,7 +36,6 @@ class MainResource {
       throw new Error('Unable to identify the main resource');
     }
 
-    // @ts-expect-error - Return type is typed as Lantern request by trace engine, but it is a raw record at runtime since we passed raw records.
     return mainResource;
   }
 }
