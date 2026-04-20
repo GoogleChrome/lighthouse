@@ -24,16 +24,17 @@ import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices. */
-const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices'];
+/** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices, agentic browsing. */
+const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices', 'agentic-browsing'];
 
 /**
- * Audit IDs from default config for MCP categories (accessibility, seo, best-practices).
+ * Audit IDs from default and agentic browsing config for MCP categories
+ * (accessibility, seo, best-practices, agentic-browsing).
  * @return {Set<string>}
  */
 function getMcpCategoryAuditIds() {
   const ids = new Set();
-  for (const categoryId of [...MCP_CATEGORY_IDS, 'agentic-browsing']) {
+  for (const categoryId of [...MCP_CATEGORY_IDS]) {
     const category = categoryId === 'agentic-browsing' ?
       agenticBrowsingConfig.categories?.['agentic-browsing'] :
       defaultConfig.categories?.[categoryId];
@@ -75,7 +76,7 @@ function getMcpRequiredGathererNames() {
     'MainDocumentContent', 'MetaElements', 'Stacks', 'Trace',
   ];
   const a11yArtifacts = ['Accessibility'];
-  const agenticArtifacts = ['WebMCPTools', 'WebMcpSchemaIssues'];
+  const agenticArtifacts = ['WebMCPTools', 'LlmsTxt'];
   for (const id of
     [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts, ...agenticArtifacts]) {
     const g = artifactToGatherer.get(id);
