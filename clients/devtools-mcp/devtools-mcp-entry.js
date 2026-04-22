@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {navigation, snapshot, generateReport} from '../../core/index.js';
+import {navigation, snapshot, generateReport, agenticBrowsingConfig} from '../../core/index.js';
 
 export {
   navigation,
   snapshot,
   generateReport,
+  agenticBrowsingConfig,
 };

@@ -121,6 +121,7 @@ export {default as Gatherer} from './gather/base-gatherer.js';
 export {NetworkRecords} from './computed/network-records.js';
 export {default as defaultConfig} from './config/default-config.js';
 export {default as desktopConfig} from './config/desktop-config.js';
+export {default as agenticBrowsingConfig} from './config/agentic-browsing-config.js';
 export * from '../types/lh.js';
 export {
   startFlow,
