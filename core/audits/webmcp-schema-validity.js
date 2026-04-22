@@ -11,8 +11,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that evaluates WebMCP schema validity. This descriptive title is shown to users when there are no schema validity issues. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   title: 'WebMCP schemas are valid',
   /** Title of a Lighthouse audit that provides detail on WebMCP schema validity. This descriptive title is shown to users when there are schema validity issues. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
-  failureTitle: 'WebMCP schemas have validity issues. ' +
-  'Fix them to improve accessibility for AI agents.',
+  failureTitle: 'WebMCP schemas are invalid',
   /** Description of a Lighthouse audit that tells the user why they should ensure WebMCP schemas are valid. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   description: 'Valid WebMCP schemas are required for AI agents to ' +
   ' understand and interact with tools correctly. ' +

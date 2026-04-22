@@ -450,16 +450,21 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 }
 
 /**
- * @param {Element|ShadowRoot} element
- * @return {LH.Artifacts.NodeDetails}
+ * @param {Node|ShadowRoot} node
+ * @return {LH.Artifacts.NodeDetails | null}
  */
-function getNodeDetails(element) {
+function getNodeDetails(node) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
   if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
-  element = element instanceof ShadowRoot ? element.host : element;
+  let element = node instanceof Element ? node : node.parentElement;
+  if (!element && node instanceof ShadowRoot) {
+    element = node.host;
+  }
+
+  if (!element) return null;
   const selector = getNodeSelector(element);
 
   // Create an id that will be unique across all execution contexts.
@@ -503,19 +508,6 @@ function getNodeDetails(element) {
   };
 
   return details;
-}
-
-/**
- * Resolves non-element nodes and shadow roots to elements for getNodeDetails.
- * @param {Node} node
- * @return {LH.Artifacts.NodeDetails | null}
- */
-function getNodeDetailsData(node) {
-  let elem = node instanceof Element ? node : node.parentElement;
-  if (!elem && node instanceof ShadowRoot) {
-    elem = node.host;
-  }
-  return elem ? getNodeDetails(elem) : null;
 }
 
 /**
@@ -641,7 +633,6 @@ export const pageFunctions = {
   getOuterHTMLSnippet,
   computeBenchmarkIndex,
   getNodeDetails,
-  getNodeDetailsData,
   getNodePath,
   getNodeSelector,
   getNodeLabel,

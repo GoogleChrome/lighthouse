@@ -70,7 +70,6 @@ class WebMcpSchemaIssues extends BaseGatherer {
 
     const deps = ExecutionContext.serializeDeps([
       pageFunctions.getNodeDetails,
-      pageFunctions.getNodeDetailsData,
     ]);
 
     const promises = this._issues.map(async (issue) => {
@@ -83,7 +82,7 @@ class WebMcpSchemaIssues extends BaseGatherer {
               objectId,
               functionDeclaration: `function () {
                 ${deps}
-                return getNodeDetailsData(this);
+                return getNodeDetails(this);
               }`,
               returnByValue: true,
               awaitPromise: true,

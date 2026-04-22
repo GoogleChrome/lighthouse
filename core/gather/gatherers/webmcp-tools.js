@@ -111,13 +111,12 @@ class WebMCPTools extends BaseGatherer {
           if (objectId) {
             const deps = ExecutionContext.serializeDeps([
               pageFunctions.getNodeDetails,
-              pageFunctions.getNodeDetailsData,
             ]);
             const response = await session.sendCommand('Runtime.callFunctionOn', {
               objectId,
               functionDeclaration: `function () {
                 ${deps}
-                return getNodeDetailsData(this);
+                return getNodeDetails(this);
               }`,
               returnByValue: true,
               awaitPromise: true,
