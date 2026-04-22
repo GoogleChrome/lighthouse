@@ -9,6 +9,8 @@
  * being enabled by default.
  */
 
+import * as LH from '../../types/lh.js';
+
 /** @type {LH.Config} */
 const config = {
   extends: 'lighthouse:default',

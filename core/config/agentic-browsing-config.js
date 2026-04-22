@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as LH from '../../types/lh.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
