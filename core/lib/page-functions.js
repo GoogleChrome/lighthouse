@@ -28,7 +28,7 @@ import {Util} from '../../shared/util.js';
  * @typedef {import('typed-query-selector/parser').ParseSelector<T>} ParseSelector
  */
 
-/* global window document Node ShadowRoot HTMLElement Element */
+/* global window document Node ShadowRoot HTMLElement */
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -459,12 +459,14 @@ function getNodeDetails(node) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
-  let element = node instanceof Element ? node : node.parentElement;
-  if (!element && node instanceof ShadowRoot) {
-    element = node.host;
+  let elem = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+  if (!elem && node instanceof ShadowRoot) {
+    elem = node.host;
   }
 
-  if (!element) return null;
+  if (!elem) return null;
+
+  const element = /** @type {Element} */ (elem);
   const selector = getNodeSelector(element);
 
   // Create an id that will be unique across all execution contexts.
