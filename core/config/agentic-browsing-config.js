@@ -36,6 +36,7 @@ const config = {
   ],
   artifacts: [
     {id: 'WebMCPTools', gatherer: 'webmcp-tools'},
+    {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
     {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
   ],
   groups: {

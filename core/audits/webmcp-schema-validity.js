@@ -47,7 +47,7 @@ class WebMcpSchemaValidity extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMcpSchemaIssues'],
+      requiredArtifacts: ['WebMCPTools', 'WebMcpSchemaIssues'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -115,6 +115,13 @@ class WebMcpSchemaValidity extends Audit {
 
     const hasErrors =
     sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
+    const hasTools = artifacts.WebMCPTools && artifacts.WebMCPTools.length > 0;
+    if (!hasTools && rawIssues.length === 0) {
+      return {
+        notApplicable: true,
+        score: 1,
+      };
+    }
 
     return {
       score: hasErrors ? 0 : (items.length > 0 ? 0.5 : 1),

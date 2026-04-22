@@ -9,12 +9,24 @@ import assert from 'assert/strict';
 import WebMcpSchemaValidityAudit from '../../audits/webmcp-schema-validity.js';
 
 describe('WebMcpSchemaValidity audit', () => {
-  it('passes when no issues were found', async () => {
+  it('passes when no issues were found (not applicable)', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPTools: [],
       WebMcpSchemaIssues: [],
     }, {});
     assert.equal(auditResult.score, 1);
+    assert.equal(auditResult.notApplicable, true);
   });
+
+  it('passes when valid tools are found without issues', async () => {
+    const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPTools: [{name: 'tool1'}],
+      WebMcpSchemaIssues: [],
+    }, {});
+    assert.equal(auditResult.score, 1);
+    assert.equal(auditResult.notApplicable, undefined);
+  });
+
 
   it('fails when WebMCP issues are found', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
