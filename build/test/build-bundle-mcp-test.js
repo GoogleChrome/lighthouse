@@ -26,8 +26,8 @@ const TEST_HTML = `
 </html>
 `;
 
-/** Categories included in the MCP bundle (accessibility, SEO, Best practices). */
-const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices'];
+/** Categories included in the MCP bundle (accessibility, SEO, Best practices, Agentic browsing). */
+const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices', 'agentic-browsing'];
 
 describe('MCP Bundle build', () => {
   const bundlePath = `${LH_ROOT}/dist/lighthouse-devtools-mcp-bundle.js`;
@@ -84,7 +84,8 @@ describe('MCP Bundle build', () => {
 
   describe('snapshot', () => {
     it('successfully runs snapshot on a local page', async () => {
-      const {snapshot} = await import(bundlePath);
+      const mcpBundle = await import(bundlePath);
+      const {snapshot} = mcpBundle;
       const browser = await puppeteer.launch({
         executablePath: getChromePath(),
       });
@@ -92,11 +93,9 @@ describe('MCP Bundle build', () => {
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
       const result = await snapshot(page, {
-        config: {
-          extends: 'lighthouse:default',
-          settings: {
-            onlyCategories: MCP_CATEGORIES,
-          },
+        config: mcpBundle.agenticBrowsingConfig,
+        settings: {
+          onlyCategories: MCP_CATEGORIES,
         },
       });
 
@@ -116,7 +115,8 @@ describe('MCP Bundle build', () => {
 
   describe('navigation', () => {
     it('successfully runs navigation', async () => {
-      const {navigation} = await import(bundlePath);
+      const mcpBundle = await import(bundlePath);
+      const {navigation} = mcpBundle;
 
       const testPageDir = path.join(LH_ROOT, '.tmp');
       if (!fs.existsSync(testPageDir)) {
@@ -137,11 +137,9 @@ describe('MCP Bundle build', () => {
         const page = await browser.newPage();
 
         const result = await navigation(page, testUrl, {
-          config: {
-            extends: 'lighthouse:default',
-            settings: {
-              onlyCategories: MCP_CATEGORIES,
-            },
+          config: mcpBundle.agenticBrowsingConfig,
+          settings: {
+            onlyCategories: MCP_CATEGORIES,
           },
         });
 
@@ -164,7 +162,8 @@ describe('MCP Bundle build', () => {
 
   describe('generateReport', () => {
     it('generates HTML report from LHR result', async () => {
-      const {snapshot, generateReport} = await import(bundlePath);
+      const mcpBundle = await import(bundlePath);
+      const {snapshot, generateReport} = mcpBundle;
 
       const browser = await puppeteer.launch({
         executablePath: getChromePath(),
@@ -173,11 +172,9 @@ describe('MCP Bundle build', () => {
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
       const result = await snapshot(page, {
-        config: {
-          extends: 'lighthouse:default',
-          settings: {
-            onlyCategories: MCP_CATEGORIES,
-          },
+        config: mcpBundle.agenticBrowsingConfig,
+        settings: {
+          onlyCategories: MCP_CATEGORIES,
         },
       });
 
@@ -190,7 +187,8 @@ describe('MCP Bundle build', () => {
     });
 
     it('generates JSON report from LHR result', async () => {
-      const {snapshot, generateReport} = await import(bundlePath);
+      const mcpBundle = await import(bundlePath);
+      const {snapshot, generateReport} = mcpBundle;
 
       const browser = await puppeteer.launch({
         executablePath: getChromePath(),
@@ -199,11 +197,9 @@ describe('MCP Bundle build', () => {
       await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
 
       const result = await snapshot(page, {
-        config: {
-          extends: 'lighthouse:default',
-          settings: {
-            onlyCategories: MCP_CATEGORIES,
-          },
+        config: mcpBundle.agenticBrowsingConfig,
+        settings: {
+          onlyCategories: MCP_CATEGORIES,
         },
       });
 
