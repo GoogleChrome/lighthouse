@@ -178,6 +178,8 @@ function createAxeRuleResultArtifact(result) {
     tags: result.tags,
     nodes,
     error,
+    help: result.help,
+    description: result.description,
   };
 }
 /* c8 ignore stop */
