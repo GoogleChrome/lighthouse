@@ -387,6 +387,7 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
       path.join(nodeModulePath, 'LICENSE'),
       path.join(nodeModulePath, 'LICENSE.txt'),
       path.join(nodeModulePath, 'LICENSE.md'),
+      path.join(nodeModulePath, 'license.md'),
       path.join(nodeModulePath, 'LICENSE.MIT'),
       path.join(nodeModulePath, 'LICENSE.APACHE'),
     ];
