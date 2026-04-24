@@ -45,7 +45,7 @@ const foldersWithStrings = [
 const ignoredPathComponents = [
   '**/.git/**',
   '**/scripts/**',
-  '**/node_modules/!(lighthouse-stack-packs)/**', // ignore all node modules *except* stack packs
+  '**/node_modules/!(lighthouse-stack-packs|.pnpm)/**', // ignore all node modules *except* stack packs and pnpm store
   '**/core/lib/bf-cache-strings.js',
   '**/core/lib/deprecations-strings.js',
   '**/core/lib/stack-packs.js',
@@ -561,10 +561,19 @@ async function collectAllStringsInDir(dir) {
   const strings = {};
 
   const globPattern = path.join(path.relative(LH_ROOT, dir), '/**/*.js');
+  // If we are scanning a directory in node_modules (like stack packs),
+  // don't ignore node_modules components within it.
+  const ignore = dir.includes('node_modules') ?
+      ignoredPathComponents.filter(p => !p.includes('node_modules')) :
+      ignoredPathComponents;
+  console.log('globPattern:', globPattern);
+  console.log('ignore:', ignore);
   const files = glob.sync(globPattern, {
     cwd: LH_ROOT,
-    ignore: ignoredPathComponents,
+    ignore,
+    follow: true, // Follow symlinks in pnpm structure
   });
+  console.log('Found files:', files.length);
 
   for (const relativeToRootPath of files) {
     const absolutePath = path.join(LH_ROOT, relativeToRootPath);
@@ -606,7 +615,14 @@ async function collectAllStringsInDir(dir) {
         placeholders,
       };
 
-      const messageKey = `${relativeToRootPath} | ${key}`;
+      let normalizedPath = relativeToRootPath;
+      if (normalizedPath.includes('.pnpm')) {
+        normalizedPath = normalizedPath.replace(/node_modules\/\.pnpm\/[^/]+\/node_modules\//, 'node_modules/');
+      }
+      const messageKey = `${normalizedPath} | ${key}`;
+      if (normalizedPath.includes('lighthouse-stack-packs')) {
+        console.log('Constructed messageKey:', messageKey);
+      }
       strings[messageKey] = ctc;
     }
   }
@@ -766,7 +782,7 @@ function checkKnownFixedCollisions(strings) {
       'Use the $MARKDOWN_SNIPPET_0$ component instead of $MARKDOWN_SNIPPET_1$ to automatically lazy-load images. $LINK_START_0$Learn more$LINK_END_0$.',
       'Use the $MARKDOWN_SNIPPET_0$ component instead of $MARKDOWN_SNIPPET_1$ to automatically lazy-load images. $LINK_START_0$Learn more$LINK_END_0$.',
       'Use the $MARKDOWN_SNIPPET_0$ component instead of $MARKDOWN_SNIPPET_1$ to automatically optimize image format. $LINK_START_0$Learn more$LINK_END_0$.',
-      'Use the $MARKDOWN_SNIPPET_0$ component instead of $MARKDOWN_SNIPPET_1$ to automatically optimize image format. $LINK_START_0$Learn more$LINK_END_0$.',
+      'Use the $MARKDOWN_SNIPPET_0$ component instead of $MARKDOWN_SNIPPET_1$ to automatically optimize image format. $LINK_START_0$Learn more$LINK_END_0$.'
     ]);
   } catch (err) {
     console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');
