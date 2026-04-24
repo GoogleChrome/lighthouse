@@ -29,7 +29,7 @@ echo "DEVTOOLS_PATH: $DEVTOOLS_PATH"
 if [ ! -d "$DEVTOOLS_PATH" ]; then
   echo "No devtools found at $DEVTOOLS_PATH."
   if [ "$DEVTOOLS_PATH" = "$DEFAULT_DEVTOOLS_PATH" ]; then
-    echo "Have you run 'yarn test-devtools' yet?"
+    echo "Have you run 'pnpm test-devtools' yet?"
   fi
 
   exit 1
@@ -41,7 +41,7 @@ if ! which gn ; then
   export PATH=$DEPOT_TOOLS_PATH:$PATH
 fi
 
-yarn devtools "$DEVTOOLS_PATH"
+pnpm devtools "$DEVTOOLS_PATH"
 
 cd "$DEVTOOLS_PATH"
 if [[ "$CI" ]]; then

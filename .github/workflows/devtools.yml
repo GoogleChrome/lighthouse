@@ -25,10 +25,17 @@ jobs:
       with:
         path: lighthouse
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11.0.0-rc.5
+
     - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
         node-version: '22.19'
+        cache: 'pnpm'
+        cache-dependency-path: lighthouse/pnpm-lock.yaml
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -58,7 +65,7 @@ jobs:
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - run: yarn --frozen-lockfile --network-timeout 1000000
+    - run: pnpm install --frozen-lockfile
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
@@ -91,12 +98,19 @@ jobs:
       with:
         path: lighthouse
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11.0.0-rc.5
+
     - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
         node-version: '22.19'
+        cache: 'pnpm'
+        cache-dependency-path: lighthouse/pnpm-lock.yaml
 
-    - run: yarn --frozen-lockfile --network-timeout 1000000
+    - run: pnpm install --frozen-lockfile
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Set $PATH
@@ -141,10 +155,17 @@ jobs:
       with:
         path: lighthouse
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11.0.0-rc.5
+
     - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
         node-version: '22.19'
+        cache: 'pnpm'
+        cache-dependency-path: lighthouse/pnpm-lock.yaml
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -156,12 +177,12 @@ jobs:
           ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
 
-    - run: yarn --frozen-lockfile --network-timeout 1000000
+    - run: pnpm install --frozen-lockfile
       working-directory: ${{ github.workspace }}/lighthouse
 
     # This is only done because the import of `parseChromeFlags` in pptr-run-devtool.js triggers imports that eventually
     # fail because of how report-assets.js reads generated files.
-    - run: yarn build-report
+    - run: pnpm build-report
       working-directory: ${{ github.workspace }}/lighthouse
 
     # Since Ubuntu 23, dev builds of Chromium need this.
@@ -173,8 +194,8 @@ jobs:
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
-    - name: yarn smoke --runner devtools
-      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --debug
+    - name: pnpm smoke --runner devtools
+      run: pnpm smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --debug
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures

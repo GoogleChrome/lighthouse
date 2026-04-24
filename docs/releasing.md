@@ -91,8 +91,8 @@ git push --tags
 npm publish
 
 # Publish viewer and treemap.
-yarn deploy-viewer
-yarn deploy-treemap
+pnpm deploy-viewer
+pnpm deploy-treemap
 ```
 
 # Create a release on GitHub.
@@ -106,7 +106,7 @@ and re-publish them to the Chrome and Firefox extension stores if necessary.
 
 To test:
 
-- run `yarn build-extension`
+- run `pnpm build-extension`
 - go to chrome://extensions/
 - click "load packed", select `dist/extension-chrome-package`
 - manually test it
@@ -132,7 +132,7 @@ echo "Upload the package zip to CWS dev dashboard..."
 
 ```sh
 git checkout vx.x.x # Checkout the specific version.
-yarn devtools ~/src/devtools/devtools-frontend
+pnpm devtools ~/src/devtools/devtools-frontend
 
 cd ~/src/devtools/devtools-frontend
 git new-branch rls

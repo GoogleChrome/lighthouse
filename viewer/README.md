@@ -6,9 +6,9 @@ Online at https://googlechrome.github.io/lighthouse/viewer/
 
 Run the following in the root folder of a Lighthouse checkout:
 
-* `yarn`
-* `yarn build-viewer`
-* `yarn serve-gh-pages`
+* `pnpm install`
+* `pnpm build-viewer`
+* `pnpm serve-gh-pages`
 * `open http://localhost:7333/viewer/`
 
 This compiles and minifies `app/src/main.js`. Results are written to `dist/gh-pages/viewer/`.
@@ -18,7 +18,7 @@ This compiles and minifies `app/src/main.js`. Results are written to `dist/gh-pa
 Deploys should be done as part of the Lighthouse release process. To push the viewer to the `gh-pages` branch under `viewer/`, run the following in the root folder of a Lighthouse checkout:
 
 ```sh
-yarn deploy-viewer
+pnpm deploy-viewer
 ```
 
 For more information on deployment, see `releasing.md`.

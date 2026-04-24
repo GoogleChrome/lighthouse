@@ -5,10 +5,10 @@
 ## Development
 
 ```sh
-yarn serve-treemap
+pnpm serve-treemap
 
 # in separate terminal, start build watch
 # dependency: `brew install entr`
-find treemap | entr -s 'DEBUG=1 yarn build-treemap'
+find treemap | entr -s 'DEBUG=1 pnpm build-treemap'
 open http://localhost:7333/treemap/?debug
 ```

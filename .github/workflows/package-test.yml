@@ -19,13 +19,19 @@ jobs:
     - name: git clone
       uses: actions/checkout@v4
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11.0.0-rc.5
+
     - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
         node-version: '22.19'
+        cache: 'pnpm'
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
+    - run: pnpm install --frozen-lockfile
+    - run: pnpm build-report
 
     - run: bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
 

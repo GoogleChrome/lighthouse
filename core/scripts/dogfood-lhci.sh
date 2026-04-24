@@ -36,7 +36,7 @@ if ! echo "$CHANGED_FILES" | grep -E 'report|lhci' > /dev/null; then
 fi
 
 # Generate HTML reports in ./dist/sample-reports
-yarn vercel-build
+pnpm vercel-build
 
 # Install LHCI
 npm install -g @lhci/cli@next

@@ -59,8 +59,8 @@ The Node CLI provides the most flexibility in how Lighthouse runs can be configu
 
 ```sh
 npm install -g lighthouse
-# or use yarn:
-# yarn global add lighthouse
+# or use pnpm:
+# pnpm add -g lighthouse
 ```
 
 **Run it**: `lighthouse https://airhorner.com/`
@@ -270,13 +270,13 @@ for detailed information.
 ### Setup
 
 ```sh
-# yarn should be installed first
+# pnpm should be installed first
 
 git clone https://github.com/GoogleChrome/lighthouse
 
 cd lighthouse
-yarn
-yarn build-all
+pnpm install
+pnpm build-all
 ```
 
 ### Run
@@ -295,30 +295,30 @@ for more info.
 
 ```sh
 # lint and test all files
-yarn test
+pnpm test
 
 # run all unit tests
-yarn unit
+pnpm unit
 
 # run a given unit test (e.g. core/test/audits/byte-efficiency/uses-long-cache-ttl-test.js)
-yarn mocha uses-long-cache-ttl
+pnpm mocha uses-long-cache-ttl
 
 # watch for file changes and run tests
 #   Requires http://entrproject.org : brew install entr
-yarn watch
+pnpm watch
 
 ## run linting, unit, and smoke tests separately
-yarn lint
-yarn unit
-yarn smoke
+pnpm lint
+pnpm unit
+pnpm smoke
 
 ## run tsc compiler
-yarn type-check
+pnpm type-check
 ```
 
 ### Docs
 
-Some of our docs have tests that run only in CI by default. To modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
+Some of our docs have tests that run only in CI by default. To modify our documentation, you'll need to run `pnpm build-pack && pnpm test-docs` locally to make sure they pass.
 
 **Additional Dependencies**
 - `brew install jq`

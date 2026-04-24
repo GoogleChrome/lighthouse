@@ -29,14 +29,20 @@ jobs:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11.0.0-rc.5
+
     - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
         node-version: '22.19'
+        cache: 'pnpm'
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn type-check
-    - run: yarn build-all
+    - run: pnpm install --frozen-lockfile
+    - run: pnpm type-check
+    - run: pnpm build-all
 
     # Since Ubuntu 23, dev builds of Chromium need this.
     # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
@@ -46,24 +52,24 @@ jobs:
     - name: Install Chrome ToT
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
 
-    - name: yarn test-clients
-      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
-    - name: yarn test-docs
-      run: yarn test-docs
-    - name: yarn test-treemap
-      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
+    - name: pnpm test-clients
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh pnpm test-clients
+    - name: pnpm test-docs
+      run: pnpm test-docs
+    - name: pnpm test-treemap
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh pnpm test-treemap
 
-    - run: yarn diff:sample-json
-    - run: yarn diff:flow-sample-json
-    - run: yarn lint
+    - run: pnpm diff:sample-json
+    - run: pnpm diff:flow-sample-json
+    - run: pnpm lint
 
-    - run: yarn test-legacy-javascript
+    - run: pnpm test-legacy-javascript
       env:
         # https://github.com/nodejs/node/issues/51555#issuecomment-1974877052
         DISABLE_V8_COMPILE_CACHE: 1
-    - run: yarn i18n:checks
-    - run: yarn dogfood-lhci
-    - run: yarn generate-insight-audits
+    - run: pnpm i18n:checks
+    - run: pnpm dogfood-lhci
+    - run: pnpm generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code
@@ -76,7 +82,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
     - name: Store in buildtracker
       # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
-      run: yarn bt-cli upload-build || true
+      run: pnpm bt-cli upload-build || true
       env:
         # https://buildtracker.dev/docs/guides/github-actions#configuration
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}

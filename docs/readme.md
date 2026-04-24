@@ -5,7 +5,7 @@ internals, see [Lighthouse Architecture](architecture.md).
 ## Using programmatically
 
 The example below shows how to run Lighthouse programmatically as a Node module. It
-assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`).
+assumes you've installed Lighthouse as a dependency (`pnpm add -D lighthouse`).
 
 ```js
 import fs from 'fs';
@@ -90,7 +90,7 @@ For more information on the types of config you can provide, see [Lighthouse Con
 
 ## Testing on a site with authentication
 
-When installed globally via `npm i -g lighthouse` or `yarn global add lighthouse`,
+When installed globally via `npm i -g lighthouse` or `pnpm add -g lighthouse`,
 `chrome-debug` is added to your `PATH`. This binary launches a standalone Chrome
 instance with an open debugging port.
 

@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "install-all": "rm -rf /tmp/.junk && rm -f {auth,custom-gatherer-puppeteer,integration-test,type-checking}/yarn.lock && yarn --cwd auth/ --cache-folder /tmp/.junk && yarn --cwd integration-test/ --cache-folder /tmp/.junk && yarn --cwd custom-gatherer-puppeteer/ --cache-folder /tmp/.junk && yarn --cwd type-checking/ --cache-folder /tmp/.junk",
-    "integration-test": "yarn --cwd integration-test/ test",
-    "custom-gatherer-puppeteer-test": "yarn --cwd custom-gatherer-puppeteer/ test",
-    "type-checking-test": "yarn --cwd type-checking/ test",
+    "install-all": "rm -rf /tmp/.junk && rm -f {auth,custom-gatherer-puppeteer,integration-test,type-checking}/pnpm-lock.yaml && pnpm -C auth/ install --store-dir /tmp/.junk && pnpm -C integration-test/ install --store-dir /tmp/.junk && pnpm -C custom-gatherer-puppeteer/ install --store-dir /tmp/.junk && pnpm -C type-checking/ install --store-dir /tmp/.junk",
+    "integration-test": "pnpm -C integration-test/ test",
+    "custom-gatherer-puppeteer-test": "pnpm -C custom-gatherer-puppeteer/ test",
+    "type-checking-test": "pnpm -C type-checking/ test",
     "test": "bash test-recipes.sh"
   }
 }

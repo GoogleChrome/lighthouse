@@ -37,7 +37,7 @@ A PR for a new audit or changing an existing audit almost always needs the follo
 
 1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
 
-1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
+1. Run `pnpm update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
 ### Audit `description` Guidelines
 
@@ -76,16 +76,16 @@ A PR adding or changing a gatherer almost always needs to include the following:
 
    It's most important to get true end-to-end coverage, so be sure that audits that consume the new gatherer output are in the expectations. Artifacts can also have expectations for those intermediate results.
 
-1. **Golden artifacts**: `sample_v2.json` is generated from a set of artifacts that come from running LH against `dbw_tester.html`. Those artifacts likely need to be updated after gatherer changes with `yarn update:sample-artifacts`, but limit to just the artifact being altered if possible. For example:
+1. **Golden artifacts**: `sample_v2.json` is generated from a set of artifacts that come from running LH against `dbw_tester.html`. Those artifacts likely need to be updated after gatherer changes with `pnpm update:sample-artifacts`, but limit to just the artifact being altered if possible. For example:
 
    ```sh
    # update just the Scripts artifact
-   yarn update:sample-artifacts Scripts
+   pnpm update:sample-artifacts Scripts
    ```
 
-   This command works for updating `yarn update:sample-artifacts DevtoolsLog` or `Trace` as well, but the resulting `sample_v2.json` churn may be extensive and you might be better off editing manually.
+   This command works for updating `pnpm update:sample-artifacts DevtoolsLog` or `Trace` as well, but the resulting `sample_v2.json` churn may be extensive and you might be better off editing manually.
 
-1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
+1. Run `pnpm update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
 ## Protobuf errors
 
