@@ -37,6 +37,9 @@ import * as LH from '../types/lh.js';
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, config, page) {
+  if (typeof flags !== 'object' || flags === null) {
+    throw new Error('Flags must be an object');
+  }
   return navigation(page, url, {config, flags});
 }
 
