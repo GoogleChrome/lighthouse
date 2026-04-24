@@ -11,7 +11,7 @@ cd $LH_ROOT
 
 set -ex
 
-yarn upgrade --latest \
+pnpm update --latest \
     @paulirish/trace_engine \
     axe-core \
     chrome-devtools-frontend \
@@ -31,17 +31,18 @@ yarn upgrade --latest \
 node -e "
     const pkg = require('$LH_ROOT/package.json');
     const ver = pkg.dependencies['devtools-protocol'].replace('^', '');
-    pkg.resolutions['puppeteer/**/devtools-protocol'] = ver;
-    pkg.resolutions['puppeteer-core/**/devtools-protocol'] = ver;
+    pkg.pnpm = pkg.pnpm || {};
+    pkg.pnpm.overrides = pkg.pnpm.overrides || {};
+    pkg.pnpm.overrides['devtools-protocol'] = ver;
     require('fs').writeFileSync('$LH_ROOT/package.json', JSON.stringify(pkg, null, 2) + '\n');
 "
 
 # Do some stuff that may update checked-in files.
-yarn generate-insight-audits
-yarn build-all
-yarn update:sample-json
-yarn type-check
-yarn lint --fix
+pnpm generate-insight-audits
+pnpm build-all
+pnpm update:sample-json
+pnpm type-check
+pnpm lint --fix
 
 # Just print something nice to copy/paste as a PR description.
 
