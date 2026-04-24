@@ -140,9 +140,9 @@ async function inlineFs(code, filepath, trackedFiles) {
  * @return {Node}
  */
 function parseExpressionAt(input, offset, options) {
+  // @ts-expect-error - Constructor is protected in some versions of acorn types.
   const parser = new acorn.Parser(options, input, offset);
   parser.nextToken();
-  // @ts-expect-error - Not part of the current acorn types.
   return parser.parseMaybeAssign();
 }
 
