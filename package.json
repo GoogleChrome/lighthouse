@@ -148,7 +148,9 @@
     "core-js-compat": "^3.44.0",
     "cpy": "^8.1.2",
     "csv-validator": "^0.0.3",
+    "debug": "^4.4.3",
     "esbuild": "0.25.9",
+    "escape-string-regexp": "^5.0.0",
     "eslint": "^9.28.0",
     "eslint-config-google": "^0.14.0",
     "eslint-formatter-codeframe": "^7.32.1",
@@ -173,6 +175,7 @@
     "puppeteer": "^24.40.0",
     "resolve": "^1.22.10",
     "rollup-plugin-polyfill-node": "^0.12.0",
+    "rxjs": "^7.8.2",
     "source-map-support": "^0.5.21",
     "terser": "^5.18.2",
     "testdouble": "^3.20.2",
@@ -181,6 +184,7 @@
     "wait-for-expect": "^3.0.2",
     "webtreemap-cdt": "^3.2.1"
   },
+
   "dependencies": {
     "@paulirish/trace_engine": "0.0.64",
     "@sentry/node": "^9.28.1",
@@ -194,6 +198,7 @@
     "intl-messageformat": "^10.5.3",
     "jpeg-js": "^0.4.4",
     "js-library-detector": "^6.7.0",
+    "lighthouse": "link:",
     "lighthouse-logger": "^2.0.2",
     "lighthouse-stack-packs": "1.12.3",
     "lodash-es": "^4.17.21",
@@ -209,12 +214,6 @@
     "yargs": "^17.3.1",
     "yargs-parser": "^21.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "puppeteer/**/devtools-protocol": "0.0.1608973",
-      "puppeteer-core/**/devtools-protocol": "0.0.1608973"
-    }
-  },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
     "google",
@@ -227,5 +226,14 @@
     "url": "https://github.com/GoogleChrome/lighthouse/issues"
   },
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme",
+  "pnpm": {
+    "packageExtensions": {
+      "puppeteer-core": {
+        "dependencies": {
+          "rxjs": "^7.8.2"
+        }
+      }
+    }
+  },
   "packageManager": "pnpm@11.0.0-rc.5"
 }

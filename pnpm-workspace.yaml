@@ -1,0 +1,20 @@
+packages:
+  - "."
+  - "lighthouse-logger"
+
+allowBuilds:
+  core-js: true
+  esbuild: true
+  protobufjs: true
+  puppeteer: true
+
+overrides:
+  "devtools-protocol": "0.0.1608973"
+  lighthouse: 'link:'
+
+packageExtensions:
+  puppeteer-core:
+    dependencies:
+      rxjs: "^7.8.2"
+
+shamefully-hoist: true

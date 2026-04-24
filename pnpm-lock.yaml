@@ -4,6 +4,12 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  devtools-protocol: 0.0.1608973
+  lighthouse: 'link:'
+
+packageExtensionsChecksum: sha256-KAsMOOwpy/GqY9NY0wPCuCwI9F4S4ieG+NU2Q2aKbbg=
+
 importers:
 
   .:
@@ -44,6 +50,9 @@ importers:
       js-library-detector:
         specifier: ^6.7.0
         version: 6.7.0
+      lighthouse:
+        specifier: 'link:'
+        version: 'link:'
       lighthouse-logger:
         specifier: ^2.0.2
         version: 2.0.2
@@ -228,9 +237,15 @@ importers:
       csv-validator:
         specifier: ^0.0.3
         version: 0.0.3
+      debug:
+        specifier: ^4.4.3
+        version: 4.4.3
       esbuild:
         specifier: 0.25.9
         version: 0.25.9
+      escape-string-regexp:
+        specifier: ^5.0.0
+        version: 5.0.0
       eslint:
         specifier: ^9.28.0
         version: 9.28.0
@@ -303,6 +318,9 @@ importers:
       rollup-plugin-polyfill-node:
         specifier: ^0.12.0
         version: 0.12.0(rollup@3.30.0)
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -324,6 +342,15 @@ importers:
       webtreemap-cdt:
         specifier: ^3.2.1
         version: 3.2.1
+
+  lighthouse-logger:
+    dependencies:
+      debug:
+        specifier: ^4.4.1
+        version: 4.4.3
+      marky:
+        specifier: ^1.2.2
+        version: 1.2.2
 
 packages:
 
@@ -2080,7 +2107,7 @@ packages:
   chromium-bidi@14.0.0:
     resolution: {integrity: sha512-9gYlLtS6tStdRWzrtXaTMnqcM4dudNegMXJxkR0I/CXObHalYeYcAMPrL19eroNZHtJ8DQmu1E+ZNOYu/IXMXw==}
     peerDependencies:
-      devtools-protocol: '*'
+      devtools-protocol: 0.0.1608973
 
   ci-info@3.3.1:
     resolution: {integrity: sha512-SXgeMX9VwDe7iFFaEWkA5AstuER9YKqy4EhHqr4DVqkwmD9rpVimkMKWHdjn30Ja45txyjhSn63lVX69eVCckg==}
@@ -2394,9 +2421,6 @@ packages:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
 
-  devtools-protocol@0.0.1581282:
-    resolution: {integrity: sha512-nv7iKtNZQshSW2hKzYNr46nM/Cfh5SEvE2oV0/SEGgc9XupIY5ggf84Cz8eJIkBce7S3bmTAauFD6aysMpnqsQ==}
-
   devtools-protocol@0.0.1608973:
     resolution: {integrity: sha512-Tpm17fxYzt+J7VrGdc1k8YdRqS3YV7se/M6KeemEqvUbq/n7At1rWVuXMxQgpWkdwSdIEKYbU//Bve+Shm4YNQ==}
 
@@ -2503,6 +2527,10 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  escape-string-regexp@5.0.0:
+    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
+    engines: {node: '>=12'}
 
   escodegen@1.14.3:
     resolution: {integrity: sha512-qFcX0XJkdg+PB3xjZZG/wKSuT1PnQWx57+TVSjIMmILd2yC/6ByYElPwJnslDsuWuSAp4AwJGumarAAmJch5Kw==}
@@ -6903,9 +6931,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromium-bidi@14.0.0(devtools-protocol@0.0.1581282):
+  chromium-bidi@14.0.0(devtools-protocol@0.0.1608973):
     dependencies:
-      devtools-protocol: 0.0.1581282
+      devtools-protocol: 0.0.1608973
       mitt: 3.0.1
       zod: 3.24.2
 
@@ -7262,8 +7290,6 @@ snapshots:
 
   delayed-stream@1.0.0: {}
 
-  devtools-protocol@0.0.1581282: {}
-
   devtools-protocol@0.0.1608973: {}
 
   diff-sequences@28.0.2: {}
@@ -7414,6 +7440,8 @@ snapshots:
   escape-string-regexp@2.0.0: {}
 
   escape-string-regexp@4.0.0: {}
+
+  escape-string-regexp@5.0.0: {}
 
   escodegen@1.14.3:
     dependencies:
@@ -9144,9 +9172,10 @@ snapshots:
   puppeteer-core@24.40.0:
     dependencies:
       '@puppeteer/browsers': 2.13.0
-      chromium-bidi: 14.0.0(devtools-protocol@0.0.1581282)
+      chromium-bidi: 14.0.0(devtools-protocol@0.0.1608973)
       debug: 4.4.3
-      devtools-protocol: 0.0.1581282
+      devtools-protocol: 0.0.1608973
+      rxjs: 7.8.2
       typed-query-selector: 2.12.1
       webdriver-bidi-protocol: 0.4.1
       ws: 8.20.0
@@ -9159,9 +9188,9 @@ snapshots:
   puppeteer@24.40.0(typescript@5.8.2):
     dependencies:
       '@puppeteer/browsers': 2.13.0
-      chromium-bidi: 14.0.0(devtools-protocol@0.0.1581282)
+      chromium-bidi: 14.0.0(devtools-protocol@0.0.1608973)
       cosmiconfig: 9.0.0(typescript@5.8.2)
-      devtools-protocol: 0.0.1581282
+      devtools-protocol: 0.0.1608973
       puppeteer-core: 24.40.0
       typed-query-selector: 2.12.1
     transitivePeerDependencies:
