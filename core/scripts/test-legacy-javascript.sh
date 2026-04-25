@@ -24,7 +24,7 @@ fi
 
 printf "\n\nRunning test...\n"
 cd "$LH_ROOT/core/scripts/legacy-javascript"
-yarn
+pnpm install
 
 # This script will update the summary sizes file with the latest data.
 node run.js
