@@ -23,10 +23,10 @@ fi
 git checkout -f "v$VERSION"
 
 # Install the dependencies.
-yarn install
+pnpm install
 
 # Build everything
-yarn build-all
+pnpm build-all
 
 # Verify the npm package won't include unncessary files
 npm pack --dry-run

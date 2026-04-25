@@ -32,18 +32,18 @@ git branch -D "$BRANCH_NAME" || true
 git checkout -b "$BRANCH_NAME"
 
 # Install the dependencies.
-yarn install
+pnpm install
 
-yarn build-report
+pnpm build-report
 
 # Bump the version in package.json and others.
 node core/scripts/release/bump-versions.js $NEW_VERSION
 
 # Update the fixtures with the new version
-yarn update:sample-json
+pnpm update:sample-json
 
 # Create the changelog entry
-yarn changelog
+pnpm changelog
 
 # Add new contributors to changelog
 NEW_CONTRIBUTORS=$(node core/scripts/print-contributors.js v${OLD_VERSION} HEAD)
