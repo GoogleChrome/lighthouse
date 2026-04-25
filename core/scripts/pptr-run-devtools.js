@@ -11,14 +11,14 @@
  *
  * To use with locally built DevTools and Lighthouse, run (assuming devtools at ~/src/devtools/devtools-frontend):
  *    DEVTOOLS_PATH=~/src/devtools/devtools-frontend sh core/scripts/build-devtools.sh
- *    yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/LighthouseIntegration/gen/front_end
+ *    pnpm run-devtools --chrome-flags=--custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/LighthouseIntegration/gen/front_end
  *
  * Or with the DevTools in .tmp:
  *   bash core/test/devtools-tests/setup.sh
- *   yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/LighthouseIntegration/gen/front_end
+ *   pnpm run-devtools --chrome-flags=--custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/LighthouseIntegration/gen/front_end
  *
- * URL list file: yarn run-devtools < path/to/urls.txt
- * Single URL: yarn run-devtools "https://example.com"
+ * URL list file: pnpm run-devtools < path/to/urls.txt
+ * Single URL: pnpm run-devtools "https://example.com"
  */
 
 import fs from 'fs';
