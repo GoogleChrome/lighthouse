@@ -8,8 +8,8 @@
 
 set -ex
 
-yarn
-yarn upgrade --latest core-js core-js-compat caniuse-lite
+pnpm install
+pnpm update --latest core-js core-js-compat caniuse-lite
 node create-polyfill-module-data.js
 node run.js # needed for next step
 node create-polyfill-size-estimation.js
