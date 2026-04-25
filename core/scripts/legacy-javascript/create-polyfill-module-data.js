@@ -296,7 +296,11 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
     if (maybeGlobal && maybeGlobal.prototype) {
       const desc = Object.getOwnPropertyDescriptor(maybeGlobal.prototype, prop);
       if (desc !== undefined) {
-        data.push({name: `${className}.prototype.${prop}`, modules: [polyfillModuleName], corejs: true});
+        data.push({
+          name: `${className}.prototype.${prop}`,
+          modules: [polyfillModuleName],
+          corejs: true,
+        });
         continue;
       }
     }
