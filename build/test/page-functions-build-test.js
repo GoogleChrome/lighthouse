@@ -5,7 +5,7 @@
  */
 
 // Our page functions are very sensitive to mangling performed by bundlers. Incorrect
-// bundling will certainly result in `yarn test-bundle` or `yarn smoke --runner devtools` failing.
+// bundling will certainly result in `pnpm test-bundle` or `pnpm smoke --runner devtools` failing.
 // The bundled lighthouse is a huge beast and hard to debug, so instead we have these smaller bundles
 // which are much easier to reason about.
 
