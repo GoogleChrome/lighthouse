@@ -1,18 +1,18 @@
 packages:
-  - "."
-  - "lighthouse-logger"
-
+  - .
+  - lighthouse-logger
 allowBuilds:
   core-js: true
   esbuild: true
   protobufjs: true
   puppeteer: true
-
-
-
 packageExtensions:
   puppeteer-core:
     dependencies:
-      rxjs: "^7.8.2"
-
+      rxjs: ^7.8.2
 shamefully-hoist: true
+onlyBuiltDependencies:
+  - core-js
+  - esbuild
+  - protobufjs
+  - puppeteer
