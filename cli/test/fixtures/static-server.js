@@ -274,7 +274,7 @@ async function createServers() {
   return servers;
 }
 
-// If called directly (such as via `yarn static-server`) then start all of the servers.
+// If called directly (such as via `pnpm static-server`) then start all of the servers.
 if (wasInvokedDirectly) {
   createServers();
 }
