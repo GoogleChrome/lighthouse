@@ -12,7 +12,7 @@ import {swapFlowLocale} from '../../shared/localization/swap-flow-locale.js';
 import {flowResult} from './sample-flow';
 
 describe('Lighthouse Flow Report', () => {
-  console.log('\n✨ Be sure to have recently run this: yarn build-report');
+  console.log('\n✨ Be sure to have recently run this: pnpm build-report');
 
   let browser: Browser;
   let page: Page;
