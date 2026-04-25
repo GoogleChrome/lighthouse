@@ -42,6 +42,9 @@ const polyfills = getCoreJsPolyfillData();
  * @param {string[]} args
  */
 function runCommand(command, args) {
+  if (command === 'pnpm' && args[0] !== 'add' && args[0] !== 'remove') {
+    args.unshift('exec');
+  }
   return execFileAsync(command, args, {cwd: scriptDir});
 }
 
@@ -49,7 +52,7 @@ function runCommand(command, args) {
  * @param {string} version
  */
 async function installCoreJs(version) {
-  await runCommand('yarn', [
+  await runCommand('pnpm', [
     'add',
     '-D',
     `core-js@${version}`,
@@ -58,7 +61,7 @@ async function installCoreJs(version) {
 
 async function removeCoreJs() {
   try {
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'remove',
       'core-js',
     ]);
@@ -100,7 +103,7 @@ async function processVariant(options) {
 
     // Apply code transforms and inject require statements for polyfills.
     // Note: No babelrc will make babel a glorified `cp`.
-    const babelOutputBuffer = await runCommand('yarn', [
+    const babelOutputBuffer = await runCommand('pnpm', [
       'babel',
       `${dir}/main.js`,
       '--config-file', `${dir}/.babelrc`,
@@ -116,7 +119,7 @@ async function processVariant(options) {
     // browserify
 
     // Transform any require statements (like for core-js) into a big bundle.
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'browserify',
       `${dir}/main.transpiled.js`,
       '-o', `${dir}/main.bundle.browserify.js`,
@@ -125,7 +128,7 @@ async function processVariant(options) {
     ]);
 
     // Minify.
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'terser',
       `${dir}/main.bundle.browserify.js`,
       '-o', `${dir}/main.bundle.browserify.min.js`,
@@ -133,14 +136,14 @@ async function processVariant(options) {
     ]);
 
     // esbuild
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'esbuild',
       `${dir}/main.transpiled.js`,
       `--outfile=${dir}/main.bundle.esbuild.js`,
       '--bundle',
       '--sourcemap',
     ]);
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'esbuild',
       `${dir}/main.transpiled.js`,
       `--outfile=${dir}/main.bundle.esbuild.min.js`,
@@ -150,7 +153,7 @@ async function processVariant(options) {
     ]);
 
     // rollup
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'rollup',
       `${dir}/main.transpiled.js`,
       '--file',
@@ -160,7 +163,7 @@ async function processVariant(options) {
       '--plugin', '@rollup/plugin-commonjs',
       '--sourcemap',
     ]);
-    await runCommand('yarn', [
+    await runCommand('pnpm', [
       'rollup',
       `${dir}/main.transpiled.js`,
       '--file',

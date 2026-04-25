@@ -21,7 +21,7 @@ rm -rf lighthouse-main
 Install and run just your plugin:
 
 ```sh
-yarn
+pnpm install
 NODE_PATH=.. npx lighthouse -- https://example.com --plugins=lighthouse-plugin-example --only-categories=lighthouse-plugin-example --view
 ```
 
@@ -46,7 +46,7 @@ Finally, publish to NPM.
    * `npm install -D lighthouse lighthouse-plugin-example`
 1. To run your private lighthouse binary, you have three options
    1. `npx --no-install lighthouse -- https://example.com --plugins=lighthouse-plugin-example --view`
-   1. `yarn lighthouse https://example.com --plugins=lighthouse-plugin-example --view`
+   1. `pnpm exec lighthouse https://example.com --plugins=lighthouse-plugin-example --view`
    1. Add an npm script calling `lighthouse` and run that.
 
 

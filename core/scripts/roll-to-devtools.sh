@@ -37,8 +37,8 @@ mkdir -p "$fe_lh_dir"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
 
-yarn build-report
-yarn build-devtools
+pnpm build-report
+pnpm build-devtools
 
 # copy lighthouse-dt-bundle
 cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
@@ -104,4 +104,4 @@ Build documentation: https://github.com/GoogleChrome/lighthouse/blob/main/build/
 
 echo ""
 echo "Done. To run the e2e tests: "
-echo "    DEVTOOLS_PATH=\"$dt_dir\" yarn test-devtools"
+echo "    DEVTOOLS_PATH=\"$dt_dir\" pnpm test-devtools"
