@@ -29,7 +29,7 @@ function cleanAndFormatLHR(lhrString) {
 
   // TODO: Resolve the below so we don't need to force it to a boolean value:
   // 1) The string|boolean story for proto
-  // 2) CI gets a absolute path during yarn diff:sample-json
+  // 2) CI gets a absolute path during pnpm diff:sample-json
   lhr.configSettings.auditMode = true;
 
   // Set timing values, which change from run to run, to predictable values
