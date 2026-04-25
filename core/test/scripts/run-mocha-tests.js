@@ -6,7 +6,7 @@
 
 /**
  * @fileoverview
- * CLI tool for running mocha tests. Run with `yarn mocha`
+ * CLI tool for running mocha tests. Run with `pnpm mocha`
  */
 
 import fs from 'fs';
@@ -56,12 +56,12 @@ function getFailedTests() {
 // For now, we isolate a number of tests until they can be refactored.
 //
 // To run tests without isolation, and all in one process:
-//    yarn mocha --no-isolation --no-parallel core/test
+//    pnpm mocha --no-isolation --no-parallel core/test
 //
 // Because mocha workers can divide up test files that mess with global scope in a way that
 // _just happens_ to not cause anything to fail, use this command to verify that
 // all necessary tests are isolated:
-//    yarn mocha --no-parallel
+//    pnpm mocha --no-parallel
 // (also, just comment out the `testsToRunIsolated` below, as they won't impact this verification)
 const testsToIsolate = new Set([
   // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
@@ -181,7 +181,7 @@ const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg
   .map(pattern => {
     if (path.isAbsolute(pattern)) {
       // Allows this to work:
-      //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
+      //     pnpm mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
       return path.relative(LH_ROOT, pattern);
     } else {
       return pattern;
