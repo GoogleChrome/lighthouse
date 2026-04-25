@@ -22,7 +22,7 @@ colorText() {
 }
 
 colorText "Generating fresh flow result" "$purple"
-yarn update:flow-sample-json --output-path "$TMP_PATH/fresh_flow_result.json"
+pnpm update:flow-sample-json --output-path "$TMP_PATH/fresh_flow_result.json"
 
 colorText "Diff'ing baseline flow result against the fresh flow result" "$purple"
 
@@ -35,6 +35,6 @@ if [ $retVal -eq 0 ]; then
   colorText "✅  PASS. No change in the flow result." "$green"
 else
   colorText "❌  FAIL. Flow result has changed." "$red"
-  echo "Run \`yarn update:flow-sample-json\` to rebaseline the flow result."
+  echo "Run \`pnpm update:flow-sample-json\` to rebaseline the flow result."
 fi
 exit $retVal
