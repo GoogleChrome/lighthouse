@@ -11,10 +11,10 @@
 # usage:
 
 # default to checkout at ~/src/devtools/devtools-frontend
-#   yarn devtools
+#   pnpm devtools
 
 # with a custom devtools location (could be path to standalone checkout):
-#   yarn devtools ~/code/devtools/devtools-frontend
+#   pnpm devtools ~/code/devtools/devtools-frontend
 
 
 set -euo pipefail
