@@ -7,9 +7,9 @@ This runs the DevTools e2e tests with latest Lighthouse.
 ## Run
 
 ```sh
-yarn test-devtools
+pnpm test-devtools
 
-# Run the test runner, without getting the latest DevTools commits like `yarn test-devtools` does.
+# Run the test runner, without getting the latest DevTools commits like `pnpm test-devtools` does.
 # This still bundles Lighthouse + rolls to DevTools before running the tests.
-SKIP_DOWNLOADS=1 yarn test-devtools
+SKIP_DOWNLOADS=1 pnpm test-devtools
 ```
