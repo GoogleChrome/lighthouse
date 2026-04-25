@@ -7,7 +7,7 @@
  * @fileoverview - Used to manually examine the polyfills/transforms used on a page.
  *
  * USAGE:
- *   1. Run `yarn start <url to examine> -G`
+ *   1. Run `pnpm start <url to examine> -G`
  *   2. Run `node ./core/scripts/legacy-javascript/examine-latest-run.js`
  *   3. Inspect output for fishy looking polyfills.
  */
