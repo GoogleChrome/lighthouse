@@ -7,7 +7,7 @@ This tool creates many projects using specific babel transforms / polyfills (cal
 First, be sure to install this folder's dependencies:
 
 ```sh
-yarn
+pnpm install
 ```
 
 ## Updating polyfill data
