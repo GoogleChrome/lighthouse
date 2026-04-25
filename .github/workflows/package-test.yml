@@ -30,7 +30,7 @@ jobs:
         node-version: '22.19'
         cache: 'pnpm'
 
-    - run: pnpm install --frozen-lockfile
+    - run: pnpm install
     - run: pnpm build-report
 
     - run: bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh

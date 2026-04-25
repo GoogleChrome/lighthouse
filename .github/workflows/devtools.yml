@@ -65,7 +65,7 @@ jobs:
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - run: pnpm install --frozen-lockfile
+    - run: pnpm install
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
@@ -110,7 +110,7 @@ jobs:
         cache: 'pnpm'
         cache-dependency-path: lighthouse/pnpm-lock.yaml
 
-    - run: pnpm install --frozen-lockfile
+    - run: pnpm install
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Set $PATH
@@ -177,7 +177,7 @@ jobs:
           ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
 
-    - run: pnpm install --frozen-lockfile
+    - run: pnpm install
       working-directory: ${{ github.workspace }}/lighthouse
 
     # This is only done because the import of `parseChromeFlags` in pptr-run-devtool.js triggers imports that eventually
