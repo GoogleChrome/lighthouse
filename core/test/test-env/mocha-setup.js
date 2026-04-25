@@ -192,7 +192,7 @@ const rootHooks = {
 
     if (!process.env.SNAPSHOT_UPDATE && snapshotTestFailed) {
       process.on('exit', () => {
-        console.log('To update snapshots, run again with `yarn mocha -u`');
+        console.log('To update snapshots, run again with `pnpm mocha -u`');
       });
     }
 
