@@ -189,7 +189,7 @@ async function buildBundle(entryPath, distPath) {
       const standalonePath = path.join(LH_ROOT, 'dist/report/standalone.js');
       if (!fs.existsSync(standalonePath)) {
         throw new Error(
-          'dist/report/standalone.js not found. Run `yarn build-report` ' +
+          'dist/report/standalone.js not found. Run `pnpm build-report` ' +
           'before building the MCP bundle.'
         );
       }
