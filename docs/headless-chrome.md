@@ -89,7 +89,7 @@ curl -sS -X POST -H 'Content-Type: application/json' \
 Install:
 
 ```sh
-yarn add lighthouse
+pnpm add lighthouse
 ```
 
 Run it:
