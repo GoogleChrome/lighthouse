@@ -34,7 +34,7 @@ You could also set the `Cookie` header, but beware: it will [override any other 
 
 ## Option 4: Open a debug instance of Chrome and manually log in
 
-1. Globally install lighthouse: `npm i -g lighthouse` or `yarn global add lighthouse`. `chrome-debug` is now in your PATH. This binary launches a standalone Chrome instance with an open debugging port.
+1. Globally install lighthouse: `npm i -g lighthouse` or `pnpm add -g lighthouse`. `chrome-debug` is now in your PATH. This binary launches a standalone Chrome instance with an open debugging port.
 1. Run chrome-debug. This logs the debugging port of your Chrome instance.
 1. Navigate to your site and log in.
 1. In a separate terminal, run `lighthouse http://mysite.com --disable-storage-reset --port port-number`, using the port number from chrome-debug.
