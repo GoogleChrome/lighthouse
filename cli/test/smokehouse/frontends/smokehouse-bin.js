@@ -48,7 +48,7 @@ const runnerPaths = {
  */
 function getDefinitionsToRun(allTestDefns, requestedIds, excludedTests) {
   let smokes = [];
-  const usage = `    ${log.dim}yarn smoke ${allTestDefns.map(t => t.id).join(' ')}${log.reset}\n`;
+  const usage = `    ${log.dim}pnpm smoke ${allTestDefns.map(t => t.id).join(' ')}${log.reset}\n`;
 
   if (requestedIds.length === 0) {
     smokes = [...allTestDefns];
@@ -184,7 +184,7 @@ async function begin() {
 
   const runnerPath = runnerPaths[/** @type {keyof typeof runnerPaths} */ (argv.runner)];
   if (argv.runner === 'bundle') {
-    console.log('\n✨ Be sure to have recently run this: yarn build-all');
+    console.log('\n✨ Be sure to have recently run this: pnpm build-all');
   }
   const {runLighthouse, setup} = await import(runnerPath);
   runLighthouse.runnerName = argv.runner;
@@ -277,7 +277,7 @@ async function begin() {
   }
 
   if (!smokehouseResult.success && testResultsToOutput) {
-    const cmd = `yarn smoke ${testResultsToOutput.map(r => r.id).join(' ')}`;
+    const cmd = `pnpm smoke ${testResultsToOutput.map(r => r.id).join(' ')}`;
     console.log(`rerun failures: ${cmd}`);
   }
 
