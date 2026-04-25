@@ -15,11 +15,11 @@ Additionally, there are build processes for:
 To build the Lighthouse bundle for CDT and roll them into a local checkout of the CDT repo:
 
 ```sh
-yarn devtools
-DEBUG=1 yarn devtools # or use this command to skip minification
+pnpm devtools
+DEBUG=1 pnpm devtools # or use this command to skip minification
 ```
 
-One of the commands that the above runs - `yarn build-devtools` - creates these files:
+One of the commands that the above runs - `pnpm build-devtools` - creates these files:
 
 ```
 dist
