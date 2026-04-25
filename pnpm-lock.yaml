@@ -50,8 +50,8 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0
       lighthouse:
-        specifier: 'link:'
-        version: 'link:'
+        specifier: file:.
+        version: 'file:'
       lighthouse-logger:
         specifier: ^2.0.2
         version: 2.0.2
@@ -292,7 +292,7 @@ importers:
         version: 12.2.0
       lighthouse-plugin-soft-navigation:
         specifier: ^1.1.0
-        version: 1.1.0(lighthouse@)
+        version: 1.1.0(lighthouse@file:)
       magic-string:
         specifier: ^0.25.7
         version: 0.25.9
@@ -4559,11 +4559,17 @@ packages:
 
   lighthouse-plugin-soft-navigation@1.1.0:
     resolution: {integrity: sha512-mQTzw0TOdTNytzcmxjciL3ptPvZIY2qkOeyGNVqbrdjuXo9gY4idseVJzaTNImjE+RMf8nq6vd5jq7k8COJUFQ==}
+    version: 1.1.0
     peerDependencies:
       lighthouse: '>=10.0.0'
 
   lighthouse-stack-packs@1.12.3:
     resolution: {integrity: sha512-d8IsOpE83kbANgnM+Tp8+x6HcMpX9o2ITBiUERssgzAIFdZCQzs/f4k6D0DLQTE59enml9mbAOU52Wu35exWtg==}
+
+  'lighthouse@file:':
+    resolution: {directory: '', type: directory}
+    engines: {node: '>=22.19'}
+    hasBin: true
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
@@ -11189,11 +11195,45 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  lighthouse-plugin-soft-navigation@1.1.0(lighthouse@):
+  lighthouse-plugin-soft-navigation@1.1.0(lighthouse@file:):
     dependencies:
-      lighthouse: 'link:'
+      lighthouse: 'file:'
 
   lighthouse-stack-packs@1.12.3: {}
+
+  'lighthouse@file:':
+    dependencies:
+      '@paulirish/trace_engine': 0.0.64
+      '@sentry/node': 9.28.1
+      axe-core: 4.11.2
+      chrome-launcher: 1.2.1
+      configstore: 7.0.0
+      csp_evaluator: 1.1.5
+      devtools-protocol: 0.0.1608973
+      enquirer: 2.3.6
+      http-link-header: 1.1.1
+      intl-messageformat: 10.5.3
+      jpeg-js: 0.4.4
+      js-library-detector: 6.7.0
+      lighthouse-logger: 2.0.2
+      lighthouse-stack-packs: 1.12.3
+      lodash-es: 4.17.21
+      lookup-closest-locale: 6.2.0
+      open: 8.4.0
+      puppeteer-core: 24.40.0
+      robots-parser: 3.0.1
+      speedline-core: 1.4.3
+      third-party-web: 0.29.0
+      tldts-icann: 7.0.27
+      web-features: 3.24.0
+      ws: 7.4.6
+      yargs: 17.7.2
+      yargs-parser: 21.1.1
+    transitivePeerDependencies:
+      - bare-buffer
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   lines-and-columns@1.2.4: {}
 
