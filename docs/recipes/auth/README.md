@@ -20,12 +20,12 @@ The server responds with different HTML for each of these pages and session stat
 (Optional) To run the server:
 ```sh
 # be in root lighthouse directory
-yarn # install global project deps
-yarn build-report
-yarn build-pack
+pnpm install # install global project deps
+pnpm build-report
+pnpm build-pack
 cd docs/recipes/auth
-yarn # install deps related to just this recipe
-yarn start # start the server on http://localhost:10632
+pnpm install # install deps related to just this recipe
+pnpm start # start the server on http://localhost:10632
 ```
 
 Now that the server is started, let's login with Puppeteer and then run Lighthouse:
