@@ -123,6 +123,7 @@ class ProtocolSession extends CrdpEventEmitter {
       }));
     });
 
+    // @ts-expect-error - Type mismatch due to resolved devtools-protocol versions in pnpm.
     const resultPromise = this._cdpSession.send(method, ...params, {
       // Add 50ms to the Puppeteer timeout to ensure the Lighthouse timeout finishes first.
       timeout: timeoutMs + PPTR_BUFFER,
