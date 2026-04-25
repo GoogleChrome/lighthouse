@@ -199,7 +199,7 @@ Smokehouse comes with a core set of test definitions, but it can run any set of 
   ```
 - with `lighthouse` installed as a dependency/peer dependency, run
 
-  `yarn smokehouse --tests-path plugin-tests.js`
+  `pnpm exec smokehouse --tests-path plugin-tests.js`
 
   or
 
