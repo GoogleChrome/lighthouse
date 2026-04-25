@@ -69,13 +69,6 @@ function pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes) {
 
   for (const [messageId, {message}] of Object.entries(localeLhl)) {
     const goldenArgumentIds = goldenLocaleArgumentIds[messageId];
-    if (messageId.includes('lighthouse-stack-packs')) {
-      console.log('Checking key in pruneLocale:', messageId);
-      if (!goldenArgumentIds) console.log('-> Not found in golden!');
-      else if (!equalArguments(goldenArgumentIds, message)) console.log('-> Arguments mismatch!');
-      else console.log('-> OK, keeping!');
-    }
-
     if (!goldenArgumentIds) {
       logRemoval(alreadyLoggedPrunes, messageId, 'it is no longer found in Lighthouse');
       continue;
@@ -104,9 +97,6 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
   const goldenLocaleArgumentIds = {};
 
   for (const [messageId, {message}] of Object.entries(goldenLhl)) {
-    if (messageId.includes('lighthouse-stack-packs')) {
-      console.log('Found golden key in prune:', messageId);
-    }
     const parsedMessageElements = MessageParser.parse(escapeIcuMessage(message), {ignoreTag: true});
     const goldenArgumentElements = collectAllCustomElementsFromICU(parsedMessageElements);
     const goldenArgumentIds = [...goldenArgumentElements.keys()].sort();
@@ -129,8 +119,6 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
  */
 function pruneObsoleteLhlMessages() {
   const goldenLhl = readJson('shared/localization/locales/en-US.json');
-  const keys = Object.keys(goldenLhl).filter(k => k.includes('lighthouse-stack-packs'));
-  console.log('Golden keys in prune script:', keys.length);
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
@@ -149,7 +137,6 @@ function pruneObsoleteLhlMessages() {
   const alreadyLoggedPrunes = new Set();
   for (const localePath of localePaths) {
     const absoluteLocalePath = path.join(LH_ROOT, localePath);
-    console.log('Pruning file:', localePath);
     // Re-read data so that the file is pulled again once updated by a collect-strings run.
     const localeLhl = readJson(absoluteLocalePath);
     const prunedLocale = pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes);

@@ -566,14 +566,11 @@ async function collectAllStringsInDir(dir) {
   const ignore = dir.includes('node_modules') ?
       ignoredPathComponents.filter(p => !p.includes('node_modules')) :
       ignoredPathComponents;
-  console.log('globPattern:', globPattern);
-  console.log('ignore:', ignore);
   const files = glob.sync(globPattern, {
     cwd: LH_ROOT,
     ignore,
     follow: true, // Follow symlinks in pnpm structure
   });
-  console.log('Found files:', files.length);
 
   for (const relativeToRootPath of files) {
     const absolutePath = path.join(LH_ROOT, relativeToRootPath);
@@ -615,14 +612,8 @@ async function collectAllStringsInDir(dir) {
         placeholders,
       };
 
-      let normalizedPath = relativeToRootPath;
-      if (normalizedPath.includes('.pnpm')) {
-        normalizedPath = normalizedPath.replace(/node_modules\/\.pnpm\/[^/]+\/node_modules\//, 'node_modules/');
-      }
+      const normalizedPath = relativeToRootPath.replace(/^.*node_modules\/.+\/node_modules\//, 'node_modules/');
       const messageKey = `${normalizedPath} | ${key}`;
-      if (normalizedPath.includes('lighthouse-stack-packs')) {
-        console.log('Constructed messageKey:', messageKey);
-      }
       strings[messageKey] = ctc;
     }
   }
