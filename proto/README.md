@@ -6,7 +6,7 @@ Note that they [changed the versioning scheme](https://developers.google.com/pro
 
 
 1. Install the proto compiler with `brew install protobuf`, or something [like this](https://github.com/GoogleChrome/lighthouse/blob/9fd45c5e2b92e3b1f10b642ea631dd5a9598f5ee/.github/workflows/unit.yml#L32-L45). Note: it's a good idea to [use a virtual environment](https://realpython.com/python-virtual-environments-a-primer/) rather than installing it globally
-1. Run `yarn test-proto`
+1. Run `pnpm test-proto`
 
 ## Proto Resources
 - [Protobuf GitHub Repo](https://github.com/protocolbuffers/protobuf)
@@ -24,5 +24,5 @@ LHR round trip flow:
 ```
 
 ## Hacking Hints
-- Clean out compiled proto and json with `yarn clean`
+- Clean out compiled proto and json with `pnpm clean`
 - Round trips might jumble the order of your JSON keys and lists!
