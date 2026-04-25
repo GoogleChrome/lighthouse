@@ -29,7 +29,7 @@ const getAuditsOfCategory = category => defaultConfig.categories[category].audit
 
 // TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', () => {
-  console.log('\n✨ Be sure to have recently run this: yarn build-viewer');
+  console.log('\n✨ Be sure to have recently run this: pnpm build-viewer');
 
   /** @type {import('puppeteer').Browser} */
   let browser;
