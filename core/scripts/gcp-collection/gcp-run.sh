@@ -21,9 +21,9 @@ git clone https://github.com/GoogleChrome/lighthouse.git
 cd ./lighthouse
 git checkout -f "$LIGHTHOUSE_GIT_REF"
 
-sudo yarn --frozen-lockfile
-sudo yarn build-report
-sudo yarn link
+sudo pnpm install --no-frozen-lockfile
+sudo pnpm build-report
+sudo pnpm link --global
 
 cd /home/lighthouse
 

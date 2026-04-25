@@ -22,7 +22,7 @@ curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 # Install dependencies
 sudo apt-get update
 sudo apt-get install -y xvfb nodejs google-chrome-stable google-cloud-sdk git zip golang-go
-sudo npm install -g yarn
+sudo npm install -g pnpm
 
 # Add a lighthouse user
 sudo useradd -m -s $(which bash) -G sudo lighthouse || echo "Lighthouse user already exists!"
