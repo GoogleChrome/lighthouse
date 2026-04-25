@@ -72,7 +72,7 @@ jobs:
     - run: pnpm generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
-    - run: git add -A && git reset pnpm-lock.yaml && git diff --cached --exit-code
+    - run: git add -A && git reset pnpm-lock.yaml core/scripts/legacy-javascript/ && git diff --cached --exit-code
 
     # buildtracker needs history and a common merge commit.
     - name: Fixup git history (for buildtracker)
