@@ -58,21 +58,24 @@ function prompt() {
  * @return {Promise<boolean>}
  */
 function askPermission() {
-  return Promise.resolve().then(_ => {
+  try {
     const configstore = new Configstore('lighthouse');
     let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
     if (typeof isErrorReportingEnabled === 'boolean') {
       return Promise.resolve(isErrorReportingEnabled);
     }
 
+    // @ts-expect-error - Type mismatch due to missing types for enquirer
     return prompt()
       .then(response => {
         isErrorReportingEnabled = response;
         configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
         return isErrorReportingEnabled;
       });
-  // Error accessing configstore; default to false.
-  }).catch(_ => false);
+  } catch (_) {
+    // Error accessing configstore; default to false.
+    return Promise.resolve(false);
+  }
 }
 
 export {
