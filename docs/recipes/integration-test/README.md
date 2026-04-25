@@ -6,14 +6,14 @@ See [example-lh-auth.test.js](./example-lh-auth.test.js) for an example of how t
 # Be in this folder: docs/recipes/integration-test
 
 # Build Lighthouse
-yarn --cwd ../../..
-yarn --cwd ../../.. build-report
-yarn --cwd ../../.. build-pack
+pnpm -C ../../.. install
+pnpm -C ../../.. build-report
+pnpm -C ../../.. build-pack
 
 # Install deps for this recipe.
-yarn
-yarn --cwd ../auth
+pnpm install
+pnpm -C ../auth install
 
 # Run the recipe.
-yarn test
+pnpm test
 ```
