@@ -24,7 +24,7 @@ function getTextEncodingCode() {
 }
 
 describe('Lighthouse Treemap', () => {
-  console.log('\n✨ Be sure to have recently run this: yarn build-treemap');
+  console.log('\n✨ Be sure to have recently run this: pnpm build-treemap');
 
   /** @type {import('puppeteer').Browser} */
   let browser;
