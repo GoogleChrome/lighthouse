@@ -137,6 +137,7 @@ const modulesToSkip = [
   'es.function.has-instance',
   'es.function.name',
   'es.global-this',
+  'es.json.stringify',
   'es.json.to-string-tag',
   'es.math.to-string-tag',
   'es.number.constructor',
@@ -216,8 +217,6 @@ const modulesToSkip = [
   'es.typed-array.sort',
   'es.typed-array.subarray',
   'es.typed-array.to-locale-string',
-  'es.typed-array.to-reversed',
-  'es.typed-array.to-sorted',
   'es.typed-array.to-string',
   'es.unescape',
   'esnext.aggregate-error',
@@ -273,12 +272,6 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
   className = className[0].toUpperCase() + className.slice(1);
   if (parts[0] === 'json') className = 'JSON';
   if (parts[0] === 'url') className = 'URL';
-  if (parts[0] === 'url-search-params') className = 'URLSearchParams';
-
-  if (parts[0] === 'typed-array') {
-    console.log(`skipping typed-array polyfill: ${polyfillModuleName}`);
-    continue;
-  }
 
   let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : '';
   if (parts[1] === 'to-json') prop = 'toJSON';
@@ -293,17 +286,14 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
 
     data.push({name: className, modules: [polyfillModuleName], corejs: true});
   } else {
-    if (maybeGlobal && maybeGlobal.prototype) {
-      const desc = Object.getOwnPropertyDescriptor(maybeGlobal.prototype, prop);
-      if (desc !== undefined) {
-        data.push({
-          name: `${className}.prototype.${prop}`,
-          modules: [polyfillModuleName],
-          corejs: true,
-        });
+    try {
+      const instance = maybeGlobal();
+      if (instance[prop] !== undefined) {
+        // eslint-disable-next-line max-len
+        data.push({name: `${className}.prototype.${prop}`, modules: [polyfillModuleName], corejs: true});
         continue;
       }
-    }
+    } catch {} // example polyfill that can't be constructed: es.math.acosh (Math.acosh). handled below.
 
     // Should be a global then. Look for a property on it.
     if (maybeGlobal && Object.hasOwn(maybeGlobal, prop)) {
