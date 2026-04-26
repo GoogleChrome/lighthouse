@@ -14,7 +14,7 @@ const scriptDir = `${LH_ROOT}/core/scripts/legacy-javascript`;
 export function makeHash() {
   return crypto
     .createHash('sha256')
-    .update(fs.readFileSync(`${scriptDir}/yarn.lock`, 'utf8'))
+    .update(fs.readFileSync(`${LH_ROOT}/pnpm-lock.yaml`, 'utf8'))
     .update(fs.readFileSync(`${scriptDir}/run.js`, 'utf8'))
     .update(fs.readFileSync(`${scriptDir}/main.js`, 'utf8'))
     /* eslint-disable max-len */
