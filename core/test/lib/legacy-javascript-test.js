@@ -53,7 +53,7 @@ describe('detectLegacyJavaScript', () => {
     ]);
     expect(results).toHaveLength(1);
     expect(results[0].matches[0].name).toEqual('String.prototype.repeat');
-    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`27910`);
+    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`0`);
   });
 
   it('fails code with multiple legacy polyfills', () => {

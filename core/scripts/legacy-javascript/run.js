@@ -58,6 +58,7 @@ const allVariantPromises = [];
 
 /**
  * @param {{group: string, name: string, code: string, babelrc?: *}} options
+ * @param {string} variantDir
  */
 function createVariant(options, variantDir) {
   allVariantPromises.push(processVariant(options, variantDir));
@@ -273,10 +274,12 @@ async function main() {
     private: true,
     devDependencies: {
       'core-js': coreJsVersion,
-    }
+    },
   }));
   // Use --no-frozen-lockfile as suggested by user to handle dynamic install
-  await runCommand('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], {cwd: variantDir});
+  await runCommand('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], {
+    cwd: variantDir,
+  });
 
   for (const plugin of plugins) {
     createVariant({
@@ -293,22 +296,22 @@ async function main() {
 
   const major = coreJsVersion.split('.')[0];
 
-    const moduleOptions = [
-      {baseline: false, bugfixes: false},
-      {baseline: true, bugfixes: false},
-      {baseline: true, bugfixes: true},
-    ];
-    for (const {baseline, bugfixes} of moduleOptions) {
-        createVariant({
-          group: `core-js-${major}-preset-env`,
-          name: `baseline_${baseline}_bugfixes_${bugfixes}`,
-          code: `require('core-js');\n${mainCode}`,
-          babelrc: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  targets: baseline ? [
+  const moduleOptions = [
+    {baseline: false, bugfixes: false},
+    {baseline: true, bugfixes: false},
+    {baseline: true, bugfixes: true},
+  ];
+  for (const {baseline, bugfixes} of moduleOptions) {
+    createVariant({
+      group: `core-js-${major}-preset-env`,
+      name: `baseline_${baseline}_bugfixes_${bugfixes}`,
+      code: `require('core-js');\n${mainCode}`,
+      babelrc: {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: baseline ? [
                     'chrome >0 and last 2.5 years',
                     'edge >0 and last 2.5 years',
                     'safari >0 and last 2.5 years',
@@ -317,36 +320,35 @@ async function main() {
                     'and_ff >0 and last 2.5 years',
                     'ios >0 and last 2.5 years',
                   ] : undefined,
-                  useBuiltIns: 'entry',
-                  corejs: major,
-                  bugfixes,
-                  debug: true,
-                },
-              ],
-            ],
-          },
-        }, variantDir);
-    }
-
-    for (const polyfill of polyfills) {
-      createVariant({
-        group: `core-js-${major}-only-polyfill`,
-        name: polyfill.name,
-        code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
-      }, variantDir);
-    }
-
-    const allPolyfillCode = polyfills.map(polyfill => {
-      return makeRequireCodeForPolyfill(polyfill.coreJs3Module);
-    }).join('\n');
-    createVariant({
-      group: 'all-legacy-polyfills',
-      name: `all-legacy-polyfills-core-js-${major}`,
-      code: allPolyfillCode,
+              useBuiltIns: 'entry',
+              corejs: major,
+              bugfixes,
+              debug: true,
+            },
+          ],
+        ],
+      },
     }, variantDir);
-
-    await waitForVariants();
   }
+
+  for (const polyfill of polyfills) {
+    createVariant({
+      group: `core-js-${major}-only-polyfill`,
+      name: polyfill.name,
+      code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
+    }, variantDir);
+  }
+
+  const allPolyfillCode = polyfills.map(polyfill => {
+    return makeRequireCodeForPolyfill(polyfill.coreJs3Module);
+  }).join('\n');
+  createVariant({
+    group: 'all-legacy-polyfills',
+    name: `all-legacy-polyfills-core-js-${major}`,
+    code: allPolyfillCode,
+  }, variantDir);
+
+  await waitForVariants();
 
   let summary;
 
