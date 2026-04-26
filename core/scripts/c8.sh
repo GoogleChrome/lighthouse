@@ -10,7 +10,7 @@ set -euxo pipefail
 
 echo $*
 
-node node_modules/.bin/c8 \
+node_modules/.bin/c8 \
   --include '{core,cli,viewer,treemap,build/plugins,report,flow-report}' \
   --exclude third_party \
   --exclude '**/test/' \
