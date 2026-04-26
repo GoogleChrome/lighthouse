@@ -41,32 +41,17 @@ const polyfills = getCoreJsPolyfillData();
  * @param {string} command
  * @param {string[]} args
  */
-function runCommand(command, args) {
-  if (command === 'pnpm' && args[0] !== 'add' && args[0] !== 'remove') {
+function runCommand(command, args, options = {}) {
+  if (command === 'pnpm' && !['add', 'remove', 'install'].includes(args[0])) {
     args.unshift('exec');
   }
-  return execFileAsync(command, args, {cwd: scriptDir});
+  return execFileAsync(command, args, {cwd: scriptDir, ...options});
 }
 
 /**
  * @param {string} version
  */
-async function installCoreJs(version) {
-  await runCommand('pnpm', [
-    'add',
-    '-D',
-    `core-js@${version}`,
-  ]);
-}
 
-async function removeCoreJs() {
-  try {
-    await runCommand('pnpm', [
-      'remove',
-      'core-js',
-    ]);
-  } catch (e) { }
-}
 
 /** @type {Promise<void>[]} */
 const allVariantPromises = [];
@@ -74,8 +59,8 @@ const allVariantPromises = [];
 /**
  * @param {{group: string, name: string, code: string, babelrc?: *}} options
  */
-function createVariant(options) {
-  allVariantPromises.push(processVariant(options));
+function createVariant(options, variantDir) {
+  allVariantPromises.push(processVariant(options, variantDir));
 }
 
 async function waitForVariants() {
@@ -85,10 +70,11 @@ async function waitForVariants() {
 
 /**
  * @param {{group: string, name: string, code: string, babelrc?: *}} options
+ * @param {string} variantDir
  */
-async function processVariant(options) {
+async function processVariant(options, variantDir) {
   const {group, name, code, babelrc} = options;
-  const dir = `${VARIANT_DIR}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
+  const dir = `${variantDir}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
 
   if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
     fs.mkdirSync(dir, {recursive: true});
@@ -280,6 +266,18 @@ function makeRequireCodeForPolyfill(module) {
 }
 
 async function main() {
+  const coreJsVersion = '3.40.0';
+  const variantDir = `${VARIANT_DIR}/${coreJsVersion}`;
+  fs.mkdirSync(variantDir, {recursive: true});
+  fs.writeFileSync(`${variantDir}/package.json`, JSON.stringify({
+    private: true,
+    devDependencies: {
+      'core-js': coreJsVersion,
+    }
+  }));
+  // Use --no-frozen-lockfile as suggested by user to handle dynamic install
+  await runCommand('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], {cwd: variantDir});
+
   for (const plugin of plugins) {
     createVariant({
       group: 'only-plugin',
@@ -288,15 +286,12 @@ async function main() {
       babelrc: {
         plugins: [plugin],
       },
-    });
+    }, variantDir);
   }
 
   await waitForVariants();
 
-  for (const coreJsVersion of ['3.40.0']) {
-    const major = coreJsVersion.split('.')[0];
-    await removeCoreJs();
-    await installCoreJs(coreJsVersion);
+  const major = coreJsVersion.split('.')[0];
 
     const moduleOptions = [
       {baseline: false, bugfixes: false},
@@ -304,33 +299,33 @@ async function main() {
       {baseline: true, bugfixes: true},
     ];
     for (const {baseline, bugfixes} of moduleOptions) {
-      createVariant({
-        group: `core-js-${major}-preset-env`,
-        name: `baseline_${baseline}_bugfixes_${bugfixes}`,
-        code: `require('core-js');\n${mainCode}`,
-        babelrc: {
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: baseline ? [
-                  'chrome >0 and last 2.5 years',
-                  'edge >0 and last 2.5 years',
-                  'safari >0 and last 2.5 years',
-                  'firefox >0 and last 2.5 years',
-                  'and_chr >0 and last 2.5 years',
-                  'and_ff >0 and last 2.5 years',
-                  'ios >0 and last 2.5 years',
-                ] : undefined,
-                useBuiltIns: 'entry',
-                corejs: major,
-                bugfixes,
-                debug: true,
-              },
+        createVariant({
+          group: `core-js-${major}-preset-env`,
+          name: `baseline_${baseline}_bugfixes_${bugfixes}`,
+          code: `require('core-js');\n${mainCode}`,
+          babelrc: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: baseline ? [
+                    'chrome >0 and last 2.5 years',
+                    'edge >0 and last 2.5 years',
+                    'safari >0 and last 2.5 years',
+                    'firefox >0 and last 2.5 years',
+                    'and_chr >0 and last 2.5 years',
+                    'and_ff >0 and last 2.5 years',
+                    'ios >0 and last 2.5 years',
+                  ] : undefined,
+                  useBuiltIns: 'entry',
+                  corejs: major,
+                  bugfixes,
+                  debug: true,
+                },
+              ],
             ],
-          ],
-        },
-      });
+          },
+        }, variantDir);
     }
 
     for (const polyfill of polyfills) {
@@ -338,7 +333,7 @@ async function main() {
         group: `core-js-${major}-only-polyfill`,
         name: polyfill.name,
         code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
-      });
+      }, variantDir);
     }
 
     const allPolyfillCode = polyfills.map(polyfill => {
@@ -348,12 +343,10 @@ async function main() {
       group: 'all-legacy-polyfills',
       name: `all-legacy-polyfills-core-js-${major}`,
       code: allPolyfillCode,
-    });
+    }, variantDir);
 
     await waitForVariants();
   }
-
-  await removeCoreJs();
 
   let summary;
 
