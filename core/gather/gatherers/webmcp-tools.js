@@ -33,6 +33,7 @@ class WebMCPTools extends BaseGatherer {
     super();
     /** @type {WebMCPTool[]} */
     this._tools = [];
+    this._webmcpEnableNotFound = false;
     this._onToolsAdded = this.onToolsAdded.bind(this);
     this._onToolsRemoved = this.onToolsRemoved.bind(this);
   }
@@ -42,9 +43,9 @@ class WebMCPTools extends BaseGatherer {
    */
   // TODO: Handle WebMCP tools per frame.
   onToolsAdded(event) {
-    // Note there is a bug right now in WebMCP.enable CDP where on newly registered tools
-    // while WebMCP is enabled, the schema is empty. We will have to address that
-    // eventually.
+    // Note that as of M148, there is a bug in WebMCP CDP.
+    // While WebMCP is enabled, any newly registered tool will
+    // have an empty schema.
     if (event.tools) {
       this._tools.push(...event.tools);
     }
@@ -71,7 +72,15 @@ class WebMCPTools extends BaseGatherer {
     // @ts-expect-error
     session.on('WebMCP.toolsRemoved', this._onToolsRemoved);
 
-    await session.sendCommand('WebMCP.enable');
+    try {
+      await session.sendCommand('WebMCP.enable');
+    } catch (err) {
+      if (err.message.includes('\'WebMCP.enable\' wasn\'t found')) {
+        this._webmcpEnableNotFound = true;
+        return;
+      }
+      throw err;
+    }
   }
 
   /**
@@ -92,7 +101,7 @@ class WebMCPTools extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.Context} context
-   * @return {Promise<WebMCPTool[]>}
+   * @return {Promise<LH.Artifacts['WebMCPTools']>}
    */
   async getArtifact(context) {
     const session = context.driver.defaultSession;
@@ -131,8 +140,10 @@ class WebMCPTools extends BaseGatherer {
       }
       resolvedTools.push(tool);
     }
-
-    return resolvedTools;
+    return {
+      tools: resolvedTools,
+      webmcpEnableNotFound: this._webmcpEnableNotFound,
+    };
   }
 }
 

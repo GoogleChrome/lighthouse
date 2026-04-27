@@ -33,6 +33,8 @@ const UIStrings = {
   'Add it to define the parameter name.',
   /** Descriptive reason for why a form field fails WebMCP validation due to missing description. */
   missingParamDescription: 'Add a description to make this form more accessible for AI agents.',
+  /** Message shown when the WebMCP feature is active on the page, but the DevTools flag needed to extract details is missing in Chrome. */
+  devToolsFlagMissing: 'Enable `DevToolsWebMCPSupport` flag to run this audit.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -47,7 +49,7 @@ class WebMcpSchemaValidity extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMCPTools', 'WebMcpSchemaIssues'],
+      requiredArtifacts: ['WebMCPTools', 'WebMcpSchemaIssues', 'WebMCPStatus'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -57,6 +59,13 @@ class WebMcpSchemaValidity extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
+    if (!artifacts.WebMCPStatus.isSupported) {
+      return {
+        notApplicable: true,
+        score: 1,
+      };
+    }
+
     /** @enum {number} */
     const Severity = {
       ERROR: 1,
@@ -105,27 +114,40 @@ class WebMcpSchemaValidity extends Audit {
       };
     });
 
+    if (items.length > 0) {
     /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
-      {key: 'element', valueType: 'node', label: str_(UIStrings.columnElement)},
-      {key: 'issue', valueType: 'text', label: str_(UIStrings.columnIssue)},
-    ];
+      const headings = [
+        {key: 'element', valueType: 'node', label: str_(UIStrings.columnElement)},
+        {key: 'issue', valueType: 'text', label: str_(UIStrings.columnIssue)},
+      ];
 
-    const details = Audit.makeTableDetails(headings, items);
+      const details = Audit.makeTableDetails(headings, items);
+      const hasErrors =
+      sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
+      return {
+        score: hasErrors ? 0 : 0.5,
+        details,
+      };
+    }
 
-    const hasErrors =
-    sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
-    const hasTools = artifacts.WebMCPTools && artifacts.WebMCPTools.length > 0;
-    if (!hasTools && rawIssues.length === 0) {
+    // No CDP audit issues
+    // If CDP WebMCP enable failed, it may be a false positive. Return error
+    // message instead.
+    if (artifacts.WebMCPTools.webmcpEnableNotFound) {
+      return {
+        displayValue: str_(UIStrings.devToolsFlagMissing),
+        score: 0,
+      };
+    }
+    if (artifacts.WebMCPTools.tools.length === 0) {
       return {
         notApplicable: true,
         score: 1,
       };
     }
-
+    // Pass if there are no CDP audits issues and web mcp tools are present.
     return {
-      score: hasErrors ? 0 : (items.length > 0 ? 0.5 : 1),
-      details: items.length > 0 ? details : undefined,
+      score: 1,
     };
   }
 }

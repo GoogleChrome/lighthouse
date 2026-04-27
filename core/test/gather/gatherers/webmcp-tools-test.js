@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import assert from 'assert/strict';
-
 import WebMCPToolsGatherer from '../../../gather/gatherers/webmcp-tools.js';
 import {createMockContext} from '../mock-driver.js';
 
@@ -39,8 +37,9 @@ describe('WebMCPTools Gatherer', () => {
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
     // Should have 1 tool from event
-    assert.equal(artifact.length, 1);
-    assert.equal(artifact[0].name, 'new_tool');
+    expect(artifact.tools.length).toEqual(1);
+    expect(artifact.tools[0].name).toEqual('new_tool');
+    expect(artifact.webmcpEnableNotFound).toEqual(false);
   });
 
   it('removes duplicates', async () => {
@@ -84,9 +83,9 @@ describe('WebMCPTools Gatherer', () => {
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
     // Should only have 1 tool because of deduplication
-    assert.equal(artifact.length, 1);
-    assert.equal(artifact[0].name, 'tool1');
-    assert.equal(artifact[0].description, 'Duplicate tool');
+    expect(artifact.tools.length).toEqual(1);
+    expect(artifact.tools[0].name).toEqual('tool1');
+    expect(artifact.tools[0].description).toEqual('Duplicate tool');
   });
 
   it('removes tools on toolsRemoved event', async () => {
@@ -130,23 +129,20 @@ describe('WebMCPTools Gatherer', () => {
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
     // Should be empty
-    assert.equal(artifact.length, 0);
+    expect(artifact.tools.length).toEqual(0);
   });
 
-  it('handles error on enable', async () => {
+  it('catches no WebMCP.enable error by setting webmcpEnableNotFound to true', async () => {
     const gatherer = new WebMCPToolsGatherer();
     const mockContext = createMockContext();
 
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('WebMCP.enable', () =>
-        Promise.reject(new Error('Protocol error: WebMCP.enable not found')));
+        Promise.reject(new Error('Protocol error: \'WebMCP.enable\' wasn\'t found')));
 
-    try {
-      await gatherer.startInstrumentation(mockContext.asContext());
-      assert.fail('Should have thrown an error');
-    } catch (e) {
-      assert.equal(e.message, 'Protocol error: WebMCP.enable not found');
-    }
+    await gatherer.startInstrumentation(mockContext.asContext());
+    const artifact = await gatherer.getArtifact(mockContext.asContext());
+    expect(artifact.webmcpEnableNotFound).toEqual(true);
   });
 
   it('returns empty array when no tools are registered', async () => {
@@ -162,7 +158,7 @@ describe('WebMCPTools Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
-    assert.equal(artifact.length, 0);
+    expect(artifact.tools.length).toEqual(0);
   });
 
   it('resolves backendNodeId to nodeDetails', async () => {
@@ -197,8 +193,8 @@ describe('WebMCPTools Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
-    assert.equal(artifact.length, 1);
-    assert.equal(artifact[0].name, 'declarative_tool');
-    assert.deepEqual(artifact[0].nodeDetails, {snippet: '<form></form>', selector: 'form'});
+    expect(artifact.tools.length).toEqual(1);
+    expect(artifact.tools[0].name).toEqual('declarative_tool');
+    expect(artifact.tools[0].nodeDetails).toEqual({snippet: '<form></form>', selector: 'form'});
   });
 });

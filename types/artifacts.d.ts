@@ -123,7 +123,9 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
   /** The tools registered via WebMCP. */
-  WebMCPTools: Artifacts.WebMCPTool[];
+  WebMCPTools: {tools: Artifacts.WebMCPTool[], webmcpEnableNotFound: boolean};
+  /** The WebMCP support status on the browser side. */
+  WebMCPStatus: {isSupported: boolean};
   /** The WebMCP schema validation issues. */
   WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */

@@ -4,32 +4,52 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import assert from 'assert/strict';
-
 import WebMcpSchemaValidityAudit from '../../audits/webmcp-schema-validity.js';
 
 describe('WebMcpSchemaValidity audit', () => {
-  it('passes when no issues were found (not applicable)', async () => {
+  it('is not applicable when modelContext is not defined', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCPTools: [],
+      WebMCPStatus: {isSupported: false},
+    }, {});
+    expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(true);
+  });
+
+  it('not applicable when no issues and no tools were found', async () => {
+    const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
       WebMcpSchemaIssues: [],
     }, {});
-    assert.equal(auditResult.score, 1);
-    assert.equal(auditResult.notApplicable, true);
+    expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(true);
+  });
+
+  it('error message when DevToolsWebMCPSupport flag is missing', async () => {
+    const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: true},
+      WebMcpSchemaIssues: [],
+    }, {});
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.displayValue.formattedDefault.length).toBeGreaterThan(0);
   });
 
   it('passes when valid tools are found without issues', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCPTools: [{name: 'tool1'}],
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [{name: 'tool1'}], webmcpEnableNotFound: false},
       WebMcpSchemaIssues: [],
     }, {});
-    assert.equal(auditResult.score, 1);
-    assert.equal(auditResult.notApplicable, undefined);
+    expect(auditResult.score).toEqual(1);
+    expect(auditResult.notApplicable).toEqual(undefined);
   });
 
 
   it('fails when WebMCP issues are found', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
       WebMcpSchemaIssues: [
         {
           errorType: 'FormModelContextParameterMissingTitleAndDescription',
@@ -44,16 +64,18 @@ describe('WebMcpSchemaValidity audit', () => {
       ],
     }, {});
 
-    assert.equal(auditResult.score, 0);
-    assert.equal(auditResult.details.items.length, 2);
-    assert.equal(auditResult.details.items[0].issue.formattedDefault,
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.items.length).toEqual(2);
+    expect(auditResult.details.items[0].issue.formattedDefault).toEqual(
       'Form level `toolname` attribute is missing. Add it to define the tool name.');
-    assert.equal(auditResult.details.items[1].issue.formattedDefault,
+    expect(auditResult.details.items[1].issue.formattedDefault).toEqual(
       'Add a description to make this form more accessible for AI agents.');
   });
 
   it('deduplicates identical issues on the same node', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
       WebMcpSchemaIssues: [
         {
           errorType: 'FormModelContextParameterMissingTitleAndDescription',
@@ -73,11 +95,11 @@ describe('WebMcpSchemaValidity audit', () => {
       ],
     }, {});
 
-    assert.equal(auditResult.score, 0.5);
-    assert.equal(auditResult.details.items.length, 2);
-    assert.equal(auditResult.details.items[0].issue.formattedDefault,
+    expect(auditResult.score).toEqual(0.5);
+    expect(auditResult.details.items.length).toEqual(2);
+    expect(auditResult.details.items[0].issue.formattedDefault).toEqual(
       'Add a description to make this form more accessible for AI agents.');
-    assert.equal(auditResult.details.items[1].issue.formattedDefault,
+    expect(auditResult.details.items[1].issue.formattedDefault).toEqual(
       'Missing `name` attribute for an optional field. Add it to define the parameter name.');
   });
 });

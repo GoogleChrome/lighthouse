@@ -9,42 +9,46 @@ import WebMCPRegisteredTools from '../../audits/webmcp-registered-tools.js';
 describe('WebMCPRegisteredTools Audit', () => {
   it('renders a table with registered tools', async () => {
     const artifacts = {
-      WebMCPTools: [
-        {
-          name: 'book_table_le_petit_bistro',
-          description: 'Creates a confirmed dining reservation at Le Petit Bistro.',
-          inputSchema: {
-            type: 'object',
-            properties: {
-              name: {type: 'string'},
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {
+        tools: [
+          {
+            name: 'book_table_le_petit_bistro',
+            description: 'Creates a confirmed dining reservation at Le Petit Bistro.',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                name: {type: 'string'},
+              },
+            },
+            frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
+            backendNodeId: 1,
+            nodeDetails: {
+              lhId: 'node-1',
+              devtoolsNodePath: '1,HTML,1,BODY,0,DIV',
+              selector: 'div#reservation',
+              boundingRect: {top: 0, left: 0, width: 100, height: 100},
+              snippet: '<div id="reservation">',
+              nodeLabel: 'Reservation Div',
             },
           },
-          frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
-          backendNodeId: 1,
-          nodeDetails: {
-            lhId: 'node-1',
-            devtoolsNodePath: '1,HTML,1,BODY,0,DIV',
-            selector: 'div#reservation',
-            boundingRect: {top: 0, left: 0, width: 100, height: 100},
-            snippet: '<div id="reservation">',
-            nodeLabel: 'Reservation Div',
-          },
-        },
-        {
-          name: 'get_weather',
-          description: 'Get current weather.',
-          inputSchema: {
-            type: 'object',
-            properties: {
-              location: {type: 'string'},
+          {
+            name: 'get_weather',
+            description: 'Get current weather.',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                location: {type: 'string'},
+              },
+            },
+            frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
+            stackTrace: {
+              callFrames: [{url: 'https://example.com/mcp.js', lineNumber: 34}],
             },
           },
-          frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
-          stackTrace: {
-            callFrames: [{url: 'https://example.com/mcp.js', lineNumber: 34}],
-          },
-        },
-      ],
+        ],
+        webmcpEnableNotFound: false,
+      },
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
@@ -87,12 +91,37 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('handles empty tools list', async () => {
     const artifacts = {
-      WebMCPTools: [],
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
 
     expect(result.score).toEqual(1);
     expect(result.details).toBeUndefined();
+  });
+
+  it('is not applicable when webmcp not supported', async () => {
+    const artifacts = {
+      WebMCPStatus: {isSupported: false},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
+    };
+
+    const result = await WebMCPRegisteredTools.audit(artifacts);
+
+    expect(result.score).toEqual(1);
+    expect(result.notApplicable).toEqual(true);
+  });
+
+  it('error message when DevToolsWebMCPSupport flag is missing', async () => {
+    const artifacts = {
+      WebMCPStatus: {isSupported: true},
+      WebMCPTools: {tools: [], webmcpEnableNotFound: true},
+    };
+
+    const result = await WebMCPRegisteredTools.audit(artifacts);
+
+    expect(result.score).toEqual(0);
+    expect(result.displayValue.formattedDefault.length).toBeGreaterThan(0);
   });
 });
