@@ -9,19 +9,6 @@ import assert from 'assert/strict';
 import LlmsTxtAudit from '../../../audits/agentic/llms-txt.js';
 
 describe('Agentic: llms.txt audit', () => {
-  it('fails and reports error when no llms.txt was provided', () => {
-    const artifacts = {
-      LlmsTxt: {
-        status: null,
-        content: null,
-      },
-    };
-
-    const auditResult = LlmsTxtAudit.audit(artifacts);
-    assert.equal(auditResult.score, 0);
-    assert.ok(auditResult.explanation);
-  });
-
   it('fails when request for /llms.txt returns a HTTP500+ error', () => {
     const testData = [
       {
@@ -78,6 +65,13 @@ describe('Agentic: llms.txt audit', () => {
         },
         expectedErrors: 3, // Missing H1, Missing links, Too short
       },
+      {
+        LlmsTxt: {
+          status: 200,
+          content: '',
+        },
+        expectedErrors: 3, // Missing H1, Missing links, Too short
+      },
     ];
 
     testData.forEach(({LlmsTxt, expectedErrors}) => {
@@ -92,7 +86,7 @@ describe('Agentic: llms.txt audit', () => {
     });
   });
 
-  it('not applicable when there is no llms.txt or it\'s empty', () => {
+  it('not applicable when there is no llms.txt', () => {
     const testData = [
       {
         status: 404,
@@ -101,10 +95,6 @@ describe('Agentic: llms.txt audit', () => {
       {
         status: 401,
         content: 'invalid content',
-      },
-      {
-        status: 200,
-        content: '',
       },
     ];
 

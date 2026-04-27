@@ -73,7 +73,7 @@ class LlmsTxt extends Audit {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
       };
-    } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
+    } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW) {
       return {
         score: 1,
         notApplicable: true,
