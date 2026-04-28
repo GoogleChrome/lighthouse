@@ -16,6 +16,7 @@ import {defaultSettings} from '../core/config/constants.js';
 import lighthouse from '../core/index.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
+import agenticBrowsingConfig from '../core/config/agentic-browsing-config.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
@@ -34,6 +35,7 @@ async function buildSampleReports() {
   if (!timespanLhr) throw new Error('Could not find a timespan report on the sample flow result');
 
   addPluginCategory(lhr);
+  addAgenticBrowsingCategory(lhr);
   const errorLhr = await generateErrorLHR();
 
   const filenameToLhr = {
@@ -45,6 +47,7 @@ async function buildSampleReports() {
     'single-category': tweakLhrForPsi(lhr),
     'snapshot': snapshotLhr,
     'timespan': timespanLhr,
+    'agentic-browsing': lhr,
   };
 
   // Generate and write reports
@@ -115,6 +118,41 @@ function addPluginCategory(sampleLhr) {
     score: 0.5,
     auditRefs: [],
   };
+}
+
+/**
+ * Add agentic browsing category to demo rendering.
+ * @param {LH.Result} sampleLhr
+ */
+function addAgenticBrowsingCategory(sampleLhr) {
+  const agenticCategory = agenticBrowsingConfig.categories?.['agentic-browsing'];
+  if (!agenticCategory) return;
+
+  sampleLhr.categories['agentic-browsing'] = {
+    ...agenticCategory,
+    score: 0.75,
+    auditRefs: agenticCategory.auditRefs.map(ref => ({...ref, weight: 1})),
+  };
+
+  const auditsToMock = [
+    'agent-accessibility-tree',
+    'webmcp-registered-tools',
+    'webmcp-form-coverage',
+    'webmcp-schema-validity',
+    'llms-txt',
+  ];
+
+  auditsToMock.forEach(id => {
+    if (!sampleLhr.audits[id]) {
+      sampleLhr.audits[id] = {
+        id,
+        title: id,
+        score: 1,
+        scoreDisplayMode: 'binary',
+        description: `Mocked audit for ${id}`,
+      };
+    }
+  });
 }
 
 /**
