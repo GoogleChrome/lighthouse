@@ -17,6 +17,9 @@ import lighthouse from '../core/index.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
 import agenticBrowsingConfig from '../core/config/agentic-browsing-config.js';
+import {Runner} from '../core/runner.js';
+import * as assetSaver from '../core/lib/asset-saver.js';
+import {initializeConfig} from '../core/config/config.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
@@ -199,22 +202,21 @@ async function generateErrorLHR() {
 async function generateAgenticBrowsingLHR() {
   const artifactsPath = path.join(LH_ROOT, 'core/test/results/artifacts');
   
+  const artifacts = readJson(path.join(artifactsPath, 'artifacts.json'));
+  const extractedSettings = artifacts.settings || {};
+
   const config = {
     ...agenticBrowsingConfig,
     settings: {
       ...defaultSettings,
-      pauseAfterFcpMs: 5250,
-      pauseAfterLoadMs: 5250,
-      networkQuietThresholdMs: 5250,
-      cpuQuietThresholdMs: 5250,
-      throttlingMethod: 'devtools',
-      extraHeaders: {
-        "Cookie": "monster=blue"
-      },
+      ...extractedSettings,
     },
   };
 
-  const runnerResult = await lighthouse(undefined, {auditMode: artifactsPath}, config);
+  const loadedArtifacts = await assetSaver.loadArtifacts(artifactsPath);
+  const {resolvedConfig} = await initializeConfig(false, config, {auditMode: true});
+
+  const runnerResult = await Runner.audit(loadedArtifacts, {resolvedConfig, computedCache: new Map()});
   if (!runnerResult) throw new Error('Failed to run lighthouse on existing artifacts');
   return runnerResult.lhr;
 }
