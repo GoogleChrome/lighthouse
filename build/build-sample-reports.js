@@ -20,6 +20,7 @@ import agenticBrowsingConfig from '../core/config/agentic-browsing-config.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
+const agenticLhr = readJson(`${LH_ROOT}/dist/sample-reports/agentic-browsing.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
@@ -35,7 +36,6 @@ async function buildSampleReports() {
   if (!timespanLhr) throw new Error('Could not find a timespan report on the sample flow result');
 
   addPluginCategory(lhr);
-  addAgenticBrowsingCategory(lhr);
   const errorLhr = await generateErrorLHR();
 
   const filenameToLhr = {
@@ -47,7 +47,7 @@ async function buildSampleReports() {
     'single-category': tweakLhrForPsi(lhr),
     'snapshot': snapshotLhr,
     'timespan': timespanLhr,
-    'agentic-browsing': lhr,
+    'agentic-browsing': agenticLhr,
   };
 
   // Generate and write reports
