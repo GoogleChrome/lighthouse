@@ -9,11 +9,29 @@ import * as cliFlags from '../../cli/cli-flags.js';
 import * as assetSaver from '../lib/asset-saver.js';
 import {Server} from '../../cli/test/fixtures/static-server.js';
 import sampleConfig from '../test/results/sample-config.js';
+import path from 'path';
+
+// Parse arguments
+const argv = process.argv.slice(2);
+let configPath = '';
+let artifactNames = [];
+
+for (let i = 0; i < argv.length; i++) {
+  const arg = argv[i];
+  if (arg.startsWith('--config-path=')) {
+    configPath = arg.substring('--config-path='.length);
+  } else if (arg === '--config-path') {
+    configPath = argv[i + 1];
+    i++;
+  } else {
+    artifactNames.push(arg);
+  }
+}
 
 const artifactPath = 'core/test/results/artifacts';
 // All artifacts must have resources from a consistent port, to ensure reproducibility.
 // https://github.com/GoogleChrome/lighthouse/issues/11776
-const MAGIC_SERVER_PORT = 10200;
+const MAGIC_SERVER_PORT = 10201;
 
 /**
  * Update the report artifacts.
@@ -32,7 +50,15 @@ async function update(artifactNames) {
     url,
   ].join(' ');
   const flags = cliFlags.getFlags(rawFlags);
-  await cli.runLighthouse(url, flags, sampleConfig);
+  // Load config
+  let config = sampleConfig;
+  if (configPath) {
+    const resolvedPath = path.resolve(process.cwd(), configPath);
+    const imported = await import(resolvedPath);
+    config = imported.default;
+  }
+
+  await cli.runLighthouse(url, flags, config);
   await server.close();
 
   const newArtifacts = assetSaver.loadArtifacts(artifactPath);
@@ -58,4 +84,4 @@ async function update(artifactNames) {
   await assetSaver.saveArtifacts(artifactsToKeep, artifactPath);
 }
 
-update(/** @type {Array<keyof LH.Artifacts>} */ (process.argv.slice(2)));
+update(/** @type {Array<keyof LH.Artifacts>} */ (artifactNames));
