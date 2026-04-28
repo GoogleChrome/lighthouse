@@ -235,6 +235,7 @@ async function generateAgenticBrowsingLHR() {
   const config = {
     ...agenticBrowsingConfig,
     settings: {
+      ...defaultSettings,
       pauseAfterFcpMs: 5250,
       pauseAfterLoadMs: 5250,
       networkQuietThresholdMs: 5250,
