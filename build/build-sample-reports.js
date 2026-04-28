@@ -121,40 +121,7 @@ function addPluginCategory(sampleLhr) {
   };
 }
 
-/**
- * Add agentic browsing category to demo rendering.
- * @param {LH.Result} sampleLhr
- */
-function addAgenticBrowsingCategory(sampleLhr) {
-  const agenticCategory = agenticBrowsingConfig.categories?.['agentic-browsing'];
-  if (!agenticCategory) return;
 
-  sampleLhr.categories['agentic-browsing'] = {
-    ...agenticCategory,
-    score: 0.75,
-    auditRefs: agenticCategory.auditRefs.map(ref => ({...ref, weight: 1})),
-  };
-
-  const auditsToMock = [
-    'agent-accessibility-tree',
-    'webmcp-registered-tools',
-    'webmcp-form-coverage',
-    'webmcp-schema-validity',
-    'llms-txt',
-  ];
-
-  auditsToMock.forEach(id => {
-    if (!sampleLhr.audits[id]) {
-      sampleLhr.audits[id] = {
-        id,
-        title: id,
-        score: 1,
-        scoreDisplayMode: 'binary',
-        description: `Mocked audit for ${id}`,
-      };
-    }
-  });
-}
 
 /**
  * Drops the LHR to only one, solo category (performance).
