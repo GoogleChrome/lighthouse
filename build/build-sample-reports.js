@@ -203,6 +203,7 @@ async function generateAgenticBrowsingLHR() {
   const artifactsPath = path.join(LH_ROOT, 'core/test/results/artifacts');
   
   const artifacts = readJson(path.join(artifactsPath, 'artifacts.json'));
+  const gatherMode = artifacts.GatherContext?.gatherMode || 'navigation';
   const extractedSettings = artifacts.settings || {};
 
   const config = {
@@ -214,7 +215,7 @@ async function generateAgenticBrowsingLHR() {
   };
 
   const loadedArtifacts = await assetSaver.loadArtifacts(artifactsPath);
-  const {resolvedConfig} = await initializeConfig(false, config, {auditMode: true});
+  const {resolvedConfig} = await initializeConfig(gatherMode, config, {auditMode: true});
 
   const runnerResult = await Runner.audit(loadedArtifacts, {resolvedConfig, computedCache: new Map()});
   if (!runnerResult) throw new Error('Failed to run lighthouse on existing artifacts');
