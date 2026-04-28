@@ -20,7 +20,7 @@ import agenticBrowsingConfig from '../core/config/agentic-browsing-config.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
-const agenticLhr = readJson(`${LH_ROOT}/dist/sample-reports/agentic-browsing.json`);
+
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
@@ -37,6 +37,7 @@ async function buildSampleReports() {
 
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
+  const agenticLhr = await generateAgenticBrowsingLHR();
 
   const filenameToLhr = {
     'english': lhr,
@@ -222,6 +223,32 @@ async function generateErrorLHR() {
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
+}
+
+/**
+ * Generate an LHR for Agentic Browsing by running Lighthouse on existing artifacts.
+ * @return {Promise<LH.Result>}
+ */
+async function generateAgenticBrowsingLHR() {
+  const artifactsPath = path.join(LH_ROOT, 'core/test/results/artifacts');
+  
+  const config = {
+    ...agenticBrowsingConfig,
+    settings: {
+      pauseAfterFcpMs: 5250,
+      pauseAfterLoadMs: 5250,
+      networkQuietThresholdMs: 5250,
+      cpuQuietThresholdMs: 5250,
+      throttlingMethod: 'devtools',
+      extraHeaders: {
+        "Cookie": "monster=blue"
+      },
+    },
+  };
+
+  const runnerResult = await lighthouse(undefined, {auditMode: artifactsPath}, config);
+  if (!runnerResult) throw new Error('Failed to run lighthouse on existing artifacts');
+  return runnerResult.lhr;
 }
 
 await buildSampleReports();
