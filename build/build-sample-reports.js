@@ -24,7 +24,6 @@ import {initializeConfig} from '../core/config/config.js';
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
 
-
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
   `${LH_ROOT}/core/test/fixtures/user-flows/reports/sample-flow-result.json`
@@ -123,9 +122,6 @@ function addPluginCategory(sampleLhr) {
     auditRefs: [],
   };
 }
-
-
-
 /**
  * Drops the LHR to only one, solo category (performance).
  * @param {LH.Result} sampleLhr
@@ -201,7 +197,7 @@ async function generateErrorLHR() {
  */
 async function generateAgenticBrowsingLHR() {
   const artifactsPath = path.join(LH_ROOT, 'core/test/results/artifacts');
-  
+
   const artifacts = readJson(path.join(artifactsPath, 'artifacts.json'));
   const gatherMode = artifacts.GatherContext?.gatherMode || 'navigation';
   const extractedSettings = artifacts.settings || {};
@@ -217,7 +213,8 @@ async function generateAgenticBrowsingLHR() {
   const loadedArtifacts = await assetSaver.loadArtifacts(artifactsPath);
   const {resolvedConfig} = await initializeConfig(gatherMode, config, {auditMode: true});
 
-  const runnerResult = await Runner.audit(loadedArtifacts, {resolvedConfig, computedCache: new Map()});
+  const opts = {resolvedConfig, computedCache: new Map()};
+  const runnerResult = await Runner.audit(loadedArtifacts, opts);
   if (!runnerResult) throw new Error('Failed to run lighthouse on existing artifacts');
   return runnerResult.lhr;
 }
