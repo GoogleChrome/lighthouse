@@ -85,34 +85,16 @@ class AgentAccessibilityTree extends Audit {
     const violations = (artifacts.Accessibility && artifacts.Accessibility.violations) || [];
     const failedRules = violations.filter(v => TARGET_RULES.has(v.id));
 
-    const nodeToRules = new Map();
-
-    failedRules.forEach(rule => {
-      rule.nodes.forEach(nodeWrap => {
-        const key = nodeWrap.node.selector || nodeWrap.node.path || nodeWrap.node.snippet || JSON.stringify(nodeWrap.node);
-        if (!nodeToRules.has(key)) {
-          nodeToRules.set(key, {node: nodeWrap.node, rules: []});
-        }
-        nodeToRules.get(key).rules.push(rule.id);
-      });
-    });
-
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
+      {key: 'description', valueType: 'text', label: str_(i18n.UIStrings.columnDescription)},
       {key: 'node', valueType: 'node', label: str_(UIStrings.columnElement)},
-      {key: null, valueType: 'text', subItemsHeading: {key: 'auditTitle'}, label: 'Failing Audits'},
     ];
 
-    const items = [];
-    for (const [key, value] of nodeToRules.entries()) {
-      items.push({
-        node: Audit.makeNodeItem(value.node),
-        subItems: {
-          type: 'subitems',
-          items: value.rules.map(ruleId => ({auditTitle: ruleId})),
-        },
-      });
-    }
+    const items = failedRules.map(rule => ({
+      description: rule.help || rule.description,
+      node: rule.nodes?.[0] ? Audit.makeNodeItem(rule.nodes[0].node) : undefined,
+    }));
 
     const listItems = [];
 
