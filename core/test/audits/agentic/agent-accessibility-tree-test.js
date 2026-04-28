@@ -63,10 +63,13 @@ describe('Agentic: agent-accessibility-tree audit', () => {
     assert.equal(auditResult.details.items[0].title.formattedDefault, 'Failed Audits');
     const items = auditResult.details.items[0].value.items;
     assert.equal(items.length, 2);
-    assert.equal(items[0].description, 'Buttons must have discernible text');
     assert.ok(items[0].node);
-    assert.equal(items[1].description, 'Form elements must have labels');
+    assert.equal(items[0].subItems.items.length, 1);
+    assert.equal(items[0].subItems.items[0].auditTitle, 'button-name');
+
     assert.ok(items[1].node);
+    assert.equal(items[1].subItems.items.length, 1);
+    assert.equal(items[1].subItems.items[0].auditTitle, 'label');
   });
 
   it('handles missing Accessibility artifact gracefully', () => {
