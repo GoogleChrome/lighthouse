@@ -10,8 +10,9 @@ const UIStrings = {
   /** Title of the Agentic Browsing category of audits. */
   agenticBrowsingCategoryTitle: 'Agentic Browsing',
   /** Description of the Agentic Browsing category. */
-  agenticBrowsingCategoryDescription: 'These checks ensure high-quality, ' +
-  'browsable websites for AI agents and validate the correctness of WebMCP integrations.',
+  agenticBrowsingCategoryDescription: 'These checks ensure high-quality, browsable ' +
+  'websites for AI agents and validate the correctness of WebMCP integrations. ' +
+  'This category is still under development and subject to change.',
   /** Title of the WebMCP group of audits. */
   webmcpGroupTitle: 'WebMCP',
   /** Description of the WebMCP group. */
