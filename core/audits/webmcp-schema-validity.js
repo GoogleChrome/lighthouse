@@ -112,31 +112,27 @@ class WebMcpSchemaValidity extends Audit {
       };
     });
 
-    if (items.length > 0) {
     /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-        {key: 'element', valueType: 'node', label: str_(UIStrings.columnElement)},
-        {key: 'issue', valueType: 'text', label: str_(UIStrings.columnIssue)},
-      ];
+    const headings = [
+      {key: 'element', valueType: 'node', label: str_(UIStrings.columnElement)},
+      {key: 'issue', valueType: 'text', label: str_(UIStrings.columnIssue)},
+    ];
 
-      const details = Audit.makeTableDetails(headings, items);
-      const hasErrors =
-      sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
-      return {
-        score: hasErrors ? 0 : 0.5,
-        details,
-      };
-    }
+    const details = Audit.makeTableDetails(headings, items);
 
-    if (artifacts.WebMCP.tools.length === 0) {
+    const hasErrors =
+    sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
+
+    if (artifacts.WebMCP.tools.length === 0 && rawIssues.length === 0) {
       return {
         notApplicable: true,
         score: 1,
       };
     }
-    // Pass if there are no CDP audits issues and web mcp tools are present.
+
     return {
-      score: 1,
+      score: hasErrors ? 0 : (items.length > 0 ? 0.5 : 1),
+      details: items.length > 0 ? details : undefined,
     };
   }
 }

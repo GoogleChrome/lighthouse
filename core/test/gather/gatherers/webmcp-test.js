@@ -37,6 +37,7 @@ describe('WebMCP Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
+    // Should have 1 tool from event
     expect(artifact.tools.length).toEqual(1);
     expect(artifact.tools[0].name).toEqual('new_tool');
     expect(artifact.isSupported).toEqual(true);
@@ -83,6 +84,7 @@ describe('WebMCP Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
+    // Should only have 1 tool because of deduplication
     expect(artifact.tools.length).toEqual(1);
     expect(artifact.tools[0].name).toEqual('tool1');
     expect(artifact.tools[0].description).toEqual('Duplicate tool');
@@ -129,10 +131,11 @@ describe('WebMCP Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
+    // Should be empty
     expect(artifact.tools.length).toEqual(0);
   });
 
-  it('returns isSupported: false and logs warning when WebMCP.enable fails', async () => {
+  it('returns isSupported false when WebMCP.enable fails', async () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
     mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
@@ -147,7 +150,7 @@ describe('WebMCP Gatherer', () => {
     expect(artifact.tools.length).toEqual(0);
   });
 
-  it('returns isSupported: false when modelContext is not found', async () => {
+  it('returns isSupported false when modelContext is not found', async () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
     mockContext.driver._executionContext.evaluate.mockResolvedValue(false);
