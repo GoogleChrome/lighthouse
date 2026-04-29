@@ -107,6 +107,11 @@ async function begin() {
     cliFlags.precomputedLanternData = data;
   }
 
+  if (!Array.isArray(cliFlags.chromeFlags)) {
+    cliFlags.chromeFlags = [cliFlags.chromeFlags];
+  }
+  cliFlags.chromeFlags.push('--enable-features=DevToolsWebMCPSupport');
+
   // By default, cliFlags.enableErrorReporting is undefined so the user is
   // prompted. This can be overridden with an explicit flag or by the cached
   // answer returned by askPermission().

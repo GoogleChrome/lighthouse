@@ -8,8 +8,6 @@
  * @fileoverview Capture WebMCP data
  */
 
-import log from 'lighthouse-logger';
-
 import BaseGatherer from '../base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
@@ -69,17 +67,6 @@ class WebMCP extends BaseGatherer {
   async startInstrumentation(passContext) {
     const session = passContext.driver.defaultSession;
 
-    const isSupported = await passContext.driver.executionContext.evaluate(
-      // @ts-expect-error - modelContext is not in types yet.
-      () => typeof navigator.modelContext !== 'undefined',
-      {args: [], useIsolation: true}
-    );
-
-    if (!isSupported) {
-      this._isSupported = false;
-      return;
-    }
-
     // @ts-expect-error - WebMCP domain might not be in types yet.
     session.on('WebMCP.toolsAdded', this._onToolsAdded);
     // @ts-expect-error
@@ -90,8 +77,6 @@ class WebMCP extends BaseGatherer {
     } catch (err) {
       if (err.message.includes('\'WebMCP.enable\' wasn\'t found')) {
         this._isSupported = false;
-        log.warn('WebMCP', 'CDP domain not found. If testing via CLI, ' +
-          'launch with --chrome-flags=\'--enable-features=DevToolsWebMCPSupport\'');
         return;
       }
       throw err;
@@ -119,9 +104,15 @@ class WebMCP extends BaseGatherer {
    * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
-    if (!this._isSupported) {
+    const isSupported = await context.driver.executionContext.evaluate(
+      // @ts-expect-error - modelContext is not in types
+      () => typeof navigator.modelContext !== 'undefined',
+      {args: [], useIsolation: true}
+    );
+    if (!isSupported || !this._isSupported) {
       return {isSupported: false, tools: []};
     }
+
     const session = context.driver.defaultSession;
 
     // Remove duplicates based on name, keeping the latest occurrence.
