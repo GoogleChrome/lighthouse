@@ -61,7 +61,7 @@ class WebMCPRegisteredTools extends Audit {
       };
     }
 
-    const tools = artifacts.WebMCP.tools;
+    const tools = artifacts.WebMCP.tools || [];
 
     const imperativeResults = [];
     const declarativeResults = [];

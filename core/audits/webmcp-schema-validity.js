@@ -123,7 +123,7 @@ class WebMcpSchemaValidity extends Audit {
     const hasErrors =
     sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
 
-    if (artifacts.WebMCP.tools.length === 0 && rawIssues.length === 0) {
+    if ((artifacts.WebMCP.tools?.length || 0) === 0 && rawIssues.length === 0) {
       return {
         notApplicable: true,
         score: 1,
