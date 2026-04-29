@@ -46,7 +46,7 @@ class WebMCPRegisteredTools extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMCPTools', 'WebMCPStatus'],
+      requiredArtifacts: ['WebMCP'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -56,22 +56,21 @@ class WebMCPRegisteredTools extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    if (!artifacts.WebMCPStatus.isSupported) {
+    if (artifacts.WebMCP.status === 'unsupported') {
       return {
         notApplicable: true,
         score: 1,
       };
     }
 
-    const toolsArtifact = artifacts.WebMCPTools;
-    if (toolsArtifact.webmcpEnableNotFound) {
+    if (artifacts.WebMCP.status === 'dt-flag-missing') {
       return {
         score: 0,
         displayValue: str_(UIStrings.devToolsFlagMissing),
       };
     }
 
-    const tools = toolsArtifact.tools || [];
+    const tools = artifacts.WebMCP.tools;
 
     const imperativeResults = [];
     const declarativeResults = [];

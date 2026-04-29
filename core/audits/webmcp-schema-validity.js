@@ -49,7 +49,7 @@ class WebMcpSchemaValidity extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMCPTools', 'WebMcpSchemaIssues', 'WebMCPStatus'],
+      requiredArtifacts: ['WebMCP', 'WebMcpSchemaIssues'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -59,7 +59,7 @@ class WebMcpSchemaValidity extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
-    if (!artifacts.WebMCPStatus.isSupported) {
+    if (artifacts.WebMCP.status === 'unsupported') {
       return {
         notApplicable: true,
         score: 1,
@@ -133,13 +133,13 @@ class WebMcpSchemaValidity extends Audit {
     // No CDP audit issues
     // If CDP WebMCP enable failed, it may be a false positive. Return error
     // message instead.
-    if (artifacts.WebMCPTools.webmcpEnableNotFound) {
+    if (artifacts.WebMCP.status === 'dt-flag-missing') {
       return {
         displayValue: str_(UIStrings.devToolsFlagMissing),
         score: 0,
       };
     }
-    if (artifacts.WebMCPTools.tools.length === 0) {
+    if (artifacts.WebMCP.tools.length === 0) {
       return {
         notApplicable: true,
         score: 1,

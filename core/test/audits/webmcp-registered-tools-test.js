@@ -9,8 +9,8 @@ import WebMCPRegisteredTools from '../../audits/webmcp-registered-tools.js';
 describe('WebMCPRegisteredTools Audit', () => {
   it('renders a table with registered tools', async () => {
     const artifacts = {
-      WebMCPStatus: {isSupported: true},
-      WebMCPTools: {
+      WebMCP: {
+        status: 'enabled',
         tools: [
           {
             name: 'book_table_le_petit_bistro',
@@ -47,7 +47,6 @@ describe('WebMCPRegisteredTools Audit', () => {
             },
           },
         ],
-        webmcpEnableNotFound: false,
       },
     };
 
@@ -91,8 +90,7 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('handles empty tools list', async () => {
     const artifacts = {
-      WebMCPStatus: {isSupported: true},
-      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
+      WebMCP: {status: 'enabled', tools: []},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
@@ -103,8 +101,7 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('is not applicable when webmcp not supported', async () => {
     const artifacts = {
-      WebMCPStatus: {isSupported: false},
-      WebMCPTools: {tools: [], webmcpEnableNotFound: false},
+      WebMCP: {status: 'unsupported', tools: []},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
@@ -115,8 +112,7 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('error message when DevToolsWebMCPSupport flag is missing', async () => {
     const artifacts = {
-      WebMCPStatus: {isSupported: true},
-      WebMCPTools: {tools: [], webmcpEnableNotFound: true},
+      WebMCP: {status: 'dt-flag-missing', tools: []},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);

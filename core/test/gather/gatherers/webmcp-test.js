@@ -4,13 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import WebMCPToolsGatherer from '../../../gather/gatherers/webmcp-tools.js';
+import WebMCP from '../../../gather/gatherers/webmcp.js';
 import {createMockContext} from '../mock-driver.js';
 
-describe('WebMCPTools Gatherer', () => {
+describe('WebMCP Gatherer', () => {
   it('collects tools from events', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+
     const eventData = {
       tools: [
         {
@@ -30,21 +32,20 @@ describe('WebMCPTools Gatherer', () => {
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
-    // Wait for event to fire (createMockOnFn uses setTimeout)
     await new Promise(resolve => setTimeout(resolve, 0));
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
-    // Should have 1 tool from event
     expect(artifact.tools.length).toEqual(1);
     expect(artifact.tools[0].name).toEqual('new_tool');
-    expect(artifact.webmcpEnableNotFound).toEqual(false);
+    expect(artifact.status).toEqual('enabled');
   });
 
   it('removes duplicates', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
 
     const eventData1 = {
       tools: [
@@ -82,15 +83,15 @@ describe('WebMCPTools Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
-    // Should only have 1 tool because of deduplication
     expect(artifact.tools.length).toEqual(1);
     expect(artifact.tools[0].name).toEqual('tool1');
     expect(artifact.tools[0].description).toEqual('Duplicate tool');
   });
 
   it('removes tools on toolsRemoved event', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
 
     const addEventData = {
       tools: [
@@ -128,13 +129,13 @@ describe('WebMCPTools Gatherer', () => {
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
 
-    // Should be empty
     expect(artifact.tools.length).toEqual(0);
   });
 
-  it('catches no WebMCP.enable error by setting webmcpEnableNotFound to true', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+  it('catches no WebMCP.enable error by setting status to dt-flag-missing', async () => {
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
 
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('WebMCP.enable', () =>
@@ -142,12 +143,25 @@ describe('WebMCPTools Gatherer', () => {
 
     await gatherer.startInstrumentation(mockContext.asContext());
     const artifact = await gatherer.getArtifact(mockContext.asContext());
-    expect(artifact.webmcpEnableNotFound).toEqual(true);
+    expect(artifact.status).toEqual('dt-flag-missing');
+    expect(artifact.tools.length).toEqual(0);
+  });
+
+  it('returns unsupported when modelContext is not found', async () => {
+    const gatherer = new WebMCP();
+    const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(false);
+
+    await gatherer.startInstrumentation(mockContext.asContext());
+    const artifact = await gatherer.getArtifact(mockContext.asContext());
+    expect(artifact.status).toEqual('unsupported');
+    expect(artifact.tools.length).toEqual(0);
   });
 
   it('returns empty array when no tools are registered', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
 
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('WebMCP.enable')
@@ -162,8 +176,9 @@ describe('WebMCPTools Gatherer', () => {
   });
 
   it('resolves backendNodeId to nodeDetails', async () => {
-    const gatherer = new WebMCPToolsGatherer();
+    const gatherer = new WebMCP();
     const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
 
     const eventData = {
       tools: [

@@ -122,11 +122,12 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   FullPageScreenshot: LHResult.FullPageScreenshot | null;
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
-  /** The tools registered via WebMCP. */
-  WebMCPTools: {tools: Artifacts.WebMCPTool[], webmcpEnableNotFound: boolean};
-  /** The WebMCP support status on the browser side. */
-  WebMCPStatus: {isSupported: boolean};
-  /** The WebMCP schema validation issues. */
+  /** The status and tools registered via WebMCP. */
+  WebMCP: {status: 'unsupported' | 'dt-flag-missing' | 'enabled', tools: Artifacts.WebMCPTool[]};
+  /** 
+   * The WebMCP schema validation issues. 
+   * TODO: fold this into the WebMCP artifact. 
+   */
   WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */
   // 'url' is excluded because it can be overridden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!

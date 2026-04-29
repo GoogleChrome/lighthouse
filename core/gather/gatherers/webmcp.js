@@ -5,7 +5,7 @@
  */
 
 /**
- * @fileoverview Capture WebMCP CDP events
+ * @fileoverview Capture WebMCP data
  */
 
 import BaseGatherer from '../base-gatherer.js';
@@ -23,7 +23,7 @@ import {ExecutionContext} from '../driver/execution-context.js';
  * @property {any} [stackTrace]
  * @property {LH.Artifacts.NodeDetails} [nodeDetails]
  */
-class WebMCPTools extends BaseGatherer {
+class WebMCP extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['navigation', 'snapshot'],
@@ -33,7 +33,8 @@ class WebMCPTools extends BaseGatherer {
     super();
     /** @type {WebMCPTool[]} */
     this._tools = [];
-    this._webmcpEnableNotFound = false;
+    /** @type {'unsupported'|'dt-flag-missing'|'enabled'} */
+    this._status = 'enabled';
     this._onToolsAdded = this.onToolsAdded.bind(this);
     this._onToolsRemoved = this.onToolsRemoved.bind(this);
   }
@@ -67,6 +68,17 @@ class WebMCPTools extends BaseGatherer {
   async startInstrumentation(passContext) {
     const session = passContext.driver.defaultSession;
 
+    const isSupported = await passContext.driver.executionContext.evaluate(
+      // @ts-expect-error - modelContext is not in types yet.
+      () => typeof navigator.modelContext !== 'undefined',
+      {args: [], useIsolation: true}
+    );
+
+    if (!isSupported) {
+      this._status = 'unsupported';
+      return;
+    }
+
     // @ts-expect-error - WebMCP domain might not be in types yet.
     session.on('WebMCP.toolsAdded', this._onToolsAdded);
     // @ts-expect-error
@@ -76,7 +88,7 @@ class WebMCPTools extends BaseGatherer {
       await session.sendCommand('WebMCP.enable');
     } catch (err) {
       if (err.message.includes('\'WebMCP.enable\' wasn\'t found')) {
-        this._webmcpEnableNotFound = true;
+        this._status = 'dt-flag-missing';
         return;
       }
       throw err;
@@ -95,15 +107,18 @@ class WebMCPTools extends BaseGatherer {
     try {
       await session.sendCommand('WebMCP.disable');
     } catch (err) {
-      // WebMCP.disable might not be implemented or fail, ignore it.
+      // Ignore errors
     }
   }
 
   /**
    * @param {LH.Gatherer.Context} context
-   * @return {Promise<LH.Artifacts['WebMCPTools']>}
+   * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
+    if (this._status !== 'enabled') {
+      return {status: this._status, tools: []};
+    }
     const session = context.driver.defaultSession;
 
     // Remove duplicates based on name, keeping the latest occurrence.
@@ -141,10 +156,10 @@ class WebMCPTools extends BaseGatherer {
       resolvedTools.push(tool);
     }
     return {
+      status: this._status,
       tools: resolvedTools,
-      webmcpEnableNotFound: this._webmcpEnableNotFound,
     };
   }
 }
 
-export default WebMCPTools;
+export default WebMCP;
