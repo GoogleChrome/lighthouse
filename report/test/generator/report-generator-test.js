@@ -103,7 +103,7 @@ describe('ReportGenerator', () => {
       expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 15).join('\n')).toMatchInlineSnapshot(`
 "\\"requestedUrl\\",\\"finalDisplayedUrl\\",\\"fetchTime\\",\\"gatherMode\\"
-\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"2026-04-17T17:59:33.054Z\\",\\"navigation\\"
+\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"2026-04-23T16:18:53.230Z\\",\\"navigation\\"
 
 category,score
 \\"performance\\",\\"0.32\\"

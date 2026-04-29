@@ -213,6 +213,8 @@ declare module Artifacts {
       relatedNodes: NodeDetails[];
     }>;
     error?: RuleExecutionError;
+    help?: string;
+    description?: string;
   }
 
   interface Accessibility {
