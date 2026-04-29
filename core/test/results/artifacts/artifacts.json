@@ -8274,5 +8274,77 @@
         "SupportPending": {}
       }
     }
-  ]
+  ],
+  "WebMCPTools": [
+    {
+      "name": "book_table_le_petit_bistro",
+      "description": "Creates a confirmed dining reservation at Le Petit Bistro.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "frameId": "F9F2B9BAF7F692B8EBEF6C0332C423C4",
+      "backendNodeId": 1,
+      "nodeDetails": {
+        "lhId": "node-1",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV",
+        "selector": "div#reservation",
+        "boundingRect": {
+          "top": 0,
+          "left": 0,
+          "width": 100,
+          "height": 100
+        },
+        "snippet": "<div id=\"reservation\">",
+        "nodeLabel": "Reservation Div"
+      }
+    },
+    {
+      "name": "get_weather",
+      "description": "Get current weather.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          }
+        }
+      },
+      "frameId": "F9F2B9BAF7F692B8EBEF6C0332C423C4",
+      "stackTrace": {
+        "callFrames": [
+          {
+            "url": "https://example.com/mcp.js",
+            "lineNumber": 34
+          }
+        ]
+      }
+    }
+  ],
+  "WebMcpSchemaIssues": [
+    {
+      "errorType": "FormModelContextParameterMissingTitleAndDescription",
+      "violatingNodeId": 1,
+      "nodeDetails": {
+        "nodeName": "INPUT",
+        "selector": "#input1"
+      }
+    },
+    {
+      "errorType": "FormModelContextMissingToolName",
+      "violatingNodeId": 2,
+      "nodeDetails": {
+        "nodeName": "FORM",
+        "selector": "#form1"
+      }
+    }
+  ],
+  "LlmsTxt": {
+    "status": 404,
+    "content": null
+  }
 }

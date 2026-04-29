@@ -16,6 +16,10 @@ import {defaultSettings} from '../core/config/constants.js';
 import lighthouse from '../core/index.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
+import agenticBrowsingConfig from '../core/config/agentic-browsing-config.js';
+import {Runner} from '../core/runner.js';
+import * as assetSaver from '../core/lib/asset-saver.js';
+import {initializeConfig} from '../core/config/config.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
@@ -35,6 +39,7 @@ async function buildSampleReports() {
 
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
+  const agenticLhr = await generateAgenticBrowsingLHR();
 
   const filenameToLhr = {
     'english': lhr,
@@ -45,6 +50,7 @@ async function buildSampleReports() {
     'single-category': tweakLhrForPsi(lhr),
     'snapshot': snapshotLhr,
     'timespan': timespanLhr,
+    'agentic-browsing': agenticLhr,
   };
 
   // Generate and write reports
@@ -116,7 +122,6 @@ function addPluginCategory(sampleLhr) {
     auditRefs: [],
   };
 }
-
 /**
  * Drops the LHR to only one, solo category (performance).
  * @param {LH.Result} sampleLhr
@@ -184,6 +189,34 @@ async function generateErrorLHR() {
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
+}
+
+/**
+ * Generate an LHR for Agentic Browsing by running Lighthouse on existing artifacts.
+ * @return {Promise<LH.Result>}
+ */
+async function generateAgenticBrowsingLHR() {
+  const artifactsPath = path.join(LH_ROOT, 'core/test/results/artifacts');
+
+  const artifacts = readJson(path.join(artifactsPath, 'artifacts.json'));
+  const gatherMode = artifacts.GatherContext?.gatherMode || 'navigation';
+  const extractedSettings = artifacts.settings || {};
+
+  const config = {
+    ...agenticBrowsingConfig,
+    settings: {
+      ...defaultSettings,
+      ...extractedSettings,
+    },
+  };
+
+  const loadedArtifacts = await assetSaver.loadArtifacts(artifactsPath);
+  const {resolvedConfig} = await initializeConfig(gatherMode, config, {auditMode: true});
+
+  const opts = {resolvedConfig, computedCache: new Map()};
+  const runnerResult = await Runner.audit(loadedArtifacts, opts);
+  if (!runnerResult) throw new Error('Failed to run lighthouse on existing artifacts');
+  return runnerResult.lhr;
 }
 
 await buildSampleReports();
