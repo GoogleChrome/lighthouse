@@ -45,7 +45,7 @@ class WebMcpFormCoverage extends Audit {
    */
   static audit(artifacts) {
     const forms = artifacts.Inputs.forms;
-    if (forms.length === 0 || artifacts.WebMCP.status === 'unsupported') {
+    if (forms.length === 0 || !artifacts.WebMCP.isSupported) {
       return {
         notApplicable: true,
         score: 1,

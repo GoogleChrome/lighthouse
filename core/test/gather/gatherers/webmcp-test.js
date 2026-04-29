@@ -39,7 +39,7 @@ describe('WebMCP Gatherer', () => {
 
     expect(artifact.tools.length).toEqual(1);
     expect(artifact.tools[0].name).toEqual('new_tool');
-    expect(artifact.status).toEqual('enabled');
+    expect(artifact.isSupported).toEqual(true);
   });
 
   it('removes duplicates', async () => {
@@ -132,29 +132,29 @@ describe('WebMCP Gatherer', () => {
     expect(artifact.tools.length).toEqual(0);
   });
 
-  it('catches no WebMCP.enable error by setting status to dt-flag-missing', async () => {
+  it('returns isSupported: false and logs warning when WebMCP.enable fails', async () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
     mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
-
-    mockContext.driver.defaultSession.sendCommand
-      .mockResponse('WebMCP.enable', () =>
-        Promise.reject(new Error('Protocol error: \'WebMCP.enable\' wasn\'t found')));
+    mockContext.driver.defaultSession.sendCommand.mockResponse(
+      'WebMCP.enable',
+      () => Promise.reject(new Error('\'WebMCP.enable\' wasn\'t found'))
+    );
 
     await gatherer.startInstrumentation(mockContext.asContext());
     const artifact = await gatherer.getArtifact(mockContext.asContext());
-    expect(artifact.status).toEqual('dt-flag-missing');
+    expect(artifact.isSupported).toEqual(false);
     expect(artifact.tools.length).toEqual(0);
   });
 
-  it('returns unsupported when modelContext is not found', async () => {
+  it('returns isSupported: false when modelContext is not found', async () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
     mockContext.driver._executionContext.evaluate.mockResolvedValue(false);
 
     await gatherer.startInstrumentation(mockContext.asContext());
     const artifact = await gatherer.getArtifact(mockContext.asContext());
-    expect(artifact.status).toEqual('unsupported');
+    expect(artifact.isSupported).toEqual(false);
     expect(artifact.tools.length).toEqual(0);
   });
 

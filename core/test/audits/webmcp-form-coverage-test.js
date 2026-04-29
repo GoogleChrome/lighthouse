@@ -9,7 +9,7 @@ import WebMcpFormCoverage from '../../audits/webmcp-form-coverage.js';
 describe('WebMCP: form-coverage audit', () => {
   it('lists forms that lack WebMCP annotations', () => {
     const artifacts = {
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
       Inputs: {
         forms: [
           {
@@ -49,7 +49,7 @@ describe('WebMCP: form-coverage audit', () => {
 
   it('is not applicable if all forms have WebMCP annotations', () => {
     const artifacts = {
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
       Inputs: {
         forms: [
           {
@@ -89,7 +89,7 @@ describe('WebMCP: form-coverage audit', () => {
 
   it('is not applicable when modelContext is not defined', () => {
     const artifacts = {
-      WebMCP: {status: 'unsupported', tools: []},
+      WebMCP: {isSupported: false, tools: []},
       Inputs: {
         forms: [],
         inputs: [],

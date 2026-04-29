@@ -8,6 +8,8 @@
  * @fileoverview Capture WebMCP data
  */
 
+import log from 'lighthouse-logger';
+
 import BaseGatherer from '../base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
@@ -33,8 +35,7 @@ class WebMCP extends BaseGatherer {
     super();
     /** @type {WebMCPTool[]} */
     this._tools = [];
-    /** @type {'unsupported'|'dt-flag-missing'|'enabled'} */
-    this._status = 'enabled';
+    this._isSupported = true;
     this._onToolsAdded = this.onToolsAdded.bind(this);
     this._onToolsRemoved = this.onToolsRemoved.bind(this);
   }
@@ -75,7 +76,7 @@ class WebMCP extends BaseGatherer {
     );
 
     if (!isSupported) {
-      this._status = 'unsupported';
+      this._isSupported = false;
       return;
     }
 
@@ -88,7 +89,9 @@ class WebMCP extends BaseGatherer {
       await session.sendCommand('WebMCP.enable');
     } catch (err) {
       if (err.message.includes('\'WebMCP.enable\' wasn\'t found')) {
-        this._status = 'dt-flag-missing';
+        this._isSupported = false;
+        log.warn('WebMCP', 'CDP domain not found. If testing via CLI, ' +
+          'launch with --chrome-flags=\'--enable-features=DevToolsWebMCPSupport\'');
         return;
       }
       throw err;
@@ -116,8 +119,8 @@ class WebMCP extends BaseGatherer {
    * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
-    if (this._status !== 'enabled') {
-      return {status: this._status, tools: []};
+    if (!this._isSupported) {
+      return {isSupported: false, tools: []};
     }
     const session = context.driver.defaultSession;
 
@@ -156,7 +159,7 @@ class WebMCP extends BaseGatherer {
       resolvedTools.push(tool);
     }
     return {
-      status: this._status,
+      isSupported: true,
       tools: resolvedTools,
     };
   }

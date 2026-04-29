@@ -30,8 +30,6 @@ const UIStrings = {
   titleImperativeTools: 'Imperative Tools',
   /** Title for the table listing declarative WebMCP tools. */
   titleDeclarativeTools: 'Declarative Tools',
-  /** Message shown when the WebMCP feature is active on the page, but the DevTools flag needed to extract details is missing in Chrome. */
-  devToolsFlagMissing: 'Enable `DevToolsWebMCPSupport` flag to run this audit.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -56,17 +54,10 @@ class WebMCPRegisteredTools extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    if (artifacts.WebMCP.status === 'unsupported') {
+    if (!artifacts.WebMCP.isSupported) {
       return {
         notApplicable: true,
         score: 1,
-      };
-    }
-
-    if (artifacts.WebMCP.status === 'dt-flag-missing') {
-      return {
-        score: 0,
-        displayValue: str_(UIStrings.devToolsFlagMissing),
       };
     }
 

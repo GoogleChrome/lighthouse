@@ -9,7 +9,7 @@ import WebMcpSchemaValidityAudit from '../../audits/webmcp-schema-validity.js';
 describe('WebMcpSchemaValidity audit', () => {
   it('is not applicable when modelContext is not defined', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'unsupported', tools: []},
+      WebMCP: {isSupported: false, tools: []},
       WebMcpSchemaIssues: [],
     }, {});
     expect(auditResult.score).toEqual(1);
@@ -18,25 +18,16 @@ describe('WebMcpSchemaValidity audit', () => {
 
   it('not applicable when no issues and no tools were found', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
       WebMcpSchemaIssues: [],
     }, {});
     expect(auditResult.score).toEqual(1);
     expect(auditResult.notApplicable).toEqual(true);
   });
 
-  it('error message when DevToolsWebMCPSupport flag is missing', async () => {
-    const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'dt-flag-missing', tools: []},
-      WebMcpSchemaIssues: [],
-    }, {});
-    expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue.formattedDefault.length).toBeGreaterThan(0);
-  });
-
   it('passes when valid tools are found without issues', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'enabled', tools: [{name: 'tool1'}]},
+      WebMCP: {isSupported: true, tools: [{name: 'tool1'}]},
       WebMcpSchemaIssues: [],
     }, {});
     expect(auditResult.score).toEqual(1);
@@ -46,7 +37,7 @@ describe('WebMcpSchemaValidity audit', () => {
 
   it('fails when WebMCP issues are found', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
       WebMcpSchemaIssues: [
         {
           errorType: 'FormModelContextParameterMissingTitleAndDescription',
@@ -71,7 +62,7 @@ describe('WebMcpSchemaValidity audit', () => {
 
   it('deduplicates identical issues on the same node', async () => {
     const auditResult = await WebMcpSchemaValidityAudit.audit({
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
       WebMcpSchemaIssues: [
         {
           errorType: 'FormModelContextParameterMissingTitleAndDescription',

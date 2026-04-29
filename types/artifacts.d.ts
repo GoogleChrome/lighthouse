@@ -123,7 +123,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
   /** The status and tools registered via WebMCP. */
-  WebMCP: {status: 'unsupported' | 'dt-flag-missing' | 'enabled', tools: Artifacts.WebMCPTool[]};
+  WebMCP: {isSupported: boolean, tools: Artifacts.WebMCPTool[]};
   /** 
    * The WebMCP schema validation issues. 
    * TODO: fold this into the WebMCP artifact. 

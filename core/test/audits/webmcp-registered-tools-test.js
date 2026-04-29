@@ -10,7 +10,7 @@ describe('WebMCPRegisteredTools Audit', () => {
   it('renders a table with registered tools', async () => {
     const artifacts = {
       WebMCP: {
-        status: 'enabled',
+        isSupported: true,
         tools: [
           {
             name: 'book_table_le_petit_bistro',
@@ -90,7 +90,7 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('handles empty tools list', async () => {
     const artifacts = {
-      WebMCP: {status: 'enabled', tools: []},
+      WebMCP: {isSupported: true, tools: []},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
@@ -101,23 +101,12 @@ describe('WebMCPRegisteredTools Audit', () => {
 
   it('is not applicable when webmcp not supported', async () => {
     const artifacts = {
-      WebMCP: {status: 'unsupported', tools: []},
+      WebMCP: {isSupported: false, tools: []},
     };
 
     const result = await WebMCPRegisteredTools.audit(artifacts);
 
     expect(result.score).toEqual(1);
     expect(result.notApplicable).toEqual(true);
-  });
-
-  it('error message when DevToolsWebMCPSupport flag is missing', async () => {
-    const artifacts = {
-      WebMCP: {status: 'dt-flag-missing', tools: []},
-    };
-
-    const result = await WebMCPRegisteredTools.audit(artifacts);
-
-    expect(result.score).toEqual(0);
-    expect(result.displayValue.formattedDefault.length).toBeGreaterThan(0);
   });
 });

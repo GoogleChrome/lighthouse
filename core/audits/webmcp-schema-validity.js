@@ -33,8 +33,6 @@ const UIStrings = {
   'Add it to define the parameter name.',
   /** Descriptive reason for why a form field fails WebMCP validation due to missing description. */
   missingParamDescription: 'Add a description to make this form more accessible for AI agents.',
-  /** Message shown when the WebMCP feature is active on the page, but the DevTools flag needed to extract details is missing in Chrome. */
-  devToolsFlagMissing: 'Enable `DevToolsWebMCPSupport` flag to run this audit.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -59,7 +57,7 @@ class WebMcpSchemaValidity extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
-    if (artifacts.WebMCP.status === 'unsupported') {
+    if (!artifacts.WebMCP.isSupported) {
       return {
         notApplicable: true,
         score: 1,
@@ -130,15 +128,6 @@ class WebMcpSchemaValidity extends Audit {
       };
     }
 
-    // No CDP audit issues
-    // If CDP WebMCP enable failed, it may be a false positive. Return error
-    // message instead.
-    if (artifacts.WebMCP.status === 'dt-flag-missing') {
-      return {
-        displayValue: str_(UIStrings.devToolsFlagMissing),
-        score: 0,
-      };
-    }
     if (artifacts.WebMCP.tools.length === 0) {
       return {
         notApplicable: true,
