@@ -34,7 +34,7 @@ class WebMcpFormCoverage extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Inputs'],
+      requiredArtifacts: ['Inputs', 'WebMCP'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -45,6 +45,12 @@ class WebMcpFormCoverage extends Audit {
    */
   static audit(artifacts) {
     const forms = artifacts.Inputs.forms;
+    if (forms.length === 0 || !artifacts.WebMCP.isSupported) {
+      return {
+        notApplicable: true,
+        score: 1,
+      };
+    }
     const withoutTools = [];
 
     for (const form of forms) {
@@ -60,6 +66,7 @@ class WebMcpFormCoverage extends Audit {
 
     if (withoutTools.length === 0) {
       return {
+        notApplicable: true,
         score: 1,
       };
     }

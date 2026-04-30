@@ -5,7 +5,7 @@
  */
 
 /**
- * @fileoverview Capture WebMCP CDP events
+ * @fileoverview Capture WebMCP data
  */
 
 import BaseGatherer from '../base-gatherer.js';
@@ -23,7 +23,7 @@ import {ExecutionContext} from '../driver/execution-context.js';
  * @property {any} [stackTrace]
  * @property {LH.Artifacts.NodeDetails} [nodeDetails]
  */
-class WebMCPTools extends BaseGatherer {
+class WebMCP extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['navigation', 'snapshot'],
@@ -33,6 +33,7 @@ class WebMCPTools extends BaseGatherer {
     super();
     /** @type {WebMCPTool[]} */
     this._tools = [];
+    this._isSupported = true;
     this._onToolsAdded = this.onToolsAdded.bind(this);
     this._onToolsRemoved = this.onToolsRemoved.bind(this);
   }
@@ -42,9 +43,9 @@ class WebMCPTools extends BaseGatherer {
    */
   // TODO: Handle WebMCP tools per frame.
   onToolsAdded(event) {
-    // Note there is a bug right now in WebMCP.enable CDP where on newly registered tools
-    // while WebMCP is enabled, the schema is empty. We will have to address that
-    // eventually.
+    // Note that as of M148, there is a bug in WebMCP CDP.
+    // While WebMCP is enabled, any newly registered tool will
+    // have an empty schema.
     if (event.tools) {
       this._tools.push(...event.tools);
     }
@@ -71,7 +72,15 @@ class WebMCPTools extends BaseGatherer {
     // @ts-expect-error
     session.on('WebMCP.toolsRemoved', this._onToolsRemoved);
 
-    await session.sendCommand('WebMCP.enable');
+    try {
+      await session.sendCommand('WebMCP.enable');
+    } catch (err) {
+      if (err.message.includes('\'WebMCP.enable\' wasn\'t found')) {
+        this._isSupported = false;
+        return;
+      }
+      throw err;
+    }
   }
 
   /**
@@ -86,15 +95,24 @@ class WebMCPTools extends BaseGatherer {
     try {
       await session.sendCommand('WebMCP.disable');
     } catch (err) {
-      // WebMCP.disable might not be implemented or fail, ignore it.
+      // Ignore errors
     }
   }
 
   /**
    * @param {LH.Gatherer.Context} context
-   * @return {Promise<WebMCPTool[]>}
+   * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
+    const isSupported = await context.driver.executionContext.evaluate(
+      // @ts-expect-error - modelContext is not in types
+      () => typeof navigator.modelContext !== 'undefined',
+      {args: [], useIsolation: true}
+    );
+    if (!isSupported || !this._isSupported) {
+      return {isSupported: false, tools: []};
+    }
+
     const session = context.driver.defaultSession;
 
     // Remove duplicates based on name, keeping the latest occurrence.
@@ -131,9 +149,11 @@ class WebMCPTools extends BaseGatherer {
       }
       resolvedTools.push(tool);
     }
-
-    return resolvedTools;
+    return {
+      isSupported: true,
+      tools: resolvedTools,
+    };
   }
 }
 
-export default WebMCPTools;
+export default WebMCP;
