@@ -154,6 +154,7 @@ describe('WebMCP Gatherer', () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
     mockContext.driver._executionContext.evaluate.mockResolvedValue(false);
+    mockContext.driver.defaultSession.sendCommand.mockResponse('WebMCP.enable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
     const artifact = await gatherer.getArtifact(mockContext.asContext());
