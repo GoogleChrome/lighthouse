@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` attributes are valid and not misspelled"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` attributes are not used correctly"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` attributes are used correctly"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Failing Elements"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` elements have alternate text"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Elements with `role=\"none\"` or `role=\"presentation\"` have conflicts"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Form elements without effective labels can create frustrating experiences for screen reader users. [Learn more about the `select` element](https://dequeuniversity.com/rules/axe/4.11/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Skip links are focusable."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG elements with an `img` role do not have an accessible text alternative"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG elements with an `img` role have an accessible text alternative"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more about the `tabindex` attribute](https://dequeuniversity.com/rules/axe/4.11/tabindex)."
@@ -568,6 +595,51 @@
   },
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Failing Element"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Failing Rule"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "A well-formed accessibility tree helps AI agents to navigate and interact with the page."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "All audits passed"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Failed Audits"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Accessibility tree is not well-formed"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Accessibility tree is well-formed"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "If your llms.txt file is malformed, large language models may not be able to understand how you want your website to be crawled or used for training. A valid llms.txt should be a Markdown file containing at least one H1 header. [Learn more about llms.txt](https://llmstxt.org/)."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Failed with HTTP status {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Fetch of llms.txt failed"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt is missing or incomplete"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "File is missing a required H1 header (e.g., \"# Title\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "File does not appear to contain any links."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt is present"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "File is suspiciously short."
   },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Current Value"
@@ -1274,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Page has valid source maps"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Form"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Consider adding WebMCP annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount, plural,\n    =1 {1 form missing annotations}\n    other {# forms missing annotations}\n    }"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP form coverage"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Description"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Source Location"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Input schema"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Tool name"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Lists the WebMCP tools registered at the time of analysis. "
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "WebMCP tools registered"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Declarative Tools"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Imperative Tools"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Issue"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Valid WebMCP schemas are required for AI agents to  understand and interact with tools correctly. Please fix any errors or warnings reported by the browser."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP schemas are invalid"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Missing `name` attribute for an optional field. Add it to define the parameter name."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Add a description to make this form more accessible for AI agents."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Missing `name` attribute for a required field. Add it to define the parameter name."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Form level `tooldescription` attribute is missing. Add it to describe the tool for AI agents."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Form level `toolname` attribute is missing. Add it to define the tool name."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP schemas are valid"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "These audits highlight best practices for improving the accessibility of the website for AI agents."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Agent Accessibility"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "These checks ensure high-quality, browsable websites for AI agents and validate the correctness of WebMCP integrations. This category is still under development and subject to change."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentic Browsing"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Audits validating WebMCP integration."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
   },
@@ -1847,6 +2006,9 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse User Flow Report"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AttributionReporting": {
+    "message": "Attribution Reporting is deprecated and will be removed. See https://goo.gle/ps-status for details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
     "message": "Authorization will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
   },
@@ -1868,9 +2030,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
     "message": "chrome.loadTimes() is deprecated, instead use standardized API: nextHopProtocol in Navigation Timing 2."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
-    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
     "message": "Relaxing the same-origin policy by setting document.domain is deprecated, and will be disabled by default. This deprecation warning is for a cross-origin access that was enabled by setting document.domain."
   },
@@ -1882,6 +2041,18 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') is deprecated and will be removed. Use new KeyboardEvent() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') is deprecated and will be removed. Use new TransitionEvent() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
+    "message": "This is an example for showing the code required for a browser process reported deprecation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
+    "message": "The Protected Audience API is deprecated and will be removed in a future release."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
@@ -1907,14 +2078,29 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator is deprecated. Please use Intl.Segmenter instead."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelParams": {
+    "message": "LanguageModel.params() is deprecated and now only available in extension contexts. The topK and temperature related fields within its result are also deprecated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTemperature": {
+    "message": "The 'temperature' parameter/attribute for LanguageModel is deprecated. It is only functional within extensions and may be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTopK": {
+    "message": "The 'topK' parameter/attribute for LanguageModel is deprecated. It is only functional within extensions and may be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputQuota": {
+    "message": "LanguageModel.inputQuota is deprecated. Please use LanguageModel.contextWindow instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputUsage": {
+    "message": "LanguageModel.inputUsage is deprecated. Please use LanguageModel.contextUsage instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_MeasureInputUsage": {
+    "message": "LanguageModel.measureInputUsage() is deprecated. Please use LanguageModel.measureContextUsage() instead. This alias is only available in extensions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_OnQuotaOverflow": {
+    "message": "LanguageModel.onquotaoverflow is deprecated. Please use LanguageModel.oncontextoverflow instead. The LanguageModel.onquotaoverflow alias is only available in extensions."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
     "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
-    "message": "Using SourceBuffer.abort() to abort remove()'s asynchronous range removal is deprecated due to specification change. Support will be removed in the future. You should listen to the updateend event instead. abort() is intended to only abort an asynchronous media append or reset parser state."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
     "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
@@ -1973,9 +2159,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
-    "message": "We're deprecating the API chrome.privacy.websites.privacySandboxEnabled, though it will remain active for backward compatibility until release M113. Instead, please use chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled and chrome.privacy.websites.adMeasurementEnabled. See https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "The constraint DtlsSrtpKeyAgreement is removed. You have specified a false value for this constraint, which is interpreted as an attempt to use the removed SDES key negotiation method. This functionality is removed; use a service that supports DTLS key negotiation instead."
   },
@@ -1988,6 +2171,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
     "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
+    "message": "Related Website Sets is deprecated and will be removed. See https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ for more details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
   },
@@ -1997,8 +2183,17 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
     "message": "SharedArrayBuffer will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedStorage": {
+    "message": "The Shared Storage API is deprecated and will be removed in a future release."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | StorageAccessAPI_requestStorageAccessFor_Method": {
+    "message": "document.requestStorageAccessFor is deprecated and will be removed. See https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ for more details."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
     "message": "speechSynthesis.speak() without user activation is deprecated and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Topics": {
+    "message": "The Topics API is deprecated and will be removed in a future release."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
     "message": "Unload event listeners are deprecated and will be removed."
@@ -2006,11 +2201,17 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
+    "message": "BluetoothRemoteGATTCharacteristic.writeValue() is deprecated. Use writeValueWithResponse() or writeValueWithoutResponse() instead."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response json in XMLHttpRequest"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
     "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XSLT": {
+    "message": "XSLTProcessor and XSLT Processing Instructions have been deprecated by all browsers. These features will be removed from this browser soon."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
     "message": "Animation"
@@ -2065,6 +2266,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Use efficient cache lifetimes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "A character encoding declaration is required. It can be done with a meta charset tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Does not declare charset in HTTP header"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Declares charset using a meta tag after the first 1024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Does not declare charset using a meta tag"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Could not determine meta charset declaration from trace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Declares charset in HTTP header"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Declares charset using a meta tag in the first 1024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Declare a character encoding"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2165,8 +2390,8 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
-    "message": "Stack trace"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | reflowCallFrames": {
+    "message": "Call frames that trigger reflow"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
     "message": "Forced reflow"
@@ -2273,8 +2498,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority=high should be applied"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high should be applied to the image preload request"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "lazy load not applied"
+    "message": "LCP resources should not use loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "LCP image loaded {PH1} after earliest start point."
@@ -2382,13 +2610,13 @@
     "message": "Duration"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
-    "message": "No render blocking requests for this navigation"
+    "message": "No render-blocking requests for this navigation"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
     "message": "Request"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
-    "message": "Render blocking requests"
+    "message": "Render-blocking requests"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/performance/insights/slow-css-selector) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs."

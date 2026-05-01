@@ -1835,6 +1835,9 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "„Lighthouse“ naudotojų srauto ataskaita"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AttributionReporting": {
+    "message": "Priskyrimo ataskaitų teikimas nutrauktas ir jos bus pašalintos. Išsamios informacijos žr. https://goo.gle/ps-status."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
     "message": "Prieigos teisė nebus įtraukta naudojant pakaitos simbolį (*) vykdant CORS funkcijos „Access-Control-Allow-Headers“ apdorojimą."
   },
@@ -1856,9 +1859,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
     "message": "Funkcijos „chrome.loadTimes()“ teikimas nutrauktas; vietoj jos naudokite standartizuotą API: „nextHopProtocol“ skiltyje „2 naršymo laiko žymės“."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
-    "message": "Slapukai, kuriuose yra „\\(0|r|n)“ simbolis, bus atmesti, o ne sutrumpinti."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
     "message": "To paties šaltinio politikos apribojimų atlaisvinimo nustatant „document.domain“ funkcijos teikimas nutrauktas ir ji bus išjungta pagal numatytuosius nustatymus. Šis teikimo nutraukimo perspėjimas skirtas skirtingų šaltinių prieigai, kuri buvo įgalinta nustačius „document.domain“."
   },
@@ -1871,14 +1871,20 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Duomenų palaikymas: „SVGUseElement“ URL nebenaudojamas ir ateityje bus pašalintas."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
+    "message": "Tai yra pavyzdys, kaip parodyti kodą, reikalingą nutraukiant naršyklės proceso pranešamą teikimą."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
+    "message": "Apsaugotos auditorijos API nebenaudojama ir bus pašalinta būsimame leidime."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
-    "message": "„getCurrentPosition()“ ir „watchPosition()“ nebeveikia nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://goo.gle/chrome-insecure-origins."
+    "message": "„getCurrentPosition()“ ir „watchPosition()“ nebeveikia nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Funkcijų „getCurrentPosition()“ ir „watchPosition()“ teikimas nutrauktas nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://goo.gle/chrome-insecure-origins."
+    "message": "Funkcijų „getCurrentPosition()“ ir „watchPosition()“ teikimas nutrauktas nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
-    "message": "„getUserMedia()“ nebeveikia nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://goo.gle/chrome-insecure-origins."
+    "message": "„getUserMedia()“ nebeveikia nesaugiuose šaltiniuose. Jei norite naudoti šią funkciją, turite apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "„RTCPeerConnectionIceErrorEvent.hostCandidate“ teikimas nutrauktas. Vietoj jos naudokite funkciją „RTCPeerConnectionIceErrorEvent.address“ arba „RTCPeerConnectionIceErrorEvent.port“."
@@ -1895,20 +1901,35 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "„Intl.v8BreakIterator“ teikimas nutrauktas. Vietoj jos naudokite funkciją „Intl.Segmenter“."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelParams": {
+    "message": "„LanguageModel.params()“ nebenaudojamas ir dabar pasiekiamas tik plėtinių kontekstuose. Taip pat nebenaudojami su „topK“ ir temperatūra susiję laukai jo rezultate."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTemperature": {
+    "message": "„LanguageModel“ parametras / atributas „temperatūra“ nebenaudojamas. Jis veikia tik plėtiniuose ir ateityje gali būti pašalintas."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModelTopK": {
+    "message": "„LanguageModel“ parametras / atributas „topK“ nebenaudojamas. Jis veikia tik plėtiniuose ir ateityje gali būti pašalintas."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputQuota": {
+    "message": "„LanguageModel.inputQuota“ nebenaudojamas. Vietoj jo naudokite „LanguageModel.contextWindow“. Šis alternatyvus el. pašto adresas pasiekiamas tik plėtiniuose."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_InputUsage": {
+    "message": "„LanguageModel.inputUsage“ nebenaudojamas. Vietoj jo naudokite „LanguageModel.contextUsage“. Šis alternatyvus el. pašto adresas pasiekiamas tik plėtiniuose."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_MeasureInputUsage": {
+    "message": "„LanguageModel.measureInputUsage()“ nebeteikiamas. Vietoj jo naudokite „LanguageModel.measureContextUsage()“. Šis alternatyvus el. pašto adresas pasiekiamas tik plėtiniuose."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LanguageModel_OnQuotaOverflow": {
+    "message": "„LanguageModel.onquotaoverflow“ nebenaudojamas. Vietoj jo naudokite „LanguageModel.oncontextoverflow“. „LanguageModel.onquotaoverflow“ alternatyvus el. pašto adresas pasiekiamas tik plėtiniuose."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
     "message": "CSS kalbos negalima įkelti iš „file:“ URL, nebent jie baigiasi „.css“ failo plėtiniu."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
-    "message": "„SourceBuffer.abort()“ naudojimas siekiant nutraukti „remove()“ nesinchronizuoto diapazono pašalinimą nutrauktas dėl specifikacijos pakeitimo. Ateityje palaikymas bus pašalintas. Turėtumėte klausytis updateend įvykio. „abort()“ skirtas naudoti tik norint nutraukti nesinchronizuotos medijos pridėjimą arba iš naujo nustatyti analizavimo įrankio būseną."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "„MediaSource.duration“ nustatymas žemiau nei bet kurio į buferį įrašyto užkoduoto rėmelio aukščiausia pristatymo laiko žymė nutrauktas dėl specifikacijos pakeitimo. Sutrumpintos į buferį įrašytos medijos numatomo pašalinimo palaikymas ateityje bus pašalintas. Vietoj to turėtumėte atlikti aiškų „remove(newDuration, oldDuration)“ visuose „sourceBuffers“, kur „newDuration < oldDuration“."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
     "message": "Žiniatinklio MIDI prašys naudojimo leidimo, net jei sistemos išskirtinis pranešimas nenurodytas funkcijoje „MIDIOptions“."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
-    "message": "Pranešimų API nebegalima naudoti iš nesaugių šaltinių. Turėtumėte apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://goo.gle/chrome-insecure-origins."
+    "message": "Pranešimų API nebegalima naudoti iš nesaugių šaltinių. Turėtumėte apsvarstyti galimybę perjungti programą į saugų šaltinį, pvz., HTTPS. Jei reikia išsamesnės informacijos, žr. https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
     "message": "Pranešimų API leidimo užklausų nebegalima teikti iš skirtingų šaltinių „iframe“. Vietoj to turėtumėte apsvarstyti galimybę teikti leidimo užklausą iš aukščiausio lygio rėmelio arba atidaryti naują langą."
@@ -1961,9 +1982,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "„HTMLVideoElement.webkitSupportsFullscreen“ nebeteikiama. Vietoj jos naudokite „Document.fullscreenEnabled“."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
-    "message": "Nutrauksime API „chrome.privacy.websites.privacySandboxEnabled“ teikimą, bet ji liks aktyvi, kad būtų užtikrintas atgalinis suderinamumas, kol bus išleista M113 versija. Dabar naudokite „chrome.privacy.websites.topicsEnabled“, „chrome.privacy.websites.fledgeEnabled“ ir „chrome.privacy.websites.adMeasurementEnabled“. Žr. https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Apribojimas „DtlsSrtpKeyAgreement“ pašalintas. Nurodėte šio apribojimo „false“ vertę, kuri interpretuojama kaip bandymas naudoti pašalintą „SDES key negotiation“ metodą. Ši funkcija pašalinta; vietoj jos naudokite paslaugą, kuri palaiko „DTLS key negotiation“."
   },
@@ -1976,6 +1994,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
     "message": "„Range.expand()“ nebeteikiama. Vietoj jos naudokite „Selection.modify()“."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
+    "message": "„Related Website Sets“ teikimas nutrauktas ir bus pašalinta. Jei reikia išsamesnės informacijos, žr. https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "Papildomų šaltinių užklausos, kurių URL yra įterptų prisijungimo duomenų (pvz., „https://user:pass@host/“), yra užblokuotos."
   },
@@ -1985,8 +2006,17 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
     "message": "Funkcijai „SharedArrayBuffer“ reikalinga apsauga nuo subjektų iš kitų domenų. Jei reikia išsamesnės informacijos, žr. https://developer.chrome.com/blog/enabling-shared-array-buffer/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedStorage": {
+    "message": "Bendrinamos saugyklos API nebenaudojama ir bus pašalinta būsimame leidime."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | StorageAccessAPI_requestStorageAccessFor_Method": {
+    "message": "„document.requestStorageAccessFor“ teikimas nutrauktas ir bus pašalinta. Jei reikia išsamesnės informacijos, žr. https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
     "message": "Funkcijos „speechSynthesis.speak()“ be naudotojo suaktyvinimo teikimas nutrauktas ir ji bus pašalinta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Topics": {
+    "message": "Temų API teikimas nutrauktas ir bus pašalinta būsimame leidime."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
     "message": "Iškėlimo įvykių apdorojimo priemonių teikimas nutrauktas ir jos bus pašalintos."
@@ -1994,17 +2024,23 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Plėtiniams reikia pasirinkti apsaugą nuo subjektų iš kitų domenų, norint toliau naudoti „SharedArrayBuffer“. Žr. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
+    "message": "„BluetoothRemoteGATTCharacteristic.writeValue()“ teikimas nutrauktas. Vietoj to naudokite „writeValueWithResponse()“ arba „writeValueWithoutResponse()“."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 nepalaikomas atsako JSON naudojant funkciją „XMLHttpRequest“"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
     "message": "Sinchroninės funkcijos „XMLHttpRequest“ pagrindinėje grupėje teikimas nutrauktas dėl jos žalingo poveikio galutinio naudotojo funkcijoms. Jei reikia daugiau pagalbos, žr. https://xhr.spec.whatwg.org/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XSLT": {
+    "message": "„XSLTProcessor“ ir XSLT apdorojimo instrukcijų teikimas nutrauktas visose naršyklėse. Šios funkcijos netrukus bus pašalintos iš šios naršyklės."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
     "message": "Animacija"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
-    "message": "Išdėstymo poslinkiai įvyksta, kai elementai juda be naudotojo sąveikos. [Išnagrinėkite išdėstymo poslinkių priežastis](https://web.dev/articles/optimize-cls), pvz., elementų pridėjimą, pašalinimą arba šriftų keitimą, kai puslapis įkeliamas."
+    "message": "Išdėstymo poslinkiai įvyksta, kai elementai juda be naudotojo sąveikos. [Išnagrinėkite išdėstymo poslinkių priežastis](https://developer.chrome.com/docs/performance/insights/cls-culprit), pvz., elementų pridėjimą, pašalinimą arba šriftų keitimą, kai puslapis įkeliamas."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
     "message": "Įterptas „iframe“"
@@ -2040,7 +2076,7 @@
     "message": "Talpyklos TTL"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
-    "message": "Jei talpykla galios ilgiau, greičiau sulauksite pakartotinių apsilankymų puslapyje. [Sužinokite daugiau](https://web.dev/uses-long-cache-ttl/)"
+    "message": "Jei talpykla galios ilgiau, greičiau sulauksite pakartotinių apsilankymų puslapyje. [Sužinokite daugiau apie saugojimą talpykloje](https://developer.chrome.com/docs/performance/insights/cache)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
     "message": "Nėra užklausų su neefektyviomis talpyklos politikos nuostatomis"
@@ -2055,7 +2091,7 @@
     "message": "Naudoti efektyvius talpyklos galiojimo terminus"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Dėl didelio DOM elementų skaičiaus gali būti ilgiau skaičiuojami stiliai ir atliekami išdėstymo perskaičiavimai, o tai daro įtaką puslapio interaktyvumui. Dėl didelio DOM elementų skaičiaus bus sunaudojama daugiau atminties. [Sužinokite, kaip išvengti per didelio DOM dydžio](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+    "message": "Dėl didelio DOM elementų skaičiaus gali būti ilgiau skaičiuojami stiliai ir atliekami išdėstymo perskaičiavimai, o tai daro įtaką puslapio interaktyvumui. Dėl didelio DOM elementų skaičiaus bus sunaudojama daugiau atminties. [Sužinokite, kaip išvengti per didelio DOM dydžio](https://developer.chrome.com/docs/performance/insights/dom-size)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
     "message": "Trukmė"
@@ -2091,7 +2127,7 @@
     "message": "Vertė"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
-    "message": "Pirmoji tinklo užklausa yra svarbiausia.  Sumažinkite delsą vengdami peradresavimų, užtikrindami spartų serverio atsaką ir įgalindami teksto glaudinimą."
+    "message": "Pirmoji tinklo užklausa yra svarbiausia. [Sumažinkite delsą](https://developer.chrome.com/docs/performance/insights/document-latency) vengdami peradresavimų, užtikrindami spartų serverio atsaką ir įgalindami teksto glaudinimą."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
     "message": "Buvo peradresavimų (peradresavimų: {PH1}, + {PH2})"
@@ -2130,13 +2166,13 @@
     "message": "Šaltinis"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Pašalinkite didelius, pasikartojančius „JavaScript“ modulius iš grupių, kad tinklo veikla be reikalo nenaudotų baitų."
+    "message": "Pašalinkite didelius, [pasikartojančius „JavaScript“ modulius](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) iš grupių, kad tinklo veikla be reikalo nenaudotų baitų."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "Tiksli „JavaScript“ kopija"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
-    "message": "Apsvarstykite galimybę nustatyti [font-display](https://developer.chrome.com/blog/font-display) kaip swap arba optional, kad tekstas būtų nuolat matomas. swap galima toliau optimizuoti, kad būtų sumažinti išdėstymo poslinkiai naudojant [šrifto metrikos nepaisymą](https://developer.chrome.com/blog/font-fallbacks)."
+    "message": "Apsvarstykite galimybę nustatyti [font-display](https://developer.chrome.com/docs/performance/insights/font-display) kaip swap arba optional, kad tekstas būtų nuolat matomas. swap galima toliau optimizuoti, kad būtų sumažinti išdėstymo poslinkiai naudojant [šrifto metrikos nepaisymą](https://developer.chrome.com/blog/font-fallbacks)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Šriftas"
@@ -2151,10 +2187,10 @@
     "message": "(anoniminė)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Priverstinis perskaičiavimas įvyksta, kai „JavaScript“ užklausia geometrinių ypatybių (pvz., offsetWidth), kai stiliai buvo pripažinti negaliojančiais dėl DOM būsenos pakeitimo. Dėl to gali būti prastas našumas. Sužinokite daugiau apie [priverstinius perskaičiavimus](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) ir galimus sušvelninimus."
+    "message": "Priverstinis perskaičiavimas įvyksta, kai „JavaScript“ užklausia geometrinių ypatybių (pvz., offsetWidth), kai stiliai buvo pripažinti negaliojančiais dėl DOM būsenos pakeitimo. Dėl to gali būti prastas našumas. Sužinokite daugiau apie [priverstinius perskaičiavimus](https://developer.chrome.com/docs/performance/insights/forced-reflow) ir galimus sušvelninimus."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
-    "message": "Dėklo pėdsakas"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | reflowCallFrames": {
+    "message": "Iškvieskite kadrus, kurie suaktyvina perskaičiavimą"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
     "message": "Priverstinis perskaičiavimas"
@@ -2169,7 +2205,7 @@
     "message": "[nepriskirta]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "Pradėkite tyrimą nuo ilgiausios antrinės dalies. [Galite sumažinti vėlavimą](https://web.dev/articles/optimize-inp#optimize_interactions). Kad apdorojimo trukmė būtų trumpesnė, [optimizuokite pagrindinės grupės mokesčius](https://web.dev/articles/optimize-long-tasks), dažnai JS."
+    "message": "Pradėkite tirti, [kaip pagerinti SKŽ](https://developer.chrome.com/docs/performance/insights/inp-breakdown), peržiūrėdami ilgiausią antrinę dalį."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "Trukmė"
@@ -2193,7 +2229,7 @@
     "message": "SKŽ analizė"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "Sutrumpinus vaizdų atsisiuntimo laiką, galima pagerinti puslapio ir DTŽ įkėlimo laiką. [Sužinokite daugiau apie vaizdo dydžio optimizavimą](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+    "message": "Sutrumpinus vaizdų atsisiuntimo laiką, galima pagerinti puslapio ir DTŽ įkėlimo laiką. [Sužinokite daugiau apie vaizdo dydžio optimizavimą](https://developer.chrome.com/docs/performance/insights/image-delivery)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (numat. {PH2})"
@@ -2223,7 +2259,7 @@
     "message": "Naudojant vaizdo įrašų formatus vietoj GIF gali būti sumažintas animuoto turinio atsisiuntimo dydis."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
-    "message": "Kiekvienai [antrinei daliai taikomos konkrečios tobulinimo strategijos](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealiu atveju didžiąją DTŽ laiko dalį turėtų sudaryti šaltinių įkėlimas, o ne vėlavimai."
+    "message": "Kiekvienai [antrinei daliai taikomos konkrečios tobulinimo strategijos](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). Idealiu atveju didžiąją DTŽ laiko dalį turėtų sudaryti šaltinių įkėlimas, o ne vėlavimai."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
     "message": "Trukmė"
@@ -2253,7 +2289,7 @@
     "message": "DTŽ analizė"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
-    "message": "Optimizuokite DTŽ, kad DTŽ vaizdas būtų [aptinkamas](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) iš karto iš HTML ir [išvengtumėte asinchroninio įkėlimo](https://web.dev/articles/lcp-lazy-loading)"
+    "message": "[Optimizuokite DTŽ](https://developer.chrome.com/docs/performance/insights/lcp-discovery), kad DTŽ vaizdas būtų aptinkamas iš karto iš HTML ir išvengtumėte asinchroninio įkėlimo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
     "message": "„fetchpriority=high“ pritaikyta"
@@ -2286,13 +2322,13 @@
     "message": "Iššvaistytų baitų"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Naudojant kodus ir transformacijas senesnėse naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Apsvarstykite galimybę pakeisti „JavaScript“ kompiliavimo procesą, kad nebūtų transpiliuojamos [pagrindinės](https://web.dev/articles/baseline-and-polyfills) funkcijos, nebent žinote, kad turite palaikyti senesnes naršykles. [Sužinokite, kodėl dauguma svetainių gali diegti ES6+ kodą be transpiliavimo](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Naudojant kodus ir transformacijas senesnėse naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Apsvarstykite galimybę pakeisti „JavaScript“ kompiliavimo procesą, kad nebūtų transpiliuojamos [pagrindinės](https://web.dev/articles/baseline-and-polyfills) funkcijos, nebent žinote, kad turite palaikyti senesnes naršykles. [Sužinokite, kodėl dauguma svetainių gali diegti ES6+ kodą be transpiliavimo](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Pasenusi „JavaScript“"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
-    "message": "Naudodami HTTP/2 ir HTTP/3 gaunate daugiau pranašumų, nei naudodami HTTP/1.1, pvz., multipleksavimą. [Sužinokite daugiau apie šiuolaikinio HTTP naudojimą](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+    "message": "Naudodami HTTP/2 ir HTTP/3 gaunate daugiau pranašumų, nei naudodami HTTP/1.1, pvz., multipleksavimą. [Sužinokite daugiau apie šiuolaikinio HTTP naudojimą](https://developer.chrome.com/docs/performance/insights/modern-http)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
     "message": "Nėra užklausų, kuriose naudojamas HTTP/1.1, arba dabartinis HTTP/1.1 naudojimas nesuteikia reikšmingos optimizavimo galimybės. HTTP/1.1 užklausos pažymimos tik tada, kai šeši ar daugiau statinių išteklių yra iš to paties šaltinio ir jie nėra teikiami iš vietinės kūrimo aplinkos arba trečiosios šalies šaltinio."
@@ -2325,7 +2361,7 @@
     "message": "Nepanaudotas išankstinis susiejimas. Patikrinkite, ar atributas „crossorigin“ naudojamas tinkamai."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Venkite svarbiausių užklausų grandinių](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), sutrumpindami grandines, sumažindami atsisiunčiamų šaltinių dydį arba atidėdami nebūtinų šaltinių atsisiuntimą, kad puslapio įkėlimas būtų sklandesnis."
+    "message": "[Venkite svarbiausių užklausų grandinių](https://developer.chrome.com/docs/performance/insights/network-dependency-tree), sutrumpindami grandines, sumažindami atsisiunčiamų šaltinių dydį arba atidėdami nebūtinų šaltinių atsisiuntimą, kad puslapio įkėlimas būtų sklandesnis."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
     "message": "Pridėkite [išankstinio susiejimo](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) nurodymų prie svarbiausių šaltinių, bet pabandykite naudoti daugiau nei keturis."
@@ -2364,7 +2400,7 @@
     "message": "Venkite svarbiausių užklausų grandinių, sutrumpindami grandines, sumažindami atsisiunčiamų šaltinių dydį arba atidėdami nebūtinų šaltinių atsisiuntimą, kad puslapio įkėlimas būtų sklandesnis."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Užklausos blokuoja pradinį puslapio pateikimą, dėl kurio DTŽ gali vėluoti. [Atidėliojant arba įterpiant](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) šias tinklo užklausas galima pašalinti iš kritinio kelio."
+    "message": "Užklausos blokuoja pradinį puslapio pateikimą, dėl kurio DTŽ gali vėluoti. [Atidėliojant arba įterpiant](https://developer.chrome.com/docs/performance/insights/render-blocking) šias tinklo užklausas galima pašalinti iš kritinio kelio."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Trukmė"
@@ -2379,7 +2415,7 @@
     "message": "Pateikimo blokavimo užklausos"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "Jei stiliaus perskaičiavimo mokesčiai išlieka dideli, juos galima sumažinti optimizavus parinkiklius. [Optimizuokite parinkiklius](https://developer.chrome.com/docs/devtools/performance/selector-stats), kai praėjęs laikas ir lėto kelio proc. yra dideli. Paprastesni parinkikliai, mažiau parinkiklių, mažesnis DOM ir seklesnis DOM sumažins atitikimo mokesčius."
+    "message": "Jei stiliaus perskaičiavimo mokesčiai išlieka dideli, juos galima sumažinti optimizavus parinkiklius. [Optimizuokite parinkiklius](https://developer.chrome.com/docs/performance/insights/slow-css-selector), kai praėjęs laikas ir lėto kelio proc. yra dideli. Paprastesni parinkikliai, mažiau parinkiklių, mažesnis DOM ir seklesnis DOM sumažins atitikimo mokesčius."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "Likęs laikas"
@@ -2418,7 +2454,7 @@
     "message": "Failų perkėlimo dydis"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Trečiosios šalies kodas gali smarkiai paveikti įkėlimo našumą. [Sumažinkite ir atidėkite trečiosios šalies kodo įkėlimą](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), kad būtų nustatytas puslapio turinio prioritetas."
+    "message": "Trečiosios šalies kodas gali smarkiai paveikti įkėlimo našumą. [Sumažinkite ir atidėkite trečiosios šalies kodo įkėlimą](https://developer.chrome.com/docs/performance/insights/third-parties), kad būtų nustatytas puslapio turinio prioritetas."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nerasta trečiųjų šalių"
@@ -2427,7 +2463,7 @@
     "message": "Trečiosios šalys"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Palietimo sąveikos gali [vėluoti iki 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/), jei peržiūros sritis neoptimizuota mobiliesiems."
+    "message": "Palietimo sąveikos gali [vėluoti iki 300 ms](https://developer.chrome.com/docs/performance/insights/viewport), jei peržiūros sritis neoptimizuota mobiliesiems."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "Palietimo delsa mobiliesiems"
