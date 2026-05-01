@@ -48,6 +48,19 @@ describe('MCP Bundle build', () => {
     expect(typeof mcpBundle.generateReport).toBe('function');
   });
 
+  it('bundle has agentic browsing config with new audits', async () => {
+    const mcpBundle = await import(bundlePath);
+    expect(mcpBundle.agenticBrowsingConfig).toBeDefined();
+    expect(mcpBundle.agenticBrowsingConfig.categories).toHaveProperty('agentic-browsing');
+    const auditRefs = mcpBundle.agenticBrowsingConfig.categories['agentic-browsing'].auditRefs;
+    const auditIds = auditRefs.map((/** @type {any} */ ref) => ref.id);
+    expect(auditIds).toContain('webmcp-registered-tools');
+    expect(auditIds).toContain('webmcp-form-coverage');
+    expect(auditIds).toContain('webmcp-schema-validity');
+    expect(auditIds).toContain('llms-txt');
+    expect(auditIds).toContain('agent-accessibility-tree');
+  });
+
   describe('licensing', () => {
     const noticesPath = path.join(LH_ROOT, 'dist/LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES');
 
