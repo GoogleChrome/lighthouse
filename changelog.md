@@ -1,3 +1,58 @@
+ <a name="13.2.0"></a>
+# 13.2.0 (2026-04-30)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.1.0...v13.2.0)
+
+We expect this release to ship in the DevTools of [Chrome 150](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- ducky-duke @ducky-duke
+- Simon Zünd @szuend
+
+## New Audits
+
+* webmcp-form-coverage: add audit for missing webmcp tool annotations ([#16964](https://github.com/GoogleChrome/lighthouse/pull/16964))
+* webmcp-registered-tools: add audit to list registered webmcp tools ([#16959](https://github.com/GoogleChrome/lighthouse/pull/16959))
+* webmcp-schema-validity: add audit to check WebMCP schema issues ([#16973](https://github.com/GoogleChrome/lighthouse/pull/16973))
+
+## Core
+
+* implement UKM Invalidate fallback for LCP ([#16956](https://github.com/GoogleChrome/lighthouse/pull/16956))
+* agentic: add new agentic browsing category ([#16953](https://github.com/GoogleChrome/lighthouse/pull/16953))
+* agentic_category: add disclaimer to category description ([#16990](https://github.com/GoogleChrome/lighthouse/pull/16990))
+* config: aggregate agent accessabilty audits ([#16982](https://github.com/GoogleChrome/lighthouse/pull/16982))
+* config: update llms.txt to refine validation logic ([#16986](https://github.com/GoogleChrome/lighthouse/pull/16986))
+* config: implement llms.txt check for AI agents ([#16970](https://github.com/GoogleChrome/lighthouse/pull/16970))
+* config: move specific accessibility audits to default config ([#16966](https://github.com/GoogleChrome/lighthouse/pull/16966))
+* config: enable and add new axe audits for agentic category ([#16965](https://github.com/GoogleChrome/lighthouse/pull/16965))
+* config: add accessibility audits to agentic-browsing-config ([#16963](https://github.com/GoogleChrome/lighthouse/pull/16963))
+* source-maps: guard against out-of-bounds sourceIndex ([#16969](https://github.com/GoogleChrome/lighthouse/pull/16969))
+* webmcp: adjust how webmcp audits handle lack of WebMCP support ([#16987](https://github.com/GoogleChrome/lighthouse/pull/16987))
+
+## Report
+
+* create agentic-browsing sample report ([#16988](https://github.com/GoogleChrome/lighthouse/pull/16988))
+
+## Deps
+
+* upgrade deps ([#16992](https://github.com/GoogleChrome/lighthouse/pull/16992))
+* upgrade web-features to 3.24.0 ([#16977](https://github.com/GoogleChrome/lighthouse/pull/16977))
+* upgrade trace_engine to 0.0.64 ([#16955](https://github.com/GoogleChrome/lighthouse/pull/16955))
+
+## Docs
+
+* release: fix heading style ([#16989](https://github.com/GoogleChrome/lighthouse/pull/16989))
+* release: update release docs and scripts ([#16954](https://github.com/GoogleChrome/lighthouse/pull/16954))
+
+## Misc
+
+* prepare devtools build for TS6 upgrade ([#16968](https://github.com/GoogleChrome/lighthouse/pull/16968))
+* build: include license.md in bundle ([#16981](https://github.com/GoogleChrome/lighthouse/pull/16981))
+* build: update devtools for agents bundle and tests ([#16980](https://github.com/GoogleChrome/lighthouse/pull/16980))
+* build: include agentic browsing in cd4a bundle ([#16975](https://github.com/GoogleChrome/lighthouse/pull/16975))
+
 <a name="13.1.0"></a>
 # 13.1.0 (2026-04-03)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.3...v13.1.0)

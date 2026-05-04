@@ -44,7 +44,7 @@ class WebMCPRegisteredTools extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMCPTools'],
+      requiredArtifacts: ['WebMCP'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -54,7 +54,14 @@ class WebMCPRegisteredTools extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const tools = artifacts.WebMCPTools || [];
+    if (!artifacts.WebMCP.isSupported) {
+      return {
+        notApplicable: true,
+        score: 1,
+      };
+    }
+
+    const tools = artifacts.WebMCP.tools || [];
 
     const imperativeResults = [];
     const declarativeResults = [];

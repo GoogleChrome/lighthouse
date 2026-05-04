@@ -9,6 +9,7 @@ import WebMcpFormCoverage from '../../audits/webmcp-form-coverage.js';
 describe('WebMCP: form-coverage audit', () => {
   it('lists forms that lack WebMCP annotations', () => {
     const artifacts = {
+      WebMCP: {isSupported: true, tools: []},
       Inputs: {
         forms: [
           {
@@ -46,8 +47,9 @@ describe('WebMCP: form-coverage audit', () => {
     });
   });
 
-  it('empty table if all forms have WebMCP annotations', () => {
+  it('is not applicable if all forms have WebMCP annotations', () => {
     const artifacts = {
+      WebMCP: {isSupported: true, tools: []},
       Inputs: {
         forms: [
           {
@@ -64,13 +66,13 @@ describe('WebMCP: form-coverage audit', () => {
       },
     };
 
-    const {score, details} = WebMcpFormCoverage.audit(artifacts);
+    const result = WebMcpFormCoverage.audit(artifacts);
 
-    expect(score).toBe(1);
-    expect(details).toBeUndefined();
+    expect(result.score).toBe(1);
+    expect(result.notApplicable).toBe(true);
   });
 
-  it('empty table if no forms are found', () => {
+  it('is not applicable if no forms are found', () => {
     const artifacts = {
       Inputs: {
         forms: [],
@@ -79,10 +81,26 @@ describe('WebMCP: form-coverage audit', () => {
       },
     };
 
-    const {score, details} = WebMcpFormCoverage.audit(artifacts);
+    const result = WebMcpFormCoverage.audit(artifacts);
 
-    expect(score).toBe(1);
-    expect(details).toBeUndefined();
+    expect(result.score).toBe(1);
+    expect(result.notApplicable).toBe(true);
+  });
+
+  it('is not applicable when modelContext is not defined', () => {
+    const artifacts = {
+      WebMCP: {isSupported: false, tools: []},
+      Inputs: {
+        forms: [],
+        inputs: [],
+        labels: [],
+      },
+    };
+
+    const result = WebMcpFormCoverage.audit(artifacts);
+
+    expect(result.score).toEqual(1);
+    expect(result.notApplicable).toEqual(true);
   });
 });
 

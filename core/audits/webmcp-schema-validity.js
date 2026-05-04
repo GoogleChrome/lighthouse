@@ -47,7 +47,7 @@ class WebMcpSchemaValidity extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['WebMCPTools', 'WebMcpSchemaIssues'],
+      requiredArtifacts: ['WebMCP', 'WebMcpSchemaIssues'],
       supportedModes: ['navigation', 'snapshot'],
     };
   }
@@ -57,6 +57,13 @@ class WebMcpSchemaValidity extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
+    if (!artifacts.WebMCP.isSupported) {
+      return {
+        notApplicable: true,
+        score: 1,
+      };
+    }
+
     /** @enum {number} */
     const Severity = {
       ERROR: 1,
@@ -115,8 +122,8 @@ class WebMcpSchemaValidity extends Audit {
 
     const hasErrors =
     sortedUniqueIssues.some(issue => issueConfigs[issue.errorType]?.severity === Severity.ERROR);
-    const hasTools = artifacts.WebMCPTools && artifacts.WebMCPTools.length > 0;
-    if (!hasTools && rawIssues.length === 0) {
+
+    if ((artifacts.WebMCP.tools?.length || 0) === 0 && rawIssues.length === 0) {
       return {
         notApplicable: true,
         score: 1,
