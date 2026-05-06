@@ -110,13 +110,13 @@ category,score
 \\"accessibility\\",\\"0.75\\"
 \\"best-practices\\",\\"0.31\\"
 \\"seo\\",\\"0.75\\"
+\\"agentic-browsing\\",\\"0.3\\"
 
 category,audit,score,displayValue,description
 \\"performance\\",\\"first-contentful-paint\\",\\"0.02\\",\\"6.8 s\\",\\"First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).\\"
 \\"performance\\",\\"largest-contentful-paint\\",\\"0\\",\\"10.9 s\\",\\"Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)\\"
 \\"performance\\",\\"total-blocking-time\\",\\"0.25\\",\\"1,060 ms\\",\\"Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).\\"
 \\"performance\\",\\"cumulative-layout-shift\\",\\"0.9\\",\\"0.1\\",\\"Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more about the Cumulative Layout Shift metric](https://web.dev/articles/cls).\\"
-\\"performance\\",\\"speed-index\\",\\"0.19\\",\\"8.3 s\\",\\"Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).\\"
 "
 `);
 
