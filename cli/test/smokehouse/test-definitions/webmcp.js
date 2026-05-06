@@ -4,22 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import agenticBrowsingConfig from '../../../../core/config/agentic-browsing-config.js';
-
-/**
- * Config to run only the agentic browsing category.
- * We use the full agenticBrowsingConfig as the base since it defines the category.
- * @type {LH.Config}
- */
+/** @type {LH.Config} */
 const config = {
-  ...agenticBrowsingConfig,
+  extends: 'lighthouse:default',
   settings: {
-    onlyCategories: [
-      'agentic-browsing',
+    onlyAudits: [
+      'webmcp-registered-tools',
+      'webmcp-form-coverage',
+      'webmcp-schema-validity',
     ],
   },
 };
-
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  */
