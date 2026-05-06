@@ -8,7 +8,7 @@ import {Buffer} from 'buffer';
 
 import log from 'lighthouse-logger';
 
-import lighthouse, {navigation, startTimespan, snapshot} from '../../core/index.js';
+import lighthouse, {navigation, startTimespan, snapshot, agenticBrowsingConfig} from '../../core/index.js';
 import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
 import * as constants from '../../core/config/constants.js';
@@ -44,8 +44,12 @@ function createConfig(categoryIDs, device) {
     settings.formFactor = 'desktop';
   }
 
+  const baseConfig = categoryIDs.includes('agentic-browsing') ?
+    agenticBrowsingConfig :
+    {extends: 'lighthouse:default'};
+
   return {
-    extends: 'lighthouse:default',
+    ...baseConfig,
     settings,
   };
 }

@@ -65,4 +65,28 @@ describe('Main Bundle build', () => {
     await browser.close();
     expect(isLighthouseAvailable).toBe(true);
   });
+
+  it('createConfig returns agenticBrowsingConfig when agentic-browsing is requested', async () => {
+    const browser = await puppeteer.launch({
+      executablePath: getChromePath(),
+    });
+    const page = await browser.newPage();
+    await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+
+    await page.evaluate(() => {
+      globalThis.global = globalThis;
+    });
+
+    await page.addScriptTag({path: bundlePath});
+
+    const config = await page.evaluate(() => {
+      // @ts-expect-error
+      return globalThis.createConfig(['agentic-browsing'], 'desktop');
+    });
+
+    await browser.close();
+    expect(config).toBeDefined();
+    expect(config.categories).toHaveProperty('agentic-browsing');
+    expect(config.settings.onlyCategories).toContain('agentic-browsing');
+  });
 });
