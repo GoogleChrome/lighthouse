@@ -136,7 +136,7 @@ function purpleify(str) {
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
-  const {id, expectations, config, testRunnerOptions: defnTestRunnerOptions} = smokeTestDefn;
+  const {id, expectations, config, testRunnerOptions: customTestRunnerOptions} = smokeTestDefn;
   const {
     lighthouseRunner,
     retries,
@@ -147,7 +147,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
 
   const mergedTestRunnerOptions = {
     ...testRunnerOptions,
-    ...defnTestRunnerOptions,
+    ...customTestRunnerOptions,
   };
 
   console.log(`${purpleify(id)} smoketest starting…`);

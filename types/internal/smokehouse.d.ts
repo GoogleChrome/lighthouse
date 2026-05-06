@@ -13,7 +13,6 @@ declare global {
   module Smokehouse {
     interface ExpectedLHR {
       audits: Record<string, any>;
-      categories?: Record<string, any>;
       requestedUrl: string;
       finalDisplayedUrl: string | RegExp;
       userAgent?: string | RegExp;

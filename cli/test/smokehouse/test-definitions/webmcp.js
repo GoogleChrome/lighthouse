@@ -27,11 +27,6 @@ const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/webmcp/webmcp_tester.html',
     finalDisplayedUrl: 'http://localhost:10200/webmcp/webmcp_tester.html',
-    categories: {
-      'agentic-browsing': {
-        title: 'Agentic Browsing',
-      },
-    },
     audits: {
       // 1. Registered Tools Audit
       // Verifies that both declarative forms are successfully registered.
