@@ -68,7 +68,7 @@ async function internalRun(url, tmpPath, config, logger, options) {
 
   let chromeFlags = '';
   if (headless) chromeFlags += '--headless=new ';
-if (options && options.chromeFlags) chromeFlags += options.chromeFlags;
+  if (options && options.chromeFlags) chromeFlags += options.chromeFlags;
 
   if (chromeFlags) args.push(`--chrome-flags="${chromeFlags.trim()}"`);
 

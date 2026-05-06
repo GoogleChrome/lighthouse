@@ -34,17 +34,22 @@ const expectations = {
     },
     audits: {
       // 1. Registered Tools Audit
-      // Verifies that the declarative tool is successfully registered and listed.
+      // Verifies that both declarative forms are successfully registered.
       'webmcp-registered-tools': {
         score: 1,
         details: {
           items: [
             {
+              title: 'Declarative Tools',
               value: {
                 items: [
                   {
                     tool: 'declarative_search',
                     description: 'Search catalog for items.',
+                  },
+                  {
+                    tool: 'declarative_feedback',
+                    description: 'Submit feedback to us.',
                   },
                 ],
               },
@@ -67,10 +72,20 @@ const expectations = {
         },
       },
       // 3. Schema Validity Audit
-      // Currently passes (score 1) because the experimental browser does not yet
-      // reliably emit Audits.issueAdded events for all schema violations in this headless context.
+      // Should flag 'declarative_feedback' because its input is missing 'toolparamdescription'.
+      // A warning-severity issue results in a score of 0.5 (partial pass).
       'webmcp-schema-validity': {
-        score: 1,
+        score: 0.5,
+        details: {
+          items: [
+            {
+              element: {
+                selector: 'body > form#invalid-declarative-form > input',
+              },
+              issue: 'Add a description to make this form more accessible for AI agents.',
+            },
+          ],
+        },
       },
     },
   },

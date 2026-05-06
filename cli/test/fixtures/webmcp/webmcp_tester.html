@@ -22,33 +22,20 @@
     <button type="submit">Login</button>
   </form>
 
-  <!-- 3. Failing Declarative Tool (Missing toolname) -->
-  <h2>Declarative Tool with Missing Toolname (Should fail schema validity)</h2>
-  <form id="invalid-declarative-form" tooldescription="This tool registration should fail because it lacks a toolname.">
-    <input type="text" name="feedback" toolparamdescription="Your feedback.">
+  <!-- 3. Declarative Tool with Missing Parameter Description (Warning) -->
+  <h2>Declarative Tool with Missing Parameter Description (Should trigger warning)</h2>
+  <form id="invalid-declarative-form" toolname="declarative_feedback" tooldescription="Submit feedback to us.">
+    <input type="text" name="feedback">
     <button type="submit">Submit Feedback</button>
   </form>
 
-  <!-- 4. Imperative Tool (JavaScript) -->
-  <h2>Imperative Tool</h2>
+  <!-- 4. Active discovery trigger to force Blink schema validation E2E -->
   <script>
-    if (navigator.modelContext && typeof navigator.modelContext.registerTool === 'function') {
-      navigator.modelContext.registerTool({
-        name: 'imperative_calculate',
-        description: 'Calculates the sum of two numbers.',
-        inputSchema: {
-          type: 'object',
-          properties: {
-            a: {type: 'number', description: 'First number'},
-            b: {type: 'number', description: 'Second number'}
-          },
-          required: ['a', 'b']
-        }
-      }, async (params) => {
-        return {result: Number(params.a) + Number(params.b)};
-      });
-    } else {
-      console.warn('navigator.modelContext is not available in this browser session.');
+    const testingApi = window.navigator.modelContextTesting || window.navigator.modelContext;
+    if (testingApi && typeof testingApi.listTools === 'function') {
+      testingApi.listTools();
+    } else if (navigator.modelContext && typeof navigator.modelContext.getRegisteredTools === 'function') {
+      navigator.modelContext.getRegisteredTools();
     }
   </script>
 </body>
