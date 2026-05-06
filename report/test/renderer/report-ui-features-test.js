@@ -94,7 +94,7 @@ describe('ReportUIFeatures', () => {
   describe('initFeatures', () => {
     it('should init a report', () => {
       const container = render(sampleResults);
-      assert.equal(dom.findAll('.lh-category', container).length, 4);
+      assert.equal(dom.findAll('.lh-category', container).length, 5);
     });
 
     it('should init a report with a single category', () => {
