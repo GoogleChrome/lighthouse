@@ -20,6 +20,7 @@ const mockStorage = {
     'seo': true,
     'accessibility': false,
     'best-practices': false,
+    'agentic-browsing': false,
   },
   [STORAGE_KEYS.Settings]: {
     device: 'mobile',
