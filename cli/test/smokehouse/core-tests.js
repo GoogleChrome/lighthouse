@@ -66,6 +66,7 @@ import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
 import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
 import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
+import webmcp from './test-definitions/webmcp.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -131,6 +132,7 @@ const smokeTests = [
   timing,
   trustedTypesDirectivePresent,
   trustedTypesDirectiveMissingDirective,
+  webmcp,
 ];
 
 export default smokeTests;

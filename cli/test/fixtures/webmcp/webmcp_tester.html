@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebMCP Smoke Test Page</title>
+</head>
+<body>
+  <h1>WebMCP Testing Ground</h1>
+
+  <!-- 1. Declarative Tool (Valid Form) -->
+  <h2>Declarative Tool (Valid)</h2>
+  <form id="valid-declarative-form" toolname="declarative_search" tooldescription="Search catalog for items.">
+    <input type="text" name="query" toolparamdescription="The search query terms." required>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- 2. Form WITHOUT WebMCP (Unannotated Form) -->
+  <h2>Unannotated Form (Should be flagged by coverage)</h2>
+  <form id="unannotated-form" action="/submit">
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <button type="submit">Login</button>
+  </form>
+
+  <!-- 3. Failing Declarative Tool (Missing toolname) -->
+  <h2>Declarative Tool with Missing Toolname (Should fail schema validity)</h2>
+  <form id="invalid-declarative-form" tooldescription="This tool registration should fail because it lacks a toolname.">
+    <input type="text" name="feedback" toolparamdescription="Your feedback.">
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <!-- 4. Imperative Tool (JavaScript) -->
+  <h2>Imperative Tool</h2>
+  <script>
+    if (navigator.modelContext && typeof navigator.modelContext.registerTool === 'function') {
+      navigator.modelContext.registerTool({
+        name: 'imperative_calculate',
+        description: 'Calculates the sum of two numbers.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            a: {type: 'number', description: 'First number'},
+            b: {type: 'number', description: 'Second number'}
+          },
+          required: ['a', 'b']
+        }
+      }, async (params) => {
+        return {result: Number(params.a) + Number(params.b)};
+      });
+    } else {
+      console.warn('navigator.modelContext is not available in this browser session.');
+    }
+  </script>
+</body>
+</html>

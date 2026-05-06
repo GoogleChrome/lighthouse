@@ -136,7 +136,7 @@ function purpleify(str) {
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
-  const {id, expectations, config} = smokeTestDefn;
+  const {id, expectations, config, testRunnerOptions: defnTestRunnerOptions} = smokeTestDefn;
   const {
     lighthouseRunner,
     retries,
@@ -144,6 +144,11 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     takeNetworkRequestUrls,
   } = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
+
+  const mergedTestRunnerOptions = {
+    ...testRunnerOptions,
+    ...defnTestRunnerOptions,
+  };
 
   console.log(`${purpleify(id)} smoketest starting…`);
 
@@ -170,7 +175,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
           reject(new Error('Timed out waiting for provided lighthouseRunner')), 1000 * 120);
       });
       const timedResult = await Promise.race([
-        lighthouseRunner(requestedUrl, config, logger, testRunnerOptions),
+        lighthouseRunner(requestedUrl, config, logger, mergedTestRunnerOptions),
         timeoutPromise,
       ]);
       result = {
