@@ -18,7 +18,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to have a valid llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits. */
   description: 'If your llms.txt file is malformed, large language models may not be able to ' +
     'understand how you want your website to be crawled or used for training. A valid ' +
-    '[llms.txt](https://llmstxt.org/) should be a Markdown file containing at least one H1 header.',
+    'llms.txt should be a Markdown file containing at least one H1 header. ' +
+    '[Learn more about llms.txt](https://llmstxt.org/).',
   /**
    * @description Label for the audit identifying that the request failed with a specific HTTP status code.
    * @example {500} statusCode
