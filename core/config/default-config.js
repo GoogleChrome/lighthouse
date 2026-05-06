@@ -297,6 +297,11 @@ const defaultConfig = {
     'seo/hreflang',
     'seo/canonical',
     'seo/manual/structured-data',
+    'agentic/agent-accessibility-tree',
+    'webmcp-registered-tools',
+    'webmcp-form-coverage',
+    'webmcp-schema-validity',
+    'agentic/llms-txt',
     'bf-cache',
     'insights/cache-insight',
     'insights/cls-culprits-insight',
@@ -315,11 +320,6 @@ const defaultConfig = {
     'insights/render-blocking-insight',
     'insights/third-parties-insight',
     'insights/viewport-insight',
-    'agentic/agent-accessibility-tree',
-    'webmcp-registered-tools',
-    'webmcp-form-coverage',
-    'webmcp-schema-validity',
-    'agentic/llms-txt',
   ],
   groups: {
     'metrics': {
