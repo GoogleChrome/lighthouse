@@ -207,12 +207,6 @@ class Server {
       absoluteFilePath = path.join(this.baseDir, '/../../../', filePath);
     }
 
-    // Serve mock /llms.txt dynamically for llms-txt smoke test.
-    if (filePath === '/llms.txt') {
-      const mockLlmsTxt = 'Bad llms txt file content\n';
-      return sendResponse(200, mockLlmsTxt);
-    }
-
     // Disallow file requests outside of LH folder
     const filePathDir = path.parse(absoluteFilePath).dir;
     if (!filePathDir.startsWith(LH_ROOT)) {
