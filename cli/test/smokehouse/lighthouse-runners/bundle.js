@@ -87,7 +87,6 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   }
 
   // Launch and connect to Chrome.
-  console.log('CHROME FLAGS:', chromeFlags);
   const launchedChrome = await ChromeLauncher.launch({
     chromeFlags,
   });
