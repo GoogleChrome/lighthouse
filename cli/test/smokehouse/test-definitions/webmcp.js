@@ -86,6 +86,6 @@ export default {
   config,
   expectations,
   testRunnerOptions: {
-    chromeFlags: '--enable-features=WebMCPTesting',
+    chromeFlags: '--enable-features=WebMCPTesting,DevToolsWebMCPSupport',
   },
 };
