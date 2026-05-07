@@ -25,6 +25,9 @@ const DEFAULT_CATEGORIES = [{
 }, {
   id: 'seo',
   title: 'SEO',
+}, {
+  id: 'agentic-browsing',
+  title: 'Agentic Browsing',
 }];
 
 /** @typedef {{backend: string, selectedCategories: string[], device: string, locale: string}} Settings */
