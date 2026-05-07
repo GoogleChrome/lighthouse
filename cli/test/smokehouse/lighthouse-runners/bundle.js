@@ -80,11 +80,15 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   const thirdPartyWeb = global.thirdPartyWeb;
   thirdPartyWeb.provideThirdPartyWeb(thirdPartyWebLib);
 
+  const chromeFlags = [];
+  if (testRunnerOptions?.headless) chromeFlags.push('--headless=new');
+  if (testRunnerOptions?.chromeFlags) {
+    chromeFlags.push(...testRunnerOptions.chromeFlags.split(' '));
+  }
+
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch({
-    chromeFlags: [
-      testRunnerOptions?.headless ? '--headless=new' : '',
-    ],
+    chromeFlags,
   });
   const port = launchedChrome.port;
 
