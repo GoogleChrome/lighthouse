@@ -213,6 +213,10 @@ export const UIStrings = {
    */
   PrefixedVideoSupportsFullscreen: "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead.",
   /**
+   * @description Warning displayed to developers when an SVG filter is applied to a disallowed content type.
+   */
+  PreventSvgFilterPaint: "SVG filters cannot be applied to cross-origin iframes, restricted iframes (e.g., sandboxed), or plugins.",
+  /**
    * @description Standard message when one web API is deprecated in favor of another.
    */
   RangeExpand: "Range.expand() is deprecated. Please use Selection.modify() instead.",
@@ -390,6 +394,9 @@ export const DEPRECATIONS_METADATA = {
   "PersistentQuotaType": {
     "chromeStatusFeature": 5176235376246784,
     "milestone": 106
+  },
+  "PreventSvgFilterPaint": {
+    "chromeStatusFeature": 5117170452398080
   },
   "RTCConstraintEnableDtlsSrtpFalse": {
     "milestone": 97
