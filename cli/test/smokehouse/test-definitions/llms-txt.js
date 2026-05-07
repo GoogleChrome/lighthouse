@@ -22,8 +22,8 @@ const config = {
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'http://localhost:10503/agentic/llms_tester.html',
-    finalDisplayedUrl: 'http://localhost:10503/agentic/llms_tester.html',
+    requestedUrl: 'http://localhost:10200/agentic/llms_tester.html',
+    finalDisplayedUrl: 'http://localhost:10200/agentic/llms_tester.html',
     audits: {
       'llms-txt': {
         score: 0,
