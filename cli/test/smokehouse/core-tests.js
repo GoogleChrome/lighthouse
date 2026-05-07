@@ -66,6 +66,7 @@ import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
 import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
 import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
+import llmsTxt from './test-definitions/llms-txt.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -96,6 +97,7 @@ const smokeTests = [
   lanternSetTimeout,
   lanternXhr,
   legacyJavascript,
+  llmsTxt,
   metricsDebugger,
   metricsDelayedFcp,
   metricsDelayedLcp,

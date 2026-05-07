@@ -11,15 +11,15 @@ const HTTP_CLIENT_ERROR_CODE_LOW = 400;
 const HTTP_SERVER_ERROR_CODE_LOW = 500;
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that provides detail on the site's llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This descriptive title is shown when the llms.txt file is present and configured correctly. */
-  title: 'llms.txt is present',
-  /** Title of a Lighthouse audit that provides detail on the site's llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This descriptive title is shown when the llms.txt file is misconfigured. */
-  failureTitle: 'llms.txt is missing or incomplete',
-  /** Description of a Lighthouse audit that tells the user *why* they need to have a valid llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits. */
-  description: 'If your llms.txt file is malformed, large language models may not be able to ' +
-    'understand how you want your website to be crawled or used for training. A valid ' +
-    'llms.txt should be a Markdown file containing at least one H1 header. ' +
-    '[Learn more about llms.txt](https://llmstxt.org/).',
+  /** Title of a Lighthouse audit that provides detail on the site's llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This descriptive title is shown when the llms.txt file follows community recommendations. */
+  title: 'llms.txt follows recommendations',
+  /** Title of a Lighthouse audit that provides detail on the site's llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This descriptive title is shown when the llms.txt file does not follow community recommendations. */
+  failureTitle: 'llms.txt does not follow recommendations',
+  /** Description of a Lighthouse audit that tells the user *why* they should have an llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits. */
+  description: 'If your llms.txt file does not follow recommendations, ' +
+    'large language models may not be able to ' +
+    'understand how you want your website to be crawled or used for training. The ' +
+    '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.',
   /**
    * @description Label for the audit identifying that the request failed with a specific HTTP status code.
    * @example {500} statusCode
