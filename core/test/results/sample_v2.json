@@ -1,5 +1,5 @@
 {
-  "lighthouseVersion": "13.2.0",
+  "lighthouseVersion": "13.3.0",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalDisplayedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -4303,7 +4303,7 @@
     "baseline": {
       "id": "baseline",
       "title": "Baseline Features",
-      "description": "Lists web features used on the page and their Baseline status as of 2026-03-18. [Learn more about Baseline](https://webstatus.dev/).",
+      "description": "Lists web features used on the page and their Baseline status as of 2026-05-01. [Learn more about Baseline](https://webstatus.dev/).",
       "score": 1,
       "scoreDisplayMode": "informative",
       "details": {
@@ -4601,6 +4601,234 @@
       "description": "Run the [Structured Data Testing Tool](https://developers.google.com/search/docs/appearance/structured-data/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
       "score": null,
       "scoreDisplayMode": "manual"
+    },
+    "agent-accessibility-tree": {
+      "id": "agent-accessibility-tree",
+      "title": "Accessibility tree is not well-formed",
+      "description": "A well-formed [accessibility tree](http://goo.gle/lighthouse-agentic-a11y) helps AI agents to navigate and interact with the page.",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "list-section",
+            "title": "Failed Audits",
+            "value": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "description",
+                  "valueType": "text",
+                  "label": "Description"
+                },
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "label": "Failing Element"
+                }
+              ],
+              "items": [
+                {
+                  "description": "Form elements must have labels",
+                  "node": {
+                    "type": "node",
+                    "lhId": "1-10-INPUT",
+                    "path": "2,HTML,1,BODY,56,INPUT",
+                    "selector": "body > input",
+                    "boundingRect": {
+                      "top": 1200,
+                      "bottom": 1221,
+                      "left": 192,
+                      "right": 350,
+                      "width": 158,
+                      "height": 21
+                    },
+                    "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+                    "nodeLabel": "body > input"
+                  }
+                },
+                {
+                  "description": "Links must have discernible text",
+                  "node": {
+                    "type": "node",
+                    "lhId": "1-13-A",
+                    "path": "2,HTML,1,BODY,52,A",
+                    "selector": "body > a",
+                    "boundingRect": {
+                      "top": 1202,
+                      "bottom": 1219,
+                      "left": 192,
+                      "right": 192,
+                      "width": 0,
+                      "height": 17
+                    },
+                    "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+                    "nodeLabel": "body > a"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "webmcp-registered-tools": {
+      "id": "webmcp-registered-tools",
+      "title": "WebMCP tools registered",
+      "description": "Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.",
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "list-section",
+            "title": "Imperative Tools",
+            "value": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "tool",
+                  "valueType": "text",
+                  "label": "Tool name"
+                },
+                {
+                  "key": "description",
+                  "valueType": "text",
+                  "label": "Description"
+                },
+                {
+                  "key": "source",
+                  "valueType": "source-location",
+                  "label": "Source Location"
+                },
+                {
+                  "key": "inputSchema",
+                  "valueType": "code",
+                  "label": "Input schema"
+                }
+              ],
+              "items": [
+                {
+                  "tool": "get_weather",
+                  "description": "Get current weather.",
+                  "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"location\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+                  "source": {
+                    "type": "source-location",
+                    "url": "https://example.com/mcp.js",
+                    "urlProvider": "network",
+                    "line": 34,
+                    "column": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "list-section",
+            "title": "Declarative Tools",
+            "value": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "tool",
+                  "valueType": "text",
+                  "label": "Tool name"
+                },
+                {
+                  "key": "description",
+                  "valueType": "text",
+                  "label": "Description"
+                },
+                {
+                  "key": "element",
+                  "valueType": "node",
+                  "label": "Element"
+                },
+                {
+                  "key": "inputSchema",
+                  "valueType": "code",
+                  "label": "Input schema"
+                }
+              ],
+              "items": [
+                {
+                  "tool": "book_table_le_petit_bistro",
+                  "description": "Creates a confirmed dining reservation at Le Petit Bistro.",
+                  "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"name\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+                  "element": {
+                    "type": "node",
+                    "lhId": "node-1",
+                    "path": "1,HTML,1,BODY,0,DIV",
+                    "selector": "div#reservation",
+                    "boundingRect": {
+                      "top": 0,
+                      "left": 0,
+                      "width": 100,
+                      "height": 100
+                    },
+                    "snippet": "<div id=\"reservation\">",
+                    "nodeLabel": "Reservation Div"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "webmcp-form-coverage": {
+      "id": "webmcp-form-coverage",
+      "title": "WebMCP form coverage",
+      "description": "Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably.",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "webmcp-schema-validity": {
+      "id": "webmcp-schema-validity",
+      "title": "WebMCP schemas are invalid",
+      "description": "Valid [WebMCP schemas](http://goo.gle/webmcp-docs) are required for AI agents to  understand and interact with tools correctly. Please fix any errors or warnings reported by the browser.",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "element",
+            "valueType": "node",
+            "label": "Element"
+          },
+          {
+            "key": "issue",
+            "valueType": "text",
+            "label": "Issue"
+          }
+        ],
+        "items": [
+          {
+            "element": {
+              "type": "node",
+              "selector": "#form1"
+            },
+            "issue": "Form level `toolname` attribute is missing. Add it to define the tool name."
+          },
+          {
+            "element": {
+              "type": "node",
+              "selector": "#input1"
+            },
+            "issue": "Add a description to make this form more accessible for AI agents."
+          }
+        ]
+      }
+    },
+    "llms-txt": {
+      "id": "llms-txt",
+      "title": "llms.txt follows recommendations",
+      "description": "If your llms.txt file does not follow recommendations, large language models may not be able to understand how you want your website to be crawled or used for training. The [llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "bf-cache": {
       "id": "bf-cache",
@@ -6702,6 +6930,49 @@
       ],
       "id": "seo",
       "score": 0.75
+    },
+    "agentic-browsing": {
+      "title": "Agentic Browsing",
+      "description": "These checks ensure high-quality, [browsable websites for AI agents](https://goo.gle/lighthouse-agentic-web) and validate the correctness of WebMCP integrations. This category is still under development and subject to change.",
+      "supportedModes": [
+        "navigation",
+        "snapshot"
+      ],
+      "categoryScoreDisplayMode": "fraction",
+      "auditRefs": [
+        {
+          "id": "agent-accessibility-tree",
+          "weight": 1,
+          "group": "agent-accessibility"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "weight": 0,
+          "group": "webmcp"
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "weight": 0,
+          "group": "webmcp"
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "weight": 1,
+          "group": "webmcp"
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "weight": 1,
+          "acronym": "CLS"
+        },
+        {
+          "id": "llms-txt",
+          "weight": 0,
+          "group": "agent-accessibility"
+        }
+      ],
+      "id": "agentic-browsing",
+      "score": 0.3
     }
   },
   "categoryGroups": {
@@ -6771,6 +7042,14 @@
     },
     "best-practices-general": {
       "title": "General"
+    },
+    "webmcp": {
+      "title": "WebMCP",
+      "description": "Audits validating WebMCP integration."
+    },
+    "agent-accessibility": {
+      "title": "Agent Accessibility",
+      "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
     },
     "hidden": {
       "title": ""
@@ -9643,6 +9922,36 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:agent-accessibility-tree",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:webmcp-registered-tools",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:webmcp-form-coverage",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:webmcp-schema-validity",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:llms-txt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:bf-cache",
         "duration": 100,
         "entryType": "measure"
@@ -9971,7 +10280,8 @@
         "audits[has-hsts].details.headings[0].label",
         "audits[origin-isolation].details.headings[0].label",
         "audits[clickjacking-mitigation].details.headings[0].label",
-        "audits[trusted-types-xss].details.headings[0].label"
+        "audits[trusted-types-xss].details.headings[0].label",
+        "audits[agent-accessibility-tree].details.items[0].value.headings[0].label"
       ],
       "core/audits/server-response-time.js | title": [
         "audits[server-response-time].title"
@@ -10212,6 +10522,7 @@
       "core/lib/i18n/i18n.js | columnElement": [
         "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
+        "audits[webmcp-registered-tools].details.items[1].value.headings[2].label",
         "audits[cls-culprits-insight].details.items[0].headings[0].label",
         "audits[dom-size-insight].details.headings[1].label"
       ],
@@ -10901,7 +11212,7 @@
       "core/audits/baseline.js | description": [
         {
           "values": {
-            "date": "2026-03-18"
+            "date": "2026-05-01"
           },
           "path": "audits.baseline.description"
         }
@@ -10968,6 +11279,75 @@
       ],
       "core/audits/seo/manual/structured-data.js | description": [
         "audits[structured-data].description"
+      ],
+      "core/audits/agentic/agent-accessibility-tree.js | failureTitle": [
+        "audits[agent-accessibility-tree].title"
+      ],
+      "core/audits/agentic/agent-accessibility-tree.js | description": [
+        "audits[agent-accessibility-tree].description"
+      ],
+      "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": [
+        "audits[agent-accessibility-tree].details.items[0].title"
+      ],
+      "core/audits/agentic/agent-accessibility-tree.js | columnElement": [
+        "audits[agent-accessibility-tree].details.items[0].value.headings[1].label"
+      ],
+      "core/audits/webmcp-registered-tools.js | title": [
+        "audits[webmcp-registered-tools].title"
+      ],
+      "core/audits/webmcp-registered-tools.js | description": [
+        "audits[webmcp-registered-tools].description"
+      ],
+      "core/audits/webmcp-registered-tools.js | titleImperativeTools": [
+        "audits[webmcp-registered-tools].details.items[0].title"
+      ],
+      "core/audits/webmcp-registered-tools.js | columnTool": [
+        "audits[webmcp-registered-tools].details.items[0].value.headings[0].label",
+        "audits[webmcp-registered-tools].details.items[1].value.headings[0].label"
+      ],
+      "core/audits/webmcp-registered-tools.js | columnDescription": [
+        "audits[webmcp-registered-tools].details.items[0].value.headings[1].label",
+        "audits[webmcp-registered-tools].details.items[1].value.headings[1].label"
+      ],
+      "core/audits/webmcp-registered-tools.js | columnImperativeLocation": [
+        "audits[webmcp-registered-tools].details.items[0].value.headings[2].label"
+      ],
+      "core/audits/webmcp-registered-tools.js | columnInputSchema": [
+        "audits[webmcp-registered-tools].details.items[0].value.headings[3].label",
+        "audits[webmcp-registered-tools].details.items[1].value.headings[3].label"
+      ],
+      "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": [
+        "audits[webmcp-registered-tools].details.items[1].title"
+      ],
+      "core/audits/webmcp-form-coverage.js | title": [
+        "audits[webmcp-form-coverage].title"
+      ],
+      "core/audits/webmcp-form-coverage.js | description": [
+        "audits[webmcp-form-coverage].description"
+      ],
+      "core/audits/webmcp-schema-validity.js | failureTitle": [
+        "audits[webmcp-schema-validity].title"
+      ],
+      "core/audits/webmcp-schema-validity.js | description": [
+        "audits[webmcp-schema-validity].description"
+      ],
+      "core/audits/webmcp-schema-validity.js | columnElement": [
+        "audits[webmcp-schema-validity].details.headings[0].label"
+      ],
+      "core/audits/webmcp-schema-validity.js | columnIssue": [
+        "audits[webmcp-schema-validity].details.headings[1].label"
+      ],
+      "core/audits/webmcp-schema-validity.js | missingToolName": [
+        "audits[webmcp-schema-validity].details.items[0].issue"
+      ],
+      "core/audits/webmcp-schema-validity.js | missingParamDescription": [
+        "audits[webmcp-schema-validity].details.items[1].issue"
+      ],
+      "core/audits/agentic/llms-txt.js | title": [
+        "audits[llms-txt].title"
+      ],
+      "core/audits/agentic/llms-txt.js | description": [
+        "audits[llms-txt].description"
       ],
       "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
@@ -11254,6 +11634,12 @@
       "core/config/default-config.js | seoCategoryManualDescription": [
         "categories.seo.manualDescription"
       ],
+      "core/config/default-config.js | agenticBrowsingCategoryTitle": [
+        "categories[agentic-browsing].title"
+      ],
+      "core/config/default-config.js | agenticBrowsingCategoryDescription": [
+        "categories[agentic-browsing].description"
+      ],
       "core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"
       ],
@@ -11346,6 +11732,18 @@
       ],
       "core/config/default-config.js | bestPracticesGeneralGroupTitle": [
         "categoryGroups[best-practices-general].title"
+      ],
+      "core/config/default-config.js | webmcpGroupTitle": [
+        "categoryGroups.webmcp.title"
+      ],
+      "core/config/default-config.js | webmcpGroupDescription": [
+        "categoryGroups.webmcp.description"
+      ],
+      "core/config/default-config.js | agentAccessibilityGroupTitle": [
+        "categoryGroups[agent-accessibility].title"
+      ],
+      "core/config/default-config.js | agentAccessibilityGroupDescription": [
+        "categoryGroups[agent-accessibility].description"
       ],
       "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": [
         "stackPacks[0].descriptions[unused-css-rules]"

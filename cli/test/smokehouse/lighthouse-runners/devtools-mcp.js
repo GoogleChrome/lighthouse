@@ -56,11 +56,15 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   // Load bundle.
   const {navigation} = await import(LH_ROOT + '/dist/lighthouse-devtools-mcp-bundle.js');
 
+  const chromeFlags = [];
+  if (testRunnerOptions?.headless) chromeFlags.push('--headless=new');
+  if (testRunnerOptions?.chromeFlags) {
+    chromeFlags.push(...testRunnerOptions.chromeFlags.split(' '));
+  }
+
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch({
-    chromeFlags: [
-      testRunnerOptions?.headless ? '--headless=new' : '',
-    ],
+    chromeFlags,
   });
   const port = launchedChrome.port;
 

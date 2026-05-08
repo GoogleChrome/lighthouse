@@ -1,3 +1,31 @@
+ <a name="13.3.0"></a>
+# 13.3.0 (2026-05-07)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.2.0...v13.3.0)
+
+We expect this release to ship in the DevTools of [Chrome 150](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+
+* New agentic browsing category added to default config ([#17002](https://github.com/GoogleChrome/lighthouse/pull/17002))
+
+## Core
+
+* agentic-web: add links to category and audit descriptions ([#16997](https://github.com/GoogleChrome/lighthouse/pull/16997))
+* llms-txt: adjust titles and descriptions and add smoketests ([#17005](https://github.com/GoogleChrome/lighthouse/pull/17005))
+
+## Deps
+
+* upgrade dependencies ([#17006](https://github.com/GoogleChrome/lighthouse/pull/17006))
+
+## Tests
+
+* smoke: widen byte efficiency wastedBytes range for ToT ([#16996](https://github.com/GoogleChrome/lighthouse/pull/16996))
+* webmcp: add webmcp smoketests ([#16999](https://github.com/GoogleChrome/lighthouse/pull/16999))
+
+## Misc
+
+* bundle: update build-bundle-mcp ([#16995](https://github.com/GoogleChrome/lighthouse/pull/16995))
+
  <a name="13.2.0"></a>
 # 13.2.0 (2026-04-30)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.1.0...v13.2.0)
