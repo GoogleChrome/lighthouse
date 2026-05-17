@@ -89,7 +89,8 @@ describe('MCP Bundle build', () => {
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {
@@ -171,7 +172,8 @@ describe('MCP Bundle build', () => {
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {
@@ -197,7 +199,8 @@ describe('MCP Bundle build', () => {
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {
