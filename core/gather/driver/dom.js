@@ -29,7 +29,7 @@ function handlePotentialMissingNodeError(err) {
 async function resolveNodeIdToObjectId(session, backendNodeId) {
   try {
     const resolveNodeResponse = await session.sendCommand('DOM.resolveNode', {backendNodeId});
-    return resolveNodeResponse.object.objectId;
+    return resolveNodeResponse.object?.objectId;
   } catch (err) {
     return handlePotentialMissingNodeError(err);
   }
@@ -47,8 +47,8 @@ async function resolveNodeIdToObjectId(session, backendNodeId) {
 async function resolveDevtoolsNodePathToObjectId(session, path) {
   try {
     const {nodeId} = await session.sendCommand('DOM.pushNodeByPathToFrontend', {path});
-    const {object: {objectId}} = await session.sendCommand('DOM.resolveNode', {nodeId});
-    return objectId;
+    const resolveNodeResponse = await session.sendCommand('DOM.resolveNode', {nodeId});
+    return resolveNodeResponse.object?.objectId;
   } catch (err) {
     return handlePotentialMissingNodeError(err);
   }

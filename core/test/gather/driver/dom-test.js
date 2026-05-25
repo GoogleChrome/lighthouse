@@ -32,6 +32,12 @@ describe('.resolveNodeIdToObjectId', () => {
     expect(objectId).toEqual(undefined);
   });
 
+  it('handles a resolve response without an object', async () => {
+    sessionMock.sendCommand.mockResponse('DOM.resolveNode', {});
+    const objectId = await dom.resolveNodeIdToObjectId(sessionMock.asSession(), 1);
+    expect(objectId).toEqual(undefined);
+  });
+
   it('raise other exceptions', async () => {
     const error = new Error('PROTOCOL_TIMEOUT');
     sessionMock.sendCommand.mockRejectedValue(error);
@@ -56,6 +62,14 @@ describe('.resolveDevtoolsNodePathToObjectId', () => {
 
   it('handle nodes in other documents', async () => {
     sessionMock.sendCommand.mockRejectedValue(new Error('Node 1 does not belong to the document'));
+    const objectId = await dom.resolveDevtoolsNodePathToObjectId(sessionMock.asSession(), 'div');
+    expect(objectId).toEqual(undefined);
+  });
+
+  it('handles a resolve response without an object', async () => {
+    sessionMock.sendCommand
+      .mockResponse('DOM.pushNodeByPathToFrontend', {nodeId: 1})
+      .mockResponse('DOM.resolveNode', {});
     const objectId = await dom.resolveDevtoolsNodePathToObjectId(sessionMock.asSession(), 'div');
     expect(objectId).toEqual(undefined);
   });
