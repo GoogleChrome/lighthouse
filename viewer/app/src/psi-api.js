@@ -7,7 +7,7 @@
 /** @typedef {{lighthouseResult?: LH.Result, error?: {message: string}}} PSIResponse */
 
 const PSI_URL = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-const PSI_KEY = 'AIzaSyAjcDRNN9CX9dCazhqI4lGR7yyQbkd_oYE';
+const PSI_KEY = 'AIzaSyAKsgPk97X47saEjIQdRsZ5f69IjviPElY';
 const PSI_DEFAULT_CATEGORIES = [
   'performance',
   'accessibility',
