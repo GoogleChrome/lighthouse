@@ -7,6 +7,7 @@
 import log from 'lighthouse-logger';
 
 import * as i18n from '../../lib/i18n/i18n.js';
+import {Sentry} from '../../lib/sentry.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -81,6 +82,18 @@ async function getImportantStorageWarning(session, url) {
   const usageData = await session.sendCommand('Storage.getUsageAndQuota', {
     origin: url,
   });
+
+  // According to the types, this should never happen. But we've gotten an error
+  // report that it does.
+  // https://github.com/GoogleChrome/lighthouse/issues/17011
+  if (!usageData || !usageData.usageBreakdown) {
+    const err = new Error(`missing usageData: ${JSON.stringify(usageData)}`);
+    Sentry.captureException(err, {
+      level: 'error',
+    });
+    return;
+  }
+
   /** @type {Record<string, string>} */
   const storageTypeNames = {
     local_storage: 'Local Storage',
