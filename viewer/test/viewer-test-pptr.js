@@ -407,7 +407,7 @@ describe('Lighthouse Viewer', () => {
         utm_source: interceptedUrl.searchParams.get('utm_source'),
       };
       expect(params).toEqual({
-        key: 'AIzaSyAjcDRNN9CX9dCazhqI4lGR7yyQbkd_oYE',
+        key: 'AIzaSyAKsgPk97X47saEjIQdRsZ5f69IjviPElY',
         url: 'https://www.example.com',
         // Order in the api call is important to PSI!
         category: [
