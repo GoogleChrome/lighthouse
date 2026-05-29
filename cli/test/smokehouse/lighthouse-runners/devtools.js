@@ -46,9 +46,12 @@ async function setup() {
  */
 async function runLighthouse(url, config, logger, testRunnerOptions) {
   const chromeFlags = [
-    testRunnerOptions?.headless ? '--headless=new' : '',
     `--custom-devtools-frontend=file://${devtoolsDir}/out/LighthouseIntegration/gen/front_end`,
   ];
+  if (testRunnerOptions?.headless) chromeFlags.push('--headless=new');
+  if (testRunnerOptions?.chromeFlags) {
+    chromeFlags.push(...testRunnerOptions.chromeFlags.split(' '));
+  }
   // TODO: `testUrlFromDevtools` should accept a logger, so we get some output even for time outs.
   const {lhr, artifacts, logs} = await testUrlFromDevtools(url, {
     config,

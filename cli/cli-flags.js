@@ -54,7 +54,7 @@ function getYargsParser(manualArgv) {
         'Path to JSON file of HTTP Header key/value pairs to send in requests')
     .example(
         'lighthouse <url> --only-categories=performance,seo',
-        'Only run the specified categories. Available categories: accessibility, best-practices, performance, seo')
+        'Only run the specified categories. Available categories: accessibility, best-practices, performance, seo, agentic-browsing')
 
     // We only have the single string positional argument, the url.
     .option('_', {
@@ -188,7 +188,7 @@ function getYargsParser(manualArgv) {
         array: true,
         type: 'string',
         coerce: splitCommaSeparatedValues,
-        describe: 'Only run the specified categories. Available categories: accessibility, best-practices, performance, seo',
+        describe: 'Only run the specified categories. Available categories: accessibility, best-practices, performance, seo, agentic-browsing',
       },
       'skip-audits': {
         array: true,

@@ -65,8 +65,22 @@ async function buildStaticServerBundle() {
   });
 }
 
-await Promise.all([
-  buildEntryPoint(),
-  buildReportGenerator(),
-  buildStaticServerBundle(),
-]);
+async function runBuild() {
+  fs.mkdirSync(distDir, {recursive: true});
+  await Promise.all([
+    buildEntryPoint(),
+    buildReportGenerator(),
+    buildStaticServerBundle(),
+  ]);
+}
+
+if (import.meta.main) {
+  await runBuild();
+}
+
+export {
+  buildEntryPoint,
+  buildReportGenerator,
+  buildStaticServerBundle,
+  runBuild,
+};

@@ -28,7 +28,7 @@ interface Config {
   plugins?: Array<string>;
 }
 
-declare module Config {
+declare namespace Config {
   /**
    * The normalized and fully resolved config.
    */
@@ -59,6 +59,7 @@ declare module Config {
     description?: string | IcuMessage;
     manualDescription?: string | IcuMessage;
     supportedModes?:  Gatherer.GatherMode[];
+    categoryScoreDisplayMode?: Result.CategoryScoreDisplayMode;
   }
 
   interface GroupJson {

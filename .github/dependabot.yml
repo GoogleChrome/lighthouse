@@ -1,16 +1,38 @@
+# Noise reduction strategy:
+# 1. Weekly updates on Sundays to avoid daily interruptions.
+# 2. Group ALL updates (major, minor, patch) into a single PR per project.
+# 3. Limit total open PRs to prevent backlog accumulation.
+
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: '/'
-    allow:
-      - "production"
+    directories:
+      - "/"
+      - "/lighthouse-logger"
+      - "/core/scripts/legacy-javascript"
     schedule:
       interval: "weekly"
+      day: "sunday"
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 14
     commit-message:
       prefix: "deps"
       include: "scope"
-  - package-ecosystem: 'github-actions' # Necessary to update action hash
-    directory: '/'
+    allow:
+      - dependency-type: "production"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      everything:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 2
+      interval: "monthly"
+    open-pull-requests-limit: 1
+    cooldown:
+      default-days: 14

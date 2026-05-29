@@ -34,6 +34,8 @@ git checkout -b "$BRANCH_NAME"
 # Install the dependencies.
 yarn install
 
+yarn build-report
+
 # Bump the version in package.json and others.
 node core/scripts/release/bump-versions.js $NEW_VERSION
 

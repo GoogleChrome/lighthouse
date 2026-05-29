@@ -450,16 +450,23 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
 }
 
 /**
- * @param {Element|ShadowRoot} element
- * @return {LH.Artifacts.NodeDetails}
+ * @param {Node|ShadowRoot} node
+ * @return {LH.Artifacts.NodeDetails | null}
  */
-function getNodeDetails(element) {
+function getNodeDetails(node) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
   if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
-  element = element instanceof ShadowRoot ? element.host : element;
+  let elem = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+  if (!elem && node instanceof ShadowRoot) {
+    elem = node.host;
+  }
+
+  if (!elem) return null;
+
+  const element = /** @type {Element} */ (elem);
   const selector = getNodeSelector(element);
 
   // Create an id that will be unique across all execution contexts.

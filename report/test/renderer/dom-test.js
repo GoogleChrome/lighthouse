@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import jestMock from 'jest-mock';
 import jsdom from 'jsdom';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {DOM} from '../../renderer/dom.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 import {Globals} from '../../renderer/report-globals.js';
@@ -25,7 +26,7 @@ describe('DOM', () => {
       i18n: new I18nFormatter('en'),
       reportJson: null,
     });
-    window = new jsdom.JSDOM().window;
+    window = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()}).window;
 
     // The Node version of URL.createObjectURL isn't compatible with the jsdom blob type,
     // so we stub it.

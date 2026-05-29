@@ -13,7 +13,7 @@ import * as puppeteerCore from 'puppeteer-core';
 
 type IfNotAny<T> = [T & 0] extends [1] ? never : T;
 
-declare module Puppeteer {
+declare namespace Puppeteer {
   // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.
   export type Browser = puppeteerCore.Browser | IfNotAny<import('puppeteer').Browser>;
   // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.

@@ -61,6 +61,9 @@ class Trace extends BaseGatherer {
       'disabled-by-default-devtools.v8-source-rundown-sources',
       'disabled-by-default-devtools.v8-source-rundown',
 
+      // Required for Baseline Audit to detect feature usage.
+      'blink.webdx_feature_usage',
+
       // Not used by Lighthouse (yet) but included for users that want JS samples when looking at
       // a trace collected by Lighthouse (e.g. "View Trace" workflow in DevTools)
       // TODO: Re-enable after investigating b/325659693

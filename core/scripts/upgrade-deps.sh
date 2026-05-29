@@ -26,6 +26,7 @@ yarn upgrade --latest \
     speedline-core \
     third-party-web \
     tldts-icann \
+    web-features \
 
 node -e "
     const pkg = require('$LH_ROOT/package.json');

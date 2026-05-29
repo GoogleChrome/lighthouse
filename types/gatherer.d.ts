@@ -22,7 +22,7 @@ import * as Lantern from '../core/lib/lantern/lantern.js';
 type CrdpEvents = CrdpMappings.Events;
 type CrdpCommands = CrdpMappings.Commands;
 
-declare module Gatherer {
+declare namespace Gatherer {
   /** The Lighthouse wrapper around a raw CDP session. */
   interface ProtocolSession {
     setTargetInfo(targetInfo: Crdp.Target.TargetInfo): void;

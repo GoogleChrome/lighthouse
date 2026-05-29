@@ -8,6 +8,7 @@ import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 import {DOM} from '../../renderer/dom.js';
@@ -29,7 +30,7 @@ describe('CategoryRenderer', () => {
       reportJson: null,
     });
 
-    const window = new jsdom.JSDOM().window;
+    const window = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()}).window;
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
 
@@ -304,7 +305,7 @@ describe('CategoryRenderer', () => {
       );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
-      assert.equal(gauge.textContent.trim(), '14/20', 'fraction is included');
+      assert.equal(gauge.textContent.trim(), '15/20', 'fraction is included');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const title = score.querySelector('.lh-fraction__label');
@@ -313,6 +314,23 @@ describe('CategoryRenderer', () => {
       assert.deepEqual(score, score.firstElementChild, 'first child is a score');
       assert.equal(title.textContent, category.title, 'title is set');
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
+    });
+
+    it('renders the category header with fraction via categoryScoreDisplayMode', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      categoryClone.categoryScoreDisplayMode = 'fraction';
+      const categoryDOM = renderer.render(
+        categoryClone,
+        sampleResults.categoryGroups,
+        {gatherMode: 'navigation'}
+      );
+
+      const gauge = categoryDOM.querySelector('.lh-fraction__content');
+      assert.equal(
+        gauge.textContent.trim(),
+        '15/20',
+        'fraction is included via categoryScoreDisplayMode'
+      );
     });
 
     it('renders the failed audits grouped by group', () => {

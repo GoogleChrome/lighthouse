@@ -51,15 +51,15 @@ class ServerResponseTime extends Audit {
     const {SourceMaps, HostDPR} = artifacts;
     const navInsights =
       await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
-    const responseTime = navInsights.model.DocumentLatency.data?.serverResponseTime;
-    const url = navInsights.model.DocumentLatency.data?.documentRequest?.args.data.url;
+    const responseTime = navInsights.model.DocumentLatency?.data?.serverResponseTime;
+    const url = navInsights.model.DocumentLatency?.data?.documentRequest?.args.data.url;
 
     if (responseTime === undefined || !url) {
       throw new Error('no timing found for main resource');
     }
 
     const passed =
-      Boolean(navInsights.model.DocumentLatency.data?.checklist.serverResponseIsFast.value);
+      Boolean(navInsights.model.DocumentLatency?.data?.checklist.serverResponseIsFast.value);
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */

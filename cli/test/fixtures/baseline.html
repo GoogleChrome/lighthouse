@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+ * @license
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Baseline Test</title>
+  <style>
+    @media (forced-colors: active) {
+      body {
+        background-color: black;
+      }
+    }
+
+    .grid {
+      display: grid;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    /* newly available */
+    .has:has(.child) {
+      color: red;
+    }
+
+    /* limited availability */
+    .accent {
+      accent-color: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hello WebDX</h1>
+
+  <div class="grid">
+    <div class="flex has">
+      <div class="child">Item</div>
+    </div>
+  </div>
+
+  <dialog id="d">Dialog</dialog>
+
+  <!-- newly available: popover -->
+  <div popover id="p">Popover</div>
+  <button popovertarget="p">Toggle</button>
+
+  <!-- limited availability: accent-color -->
+  <input type="checkbox" class="accent" checked />
+
+  <script>
+    // Trigger dialog
+    document.getElementById('d').showModal();
+
+    // Trigger popover
+    document.getElementById('p').showPopover();
+
+    // Trigger AbortController
+    const controller = new AbortController();
+    controller.abort();
+
+    // Trigger Fetch and Promise
+    fetch('baseline.html').then(() => console.log('fetched'));
+
+    // Trigger limited: accelerometer
+    try { new Accelerometer(); } catch (e) { }
+  </script>
+</body>
+
+</html>

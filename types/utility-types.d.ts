@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-declare module Util {
+declare namespace Util {
   /** Make properties K in T optional. */
   type MakeOptional<T, K extends keyof T> = {
     [P in Exclude<keyof T, K>]: T[P]

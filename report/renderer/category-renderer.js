@@ -343,7 +343,7 @@ export class CategoryRenderer {
    */
   renderCategoryScore(category, groupDefinitions, options) {
     let categoryScore;
-    if (options && ReportUtils.shouldDisplayAsFraction(options.gatherMode)) {
+    if (options && ReportUtils.shouldDisplayAsFraction(options.gatherMode, category)) {
       categoryScore = this.renderCategoryFraction(category);
     } else {
       categoryScore = this.renderScoreGauge(category, groupDefinitions);
