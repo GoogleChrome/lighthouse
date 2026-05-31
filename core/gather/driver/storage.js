@@ -100,7 +100,8 @@ async function getImportantStorageWarning(session, url) {
     indexeddb: 'IndexedDB',
     websql: 'Web SQL',
   };
-  const locations = usageData.usageBreakdown
+  const usageBreakdown = usageData.usageBreakdown || [];
+  const locations = usageBreakdown
     .filter(usage => usage.usage)
     .map(usage => storageTypeNames[usage.storageType] || '')
     .filter(Boolean);

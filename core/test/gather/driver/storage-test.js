@@ -139,4 +139,13 @@ describe('.getImportantDataWarning', () => {
     );
     expect(warning).toBeUndefined();
   });
+
+  it('does not warn when storage usage breakdown is omitted', async () => {
+    sessionMock.sendCommand.mockResponse('Storage.getUsageAndQuota', {});
+    const warning = await storage.getImportantStorageWarning(
+      sessionMock.asSession(),
+      'https://example.com'
+    );
+    expect(warning).toBeUndefined();
+  });
 });
