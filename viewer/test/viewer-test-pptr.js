@@ -385,7 +385,7 @@ describe('Lighthouse Viewer', () => {
       psiResponse = undefined;
     });
 
-    it.only('should call out to PSI with all categories by default', async () => {
+    it('should call out to PSI with all categories by default', async () => {
       psiResponse = goodPsiResponse;
 
       const url = `${viewerUrl}?psiurl=https://www.example.com`;
