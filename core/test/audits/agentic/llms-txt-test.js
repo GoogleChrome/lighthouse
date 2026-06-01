@@ -9,6 +9,22 @@ import assert from 'assert/strict';
 import LlmsTxtAudit from '../../../audits/agentic/llms-txt.js';
 
 describe('Agentic: llms.txt audit', () => {
+  it('fails when the network request for /llms.txt fails entirely (no status)', () => {
+    // The gatherer returns status: null when the fetch throws (network error).
+    const testData = [
+      {status: null, content: null},
+      {status: 0, content: null},
+    ];
+
+    testData.forEach(LlmsTxt => {
+      const artifacts = {LlmsTxt};
+      const auditResult = LlmsTxtAudit.audit(artifacts);
+
+      assert.equal(auditResult.score, 0);
+      expect(auditResult.explanation).toBeDisplayString('Fetch of llms.txt failed');
+    });
+  });
+
   it('fails when request for /llms.txt returns a HTTP500+ error', () => {
     const testData = [
       {
@@ -72,6 +88,15 @@ describe('Agentic: llms.txt audit', () => {
         },
         expectedErrors: 3, // Missing H1, Missing links, Too short
       },
+      {
+        // ## is an H2 — the regex /^#\s+.+/m requires a single leading #,
+        // so this must not satisfy the H1 requirement.
+        LlmsTxt: {
+          status: 200,
+          content: '## Section\nLong enough file with a link [Link](https://example.com) but only an H2.',
+        },
+        expectedErrors: 1, // Missing H1 only
+      },
     ];
 
     testData.forEach(({LlmsTxt, expectedErrors}) => {
@@ -83,6 +108,24 @@ describe('Agentic: llms.txt audit', () => {
 
       assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, expectedErrors);
+    });
+  });
+
+  it('fails when request for /llms.txt is a redirect (3xx)', () => {
+    // 3xx responses have no body, so content is null. The audit throws because
+    // it has no redirect branch — this documents that known behaviour.
+    const testData = [
+      {status: 301, content: null},
+      {status: 302, content: null},
+    ];
+
+    testData.forEach(LlmsTxt => {
+      const artifacts = {LlmsTxt};
+
+      assert.throws(
+        () => LlmsTxtAudit.audit(artifacts),
+        /Status \d+ was valid, but content was null/
+      );
     });
   });
 
