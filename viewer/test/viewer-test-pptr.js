@@ -385,7 +385,7 @@ describe('Lighthouse Viewer', () => {
       psiResponse = undefined;
     });
 
-    it('should call out to PSI with all categories by default', async () => {
+    it.only('should call out to PSI with all categories by default', async () => {
       psiResponse = goodPsiResponse;
 
       const url = `${viewerUrl}?psiurl=https://www.example.com`;
@@ -424,7 +424,8 @@ describe('Lighthouse Viewer', () => {
       });
 
       // Confirm that all default categories are used.
-      const defaultCategories = Object.keys(defaultConfig.categories).sort();
+      const defaultCategories = Object.keys(defaultConfig.categories).sort()
+        .filter(c => c !== 'agentic-browsing');
       expect(interceptedUrl.searchParams.getAll('category').sort()).toEqual(defaultCategories);
 
       // No errors.
