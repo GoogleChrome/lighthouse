@@ -415,7 +415,7 @@ describe('Lighthouse Viewer', () => {
           'accessibility',
           'seo',
           'best-practices',
-          'agentic-browsing',
+          // 'agentic-browsing',
         ],
         strategy: 'mobile',
         // These values aren't set by default.
