@@ -45,7 +45,8 @@ describe('Main Bundle build', () => {
       executablePath: getChromePath(),
     });
     const page = await browser.newPage();
-    await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+    await page.setContent(TEST_HTML);
+    await page.waitForNetworkIdle();
 
     // devtools-entry.js expects `global` to be defined.
     await page.evaluate(() => {
