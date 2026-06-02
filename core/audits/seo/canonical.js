@@ -108,7 +108,6 @@ class Canonical extends Audit {
             uniqueCanonicalURLs.add(link.href);
           }
         }
-
       } else if (link.rel === 'alternate') {
         if (link.href && link.hreflang) hreflangURLs.add(link.href);
       }
@@ -167,7 +166,7 @@ class Canonical extends Audit {
    * @return {LH.Audit.Product|undefined}
    */
   static findCommonCanonicalURLMistakes(canonicalURLData, canonicalURL, baseURL) {
-    const { hreflangURLs } = canonicalURLData;
+    const {hreflangURLs} = canonicalURLData;
 
     // cross-language or cross-country canonicals are a common issue
     if (
@@ -202,7 +201,7 @@ class Canonical extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.DevtoolsLog;
 
-    const mainResource = await MainResource.request({ devtoolsLog, URL: artifacts.URL }, context);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
     const baseURL = new URL(mainResource.url);
     const canonicalURLData = Canonical.collectCanonicalURLs(artifacts.LinkElements);
 
