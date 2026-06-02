@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Støtte for data:-nettadresser i SVGUseElement er avviklet og blir fjernet i fremtiden."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') er avviklet og kommer til å bli fjernet. Bruk new KeyboardEvent() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') er avviklet og kommer til å bli fjernet. Bruk new TransitionEvent() i stedet."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Dette er et eksempel på hvordan du viser koden som kreves for en avvikling som er rapportert for en nettleserprosess."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen er avviklet. Bruk Document.fullscreenEnabled i stedet."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG-filtre kan ikke brukes på iframe-rammer med opphav på et annet domene, begrensede iframe-rammer (f.eks. i sandkasser) eller programtillegg."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Begrensningen DtlsSrtpKeyAgreement er fjernet. Du har angitt verdien false for denne begrensningen, noe som tolkes som et forsøk på å bruke den fjernede SDES key negotiation-metoden. Denne funksjonaliteten er fjernet. Bruk en tjeneste som støtter DTLS key negotiation i stedet."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Bruk effektive bufferlevetider"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "En tegnkodingsdeklarasjon kreves. Dette kan gjøres med en «meta charset»-tag i de første 1024 bytene av HTML-koden eller i HTTP-svarhodet «Content-Type». [Finn ut mer om å deklarere tegnkodingen.](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Deklarerer ikke tegnsett i HTTP-toppteksten"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklarerer tegnsett med en metatag etter de første 1024 bytene"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Angir ikke tegnsett med en metatag"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Kunne ikke fastslå «meta charset»-deklarasjonen fra sporet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Deklarerer tegnsett i HTTP-overskrift"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Deklarerer tegnsett ved hjelp av en metatag i de første 1024 bytene"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Deklarer en tegnkoding"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Store DOM-er kan øke varigheten på stilberegninger og dynamiske tilpasninger av layouten, noe som påvirker sidens responstid. Store DOM-er øker også minnebruken. [Finn ut hvordan du unngår at DOM-en blir for stor.](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority=high bør brukes"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high bør brukes for forespørselen om forhåndslasting av bildet"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "utsatt innlasting er ikke brukt"
+    "message": "LCP-ressurser skal ikke bruke loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Bildet med største innholdsrike opptegning (LCP) ble lastet inn {PH1} etter det tidligste startpunktet."

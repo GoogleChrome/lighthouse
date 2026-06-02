@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Dukungan untuk data: URL dalam SVGUseElement tidak digunakan lagi dan akan dihapus pada masa mendatang."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') tidak digunakan lagi dan akan dihapus. Sebagai gantinya, gunakan new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') tidak digunakan lagi dan akan dihapus. Sebagai gantinya, gunakan new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Ini adalah contoh untuk menampilkan kode yang diperlukan untuk penghentian penggunaan yang dilaporkan proses browser."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen tidak digunakan lagi. Sebagai gantinya, gunakan Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Filter SVG tidak dapat diterapkan ke iframe lintas origin, iframe yang dibatasi (misalnya sandbox), atau plugin."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Batasan DtlsSrtpKeyAgreement dihapus. Anda telah menentukan nilai false untuk batasan ini, yang ditafsirkan sebagai upaya untuk menggunakan metode SDES key negotiation yang dihapus. Fungsi ini dihapus. Sebagai gantinya, gunakan layanan yang mendukung DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Gunakan durasi cache yang efisien"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Deklarasi encoding karakter diperlukan. Tindakan ini dapat dilakukan dengan tag charset meta pada 1024 byte pertama HTML atau di header respons HTTP Content-Type. [Pelajari lebih lanjut cara mendeklarasikan encoding karakter](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Tidak mendeklarasikan charset di header HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Mendeklarasikan charset menggunakan tag meta setelah 1024 byte pertama"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Tidak mendeklarasikan charset menggunakan tag meta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Tidak dapat menentukan deklarasi charset meta dari trace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Mendeklarasikan charset di header HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Mendeklarasikan charset menggunakan tag meta dalam 1024 byte pertama"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Deklarasikan encoding karakter"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM yang besar dapat meningkatkan durasi penghitungan gaya dan perubahan posisi/geometri tata letak, yang memengaruhi responsivitas halaman. DOM yang besar juga akan meningkatkan penggunaan memori. [Pelajari cara menghindari ukuran DOM yang berlebihan](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority=high harus diterapkan"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high harus diterapkan ke permintaan pramuat gambar"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "pemuatan lambat tidak diterapkan"
+    "message": "Resource LCP tidak boleh menggunakan loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Gambar LCP dimuat {PH1} setelah titik awal paling awal."

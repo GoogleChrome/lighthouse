@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Compatibilitate cu datele: adresele URL din SVGUseElement sunt învechite și vor fi eliminate pe viitor."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') este învechit și va fi eliminat. Folosește new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') este învechit și va fi eliminat. Folosește new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Acesta este un exemplu pentru afișarea codului necesar pentru o renunțare la dezvoltare raportată pentru un proces al browserului."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen este învechit. Folosește Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Filtrele GVS nu pot fi aplicate iframe-urilor cu origini multiple, iframe-urilor restricționate (de exemplu, cu acces limitat) sau pluginurilor."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Restricția DtlsSrtpKeyAgreement a fost eliminată. Ai specificat o valoare false pentru această restricție, care este interpretată ca o încercare de a folosi metoda SDES key negotiation eliminată. Această funcție a fost eliminată. Folosește un serviciu care acceptă DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Folosește perioade eficiente ale memoriei cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Este necesară o declarație privind codificarea caracterelor. Aceasta se poate face folosind o etichetă set de caractere meta în primii 1.024 de byți din HTML sau în antetul de răspuns Content-Type din HTTP. [Află mai multe despre declararea codificării caracterelor](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Nu declară setul de caractere în antetul HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Declară setul de caractere folosind o metaetichetă după primii 1.024 de byți"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Nu declară setul de caractere folosind o metaetichetă"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Nu s-a putut stabili declarația setului de caractere meta din urmărire"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Declară setul de caractere în antetul HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Declară setul de caractere folosind o metaetichetă în primii 1.024 de byți"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Declară o codificare a caracterelor"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un DOM mare poate crește durata calculelor de stil și a rearanjărilor aspectului, afectând receptivitatea paginii. Un DOM mare va crește și folosirea memoriei. [Află cum să eviți o dimensiune DOM excesivă](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Valoarea fetchpriority=high trebuie aplicată"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Valoarea fetchpriority=high trebuie aplicată solicitării de preîncărcare a imaginii"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "încărcarea asincronă nu este aplicată"
+    "message": "Resursele LCP nu trebuie să folosească loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Imaginea LCP s-a încărcat la {PH1} după primul punct de pornire."

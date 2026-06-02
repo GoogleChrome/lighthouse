@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "La prise en charge des URL \"data\" dans SVGUseElement est obsolète et sera supprimée à l'avenir."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') est obsolète et va être supprimé. Utilisez new KeyboardEvent() à la place."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') est obsolète et va être supprimé. Utilisez new TransitionEvent() à la place."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Exemple d'affichage du code requis pour un abandon signalé de processus du navigateur."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen est obsolète. Veuillez plutôt utiliser Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Vous ne pouvez pas appliquer de filtres SVG aux iFrames inter-origines, aux iFrames restreints (par exemple, en bac à sable) ni aux plug-ins."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "La contrainte DtlsSrtpKeyAgreement a été supprimée. Vous avez spécifié une valeur false pour cette contrainte, ce qui est interprété comme une tentative d'utiliser la méthode SDES key negotiation, qui a été supprimée. Cette fonctionnalité a été supprimée. À la place, utilisez un service compatible avec DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Utiliser des durées de mise en cache efficaces"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "La déclaration d'encodage des caractères est obligatoire. Elle peut être effectuée avec une balise Meta charset dans les 1 024 premiers octets du code HTML, ou dans l'en-tête de réponse HTTP Content-Type. [Découvrez comment déclarer l'encodage des caractères.](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Ne déclare pas le charset dans l'en-tête HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Déclare le charset à l'aide d'une balise Meta après les 1 024 premiers octets"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Aucun charset déclaré à l'aide d'une balise Meta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Impossible de déterminer la déclaration de charset Meta à partir de la trace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Déclare le charset dans l'en-tête HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Déclare le charset à l'aide d'une balise Meta dans les 1 024 premiers octets"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Déclarer un encodage des caractères"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un grand DOM peut allonger la durée des calculs de style et des ajustements de la mise en page, ce qui impacte la réactivité de la page. Un grand DOM sollicite davantage la mémoire. [Découvrez comment éviter une taille de DOM excessive.](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority=high doit être appliqué"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high doit être appliqué à la demande de préchargement d'image"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "chargement différé non appliqué"
+    "message": "Les ressources LCP ne doivent pas utiliser loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Image LCP chargée {PH1} après le premier point de départ."

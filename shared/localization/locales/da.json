@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Understøttelse af data: Webadresser i SVGUseElement er udfaset, og de fjernes på et senere tidspunkt."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') er udfaset og fjernes. Brug new KeyboardEvent() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') er udfaset og fjernes. Brug new TransitionEvent() i stedet."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Dette er et eksempel på visningen af den kode, som kræves for en browserproces, der er rapporteret som udfaset."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen er udfaset. Brug Document.fullscreenEnabled i stedet."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG-filtre kan ikke anvendes på iframes med krydsoprindelse, begrænsede iframes (f.eks. sandboxed) eller plugins."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Begrænsningen DtlsSrtpKeyAgreement er fjernet. Du har angivet værdien false for denne begrænsning, hvilket tolkes som et forsøg på at bruge den fjernede metode SDES key negotiation. Denne funktion er fjernet. Brug i stedet en tjeneste, der understøtter DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Brug effektive cachelevetider"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Der skal angives en erklæring om tegnkodning. Det kan gøres med et meta charset-tag i de første 1024 bytes i HTML-koden eller i HTTP-svarheaderen for Content-Type. [Få flere oplysninger om erklæring af tegnkodning](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Deklarerer ikke charset i HTTP-headeren"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklarerer charset ved hjælp af et metatag efter de første 1.024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Deklarerer ikke charset ved hjælp af et metatag"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Deklareringen af meta charset kunne ikke fastslås ud fra sporingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Deklarerer charset i HTTP-header"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Deklarerer charset ved hjælp af et metatag i de første 1.024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Deklarer en tegnkodning"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "En stor DOM kan øge varigheden af beregninger af stil og dynamiske tilpasninger af layout, hvilket påvirker sidens svartid. En stor DOM øger også hukommelsesforbruget. [Få oplysninger om, hvordan du undgår en for stor DOM-størrelse](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority=high bør anvendes"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high bør anvendes på anmodningen om forudindlæsning af billedet"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "Lazy loading er ikke anvendt"
+    "message": "LCP-ressourcer bør ikke bruge loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "LCP-billedet blev indlæst {PH1} efter det tidligste startpunkt."
@@ -2499,7 +2535,7 @@
     "message": "Back/forward-cachen er deaktiveret for forhåndsgengivelsen."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "Siden kan ikke cachelagres, da den har en BroadcastChannel-forekomst med registrerede hændelsesfunktioner."
+    "message": "Siden kan ikke cachelagres, da den har en BroadcastChannel-instans med registrerede hændelsesfunktioner."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
     "message": "Sider med headeren cache-control:no-store kan ikke føjes til back/forward-cachen."

@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Обробка даних: підтримку URL-адрес у SVGUseElement припинено, і в майбутньому цю функцію буде вилучено."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Метод document.createEvent('KeyboardEvents') не підтримується, і його буде вилучено. Натомість використовуйте метод new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Метод document.createEvent('TransitionEvent') не підтримується, і його буде вилучено. Натомість використовуйте метод new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Це приклад коду для повідомлення про припинення підтримки процесу у вебпереглядачі."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Метод HTMLVideoElement.webkitSupportsFullscreen не підтримується. Натомість використовуйте метод Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Фільтри SVG не можна застосовувати до елементів iframe із різних джерел, обмежених елементів iframe (наприклад, ізольованих) або плагінів."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Обмеження DtlsSrtpKeyAgreement вилучено. Ви вказали значення false для цього обмеження, що ми витлумачили як спробу застосувати вилучений метод \"SDES key negotiation\". Цю функцію вилучено; натомість використовуйте сервіс, що підтримує \"DTLS key negotiation\"."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Використовуйте ефективні значення TTL кешу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Декларація кодування символів обов’язкова. Її можна вказати за допомогою значення charset тегу meta в перших 1024 байтах HTML або в заголовку відповіді HTTP Content-Type. [Дізнайтесь, як задати кодування символів.](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Значення charset не вказується в заголовку HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Значення charset вказується за допомогою тегу meta після перших 1024 байтів"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Значення charset не вказується за допомогою тегу meta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Не вдалося визначити, чи вказується значення charset за допомогою тегу meta, на основі даних трасування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Значення charset вказується в заголовку HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Значення charset вказується за допомогою тегу meta в перших 1024 байтах"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Перевірити кодування символів"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Через велике дерево DOM обчислення стилів і перекомпонування макетів може тривати довше, що впливає на адаптивність сторінки. Крім того, у такому разі використовується більше пам’яті. [Дізнайтесь, як уникнути надмірного розміру DOM.](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Потрібно застосувати значення fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Для запиту на попереднє завантаження зображення потрібно вказати значення fetchpriority=high"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "відкладене завантаження не застосовується"
+    "message": "Для ресурсів LCP не слід використовувати атрибут loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Зображення LCP завантажилося за {PH1} від першої початкової точки."

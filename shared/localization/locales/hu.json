@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Adatok támogatása: az SVGUseElement elemben lévő URL-ek elavultak, és a jövőben el fogjuk távolítani őket."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "A document.createEvent('KeyboardEvents') elavult, és el fogjuk távolítani. Inkább ezt használja: new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "A document.createEvent('TransitionEvent') elavult, és el fogjuk távolítani. Inkább ezt használja: new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Ez egy példa a böngészőfolyamat által jelentett megszüntetéshez szükséges kód megjelenítésére."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "A HTMLVideoElement.webkitSupportsFullscreen elavult. A Document.fullscreenEnabled elemet használja helyette."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Az SVG-szűrők nem alkalmazhatók eltérő eredetű iframe-ekre, korlátozott iframe-ekre (pl. sandboxban lévőkre) vagy bővítményekre."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "A DtlsSrtpKeyAgreement korlátozást eltávolítottuk. Olyan false értéket adott meg ennél a korlátozásnál, amelyet a rendszer úgy értelmez, hogy az eltávolított SDES key negotiation metódust szeretné használni. Ezt a funkciót eltávolítottuk. Használjon helyette egy olyan szolgáltatást, amely támogatja a DTLS key negotiation műveletet."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Hatékony gyorsítótár-élettartam használata"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Kötelező deklarálnia a karakterkódolást. Ezt megteheti egy meta charset címkében, ha az a HTML első 1024 bájtjába kerül, vagy a HTTP-válasz Content-Type fejlécében. [További információ a karakterkódolás deklarálásáról](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Nem deklarálja a charset rendszert a HTTP-fejlécben"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "A charset rendszert deklarálja metacímke használatával az első 1024 bájt után"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Nem deklarálja a karakterkészletet metacímke használatával"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Nem sikerült meghatározni a meta charset-deklarációt a nyomból"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "A charset rendszert a HTTP-fejlécben deklarálja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "A karakterkészletet deklarálja metacímke használatával az első 1024 bájtban"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Karakterkódolás deklarálása"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "A nagy méretű DOM megnövelheti a stílusszámítások és az elrendezés-újraszámítások időtartamát, ami befolyásolja az oldal reagálóképességét. A nagy méretű DOM megnöveli a memóriahasználatot is. [További információ a túl nagy méretű DOM elkerüléséről](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "A fetchpriority=high attribútumot kell alkalmazni"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "A fetchpriority=high attribútumot kell alkalmazni a képelőtöltési kérésre"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "késleltetett betöltés nincs alkalmazva"
+    "message": "Az LCP-erőforrások nem használhatják a loading=lazy attribútumot"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Az LCP-kép a legkorábbi kezdőpont után {PH1} elteltével töltődött be."

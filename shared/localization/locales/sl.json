@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Podpora za podatke: URL-ji v elementu SVGUseElement so zastareli in bodo v prihodnosti odstranjeni."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Atribut »document.createEvent('KeyboardEvents')« je zastarel in bo odstranjen. Uporabite new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Atribut »document.createEvent('TransitionEvent')« je zastarel in bo odstranjen. Uporabite new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "To je primer prikaza kode, ki je potrebna za prijavljeno zastarelost procesa brskalnika."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "API HTMLVideoElement.webkitSupportsFullscreen je zastarel. Uporabite »Document.fullscreenEnabled«."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Filtrov SVG ni mogoče uporabiti za elemente iframe iz več izvorov, omejene elemente iframe (npr. izvajane v peskovniku) ali vtičnike."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Omejitev »DtlsSrtpKeyAgreement« je odstranjena. Navedli ste vrednost »false« za to omejitev, kar se razlaga kot poskus uporabe odstranjene metode »SDES key negotiation«. Ta funkcija je odstranjena. Namesto nje uporabite storitev, ki podpira »DTLS key negotiation«."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Uporaba učinkovitega dolgotrajnega predpomnjenja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Izjava glede kodiranja znakov je obvezna. Izvedete jo lahko z metaoznako »charset« v prvih 1024 B HTML-ja ali v glavi odziva HTTP-ja glede vrste vsebine. [Preberite več o deklaraciji glede kodiranja znakov](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "V glavi HTTP ni deklariran atribut »charset«"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklarira atribut »charset« z metaoznako po prvih 1024 bajtih"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Ne deklarira atributa »charset« z metaoznako"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Iz sledi ni bilo mogoče določiti deklaracije metaatributa »charset«"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Deklarira atribut »charset« v glavi HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Deklarira atribut »charset« z metaoznako v prvih 1024 bajtih"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Deklariranje kodiranja znakov"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Velik DOM lahko podaljša trajanje slogovnih izračunov in prilagoditev postavitve, kar vpliva na odzivnost strani. Velik DOM prav tako povzroči povečano uporabo pomnilnika. [Preberite, kako se izognete prekomerni velikosti DOM-a](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Uporabiti je treba fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "V zahtevi za prednalaganje slike je treba uporabiti parameter »fetchpriority=high«"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "odloženo nalaganje ni uporabljeno"
+    "message": "Sredstva LCP ne smejo uporabljati parametra »loading=lazy«"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Slika LCP-ja je bila naložena {PH1} po najzgodnejši začetni točki."

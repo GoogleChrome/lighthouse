@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "La compatibilitat amb les URL data: a SVGUseElement està obsoleta i se suprimirà en el futur."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') està obsolet i se suprimirà. Substitueix-lo per new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') està obsolet i se suprimirà. Substitueix-lo per new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Això és un exemple per mostrar el codi necessari per a una discontinuació informada del procés del navegador."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "L'API HTMLVideoElement.webkitSupportsFullscreen està obsoleta. Substitueix-la per Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Els filtres SVG no es poden aplicar als iframes d'altres orígens, als iframes restringits (p. ex., els que estan en un entorn controlat de proves) ni als connectors."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "La restricció DtlsSrtpKeyAgreement s'ha suprimit. Has especificat un valor false per a aquesta restricció, la qual cosa s'interpreta com un intent d'utilitzar el mètode SDES key negotiation suprimit. Aquesta funcionalitat s'ha suprimit; substitueix-la per un servei que admeti DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Utilitza temps de vida eficients de la memòria cau"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Cal una declaració de codificació de caràcters. Es pot fer amb una etiqueta de codi de caràcters als primers 1.024 bytes de l'HTML o a la capçalera de resposta HTTP de tipus contingut. [Obtén més informació sobre com pots declarar la codificació de caràcters](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "No declara el conjunt de caràcters a la capçalera HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Declara el codi de caràcters mitjançant una metaetiqueta després dels primers 1.024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "No declara el codi de caràcters mitjançant una metaetiqueta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "No s'ha pogut determinar la declaració del codi de caràcters meta a partir de la traça"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Declara el codi de caràcters a la capçalera HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Declara el codi de caràcters mitjançant una metaetiqueta als primers 1.024 bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Declara una codificació de caràcters"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un DOM gran pot augmentar la durada dels càlculs d'estil i de les recomposicions del disseny, i això repercuteix en la capacitat de resposta de la pàgina. Un DOM gran també augmenta l'ús de memòria. [Obtén informació sobre com pots evitar una mida del DOM massa gran](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "S'ha d'aplicar fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "S'ha d'aplicar fetchpriority=high a la sol·licitud de precàrrega d'imatges"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "no s'ha aplicat la càrrega lenta"
+    "message": "Els recursos LCP no han d'utilitzar loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "La imatge LCP s'ha carregat {PH1} després del primer punt d'inici."

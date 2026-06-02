@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Duomenų palaikymas: „SVGUseElement“ URL nebenaudojamas ir ateityje bus pašalintas."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "„document.createEvent('KeyboardEvents')“ teikimas nutrauktas ir bus pašalinta. Vietoj to naudokite „new KeyboardEvent()“."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "„document.createEvent('TransitionEvent')“ teikimas nutrauktas ir jis bus pašalintas. Vietoj to naudokite „new TransitionEvent()“."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Tai yra pavyzdys, kaip parodyti kodą, reikalingą nutraukiant naršyklės proceso pranešamą teikimą."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "„HTMLVideoElement.webkitSupportsFullscreen“ nebeteikiama. Vietoj jos naudokite „Document.fullscreenEnabled“."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG filtrų negalima taikyti skirtingų šaltinių „iframe“, apribotiems „iframe“ (pvz., naudojamiems smėlio dėžėje) arba papildiniams."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Apribojimas „DtlsSrtpKeyAgreement“ pašalintas. Nurodėte šio apribojimo „false“ vertę, kuri interpretuojama kaip bandymas naudoti pašalintą „SDES key negotiation“ metodą. Ši funkcija pašalinta; vietoj jos naudokite paslaugą, kuri palaiko „DTLS key negotiation“."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Naudoti efektyvius talpyklos galiojimo terminus"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Reikalinga ženklų koduotės deklaracija. Tai galima atlikti naudojant „charset“ metažymą pirmuose 1 024 HTML baituose arba turinio tipo HTTP atsako antraštėje. [Sužinokite daugiau apie ženklų koduotės deklaravimą](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Nenurodoma „charset“ HTTP antraštėje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklaruojama „charset“ naudojant metažymą po pirmųjų 1 024 baitų"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Nenurodoma „charset“ naudojant metažymą"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Nepavyko nustatyti metaduomenų „charset“ deklaracijos iš pėdsako"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Nurodo „charset“ HTTP antraštėje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Nurodoma „charset“ naudojant metažymą pirmuose 1 024 baituose"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Ženklų koduotės deklaravimas"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Dėl didelio DOM elementų skaičiaus gali būti ilgiau skaičiuojami stiliai ir atliekami išdėstymo perskaičiavimai, o tai daro įtaką puslapio interaktyvumui. Dėl didelio DOM elementų skaičiaus bus sunaudojama daugiau atminties. [Sužinokite, kaip išvengti per didelio DOM dydžio](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Turi būti pritaikyta „fetchpriority=high“"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "„fetchpriority=high“ turi būti pritaikyta vaizdo išankstinio įkėlimo užklausai"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "asinchroninis įkėlimas netaikomas"
+    "message": "DTŽ šaltiniuose neturėtų būti naudojama „loading=lazy“"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "DTŽ vaizdas įkeltas {PH1} po anksčiausio pradžios taško."

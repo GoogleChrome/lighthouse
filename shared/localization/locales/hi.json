@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "डेटा के लिए सहायता: SVGUseElement में मौजूद यूआरएल अब काम नहीं करते. इन्हें आने वाले समय में हटा दिया जाएगा."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') के इस्तेमाल पर रोक लगा दी गई है. इसे हटा दिया जाएगा. इसके बजाय, new KeyboardEvent() का इस्तेमाल करें."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') के इस्तेमाल पर रोक लगा दी गई है. इसे हटा दिया जाएगा. इसके बजाय, new TransitionEvent() का इस्तेमाल करें."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "This is an example for showing the code required for a browser process reported deprecation."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen अब काम नहीं करता है. इसके बजाय, कृपया Document.fullscreenEnabled का इस्तेमाल करें."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG फ़िल्टर, क्रॉस-ऑरिजिन iframe, पाबंदी वाले iframe (जैसे, सैंडबॉक्स) या प्लगिन पर लागू नहीं किए जा सकते."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "DtlsSrtpKeyAgreement कंस्ट्रेंट को हटा दिया गया है. आपने इस कंस्ट्रेंट के लिए, false वैल्यू दी है जिससे ऐसा लगता है कि आपने हटाए गए SDES key negotiation तरीके को इस्तेमाल करने की कोशिश की है. इस सुविधा को हटा दिया गया है. इसके बजाय, ऐसी सेवा का इस्तेमाल करें जो DTLS key negotiation के साथ काम करती हो."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "कैश मेमोरी में कॉन्टेंट को लंबे समय तक सेव रखने वाले संसाधनों का इस्तेमाल करें"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "कैरेक्टर एन्कोडिंग सेट करना ज़रूरी है. ऐसा मैटा charset टैग की मदद से एचटीएमएल की शुरुआती 1024 बाइट या कॉन्टेंट-टाइप एचटीटीपी रिस्पॉन्स हेडर में किया जा सकता है. [कैरेक्टर एन्कोडिंग सेट करने के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "एचटीटीपी हेडर में charset की जानकारी नहीं दी गई है"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "शुरुआती 1024 बाइट के बाद, मेटा टैग का इस्तेमाल करके charset की जानकारी दी गई है"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "मेटा टैग का इस्तेमाल करके, charset की जानकारी नहीं दी गई है"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "ट्रेस से, मेटा charset की जानकारी का पता नहीं लगाया जा सका"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "इससे एचटीटीपी हेडर में charset की जानकारी मिलती है"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "शुरुआती 1024 बाइट में मेटा टैग का इस्तेमाल करके, charset की जानकारी दी गई है"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "कैरेक्टर एन्कोडिंग सेट करें"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "डीओएम के बड़े साइज़ की वजह से, स्टाइल कैलकुलेशन और लेआउट रीफ़्लो की प्रोसेस में ज़्यादा समय लग सकता है. इसकी वजह से, पेज के रिस्पॉन्स देने की प्रोसेस पर असर पड़ता है. बड़े डीओएम से मेमोरी का इस्तेमाल भी बढ़ जाएगा. [बड़े साइज़ के डीओएम से बचने का तरीका जानें](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "fetchpriority की वैल्यू high लागू की गई"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "इमेज को पहले से लोड करने के अनुरोध के लिए, fetchpriority=high का इस्तेमाल किया जाना चाहिए"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "लेज़ी लोड वाली प्रॉपर्टी लागू नहीं की गई"
+    "message": "एलसीपी रिसॉर्स के लिए, loading=lazy का इस्तेमाल नहीं किया जाना चाहिए"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "एलसीपी इमेज, खोजे जाने के शुरुआती समय से {PH1} बाद लोड हुई."

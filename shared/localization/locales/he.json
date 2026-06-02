@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "התמיכה בהקצאת כתובות URL מסוג data:‎ ב-SVGUseElement הוצאה משימוש ותוסר בעתיד."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "ה-method‏document.createEvent('KeyboardEvents') הוצאה משימוש ותוסר. במקומה, צריך להשתמש ב-method‏ new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "ה-method‏ document.createEvent('TransitionEvent') הוצאה משימוש ותוסר. במקומה, צריך להשתמש ב-method‏ new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "זו דוגמה להצגת הקוד שנדרש כדי לדווח על הוצאה משימוש בתהליך הדפדפן."
   },
@@ -1979,6 +1985,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "ה-API‏ HTMLVideoElement.webkitSupportsFullscreen הוצא משימוש. במקומו צריך להשתמש ב-Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "אי אפשר להחיל פילטרים של SVG על רכיבי iframe ממקורות צולבים, על רכיבי iframe מוגבלים (למשל, בארגז חול) או על פלאגינים."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "המגבלה DtlsSrtpKeyAgreement הוסרה. ציינת ערך false למגבלה הזו, והוא מפורש כניסיון להשתמש בשיטה SDES key negotiation שהוסרה. הפונקציונליות הזו הוסרה. במקומה יש להשתמש בשירות שתומך ב-DTLS key negotiation."
   },
@@ -2086,6 +2095,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "שימוש בזמני אחסון יעילים במטמון"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "נדרשת הצהרה לגבי קידוד תווים. ניתן להגדיר אותה באמצעות מטא תג charset שממוקם ב-1,024 הבייטים הראשונים של ה-HTML או ברכיב ה-Content-Type בכותרת התגובה של ה-HTTP. [מידע נוסף על ההצהרה לגבי קידוד תווים](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "הקוד לא כולל הצהרה לגבי charset בכותרת ה-HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "הקוד כולל הצהרה על charset באמצעות מטא תג אחרי 1024 הבייטים הראשונים"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "הקוד לא כולל הצהרה על charset באמצעות מטא תג"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "לא ניתן לקבוע מתוך נתוני המעקב אם יש הצהרה לגבי מטא charset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "הקוד כולל הצהרה לגבי charset בכותרת ה-HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "הקוד כולל הצהרה על charset באמצעות מטא תג ב-1,024 הבייטים הראשונים"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "הצהרה לגבי קידוד תווים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "נפח DOM גדול יכול להאריך את משך הזמן של חישובי סגנונות ולהוביל להזרמה חוזרת של פריסות, מה שמשפיע על הרספונסיביות של הדף. נפח DOM גדול מגביר את מידת השימוש בזיכרון. [כאן מוסבר איך להימנע מנפח DOM גדול מדי](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2294,8 +2327,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "צריך להחיל את fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "צריך להשתמש בערך fetchpriority=high בבקשת הטעינה מראש של התמונה"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "הטעינה המדורגת לא הוחלה"
+    "message": "במשאבי LCP אסור להשתמש במאפיין loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "תמונת ה-LCP נטענה {PH1} אחרי נקודת ההתחלה המוקדמת ביותר."

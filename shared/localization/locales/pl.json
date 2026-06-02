@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Obsługa danych: adresy URL w funkcji SVGUseElement zostały wycofane i w przyszłości zostaną usunięte."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Metoda document.createEvent('KeyboardEvents') została wycofana i zostanie usunięta. Użyj w zamian zasady new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Metoda document.createEvent('TransitionEvent') została wycofana i zostanie usunięta. Użyj w zamian zasady new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "To jest przykład pokazujący kod wymagany w przypadku wycofania funkcji zgłoszonego przez proces przeglądarki."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Interfejs HTMLVideoElement.webkitSupportsFullscreen został wycofany. Użyj interfejsu Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Filtrów SVG nie można stosować do elementów iframe z innych domen, ograniczonych elementów iframe (np. w piaskownicy) ani wtyczek."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Ograniczenie DtlsSrtpKeyAgreement zostało usunięte. W przypadku tego ograniczenia określono wartość false, co jest interpretowane jako próba użycia usuniętej metody SDES key negotiation. Ta funkcja została usunięta. Użyj usługi, która obsługuje DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Używaj efektywnego czasu przechowywania w pamięci podręcznej"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Wymagana jest deklaracja kodowania znaków. Możesz ją dodać za pomocą tagu meta charset w pierwszych 1024 bajtach kodu HTML lub w nagłówku odpowiedzi HTTP Content-Type. [Więcej informacji o deklarowaniu kodowania znaków](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Nie deklaruje zestawu znaków w nagłówku HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklaruje zestaw znaków za pomocą metatagu po pierwszych 1024 bajtach"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Nie deklaruje zestawu znaków za pomocą metatagu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Nie udało się określić deklaracji meta charset na podstawie śledzenia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Deklaruje zestaw znaków w nagłówku HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Deklaruje zestaw znaków za pomocą metatagu w pierwszych 1024 bajtach"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Zadeklaruj kodowanie znaków"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Duży DOM może wydłużać obliczenia stylów i przeformatowania układu, co wpływa na responsywność strony. Duży DOM zwiększy też wykorzystanie pamięci. [Jak unikać nadmiernego rozmiaru DOM](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Należy zastosować fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Do żądania wstępnego ładowania obrazu należy zastosować atrybut fetchpriority=high"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "nie zastosowano leniwego ładowania"
+    "message": "Zasoby LCP nie powinny używać atrybutu loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Obraz LCP został wczytany {PH1} po najstarszym punkcie początkowym."

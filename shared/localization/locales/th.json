@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "การรองรับข้อมูล: URL ใน SVGUseElement เลิกใช้งานแล้วและจะนำออกในอนาคต"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "เลิกใช้งาน document.createEvent('KeyboardEvents') แล้วและจะถูกนำออก ให้ใช้ new KeyboardEvent() แทน"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "เลิกใช้งาน document.createEvent('TransitionEvent') แล้วและจะถูกนำออก ให้ใช้ new TransitionEvent() แทน"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "นี่คือตัวอย่างการแสดงโค้ดที่จำเป็นสำหรับการเลิกใช้งานที่รายงานโดยกระบวนการของเบราว์เซอร์"
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen เลิกใช้งานแล้ว โปรดใช้ Document.fullscreenEnabled แทน"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "ใช้ตัวกรอง SVG กับ iframe แบบข้ามต้นทาง, iframe ที่ถูกจำกัด (เช่น ทำแซนด์บ็อกซ์ไว้) หรือปลั๊กอินไม่ได้"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "ข้อจำกัด DtlsSrtpKeyAgreement ถูกนำออกแล้ว คุณได้ระบุค่า false สำหรับข้อจำกัดนี้ ซึ่งระบบตีความว่าเป็นการพยายามใช้เมธอด SDES key negotiation ที่นำออกไปแล้ว ฟังก์ชันการทำงานนี้ถูกนำออกแล้ว โปรดใช้บริการที่รองรับ DTLS key negotiation แทน"
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "ใช้อายุการใช้งานแคชที่มีประสิทธิภาพ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "จำเป็นต้องประกาศการเข้ารหัสอักขระ ซึ่งทำได้โดยใช้แท็กชุดอักขระเมตาใน 1024 ไบต์แรกของ HTML หรือในส่วนหัวการตอบกลับ HTTP ประเภทเนื้อหา [ดูข้อมูลเพิ่มเติมเกี่ยวกับการประกาศการเข้ารหัสอักขระ](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "ไม่ได้ประกาศชุดอักขระในส่วนหัว HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "ประกาศชุดอักขระโดยใช้เมตาแท็กหลังจาก 1024 ไบต์แรก"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "ไม่ได้ประกาศชุดอักขระโดยใช้เมตาแท็ก"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "ระบุการประกาศชุดอักขระเมตาจากร่องรอยไม่ได้"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "ประกาศชุดอักขระในส่วนหัว HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "ประกาศชุดอักขระโดยใช้เมตาแท็กใน 1024 ไบต์แรก"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "ประกาศการเข้ารหัสอักขระ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM ที่มีขนาดใหญ่จะใช้เวลานานขึ้นในการคำนวณสไตล์และการจัดเรียงเลย์เอาต์ใหม่ ซึ่งส่งผลต่อการตอบสนองของหน้าเว็บ นอกจากนี้ DOM ที่มีขนาดใหญ่จะใช้หน่วยความจำเพิ่มขึ้นด้วย [ดูวิธีหลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "ควรใช้ fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "ควรใช้ fetchpriority=high กับคำขอโหลดรูปภาพล่วงหน้า"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "ไม่ได้ใช้การโหลดแบบ Lazy Loading"
+    "message": "ทรัพยากร LCP ไม่ควรใช้ loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "รูปภาพ LCP ใช้เวลาโหลด {PH1} หลังจากจุดเริ่มต้นแรกสุด"

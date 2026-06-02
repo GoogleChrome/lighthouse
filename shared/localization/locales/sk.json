@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Podpora údajov: podpora webových adries v prvku SVGUseElement bola ukončená a v budúcnosti bude odstránená."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Podpora metódy document.createEvent('KeyboardEvents') bola ukončená a bude odstránená. Namiesto toho použite new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Podpora metódy document.createEvent('TransitionEvent') bola ukončená a bude odstránená. Namiesto toho použite new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Toto je príklad zobrazenia kódu vyžadovaného pre proces prehliadača s nahláseným ukončením podpory."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Podpora rozhrania HTMLVideoElement.webkitSupportsFullscreen bola ukončená. Použite namiesto neho Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Filtre SVG sa nedajú použiť na prvky iframe z iných zdrojov, obmedzené prvky iframe (napr. v karanténe) ani doplnky."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Obmedzenie DtlsSrtpKeyAgreement bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu false, ktorá je interpretovaná ako pokus o použitie odstránenej metódy SDES key negotiation. Táto funkcia bola odstránená. Namiesto nej použite službu, ktorá podporuje funkciu DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Efektívne využívanie celých období vyrovnácej pamäte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Vyžaduje sa deklarácia kódovania znakov. Môžete to vykonať pomocou metaznačky kódovania znakov v prvých 1 024 bajtoch kódu HTML alebo hlavičke odpovede HTTP Content‑Type. [Ďalšie informácie o deklarácii kódovania znakov](https://developer.chrome.com/docs/insights/charset/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Nedeklaruje kódovanie znakov v hlavičke HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Deklaruje kódovanie znakov pomocou metaznačky za prvými 1 024 bajtmi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Neobsahuje deklaráciu kódovania znakov pomocou metaznačky"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Zo stopy sa nepodarilo určiť deklaráciu kódovania znakov pomocou metaznačky"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Deklaruje kódovanie znakov v hlavičke HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Deklaruje kódovanie znakov pomocou metaznačky v prvých 1 024 bajtoch"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Deklarujte kódovanie znakov"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Rozsiahly model DOM môže predĺžiť výpočty štýlov a preformátovaní rozložení, čím ovplyvní responzívnosť stránky. Okrem toho zvýši využitie pamäte. [Ako sa vyhnúť nadmernej veľkosti modelu DOM](https://developer.chrome.com/docs/performance/insights/dom-size)"
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Mala by byť použitá hodnota fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Na požiadavku o prednačítanie obrázka by sa mala použiť hodnota fetchpriority=high"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "lenivé načítanie nebolo použité"
+    "message": "Zdroje vykreslenia najväčšieho prvku by nemali používať hodnotu loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Obrázok vykreslenia najväčšieho prvku bol načítaný {PH1} po najskoršom začatí."

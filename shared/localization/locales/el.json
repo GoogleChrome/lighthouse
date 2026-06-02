@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Υποστήριξη για δεδομένα: Τα URL στο SVGUseElement έχουν καταργηθεί και θα αποσυρθούν στο μέλλον."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Το document.createEvent('KeyboardEvents') έχει καταργηθεί και θα αφαιρεθεί. Εναλλακτικά, χρησιμοποιήστε το new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Το document.createEvent('TransitionEvent') έχει καταργηθεί και θα αφαιρεθεί. Εναλλακτικά, χρησιμοποιήστε το new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Αυτό είναι ένα παράδειγμα για την εμφάνιση του κώδικα που απαιτείται για μια κατάργηση που αναφέρεται σε διαδικασία προγράμματος περιήγησης."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Το HTMLVideoElement.webkitSupportsFullscreen έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Δεν είναι δυνατή η εφαρμογή φίλτρων SVG σε iframe διαφορετικής προέλευσης, περιορισμένα iframe (π.χ. σε sandbox) ή προσθήκες."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Ο περιορισμός DtlsSrtpKeyAgreement καταργήθηκε. Έχετε καθορίσει μια τιμή false για αυτόν τον περιορισμό, η οποία ερμηνεύεται ως προσπάθεια χρήσης της μεθόδου SDES key negotiation που καταργήθηκε. Αυτή η λειτουργία καταργήθηκε, χρησιμοποιήστε εναλλακτικά μια υπηρεσία που υποστηρίζει το DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Χρήση αποδοτικών συνολικών χρόνων κρυφής μνήμης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Απαιτείται δήλωση κωδικοποίησης χαρακτήρων. Μπορεί να πραγματοποιηθεί με μια μεταετικέτα συνόλου χαρακτήρων στα πρώτα 1024 byte του κώδικα HTML ή στην κεφαλίδα απόκρισης HTTP τύπου περιεχομένου. [Μάθετε περισσότερα σχετικά με τη δήλωση της κωδικοποίησης χαρακτήρων](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Δεν δηλώθηκε σύνολο χαρακτήρων στην κεφαλίδα HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Δηλώθηκε σύνολο χαρακτήρων με χρήση μεταετικέτας μετά τα πρώτα 1024 byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Δεν δηλώθηκε σύνολο χαρακτήρων με χρήση μεταετικέτας"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Δεν βρέθηκε δήλωση μεταετικέτας συνόλου χαρακτήρων από το ίχνος"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Δηλώθηκε σύνολο χαρακτήρων στην κεφαλίδα HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Δηλώθηκε σύνολο χαρακτήρων με χρήση μεταετικέτας στα πρώτα 1024 byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Δήλωση κωδικοποίησης χαρακτήρων"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Ένα μεγάλο DOM μπορεί να αυξήσει τη διάρκεια των υπολογισμών στιλ και των επαναλήψεων ροών διάταξης και, συνεπώς, να επηρεάσει την απόκριση της σελίδας. Ένα μεγάλο DOM θα αυξήσει επίσης τη χρήση της μνήμης. [Μάθετε πώς μπορείτε να αποφύγετε ένα υπερβολικά μεγάλο μέγεθος DOM](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Απαιτείται η εφαρμογή της ιδιότητας fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Το χαρακτηριστικό fetchpriority=high πρέπει να εφαρμοστεί στο αίτημα προφόρτωσης εικόνας"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "δεν εφαρμόστηκε η αργή φόρτωση"
+    "message": "Οι πόροι LCP δεν πρέπει να χρησιμοποιούν το χαρακτηριστικό loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Η εικόνα LCP φορτώθηκε {PH1} μετά το νωρίτερο σημείο έναρξης."

@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Hỗ trợ về dữ liệu: Các URL trong SVGUseElement không được dùng nữa và sẽ bị loại bỏ trong tương lai."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent(\"KeyboardEvents\") không được dùng nữa và sẽ bị xoá. Thay vào đó, hãy sử dụng new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent(\"TransitionEvent\") không được dùng nữa và sẽ bị xoá. Thay vào đó, hãy sử dụng new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Đây là ví dụ minh hoạ phần mã cần dùng khi trình duyệt báo rằng tiến trình này đã ngừng hoạt động."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen không còn được dùng nữa. Thay vào đó, vui lòng sử dụng Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Không thể áp dụng bộ lọc SVG cho iframe nhiều nguồn gốc, iframe bị hạn chế (ví dụ: iframe chạy trong môi trường hộp cát) hoặc trình bổ trợ."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Điều kiện hạn chế DtlsSrtpKeyAgreement đã bị xoá. Bạn đã chỉ định một giá trị false cho điều kiện hạn chế này, đây được coi là nỗ lực sử dụng phương thức SDES key negotiation đã bị xoá. Chức năng này đã bị xoá; thay vào đó, hãy sử dụng một dịch vụ có hỗ trợ DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Sử dụng thời gian hữu dụng của bộ nhớ đệm hiệu quả"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Cần khai báo hệ thống mã hoá ký tự. Bạn có thể thực hiện việc này bằng thẻ bộ ký tự meta trong 1024 byte đầu tiên của HTML hoặc trong tiêu đề phản hồi HTTP Content-Type. [Tìm hiểu thêm về cách khai báo hệ thống mã hoá ký tự](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Không khai báo bộ ký tự trong tiêu đề HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Khai báo bộ ký tự bằng thẻ meta sau 1024 byte đầu tiên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Không khai báo bộ ký tự bằng thẻ meta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Không xác định được khai báo bộ ký tự meta dựa vào dấu vết"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Khai báo bộ ký tự trong tiêu đề HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Khai báo bộ ký tự bằng thẻ meta trong 1024 byte đầu tiên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Khai báo hệ thống mã hoá ký tự"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM lớn có thể làm các phép tính về kiểu và quy trình trình bày lại bố cục dài hơn, ảnh hưởng đến tốc độ phản hồi của trang. DOM lớn cũng sẽ làm tăng mức sử dụng bộ nhớ. [Tìm hiểu cách tránh kích thước DOM quá lớn](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Bạn nên áp dụng fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high nên được áp dụng cho yêu cầu tải trước hình ảnh"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "chưa áp dụng phương thức tải từng phần"
+    "message": "Tài nguyên LCP không nên sử dụng loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Hình ảnh LCP được tải sau {PH1} kể từ thời điểm bắt đầu sớm nhất."

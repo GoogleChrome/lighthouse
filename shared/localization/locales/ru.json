@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "URL из SVGUseElement больше не поддерживаются и в дальнейшем будут удалены."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Метод document.createEvent('KeyboardEvents') больше не поддерживается и будет удален. Вместо него используйте new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Метод document.createEvent('TransitionEvent') больше не поддерживается и будет удален. Вместо него используйте new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Пример кода, необходимого для функции прекращения поддержки, о которой сообщил процесс браузера."
   },
@@ -1979,6 +1985,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Метод HTMLVideoElement.webkitSupportsFullscreen больше не поддерживается. Используйте Document.fullscreenEnabled вместо него."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Фильтры SVG нельзя применять к окнам iframe с другими источниками, ограниченным окнам iframe (например, изолированным) и плагинам."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Ограничение DtlsSrtpKeyAgreement удалено. Вы указали для него значение false, которое интерпретируется как попытка использовать неподдерживаемый метод SDES key negotiation. Эта возможность удалена. Вместо нее используйте сервис, поддерживающий DTLS key negotiation."
   },
@@ -2086,6 +2095,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Выбирайте эффективный период хранения кеша"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Требуется задать кодировку символов. Это можно сделать с помощью тега в первых 1024 байтах HTML-страницы или в заголовке ответа HTTP Content-Type. Подробнее о том, [как задать кодировку символов](https://developer.chrome.com/docs/insights/charset/)…"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "В HTTP-заголовке не задана кодировка символов."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Кодировка символов с помощью метатега задана после первых 1024 байтов."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Не задана кодировка символов с помощью метатега."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Не удалось определить кодировку символов из трассировки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Кодировка символов задана в HTTP-заголовке."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Кодировка символов с помощью метатега задана в первых 1024 байтах."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Задайте кодировку символов"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Из-за большого размера дерева DOM может замедляться расчет стиля и компоновка макета. Это повлияет на скорость отклика страницы и увеличит объем используемой памяти. Узнайте, [как уменьшить размер дерева DOM](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2294,8 +2327,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Требуется значение fetchpriority=high."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Для запроса предварительной загрузки изображения требуется значение fetchpriority=high."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "Не удалось применить отложенную загрузку."
+    "message": "Не используйте loading=lazy для ресурсов LCP."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Время загрузки самого крупного изображения: {PH1}."

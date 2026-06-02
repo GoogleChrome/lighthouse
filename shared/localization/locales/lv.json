@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Datu atbalsts: parametrā SVGUseElement vairs netiek atbalstīti vietrāži URL, un nākotnē tie tiks noņemti."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Saskarne “document.createEvent('KeyboardEvents')” vairs netiek izmantota un tiks noņemta. Tā vietā izmantojiet saskarni new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Saskarne “document.createEvent('TransitionEvent')” vairs netiek izmantota un tiks noņemta. Tā vietā izmantojiet saskarni new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Šajā piemērā ir redzams kods, kas nepieciešams pārlūka procesa darbības pārtraukšanas ziņojuma rādīšanai."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Saskarne HTMLVideoElement.webkitSupportsFullscreen vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG filtrus nevar lietot starpdomēnu iframe elementiem, ierobežotiem iframe elementiem (piemēram, smilškastē) vai spraudņiem."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Ierobežojums DtlsSrtpKeyAgreement ir noņemts. Jūs šim ierobežojumam esat noteicis vērtību “false”, un tas tiek interpretēts kā mēģinājums izmantot noņemto metodi SDES key negotiation. Šī funkcionalitāte ir noņemta. Tās vietā izmantojiet pakalpojumu, kas atbalsta metodi DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Efektīva kešatmiņas darbības ilguma izmantošana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Ir nepieciešama rakstzīmju kodējuma deklarācija. To var ietvert HTML koda pirmajos 1024 baitos vai satura veida HTTP atbildes galvenē. [Uzziniet vairāk par rakstzīmju kodējuma deklarēšanu](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "HTTP galvenē nav deklarēta rakstzīmju kopa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Rakstzīmju kopa tiek deklarēta, izmantojot metatagu pēc pirmajiem 1024 baitiem"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Netiek deklarēta rakstzīmju kopa, izmantojot metatagu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Nevarēja noteikt meta rakstzīmju kopas deklarāciju no trasējuma"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Rakstzīmju kopa ir deklarēta HTTP galvenē"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Rakstzīmju kopa tiek deklarēta, izmantojot metatagu pirmajos 1024 baitos"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Rakstzīmju kodējuma deklarēšana"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Liels DOM koks var paildzināt stila aprēķinus un izkārtojuma plūduma pārkārtošanu, ietekmējot lapas reaģētspēju. Liels DOM koks arī palielinās atmiņas lietojumu. [Uzziniet, kā izvairīties no pārmērīga DOM lieluma](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Jāizmanto vērtība fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Attēla iepriekšējas ielādes pieprasījumam jāizmanto vērtība “fetchpriority=high”"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "atliktā ielāde netiek lietota"
+    "message": "LCP resursiem nevajadzētu izmantot atribūtu loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "LCP attēls tika ielādēts {PH1} pēc agrākā sākumpunkta."

@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Suporta para sa data: Hindi na ginagamit ang mga URL sa SVGUseElement at aalisin na ito sa hinaharap."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "Hindi na ginagamit at aalisin na ang document.createEvent('KeyboardEvents'). new KeyboardEvent() na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "Hindi na ginagamit at aalisin na ang document.createEvent('TransitionEvent'). new TransitionEvent() na lang ang gamitin."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Isa itong halimbawa para sa pagpapakita ng code na nire-require para sa iniulat na paghinto sa paggamit ng proseso ng browser."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "Hindi na ginagamit ang HTMLVideoElement.webkitSupportsFullscreen. Pakigamit na lang ang Document.fullscreenEnabled."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "Hindi puwedeng ilapat ang mga SVG filter sa mga cross-origin na iframe, pinaghihigpitang iframe (hal., naka-sandbox), o plugin."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Inalis ang paghihigpit na DtlsSrtpKeyAgreement. Tinukoy mo ang isang false na value para sa paghihigpit na ito, na itinuturing na pagsubok na gamitin ang inalis na paraan ng SDES key negotiation. Inalis ang functionality na ito; isang serbisyong sumusuporta sa DTLS key negotiation na lang ang gamitin."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Gumamit ng mahuhusay na lifetime ng cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Kailangang mag-declare ng pag-encode ng character. Magagawa ito gamit ang isang meta charset tag sa unang 1024 na byte ng HTML o sa header ng sagot ng Content-Type HTTP. [Matuto pa tungkol sa pag-declare ng pag-encode ng character](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Hindi nagde-declare ng charset sa header ng HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Nagde-declare ng charset gamit ang meta tag pagkatapos ng unang 1024 na byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Hindi nagde-declare ng charset gamit ang meta tag"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Hindi matukoy ang pag-declare ng meta charset mula sa trace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Nagde-declare ng charset sa header ng HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Nagde-declare ng charset gamit ang meta tag sa unang 1024 na byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Mag-declare ng pag-encode ng character"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Kapag malaki ang DOM, puwedeng tumaas ang tagal ng pagkalkula ng istilo at mga reflow ng layout, na nakakaapekto sa pagiging responsive ng page. Madaragdagan din ng malaking DOM ang paggamit ng memory. [Alamin kung paano iwasan ang masyadong malaking DOM](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "Dapat i-apply ang fetchpriority=high"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "Dapat i-apply ang fetchpriority=high sa request sa pag-preload ng larawan"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "hindi na-apply ang mabagal na pag-load"
+    "message": "Hindi dapat gumamit ng loading=lazy ang mga resource ng LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "Nag-load ang LCP na larawan {PH1} pagkatapos ng pinakaunang punto ng pagsisimula."

@@ -1871,6 +1871,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Datatuki: URL-osoitteet SVGUseElement-elementissä on poistettu käytöstä, ja se poistetaan tulevaisuudessa."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
+    "message": "document.createEvent('KeyboardEvents') on poistettu käytöstä ja poistetaan kokonaan. Valitse sen sijaan new KeyboardEvent()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventTransitionEvent": {
+    "message": "document.createEvent('TransitionEvent') on poistettu käytöstä ja poistetaan kokonaan. Valitse sen sijaan new TransitionEvent()."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Tämä on esimerkki koodista, joka tarvitaan selainprosessin ilmoittamaan käytöstä poistamiseen."
   },
@@ -1982,6 +1988,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen on poistettu käytöstä. Käytä sen sijaan Document.fullscreenEnabled-APIa."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
+    "message": "SVG-suodattimia ei voi käyttää eri lähteistä peräisin olevissa iframeissa, rajoitetuissa iframeissa (esim. hiekkalaatikkoympäristössä) tai liitännäisissä."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "Rajoitus DtlsSrtpKeyAgreement on poistettu. Olet määrittänyt false ‑arvon tälle rajoitukselle, mikä tulkitaan yrityksenä käyttää poistettua SDES key negotiation ‑metodia. Tämä toiminto on poistettu. Käytä sen sijaan palvelua, joka tukee tätä: DTLS key negotiation."
   },
@@ -2089,6 +2098,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
     "message": "Käytä tehokasta välimuistin käyttöikää"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": {
+    "message": "Merkistökoodausilmoitus vaaditaan. Sen voi tehdä metamerkistötagilla HTML:n ensimmäisen 1 024 tavun sisällä tai HTTP-vastauksen otsikon sisältötyyppi-kohdassa. [Lue lisää merkistökoodauksen ilmoittamisesta](https://developer.chrome.com/docs/insights/charset/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
+    "message": "Ei ilmoita merkistöä HTTP-otsikossa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
+    "message": "Ilmoittaa merkistön käyttämällä sisällönkuvauskenttää 1 024 ensimmäisen tavun jälkeen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
+    "message": "Ei ilmoita merkistöä käyttämällä sisällönkuvauskenttää"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
+    "message": "Jäljityksestä ei voitu määrittää metamerkistöilmoitusta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
+    "message": "Ilmoittaa merkistön HTTP-otsikossa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingMetaCharsetEarly": {
+    "message": "Ilmoittaa merkistön käyttämällä sisällönkuvauskenttää ensimmäisen 1 024 tavun sisällä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": {
+    "message": "Ilmoita merkistökoodaus"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Suuri DOM voi pidentää tyylilaskelmien ja asettelun uudelleenjuoksutusten kestoa, mikä vaikuttaa sivun responsiivisuuteen. Suuri DOM lisää myös muistin käyttöä. [Katso, miten voit välttää liian suuren DOM:n](https://developer.chrome.com/docs/performance/insights/dom-size)."
@@ -2297,8 +2330,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
     "message": "\"fetchpriority=high\" tulisi käyttää"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeAppliedToImagePreload": {
+    "message": "fetchpriority=high täytyy lisätä kuvan esilatauspyyntöön"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "laiska latautuminen ei käytössä"
+    "message": "LCP-resursseissa ei pitäisi käyttää loading=lazy-määritettä"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
     "message": "LCP-kuva ladattu ({PH1}) aikaisimman aloituspisteen jälkeen."
