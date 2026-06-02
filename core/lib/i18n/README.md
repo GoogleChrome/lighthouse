@@ -87,7 +87,7 @@ const UIStrings = {
 };
 ```
 
-For proper translation, **all** strings must be accompanied by a description, written as a preceeding comment.
+For proper translation, **all** strings must be accompanied by a description, written as a preceding comment.
 
 
 ### Replacements and primitive formatting

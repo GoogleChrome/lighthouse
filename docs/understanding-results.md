@@ -19,10 +19,10 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 | mainDocumentUrl | The URL of the main document request during the final page navigation. |
 | finalDisplayedUrl | The URL displayed on the page after all redirects, history API updates, etc. |
 | [audits](#audits) | An object containing the results of the audits. |
-| [configSettings](#config-settings) | An object containing information about the configuration used by Lighthouse. |
+| [configSettings](#configsettings) | An object containing information about the configuration used by Lighthouse. |
 | [timing](#timing) | An object containing information about how long Lighthouse spent auditing. |
 | [categories](#categories) | An object containing the different categories, their scores, and references to the audits that comprise them. |
-| [categoryGroups](#category-groups) | An object containing the display groups of audits for the report. |
+| [categoryGroups](#categorygroups) | An object containing the display groups of audits for the report. |
 | runtimeError | An object `{code: string, message: string};` providing a top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. |
 | runWarnings | Array of top-level warnings for this Lighthouse run. |
 
@@ -44,7 +44,6 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 ```
 
 
-<a name="audits"></a>
 ## `audits`
 
 An object containing the results of the audits, keyed by their name.
@@ -100,7 +99,6 @@ An object containing the results of the audits, keyed by their name.
 ```
 
 
-<a name="config-settings"></a>
 ## `configSettings`
 
 An object containing information about the configuration used by Lighthouse.
@@ -133,7 +131,6 @@ An object containing information about the configuration used by Lighthouse.
 }
 ```
 
-<a name="timing"></a>
 ## `timing`
 
 An object containing information about how long Lighthouse spent auditing.
@@ -150,7 +147,6 @@ An object containing information about how long Lighthouse spent auditing.
 }
 ```
 
-<a name="categories"></a>
 ## `categories`
 
 An array containing the different categories, their scores, and the results of the audits in the categories.
@@ -189,7 +185,6 @@ An array containing the different categories, their scores, and the results of t
 }
 ```
 
-<a name="category-groups"></a>
 ## `categoryGroups`
 
 An object containing the display groups of audits for the report, keyed by the group ID found in the config.

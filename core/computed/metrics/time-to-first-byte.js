@@ -45,14 +45,15 @@ class TimeToFirstByte extends NavigationMetric {
    * @return {Promise<LH.Artifacts.Metric>}
    */
   static async computeObservedMetric(data, context) {
-    const {trace, settings, SourceMaps} = data;
+    const {trace, settings, SourceMaps, HostDPR} = data;
     const traceEngineResult =
-      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
-    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
+      await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
+    const navInsights =
+      await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
     const lcpBreakdown = navInsights.model.LCPBreakdown;
 
     // Defer to LCP breakdown, but if there's no LCP fallback to manual calculation.
-    if (!(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
+    if (lcpBreakdown && !(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
       return {
         timing: lcpBreakdown.subparts.ttfb.range / 1000,
         timestamp: lcpBreakdown.subparts.ttfb.max,
@@ -81,6 +82,6 @@ class TimeToFirstByte extends NavigationMetric {
 
 const TimeToFirstByteComputed = makeComputedArtifact(
   TimeToFirstByte,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {TimeToFirstByteComputed as TimeToFirstByte};

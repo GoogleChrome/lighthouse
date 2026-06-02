@@ -35,7 +35,7 @@ class ServerResponseTime extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 1,
-      requiredArtifacts: ['Trace', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'SourceMaps', 'HostDPR'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -48,17 +48,18 @@ class ServerResponseTime extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const trace = artifacts.Trace;
-    const SourceMaps = artifacts.SourceMaps;
-    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
-    const responseTime = navInsights.model.DocumentLatency.data?.serverResponseTime;
-    const url = navInsights.model.DocumentLatency.data?.documentRequest?.args.data.url;
+    const {SourceMaps, HostDPR} = artifacts;
+    const navInsights =
+      await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
+    const responseTime = navInsights.model.DocumentLatency?.data?.serverResponseTime;
+    const url = navInsights.model.DocumentLatency?.data?.documentRequest?.args.data.url;
 
     if (responseTime === undefined || !url) {
       throw new Error('no timing found for main resource');
     }
 
     const passed =
-      Boolean(navInsights.model.DocumentLatency.data?.checklist.serverResponseIsFast.value);
+      Boolean(navInsights.model.DocumentLatency?.data?.checklist.serverResponseIsFast.value);
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */

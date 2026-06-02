@@ -28,7 +28,7 @@ class LegacyJavaScriptInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 2,
-      requiredArtifacts: ['Trace', 'Scripts', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'Scripts', 'SourceMaps', 'HostDPR'],
     };
   }
 

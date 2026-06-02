@@ -61,7 +61,7 @@ describe('Metrics: TTI', () => {
     );
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -80,7 +80,7 @@ describe('Metrics: TTI', () => {
     );
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
     assert.equal(Math.round(result.timing), 224);
     assert.equal(result.timestamp, 376406205074);
@@ -92,7 +92,7 @@ describe('Metrics: TTI', () => {
     );
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
     assert.equal(Math.round(result.timing), 224);
     assert.equal(result.timestamp, 376406205074);

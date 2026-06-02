@@ -35,6 +35,7 @@ class Metric {
       settings: data.settings,
       URL: data.URL,
       SourceMaps: data.SourceMaps,
+      HostDPR: data.HostDPR,
       simulator: null,
     };
   }

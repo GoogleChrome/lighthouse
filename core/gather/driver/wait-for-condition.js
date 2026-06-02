@@ -387,11 +387,21 @@ async function isPageHung(session) {
     await session.sendCommand('Runtime.evaluate', {
       expression: '"ping"',
       returnByValue: true,
-      timeout: 1000,
     });
 
     return false;
   } catch (err) {
+    // If the session has crashed, we want to rethrow that error instead of assuming it's a hang.
+    // session.sendCommand normally handles this, but if PROTOCOL_TIMEOUT wins the race,
+    // we might have missed the TARGET_CRASHED error.
+    try {
+      // Check if it's already crashed.
+      await Promise.race([session.onCrashPromise(), Promise.resolve()]);
+    } catch (crashErr) {
+      if (crashErr.code === 'TARGET_CRASHED') throw crashErr;
+    }
+
+    if (err.code === 'TARGET_CRASHED') throw err;
     return true;
   }
 }

@@ -47,7 +47,7 @@ class LayoutShifts extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
-      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps', 'HostDPR'],
     };
   }
 
@@ -59,9 +59,9 @@ class LayoutShifts extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const trace = artifacts.Trace;
-    const SourceMaps = artifacts.SourceMaps;
+    const {SourceMaps, HostDPR} = artifacts;
     const traceEngineResult =
-      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+      await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
     const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
     const {cumulativeLayoutShift: clsSavings, impactByNodeId} =
       await CumulativeLayoutShiftComputed.request(trace, context);
@@ -73,7 +73,7 @@ class LayoutShifts extends Audit {
       layoutShifts: new Map(),
     };
     for (const insightSet of traceEngineResult.insights.values()) {
-      for (const [shift, reasons] of insightSet.model.CLSCulprits.shifts) {
+      for (const [shift, reasons] of insightSet.model.CLSCulprits?.shifts ?? []) {
         allRootCauses.layoutShifts.set(shift, reasons);
       }
     }

@@ -27,7 +27,7 @@ describe('TraceEngineResult', () => {
   describe('compute_', () => {
     it('works on a basic trace', async () => {
       const result = await TraceEngineResult.request(
-        {trace: basicTrace, SourceMaps: [], settings},
+        {trace: basicTrace, SourceMaps: [], HostDPR: 1, settings},
         context
       );
       assert.ok(result.insights);
@@ -69,9 +69,10 @@ describe('TraceEngineResult', () => {
 
         bigTrace.traceEvents.push(...measureEvents);
 
-        result = await TraceEngineResult.request({trace: bigTrace, SourceMaps: [], settings},
-          context
-        );
+        result =
+          await TraceEngineResult.request({trace: bigTrace, SourceMaps: [], HostDPR: 1, settings},
+            context
+          );
       });
 
 

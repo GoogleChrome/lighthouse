@@ -68,7 +68,7 @@ class LongTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps', 'HostDPR'],
       guidanceLevel: 1,
     };
   }
@@ -176,7 +176,7 @@ class LongTasks extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const {URL, SourceMaps} = artifacts;
+    const {URL, HostDPR, SourceMaps} = artifacts;
     const trace = artifacts.Trace;
     const tasks = await MainThreadTasks.request(trace, context);
     const devtoolsLog = artifacts.DevtoolsLog;
@@ -194,7 +194,7 @@ class LongTasks extends Audit {
       const simulatorOptions = {devtoolsLog, settings: context.settings};
       const pageGraph =
         // eslint-disable-next-line max-len
-        await PageDependencyGraph.request({settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context);
+        await PageDependencyGraph.request({settings, trace, devtoolsLog, URL, SourceMaps, HostDPR, fromTrace: false}, context);
       const simulator = await LoadSimulator.request(simulatorOptions, context);
       const simulation = simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
       for (const [node, timing] of simulation.nodeTimings.entries()) {

@@ -17,7 +17,7 @@ describe('Timing summary', () => {
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const artifacts =
       // eslint-disable-next-line max-len
-      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, SourceMaps: [], gatherContext};
+      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, SourceMaps: [], HostDPR: 1, gatherContext};
     const result = await TimingSummary.request(artifacts, context);
 
     expect(result.metrics).toMatchInlineSnapshot(`

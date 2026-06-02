@@ -20,7 +20,8 @@ describe('Metrics: Speed Index', () => {
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await SpeedIndex.request(
-      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
         context);
 
     expect({
@@ -54,7 +55,7 @@ Object {
         devtoolsLog: devtoolsLog1msLayout,
         settings,
         URL,
-        SourceMaps: [],
+        SourceMaps: [], HostDPR: 1,
         simulator: null,
       },
       context
@@ -78,7 +79,8 @@ Object {
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await SpeedIndex.request(
-      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     await expect(result).toMatchInlineSnapshot(`
@@ -95,7 +97,8 @@ Object {
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result =
       await SpeedIndex.request(
-        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+        // eslint-disable-next-line max-len
+        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
         context);
 
     await expect(result).toMatchInlineSnapshot(`

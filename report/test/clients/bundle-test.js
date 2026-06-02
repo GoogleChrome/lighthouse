@@ -9,6 +9,7 @@ import fs from 'fs';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
+import {createQuietConsole} from '../renderer/jsdom-setup.js';
 import * as lighthouseRenderer from '../../clients/bundle.js';
 import {LH_ROOT} from '../../../shared/root.js';
 
@@ -20,7 +21,7 @@ describe('lighthouseRenderer bundle', () => {
   before(() => {
     global.console.warn = jestMock.fn();
 
-    const {window} = new jsdom.JSDOM();
+    const {window} = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()});
     document = window.document;
 
     global.window = global.self = window;

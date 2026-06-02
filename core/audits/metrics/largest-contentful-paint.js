@@ -28,7 +28,7 @@ class LargestContentfulPaint extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
       requiredArtifacts: ['HostUserAgent', 'Trace', 'DevtoolsLog', 'GatherContext', 'URL',
-        'SourceMaps'],
+        'SourceMaps', 'HostDPR'],
     };
   }
 
@@ -77,6 +77,7 @@ class LargestContentfulPaint extends Audit {
       trace, devtoolsLog, gatherContext,
       settings: context.settings, URL: artifacts.URL,
       SourceMaps: artifacts.SourceMaps, simulator: null,
+      HostDPR: artifacts.HostDPR,
     };
 
     const metricResult = await ComputedLcp.request(metricComputationData, context);

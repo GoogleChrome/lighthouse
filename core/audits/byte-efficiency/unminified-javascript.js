@@ -45,7 +45,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       requiredArtifacts: ['Scripts', 'DevtoolsLog', 'Trace', 'GatherContext', 'URL',
-        'SourceMaps'],
+        'SourceMaps', 'HostDPR'],
     };
   }
 

@@ -23,7 +23,7 @@ describe('Lighthouse Flow Report', () => {
       executablePath: getChromePath(),
     });
     page = await browser.newPage();
-    page.on('pageerror', pageError => pageErrors.push(pageError));
+    page.on('pageerror', pageError => pageErrors.push(pageError as Error));
   });
 
   after(async () => {

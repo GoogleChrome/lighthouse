@@ -21,6 +21,7 @@ function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
     DevtoolsLog: devtoolsLog,
     HostUserAgent,
     SourceMaps: [],
+    HostDPR: 1,
   };
 }
 

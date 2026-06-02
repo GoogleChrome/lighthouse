@@ -279,7 +279,7 @@ describe('Lighthouse Viewer', () => {
       const firstLogPromise =
         new Promise(resolve => savedPage.once('console', e => resolve(e.text())));
       await savedPage.goto(`file://${tmpDir}/${filename}`);
-      expect(await firstLogPromise).toEqual('window.__LIGHTHOUSE_JSON__ JSHandle@object');
+      expect(await firstLogPromise).toEqual('window.__LIGHTHOUSE_JSON__ [object Object]');
       if (savedPageErrors.length) {
         assert.fail('errors from page:\n\n' + savedPageErrors.map(e => e.toString()).join('\n\n'));
       }
@@ -407,7 +407,7 @@ describe('Lighthouse Viewer', () => {
         utm_source: interceptedUrl.searchParams.get('utm_source'),
       };
       expect(params).toEqual({
-        key: 'AIzaSyAjcDRNN9CX9dCazhqI4lGR7yyQbkd_oYE',
+        key: 'AIzaSyAKsgPk97X47saEjIQdRsZ5f69IjviPElY',
         url: 'https://www.example.com',
         // Order in the api call is important to PSI!
         category: [
@@ -415,6 +415,7 @@ describe('Lighthouse Viewer', () => {
           'accessibility',
           'seo',
           'best-practices',
+          // 'agentic-browsing',
         ],
         strategy: 'mobile',
         // These values aren't set by default.
@@ -423,7 +424,8 @@ describe('Lighthouse Viewer', () => {
       });
 
       // Confirm that all default categories are used.
-      const defaultCategories = Object.keys(defaultConfig.categories).sort();
+      const defaultCategories = Object.keys(defaultConfig.categories).sort()
+        .filter(c => c !== 'agentic-browsing');
       expect(interceptedUrl.searchParams.getAll('category').sort()).toEqual(defaultCategories);
 
       // No errors.

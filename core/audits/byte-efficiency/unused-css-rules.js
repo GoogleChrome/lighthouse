@@ -34,8 +34,8 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
-      requiredArtifacts:
-        ['Stylesheets', 'CSSUsage', 'URL', 'DevtoolsLog', 'Trace', 'GatherContext', 'SourceMaps'],
+      // eslint-disable-next-line max-len
+      requiredArtifacts: ['Stylesheets', 'CSSUsage', 'URL', 'DevtoolsLog', 'Trace', 'GatherContext', 'SourceMaps', 'HostDPR'],
     };
   }
 

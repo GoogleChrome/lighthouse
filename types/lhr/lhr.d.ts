@@ -70,7 +70,7 @@ interface Result {
 }
 
 // Result namespace
-declare module Result {
+declare namespace Result {
   interface Environment {
     /** The user agent string of the version of Chrome used. */
     hostUserAgent: string;
@@ -97,6 +97,15 @@ declare module Result {
     gather?: boolean;
   }
 
+  interface CategoryScoreDisplayModes {
+    /** Scores of 0-1 (map to displayed scores of 0-100). */
+    GAUGE: 'gauge';
+    /** Display as a fraction (x/y). */
+    FRACTION: 'fraction';
+  }
+
+  type CategoryScoreDisplayMode = CategoryScoreDisplayModes[keyof CategoryScoreDisplayModes];
+
   interface Category {
     /** The string identifier of the category. */
     id: string;
@@ -112,6 +121,8 @@ declare module Result {
     auditRefs: AuditRef[];
     /** An array of all the modes supported by the category. */
     supportedModes?:  Result.GatherMode[];
+    /** How to display the category score. */
+    categoryScoreDisplayMode?: CategoryScoreDisplayMode;
   }
 
   interface AuditRef {

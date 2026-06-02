@@ -19,6 +19,7 @@ describe('minify-devtoolslog', () => {
       DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       SourceMaps: [],
+      HostDPR: 1,
     };
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details: {items: [before]}} = await MetricsAudit.audit(artifacts, context);

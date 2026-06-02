@@ -71,6 +71,6 @@ class TotalBlockingTime extends ComputedMetric {
 
 const TotalBlockingTimeComputed = makeComputedArtifact(
   TotalBlockingTime,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {TotalBlockingTimeComputed as TotalBlockingTime};

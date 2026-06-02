@@ -24,7 +24,7 @@ class CacheInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['Trace', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'SourceMaps', 'HostDPR'],
       replacesAudits: ['uses-long-cache-ttl'],
     };
   }

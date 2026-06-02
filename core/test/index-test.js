@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import lighthouse, {getAuditList, traceCategories} from '../index.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {readJson} from './test-utils.js';
+import * as publicTypes from '../../types.js';
 
 const pkg = readJson('package.json');
 
@@ -25,6 +26,10 @@ describe('Module Tests', function() {
 
   it('should require lighthouse as a function', function() {
     assert.ok(typeof lighthouse === 'function');
+  });
+
+  it('should expose a public type-only entrypoint', function() {
+    assert.deepEqual(Object.keys(publicTypes), []);
   });
 
   it('should return a list of audits', function() {

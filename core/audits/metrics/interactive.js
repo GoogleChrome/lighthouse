@@ -33,7 +33,7 @@ class InteractiveMetric extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'SourceMaps', 'HostDPR'],
     };
   }
 
@@ -74,6 +74,7 @@ class InteractiveMetric extends Audit {
       trace, devtoolsLog, gatherContext,
       settings: context.settings, URL: artifacts.URL,
       SourceMaps: artifacts.SourceMaps, simulator: null,
+      HostDPR: artifacts.HostDPR,
     };
     const metricResult = await Interactive.request(metricComputationData, context);
     const timeInMs = metricResult.timing;

@@ -90,6 +90,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toHaveLength(0);
@@ -106,6 +107,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toMatchObject([
@@ -138,6 +140,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const result = await LongTasks.audit(artifacts, context);
@@ -164,6 +167,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const context = {
       computedCache: new Map(),
@@ -201,6 +205,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toMatchObject([
@@ -232,6 +237,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const result = await LongTasks.audit(artifacts, context);
@@ -266,6 +272,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const result = await LongTasks.audit(artifacts, context);
 
@@ -300,6 +307,7 @@ describe('Long tasks audit', () => {
       DevtoolsLog: redirectDevtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const result = await LongTasks.audit(artifacts, context);
 

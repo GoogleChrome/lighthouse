@@ -224,6 +224,9 @@ User-agent: NotOfficial
 noindex: /bla
 Visit-time: 0600-0845
 Request-rate: 1/30m
+
+User-agent: RespectfulAI
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 `,
       },
     ];

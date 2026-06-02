@@ -8,6 +8,7 @@ import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 import {DOM} from '../../renderer/dom.js';
@@ -30,7 +31,7 @@ describe('PerfCategoryRenderer', () => {
       reportJson: null,
     });
 
-    const window = new jsdom.JSDOM().window;
+    const window = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()}).window;
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
     global.CustomEvent = window.CustomEvent;
@@ -236,12 +237,12 @@ describe('PerfCategoryRenderer', () => {
       const url = new URL(href);
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
-  "#FCP=6803",
-  "LCP=10894",
-  "TBT=1018",
+  "#FCP=6795",
+  "LCP=10885",
+  "TBT=1055",
   "CLS=0",
-  "SI=8407",
-  "TTI=7992",
+  "SI=8296",
+  "TTI=8012",
 ]
 `);
     });
@@ -256,12 +257,12 @@ Array [
       try {
         expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
-  "#FCP=6803",
-  "LCP=10894",
-  "TBT=1018",
+  "#FCP=6795",
+  "LCP=10885",
+  "TBT=1055",
   "CLS=0.1",
-  "SI=8407",
-  "TTI=7992",
+  "SI=8296",
+  "TTI=8012",
   "device=mobile",
   "version=6.0.0",
 ]

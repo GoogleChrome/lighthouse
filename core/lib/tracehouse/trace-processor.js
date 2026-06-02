@@ -349,7 +349,7 @@ class TraceProcessor {
 
     const ret = this.getMainThreadTopLevelEventDurations(events, startTime, endTime);
     return this._riskPercentiles(ret.durations, totalTime, percentiles,
-        ret.clippedLength);
+      ret.clippedLength);
   }
 
   /**
@@ -479,9 +479,9 @@ class TraceProcessor {
     const firstResourceSendEvt = events.find(e => e.name === 'ResourceSendRequest');
     // We know that these properties exist if we found the events, but TSC doesn't.
     if (navStartEvt?.args?.data &&
-        firstResourceSendEvt &&
-        firstResourceSendEvt.pid === navStartEvt.pid &&
-        firstResourceSendEvt.tid === navStartEvt.tid) {
+      firstResourceSendEvt &&
+      firstResourceSendEvt.pid === navStartEvt.pid &&
+      firstResourceSendEvt.tid === navStartEvt.tid) {
       const frameId = navStartEvt.args.frame;
       if (frameId) {
         return {
@@ -552,9 +552,9 @@ class TraceProcessor {
    */
   static isScheduleableTask(evt) {
     return evt.name === SCHEDULABLE_TASK_TITLE_LH ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
 
   /**
@@ -563,7 +563,7 @@ class TraceProcessor {
    */
   static isLCPEvent(evt) {
     if (evt.name !== 'largestContentfulPaint::Invalidate' &&
-        evt.name !== 'largestContentfulPaint::Candidate') return false;
+      evt.name !== 'largestContentfulPaint::Candidate') return false;
     return Boolean(evt.args?.frame);
   }
 
@@ -602,9 +602,10 @@ class TraceProcessor {
    *
    * @param {LH.TraceEvent[]} events
    * @param {LH.TraceEvent} timeOriginEvent
+   * @param {string|undefined} mainFrameId
    * @return {{lcp: LCPEvent | undefined, invalidated: boolean}}
    */
-  static computeValidLCPAllFrames(events, timeOriginEvent) {
+  static computeValidLCPAllFrames(events, timeOriginEvent, mainFrameId) {
     const lcpEvents = events.filter(this.isLCPEvent).reverse();
 
     /** @type {Map<string, LCPEvent>} */
@@ -625,6 +626,53 @@ class TraceProcessor {
       if (!this.isLCPCandidateEvent(lcp)) continue;
       if (!maxLcpAcrossFrames || lcp.args.data.size > maxLcpAcrossFrames.args.data.size) {
         maxLcpAcrossFrames = lcp;
+      }
+    }
+
+    // If no standard LCP candidate is found, try the UKM AllFramesEvents.
+    if (!maxLcpAcrossFrames) {
+      const ukmEvents = events.filter(
+        (e) =>
+          e.name.includes('LargestContentfulPaint') && e.name.includes('UKM')
+      );
+
+      // In the rare cases this whole fallback is necessary, the
+      // NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM events are missing too.
+      // As a result, the only useful signal left is the AllFrames invalidates.
+      // Not ideal since they are 1 paint behind, but.. better than the dreaded
+      // NO_LCP error
+      const targetEventName =
+        'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM';
+      const ukmInvalidates = ukmEvents.filter((e) => e.name === targetEventName);
+
+      if (ukmInvalidates.length > 0) {
+        ukmInvalidates.sort((a, b) => a.ts - b.ts);
+        const lastInvalidate = ukmInvalidates[ukmInvalidates.length - 1];
+
+        log.warn(
+          'TraceProcessor',
+          'LCP candidate missing, falling back to UKM Invalidate event.'
+        );
+
+        // Construct a mock LCP candidate event
+        maxLcpAcrossFrames = /** @type {LCPCandidateEvent} */ (
+          /** @type {unknown} */ ({
+            name: 'largestContentfulPaint::Candidate',
+            cat: 'loading',
+            ph: lastInvalidate.ph,
+            ts: lastInvalidate.ts,
+            pid: lastInvalidate.pid,
+            tid: lastInvalidate.tid,
+            args: {
+              frame: mainFrameId || 'main_frame', // Mocked frame ID
+              data: {
+                size: 1, // Don't know the actuall size so we assign it 1
+                isMainFrame: true,
+                isOutermostMainFrame: true,
+              },
+            },
+          })
+        );
       }
     }
 
@@ -669,7 +717,7 @@ class TraceProcessor {
    * @param {LH.Trace} trace
    * @param {{timeOriginDeterminationMethod?: TimeOriginDeterminationMethod}} [options]
    * @return {LH.Artifacts.ProcessedTrace}
-  */
+   */
   static processTrace(trace, options) {
     const {timeOriginDeterminationMethod = 'auto'} = options || {};
 
@@ -677,9 +725,9 @@ class TraceProcessor {
     // *must* be stable to keep events correctly nested.
     const keyEvents = this.filteredTraceSort(trace.traceEvents, e => {
       return e.cat.includes('blink.user_timing') ||
-          e.cat.includes('loading') ||
-          e.cat.includes('devtools.timeline') ||
-          e.cat === '__metadata';
+        e.cat.includes('loading') ||
+        e.cat.includes('devtools.timeline') ||
+        e.cat === '__metadata';
     });
 
     // Find the inspected frame
@@ -699,7 +747,7 @@ class TraceProcessor {
     // Begin collection of frame tree information with TracingStartedInBrowser,
     // which should be present even without navigations.
     const tracingStartedFrames = keyEvents
-        .find(e => e.name === 'TracingStartedInBrowser')?.args?.data?.frames;
+      .find(e => e.name === 'TracingStartedInBrowser')?.args?.data?.frames;
     if (tracingStartedFrames) {
       for (const frame of tracingStartedFrames) {
         framesById.set(frame.frame, {
@@ -738,12 +786,18 @@ class TraceProcessor {
     // Filter to just events matching the main frame ID, just to make sure.
     /** @param {LH.TraceEvent} e */
     function associatedToMainFrame(e) {
+      if (e.name === 'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM') {
+        return true;
+      }
       const frameId = TraceProcessor.getFrameId(e);
       return frameId === mainFrameInfo.frameId;
     }
 
     /** @param {LH.TraceEvent} e */
     function associatedToAllFrames(e) {
+      if (e.name.includes('LargestContentfulPaint') && e.name.includes('UKM')) {
+        return true;
+      }
       const frameId = TraceProcessor.getFrameId(e);
       return frameId ? inspectedTreeFrameIds.includes(frameId) : false;
     }
@@ -805,9 +859,16 @@ class TraceProcessor {
    * origin in addition to the standard microsecond monotonic timestamps.
    * @param {LH.Artifacts.ProcessedTrace} processedTrace
    * @return {LH.Artifacts.ProcessedNavigation}
-  */
+   */
   static processNavigation(processedTrace) {
-    const {frameEvents, frameTreeEvents, timeOriginEvt, timings, timestamps} = processedTrace;
+    const {
+      frameEvents,
+      frameTreeEvents,
+      timeOriginEvt,
+      timings,
+      timestamps,
+      mainFrameInfo,
+    } = processedTrace;
 
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeNavigationTimingsForFrame(frameEvents, {timeOriginEvt});
@@ -822,7 +883,11 @@ class TraceProcessor {
     }
 
     // Compute LCP for all frames.
-    const lcpAllFramesEvt = this.computeValidLCPAllFrames(frameTreeEvents, timeOriginEvt).lcp;
+    const lcpAllFramesEvt = this.computeValidLCPAllFrames(
+      frameTreeEvents,
+      timeOriginEvt,
+      mainFrameInfo.frameId
+    ).lcp;
 
     /** @param {number} ts */
     const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
@@ -950,7 +1015,7 @@ class TraceProcessor {
    * in addition to the standard microsecond monotonic timestamps.
    * @param {Array<LH.TraceEvent>} frameEvents
    * @param {{timeOriginEvt: LH.TraceEvent}} options
-  */
+   */
   static computeNavigationTimingsForFrame(frameEvents, options) {
     const {timeOriginEvt} = options;
 
@@ -967,7 +1032,8 @@ class TraceProcessor {
     }
 
     // This function accepts events spanning multiple frames, but this usage will only provide events from the main frame.
-    const lcpResult = this.computeValidLCPAllFrames(frameEvents, timeOriginEvt);
+    const frameId = frameEvents.map(e => TraceProcessor.getFrameId(e)).find(Boolean);
+    const lcpResult = this.computeValidLCPAllFrames(frameEvents, timeOriginEvt, frameId);
 
     const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > timeOriginEvt.ts);
     const domContentLoaded = frameEvents.find(

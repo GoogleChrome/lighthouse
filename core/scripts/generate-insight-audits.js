@@ -71,7 +71,7 @@ class ${insightName}Insight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3, // TODO: confirm/change.
-      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps', 'HostDPR'],
     };
   }
 
@@ -100,7 +100,10 @@ export default ${insightName}Insight;
 `.trim() + '\n';
 }
 
-const insightNames = getAllInsightNames();
+const ignoredInsights = [
+  'CharacterSet', // TODO: add new insight audit.
+];
+const insightNames = getAllInsightNames().filter(name => !ignoredInsights.includes(name));
 
 const allAuditIds = [];
 for (const insightName of insightNames) {

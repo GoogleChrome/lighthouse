@@ -34,6 +34,6 @@ class LanternMaxPotentialFID extends Lantern.Metrics.MaxPotentialFID {
 
 const LanternMaxPotentialFIDComputed = makeComputedArtifact(
   LanternMaxPotentialFID,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {LanternMaxPotentialFIDComputed as LanternMaxPotentialFID};

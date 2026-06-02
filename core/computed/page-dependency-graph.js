@@ -13,12 +13,12 @@ import {TraceEngineResult} from './trace-engine-result.js';
 
 class PageDependencyGraph {
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], fromTrace: boolean}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR'], fromTrace: boolean}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Gatherer.Simulation.GraphNode>}
    */
   static async compute_(data, context) {
-    const {trace, settings, devtoolsLog, URL, SourceMaps} = data;
+    const {trace, settings, devtoolsLog, URL, SourceMaps, HostDPR} = data;
     const [{mainThreadEvents}, networkRecords] = await Promise.all([
       ProcessedTrace.request(trace, context),
       NetworkRecords.request(devtoolsLog, context),
@@ -26,7 +26,7 @@ class PageDependencyGraph {
 
     if (data.fromTrace) {
       const traceEngineResult =
-        await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+        await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
       const parsedTrace = traceEngineResult.data;
       const requests =
         Lantern.TraceEngineComputationData.createNetworkRequests(trace, parsedTrace);
@@ -46,5 +46,5 @@ class PageDependencyGraph {
 }
 
 const PageDependencyGraphComputed = makeComputedArtifact(PageDependencyGraph,
-  ['devtoolsLog', 'settings', 'trace', 'URL', 'SourceMaps', 'fromTrace']);
+  ['devtoolsLog', 'settings', 'trace', 'URL', 'SourceMaps', 'HostDPR', 'fromTrace']);
 export {PageDependencyGraphComputed as PageDependencyGraph};

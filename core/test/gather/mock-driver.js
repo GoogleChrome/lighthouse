@@ -224,7 +224,7 @@ function createMockBaseArtifacts() {
     PageLoadError: null,
     settings: constants.defaultSettings,
     BenchmarkIndex: 500,
-    HostDPR: 2,
+    HostDPR: 1,
     LighthouseRunWarnings: [],
     Timing: [],
     HostFormFactor: 'desktop',

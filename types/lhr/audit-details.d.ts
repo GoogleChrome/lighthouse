@@ -26,7 +26,7 @@ type Details =
   Details.Table;
 
 // Details namespace.
-declare module Details {
+declare namespace Details {
   type NetworkNode = {
     [id: string]: {
       url: string;
@@ -97,7 +97,7 @@ declare module Details {
   // NOTE: any `Details` type *should* be usable in `items`, but check
   // styles/report-ui-features are good before adding.
   type ListableDetail = Table | Checklist | NetworkTree | NodeValue | TextValue | DebugData;
-  
+
   interface ListSectionItem {
     type: 'list-section';
     title?: IcuMessage | string;
@@ -195,10 +195,10 @@ declare module Details {
   }
 
   /** String enum of possible types of values found within table items. */
-  type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+  type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url' | 'baseline-status';
 
   /** Possible types of values found within table items. */
-  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems;
+  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems | BaselineStatusValue;
 
   interface TableColumnHeading {
     /**
@@ -362,6 +362,12 @@ declare module Details {
   interface TextValue {
     type: 'text',
     value: IcuMessage | string,
+  }
+
+  interface BaselineStatusValue {
+    type: 'baseline-status',
+    status: 'high' | 'low' | 'limited' | string,
+    displayString: IcuMessage | string,
   }
 }
 

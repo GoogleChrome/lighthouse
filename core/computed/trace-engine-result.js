@@ -22,9 +22,10 @@ class TraceEngineResult {
    * @param {LH.TraceEvent[]} _traceEvents
    * @param {LH.Audit.Context['settings']} settings
    * @param {LH.Artifacts['SourceMaps']} SourceMaps
+   * @param {LH.Artifacts['HostDPR']} HostDPR
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
-  static async runTraceEngine(_traceEvents, settings, SourceMaps) {
+  static async runTraceEngine(_traceEvents, settings, SourceMaps, HostDPR) {
     const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
     const traceEvents =
       /** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (_traceEvents);
@@ -51,6 +52,7 @@ class TraceEngineResult {
         },
       },
       lanternSettings,
+      metadata: {hostDPR: HostDPR},
       async resolveSourceMap(params) {
         const sourceMap = SourceMaps.find(sm => sm.scriptId === params.scriptId);
         if (!sourceMap || !sourceMap.map) {
@@ -220,7 +222,7 @@ class TraceEngineResult {
   }
 
   /**
-   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps']}} data
+   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
@@ -251,11 +253,12 @@ class TraceEngineResult {
     }
 
     const result =
-      await TraceEngineResult.runTraceEngine(traceEvents, data.settings, data.SourceMaps);
+      await TraceEngineResult.runTraceEngine(
+        traceEvents, data.settings, data.SourceMaps, data.HostDPR);
     return result;
   }
 }
 
 const TraceEngineResultComputed =
-  makeComputedArtifact(TraceEngineResult, ['trace', 'settings', 'SourceMaps']);
+  makeComputedArtifact(TraceEngineResult, ['trace', 'settings', 'SourceMaps', 'HostDPR']);
 export {TraceEngineResultComputed as TraceEngineResult};
