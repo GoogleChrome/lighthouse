@@ -3,13 +3,13 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-
 import path from 'path';
 import {createRequire} from 'module';
 import url from 'url';
 
 import {isEqual} from 'lodash-es';
 
+import * as LH from '../../types/lh.js';
 import * as constants from './constants.js';
 import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';

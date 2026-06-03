@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as LH from '../../types/lh.js';
 import {Audit} from '../audits/audit.js';
 import BaseGatherer from '../gather/base-gatherer.js';
 import * as i18n from '../lib/i18n/i18n.js';

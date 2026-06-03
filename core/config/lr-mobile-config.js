@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as LH from '../../types/lh.js';
+
 /** @type {LH.Config} */
 const config = {
   extends: 'lighthouse:default',

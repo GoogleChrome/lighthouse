@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as LH from '../../types/lh.js';
 import {Audit} from '../audits/audit.js';
 
 /** @type {Record<keyof LH.BaseArtifacts, string>} */
