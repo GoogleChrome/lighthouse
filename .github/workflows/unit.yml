@@ -13,13 +13,12 @@ jobs:
   unit:
     strategy:
       matrix:
-        node: ['22.19', '24']
+        node: ['22.19', '24', '26']
       fail-fast: false
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
     env:
       CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
-      LATEST_NODE: '24'
       FORCE_COLOR: true
 
     steps:
