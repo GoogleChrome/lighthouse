@@ -9,6 +9,7 @@ import log from 'lighthouse-logger';
 import * as storage from './storage.js';
 import * as emulation from '../../lib/emulation.js';
 import {pageFunctions} from '../../lib/page-functions.js';
+import {NETWORK_ENABLE_OPTIONS} from './network.js';
 
 /**
  * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
@@ -143,7 +144,7 @@ async function prepareThrottlingAndNetwork(session, settings) {
  */
 async function prepareDeviceEmulation(driver, settings) {
   // Enable network domain here so future calls to `emulate()` don't clear cache (https://github.com/GoogleChrome/lighthouse/issues/12631)
-  await driver.defaultSession.sendCommand('Network.enable');
+  await driver.defaultSession.sendCommand('Network.enable', NETWORK_ENABLE_OPTIONS);
 
   // Emulate our target device screen and user agent.
   await emulation.emulate(driver.defaultSession, settings);

@@ -12,6 +12,7 @@ import {TargetManager} from '../../../gather/driver/target-manager.js';
 import {createMockCdpSession} from '../mock-driver.js';
 import {createMockSendCommandFn} from '../../gather/mock-commands.js';
 import {fnAny} from '../../test-utils.js';
+import {NETWORK_ENABLE_OPTIONS} from '../../../gather/driver/network.js';
 
 /**
  * @param {{type?: string, targetId?: string}} [overrides]
@@ -57,6 +58,7 @@ describe('TargetManager', () => {
         .mockResponse('Target.setAutoAttach');
       await targetManager.enable();
 
+      expect(sendMock.findAllInvocations('Network.enable')[0]).toEqual(NETWORK_ENABLE_OPTIONS);
       expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
       expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(1);
       expect(targetManager._mainFrameId).toEqual('mainFrameId');
@@ -103,6 +105,11 @@ describe('TargetManager', () => {
       await sessionListener(sessionMock);
       expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(4);
       expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(3);
+      expect(sendMock.findAllInvocations('Network.enable')).toEqual([
+        NETWORK_ENABLE_OPTIONS,
+        NETWORK_ENABLE_OPTIONS,
+        NETWORK_ENABLE_OPTIONS,
+      ]);
 
       // Four resumes because in finally clause, so runs regardless of uniqueness.
       expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(4);

@@ -6,6 +6,12 @@
 
 import {NetworkRequest} from '../../lib/network-request.js';
 
+// Give each response body more room in the inspector cache before gatherers call
+// `Network.getResponseBody`.
+const NETWORK_ENABLE_OPTIONS = {
+  maxResourceBufferSize: 20 * 1024 * 1024,
+};
+
 /**
  * Return the body of the response with the given ID. Rejects if getting the
  * body times out.
@@ -24,4 +30,4 @@ async function fetchResponseBodyFromCache(session, requestId, timeout = 1000) {
   return result.body;
 }
 
-export {fetchResponseBodyFromCache};
+export {fetchResponseBodyFromCache, NETWORK_ENABLE_OPTIONS};

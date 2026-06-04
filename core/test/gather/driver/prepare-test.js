@@ -20,6 +20,7 @@ await td.replaceEsm('../../../gather/driver/storage.js', storageMock);
 // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 const prepare = await import('../../../gather/driver/prepare.js');
 const constants = await import('../../../config/constants.js');
+const network = await import('../../../gather/driver/network.js');
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();
@@ -189,6 +190,16 @@ describe('.prepareTargetForNavigationMode()', () => {
       width: 200,
       height: 300,
     });
+  });
+
+  it('enables Network with a larger resource cache buffer', async () => {
+    await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+    }, requestor);
+
+    expect(sessionMock.sendCommand.findInvocation('Network.enable')).toEqual(
+      network.NETWORK_ENABLE_OPTIONS
+    );
   });
 
   it('cache natives on new document', async () => {
@@ -372,6 +383,10 @@ describe('.prepareTargetForTimespanMode()', () => {
       blockedUrlPatterns: ['.jpg'],
       extraHeaders: {Cookie: 'name=wolverine'},
     });
+
+    expect(sessionMock.sendCommand.findInvocation('Network.enable')).toEqual(
+      network.NETWORK_ENABLE_OPTIONS
+    );
 
     const blockedInvocation = sessionMock.sendCommand.findInvocation('Network.setBlockedURLs');
     expect(blockedInvocation).toEqual({urls: ['.jpg']});

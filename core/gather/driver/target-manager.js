@@ -14,6 +14,7 @@ import EventEmitter from 'events';
 import log from 'lighthouse-logger';
 
 import {ProtocolSession} from '../session.js';
+import {NETWORK_ENABLE_OPTIONS} from './network.js';
 
 /**
  * @typedef {{
@@ -159,7 +160,7 @@ class TargetManager extends ProtocolEventEmitter {
       this._targetIdToTargets.set(targetId, targetWithSession);
 
       // We want to receive information about network requests from iframes, so enable the Network domain.
-      await newSession.sendCommand('Network.enable');
+      await newSession.sendCommand('Network.enable', NETWORK_ENABLE_OPTIONS);
       // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
       await newSession.sendCommand('Target.setAutoAttach', {
         autoAttach: true,
