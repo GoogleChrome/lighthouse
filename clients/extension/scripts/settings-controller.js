@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// / <reference types="chrome" />
+// eslint-disable-next-line spaced-comment
+/// <reference types="chrome" />
 
 const BACKENDS = [{
   id: 'psi',
@@ -88,6 +89,7 @@ function loadSettings() {
 
       // Load saved categories and settings, overwriting defaults with any
       // saved selections.
+      /** @type {Record<string, boolean>} */
       const savedCategories = {...defaultCategories, ...(result[STORAGE_KEYS.Categories] || {})};
 
       /** @type {Partial<Settings>} */
