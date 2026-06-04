@@ -7,7 +7,6 @@
 import BaseGatherer from '../base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import {ExecutionContext} from '../driver/execution-context.js';
 
 class WebMcpSchemaIssues extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -68,27 +67,21 @@ class WebMcpSchemaIssues extends BaseGatherer {
   async getArtifact(context) {
     const session = context.driver.defaultSession;
 
-    const deps = ExecutionContext.serializeDeps([
-      pageFunctions.getNodeDetails,
-    ]);
-
     const promises = this._issues.map(async (issue) => {
       const processedIssue = {...issue};
       if (issue.violatingNodeId) {
         try {
           const objectId = await resolveNodeIdToObjectId(session, issue.violatingNodeId);
           if (objectId) {
-            const response = await session.sendCommand('Runtime.callFunctionOn', {
-              objectId,
-              functionDeclaration: `function () {
-                ${deps}
-                return getNodeDetails(this);
-              }`,
-              returnByValue: true,
-              awaitPromise: true,
-            });
-            if (response && response.result && response.result.value) {
-              processedIssue.nodeDetails = response.result.value;
+            const nodeDetails = await context.driver.executionContext.evaluateOnObject(
+              pageFunctions.getNodeDetails,
+              {
+                objectId,
+                args: [],
+              }
+            );
+            if (nodeDetails) {
+              processedIssue.nodeDetails = nodeDetails;
             }
           }
         } catch (err) {

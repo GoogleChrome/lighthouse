@@ -20,7 +20,6 @@ import Trace from './trace.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
-import {ExecutionContext} from '../driver/execution-context.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import SourceMaps from './source-maps.js';
 
@@ -29,14 +28,14 @@ import SourceMaps from './source-maps.js';
 const MAX_LAYOUT_SHIFTS = 15;
 
 /**
- * @this {HTMLElement}
+ * @param {Element | ShadowRoot | Text} node
  */
 /* c8 ignore start */
-function getNodeDetailsData() {
-  /** @type {Element|null} */
-  let elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
-  if (!elem && this instanceof ShadowRoot) {
-    elem = this.host;
+function getNodeDetailsData(node) {
+  /** @type {Element | ShadowRoot | Text | null} */
+  let elem = node.nodeType === document.ELEMENT_NODE ? node : node.parentElement;
+  if (!elem && node instanceof ShadowRoot) {
+    elem = node.host;
   }
 
   let traceElement;
@@ -292,26 +291,22 @@ class TraceElements extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.ProtocolSession} session
+   * @param {LH.Gatherer.Driver['executionContext']} executionContext
    * @param {number} backendNodeId
    */
-  async getNodeDetails(session, backendNodeId) {
+  async getNodeDetails(session, executionContext, backendNodeId) {
     try {
       const objectId = await resolveNodeIdToObjectId(session, backendNodeId);
       if (!objectId) return null;
 
-      const deps = ExecutionContext.serializeDeps([
-        pageFunctions.getNodeDetails,
+      return await executionContext.evaluateOnObject(
         getNodeDetailsData,
-      ]);
-      return await session.sendCommand('Runtime.callFunctionOn', {
-        objectId,
-        functionDeclaration: `function () {
-          ${deps}
-          return getNodeDetailsData.call(this);
-        }`,
-        returnByValue: true,
-        awaitPromise: true,
-      });
+        {
+          objectId,
+          args: [],
+          deps: [pageFunctions.getNodeDetails],
+        }
+      );
     } catch (err) {
       Sentry.captureException(err, {
         tags: {gatherer: 'TraceElements'},
@@ -346,29 +341,30 @@ class TraceElements extends BaseGatherer {
       trace, traceEngineResult, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
 
-    /** @type {Map<string, TraceElementData[]>} */
+    /** @type {Map<LH.Artifacts.TraceElement['traceEventType'], TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['trace-engine', traceEngineData],
       ['layout-shift', shiftsData],
       ['animation', animatedElementData],
     ]);
 
-    /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
-    const callFunctionOnCache = new Map();
+    /** @type {Map<number, {node: LH.Artifacts.NodeDetails} | null>} */
+    const evaluateOnObjectCache = new Map();
     /** @type {LH.Artifacts.TraceElement[]} */
     const traceElements = [];
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
         const backendNodeId = backendNodeData[i].nodeId;
-        let response = callFunctionOnCache.get(backendNodeId);
+        let response = evaluateOnObjectCache.get(backendNodeId);
         if (response === undefined) {
-          response = await this.getNodeDetails(session, backendNodeId);
-          callFunctionOnCache.set(backendNodeId, response);
+          response = await this.getNodeDetails(
+            session, context.driver.executionContext, backendNodeId) || null;
+          evaluateOnObjectCache.set(backendNodeId, response);
         }
 
-        if (response?.result?.value) {
+        if (response?.node) {
           traceElements.push({
-            ...response.result.value,
+            ...response,
             traceEventType,
             animations: backendNodeData[i].animations,
             nodeId: backendNodeId,

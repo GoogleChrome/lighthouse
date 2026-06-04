@@ -11,7 +11,6 @@
 import BaseGatherer from '../base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import {ExecutionContext} from '../driver/execution-context.js';
 
 /**
  * @typedef {Object} WebMCPTool
@@ -101,6 +100,38 @@ class WebMCP extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.Context} context
+   * @param {WebMCPTool} tool
+   */
+  async _tryResolveToolNodeDetails(context, tool) {
+    if (!tool.backendNodeId) {
+      return;
+    }
+
+    const session = context.driver.defaultSession;
+
+    try {
+      const objectId = await resolveNodeIdToObjectId(session, tool.backendNodeId);
+      if (!objectId) {
+        return;
+      }
+
+      const nodeDetails = await context.driver.executionContext.evaluateOnObject(
+        pageFunctions.getNodeDetails, {
+          objectId,
+          args: [],
+          deps: [pageFunctions.getNodeDetails],
+        }
+      );
+      if (nodeDetails) {
+        tool.nodeDetails = nodeDetails;
+      }
+    } catch (err) {
+      // Ignore error
+    }
+  }
+
+  /**
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
@@ -113,9 +144,8 @@ class WebMCP extends BaseGatherer {
       return {isSupported: false, tools: []};
     }
 
-    const session = context.driver.defaultSession;
-
     // Remove duplicates based on name, keeping the latest occurrence.
+    /** @type {Map<string, WebMCPTool>} */
     const toolMap = new Map();
     for (const tool of this._tools) {
       toolMap.set(tool.name, tool);
@@ -123,32 +153,10 @@ class WebMCP extends BaseGatherer {
 
     const resolvedTools = [];
     for (const tool of toolMap.values()) {
-      if (tool.backendNodeId) {
-        try {
-          const objectId = await resolveNodeIdToObjectId(session, tool.backendNodeId);
-          if (objectId) {
-            const deps = ExecutionContext.serializeDeps([
-              pageFunctions.getNodeDetails,
-            ]);
-            const response = await session.sendCommand('Runtime.callFunctionOn', {
-              objectId,
-              functionDeclaration: `function () {
-                ${deps}
-                return getNodeDetails(this);
-              }`,
-              returnByValue: true,
-              awaitPromise: true,
-            });
-            if (response && response.result && response.result.value) {
-              tool.nodeDetails = response.result.value;
-            }
-          }
-        } catch (err) {
-          // Ignore error
-        }
-      }
+      await this._tryResolveToolNodeDetails(context, tool);
       resolvedTools.push(tool);
     }
+
     return {
       isSupported: true,
       tools: resolvedTools,

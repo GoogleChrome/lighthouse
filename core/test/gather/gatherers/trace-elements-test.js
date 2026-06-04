@@ -209,16 +209,18 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     driver._session.sendCommand
       // Trace engine 1 / Shifts 1
       .mockResponse('DOM.resolveNode', {object: {objectId: 4}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: layoutShiftNodeData}})
       // Trace engine 2
       .mockResponse('DOM.resolveNode', {object: {objectId: 7}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: null}})
       // Trace engine 3 / Animations 1
       .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}})
       // LCP 1
-      .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}});
+      .mockResponse('DOM.resolveNode', {object: {objectId: 5}});
+
+    driver._executionContext.evaluateOnObject
+      .mockResolvedValueOnce({node: layoutShiftNodeData})
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({node: animationNodeData})
+      .mockResolvedValueOnce({node: LCPNodeData});
 
     const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
     trace.traceEvents.push(
@@ -256,22 +258,22 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     expect(sorted).toEqual([
       {
-        ...layoutShiftNodeData,
+        node: layoutShiftNodeData,
         traceEventType: 'trace-engine',
         nodeId: 4,
       },
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'trace-engine',
         nodeId: 5,
       },
       {
-        ...layoutShiftNodeData,
+        node: layoutShiftNodeData,
         traceEventType: 'layout-shift',
         nodeId: 4,
       },
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'animation',
         animations: [
           {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['height']},
@@ -314,10 +316,12 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     driver._session.sendCommand
       // LCP node / animated node
       .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}})
       // Composited node
-      .mockResponse('DOM.resolveNode', {object: {objectId: 7}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: compositedNodeData}});
+      .mockResponse('DOM.resolveNode', {object: {objectId: 7}});
+
+    driver._executionContext.evaluateOnObject
+      .mockResolvedValueOnce({node: animationNodeData})
+      .mockResolvedValueOnce({node: compositedNodeData});
 
     const gatherer = new TraceElementsGatherer();
     gatherer.animationIdToName.set('3', 'alpha');
@@ -383,12 +387,14 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       })
       // Trace engine 2 / Animation 2
       .mockResponse('DOM.resolveNode', {object: {objectId: 6}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}})
       // LCP 1
       .mockResponse('DOM.resolveNode', {object: {objectId: 7}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
       // Animation 2
       .mockResponse('DOM.resolveNode', {object: {objectId: 6}});
+
+    driver._executionContext.evaluateOnObject
+      .mockResolvedValueOnce({node: animationNodeData})
+      .mockResolvedValueOnce({node: LCPNodeData});
 
     const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
     trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'b', {id: '1', nodeId: 5}));
@@ -417,12 +423,12 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     expect(result).toEqual([
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'trace-engine',
         nodeId: 6,
       },
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'animation',
         animations: [
           {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['color']},
@@ -451,10 +457,12 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     driver._session.sendCommand
       // Trace engine 1 (happens to be same node as Animation 1)
       .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}})
       // Animation 1
-      .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
-      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}});
+      .mockResponse('DOM.resolveNode', {object: {objectId: 5}});
+
+    driver._executionContext.evaluateOnObject
+      .mockResolvedValueOnce({node: animationNodeData})
+      .mockResolvedValueOnce({node: animationNodeData});
 
     const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
     trace.traceEvents = trace.traceEvents.filter(event => event.name !== 'firstContentfulPaint');
@@ -478,13 +486,13 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     expect(result).toEqual([
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'trace-engine',
         animations: undefined,
         nodeId: 5,
       },
       {
-        ...animationNodeData,
+        node: animationNodeData,
         traceEventType: 'animation',
         animations: [
           {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['height']},

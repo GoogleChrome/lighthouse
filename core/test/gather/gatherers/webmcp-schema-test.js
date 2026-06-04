@@ -24,17 +24,14 @@ describe('WebMcpSchemaIssues Gatherer', () => {
       sendCommand: async (/** @type {string} */ command, /** @type {any} */ _) => {
         if (command === 'Audits.enable') return {};
         if (command === 'DOM.resolveNode') return {object: {objectId: 'obj1'}};
-        if (command === 'Runtime.callFunctionOn') {
-          return {
-            result: {
-              value: {
-                nodeName: 'INPUT',
-                selector: '#my-input',
-              },
-            },
-          };
-        }
       },
+    });
+
+    const mockExecutionContext = /** @type {any} */ ({
+      evaluateOnObject: async () => ({
+        nodeName: 'INPUT',
+        selector: '#my-input',
+      }),
     });
 
     // Helper to resolve node ID to object ID (mocked as returning true for simplify)
@@ -59,7 +56,10 @@ describe('WebMcpSchemaIssues Gatherer', () => {
     });
 
     const artifact = await gatherer.getArtifact(
-      /** @type {any} */ ({driver: {defaultSession: mockSession}}));
+      /** @type {any} */ ({driver: {
+        defaultSession: mockSession,
+        executionContext: mockExecutionContext,
+      }}));
 
     assert.equal(artifact.length, 1);
     assert.equal(artifact[0].errorType, 'FormModelContextParameterMissingTitleAndDescription');

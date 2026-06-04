@@ -223,12 +223,94 @@ class ExecutionContext {
 
     const expression = `(() => {
       ${ExecutionContext._cachedNativesPreamble};
+      ${pageFunctions.esbuildFunctionWrapperString}
       ${depsSerialized};
       (${mainFn})(${argsSerialized});
     })()
     //# sourceURL=_lighthouse-eval.js`;
 
     await this._session.sendCommand('Page.addScriptToEvaluateOnNewDocument', {source: expression});
+  }
+
+  /**
+   * Call a function on the given object.
+   * Returns a promise that resolves on a value of `mainFn`'s return type.
+   * @template {unknown[]} T, R
+   * @param {((thisArg: any, ...args: T) => R)} mainFn The main function to call.
+   * @param {{args: T, objectId: string, deps?: Array<Function|string>}} options `args` should
+   *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
+   *   defined for `mainFn` to work.
+   * @return {Promise<Awaited<R>>}
+   */
+  evaluateOnObject(mainFn, options) {
+    const argsSerialized = ExecutionContext.serializeArguments(options.args);
+    const depsSerialized = ExecutionContext.serializeDeps(options.deps);
+
+    const argsString = argsSerialized ? `this, ${argsSerialized}` : 'this';
+    const functionDeclaration = `function() {
+      ${depsSerialized}
+      return (${mainFn})(${argsString});
+    }`;
+    return this._callFunctionOn(functionDeclaration, options);
+  }
+
+  /**
+   * @param {string} functionDeclaration
+   * @param {{objectId: string}} options
+   * @return {Promise<*>}
+   */
+  async _callFunctionOn(functionDeclaration, options) {
+    const timeout = this._session.hasNextProtocolTimeout() ?
+      this._session.getNextProtocolTimeout() :
+      60000;
+
+    const evaluationParams = {
+      functionDeclaration: `function wrapInNativePromise() {
+        ${ExecutionContext._cachedNativesPreamble};
+        ${pageFunctions.esbuildFunctionWrapperString}
+        const self = this;
+        const args = arguments;
+        return new Promise(function (resolve) {
+          return Promise.resolve()
+            .then(_ => (${functionDeclaration}).apply(self, args))
+            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowser})
+            .then(resolve);
+        });
+      }
+      //# sourceURL=_lighthouse-eval.js
+      `,
+      objectId: options.objectId,
+      returnByValue: true,
+      awaitPromise: true,
+      timeout,
+    };
+
+    this._session.setNextProtocolTimeout(timeout);
+    const response = await this._session.sendCommand('Runtime.callFunctionOn', evaluationParams);
+
+    const ex = response.exceptionDetails;
+    if (ex) {
+      const elidedExpression = functionDeclaration.replace(/\s+/g, ' ').substring(0, 100);
+      const messageLines = [
+        'Runtime.callFunctionOn exception',
+        `Expression: ${elidedExpression}\n---- (elided)`,
+        !ex.stackTrace ? `Parse error at: ${ex.lineNumber + 1}:${ex.columnNumber + 1}` : null,
+        ex.exception?.description || ex.text,
+      ].filter(Boolean);
+      const evaluationError = new Error(messageLines.join('\n'));
+      return Promise.reject(evaluationError);
+    }
+
+    if (response.result === undefined) {
+      return Promise.reject(
+        new Error('Runtime.callFunctionOn response did not contain a "result" object'));
+    }
+    const value = response.result.value;
+    if (value?.__failedInBrowser) {
+      return Promise.reject(Object.assign(new Error(), value));
+    } else {
+      return value;
+    }
   }
 
   /**
@@ -279,7 +361,10 @@ class ExecutionContext {
    * @return {string}
    */
   static serializeDeps(deps) {
-    deps = [pageFunctions.esbuildFunctionWrapperString, ...deps || []];
+    if (!deps) {
+      return '';
+    }
+
     return deps.map(dep => {
       if (typeof dep === 'function') {
         // esbuild will change the actual function name (ie. function actualName() {})

@@ -202,9 +202,10 @@ describe('WebMCP Gatherer', () => {
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('WebMCP.enable')
       .mockResponse('DOM.resolveNode', {object: {objectId: 'remote-obj-1'}})
-      .mockResponse('Runtime.callFunctionOn',
-        {result: {value: {snippet: '<form></form>', selector: 'form'}}})
       .mockResponse('WebMCP.disable');
+
+    mockContext.driver._executionContext.evaluateOnObject
+      .mockResolvedValue({snippet: '<form></form>', selector: 'form'});
 
     await gatherer.startInstrumentation(mockContext.asContext());
     await new Promise(resolve => setTimeout(resolve, 0));
