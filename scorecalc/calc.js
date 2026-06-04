@@ -520,6 +520,31 @@ function getMajorVersion(version) {
   return version.split('.')[0];
 }
 
+function clampMetricValuesForDevice(metricValues, versions, device) {
+  const nextMetricValues = {...metricValues};
+  const versionKeys = versions.map(version => `v${version}`);
+
+  for (const id of Object.keys(nextMetricValues)) {
+    const bounds = versionKeys
+      .map(versionKey => {
+        const scoringGuide = scoringGuides[versionKey] && scoringGuides[versionKey][device];
+        return scoringGuide && scoringGuide[id];
+      })
+      .filter(Boolean)
+      .map(determineMinMax);
+
+    if (!bounds.length) continue;
+
+    const min = Math.max(...bounds.map(bound => bound.min));
+    const max = Math.min(...bounds.map(bound => bound.max));
+    if (min <= max) {
+      nextMetricValues[id] = Math.max(Math.min(nextMetricValues[id], max), min);
+    }
+  }
+
+  return nextMetricValues;
+}
+
 class Metric extends m {
   onValueChange(e) {
     const {id} = this.props;
@@ -731,7 +756,10 @@ class App extends m {
   }
 
   onDeviceChange(e) {
-    this.setState({device: e.target.value});
+    const device = e.target.value;
+    const versions = this.normalizeVersions(this.state.versions);
+    const metricValues = clampMetricValuesForDevice(this.state.metricValues, versions, device);
+    this.setState({device, metricValues});
   }
 
   onVersionsChange(e) {
