@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// <reference types="chrome" />
+// / <reference types="chrome" />
 
 import * as SettingsController from './settings-controller.js';
 import {DOM} from '../../../report/renderer/dom.js';

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// <reference types="chrome" />
+// / <reference types="chrome" />
 
 const BACKENDS = [{
   id: 'psi',
@@ -88,14 +88,14 @@ function loadSettings() {
 
       // Load saved categories and settings, overwriting defaults with any
       // saved selections.
-      const savedCategories = {...defaultCategories, .../** @type {Record<string, boolean>} */ (result[STORAGE_KEYS.Categories] || {})};
+      const savedCategories = {...defaultCategories, ...(result[STORAGE_KEYS.Categories] || {})};
 
       /** @type {Partial<Settings>} */
       const defaultSettings = {
         device: 'mobile',
       };
       /** @type {Partial<Settings>} */
-      const savedSettings = {...defaultSettings, .../** @type {Partial<Settings>} */ (result[STORAGE_KEYS.Settings] || {})};
+      const savedSettings = {...defaultSettings, ...(result[STORAGE_KEYS.Settings] || {})};
 
       resolve({
         backend: savedSettings.backend ?? 'psi',
