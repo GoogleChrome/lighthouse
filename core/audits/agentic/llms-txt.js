@@ -84,7 +84,7 @@ class LlmsTxt extends Audit {
       throw new Error(`Status ${status} was valid, but content was null`);
     }
 
-    const hasH1 = /^#\s+.+/m.test(content);
+    const hasH1 = /^\s*#\s+.+/m.test(content);
     const hasLink = /\[.+\]\(.+\)/.test(content);
     const isTooShort = content.length < 50;
 

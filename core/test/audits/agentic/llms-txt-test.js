@@ -170,6 +170,13 @@ describe('Agentic: llms.txt audit', () => {
 This content is long enough to pass the length check and has a link [Here](https://example.com).
 `,
       },
+      {
+        status: 200,
+        content: `\uFEFF# Title with BOM
+
+This content is long enough to pass the length check and has a link [Here](https://example.com).
+`,
+      },
     ];
 
     testData.forEach(LlmsTxt => {
