@@ -10,7 +10,7 @@ import LHResult from '../lhr/lhr.js';
 import {LocalConsole} from '../../cli/test/smokehouse/lib/local-console.js';
 
 declare global {
-  module Smokehouse {
+  namespace Smokehouse {
     interface ExpectedLHR {
       audits: Record<string, any>;
       requestedUrl: string;

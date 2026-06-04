@@ -150,7 +150,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceElements: Artifacts.TraceElement[];
 }
 
-declare module Artifacts {
+declare namespace Artifacts {
   interface WebMcpSchemaIssue {
     errorType: string;
     violatingNodeId?: number;
