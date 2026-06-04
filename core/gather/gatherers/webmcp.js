@@ -119,7 +119,6 @@ class WebMCP extends BaseGatherer {
         pageFunctions.getNodeDetails, {
           objectId,
           args: [],
-          deps: [pageFunctions.getNodeDetails],
         }
       );
       if (nodeDetails) {
