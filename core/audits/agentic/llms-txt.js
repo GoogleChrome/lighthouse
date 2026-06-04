@@ -84,9 +84,11 @@ class LlmsTxt extends Audit {
       throw new Error(`Status ${status} was valid, but content was null`);
     }
 
-    const hasH1 = /^#\s+.+/m.test(content);
-    const hasLink = /\[.+\]\(.+\)/.test(content);
-    const isTooShort = content.length < 50;
+    const contentWithoutBom = content.replace(/^\uFEFF/, '');
+
+    const hasH1 = /^#\s+.+/m.test(contentWithoutBom);
+    const hasLink = /\[.+\]\(.+\)/.test(contentWithoutBom);
+    const isTooShort = contentWithoutBom.length < 50;
 
     const errors = [];
     if (!hasH1) errors.push(str_(UIStrings.missingH1));
