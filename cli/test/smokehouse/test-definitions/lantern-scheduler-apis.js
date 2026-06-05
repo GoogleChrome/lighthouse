@@ -24,6 +24,13 @@ const expectations = [
         'total-blocking-time': {
           numericValue: '<=100',
         },
+        'long-tasks': {
+          details: {
+            items: {
+              length: 0,
+            },
+          },
+        },
       },
     },
   },
@@ -34,6 +41,13 @@ const expectations = [
       audits: {
         'total-blocking-time': {
           numericValue: '<=100',
+        },
+        'long-tasks': {
+          details: {
+            items: {
+              length: 0,
+            },
+          },
         },
       },
     },
