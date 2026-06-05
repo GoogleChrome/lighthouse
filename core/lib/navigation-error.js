@@ -130,8 +130,11 @@ function getNonHtmlError(finalRecord) {
  */
 function getPageLoadError(navigationError, context) {
   const {url, networkRecords} = context;
-  /** @type {LH.Artifacts.NetworkRequest|undefined} */
-  let mainRecord = Lantern.Core.NetworkAnalyzer.findResourceForUrl(networkRecords, url);
+  const mainRecordLantern = Lantern.Core.NetworkAnalyzer.findResourceForUrl(
+    networkRecords,
+    url
+  );
+  let mainRecord = mainRecordLantern;
 
   // If the url doesn't give us a network request, it's possible we landed on a chrome-error:// page
   // In this case, just get the first document request.

@@ -2,7 +2,7 @@
   "steps": [
     {
       "lhr": {
-        "lighthouseVersion": "13.0.1",
+        "lighthouseVersion": "13.3.0",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "mainDocumentUrl": "https://www.mikescerealshack.co/",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/",
@@ -2643,6 +2643,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
@@ -2890,6 +2956,34 @@
                   "key": "node",
                   "valueType": "node",
                   "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "baseline": {
+            "id": "baseline",
+            "title": "Baseline Features",
+            "description": "Lists web features used on the page and their Baseline status as of 2026-05-01. [Learn more about Baseline](https://webstatus.dev/).",
+            "score": 1,
+            "scoreDisplayMode": "informative",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "featureId",
+                  "valueType": "link",
+                  "label": "Web-features"
+                },
+                {
+                  "key": "displayStatus",
+                  "valueType": "baseline-status",
+                  "label": "Baseline Status"
+                },
+                {
+                  "key": "source",
+                  "valueType": "source-location",
+                  "label": "Source"
                 }
               ],
               "items": []
@@ -3193,6 +3287,50 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "agent-accessibility-tree": {
+            "id": "agent-accessibility-tree",
+            "title": "Accessibility tree is well-formed",
+            "description": "A well-formed [accessibility tree](http://goo.gle/lighthouse-agentic-a11y) helps AI agents to navigate and interact with the page.",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "displayValue": "All audits passed"
+          },
+          "webmcp-registered-tools": {
+            "id": "webmcp-registered-tools",
+            "title": "WebMCP tools registered",
+            "description": "Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-form-coverage": {
+            "id": "webmcp-form-coverage",
+            "title": "WebMCP form coverage",
+            "description": "Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-schema-validity": {
+            "id": "webmcp-schema-validity",
+            "title": "WebMCP schemas are valid",
+            "description": "Valid [WebMCP schemas](http://goo.gle/webmcp-docs) are required for AI agents to  understand and interact with tools correctly. Please fix any errors or warnings reported by the browser.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "llms-txt": {
+            "id": "llms-txt",
+            "title": "llms.txt follows recommendations",
+            "description": "If your llms.txt file does not follow recommendations, large language models may not be able to understand how you want your website to be crawled or used for training. The [llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required LlmsTxt gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
           "bf-cache": {
             "id": "bf-cache",
             "title": "Page didn't prevent back/forward cache restoration",
@@ -3333,7 +3471,7 @@
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
-            "title": "Render blocking requests",
+            "title": "Render-blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "error",
@@ -3959,6 +4097,21 @@
                 "group": "a11y-best-practices"
               },
               {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "focusable-controls",
                 "weight": 0
               },
@@ -4121,6 +4274,11 @@
                 "group": "best-practices-browser-compat"
               },
               {
+                "id": "baseline",
+                "weight": 0,
+                "group": "best-practices-browser-compat"
+              },
+              {
                 "id": "js-libraries",
                 "weight": 0,
                 "group": "best-practices-general"
@@ -4220,6 +4378,49 @@
             ],
             "id": "seo",
             "score": 0.91
+          },
+          "agentic-browsing": {
+            "title": "Agentic Browsing",
+            "description": "These checks ensure high-quality, [browsable websites for AI agents](https://goo.gle/lighthouse-agentic-web) and validate the correctness of WebMCP integrations. This category is still under development and subject to change.",
+            "supportedModes": [
+              "navigation",
+              "snapshot"
+            ],
+            "categoryScoreDisplayMode": "fraction",
+            "auditRefs": [
+              {
+                "id": "agent-accessibility-tree",
+                "weight": 1,
+                "group": "agent-accessibility"
+              },
+              {
+                "id": "webmcp-form-coverage",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-registered-tools",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-schema-validity",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "cumulative-layout-shift",
+                "weight": 1,
+                "acronym": "CLS"
+              },
+              {
+                "id": "llms-txt",
+                "weight": 1,
+                "group": "agent-accessibility"
+              }
+            ],
+            "id": "agentic-browsing",
+            "score": null
           }
         },
         "categoryGroups": {
@@ -4289,6 +4490,14 @@
           },
           "best-practices-general": {
             "title": "General"
+          },
+          "webmcp": {
+            "title": "WebMCP",
+            "description": "Audits validating WebMCP integration."
+          },
+          "agent-accessibility": {
+            "title": "Agent Accessibility",
+            "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
           },
           "hidden": {
             "title": ""
@@ -6009,240 +6218,294 @@
             },
             {
               "startTime": 194,
-              "name": "lh:audit:total-byte-weight",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 195,
-              "name": "lh:audit:unminified-css",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 196,
-              "name": "lh:audit:unminified-javascript",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 197,
-              "name": "lh:audit:unused-css-rules",
+              "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 198,
-              "name": "lh:audit:unused-javascript",
+              "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 199,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 200,
-              "name": "lh:audit:charset",
+              "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 201,
-              "name": "lh:audit:geolocation-on-start",
+              "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 202,
-              "name": "lh:audit:inspector-issues",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 203,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:charset",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 204,
-              "name": "lh:audit:notification-on-start",
+              "name": "lh:audit:geolocation-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 205,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 206,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 207,
-              "name": "lh:audit:http-status-code",
+              "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 208,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 209,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:baseline",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 210,
-              "name": "lh:audit:is-crawlable",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 211,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 212,
-              "name": "lh:audit:hreflang",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 213,
-              "name": "lh:audit:canonical",
+              "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 214,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 215,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 216,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 217,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 218,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 219,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:agent-accessibility-tree",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 220,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:webmcp-registered-tools",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 221,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:webmcp-form-coverage",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 222,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:webmcp-schema-validity",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 223,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:llms-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 224,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 232,
+              "name": "lh:audit:image-delivery-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 233,
+              "name": "lh:audit:inp-breakdown-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 234,
+              "name": "lh:audit:lcp-breakdown-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 235,
+              "name": "lh:audit:lcp-discovery-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 236,
+              "name": "lh:audit:legacy-javascript-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 237,
+              "name": "lh:audit:network-dependency-tree-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 238,
+              "name": "lh:audit:render-blocking-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 239,
+              "name": "lh:audit:third-parties-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 240,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 241,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 233
+          "total": 242
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -6455,6 +6718,34 @@
               {
                 "values": {
                   "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-registered-tools].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-form-coverage].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-schema-validity].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "LlmsTxt"
+                },
+                "path": "audits[llms-txt].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
                   "artifactName": "HostDPR"
                 },
                 "path": "audits[cache-insight].errorMessage"
@@ -6605,7 +6896,8 @@
               "audits[errors-in-console].details.headings[0].label",
               "audits.deprecations.details.headings[1].label",
               "audits[geolocation-on-start].details.headings[0].label",
-              "audits[notification-on-start].details.headings[0].label"
+              "audits[notification-on-start].details.headings[0].label",
+              "audits.baseline.details.headings[2].label"
             ],
             "core/lib/i18n/i18n.js | columnDescription": [
               "audits[errors-in-console].details.headings[1].label",
@@ -6947,6 +7239,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -7315,6 +7610,24 @@
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
             ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
+            ],
             "core/audits/byte-efficiency/total-byte-weight.js | title": [
               "audits[total-byte-weight].title"
             ],
@@ -7401,6 +7714,23 @@
             "core/audits/dobetterweb/paste-preventing-inputs.js | description": [
               "audits[paste-preventing-inputs].description"
             ],
+            "core/audits/baseline.js | title": [
+              "audits.baseline.title"
+            ],
+            "core/audits/baseline.js | description": [
+              {
+                "values": {
+                  "date": "2026-05-01"
+                },
+                "path": "audits.baseline.description"
+              }
+            ],
+            "core/audits/baseline.js | columnFeature": [
+              "audits.baseline.details.headings[0].label"
+            ],
+            "core/audits/baseline.js | columnStatus": [
+              "audits.baseline.details.headings[1].label"
+            ],
             "core/audits/seo/meta-description.js | title": [
               "audits[meta-description].title"
             ],
@@ -7457,6 +7787,39 @@
             ],
             "core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | title": [
+              "audits[agent-accessibility-tree].title"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | description": [
+              "audits[agent-accessibility-tree].description"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": [
+              "audits[agent-accessibility-tree].displayValue"
+            ],
+            "core/audits/webmcp-registered-tools.js | title": [
+              "audits[webmcp-registered-tools].title"
+            ],
+            "core/audits/webmcp-registered-tools.js | description": [
+              "audits[webmcp-registered-tools].description"
+            ],
+            "core/audits/webmcp-form-coverage.js | title": [
+              "audits[webmcp-form-coverage].title"
+            ],
+            "core/audits/webmcp-form-coverage.js | description": [
+              "audits[webmcp-form-coverage].description"
+            ],
+            "core/audits/webmcp-schema-validity.js | title": [
+              "audits[webmcp-schema-validity].title"
+            ],
+            "core/audits/webmcp-schema-validity.js | description": [
+              "audits[webmcp-schema-validity].description"
+            ],
+            "core/audits/agentic/llms-txt.js | title": [
+              "audits[llms-txt].title"
+            ],
+            "core/audits/agentic/llms-txt.js | description": [
+              "audits[llms-txt].description"
             ],
             "core/audits/bf-cache.js | title": [
               "audits[bf-cache].title"
@@ -7584,6 +7947,12 @@
             "core/config/default-config.js | seoCategoryManualDescription": [
               "categories.seo.manualDescription"
             ],
+            "core/config/default-config.js | agenticBrowsingCategoryTitle": [
+              "categories[agentic-browsing].title"
+            ],
+            "core/config/default-config.js | agenticBrowsingCategoryDescription": [
+              "categories[agentic-browsing].description"
+            ],
             "core/config/default-config.js | metricGroupTitle": [
               "categoryGroups.metrics.title"
             ],
@@ -7677,6 +8046,18 @@
             "core/config/default-config.js | bestPracticesGeneralGroupTitle": [
               "categoryGroups[best-practices-general].title"
             ],
+            "core/config/default-config.js | webmcpGroupTitle": [
+              "categoryGroups.webmcp.title"
+            ],
+            "core/config/default-config.js | webmcpGroupDescription": [
+              "categoryGroups.webmcp.description"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupTitle": [
+              "categoryGroups[agent-accessibility].title"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupDescription": [
+              "categoryGroups[agent-accessibility].description"
+            ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"
             ],
@@ -7741,7 +8122,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "13.0.1",
+        "lighthouseVersion": "13.3.0",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2025-02-05T01:31:50.141Z",
         "gatherMode": "timespan",
@@ -9058,6 +9439,34 @@
               "items": []
             }
           },
+          "baseline": {
+            "id": "baseline",
+            "title": "Baseline Features",
+            "description": "Lists web features used on the page and their Baseline status as of 2026-05-01. [Learn more about Baseline](https://webstatus.dev/).",
+            "score": 1,
+            "scoreDisplayMode": "informative",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "featureId",
+                  "valueType": "link",
+                  "label": "Web-features"
+                },
+                {
+                  "key": "displayStatus",
+                  "valueType": "baseline-status",
+                  "label": "Baseline Status"
+                },
+                {
+                  "key": "source",
+                  "valueType": "source-location",
+                  "label": "Source"
+                }
+              ],
+              "items": []
+            }
+          },
           "bf-cache": {
             "id": "bf-cache",
             "title": "Page didn't prevent back/forward cache restoration",
@@ -9198,7 +9607,7 @@
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
-            "title": "Render blocking requests",
+            "title": "Render-blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "error",
@@ -9515,6 +9924,11 @@
                 "group": "best-practices-ux"
               },
               {
+                "id": "baseline",
+                "weight": 0,
+                "group": "best-practices-browser-compat"
+              },
+              {
                 "id": "deprecations",
                 "weight": 5,
                 "group": "best-practices-general"
@@ -9611,6 +10025,14 @@
           },
           "best-practices-general": {
             "title": "General"
+          },
+          "webmcp": {
+            "title": "WebMCP",
+            "description": "Audits validating WebMCP integration."
+          },
+          "agent-accessibility": {
+            "title": "Agent Accessibility",
+            "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
           },
           "hidden": {
             "title": ""
@@ -10287,114 +10709,120 @@
             },
             {
               "startTime": 84,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:baseline",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 85,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 86,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 87,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 88,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 89,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 90,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 91,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 92,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 93,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 94,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:inp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 95,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:lcp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 96,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 97,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:legacy-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 98,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 99,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 100,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 101,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 102,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 102
+          "total": 103
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10688,7 +11116,8 @@
             ],
             "core/lib/i18n/i18n.js | columnSource": [
               "audits[errors-in-console].details.headings[0].label",
-              "audits.deprecations.details.headings[1].label"
+              "audits.deprecations.details.headings[1].label",
+              "audits.baseline.details.headings[2].label"
             ],
             "core/lib/i18n/i18n.js | columnDescription": [
               "audits[errors-in-console].details.headings[1].label"
@@ -10914,6 +11343,23 @@
             "core/audits/dobetterweb/inspector-issues.js | columnIssueType": [
               "audits[inspector-issues].details.headings[0].label"
             ],
+            "core/audits/baseline.js | title": [
+              "audits.baseline.title"
+            ],
+            "core/audits/baseline.js | description": [
+              {
+                "values": {
+                  "date": "2026-05-01"
+                },
+                "path": "audits.baseline.description"
+              }
+            ],
+            "core/audits/baseline.js | columnFeature": [
+              "audits.baseline.details.headings[0].label"
+            ],
+            "core/audits/baseline.js | columnStatus": [
+              "audits.baseline.details.headings[1].label"
+            ],
             "core/audits/bf-cache.js | title": [
               "audits[bf-cache].title"
             ],
@@ -11114,6 +11560,18 @@
             ],
             "core/config/default-config.js | bestPracticesGeneralGroupTitle": [
               "categoryGroups[best-practices-general].title"
+            ],
+            "core/config/default-config.js | webmcpGroupTitle": [
+              "categoryGroups.webmcp.title"
+            ],
+            "core/config/default-config.js | webmcpGroupDescription": [
+              "categoryGroups.webmcp.description"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupTitle": [
+              "categoryGroups[agent-accessibility].title"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupDescription": [
+              "categoryGroups[agent-accessibility].description"
             ]
           }
         }
@@ -11122,7 +11580,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "13.0.1",
+        "lighthouseVersion": "13.3.0",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2025-02-05T01:32:00.108Z",
         "gatherMode": "snapshot",
@@ -13552,6 +14010,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
@@ -14014,6 +14538,50 @@
             "description": "Run the [Structured Data Testing Tool](https://developers.google.com/search/docs/appearance/structured-data/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
+          },
+          "agent-accessibility-tree": {
+            "id": "agent-accessibility-tree",
+            "title": "Accessibility tree is well-formed",
+            "description": "A well-formed [accessibility tree](http://goo.gle/lighthouse-agentic-a11y) helps AI agents to navigate and interact with the page.",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "displayValue": "All audits passed"
+          },
+          "webmcp-registered-tools": {
+            "id": "webmcp-registered-tools",
+            "title": "WebMCP tools registered",
+            "description": "Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-form-coverage": {
+            "id": "webmcp-form-coverage",
+            "title": "WebMCP form coverage",
+            "description": "Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-schema-validity": {
+            "id": "webmcp-schema-validity",
+            "title": "WebMCP schemas are valid",
+            "description": "Valid [WebMCP schemas](http://goo.gle/webmcp-docs) are required for AI agents to  understand and interact with tools correctly. Please fix any errors or warnings reported by the browser.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "llms-txt": {
+            "id": "llms-txt",
+            "title": "llms.txt follows recommendations",
+            "description": "If your llms.txt file does not follow recommendations, large language models may not be able to understand how you want your website to be crawled or used for training. The [llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required LlmsTxt gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
           }
         },
         "configSettings": {
@@ -14372,6 +14940,21 @@
                 "group": "a11y-best-practices"
               },
               {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "focusable-controls",
                 "weight": 0
               },
@@ -14538,6 +15121,44 @@
             ],
             "id": "seo",
             "score": 0.6
+          },
+          "agentic-browsing": {
+            "title": "Agentic Browsing",
+            "description": "These checks ensure high-quality, [browsable websites for AI agents](https://goo.gle/lighthouse-agentic-web) and validate the correctness of WebMCP integrations. This category is still under development and subject to change.",
+            "supportedModes": [
+              "navigation",
+              "snapshot"
+            ],
+            "categoryScoreDisplayMode": "fraction",
+            "auditRefs": [
+              {
+                "id": "agent-accessibility-tree",
+                "weight": 1,
+                "group": "agent-accessibility"
+              },
+              {
+                "id": "webmcp-form-coverage",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-registered-tools",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-schema-validity",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "llms-txt",
+                "weight": 1,
+                "group": "agent-accessibility"
+              }
+            ],
+            "id": "agentic-browsing",
+            "score": null
           }
         },
         "categoryGroups": {
@@ -14607,6 +15228,14 @@
           },
           "best-practices-general": {
             "title": "General"
+          },
+          "webmcp": {
+            "title": "WebMCP",
+            "description": "Audits validating WebMCP integration."
+          },
+          "agent-accessibility": {
+            "title": "Agent Accessibility",
+            "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
           },
           "hidden": {
             "title": ""
@@ -15974,60 +16603,108 @@
             },
             {
               "startTime": 99,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 100,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 101,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 102,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 103,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 104,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 105,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 106,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 107,
+              "name": "lh:audit:crawlable-anchors",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 108,
+              "name": "lh:audit:robots-txt",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 109,
+              "name": "lh:audit:structured-data",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 110,
+              "name": "lh:audit:agent-accessibility-tree",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 111,
+              "name": "lh:audit:webmcp-registered-tools",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 112,
+              "name": "lh:audit:webmcp-form-coverage",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 113,
+              "name": "lh:audit:webmcp-schema-validity",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 114,
+              "name": "lh:audit:llms-txt",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 115,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 108
+          "total": 116
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -16168,6 +16845,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -16536,6 +17216,24 @@
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
             ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
+            ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
             ],
@@ -16593,6 +17291,69 @@
             "core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
             ],
+            "core/audits/agentic/agent-accessibility-tree.js | title": [
+              "audits[agent-accessibility-tree].title"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | description": [
+              "audits[agent-accessibility-tree].description"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": [
+              "audits[agent-accessibility-tree].displayValue"
+            ],
+            "core/audits/webmcp-registered-tools.js | title": [
+              "audits[webmcp-registered-tools].title"
+            ],
+            "core/audits/webmcp-registered-tools.js | description": [
+              "audits[webmcp-registered-tools].description"
+            ],
+            "core/lib/lh-error.js | missingRequiredArtifact": [
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-registered-tools].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-form-coverage].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-schema-validity].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "LlmsTxt"
+                },
+                "path": "audits[llms-txt].errorMessage"
+              }
+            ],
+            "core/audits/webmcp-form-coverage.js | title": [
+              "audits[webmcp-form-coverage].title"
+            ],
+            "core/audits/webmcp-form-coverage.js | description": [
+              "audits[webmcp-form-coverage].description"
+            ],
+            "core/audits/webmcp-schema-validity.js | title": [
+              "audits[webmcp-schema-validity].title"
+            ],
+            "core/audits/webmcp-schema-validity.js | description": [
+              "audits[webmcp-schema-validity].description"
+            ],
+            "core/audits/agentic/llms-txt.js | title": [
+              "audits[llms-txt].title"
+            ],
+            "core/audits/agentic/llms-txt.js | description": [
+              "audits[llms-txt].description"
+            ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
             ],
@@ -16616,6 +17377,12 @@
             ],
             "core/config/default-config.js | seoCategoryManualDescription": [
               "categories.seo.manualDescription"
+            ],
+            "core/config/default-config.js | agenticBrowsingCategoryTitle": [
+              "categories[agentic-browsing].title"
+            ],
+            "core/config/default-config.js | agenticBrowsingCategoryDescription": [
+              "categories[agentic-browsing].description"
             ],
             "core/config/default-config.js | metricGroupTitle": [
               "categoryGroups.metrics.title"
@@ -16710,6 +17477,18 @@
             "core/config/default-config.js | bestPracticesGeneralGroupTitle": [
               "categoryGroups[best-practices-general].title"
             ],
+            "core/config/default-config.js | webmcpGroupTitle": [
+              "categoryGroups.webmcp.title"
+            ],
+            "core/config/default-config.js | webmcpGroupDescription": [
+              "categoryGroups.webmcp.description"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupTitle": [
+              "categoryGroups[agent-accessibility].title"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupDescription": [
+              "categoryGroups[agent-accessibility].description"
+            ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"
             ],
@@ -16774,7 +17553,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "13.0.1",
+        "lighthouseVersion": "13.3.0",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
         "mainDocumentUrl": "https://www.mikescerealshack.co/corrections",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/corrections",
@@ -19561,6 +20340,72 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "autocomplete-valid": {
+            "id": "autocomplete-valid",
+            "title": "`autocomplete` attributes are used correctly",
+            "description": "The `autocomplete` attribute values must be valid and correctly applied for screen readers to function correctly. [Learn more about valid autocomplete values](https://dequeuniversity.com/rules/axe/4.11/autocomplete-valid).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "presentation-role-conflict": {
+            "id": "presentation-role-conflict",
+            "title": "Elements with `role=\"none\"` or `role=\"presentation\"` do not have conflicts",
+            "description": "There are certain cases where the semantic role of an element with `role=\"none\"` or `role=\"presentation\"` does not resolve to none or presentation. To ensure the element remains removed from the accessibility tree, you should not add any global ARIA attributes to the element or make it focusable. [Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "svg-img-alt": {
+            "id": "svg-img-alt",
+            "title": "SVG elements with an `img` role have an accessible text alternative",
+            "description": "Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` role have an accessible text alternative. [Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.11/svg-img-alt).",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
@@ -19792,6 +20637,34 @@
                   "key": "node",
                   "valueType": "node",
                   "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
+          },
+          "baseline": {
+            "id": "baseline",
+            "title": "Baseline Features",
+            "description": "Lists web features used on the page and their Baseline status as of 2026-05-01. [Learn more about Baseline](https://webstatus.dev/).",
+            "score": 1,
+            "scoreDisplayMode": "informative",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "featureId",
+                  "valueType": "link",
+                  "label": "Web-features"
+                },
+                {
+                  "key": "displayStatus",
+                  "valueType": "baseline-status",
+                  "label": "Baseline Status"
+                },
+                {
+                  "key": "source",
+                  "valueType": "source-location",
+                  "label": "Source"
                 }
               ],
               "items": []
@@ -20077,6 +20950,50 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "agent-accessibility-tree": {
+            "id": "agent-accessibility-tree",
+            "title": "Accessibility tree is well-formed",
+            "description": "A well-formed [accessibility tree](http://goo.gle/lighthouse-agentic-a11y) helps AI agents to navigate and interact with the page.",
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "displayValue": "All audits passed"
+          },
+          "webmcp-registered-tools": {
+            "id": "webmcp-registered-tools",
+            "title": "WebMCP tools registered",
+            "description": "Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-form-coverage": {
+            "id": "webmcp-form-coverage",
+            "title": "WebMCP form coverage",
+            "description": "Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "webmcp-schema-validity": {
+            "id": "webmcp-schema-validity",
+            "title": "WebMCP schemas are valid",
+            "description": "Valid [WebMCP schemas](http://goo.gle/webmcp-docs) are required for AI agents to  understand and interact with tools correctly. Please fix any errors or warnings reported by the browser.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required WebMCP gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "llms-txt": {
+            "id": "llms-txt",
+            "title": "llms.txt follows recommendations",
+            "description": "If your llms.txt file does not follow recommendations, large language models may not be able to understand how you want your website to be crawled or used for training. The [llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required LlmsTxt gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
           "bf-cache": {
             "id": "bf-cache",
             "title": "Page didn't prevent back/forward cache restoration",
@@ -20217,7 +21134,7 @@
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
-            "title": "Render blocking requests",
+            "title": "Render-blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "error",
@@ -20843,6 +21760,21 @@
                 "group": "a11y-best-practices"
               },
               {
+                "id": "autocomplete-valid",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "presentation-role-conflict",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "svg-img-alt",
+                "weight": 1,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "focusable-controls",
                 "weight": 0
               },
@@ -21005,6 +21937,11 @@
                 "group": "best-practices-browser-compat"
               },
               {
+                "id": "baseline",
+                "weight": 0,
+                "group": "best-practices-browser-compat"
+              },
+              {
                 "id": "js-libraries",
                 "weight": 0,
                 "group": "best-practices-general"
@@ -21104,6 +22041,49 @@
             ],
             "id": "seo",
             "score": 0.82
+          },
+          "agentic-browsing": {
+            "title": "Agentic Browsing",
+            "description": "These checks ensure high-quality, [browsable websites for AI agents](https://goo.gle/lighthouse-agentic-web) and validate the correctness of WebMCP integrations. This category is still under development and subject to change.",
+            "supportedModes": [
+              "navigation",
+              "snapshot"
+            ],
+            "categoryScoreDisplayMode": "fraction",
+            "auditRefs": [
+              {
+                "id": "agent-accessibility-tree",
+                "weight": 1,
+                "group": "agent-accessibility"
+              },
+              {
+                "id": "webmcp-form-coverage",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-registered-tools",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "webmcp-schema-validity",
+                "weight": 1,
+                "group": "webmcp"
+              },
+              {
+                "id": "cumulative-layout-shift",
+                "weight": 1,
+                "acronym": "CLS"
+              },
+              {
+                "id": "llms-txt",
+                "weight": 1,
+                "group": "agent-accessibility"
+              }
+            ],
+            "id": "agentic-browsing",
+            "score": null
           }
         },
         "categoryGroups": {
@@ -21173,6 +22153,14 @@
           },
           "best-practices-general": {
             "title": "General"
+          },
+          "webmcp": {
+            "title": "WebMCP",
+            "description": "Audits validating WebMCP integration."
+          },
+          "agent-accessibility": {
+            "title": "Agent Accessibility",
+            "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
           },
           "hidden": {
             "title": ""
@@ -22950,240 +23938,294 @@
             },
             {
               "startTime": 193,
-              "name": "lh:audit:total-byte-weight",
+              "name": "lh:audit:autocomplete-valid",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 194,
-              "name": "lh:audit:unminified-css",
+              "name": "lh:audit:presentation-role-conflict",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 195,
-              "name": "lh:audit:unminified-javascript",
+              "name": "lh:audit:svg-img-alt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 196,
-              "name": "lh:audit:unused-css-rules",
+              "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 197,
-              "name": "lh:audit:unused-javascript",
+              "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 198,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 199,
-              "name": "lh:audit:charset",
+              "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 200,
-              "name": "lh:audit:geolocation-on-start",
+              "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 201,
-              "name": "lh:audit:inspector-issues",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 202,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:charset",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 203,
-              "name": "lh:audit:notification-on-start",
+              "name": "lh:audit:geolocation-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 204,
-              "name": "lh:audit:paste-preventing-inputs",
+              "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 205,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 206,
-              "name": "lh:audit:http-status-code",
+              "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 207,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:paste-preventing-inputs",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 208,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:baseline",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 209,
-              "name": "lh:audit:is-crawlable",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 210,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 211,
-              "name": "lh:audit:hreflang",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 212,
-              "name": "lh:audit:canonical",
+              "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 213,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 214,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 215,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 216,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 217,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 218,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:agent-accessibility-tree",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 219,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:webmcp-registered-tools",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 220,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:webmcp-form-coverage",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 221,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:webmcp-schema-validity",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 222,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:llms-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 223,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 224,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
+              "name": "lh:audit:image-delivery-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 232,
+              "name": "lh:audit:inp-breakdown-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 233,
+              "name": "lh:audit:lcp-breakdown-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 234,
+              "name": "lh:audit:lcp-discovery-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 235,
+              "name": "lh:audit:legacy-javascript-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 236,
+              "name": "lh:audit:network-dependency-tree-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 237,
+              "name": "lh:audit:render-blocking-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 238,
+              "name": "lh:audit:third-parties-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 239,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 240,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 232
+          "total": 241
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -23396,6 +24438,34 @@
               {
                 "values": {
                   "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-registered-tools].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-form-coverage].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "WebMCP"
+                },
+                "path": "audits[webmcp-schema-validity].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "LlmsTxt"
+                },
+                "path": "audits[llms-txt].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
                   "artifactName": "HostDPR"
                 },
                 "path": "audits[cache-insight].errorMessage"
@@ -23546,7 +24616,8 @@
               "audits[errors-in-console].details.headings[0].label",
               "audits.deprecations.details.headings[1].label",
               "audits[geolocation-on-start].details.headings[0].label",
-              "audits[notification-on-start].details.headings[0].label"
+              "audits[notification-on-start].details.headings[0].label",
+              "audits.baseline.details.headings[2].label"
             ],
             "core/lib/i18n/i18n.js | columnDescription": [
               "audits[errors-in-console].details.headings[1].label",
@@ -23888,6 +24959,9 @@
               "audits.listitem.details.headings[0].label",
               "audits[meta-viewport].details.headings[0].label",
               "audits[target-size].details.headings[0].label",
+              "audits[autocomplete-valid].details.headings[0].label",
+              "audits[presentation-role-conflict].details.headings[0].label",
+              "audits[svg-img-alt].details.headings[0].label",
               "audits[paste-preventing-inputs].details.headings[0].label"
             ],
             "core/audits/accessibility/aria-allowed-role.js | title": [
@@ -24256,6 +25330,24 @@
             "core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
             ],
+            "core/audits/accessibility/autocomplete-valid.js | title": [
+              "audits[autocomplete-valid].title"
+            ],
+            "core/audits/accessibility/autocomplete-valid.js | description": [
+              "audits[autocomplete-valid].description"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | title": [
+              "audits[presentation-role-conflict].title"
+            ],
+            "core/audits/accessibility/presentation-role-conflict.js | description": [
+              "audits[presentation-role-conflict].description"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | title": [
+              "audits[svg-img-alt].title"
+            ],
+            "core/audits/accessibility/svg-img-alt.js | description": [
+              "audits[svg-img-alt].description"
+            ],
             "core/audits/byte-efficiency/total-byte-weight.js | title": [
               "audits[total-byte-weight].title"
             ],
@@ -24342,6 +25434,23 @@
             "core/audits/dobetterweb/paste-preventing-inputs.js | description": [
               "audits[paste-preventing-inputs].description"
             ],
+            "core/audits/baseline.js | title": [
+              "audits.baseline.title"
+            ],
+            "core/audits/baseline.js | description": [
+              {
+                "values": {
+                  "date": "2026-05-01"
+                },
+                "path": "audits.baseline.description"
+              }
+            ],
+            "core/audits/baseline.js | columnFeature": [
+              "audits.baseline.details.headings[0].label"
+            ],
+            "core/audits/baseline.js | columnStatus": [
+              "audits.baseline.details.headings[1].label"
+            ],
             "core/audits/seo/meta-description.js | title": [
               "audits[meta-description].title"
             ],
@@ -24398,6 +25507,39 @@
             ],
             "core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | title": [
+              "audits[agent-accessibility-tree].title"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | description": [
+              "audits[agent-accessibility-tree].description"
+            ],
+            "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": [
+              "audits[agent-accessibility-tree].displayValue"
+            ],
+            "core/audits/webmcp-registered-tools.js | title": [
+              "audits[webmcp-registered-tools].title"
+            ],
+            "core/audits/webmcp-registered-tools.js | description": [
+              "audits[webmcp-registered-tools].description"
+            ],
+            "core/audits/webmcp-form-coverage.js | title": [
+              "audits[webmcp-form-coverage].title"
+            ],
+            "core/audits/webmcp-form-coverage.js | description": [
+              "audits[webmcp-form-coverage].description"
+            ],
+            "core/audits/webmcp-schema-validity.js | title": [
+              "audits[webmcp-schema-validity].title"
+            ],
+            "core/audits/webmcp-schema-validity.js | description": [
+              "audits[webmcp-schema-validity].description"
+            ],
+            "core/audits/agentic/llms-txt.js | title": [
+              "audits[llms-txt].title"
+            ],
+            "core/audits/agentic/llms-txt.js | description": [
+              "audits[llms-txt].description"
             ],
             "core/audits/bf-cache.js | title": [
               "audits[bf-cache].title"
@@ -24525,6 +25667,12 @@
             "core/config/default-config.js | seoCategoryManualDescription": [
               "categories.seo.manualDescription"
             ],
+            "core/config/default-config.js | agenticBrowsingCategoryTitle": [
+              "categories[agentic-browsing].title"
+            ],
+            "core/config/default-config.js | agenticBrowsingCategoryDescription": [
+              "categories[agentic-browsing].description"
+            ],
             "core/config/default-config.js | metricGroupTitle": [
               "categoryGroups.metrics.title"
             ],
@@ -24617,6 +25765,18 @@
             ],
             "core/config/default-config.js | bestPracticesGeneralGroupTitle": [
               "categoryGroups[best-practices-general].title"
+            ],
+            "core/config/default-config.js | webmcpGroupTitle": [
+              "categoryGroups.webmcp.title"
+            ],
+            "core/config/default-config.js | webmcpGroupDescription": [
+              "categoryGroups.webmcp.description"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupTitle": [
+              "categoryGroups[agent-accessibility].title"
+            ],
+            "core/config/default-config.js | agentAccessibilityGroupDescription": [
+              "categoryGroups[agent-accessibility].description"
             ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"

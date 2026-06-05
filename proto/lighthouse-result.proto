@@ -358,6 +358,15 @@ message CategoryGroup {
   string description = 2;
 }
 
+// The ways a category score should be displayed:
+enum CategoryScoreDisplayMode {
+  CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED = 0;
+  // Display the score as a standard circular gauge (default)
+  gauge = 1;
+  // Display the score as a fraction, e.g. "3/5"
+  fraction = 2;
+}
+
 // Message containing a category of audits and their combined weighted score.
 message LhrCategory {
   // the internal id of the category
@@ -402,6 +411,9 @@ message LhrCategory {
 
   // List of gather modes this category is available in.
   repeated string supported_modes = 7;
+
+  // How the category score should be displayed (e.g. as a fraction).
+  CategoryScoreDisplayMode category_score_display_mode = 8;
 }
 
 // The ways an audit score should be interpreted:

@@ -7,8 +7,8 @@
 import {Buffer} from 'buffer';
 
 import log from 'lighthouse-logger';
-import {CdpBrowser} from 'puppeteer-core/lib/esm/puppeteer/cdp/Browser.js';
-import {Connection as PptrConnection} from 'puppeteer-core/lib/esm/puppeteer/cdp/Connection.js';
+import {CdpBrowser} from 'puppeteer-core/lib/puppeteer/cdp/Browser.js';
+import {Connection as PptrConnection} from 'puppeteer-core/lib/puppeteer/cdp/Connection.js';
 
 import lighthouse, * as api from '../../core/index.js';
 import {LighthouseError} from '../../core/lib/lh-error.js';

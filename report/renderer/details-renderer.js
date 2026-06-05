@@ -115,7 +115,7 @@ export class DetailsRenderer {
     }
 
     const element = this._dom.createElement('div', 'lh-text__url');
-    element.append(this._renderLink({text: displayedPath, url}));
+    element.append(this._createLink({text: displayedPath, url}));
 
     if (displayedHost) {
       const hostElem = this._renderText(displayedHost);
@@ -132,10 +132,18 @@ export class DetailsRenderer {
   }
 
   /**
-   * @param {{text: string, url: string}} details
+   * @param {LH.Audit.Details.LinkValue} details
    * @return {HTMLElement}
    */
   _renderLink(details) {
+    return this._createLink(details);
+  }
+
+  /**
+   * @param {{text: string, url: string}} details
+   * @return {HTMLElement}
+   */
+  _createLink(details) {
     const a = this._dom.createElement('a');
     this._dom.safelySetHref(a, details.url);
 
@@ -160,6 +168,18 @@ export class DetailsRenderer {
   _renderText(text) {
     const element = this._dom.createElement('div', 'lh-text');
     element.textContent = text;
+    return element;
+  }
+
+  /**
+   * @param {LH.Audit.Details.BaselineStatusValue} details
+   * @return {HTMLDivElement}
+   */
+  _renderBaselineStatus(details) {
+    const element = this._dom.createElement('div', 'lh-baseline-status');
+    const classSuffix = details.status;
+    element.classList.add(`lh-baseline-status--${classSuffix}`);
+    element.textContent = String(details.displayString);
     return element;
   }
 
@@ -242,6 +262,9 @@ export class DetailsRenderer {
         case 'url': {
           return this.renderTextURL(value.value);
         }
+        case 'baseline-status': {
+          return this._renderBaselineStatus(value);
+        }
         default: {
           return this._renderUnknown(value.type, value);
         }
@@ -291,6 +314,7 @@ export class DetailsRenderer {
           return this._renderCode(strValue);
         }
       }
+
       default: {
         return this._renderUnknown(heading.valueType, value);
       }
@@ -673,7 +697,7 @@ export class DetailsRenderer {
     // We render slightly differently based on presence of source map and provenance of URL.
     let element;
     if (item.urlProvider === 'network' && sourceMappedOriginalLocation) {
-      element = this._renderLink({
+      element = this._createLink({
         url: item.url,
         text: sourceMappedOriginalLocation,
       });

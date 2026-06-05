@@ -9,7 +9,7 @@ import {ProtocolMapping as CrdpMappings} from 'devtools-protocol/types/protocol-
 type CrdpEvents = CrdpMappings.Events;
 type CrdpCommands = CrdpMappings.Commands;
 
-declare module Protocol {
+declare namespace Protocol {
   type TargetType = 'page' | 'iframe' | 'worker';
 
   /**

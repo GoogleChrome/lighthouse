@@ -14,7 +14,7 @@ import Treemap_ from '../../types/lhr/treemap';
 
 declare global {
   // Expose global types in LH namespace.
-  module LH {
+  namespace LH {
     export import Result = LHResult;
     export import ReportResult = ReportResult_;
     export import Renderer = Renderer_;
@@ -22,7 +22,7 @@ declare global {
     export type IcuMessage = IcuMessage_;
     export type FormattedIcu<T> = FormattedIcu_<T>;
 
-    module Audit {
+    namespace Audit {
       export import Details = AuditDetails;
     }
 

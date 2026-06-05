@@ -15,7 +15,7 @@ interface ReportResult extends LHResult {
   categories: Record<string, ReportResult.Category>;
 }
 
-declare module ReportResult {
+declare namespace ReportResult {
   interface Category extends LHResult.Category {
     auditRefs: Array<AuditRef>;
   }

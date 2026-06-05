@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebMCP Smoke Test Page</title>
+</head>
+<body>
+  <h1>WebMCP Testing Ground</h1>
+
+  <!-- 1. Declarative Tool (Valid Form) -->
+  <h2>Declarative Tool (Valid)</h2>
+  <form id="valid-declarative-form" toolname="declarative_search" tooldescription="Search catalog for items.">
+    <input type="text" name="query" toolparamdescription="The search query terms." required>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- 2. Form WITHOUT WebMCP (Unannotated Form) -->
+  <h2>Unannotated Form (Should be flagged by coverage)</h2>
+  <form id="unannotated-form" action="/submit">
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <button type="submit">Login</button>
+  </form>
+
+  <!-- 3. Declarative Tool with Missing Parameter Description (Warning) -->
+  <h2>Declarative Tool with Missing Parameter Description (Should trigger warning)</h2>
+  <form id="invalid-declarative-form" toolname="declarative_feedback" tooldescription="Submit feedback to us.">
+    <input type="text" name="feedback">
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <!-- 4. Active discovery trigger to force Blink schema validation E2E -->
+  <script>
+    const testingApi = window.navigator.modelContextTesting || window.navigator.modelContext;
+    if (testingApi && typeof testingApi.listTools === 'function') {
+      testingApi.listTools();
+    } else if (navigator.modelContext && typeof navigator.modelContext.getRegisteredTools === 'function') {
+      navigator.modelContext.getRegisteredTools();
+    }
+  </script>
+</body>
+</html>

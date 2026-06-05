@@ -448,18 +448,6 @@ const expectations = {
                 }],
               },
             },
-            {
-              // This issue only appears in the DevTools runner for some reason.
-              // TODO: Investigate why this doesn't happen on the CLI runner.
-              _runner: 'devtools',
-              reason: 'There were permission requests upon navigating away.',
-              failureType: 'Pending browser support',
-              subItems: {
-                items: [{
-                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-                }],
-              },
-            },
           ],
         },
       },

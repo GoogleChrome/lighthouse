@@ -11,8 +11,8 @@
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'https://example.com/',
-    finalDisplayedUrl: 'https://example.com/',
+    requestedUrl: 'http://localhost:10200/simple-page.html',
+    finalDisplayedUrl: 'http://localhost:10200/simple-page.html',
     audits: {
       'clickjacking-mitigation': {
         score: 1,

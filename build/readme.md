@@ -25,7 +25,7 @@ One of the commands that the above runs - `yarn build-devtools` - creates these 
 dist
 ├── dt-report-resources
 │   ├── report-generator.mjs
-│   └── report-generator.mjs.d.ts
+│   └── report-generator.d.mts
 ├── lighthouse-dt-bundle.js
 ├── lighthouse-dt-bundle.js.map
 └── report
@@ -35,7 +35,7 @@ dist
 1. the biggest file is `lighthouse-dt-bundle.js`. This is a bundle of `core` via `clients/devtools/devtools-entry.js`, and is run inside a worker in CDT.
 1. the much smaller `report-generator.mjs` bundle. This is assigned to the global object as `Lighthouse.ReportGenerator`
     - This bundle has inlined the `dist/report/standalone.js` and `standalone-template.html` files (these are not transformed in any way). We call these the report generator assets.
-    - `report-generator.mjs.d.ts` is an empty type definition file to make the CDT build happy
+    - `report-generator.d.mts` is an empty type definition file to make the CDT build happy
 1. Finally, `report/bundle.esm.js` is an ES modules bundle of the report code (note: this is copied to CDT as `report/bundle.js`).
 
 ### How the Lighthouse Panel uses the Lighthouse CDT build artifacts

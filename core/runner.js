@@ -498,6 +498,7 @@ vs: ${JSON.stringify(normalizedAuditSettings[k], null, 2)}`);
           .map(f => `byte-efficiency/${f}`),
       ...fs.readdirSync(path.join(moduleDir, './audits/manual')).map(f => `manual/${f}`),
       ...fs.readdirSync(path.join(moduleDir, './audits/insights')).map(f => `insights/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/agentic')).map(f => `agentic/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);
@@ -514,6 +515,8 @@ vs: ${JSON.stringify(normalizedAuditSettings[k], null, 2)}`);
       ...fs.readdirSync(path.join(moduleDir, './gather/gatherers/seo')).map(f => `seo/${f}`),
       ...fs.readdirSync(path.join(moduleDir, './gather/gatherers/dobetterweb'))
           .map(f => `dobetterweb/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './gather/gatherers/agentic'))
+          .map(f => `agentic/${f}`),
     ];
     return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();
   }

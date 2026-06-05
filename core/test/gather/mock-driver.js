@@ -126,6 +126,8 @@ function createMockExecutionContext() {
     evaluateAsync: fnAny(),
     evaluateOnNewDocument: fnAny(),
     cacheNativesOnNewDocument: fnAny(),
+    evaluateOnObject: fnAny(),
+    evaluateOnObjectAsync: fnAny(),
 
     /** @return {ExecutionContext} */
     asExecutionContext() {

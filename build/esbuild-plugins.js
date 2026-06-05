@@ -12,6 +12,7 @@ import {createRequire} from 'module';
 import esbuild from 'esbuild';
 import builtin from 'builtin-modules';
 
+import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 
 /**
@@ -278,10 +279,158 @@ function umd(moduleName) {
   };
 }
 
+/**
+ * @param {string} id
+ * @param {string} shimDir
+ * @return {string}
+ */
+function generateAuditShim(id, shimDir) {
+  const auditPath = path.resolve(LH_ROOT, 'core/audits/audit.js');
+  let relativePath = path.relative(shimDir, auditPath);
+  if (!relativePath.startsWith('.')) relativePath = './' + relativePath;
+
+  return `
+import {Audit} from '${relativePath}';
+class ShimAudit extends Audit {
+  static get meta() {
+    return {
+      id: '${id}',
+      title: 'Shim Audit',
+      description: 'This audit was filtered out and is not available in this bundle.',
+      scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
+      requiredArtifacts: [],
+    };
+  }
+  static audit() {
+    return {score: null, scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE};
+  }
+}
+export default ShimAudit;
+`;
+}
+
+/**
+ * @param {string} id
+ * @param {string} shimDir
+ * @return {string}
+ */
+function generateGathererShim(id, shimDir) {
+  const gathererPath = path.resolve(LH_ROOT, 'core/gather/base-gatherer.js');
+  let relativePath = path.relative(shimDir, gathererPath);
+  if (!relativePath.startsWith('.')) relativePath = './' + relativePath;
+
+  return `
+import BaseGatherer from '${relativePath}';
+class ShimGatherer extends BaseGatherer {
+  meta = {supportedModes: ['navigation', 'timespan', 'snapshot']};
+  static getDefaultTraceCategories() { return []; }
+  getArtifact() {
+    return undefined;
+  }
+}
+export default ShimGatherer;
+`;
+}
+
+/**
+ * @param {{
+ *   includedAudits?: string[],
+ *   includedGatherers?: string[],
+ * }} options
+ * @return {esbuild.Plugin}
+ */
+function lighthouseShimPlugin(options) {
+  const {includedAudits = [], includedGatherers = []} = options;
+
+  return {
+    name: 'lh-shim',
+    setup(build) {
+      // Intercept audits
+      build.onResolve({filter: /audits\/.*\.js$/}, args => {
+        if (args.path.endsWith('/audit.js') || args.path === './audit.js') return;
+        const isIncluded = includedAudits.some(p => args.path.includes(p));
+        if (isIncluded) return;
+
+        // Resolve to absolute path to ensure we have a consistent base for shimDir
+        const absolutePath = path.resolve(args.resolveDir, args.path);
+        return {path: absolutePath, namespace: 'lh-audit-shim'};
+      });
+
+      build.onLoad({filter: /.*/, namespace: 'lh-audit-shim'}, args => {
+        const id = path.basename(args.path, '.js');
+        const shimDir = path.dirname(args.path);
+        return {contents: generateAuditShim(id, shimDir), loader: 'js', resolveDir: shimDir};
+      });
+
+      // Intercept gatherers
+      build.onResolve({filter: /gatherers\/.*\.js$/}, args => {
+        if (args.path.endsWith('/base-gatherer.js') || args.path === '../base-gatherer.js') return;
+        const isIncluded = includedGatherers.some(p => args.path.includes(p));
+        if (isIncluded) return;
+
+        const absolutePath = path.resolve(args.resolveDir, args.path);
+        return {path: absolutePath, namespace: 'lh-gatherer-shim'};
+      });
+
+      build.onLoad({filter: /.*/, namespace: 'lh-gatherer-shim'}, args => {
+        const id = path.basename(args.path, '.js');
+        const shimDir = path.dirname(args.path);
+        return {contents: generateGathererShim(id, shimDir), loader: 'js', resolveDir: shimDir};
+      });
+    },
+  };
+}
+
+/**
+ * @param {{removeExtraLicenses?: boolean}} options
+ * @return {esbuild.Plugin}
+ */
+function postprocess(options = {}) {
+  return {
+    name: 'postprocess',
+    setup({onEnd}) {
+      onEnd(async (result) => {
+        if (result.errors.length) return;
+
+        const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
+        const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
+        if (!codeFile) throw new Error('missing output');
+
+        // Just make sure the shimming worked.
+        let code = codeFile.text;
+        if (code.includes('inflate_fast')) {
+          throw new Error('Expected zlib inflate code to have been removed');
+        }
+
+        if (options.removeExtraLicenses) {
+          // Get rid of our extra license comments.
+          // All comments would have been moved to the end of the file, so removing some will not break
+          // source maps.
+          // https://stackoverflow.com/a/35923766
+          const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
+          let hasSeenFirst = false;
+          code = code.replace(re, (match) => {
+            if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
+              if (hasSeenFirst) return '';
+              hasSeenFirst = true;
+            }
+            return match;
+          });
+        }
+
+        await fs.promises.writeFile(codeFile.path, code);
+        if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
+      });
+    },
+  };
+}
+
 export {
   partialLoaders,
   bulkLoader,
   replaceModules,
   ignoreBuiltins,
   umd,
+  lighthouseShimPlugin,
+  postprocess,
 };

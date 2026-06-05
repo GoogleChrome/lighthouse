@@ -37,9 +37,10 @@ class AstError extends Error {
  * Returns `null` as code if no changes were made.
  * @param {string} code
  * @param {string} filepath
+ * @param {Set<string>=} trackedFiles
  * @return {Promise<{code: string|null, warnings: Array<Warning>}>}
  */
-async function inlineFs(code, filepath) {
+async function inlineFs(code, filepath, trackedFiles) {
   // Approach:
   // - scan `code` for fs methods
   // - parse only the expression at each found index
@@ -90,9 +91,13 @@ async function inlineFs(code, filepath) {
     let content;
     try {
       if (parsed.callee.property.name === 'readFileSync') {
-        content = await getReadFileReplacement(parsed, filepath);
+        const constructedPath = await getReadFilePath(parsed, filepath);
+        if (trackedFiles) trackedFiles.add(constructedPath);
+        content = await getReadFileReplacement(constructedPath, parsed);
       } else if (parsed.callee.property.name === 'readdirSync') {
-        content = await getReaddirReplacement(parsed, filepath);
+        const constructedPath = await getReaddirPath(parsed, filepath);
+        if (trackedFiles) trackedFiles.add(constructedPath);
+        content = await getReaddirReplacement(constructedPath, parsed);
       } else {
         throw new AstError(`unexpected fs call 'fs.${parsed.callee.property.name}'`,
             parsed.callee.property);
@@ -183,14 +188,12 @@ function createWarning(error, filepath, location) {
 }
 
 /**
- * Attempts to statically determine the target of a `fs.readFileSync()` call and
- * returns the already-quoted contents of the file to be loaded.
- * If it's a JS file, it's minified before inlining.
+ * Attempts to statically determine the target of a `fs.readFileSync()` call.
  * @param {SimpleCallExpression} node ESTree node for `fs.readFileSync` call.
  * @param {string} filepath The path of the file containing this node.
  * @return {Promise<string>}
  */
-async function getReadFileReplacement(node, filepath) {
+async function getReadFilePath(node, filepath) {
   assertEqualString(node.callee.type, 'MemberExpression');
   assertEqualString(node.callee.property.type, 'Identifier');
   assert.equal(node.callee.property.name, 'readFileSync');
@@ -200,7 +203,17 @@ async function getReadFileReplacement(node, filepath) {
   if (!isUtf8Options(node.arguments[1])) {
     throw new AstError('only utf8 readFileSync is supported', node.arguments[1]);
   }
+  return constructedPath;
+}
 
+/**
+ * Returns the already-quoted contents of the file to be loaded.
+ * If it's a JS file, it's minified before inlining.
+ * @param {string} constructedPath
+ * @param {SimpleCallExpression} _ ESTree node for `fs.readFileSync` call.
+ * @return {Promise<string>}
+ */
+async function getReadFileReplacement(constructedPath, _) {
   let readContent = await fs.promises.readFile(constructedPath, 'utf8');
 
   // Minify inlined javascript.
@@ -216,13 +229,12 @@ async function getReadFileReplacement(node, filepath) {
 }
 
 /**
- * Attempts to statically determine the target of a `fs.readdirSync()` call and
- * returns a JSON.stringified array with the contents of the target directory.
+ * Attempts to statically determine the target of a `fs.readdirSync()` call.
  * @param {SimpleCallExpression} node ESTree node for `fs.readdirSync` call.
  * @param {string} filepath The path of the file containing this node.
  * @return {Promise<string>}
  */
-async function getReaddirReplacement(node, filepath) {
+async function getReaddirPath(node, filepath) {
   assertEqualString(node.callee.type, 'MemberExpression');
   assertEqualString(node.callee.property.type, 'Identifier');
   assert.equal(node.callee.property.name, 'readdirSync');
@@ -234,8 +246,16 @@ async function getReaddirReplacement(node, filepath) {
     }
   }
 
-  const constructedPath = collapseToStringLiteral(node.arguments[0], filepath);
+  return collapseToStringLiteral(node.arguments[0], filepath);
+}
 
+/**
+ * Returns a JSON.stringified array with the contents of the target directory.
+ * @param {string} constructedPath
+ * @param {SimpleCallExpression} _ ESTree node for `fs.readdirSync` call.
+ * @return {Promise<string>}
+ */
+async function getReaddirReplacement(constructedPath, _) {
   try {
     const contents = await fs.promises.readdir(constructedPath, 'utf8');
     return JSON.stringify(contents);
@@ -243,6 +263,7 @@ async function getReaddirReplacement(node, filepath) {
     throw new Error(`could not inline fs.readdirSync contents: ${err.message}`);
   }
 }
+
 
 /**
  * Returns whether the options object/string specifies the allowed utf8/utf-8

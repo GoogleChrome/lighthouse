@@ -8,7 +8,7 @@ We tag issues that are good candidates for those new to the code with [`good fir
 
 ## Follow the coding style
 
-The `.eslintrc.cjs` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). Annotations are encouraged for all contributions.
+The `.eslintrc.cjs` file defines all. We use [JSDoc](https://jsdoc.app/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). Annotations are encouraged for all contributions.
 
 ## Learn about the architecture
 

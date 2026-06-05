@@ -10,8 +10,8 @@
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'https://developer.mozilla.org/en-US/',
-    finalDisplayedUrl: 'https://developer.mozilla.org/en-US/',
+    requestedUrl: 'https://eslint.org/',
+    finalDisplayedUrl: 'https://eslint.org/',
     audits: {
       'has-hsts': {
         score: 1,

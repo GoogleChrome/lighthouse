@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
+import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -34,7 +35,7 @@ describe('ReportRenderer', () => {
       };
     };
 
-    const {window} = new jsdom.JSDOM();
+    const {window} = new jsdom.JSDOM(undefined, {virtualConsole: createQuietConsole()});
     global.self = window;
     global.HTMLElement = window.HTMLElement;
     global.CustomEvent = window.CustomEvent;
@@ -64,8 +65,9 @@ describe('ReportRenderer', () => {
       assert.ok(output.querySelector('.lh-header-container'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
+      // exclude agentic browsing category, which uses a fractional score
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-exp-gauge__wrapper').length,
-          Object.keys(sampleResults.categories).length * 3, 'renders category gauges');
+          (Object.keys(sampleResults.categories).length - 1) * 3, 'renders category gauges');
     });
 
     it('renders additional reports by replacing the existing one', () => {
@@ -101,7 +103,13 @@ describe('ReportRenderer', () => {
       const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
-      const defaults = ['Performance', 'Accessibility', 'Best Practices', 'SEO'];
+      const defaults = [
+        'Performance',
+        'Accessibility',
+        'Best Practices',
+        'SEO',
+        'Agentic Browsing',
+      ];
 
       function isDefaultGauge(el) {
         return defaults.includes(el.querySelector('.lh-gauge__label').textContent);
@@ -114,10 +122,11 @@ describe('ReportRenderer', () => {
         .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
-      assert.equal(scoresHeaderElem.children.length - 1, indexOfPluginGauge);
+      assert.equal(scoresHeaderElem.children.length - 2, indexOfPluginGauge);
 
       for (let i = 0; i < scoresHeaderElem.children.length; i++) {
         const gauge = scoresHeaderElem.children[i];
+        if (gauge.querySelector('.lh-fraction__label')) continue;
 
         assert.ok(gauge.classList.contains('lh-gauge__wrapper'));
         if (i >= indexOfPluginGauge) {
@@ -148,10 +157,12 @@ describe('ReportRenderer', () => {
         '#index=0&anchor=accessibility',
         '#index=0&anchor=best-practices',
         '#index=0&anchor=seo',
+        '#index=0&anchor=agentic-browsing',
         '#index=0&anchor=performance',
         '#index=0&anchor=accessibility',
         '#index=0&anchor=best-practices',
         '#index=0&anchor=seo',
+        '#index=0&anchor=agentic-browsing',
       ]);
     });
 
