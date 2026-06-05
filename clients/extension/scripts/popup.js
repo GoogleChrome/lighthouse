@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// eslint-disable-next-line spaced-comment
+/// <reference types="chrome" />
+
 import * as SettingsController from './settings-controller.js';
 import {DOM} from '../../../report/renderer/dom.js';
 

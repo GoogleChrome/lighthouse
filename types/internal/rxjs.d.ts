@@ -5,7 +5,7 @@
  */
 
 declare module 'rxjs' {
-  export * from 'rxjs/index.js';
+  export * from 'rxjs';
 
   // Puppeteer uses a later version of rxjs as a dev dep.
   // We don't need it for normal execution, but these types are necessary

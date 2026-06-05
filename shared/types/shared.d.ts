@@ -12,7 +12,7 @@ import {Locale as Locale_} from '../../types/lhr/settings';
 
 declare global {
   // Expose global types in LH namespace.
-  module LH {
+  namespace LH {
     export import Result = LHResult;
     export import FlowResult = FlowResult_;
     export type IcuMessage = IcuMessage_;

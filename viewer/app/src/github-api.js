@@ -71,6 +71,9 @@ export class GithubApi {
         body: JSON.stringify(body),
       });
       const response = await fetch(request);
+      if (response.status === 401) {
+        this._auth.signOut();
+      }
       const json = await response.json();
       if (json.id) {
         logger.log('Saved!');
@@ -122,6 +125,8 @@ export class GithubApi {
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
               idbKeyval.delete(id); // Note: async.
+            } else if (resp.status === 401 && accessToken) {
+              this._auth.signOut();
             }
             throw new Error(`${resp.status} fetching gist`);
           }
