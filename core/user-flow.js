@@ -68,6 +68,12 @@ class UserFlow {
     this._gatherStepRunnerOptions = new WeakMap();
   }
 
+  _controller = new AbortController();
+
+  dispose() {
+    this._controller.abort();
+  }
+
   /**
    * @param {LH.UserFlow.StepFlags|undefined} flags
    * @return {LH.UserFlow.StepFlags|undefined}
@@ -131,6 +137,7 @@ class UserFlow {
     const gatherResult = await navigationGather(this._page, requestor, {
       config: this._options?.config,
       flags: nextFlags,
+      signal: this._controller.signal,
     });
 
     this._addGatherStep(gatherResult, nextFlags);

@@ -244,6 +244,52 @@ describe('waitForFullyLoaded()', () => {
     // Make sure we still cleaned up our listeners
     expect(options._waitForTestOverrides.waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
   });
+
+  it('should stop waiting and cancel listeners when aborted', async () => {
+    const controller = new AbortController();
+
+    const loadPromise = makePromiseInspectable(wait.waitForFullyLoaded(
+      session,
+      networkMonitor,
+      {...options, maxWaitForFcpMs: 60000},
+      controller.signal
+    ));
+
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone();
+
+    controller.abort();
+    await flushAllTimersAndMicrotasks();
+
+    expect(loadPromise).toBeDone();
+    expect(await loadPromise).toEqual({timedOut: false});
+    expect(options._waitForTestOverrides.waitForFcp.getMockCancelFn()).toHaveBeenCalled();
+    expect(options._waitForTestOverrides.waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
+  });
+
+  it('should remove the abort listener when loading completes', async () => {
+    const signal = /** @type {AbortSignal} */ ({
+      addEventListener: fnAny(),
+      removeEventListener: fnAny(),
+    });
+
+    const loadPromise = wait.waitForFullyLoaded(
+      session,
+      networkMonitor,
+      options,
+      signal
+    );
+
+    options._waitForTestOverrides.waitForLoadEvent.mockResolve();
+    options._waitForTestOverrides.waitForNetworkIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+
+    options._waitForTestOverrides.waitForCPUIdle.mockResolve();
+    await loadPromise;
+
+    const onAbort = signal.addEventListener.mock.calls[0][1];
+    expect(signal.removeEventListener).toHaveBeenCalledWith('abort', onAbort);
+  });
 });
 
 describe('waitForFcp()', () => {
