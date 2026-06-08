@@ -66,9 +66,13 @@ class UserFlow {
     this._gatherSteps = [];
     /** @type {GatherStepRunnerOptions} */
     this._gatherStepRunnerOptions = new WeakMap();
-  }
+    /** @type {AbortController} */
+    this._controller = new AbortController();
 
-  _controller = new AbortController();
+    page.on('close', () => {
+      this.dispose();
+    });
+  }
 
   dispose() {
     this._controller.abort();
