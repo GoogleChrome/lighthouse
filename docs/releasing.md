@@ -42,10 +42,6 @@ In general, Lighthouse should be using the latest version of its critical depend
 bash core/scripts/upgrade-deps.sh
 ```
 
-### Update web-features-metadata.json, if needed
-
-`web-features-metadata.json` is currently manually set. Ensure the date matches the version we use.
-
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
