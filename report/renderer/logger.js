@@ -13,8 +13,18 @@ export class Logger {
    */
   constructor(element) {
     this.el = element;
+
     const styleEl = document.createElement('style');
     styleEl.textContent = /* css */ `
+      @keyframes fadeInDown {
+        from { transform: translateY(100px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes fadeOutUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(100px); opacity: 0; }
+      }
+
       #lh-log {
         position: fixed;
         background-color: #323232;
@@ -27,7 +37,6 @@ export class Logger {
         margin: 12px;
         font-size: 14px;
         cursor: default;
-        transition: transform 0.3s, opacity 0.3s;
         transform: translateY(100px);
         opacity: 0;
         bottom: 0;
@@ -40,8 +49,11 @@ export class Logger {
       }
       
       #lh-log.lh-show {
-        opacity: 1;
-        transform: translateY(0);
+        animation: fadeInDown 0.3s forwards;
+      }
+
+      #lh-log.lh-hide {
+        animation: fadeOutUp 0.3s forwards;
       }
     `;
     if (!this.el.parentNode) throw new Error('element needs to be in the DOM');
@@ -59,10 +71,11 @@ export class Logger {
     this._id && clearTimeout(this._id);
 
     this.el.textContent = msg;
+    this.el.classList.remove('lh-hide');
     this.el.classList.add('lh-show');
     if (autoHide) {
       this._id = setTimeout(() => {
-        this.el.classList.remove('lh-show');
+        this.hide();
       }, 7000);
     }
   }
@@ -93,5 +106,6 @@ export class Logger {
   hide() {
     this._id && clearTimeout(this._id);
     this.el.classList.remove('lh-show');
+    this.el.classList.add('lh-hide');
   }
 }
