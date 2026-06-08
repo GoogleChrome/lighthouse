@@ -218,7 +218,7 @@ describe('getTranslatedDescription', () => {
     expect(findings).toHaveLength(1);
 
     const translated = findings[0].map(getTranslatedDescription);
-    expect(translated).toHaveLength(1);
+    expect(translated).toHaveLength(2);
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
       'Nonces should use the base64 charset.'
