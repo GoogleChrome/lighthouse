@@ -8,6 +8,7 @@
  * @fileoverview Mock driver for testing.
  */
 
+import {EventEmitter} from 'node:events';
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
@@ -110,6 +111,7 @@ function createMockPage() {
   return {
     url: fnAny().mockReturnValue('https://example.com'),
     goto: fnAny(),
+    on: fnAny(),
     target: () => ({createCDPSession: () => createMockSession()}),
 
     /** @return {LH.Puppeteer.Page} */
