@@ -22,7 +22,7 @@ const UIStrings = {
       'or `role="presentation"` does not resolve to none or presentation. To ensure the ' +
       'element remains removed from the accessibility tree, you should not add any global ' +
       'ARIA attributes to the element or make it focusable. ' +
-      '[Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.11/presentation-role-conflict).',
+      '[Learn more about presentation role conflict](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

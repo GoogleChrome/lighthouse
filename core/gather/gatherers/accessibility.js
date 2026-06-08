@@ -84,6 +84,7 @@ async function runA11yChecks() {
       'table-fake-caption': {enabled: true},
       'target-size': {enabled: true},
       'td-has-header': {enabled: true},
+      'aria-tab-name': {enabled: false}, // TODO: consider adding.
     },
   });
 
