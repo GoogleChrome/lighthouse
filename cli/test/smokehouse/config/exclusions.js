@@ -84,6 +84,8 @@ for (const array of Object.values(exclusions)) {
   array.push('issues-mixed-content');
   // works most of the time, but since it uses a live site it can be flaky
   array.push('trusted-types-directive-present');
+  // https://csp.withgoogle.com/docs/index.html is down
+  array.push('origin-isolation-coop-present');
 }
 
 export default exclusions;
