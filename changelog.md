@@ -1,20 +1,19 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Thomas Steiner @tomayac
-KS Nithin @Nithin0620
-Emanuele @emazack
-Kirtikumar Anandrao Ramchandani @KirtiRamchandani
-Rin @RinZ27
-Michael Hablich @natorion
- <a name="13.4.0"></a>
+<a name="13.4.0"></a>
 # 13.4.0 (2026-06-09)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.3.0...v13.4.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 151](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
-## Notable Changes
-~~ TODO: Move notable changes here ~~
+## New contributors
 
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Thomas Steiner @tomayac
+- KS Nithin @Nithin0620
+- Emanuele @emazack
+- Kirtikumar Anandrao Ramchandani @KirtiRamchandani
+- Rin @RinZ27
+- Michael Hablich @natorion
 
 ## Core
 
@@ -224,14 +223,16 @@ We expect this release to ship in the DevTools of [Chrome 146](https://chromiumd
 
 We expect this release to ship in the DevTools of [Chrome 146](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
+## New contributors
+
 Thanks to our new contributors 👽🐷🐰🐯🐻!
 
-Alex Rudenko @OrKoN
-Lusa Zhan @lusayaa
-Atakan Demircioğlu @atakde
-Mimori @Mimori256
-Denis @filchakov
-_ @Lulucmy
+- Alex Rudenko @OrKoN
+- Lusa Zhan @lusayaa
+- Atakan Demircioğlu @atakde
+- Mimori @Mimori256
+- Denis @filchakov
+- _ @Lulucmy
 
 ## Core
 
