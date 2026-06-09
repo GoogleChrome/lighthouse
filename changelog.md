@@ -17,19 +17,19 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 ## Core
 
-* match scripts to network requests using frameId ([#16774](https://github.com/GoogleChrome/lighthouse/pull/16774))
-* add public Lighthouse types entrypoint ([#17028](https://github.com/GoogleChrome/lighthouse/pull/17028))
 * canonical: improve validation for invalid URLs ([#16765](https://github.com/GoogleChrome/lighthouse/pull/16765))
+* llms-txt: allow leading whitespace for header check ([#17057](https://github.com/GoogleChrome/lighthouse/pull/17057))
+* geolocation-on-start: mention `geolocation` element ([#16835](https://github.com/GoogleChrome/lighthouse/pull/16835))
+* add public Lighthouse types entrypoint ([#17028](https://github.com/GoogleChrome/lighthouse/pull/17028))
+* match scripts to network requests using frameId ([#16774](https://github.com/GoogleChrome/lighthouse/pull/16774))
 * config: import LH types ([#17048](https://github.com/GoogleChrome/lighthouse/pull/17048))
 * driver: add ExecutionContext.evaluateOnObject ([#17050](https://github.com/GoogleChrome/lighthouse/pull/17050))
 * driver: check if usage data exists before using ([#17033](https://github.com/GoogleChrome/lighthouse/pull/17033))
-* geolocation-on-start: mention `geolocation` element ([#16835](https://github.com/GoogleChrome/lighthouse/pull/16835))
-* llms-txt: allow leading whitespace for header check ([#17057](https://github.com/GoogleChrome/lighthouse/pull/17057))
 
 ## Report
 
-* decouple link creation from link details rendering ([#17049](https://github.com/GoogleChrome/lighthouse/pull/17049))
 * fix performance gauge label, improve load animation ([#17045](https://github.com/GoogleChrome/lighthouse/pull/17045))
+* decouple link creation from link details rendering ([#17049](https://github.com/GoogleChrome/lighthouse/pull/17049))
 * viewer: persist dark mode when when changing langauge ([#17063](https://github.com/GoogleChrome/lighthouse/pull/17063))
 
 ## Deps
@@ -46,7 +46,6 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 * viewer: prevent toast showing on load ([#17069](https://github.com/GoogleChrome/lighthouse/pull/17069))
 * viewer: clear github auth token on 401 error ([#17064](https://github.com/GoogleChrome/lighthouse/pull/17064))
 * viewer: disable agentic-browsing in PSI api call ([#17041](https://github.com/GoogleChrome/lighthouse/pull/17041))
-* viewer: rotate PSI API key ([#17035](https://github.com/GoogleChrome/lighthouse/pull/17035))
 
 ## I18n
 
