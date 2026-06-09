@@ -533,6 +533,7 @@ async function waitForFullyLoaded(session, networkMonitor, options, signal) {
   let onAbort = () => {};
   /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
   const abortPromise = new Promise((resolve) => {
+    signal?.throwIfAborted();
     onAbort = () => resolve(async () => ({timedOut: false}));
     signal?.addEventListener('abort', onAbort, {once: true});
   });
