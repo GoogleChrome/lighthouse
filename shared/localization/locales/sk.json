@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atribúty `[aria-*]` sú platné a neobsahujú preklepy"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Ak majú čítačky obrazovky riadne fungovať, hodnoty atribútu `autocomplete` musia byť platné a správne použité. [Ďalšie informácie o platných hodnotách automatického dopĺňania](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Atribúty `autocomplete` nie sú použité správne"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Atribúty `autocomplete` sú použité správne"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Prvky s chybami"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Prvky `<object>` majú alternatívny text"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "V niektorých prípadoch sa sémantická rola prvku s atribútom `role=\"none\"` alebo `role=\"presentation\"` nevyhodnotí ako none alebo presentation. Ak chcete, aby daný prvok zostal zo stromu prístupnosti odstránený, nepridávajte k tomuto prvku žiadne globálne atribúty ARIA ani ho nenastavujte tak, aby bol označiteľný. [Ďalšie informácie o konflikte roly presentation](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Prvky s atribútom `role=\"none\"` alebo `role=\"presentation\"` majú konflikty"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Prvky s atribútom `role=\"none\"` alebo `role=\"presentation\"` nemajú konflikty"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Prvky formulárov bez efektívnych štítkov môžu byť pre používateľov čítačiek obrazovky frustrujúce. [Ďalšie informácie o prvku `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Odkazy na preskočenie sú označiteľné."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Zaisťuje, aby mali prvky SVG s rolou `img`, `graphics-document` alebo `graphics-symbol` dostupnú textovú alternatívu. [Ďalšie informácie o alternatívnom texte prvkov SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Prvky SVG s rolou `img` nemajú dostupnú textovú alternatívu"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Prvky SVG s rolou `img` majú dostupnú textovú alternatívu"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Hodnota väčšia ako 0 označuje explicitné usporiadanie navigácie. Ide o technicky platné riešenie, ale často vedie k nepríjemným skúsenostiam používateľov, ktorí potrebujú asistenčné technológie. [Ďalšie informácie o atribúte `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Prvky `<video>` obsahujú prvok `<track>` s titulkami `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Nevyhovujúci prvok"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Nevyhovujúce pravidlo"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "[Strom dostupnosti](http://goo.gle/lighthouse-agentic-a11y) v správnom formáte pomáha agentom umelej inteligencie prechádzať po stránke a interagovať s ňou."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Všetky kontroly boli úspešné"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Neúspešné audity"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Strom dostupnosti nemá správny formát"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Strom dostupnosti má správny formát"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Ak váš súbor llms.txt nespĺňa odporúčania, rozsiahle jazykové modely nemusia pochopiť, ako majú váš web prehľadávať alebo používať na cvičenie. Súbor [llms.txt](https://llmstxt.org/) by mal byť súbor Markdown s aspoň jednou hlavičkou H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Nepodarilo sa so stavom HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Súbor llms.txt sa nepodarilo načítať"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Súbor llms.txt nespĺňa odporúčania"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "V súbore chýba povinná hlavička H1 (napr. # Názov)."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Zdá sa, že súbor neobsahuje žiadne odkazy."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Súbor llms.txt spĺňa odporúčania"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Súbor je podozrivo krátky."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Aktuálna hodnota"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Skontrolujte poradie tokenov: {tokens} v {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Webové funkcie"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Stav Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Uvádza zoznam webových funkcií používaných na stránke a ich stav Baseline k {date}. [Ďalšie informácie o úsilí Baseline](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Funkcie Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Opraviteľné"
@@ -771,7 +855,7 @@
     "message": "Stránka obsahuje prvok HTML doctype"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Používatelia nedôverujú webom, ktoré požadujú ich polohu bez kontextu, alebo ich považujú za mätúce. Zvážte namiesto toho spojenie žiadosti s akciou používateľa. [Ďalšie informácie o povolení geolokácie](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Požaduje povolenie na geolokáciu pri načítaní stránky"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Stránka obsahuje platné mapy zdroja"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Formulár"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Zvážte možnosť pridať do formulárov uvedených nižšie anotácie [protokolu WebMCP](http://goo.gle/webmcp-docs). Agenti umelej inteligencie vďaka nim dokážu tieto formuláre spoľahlivejšie identifikovať a interagovať s nimi."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 formulár nemá anotácie}few{# formuláre nemajú anotácie}many{# forms missing annotations}other{# formulárov nemá anotácie}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Pokrytie formulárov WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Prvok"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Opis"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Umiestnenie zdroja"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Schéma vstupu"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Názov nástroja"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Uvádza zoznam [nástrojov WebMCP](http://goo.gle/webmcp-docs) zaregistrovaných v čase analýzy."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Nástroje WebMCP boli zaregistrované"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Deklaratívne nástroje"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Imperatívne nástroje"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Prvok"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problém"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Na to, aby agenti umelej inteligencie pochopili nástroje a správne s nimi interagovali, sú potrebné platné [schémy WebMCP](http://goo.gle/webmcp-docs). Opravte všetky chyby alebo varovania, ktoré prehliadač nahlásil."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Schémy WebMCP sú neplatné"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Chýba atribút `name` pre nepovinné pole. Pridajte ho a definujte názov parametra."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Pridajte opis, aby bol tento formulár dostupnejší pre agentov umelej inteligencie."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Chýba atribút `name` pre povinné pole. Pridajte ho a definujte názov parametra."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Chýba atribút `tooldescription` na úrovni formulára. Pridajte ho a opíšte nástroj pre agentov umelej inteligencie."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Chýba atribút `toolname` na úrovni formulára. Pridajte ho a definujte názov nástroja."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Schémy WebMCP sú platné"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Tieto audity zvýrazňujú osvedčené postupy na zlepšenie dostupnosti webu pre agentov umelej inteligencie."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Dostupnosť agenta"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Tieto kontroly zaisťujú vysokokvalitné [prehliadateľné weby pre agentov umelej inteligencie](https://goo.gle/lighthouse-agentic-web) a overujú správnosť integrácií WebMCP. Táto kategória je stále vo vývoji a môže sa zmeniť."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentské prehliadanie"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Audity overujúce integráciu WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Toto sú možnosti zlepšenia technológie ARIA vo vašej aplikácii, čo môže pomôcť používateľom asistenčných technológií (napr. čítačiek obrazovky)."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabuľky a zoznamy"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Tieto audity zvýrazňujú osvedčené postupy na zlepšenie dostupnosti webu pre agentov umelej inteligencie."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Dostupnosť agenta"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Tieto kontroly zaisťujú vysokokvalitné [prehliadateľné weby pre agentov umelej inteligencie](https://goo.gle/lighthouse-agentic-web) a overujú správnosť integrácií WebMCP. Táto kategória je stále vo vývoji a môže sa zmeniť."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentské prehliadanie"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilita prehliadača"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Vhodné pre mobilné zariadenia"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Audity overujúce integráciu WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Testované zariadenie má zrejme pomalší procesor ako Lighthouse očakáva. Môže to záporne ovplyvniť vaše skóre výkonnosti. [Ďalšie informácie o kalibrácii vhodného multiplikátora spomalenia procesora](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)"
@@ -1488,7 +1677,7 @@
     "message": "TTL vyrovnávacej pamäte"
   },
   "core/lib/i18n/i18n.js | columnDescription": {
-    "message": "Popis"
+    "message": "Opis"
   },
   "core/lib/i18n/i18n.js | columnDuration": {
     "message": "Trvanie"

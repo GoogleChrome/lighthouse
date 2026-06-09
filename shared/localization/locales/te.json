@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "``[aria-*]`` లక్షణాలు చెల్లుబాటు అయ్యేవి, అక్షరదోషాలేవీ లేవు"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "స్క్రీన్ రీడర్‌లు సరిగ్గా పని చేయడానికి `autocomplete` అట్రిబ్యూట్ విలువలు తప్పనిసరిగా చెల్లుబాటు అయ్యేవిగా ఉండాలి, అలాగే వాటిని సరిగ్గా వర్తింపజేయాలి. [చెల్లుబాటు అయ్యే ఆటో-కంప్లీట్ విలువల గురించి మరింత తెలుసుకోండి](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` అట్రిబ్యూట్‌లను సరిగ్గా ఉపయోగించలేదు"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` అట్రిబ్యూట్‌లను సరిగ్గా ఉపయోగించారు"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "విఫలం అవుతున్న మూలకాలు"
   },
@@ -456,7 +465,7 @@
     "message": "జూమ్ చేయగల సామర్థ్యాన్ని డిజేబుల్ చేస్తే, స్క్రీన్ మ్యాగ్నిఫికేషన్‌పై ఆధారపడే తక్కువ కంటిచూపు ఉన్న యూజర్‌లు వెబ్ పేజీ కంటెంట్‌లను సరిగ్గా చూడలేరు. [వ్యూపోర్ట్ మెటా ట్యాగ్ గురించి మరింత తెలుసుకోండి](https://dequeuniversity.com/rules/axe/4.12/meta-viewport)."
   },
   "core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "'`[user-scalable=\"no\"]`' అన్నది '`<meta name=\"viewport\">`' మూలకంలో ఉపయోగించబడింది, అలాగే '`[maximum-scale]`' లక్షణం 5 కంటే తక్కువ ఉంది."
+    "message": "'`[user-scalable=\"no\"]`' అన్నది '`<meta name=\"viewport\">`' మూలకంలో ఉపయోగించారు, అలాగే '`[maximum-scale]`' లక్షణం 5 కంటే తక్కువ ఉంది."
   },
   "core/audits/accessibility/meta-viewport.js | title": {
     "message": "'`[user-scalable=\"no\"]`' అన్నది '`<meta name=\"viewport\">`' మూలకంలో ఉపయోగించలేదు, అలాగే '`[maximum-scale]`' లక్షణం 5 కంటే తక్కువగా లేదు."
@@ -469,6 +478,15 @@
   },
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` ఎలిమెంట్‌లు ప్రత్యామ్నాయ టెక్స్ట్‌ను కలిగి ఉన్నాయి"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "`role=\"none\"` లేదా `role=\"presentation\"` ఉన్న ఎలిమెంట్ సెమాంటిక్ రోల్, 'ఏదీ కాదు' లేదా 'ప్రజెంటేషన్'గా నిర్ధారణ కాని కొన్ని ప్రత్యేక సందర్భాలు ఉంటాయి. ఎలిమెంట్‌ను యాక్సెసిబిలిటీ ట్రీ నుండి తీసివేశారని నిర్ధారించుకోవడానికి, మీరు ఎలిమెంట్‌కు ఎటువంటి గ్లోబల్ ARIA అట్రిబ్యూట్‌లను జోడించకూడదు లేదా దాన్ని ఫోకస్ చేయదగినదిగా చేయకూడదు. [ప్రజెంటేషన్ రోల్ వైరుధ్యం గురించి మరింత తెలుసుకోండి](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "`role=\"none\"` లేదా `role=\"presentation\"` ఉన్న ఎలిమెంట్‌లలో వైరుధ్యాలు ఉన్నాయి"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "`role=\"none\"` లేదా `role=\"presentation\"`‌తో ఉన్న ఎలిమెంట్‌లకు వైరుధ్యాలు ఏవీ లేవు"
   },
   "core/audits/accessibility/select-name.js | description": {
     "message": "ప్రభావవంతమైన లేబుల్స్ లేని ఫారమ్ ఎలిమెంట్స్ స్క్రీన్ రీడర్ యూజర్‌లకు నిరాశపరిచే ఎక్స్‌పీరియన్స్‌లను క్రియేట్ చేయగలవు. [ `select` ఎలిమెంట్](https://dequeuniversity.com/rules/axe/4.12/select-name) గురించి మరింత తెలుసుకోండి."
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "స్కిప్ లింక్‌లపై ఫోకస్ చేయడం సాధ్యమే."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "`img`, `graphics-document` లేదా `graphics-symbol` రోల్‌తో ఉన్న SVG ఎలిమెంట్‌లకు, సులభంగా అర్థం చేసుకునేలా టెక్స్ట్ ప్రత్యామ్నాయం ఉండేలా చూస్తుంది. [SVG ప్రత్యామ్నాయ టెక్స్ట్ గురించి మరింత తెలుసుకోండి](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "`img` రోల్‌తో ఉన్న SVG ఎలిమెంట్‌లకు, యాక్సెస్ చేయగల టెక్స్ట్ ప్రత్యామ్నాయం ఏదీ లేదు"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "`img` రోల్‌తో ఉన్న SVG ఎలిమెంట్‌లకు, యాక్సెస్ చేయగల టెక్స్ట్ ప్రత్యామ్నాయం ఉంది"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "0 కంటే పెద్ద విలువ, స్పష్టమైన నావిగేషన్ క్రమాన్ని సూచిస్తుంది. టెక్నికల్‌గా చెల్లుబాటే అయినప్పటికీ, సహాయక టెక్నాలజీలపై ఆధారపడే యూజర్‌లకు ఇది తరచుగా విసుగు తెప్పిస్తూ ఉంటుంది. [`tabindex` లక్షణం గురించి మరింత తెలుసుకోండి](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` ఎలిమెంట్‌లు `[kind=\"captions\"]`తో ఉన్న `<track>` ఎలిమెంట్‌ను కలిగి ఉన్నాయి"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "విఫలమవుతున్న ఎలిమెంట్"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "విఫలమైన నియమం"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "సరిగ్గా రూపొందించిన [యాక్సెసిబిలిటీ ట్రీ](http://goo.gle/lighthouse-agentic-a11y) పేజీని నావిగేట్ చేయడంలో, ఇంటరాక్ట్ అవ్వడంలో AI ఏజెంట్‌లకు సహాయపడుతుంది."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "ఆడిట్‌లన్నీ పాస్ అయ్యాయి"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "విఫలమైన ఆడిట్‌లు"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "యాక్సెసిబిలిటీ ట్రీ సరిగ్గా ఫార్మాట్ చేయబడలేదు"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "యాక్సెసిబిలిటీ ట్రీ సరిగ్గా ఫార్మాట్ చేయబడింది"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "మీ llms.txt ఫైల్, సిఫార్సులను పాటించకపోతే, మీ వెబ్‌సైట్‌ను ఎలా క్రాల్ చేయాలి లేదా ట్రెయినింగ్ కోసం ఎలా ఉపయోగించాలి అన్నది లార్జ్ లాంగ్వేజ్ మోడల్స్‌కు అర్థం కాకపోవచ్చు. ఈ [llms.txt](https://llmstxt.org/) ఫైల్, కనీసం ఒక H1 హెడర్‌ను కలిగి ఉన్న మార్క్‌డౌన్ ఫైల్ అయి ఉండాలి."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "HTTP స్టేటస్ {statusCode}‌తో విఫలమైంది"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt పొందడం విఫలమైంది"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt, సిఫార్సులను ఫాలో అవ్వడం లేదు"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "ఫైల్‌లో అవసరమైన H1 హెడర్ లేదు (ఉదా., \"# టైటిల్\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "ఫైల్‌లో లింక్‌లు ఏవీ ఉన్నట్లు కనిపించడం లేదు."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt, సిఫార్సులను ఫాలో అవుతోంది"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "ఫైల్ అనుమానాస్పదంగా చిన్నదిగా ఉంది."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "ప్రస్తుత విలువ"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "టోకెన్‌ల ఆర్డర్‌ను రివ్యూ చేయండి: \"{tokens}\"ను {snippet}లో"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "వెబ్-ఫీచర్‌లు"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "బేస్‌లైన్ స్టేటస్"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "పేజీలో ఉపయోగించిన వెబ్ ఫీచర్‌లను, {date} నాటికి వాటి బేస్‌లైన్ స్టేటస్‌ను లిస్ట్ చేస్తుంది. [బేస్‌లైన్ గురించి మరింత తెలుసుకోండి](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "బేస్‌లైన్ ఫీచర్‌లు"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "చర్య తీసుకోదగినవి"
@@ -771,7 +855,7 @@
     "message": "పేజీలో 'HTML doctype' ఉంది"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "సందర్భం ఏమీ లేకుండా యూజర్‌ల లొకేషన్‌ను రిక్వెస్ట్ చేసే సైట్‌లను యూజర్‌లు నమ్మరు లేదా వారు అయోమయానికి గురి అవుతారు. అందుకు బదులుగా, రిక్వెస్ట్‌ను యూజర్ చర్యకు లింక్ చేయడాన్ని పరిశీలించండి. [భౌగోళిక స్థానం అనుమతి గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "పేజీ లోడ్ సమయంలో భౌగోళిక స్థానం అనుమతిని అభ్యర్థిస్తుంది"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "పేజీలో చెల్లుబాటు అయ్యే సోర్స్ మ్యాప్‌లు ఉన్నాయి"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "ఫారమ్"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "కింద లిస్ట్ చేసిన ఫారమ్‌లకు [WebMCP](http://goo.gle/webmcp-docs) అదనపు గమనికలను జోడించడాన్ని పరిగణించండి. ఇది AI ఏజెంట్‌లు ఈ ఫారమ్‌లను మరింత విశ్వసనీయంగా గుర్తించడంలో, ఇంటరాక్ట్ అవ్వడంలో సహాయపడుతుంది."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 ఫారమ్‌లో అదనపు గమనికలు లేవు}other{# ఫారమ్‌లలో అదనపు గమనికలు లేవు}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP ఫారమ్ కవరేజీ"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "ఎలిమెంట్"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "వివరణ"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "సోర్స్ లొకేషన్"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "ఇన్‌పుట్ స్కీమా"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "టూల్ పేరు"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "విశ్లేషణ సమయంలో రిజిస్టర్ అయిన [WebMCP టూల్స్‌](http://goo.gle/webmcp-docs)ను లిస్ట్ చేస్తుంది."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "WebMCP టూల్స్ రిజిస్టర్ అయ్యాయి"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "డిక్లరేటివ్ టూల్స్"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "అత్యవసర టూల్స్"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "ఎలిమెంట్"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "సమస్య"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "AI ఏజెంట్‌లు టూల్స్‌ను సరిగ్గా అర్థం చేసుకోవడానికి, వాటితో ఇంటరాక్ట్ అవ్వడానికి చెల్లుబాటు అయ్యే [WebMCP స్కీమాలు](http://goo.gle/webmcp-docs) అవసరం. దయచేసి బ్రౌజర్, రిపోర్ట్ చేసిన ఏవైనా ఎర్రర్‌లను లేదా వార్నింగ్స్‌ను (హెచ్చరికలను) పరిష్కరించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP స్కీమాలు చెల్లవు"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "ఆప్షనల్ ఫీల్డ్‌కు `name` అట్రిబ్యూట్ మిస్ అయింది. పారామీటర్ పేరును డిఫైన్ చేయడానికి దాన్ని జోడించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "AI ఏజెంట్‌లు ఈ ఫారమ్‌ను మరింత యాక్సెస్ చేయగలిగేలా చేయడానికి వివరణను జోడించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "అవసరమైన ఫీల్డ్‌కు `name` అట్రిబ్యూట్ మిస్ అయింది. పారామీటర్ పేరును డిఫైన్ చేయడానికి దాన్ని జోడించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "ఫారమ్ స్థాయి `tooldescription` అట్రిబ్యూట్ మిస్ అయింది. AI ఏజెంట్‌ల కోసం టూల్‌ను డిస్క్రయిబ్ చేయడానికి దాన్ని జోడించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "ఫారమ్ స్థాయి `toolname` అట్రిబ్యూట్ మిస్ అయింది. టూల్ పేరును డిఫైన్ చేయడానికి దాన్ని జోడించండి."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP స్కీమాలు చెల్లుబాటు అవుతాయి"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "AI ఏజెంట్‌ల కోసం వెబ్‌సైట్ యాక్సెసిబిలిటీని మెరుగుపరచడానికి ఈ ఆడిట్‌లు బెస్ట్ ప్రాక్టీసులను హైలైట్ చేస్తాయి."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "ఏజెంట్ యాక్సెసిబిలిటీ"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "ఈ చెకప్ దశలు [AI ఏజెంట్‌లు అందించే వెబ్‌సైట్‌లు](https://goo.gle/lighthouse-agentic-web) హై-క్వాలిటీలో, బ్రౌజ్ చేయదగినవిగా ఉండేలా చూస్తాయి, WebMCP ఇంటిగ్రేషన్‌లు సరైనవో, కాదో వ్యాలిడేట్ చేస్తాయి. ఈ కేటగిరీ ఇంకా డెవలప్‌మెంట్ దశలోనే ఉంది, మార్పునకు లోబడి ఉంటుంది."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "ఏజెంటిక్ బ్రౌజింగ్"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP ఇంటిగ్రేషన్‌ను వ్యాలిడేట్ చేసే ఆడిట్‌లు."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "మీ అప్లికేషన్‌లో ARIA వినియోగాన్ని మెరుగుపరచాడానికి ఇవి అవకాశాలుగా ఉపయోగపడతాయి, ఇది స్క్రీన్ రీడర్ లాంటి సహాయక సాంకేతిక పరిజ్ఞానం ఉపయోగించే వినియోగదారులకు మెరుగైన అనుభవాన్ని అందించవచ్చు."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "పట్టికలు మరియు లిస్ట్‌లు"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "AI ఏజెంట్‌ల కోసం వెబ్‌సైట్ యాక్సెసిబిలిటీని మెరుగుపరచడానికి ఈ ఆడిట్‌లు బెస్ట్ ప్రాక్టీసులను హైలైట్ చేస్తాయి."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "ఏజెంట్ యాక్సెసిబిలిటీ"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "ఈ చెకప్ దశలు [AI ఏజెంట్‌లు అందించే వెబ్‌సైట్‌లు](https://goo.gle/lighthouse-agentic-web) హై-క్వాలిటీలో, బ్రౌజ్ చేయదగినవిగా ఉండేలా చూస్తాయి, WebMCP ఇంటిగ్రేషన్‌లు సరైనవో, కాదో వ్యాలిడేట్ చేస్తాయి. ఈ కేటగిరీ ఇంకా డెవలప్‌మెంట్ దశలోనే ఉంది, మార్పునకు లోబడి ఉంటుంది."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "ఏజెంటిక్ బ్రౌజింగ్"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "బ్రౌజర్ అనుకూలత"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "మొబైల్-అనుకూలం"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP ఇంటిగ్రేషన్‌ను వ్యాలిడేట్ చేసే ఆడిట్‌లు."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "పరీక్షించిన పరికరం Lighthouse ఆశించే దాని కంటే తక్కువ CPUని కలిగి ఉన్నట్లుంది. మీ పనితీరు స్కోర్‌పై ఇది ప్రతికూల ప్రభావం చూపగలదు. [సముచిత CPU నెమ్మది చలనం మల్టీప్లయర్‌ను క్యాలిబ్రేట్ చేయడం](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling) గురించి మరింత తెలుసుకోండి."
@@ -1479,7 +1668,7 @@
     "message": "ఈ మార్పు {milestone} మైల్‌స్టోన్‌తో అమలులోకి వస్తుంది."
   },
   "core/lib/deprecation-description.js | title": {
-    "message": "విస్మరించబడిన ఫీచర్ ఉపయోగించబడింది"
+    "message": "విస్మరించిన ఫీచర్ ఉపయోగించారు"
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "ప్రధాన థ్రెడ్ బ్లాక్ చేయబడే సమయం"
@@ -1494,7 +1683,7 @@
     "message": "వ్యవధి"
   },
   "core/lib/i18n/i18n.js | columnElement": {
-    "message": "మూలకం"
+    "message": "ఎలిమెంట్"
   },
   "core/lib/i18n/i18n.js | columnFailingElem": {
     "message": "విఫలం అవుతున్న మూలకాలు"

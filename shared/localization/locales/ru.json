@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибуты `[aria-*]` действительны и написаны без ошибок"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Значения атрибута `autocomplete` должны быть действительными и правильно применены, чтобы программы чтения с экрана работали корректно. Подробнее [о допустимых значениях атрибута autocomplete](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)…"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Атрибуты `autocomplete` используются неправильно"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Атрибуты `autocomplete` используются правильно"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Элементы, не прошедшие проверку"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "У элементов `<object>` есть альтернативный текст"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "В некоторых случаях семантическая роль элемента с атрибутом `role=\"none\"` (или `role=\"presentation\"`) не распознается как none (или presentation). Чтобы элемент оставался исключенным из дерева доступности, не добавляйте к нему глобальные атрибуты ARIA и не делайте его фокусируемым. Подробнее [о конфликте с ролью presentation](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)…"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "У элементов с атрибутом `role=\"none\"` (или `role=\"presentation\"`) есть конфликты"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "У элементов с атрибутом `role=\"none\"` (или `role=\"presentation\"`) нет конфликтов"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Элементы формы без эффективных меток могут доставить неудобства пользователям программы чтения с экрана. Подробнее [об элементе `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)…"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Ссылки для пропуска контента фокусируемые"
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "У SVG-элементов с ролью `img`, `graphics-document` или `graphics-symbol` должен быть доступный альтернативный текст. Подробнее [об альтернативном тексте для SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)…"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "У SVG-элементов с ролью `img` нет доступного альтернативного текста"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "У SVG-элементов с ролью `img` есть доступный альтернативный текст"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Значение больше 0 подразумевает явное указание порядка навигации. Это может создавать трудности для пользователей с ограниченными возможностями. Подробнее [об атрибуте `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)…"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Элементы `<video>` содержат элемент `<track>` с атрибутом `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Неподходящий элемент"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Невыполненное правило"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Корректно сформированное [дерево доступности](http://goo.gle/lighthouse-agentic-a11y) помогает ИИ-агентам ориентироваться на странице и взаимодействовать с ней."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Все проверки пройдены."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Непройденные проверки"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Дерево доступности имеет неверный формат"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Дерево доступности сформировано корректно"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Если файл llms.txt не соответствует рекомендациям, большие языковые модели могут не распознать ваши инструкции по сканированию сайта или его использованию для обучения. Файл [llms.txt](https://llmstxt.org/) должен быть в формате Markdown и включать хотя бы один заголовок H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Ошибка HTTP. Код статуса: {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Не удалось загрузить файл llms.txt."
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Файл llms.txt не соответствует рекомендациям"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "В файле отсутствует обязательный заголовок H1 (например, \"# Заголовок\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Файл не содержит ссылок."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Файл llms.txt соответствует рекомендациям"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Слишком маленький файл."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Текущее значение"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Проверьте порядок токенов: \"{tokens}\" в выражении {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Веб-функции"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Статус Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Список веб-функций, используемых на странице, и их статус Baseline на {date}. Подробнее [о Baseline](https://webstatus.dev/)…"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Функции Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Есть доступные действия"
@@ -771,7 +855,7 @@
     "message": "Тип страницы (DOCTYPE): HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Пользователи с подозрением относятся к сайтам, которые беспричинно запрашивают доступ к их местоположению. Рекомендуем связать этот запрос с определенными действиями пользователя. Подробнее [о разрешении на определение местоположения](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)…"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Разрешение на определение местоположения запрашивается при загрузке страницы"
@@ -783,10 +867,10 @@
     "message": "Тип нарушения"
   },
   "core/audits/dobetterweb/inspector-issues.js | description": {
-    "message": "Ошибки, записанные на панели`Issues` в Инструментах разработчика Chrome, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы, низкий уровень защиты и другие сбои в работе браузера. Чтобы получить подробную информацию о каждой неполадке, откройте панель."
+    "message": "Ошибки, записанные на панели `Issues` в инструментах разработчика в Chrome, указывают на нерешенные проблемы. Это могут быть невыполненные сетевые запросы, низкий уровень защиты и другие сбои в работе браузера. Чтобы получить подробную информацию о каждой неполадке, откройте панель."
   },
   "core/audits/dobetterweb/inspector-issues.js | failureTitle": {
-    "message": "Ошибки были записаны на панели `Issues` в Инструментах разработчика Chrome"
+    "message": "Ошибки были записаны на панели `Issues` в инструментах разработчика в Chrome"
   },
   "core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
     "message": "Заблокировано в соответствии с правилами использования междоменных запросов."
@@ -795,7 +879,7 @@
     "message": "Объявления используют слишком много ресурсов"
   },
   "core/audits/dobetterweb/inspector-issues.js | title": {
-    "message": "Нет записей ошибок на панели `Issues` в Инструментах разработчика Chrome"
+    "message": "Нет записей ошибок на панели `Issues` в инструментах разработчика в Chrome"
   },
   "core/audits/dobetterweb/js-libraries.js | columnVersion": {
     "message": "Версия"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "У страницы правильные карты исходного кода"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Форма"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Рекомендуем добавить аннотации [WebMCP](http://goo.gle/webmcp-docs) в перечисленные ниже формы. Это поможет ИИ-агентам при поиске форм и взаимодействии с ними."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{В 1 форме нет аннотаций}one{В # форме нет аннотаций}few{В # формах нет аннотаций}many{В # формах нет аннотаций}other{В # формы нет аннотаций}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Покрытие форм WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Элемент"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Описание"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Исходное местоположение"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Схема ввода"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Название инструмента"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Список [инструментов WebMCP](http://goo.gle/webmcp-docs), зарегистрированных на момент анализа."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Зарегистрированные инструменты WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Декларативные инструменты"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Императивные инструменты"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Элемент"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Проблема"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Чтобы ИИ-агенты могли правильно понимать инструменты и взаимодействовать с ними, нужны действительные [схемы WebMCP](http://goo.gle/webmcp-docs). Исправьте все ошибки и предупреждения, о которых сообщает браузер."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Схемы WebMCP недействительны"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Отсутствует атрибут `name` для необязательного поля. Добавьте его, чтобы указать название параметра."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Добавьте описание, чтобы сделать эту форму более доступной для ИИ-агентов."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Отсутствует атрибут `name` для обязательного поля. Добавьте его, чтобы указать название параметра."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Отсутствует атрибут `tooldescription` на уровне формы. Добавьте его, чтобы описать инструмент для ИИ-агентов."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Отсутствует атрибут `toolname` на уровне формы. Добавьте его, чтобы указать название инструмента."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Схемы WebMCP действительны"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Эти проверки помогут вам улучшить доступность сайта для ИИ-агентов."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Доступность агента"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Эти проверки гарантируют высокое качество [сайтов для ИИ-агентов](https://goo.gle/lighthouse-agentic-web) и правильность интеграции WebMCP. Эта категория находится на этапе разработки и может быть изменена."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Агентный просмотр"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Проверки интеграции WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Проверьте, правильно ли заданы атрибуты ARIA. Они облегчают работу с вашим приложением пользователям с ограниченными возможностями."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Таблицы и списки"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Эти проверки помогут вам улучшить доступность сайта для ИИ-агентов."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Доступность агента"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Эти проверки гарантируют высокое качество [сайтов для ИИ-агентов](https://goo.gle/lighthouse-agentic-web) и правильность интеграции WebMCP. Эта категория находится на этапе разработки и может быть изменена."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Агентный просмотр"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Совместимость с браузерами"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Оптимизация для мобильных устройств"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Проверки интеграции WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "У тестируемого устройства недостаточно быстрый процессор. Это может негативно повлиять на показатель производительности. Подробнее [о калибровке множителя замедления процессора](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)…"
@@ -2934,10 +3123,10 @@
     "message": "Убедитесь, что включен параметр \"Объединить файлы JavaScript\" на странице \"Администрирование > Конфигурация > Разработка\"."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Рекомендуем удалять ненужные правила CSS и подключать к страницам и их компонентам только те библиотеки `Drupal`, которые требуются для их загрузки. Подробная информация доступна в [документации `Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Чтобы найти подключенные библиотеки, которые загружают неиспользуемый код JavaScript, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage) в инструментах разработчика Chrome. Если на вашем сайте `Drupal` выключена агрегация CSS, определить проблемный модуль или тему можно по URL-адресу таблицы стилей. Обращайте внимание на модули и темы с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Модули и темы должны подключать таблицу стилей только в том случае, если она используется на странице."
+    "message": "Рекомендуем удалять ненужные правила CSS и подключать к страницам и их компонентам только те библиотеки `Drupal`, которые требуются для их загрузки. Подробная информация доступна в [документации `Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Чтобы найти подключенные библиотеки, которые загружают неиспользуемый код JavaScript, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage) в инструментах разработчика в Chrome. Если на вашем сайте `Drupal` выключена агрегация CSS, определить проблемный модуль или тему можно по URL-адресу таблицы стилей. Обращайте внимание на модули и темы с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Модули и темы должны подключать таблицу стилей только в том случае, если она используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Рекомендуем удалять ненужные файлы JavaScript и подключать к страницам и их компонентам только те библиотеки `Drupal`, которые необходимы для их загрузки. Подробные сведения можно прочитать в [документации Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Чтобы найти подключенные библиотеки, которые загружают неиспользуемый код JavaScript, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage) в инструментах разработчика Chrome. Если на вашем сайте `Drupal` выключена агрегация JavaScript, определить проблемный модуль или тему можно по URL-адресу скрипта. Обращайте внимание на модули и темы с большим количеством скриптов, где при анализе покрытия кода преобладает красный цвет. Модули и темы должны подключать библиотеку скриптов только в том случае, если она используется на странице."
+    "message": "Рекомендуем удалять ненужные файлы JavaScript и подключать к страницам и их компонентам только те библиотеки `Drupal`, которые необходимы для их загрузки. Подробные сведения можно прочитать в [документации Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Чтобы найти подключенные библиотеки, которые загружают неиспользуемый код JavaScript, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage) в инструментах разработчика в Chrome. Если на вашем сайте `Drupal` выключена агрегация JavaScript, определить проблемный модуль или тему можно по URL-адресу скрипта. Обращайте внимание на модули и темы с большим количеством скриптов, где при анализе покрытия кода преобладает красный цвет. Модули и темы должны подключать библиотеку скриптов только в том случае, если она используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
     "message": "Перейдите на страницу \"Администрирование > Конфигурация > Разработка\" и укажите максимальный срок хранения кеша браузера и прокси-сервера. Подробнее о [кеше в `Drupal` и оптимизации производительности сайта](https://www.drupal.org/docs/8/api/cache-api/cache-api)…"
@@ -3045,10 +3234,10 @@
     "message": "Чтобы ускорить загрузку сайта, используйте [расширения Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) или специальные шаблоны, которые позволяют объединять, уменьшать и сжимать таблицы стилей CSS."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Рекомендуем заменить или удалить [расширения Joomla](https://extensions.joomla.org/), которые загружают неиспользуемый код CSS. Чтобы найти такие расширения, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Инструментах разработчика Chrome. Определить проблемный плагин или тему можно по URL-адресу таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Таблица стилей должна попадать в очередь, только если она используется на странице."
+    "message": "Рекомендуем заменить или удалить [расширения Joomla](https://extensions.joomla.org/), которые загружают неиспользуемый код CSS. Чтобы найти такие расширения, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика в Chrome. Определить проблемный плагин или тему можно по URL-адресу таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Таблица стилей должна попадать в очередь, только если она используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Рекомендуем заменить или удалить [расширения Joomla](https://extensions.joomla.org/), которые загружают неиспользуемый код JavaScript. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Инструментах разработчика Chrome. Определить проблемное расширение можно по URL-адресу скрипта. Обращайте внимание на расширения с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
+    "message": "Рекомендуем заменить или удалить [расширения Joomla](https://extensions.joomla.org/), которые загружают неиспользуемый код JavaScript. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика в Chrome. Определить проблемное расширение можно по URL-адресу скрипта. Обращайте внимание на расширения с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
     "message": "Подробнее о [кешировании в браузере на платформе Joomla](https://docs.joomla.org/Cache)…"
@@ -3213,10 +3402,10 @@
     "message": "Существует множество [плагинов](https://octobercms.com/plugins?search=javascript), которые ускоряют загрузку сайтов, объединяя, уменьшая или сжимая скрипты. Рекомендуем использовать такие плагины на этапе сборки."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
-    "message": "Рекомендуем проверить [плагины](https://octobercms.com/plugins), которые загружают неиспользуемый код CSS на сайт. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Инструментах разработчика Chrome. Определить проблемный плагин или тему можно по URL-адресу таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Таблица стилей должна добавляться, только если она используется на странице."
+    "message": "Рекомендуем проверить [плагины](https://octobercms.com/plugins), которые загружают неиспользуемый код CSS на сайт. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика в Chrome. Определить проблемный плагин или тему можно по URL-адресу таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, где при анализе покрытия кода преобладает красный цвет. Таблица стилей должна добавляться, только если она используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
-    "message": "Проверьте [плагины](https://octobercms.com/plugins?search=javascript), которые загружают неиспользуемый код JavaScript. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Инструментах разработчика Chrome. Определить проблемный плагин или тему можно по URL-адресу скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Плагин должен добавлять скрипт, только если он используется на странице."
+    "message": "Проверьте [плагины](https://octobercms.com/plugins?search=javascript), которые загружают неиспользуемый код JavaScript. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика в Chrome. Определить проблемный плагин или тему можно по URL-адресу скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Плагин должен добавлять скрипт, только если он используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
     "message": "Ознакомьтесь с информацией о том, [как предотвратить ненужные сетевые запросы с помощью кеширования HTTP](https://web.dev/http-cache/#caching-checklist). Вы можете использовать [плагины для ускорения скорости кеширования](https://octobercms.com/plugins?search=Caching)."
@@ -3291,10 +3480,10 @@
     "message": "Ускорьте загрузку сайта с помощью [плагинов WordPress](https://wordpress.org/plugins/search/minify+javascript/), которые позволяют объединять, уменьшать и сжимать скрипты. Рекомендуем использовать такие плагины на этапе сборки."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": {
-    "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код CSS на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage/) в инструментах разработчика Chrome. Определить нужный плагин или тему можно по URL таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, в которых при анализе покрытия кода преобладает красный цвет. Таблица стилей должна попадать в очередь, только если она используется на странице."
+    "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код CSS на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage/) в инструментах разработчика в Chrome. Определить нужный плагин или тему можно по URL таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, в которых при анализе покрытия кода преобладает красный цвет. Таблица стилей должна попадать в очередь, только если она используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": {
-    "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код JavaScript на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage/) в инструментах разработчика Chrome. Определить нужный плагин или тему можно по URL скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
+    "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код JavaScript на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developer.chrome.com/docs/devtools/coverage/) в инструментах разработчика в Chrome. Определить нужный плагин или тему можно по URL скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": {
     "message": "Подробнее [о кешировании в браузере на платформе WordPress](https://wordpress.org/support/article/optimization/#browser-caching)…"

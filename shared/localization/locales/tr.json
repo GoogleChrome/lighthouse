@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` özellikleri geçerli ve yanlış yazılmamış"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Ekran okuyucuların doğru şekilde çalışması için `autocomplete` özellik değerleri geçerli olmalı ve doğru şekilde uygulanmalıdır. [Geçerli otomatik tamamlama değerleri hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` özellik doğru şekilde kullanılmıyor"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` özellik doğru şekilde kullanılıyor"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Başarısız Öğeler"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` öğelerinin alternatif metni var"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "`role=\"none\"` veya `role=\"presentation\"` içeren bir öğenin semantik rolünün, hiçbiri veya sunum olarak çözümlenmediği belirli durumlar vardır. Öğenin erişilebilirlik ağacından kaldırıldığından emin olmak için öğeye genel ARIA özellikleri eklememeli veya öğeyi odaklanılabilir hale getirmemelisiniz. [Sunum rolü çakışması hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "`role=\"none\"` veya `role=\"presentation\"` içeren öğelerde çakışmalar var"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "`role=\"none\"` veya `role=\"presentation\"` içeren öğelerde çakışma yok"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Etkili etiket içermeyen <form> öğeleri, ekran okuyucu kullanıcılarının can sıkıcı deneyimler yaşamasına neden olabilir. [`select` öğesi hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Atlama bağlantılarına odaklanılabiliyor."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "`img`, `graphics-document` veya `graphics-symbol` rolüne sahip SVG öğelerinin erişilebilir metin alternatifi olmasını sağlar. [SVG alternatif metni hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "`img` rolü olan SVG öğelerinin erişilebilir metin alternatifi yok"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "`img` rolü olan SVG öğelerinin erişilebilir metin alternatifi var"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "0'dan büyük bir değer, açık bir gezinme sıralamasını belirtir. Bu durum teknik olarak geçerli olsa da yardımcı teknolojilerden yararlanan kullanıcıların genellikle sinir bozucu deneyimler yaşamalarına neden olur. [`tabindex` özelliği hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` öğelerinde `[kind=\"captions\"]`içeren bir `<track>` öğesi bulunuyor"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Başarısız Öğe"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Başarısız Kural"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Düzgün biçimlendirilmiş bir [erişilebilirlik ağacı](http://goo.gle/lighthouse-agentic-a11y), yapay zeka ajanlarının sayfada gezinmesine ve sayfayla etkileşim kurmasına yardımcı olur."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Tüm denetimler başarılı"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Başarısız Denetimler"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Erişilebilirlik ağacı düzgün biçimlendirilmemiş"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Erişilebilirlik ağacı düzgün biçimlendirilmiş"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "llms.txt dosyanız önerilere uygun değilse büyük dil modelleri, web sitenizin nasıl taranmasını veya eğitim için kullanılmasını istediğinizi anlayamayabilir. [llms.txt](https://llmstxt.org/) dosyası, en az bir H1 başlığı içeren Markdown dosyası olmalıdır."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "{statusCode} HTTP durumuyla başarısız oldu"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt getirilemedi"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt, önerilere uygun değil"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Dosyada gerekli bir H1 başlığı (ör. \"# Başlık\") eksik."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Dosyada bağlantı yok."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt, önerilere uygun"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Dosya şüpheli derecede kısa."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Mevcut Değer"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Jetonların sırasını inceleyin: {snippet} içindeki \"{tokens}\"."
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Web özellikleri"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline Durumu"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "{date} itibarıyla sayfada kullanılan web özelliklerini ve Baseline durumlarını listeler. [Baseline hakkında daha fazla bilgi edinin](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Baseline Özellikleri"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "İşlem Yapılabilir"
@@ -771,7 +855,7 @@
     "message": "Sayfa HTML DOCTYPE içeriyor"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Kullanıcılar herhangi bir bağlam olmadan konum bilgilerini isteyen sitelere şüpheyle bakarlar veya bu istek karşısında şaşırırlar. Onun yerine isteği bir kullanıcı işlemine bağlamayı değerlendirin. [Coğrafi konum izni hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Sayfa yüklemede coğrafi konum izni istiyor"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Sayfadaki kaynak eşlemeleri geçerli"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Form"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Aşağıda listelenen formlara [WebMCP](http://goo.gle/webmcp-docs) ek açıklamaları ekleyebilirsiniz. Bu sayede yapay zeka ajanları bu formları daha güvenilir bir şekilde tanımlayıp bunlarla etkileşim kurabilir."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 formda ek açıklamalar eksik}other{# formda ek açıklamalar eksik}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP formu kapsamı"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Öğe"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Açıklama"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Kaynak Konumu"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Giriş şeması"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Araç adı"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Analiz sırasında kayıtlı olan [WebMCP araçlarını](http://goo.gle/webmcp-docs) listeler."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Kayıtlı WebMCP araçları"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Bildirime Dayalı Araçlar"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Talimata Dayalı Araçlar"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Öğe"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Sorun"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Yapay zeka ajanlarının araçları doğru şekilde anlayıp bunlarla etkileşim kurması için [geçerli WebMCP şemaları](http://goo.gle/webmcp-docs) gerekir. Lütfen tarayıcı tarafından bildirilen tüm hata veya uyarıları düzeltin."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP şemaları geçersiz"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "İsteğe bağlı bir alanda `name` özelliği eksik. Parametre adını tanımlamak için bu özelliği ekleyin."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Bu formu yapay zeka ajanları için daha erişilebilir hale getirmek üzere bir açıklama ekleyin."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Zorunlu bir alanda `name` özelliği eksik. Parametre adını tanımlamak için bu özelliği ekleyin."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Form düzeyinde `tooldescription` özelliği eksik. Yapay zeka ajanlarının aracı tanımlayabilmesi için bu özelliği ekleyin."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Form düzeyinde `toolname` özelliği eksik. Aracın adını tanımlamak için bu özelliği ekleyin."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP şemaları geçerli"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Bu denetimler, yapay zeka ajanları için web sitesi erişilebilirliğini artırmaya yönelik en iyi uygulamaları öne çıkarır."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Ajan Erişilebilirliği"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Bu kontroller, [yapay zeka ajanları için yüksek kaliteli, göz atılabilir web siteleri](https://goo.gle/lighthouse-agentic-web) sağlar ve WebMCP entegrasyonlarının doğruluğunu onaylar. Bu kategori hâlâ geliştirme aşamasında olduğundan değişebilir."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Ajan Tabanlı Tarama"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP entegrasyonunu doğrulayan denetimler."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Bu fırsatlar, uygulamanızda ARIA kullanımının iyileştirilmesine olanak tanır. Bu da ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına daha iyi bir deneyim sunulmasını sağlayabilir."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tablolar ve listeler"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Bu denetimler, yapay zeka ajanları için web sitesi erişilebilirliğini artırmaya yönelik en iyi uygulamaları öne çıkarır."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Ajan Erişilebilirliği"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Bu kontroller, [yapay zeka ajanları için yüksek kaliteli, göz atılabilir web siteleri](https://goo.gle/lighthouse-agentic-web) sağlar ve WebMCP entegrasyonlarının doğruluğunu onaylar. Bu kategori hâlâ geliştirme aşamasında olduğundan değişebilir."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Ajan Tabanlı Tarama"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Tarayıcı Uyumluluğu"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobil Uyumlu"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP entegrasyonunu doğrulayan denetimler."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Test edilen cihazın CPU'sunun, Lighthouse'un beklediğinden daha yavaş olduğu anlaşılıyor. Bu durum, performans skorunuzu olumsuz etkileyebilir. [Uygun CPU yavaşlama katsayısını ayarlama](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling) hakkında daha fazla bilgi edinin."

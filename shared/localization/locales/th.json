@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "แอตทริบิวต์ `[aria-*]` ถูกต้องและสะกดถูกต้อง"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "ค่าแอตทริบิวต์ `autocomplete` ต้องถูกต้องและนำไปใช้ได้อย่างถูกต้องเพื่อให้โปรแกรมอ่านหน้าจอทำงานได้อย่างเหมาะสม [ดูข้อมูลเพิ่มเติมเกี่ยวกับค่าการเติมข้อความอัตโนมัติที่ถูกต้อง](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "ไม่ได้ใช้แอตทริบิวต์ `autocomplete` อย่างถูกต้อง"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "ใช้แอตทริบิวต์ `autocomplete` อย่างถูกต้อง"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "องค์ประกอบ `<object>` มีข้อความแสดงแทน"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "มีบางกรณีที่บทบาททางอรรถศาสตร์ขององค์ประกอบที่มี `role=\"none\"` หรือ `role=\"presentation\"` ไม่ได้มีการกำหนดเป็น none หรือ presentation หากต้องการให้ระบบนำองค์ประกอบออกจากแผนผังการช่วยเหลือพิเศษอย่างถาวร คุณไม่ควรเพิ่มแอตทริบิวต์ ARIA ส่วนกลางใดๆ ลงในองค์ประกอบหรือทำให้องค์ประกอบดังกล่าวโฟกัสได้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับความขัดแย้งของบทบาท presentation](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "องค์ประกอบที่มี `role=\"none\"` หรือ `role=\"presentation\"` มีความขัดแย้ง"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "องค์ประกอบที่มี `role=\"none\"` หรือ `role=\"presentation\"` ไม่มีความขัดแย้ง"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "องค์ประกอบแบบฟอร์มที่ไม่มีป้ายกำกับที่มีประสิทธิภาพจะสร้างประสบการณ์การใช้งานที่น่าผิดหวังสำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติมเกี่ยวกับองค์ประกอบ `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "โฟกัสลิงก์ข้ามได้"
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "ตรวจสอบว่าองค์ประกอบ SVG ที่มีบทบาท `img`, `graphics-document` หรือ `graphics-symbol` มีข้อความสำรองที่เข้าถึงได้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับข้อความแสดงแทนของ SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "องค์ประกอบ SVG ที่มีบทบาท `img` ไม่มีข้อความสำรองที่เข้าถึงได้"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "องค์ประกอบ SVG ที่มีบทบาท `img` มีข้อความสำรองที่เข้าถึงได้"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "ค่าที่มากกว่า 0 หมายความว่ามีการจัดเรียงการนำทางที่ชัดเจน แม้ว่าการทำงานนี้จะไม่มีปัญหาในทางเทคนิค แต่มักก่อให้เกิดประสบการณ์การใช้งานที่น่าหงุดหงิดสำหรับผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ [ดูข้อมูลเพิ่มเติมเกี่ยวกับแอตทริบิวต์ `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "กฎที่ไม่ผ่าน"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "[แผนผังการช่วยเหลือพิเศษ](http://goo.gle/lighthouse-agentic-a11y)ที่สร้างขึ้นอย่างถูกต้องจะช่วยให้ AI Agent นำทางและโต้ตอบกับหน้าเว็บได้"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "การตรวจสอบทั้งหมดผ่านแล้ว"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "การตรวจสอบที่ไม่สำเร็จ"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "แผนผังการช่วยเหลือพิเศษมีรูปแบบไม่ถูกต้อง"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "แผนผังการช่วยเหลือพิเศษมีรูปแบบที่ถูกต้อง"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "หากไฟล์ llms.txt ไม่เป็นไปตามคําแนะนํา โมเดลภาษาขนาดใหญ่อาจไม่เข้าใจวิธีที่คุณต้องการให้ทำการ Crawl หรือใช้เว็บไซต์เพื่อการฝึก ไฟล์ [llms.txt](https://llmstxt.org/) ควรเป็นไฟล์มาร์กดาวน์ที่มีส่วนหัว H1 อย่างน้อย 1 รายการ"
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "ล้มเหลวด้วยสถานะ HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "ดึงข้อมูล llms.txt ไม่สำเร็จ"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt ไม่เป็นไปตามคำแนะนำ"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "ไฟล์ไม่มีส่วนหัว H1 ที่จำเป็น (เช่น \"# Title\")"
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "ดูเหมือนว่าไฟล์จะไม่มีลิงก์"
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt เป็นไปตามคำแนะนำ"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "ไฟล์สั้นผิดปกติ"
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "ค่าปัจจุบัน"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "ตรวจสอบลำดับของโทเค็น: \"{tokens}\" ใน {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "ฟีเจอร์เว็บ"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "สถานะ Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "แสดงรายการฟีเจอร์เว็บที่ใช้ในหน้าและสถานะ Baseline ณ วันที่ {date} [ดูข้อมูลเพิ่มเติมเกี่ยวกับ Baseline](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "ฟีเจอร์ Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "ดำเนินการได้"
@@ -771,7 +855,7 @@
     "message": "หน้ามี DOCTYPE HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "ผู้ใช้ไม่เชื่อถือหรือเกิดความสับสนในเว็บไซต์ที่ขอข้อมูลตำแหน่งโดยไม่มีบริบทให้ พิจารณาผูกคำขอกับการกระทำของผู้ใช้แทน [ดูข้อมูลเพิ่มเติมเกี่ยวกับสิทธิ์เข้าถึงตำแหน่งทางภูมิศาสตร์](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "ขอสิทธิ์เข้าถึงตำแหน่งทางภูมิศาสตร์ในการโหลดหน้าเว็บ"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "หน้าเว็บมีแผนที่แหล่งที่มาถูกต้อง"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "แบบฟอร์ม"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "ลองเพิ่มหมายเหตุ [WebMCP](http://goo.gle/webmcp-docs) ลงในแบบฟอร์มที่แสดงด้านล่าง ซึ่งจะช่วยให้ AI Agent ระบุและโต้ตอบกับแบบฟอร์มเหล่านี้ได้อย่างน่าเชื่อถือมากขึ้น"
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{แบบฟอร์ม 1 รายการไม่มีหมายเหตุ}other{แบบฟอร์ม # รายการไม่มีหมายเหตุ}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "ความครอบคลุมของแบบฟอร์ม WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "องค์ประกอบ"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "คำอธิบาย"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "ตำแหน่งของแหล่งที่มา"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "สคีมาอินพุต"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "ชื่อเครื่องมือ"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "แสดงรายการ[เครื่องมือ WebMCP](http://goo.gle/webmcp-docs) ที่ลงทะเบียนไว้ในขณะที่ทำการวิเคราะห์"
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "ลงทะเบียนเครื่องมือ WebMCP แล้ว"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "เครื่องมือที่ประกาศ"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "เครื่องมือที่ต้องใช้"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "องค์ประกอบ"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "ปัญหา"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "ต้องมี[สคีมา WebMCP](http://goo.gle/webmcp-docs) ที่ถูกต้องเพื่อให้ AI Agent เข้าใจและโต้ตอบกับเครื่องมือได้อย่างถูกต้อง โปรดแก้ไขข้อผิดพลาดหรือคำเตือนที่เบราว์เซอร์รายงาน"
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "สคีมา WebMCP ไม่ถูกต้อง"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "ไม่มีแอตทริบิวต์ `name` สำหรับฟิลด์ที่ไม่บังคับ เพิ่มเพื่อกำหนดชื่อพารามิเตอร์"
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "เพิ่มคำอธิบายเพื่อให้ AI Agent เข้าถึงแบบฟอร์มนี้ได้ง่ายขึ้น"
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "ไม่มีแอตทริบิวต์ `name` สำหรับฟิลด์ที่ต้องกรอก เพิ่มเพื่อกำหนดชื่อพารามิเตอร์"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "ไม่มีแอตทริบิวต์ `tooldescription` ระดับแบบฟอร์ม เพิ่มเพื่ออธิบายเครื่องมือสำหรับ AI Agent"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "ไม่มีแอตทริบิวต์ `toolname` ระดับแบบฟอร์ม เพิ่มเพื่อกำหนดชื่อเครื่องมือ"
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "สคีมา WebMCP ถูกต้อง"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "การตรวจสอบเหล่านี้ไฮไลต์แนวทางปฏิบัติแนะนำสำหรับการปรับปรุงการช่วยเหลือพิเศษของเว็บไซต์สำหรับตัวแทน AI"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "การช่วยเหลือพิเศษของตัวแทน"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "การตรวจสอบเหล่านี้ช่วยรับรองว่า [AI Agent จะเข้าถึงเว็บไซต์ที่มีคุณภาพสูงและเลือกดูได้](https://goo.gle/lighthouse-agentic-web) รวมถึงตรวจสอบความถูกต้องของการผสานรวม WebMCP หมวดหมู่นี้ยังอยู่ระหว่างการพัฒนาและอาจมีการเปลี่ยนแปลง"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "การท่องเว็บด้วย Agent"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "การตรวจสอบที่ตรวจสอบการผสานรวม WebMCP"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "นี่เป็นโอกาสปรับปรุงการใช้งาน ARIA ในแอปพลิเคชันของคุณ ซึ่งอาจช่วยให้ผู้ใช้ได้รับประสบการณ์การใช้งานเทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ ที่ดียิ่งขึ้น"
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "ตารางและรายการ"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "การตรวจสอบเหล่านี้ไฮไลต์แนวทางปฏิบัติแนะนำสำหรับการปรับปรุงการช่วยเหลือพิเศษของเว็บไซต์สำหรับตัวแทน AI"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "การช่วยเหลือพิเศษของตัวแทน"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "การตรวจสอบเหล่านี้ช่วยรับรองว่า [AI Agent จะเข้าถึงเว็บไซต์ที่มีคุณภาพสูงและเลือกดูได้](https://goo.gle/lighthouse-agentic-web) รวมถึงตรวจสอบความถูกต้องของการผสานรวม WebMCP หมวดหมู่นี้ยังอยู่ระหว่างการพัฒนาและอาจมีการเปลี่ยนแปลง"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "การท่องเว็บด้วย Agent"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "ความเข้ากันได้กับเบราว์เซอร์"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "เหมาะกับมือถือ"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "การตรวจสอบที่ตรวจสอบการผสานรวม WebMCP"
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "ดูเหมือนว่า CPU ของอุปกรณ์ที่ใช้ทดสอบจะช้ากว่าที่ Lighthouse คาดไว้ ซึ่งอาจส่งผลเสียต่อคะแนนประสิทธิภาพของคุณ ดูข้อมูลเพิ่มเติมเกี่ยวกับ[การปรับเทียบตัวคูณการชะลอตัวของ CPU ที่เหมาะสม](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
@@ -1488,7 +1677,7 @@
     "message": "แคช TTL"
   },
   "core/lib/i18n/i18n.js | columnDescription": {
-    "message": "รายละเอียด"
+    "message": "คำอธิบาย"
   },
   "core/lib/i18n/i18n.js | columnDuration": {
     "message": "ระยะเวลา"

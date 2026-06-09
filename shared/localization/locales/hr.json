@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributi `[aria-*]` su valjani i nisu pogrešno napisani"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Vrijednosti atributa `autocomplete` moraju biti važeće i ispravno primijenjene da bi čitači zaslona ispravno funkcionirali. [Saznajte više o važećim vrijednostima za samodovršavanje](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Atributi `autocomplete` ne upotrebljavaju se ispravno"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Atributi `autocomplete` ispravno se upotrebljavaju"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementi koji nisu prošli provjeru"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Elementi `<object>` imaju zamjenski tekst"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Postoje određeni slučajevi u kojima se semantička uloga elementa s ulogom `role=\"none\"` ili `role=\"presentation\"` ne razrješava u none ili presentation. Kako biste osigurali da element ostane uklonjen iz stabla pristupačnosti, elementu ne biste trebali dodavati globalne ARIA atribute niti mu omogućiti fokusiranje. [Saznajte više o sukobu s ulogom presentation](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Elementi s ulogom `role=\"none\"` ili `role=\"presentation\"` sadrže sukobe"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Elementi s ulogom `role=\"none\"` ili `role=\"presentation\"` ne sadrže sukobe"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Elementi obrasca bez učinkovitih oznaka mogu frustrirati korisnike čitača zaslona. [Saznajte više o elementu `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Veze za preskakanje mogu se fokusirati."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Osigurava da SVG elementi s ulogom `img`, `graphics-document` ili `graphics-symbol` imaju zamjenski tekst kojem se može pristupiti. [Saznajte više o zamjenskom tekstu za SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG elementi s ulogom `img` nemaju zamjenski tekst kojem se može pristupiti"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG elementi s ulogom `img` imaju zamjenski tekst kojem se može pristupiti"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Vrijednost viša od 0 podrazumijeva eksplicitno naređivanje kretanja. Iako je tehnički valjano, to često frustrira korisnike koji se oslanjaju na asistivne tehnologije. [Saznajte više o atributu `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Elementi `<video>` sadržavaju element `<track>` s `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Element koji ne poštuje pravilo"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Pravilo koje se ne poštuje"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Dobro oblikovano [stablo pristupačnosti](http://goo.gle/lighthouse-agentic-a11y) pomaže AI agentima da se kreću po stranici i komuniciraju s njom."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Sve su revizije bile uspješne"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Neuspjele revizije"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Stablo pristupačnosti nije dobro oblikovano"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Stablo pristupačnosti dobro je oblikovano"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Ako vaša datoteka llms.txt ne slijedi preporuke, veliki jezični modeli možda neće moći razumjeti kako želite da se vaša web-lokacija pretraži i indeksira ili upotrebljava za obuku. Datoteka [llms.txt](https://llmstxt.org/) trebala bi biti Markdown datoteka koja sadrži barem jedno zaglavlje H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Neuspjeli zahtjev s HTTP statusom {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Dohvaćanje datoteke llms.txt nije uspjelo"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Datoteka llms.txt ne slijedi preporuke"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "U datoteci nedostaje obavezno zaglavlje H1 (npr. # Naslov)."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Čini se da datoteka ne sadrži nijednu vezu."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Datoteka llms.txt slijedi preporuke"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Datoteka je sumnjivo kratka."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Trenutačna vrijednost"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Pregledajte narudžbu oznaka: \"{tokens}\" u {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Web-značajke"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline status"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Navodi web-značajke koje se upotrebljavaju na stranici i njihov Baseline status od {date} [Saznajte više o Baselineu](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Osnovne značajke"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Omogućuje poduzimanje radnje"
@@ -771,7 +855,7 @@
     "message": "Stranica ima HTML vrstu dokumenta"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Korisnici ne vjeruju web-lokacijama koje žele znati njihovu lokaciju bez konteksta ili ih takve web-lokacije zbunjuju. Razmislite o tome da umjesto toga zahtjev povežete s radnjama korisnika. [Saznajte više o dopuštenju za geolociranje](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Zahtijeva dopuštenje za geolociranje pri učitavanju stranice"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Stranica ima važeće karte izvora"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Obrazac"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Razmislite o dodavanju [WebMCP](http://goo.gle/webmcp-docs) napomena u obrasce navedene u nastavku. To pomaže AI agentima da pouzdanije identificiraju te obrasce i komuniciraju s njima."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 obrazac nema napomene}one{# obrazac nema napomene}few{# obrasca nemaju napomene}other{# obrazaca nema napomene}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Pokrivenost WebMCP obrazaca"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Opis"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Lokacija izvora"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Shema unosa"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Naziv alata"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Navodi [WebMCP alate](http://goo.gle/webmcp-docs) registrirane u vrijeme analize."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Registrirani WebMCP alati"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Deklarativni alati"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Imperativni alati"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problem"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Za AI agente potrebne su važeće [WebMCP sheme](http://goo.gle/webmcp-docs) kako bi pravilno razumjeli alate i stupili u interakciju s njima. Ispravite pogreške ili upozorenja koja je prijavio preglednik."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Sheme WebMCP-a nisu važeće"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Nedostaje atribut `name` za neobavezno polje. Dodajte ga da biste definirali naziv parametra."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Dodajte opis da biste ovaj obrazac učinili pristupačnijim za AI agente."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Nedostaje atribut `name` za obavezno polje. Dodajte ga da biste definirali naziv parametra."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Nedostaje atribut razine obrasca `tooldescription`. Dodajte ga da biste opisali alat za AI agente."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Nedostaje atribut razine obrasca `toolname`. Dodajte ga da biste definirali naziv alata."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP sheme su važeće"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Ove revizije ističu najbolje primjere iz prakse za poboljšanje pristupačnosti web-lokacije za AI agente."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Pristupačnost agenta"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Ove provjere osiguravaju kvalitetne [web-lokacije koje se mogu pregledavati za AI agente](https://goo.gle/lighthouse-agentic-web) i potvrđuju ispravnost integracija WebMCP-a. Ova je kategorija još u razvoju i podložna je promjenama."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentsko pregledavanje"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Revizije koje potvrđuju integraciju WebMCP-a."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "To su prilike za poboljšanje uporabe sustava ARIA u vašoj aplikaciji, što može unaprijediti doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tablice i popisi"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Ove revizije ističu najbolje primjere iz prakse za poboljšanje pristupačnosti web-lokacije za AI agente."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Pristupačnost agenta"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Ove provjere osiguravaju kvalitetne [web-lokacije koje se mogu pregledavati za AI agente](https://goo.gle/lighthouse-agentic-web) i potvrđuju ispravnost integracija WebMCP-a. Ova je kategorija još u razvoju i podložna je promjenama."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentsko pregledavanje"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilnost preglednika"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Prilagođeno mobilnim uređajima"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Revizije koje potvrđuju integraciju WebMCP-a."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Čini se da testirani uređaj ima sporiji procesor nego što Lighthouse očekuje. To može negativno utjecati na vaš rezultat izvedbe. Saznajte više o [kalibraciji odgovarajućeg množitelja usporavanja procesora](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Los atributos `[aria-*]` son válidos y están bien escritos"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Los valores del atributo `autocomplete` deben ser válidos y aplicarse correctamente para que los lectores de pantalla funcionen de forma adecuada. [Obtén más información sobre los valores válidos de autocompletar](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Los atributos `autocomplete` no se usan correctamente"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Los atributos `autocomplete` se usan correctamente"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementos con errores"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Los elementos `<object>` tienen texto alternativo"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Hay ciertos casos en los que el rol semántico de un elemento con `role=\"none\"` o `role=\"presentation\"` no se resuelve en ninguno o presentación. Para asegurarte de que el elemento se quite por completo del árbol de accesibilidad, no debes agregarle ningún atributo ARIA global ni hacer que se pueda enfocar. [Obtén más información sobre el conflicto de roles de presentación](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Los elementos con `role=\"none\"` o `role=\"presentation\"` tienen conflictos"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Los elementos con `role=\"none\"` o `role=\"presentation\"` no tienen conflictos"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Los elementos del formulario sin etiquetas eficaces pueden crear experiencias frustrantes para los usuarios de lectores de pantalla. [Obtén más información sobre el elemento `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Los vínculos de navegación son enfocables."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Garantiza que los elementos SVG con un rol `img`, `graphics-document` o `graphics-symbol` tengan una alternativa de texto accesible. [Obtén más información sobre el texto alternativo de SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Los elementos SVG con un rol de `img` no tienen una alternativa de texto accesible"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Los elementos SVG con un rol de `img` tienen una alternativa de texto accesible"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Si el valor es superior a 0, el orden de navegación es explícito. Aunque técnicamente esta es una posibilidad válida, suele producir experiencias frustrantes para los usuarios que necesitan usar las tecnologías de accesibilidad. [Obtén más información sobre el atributo `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Los elementos `<video>` contienen un elemento `<track>` con `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Elemento con errores"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Regla con errores"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Un [árbol de accesibilidad](http://goo.gle/lighthouse-agentic-a11y) con un formato correcto ayuda a los agentes de IA a navegar por la página y a interactuar con ella."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Se aprobaron todas las auditorías"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Auditorías con errores"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "El árbol de accesibilidad no tiene un formato correcto"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "El árbol de accesibilidad tiene un formato correcto"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Si el archivo llms.txt no sigue las recomendaciones, es posible que los modelos de lenguaje grandes no puedan interpretar cómo quieres que se rastree tu sitio web o se use para el entrenamiento. El archivo [llms.txt](https://llmstxt.org/) debe ser un archivo de Markdown que contenga al menos un encabezado H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Falló con el estado HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "No se pudo recuperar llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt no sigue las recomendaciones"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Falta un encabezado H1 obligatorio en el archivo (p. ej., \"# Título\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Al parecer, el archivo no contiene ningún vínculo."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt sigue las recomendaciones"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "El archivo es sospechosamente corto."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Valor actual"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Revisa el orden de los tokens: \"{tokens}\" en {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Funciones web"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Estado de Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Enumera las funciones web que se usan en la página y su estado de Baseline a partir del {date}. [Obtén más información sobre Baseline](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Funciones de Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Permite una acción"
@@ -771,7 +855,7 @@
     "message": "La página tiene el DOCTYPE de HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Los sitios que solicitan a los usuarios su ubicación sin contexto los confunden o los hacen desconfiar. Te recomendamos vincular la solicitud a una acción del usuario. [Obtén más información sobre el permiso de ubicación geográfica](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Solicita el permiso de ubicación geográfica al cargar la página"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "La página tiene mapas de orígenes válidos"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Formulario"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Considera agregar anotaciones de [WebMCP](http://goo.gle/webmcp-docs) a los formularios que se indican a continuación. Esto ayuda a los agentes de IA a identificar estos formularios y a interactuar con ellos de forma más confiable."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{A 1 formulario le faltan las anotaciones}other{A # formularios les faltan las anotaciones}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Cobertura del formulario de WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Elemento"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Descripción"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Ubicación de la fuente"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Esquema de entrada"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Nombre de la herramienta"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Enumera las [herramientas de WebMCP](http://goo.gle/webmcp-docs) registradas en el momento del análisis."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Herramientas de WebMCP registradas"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Herramientas declarativas"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Herramientas imperativas"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Elemento"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problema"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Se requieren [esquemas de WebMCP](http://goo.gle/webmcp-docs) válidos para que los agentes de IA comprendan las herramientas y puedan interactuar con ellas correctamente. Corrige los errores o las advertencias que informe el navegador."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Los esquemas de WebMCP no son válidos"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Falta el atributo `name` para un campo opcional. Agrégalo para definir el nombre del parámetro."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Agrega una descripción para que este formulario sea más accesible para los agentes de IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Falta el atributo `name` para un campo obligatorio. Agrégalo para definir el nombre del parámetro."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Falta el atributo `tooldescription` de nivel de formulario. Agrégalo para describir la herramienta para los agentes de IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Falta el atributo `toolname` de nivel de formulario. Agrégalo para definir el nombre de la herramienta."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Los esquemas de WebMCP son válidos"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Estas auditorías destacan las prácticas recomendadas para mejorar la accesibilidad del sitio web para los agentes de IA."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accesibilidad del agente"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Estas verificaciones garantizan [sitios web de alta calidad y navegables para los agentes de IA](https://goo.gle/lighthouse-agentic-web), y validan la exactitud de las integraciones de WebMCP. Esta categoría aún está en desarrollo y está sujeta a cambios."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegación con agentes"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Auditorías que validan la integración de WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "A continuación, se indican consejos para optimizar el uso de ARIA en tu app, lo que puede mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tablas y listas"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Estas auditorías destacan las prácticas recomendadas para mejorar la accesibilidad del sitio web para los agentes de IA."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accesibilidad del agente"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Estas verificaciones garantizan [sitios web de alta calidad y navegables para los agentes de IA](https://goo.gle/lighthouse-agentic-web), y validan la exactitud de las integraciones de WebMCP. Esta categoría aún está en desarrollo y está sujeta a cambios."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegación con agentes"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Compatibilidad del navegador"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Optimizada para dispositivos móviles"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Auditorías que validan la integración de WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "El dispositivo probado parece tener una CPU más lenta de lo que espera Lighthouse, lo que puede afectar negativamente la puntuación del rendimiento. Obtén más información para [calibrar un multiplicador adecuado para ralentizar la CPU](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

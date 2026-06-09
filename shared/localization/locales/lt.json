@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Atributai „`[aria-*]`“ yra tinkami, rašybos klaidų nėra"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Atributo „`autocomplete`“ vertės turi būti tinkamos ir tinkamai pritaikytos, kad ekrano skaitytuvai veiktų tinkamai. [Sužinokite daugiau apie tinkamas automatinio užbaigimo vertes](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Atributai „`autocomplete`“ naudojami netinkamai"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Atributai „`autocomplete`“ naudojami tinkamai"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Netinkami elementai"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Elementuose „`<object>`“ yra alternatyviojo teksto"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Yra tam tikrų atvejų, kai elemento su „`role=\"none\"`“ arba „`role=\"presentation\"`“ semantinis vaidmuo nėra nustatytas kaip „nėra“ arba „pristatymas“. Kad elementas būtų pašalintas iš pasiekiamumo medžio, neturėtumėte prie elemento pridėti jokių visuotinių ARIA atributų arba padaryti, kad jis būtų sufokusuojamas. [Sužinokite daugiau apie pristatymo vaidmenų konfliktą](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Elementuose su „`role=\"none\"`“ arba „`role=\"presentation\"`“ yra nesuderinamumų"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Elementuose su „`role=\"none\"`“ arba „`role=\"presentation\"`“ nėra nesuderinamumų"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Dėl formos elementų be veiksmingų etikečių ekrano skaitytuvo naudotojams gali būti nepatogu naudotis funkcijomis. [Sužinokite daugiau apie elementą „`select`“](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Praleidimo nuorodos yra suaktyvinamos."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Užtikrina, kad SVG elementai, kurių vaidmuo yra „`img`“, „`graphics-document`“ arba „`graphics-symbol`“, turėtų pasiekiamą teksto alternatyvą. [Sužinokite daugiau apie SVG alternatyvųjį tekstą](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG elementuose su vaidmeniu „`img`“ nėra pasiekiamos teksto alternatyvos"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG elementai, kurių vaidmuo yra „`img`“, turi pasiekiamą alternatyvųjį tekstą"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Didesnė nei 0 vertė aiškiai nurodo naršymo tvarką. Iš tiesų tai yra tinkamas sprendimas, tačiau dažnai erzina pagalbinių technologijų naudotojus. [Sužinokite daugiau apie atributą „`tabindex`“](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Elementas, kuris neatitiko taisyklės"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Taisyklė, kurios nesilaikyta"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Kai [pritaikomumo medžio](http://goo.gle/lighthouse-agentic-a11y) formatas tinkamas, DI tarpininkai gali naršyti puslapį ir sąveikauti su juo."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Visos patikros sėkmingai atliktos"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Nepavykusios patikros"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Netinkamas pritaikomumo medžio formatas"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Pritaikomumo medžio formatas tinkamas"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Jei failas „llms.txt“ neatitinka rekomendacijų, didelės apimties kalbos modeliai gali nesuprasti, kaip norite tikrinti svetainę ar naudoti ją mokymo tikslais. Failas [„llms.txt“](https://llmstxt.org/) turi būti žymėjimo failas, kuriame yra bent viena H1 antraštė."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Nepavyko, HTTP būsena: {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Nepavyko gauti failo „llms.txt“"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Failas „llms.txt“ neatitinka rekomendacijų"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Faile trūksta būtinos H1 antraštės (pvz., „# Pavadinimas“)."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Panašu, kad faile nėra jokių nuorodų."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Failas „llms.txt“ atitinka rekomendacijas"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Failas įtartinai trumpas."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Dabartinė vertė"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Peržiūrėkite prieigos raktų išdėstymo tvarką: „{tokens}“ sistemoje {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Žiniatinklio funkcijos"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Pradinė būsena"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Pateikiamas puslapyje naudojamų žiniatinklio funkcijų ir jų pradinės būsenos sąrašas nuo {date}. [Sužinokite daugiau apie pradinę vertę](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Pagrindinės funkcijos"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Reikia imtis veiksmų"
@@ -771,7 +855,7 @@
     "message": "Puslapyje yra HTML DOCTYPE"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Naudotojai gali būti įtarūs arba sumišę, jei svetainėse bus prašoma suteikti leidimą pasiekti vietovės duomenis be jokio konteksto. Vietoj to apsvarstykite galimybę susieti užklausą su naudotojų veiksmu. [Sužinokite daugiau apie leidimą nustatyti geografinę vietovę](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Įkeliant puslapį pateikiama užklausa dėl pranešimų leidimo"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Puslapyje yra galiojančių šaltinio žemėlapių"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Forma"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Apsvarstykite galimybę pridėti [„WebMCP“](http://goo.gle/webmcp-docs) komentarų prie toliau pateiktų formų. Tai padeda DI tarpininkams patikimiau identifikuoti šias formas ir sąveikauti su jomis."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{Vienoje formoje trūksta komentarų}one{# formoje trūksta komentarų}few{# formose trūksta komentarų}many{# formos trūksta komentarų}other{# formų trūksta komentarų}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "„WebMCP“ formos aprėptis"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Elementas"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Aprašas"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Šaltinio vieta"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Įvesties schema"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Įrankio pavadinimas"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Pateikiamas atliekant analizę užregistruotų [„WebMCP“ įrankių](http://goo.gle/webmcp-docs) sąrašas."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "„WebMCP“ įrankiai užregistruoti"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Deklaratyvūs įrankiai"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Būtini įrankiai"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Elementas"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problema"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Kad DI tarpininkai tinkamai suprastų ir sąveikautų su įrankiais, reikalingos tinkamos [„WebMCP“ schemos](http://goo.gle/webmcp-docs). Ištaisykite visas naršyklės nurodytas klaidas ar įspėjimus."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "„WebMCP“ schemos netinkamos"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Trūksta atributo „`name`“, skirto pasirenkamam laukui. Pridėkite jį, kad nurodytumėte parametro pavadinimą."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Pridėkite aprašymą, kad ši forma būtų lengviau pasiekiama DI tarpininkams."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Trūksta atributo „`name`“, skirto būtinam laukui. Pridėkite jį, kad nurodytumėte parametro pavadinimą."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Trūksta formos lygio atributo „`tooldescription`“. Pridėkite, kad apibūdintumėte DI tarpininkams skirtą įrankį."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Trūksta formos lygio atributo „`toolname`“. Pridėkite jį, kad nurodytumėte įrankio pavadinimą."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "„WebMCP“ schemos tinkamos"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Šie auditai paryškina geriausios praktikos metodus, kaip pagerinti svetainės pritaikomumą DI tarpininkams."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Tarpininko pritaikomumas"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Šios patikros užtikrina aukštos kokybės, [naršomas svetaines DI tarpininkams](https://goo.gle/lighthouse-agentic-web) ir patvirtina „WebMCP“ integravimų tinkamumą. Ši kategorija vis dar kuriama ir gali būti pakeista."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Tarpininkaujantis naršymas"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Auditai, patvirtinantys „WebMCP“ integravimą."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Tai yra galimybės, skirtos pagerinti ARIA naudojimą programoje. Jos gali pagerinti pagalbinių technologijų, pvz., ekrano skaitytuvų, naudotojų patirtį."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Lentelės ir sąrašai"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Šie auditai paryškina geriausios praktikos metodus, kaip pagerinti svetainės pritaikomumą DI tarpininkams."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Tarpininko pritaikomumas"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Šios patikros užtikrina aukštos kokybės, [naršomas svetaines DI tarpininkams](https://goo.gle/lighthouse-agentic-web) ir patvirtina „WebMCP“ integravimų tinkamumą. Ši kategorija vis dar kuriama ir gali būti pakeista."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Tarpininkaujantis naršymas"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Naršyklės suderinamumas"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pritaikyta mobiliesiems"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Auditai, patvirtinantys „WebMCP“ integravimą."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Išbandyto įrenginio centrinis procesorius pasirodė lėtesnis, nei tikėjosi „Lighthouse“. Tai gali neigiamai paveikti našumo įvertinimą. Sužinokite daugiau apie [atitinkamo centrinio procesoriaus sulėtėjimo koeficiento kalibravimą](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

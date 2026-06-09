@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "מאפייני ה-`[aria-*]` חוקיים ולא כוללים שגיאות איות"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "כדי שקוראי המסך יפעלו בצורה תקינה, הערכים של המאפיין `autocomplete` צריכים להיות תקינים וצריך ליישם אותם בצורה נכונה. [מידע נוסף על ערכים תקינים של השלמה אוטומטית](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "יש מאפיינים של `autocomplete` שלא נעשה בהם שימוש תקין"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "נעשה שימוש תקין במאפיינים של `autocomplete`"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "רכיבים שנכשלו בבדיקה"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "לרכיבי `<object>` יש טקסט חלופי"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "יש מקרים מסוימים שבהם התפקיד הסמנטי של רכיב עם תפקיד `role=\"none\"` או `role=\"presentation\"` לא מסתכם בערכים none או presentation. כדי לוודא שהרכיב יישאר מחוץ לעץ הנגישות, אסור להוסיף לרכיב מאפייני ARIA גלובליים או להפוך אותו לניתן למיקוד. [מידע נוסף על התנגשות שקשורה לתפקיד presentation‏](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "יש התנגשויות שקשורות לרכיבים עם תפקיד `role=\"none\"` או `role=\"presentation\"`"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "אין התנגשויות בין רכיבים עם התפקידים `role=\"none\"` או `role=\"presentation\"`"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "רכיבי טופס שאין בהם תוויות מועילות יכולים לגרום לתסכול בחוויות של משתמשים בקורא מסך. [מידע נוסף על רכיבים מסוג `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "ניתן להתמקד בקישורים לדילוג למקום מסוים בדף."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "הבדיקה מוודאת שלרכיבי SVG עם תפקידים מסוג `img`, ‏ `graphics-document` או `graphics-symbol` יש טקסט חלופי נגיש. [מידע נוסף על טקסט חלופי ב-SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "לרכיבי SVG עם תפקיד `img` אין טקסט חלופי נגיש"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "לרכיבי SVG עם תפקיד `img` יש טקסט חלופי נגיש"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "ערך גדול מ-0 מציין סדר ניווט מפורש. למרות שאפשרות זו תקינה מבחינה טכנית, במקרים רבים היא מובילה לחוויה מתסכלת בקרב משתמשים שמסתמכים על טכנולוגיות מסייעות. [מידע נוסף על המאפיין `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "רכיבי `<video>` מכילים רכיב `<track>` עם `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "רכיב שנכשל"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "כלל שנכשל"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "[עץ נגישות תקין](http://goo.gle/lighthouse-agentic-a11y) עוזר לסוכני ה-AI לנווט בדף ולקיים איתו אינטראקציה."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "כל הביקורות הסתיימו בהצלחה"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "ביקורות שנכשלו"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "עץ הנגישות לא תקין"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "עץ הנגישות תקין"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "אם קובץ ה-llms.txt לא עומד בדרישות, יכול להיות שמודלי שפה גדולים לא יבינו איך לסרוק את האתר שלך או להשתמש בו לאימון. קובץ [llms.txt](https://llmstxt.org/) צריך להיות קובץ Markdown שמכיל כותרת H1 אחת לפחות."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "הבקשה נכשלה עם סטטוס HTTP ‏{statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "האחזור של llms.txt נכשל"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "הקובץ llms.txt לא עומד בדרישות"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "בקובץ חסרה כותרת H1 נדרשת (למשל, \"# כותרת\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "נראה שאין קישורים בקובץ."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "קובץ llms.txt עומד בדרישות"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "הקובץ קצר באופן חריג."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "ערך נוכחי"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "בדיקת סדר הטוקנים: \"{tokens}\" בתוך {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "תכונות אתרים"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "סטטוס Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "רשימה של תכונות אינטרנט שנעשה בהן שימוש בדף וסטטוס ה-Baseline שלהן נכון ל-{date}. [מידע נוסף על Baseline](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "תכונות Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "ניתן לבצע פעולה"
@@ -771,7 +855,7 @@
     "message": "ה-doctype של הדף מוגדר ל-HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "אתרים שמבקשים לקבל גישה למיקום של המשתמשים בלי לציין הקשר, מעוררים אצל המשתמשים תחושת בלבול או חשדנות. במקום זאת, כדאי לקשר את הבקשות לפעולה של המשתמשים. [מידע נוסף על הרשאת המיקום הגיאוגרפי](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "הדף מבקש הרשאות למיקום גאוגרפי במהלך טעינת הדף"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "הדף מכיל מפות מקור חוקיות"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "טופס"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "כדאי להוסיף [אנוטציות WebMCP‏](http://goo.gle/webmcp-docs) לטפסים שמופיעים ברשימה בהמשך. זה יאפשר לסוכני AI לזהות את הטפסים האלה יותר בקלות ולקיים איתם אינטראקציה בצורה מהימנה יותר."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{בטופס אחד חסרות אנוטציות}one{ב-# טפסים חסרות אנוטציות}two{ב-# טפסים חסרות אנוטציות}other{ב-# טפסים חסרות אנוטציות}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "היקף אנוטציות WebMCP בטפסים"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "רכיב"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "תיאור"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "מיקום המקור"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "סכימת הקלט"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "שם הכלי"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "רשימת [הכלים של WebMCP‏](http://goo.gle/webmcp-docs) שנרשמו בזמן הניתוח."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "כלי WebMCP רשומים"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "כלים הצהרתיים"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "כלים אימפרטיביים"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "הרכיב"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "הבעיה"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "כדי שסוכני ה-AI יוכלו להבין את הכלים ולקיים איתם אינטראקציות בצורה תקינה, נדרשות [סכימות WebMCP‏](http://goo.gle/webmcp-docs) תקינות. עליך לתקן את השגיאות או האזהרות שהדפדפן מדווח עליהן."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "סכימות ה-WebMCP לא תקינות"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "חסר מאפיין `name` בשדה אופציונלי. צריך להוסיף אותו כדי להגדיר את שם הפרמטר."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "כדי להפוך את הטופס הזה לנגיש יותר לסוכני AI, כדאי להוסיף תיאור."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "חסר מאפיין `name` בשדה חובה. צריך להוסיף אותו כדי להגדיר את שם הפרמטר."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "חסר מאפיין `tooldescription` ברמת הטופס. צריך להוסיף אותו כדי לתאר את הכלי לסוכני AI."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "חסר מאפיין `toolname` ברמת הטופס. צריך להוסיף אותו כדי להגדיר את שם הכלי."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "סכימות ה-WebMCP תקינות"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "הבדיקות האלה מדגישות שיטות מומלצות לשיפור הנגישות של האתר לסוכני AI."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "נגישות לסוכן"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "הבדיקות האלו מוודאות שהאתרים באיכות גבוהה [ושסוכני ה-AI יכולים לעיין בהם](https://goo.gle/lighthouse-agentic-web), וכן מאמתות את תקינות האינטגרציות של WebMCP. הקטגוריה הזו נמצאת עדיין בתהליכי פיתוח וכפופה לשינויים."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "עיון באמצעות סוכנים"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "בדיקות שמאמתות את השילוב של WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "אלו הזדמנויות לשיפור השימוש ב-ARIA באפליקציה, והן יכולות לשפר את החוויה של משתמשים שנעזרים בטכנולוגיות לנגישות, כמו קוראי מסך."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "טבלאות ורשימות"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "הבדיקות האלה מדגישות שיטות מומלצות לשיפור הנגישות של האתר לסוכני AI."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "נגישות לסוכן"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "הבדיקות האלו מוודאות שהאתרים באיכות גבוהה [ושסוכני ה-AI יכולים לעיין בהם](https://goo.gle/lighthouse-agentic-web), וכן מאמתות את תקינות האינטגרציות של WebMCP. הקטגוריה הזו נמצאת עדיין בתהליכי פיתוח וכפופה לשינויים."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "עיון באמצעות סוכנים"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "תאימות לדפדפנים"
@@ -1391,6 +1574,12 @@
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "התאמה לניידים"
   },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "בדיקות שמאמתות את השילוב של WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "יחידת העיבוד המרכזית (CPU) במכשיר שנבדק איטית ממה שצפוי ב-Lighthouse. זה עשוי להשפיע לרעה על ציון הביצועים שלך. בקישור הבא אפשר למצוא מידע נוסף על [כיול של מכפיל מתאים להאטה ביחידת העיבוד המרכזית (CPU)](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
   },
@@ -1431,7 +1620,7 @@
     "message": "חסר `base-uri`, שמאפשר להחדיר תגי `<base>` כדי להגדיר את כתובת ה-URL הבסיסית לכל כתובות ה-URL היחסיות (למשל, סקריפטים) לדומיין שנשלט על ידי תוקף. כדאי להגדיר את `base-uri` לערך '`'none'`' או '`'self'`'."
   },
   "core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "כשלא מוגדר `object-src`, מתאפשרת החדרת יישומי פלאגין שמפעילים סקריפטים לא בטוחים. אם אפשר, כדאי להגדיר את `object-src` לערך '`'none'`'."
+    "message": "כשלא מוגדר `object-src`, מתאפשרת החדרת יישומי פלאגין שמפעילים סקריפטים לא בטוחים. אם אפשר, כדאי להגדיר את `object-src` לערך \"`'none'`\"."
   },
   "core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "חסרה ההוראה `script-src`. מצב כזה מאפשר הפעלה של סקריפטים לא בטוחים."
@@ -2934,10 +3123,10 @@
     "message": "צריך לוודא שהאפשרות Aggregate JavaScript files (קובצי ה-JavaScript המצטברים) מופעלת בדף Administration (ניהול) » Configuration (הגדרות אישיות) » Development (פיתוח)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "כדאי להסיר כללי CSS שלא בשימוש, ולצרף לדף הרלוונטי או לרכיב בדף רק את ספריות ה-`Drupal` הנדרשות. לקבלת פרטים, אפשר לעיין ב[`Drupal`מסמכים](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). כדי לזהות ספריות מצורפות שמוסיפות תוכן CSS מיותר, כדאי להפעיל את האפשרות [רמת הכיסוי של הקוד](https://developer.chrome.com/docs/devtools/coverage) בכלי הפיתוח ל-Chrome. לאחר ההשבתה של צבירת CSS באתר ה-`Drupal` שלך, ניתן יהיה לזהות את העיצוב או המודול שאחראים להוספת גיליון הסגנונות לפי כתובת ה-URL. העיצובים או המודולים הבעייתיים הם אלה שברשימת גיליונות הסגנונות שלהם יש הרבה גיליונות סגנונות באדום ברמת הכיסוי של הקוד. עיצוב או מודול צריכים לצרף ספריית גיליון סגנונות רק אם נעשה בה שימוש בפועל בדף."
+    "message": "כדאי להסיר כללי CSS שלא בשימוש, ולצרף לדף הרלוונטי או לרכיב בדף רק את ספריות ה-`Drupal` הנדרשות. לקבלת פרטים, עייני ב[מאמרי העזרה של `Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). כדי לזהות ספריות מצורפות שמוסיפות תוכן CSS מיותר, נסי להפעיל את האפשרות [רמת הכיסוי של הקוד](https://developer.chrome.com/docs/devtools/coverage) בכלי הפיתוח ל-Chrome. לאחר ההשבתה של צבירת CSS באתר ה-`Drupal` שלך, תוכלי לזהות את העיצוב או המודול שאחראים להוספת גיליון הסגנונות לפי כתובת ה-URL. העיצובים או המודולים הבעייתיים הם אלה שברשימת גיליונות הסגנונות שלהם יש הרבה גיליונות סגנונות באדום ברמת הכיסוי של הקוד. עיצוב או מודול צריכים לצרף ספריית גיליון סגנונות רק אם נעשה בה שימוש בפועל בדף."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "כדאי להסיר של נכסי JavaScript שלא בשימוש, ולצרף לדף הרלוונטי או לרכיב בדף רק את ספריות ה-`Drupal` הנדרשות. לפרטים נוספים, אפשר לעיין ב[תיעוד של Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). כדי לזהות ספריות מצורפות שמוסיפות תוכן JavaScript מיותר, כדאי להפעיל את האפשרות [רמת הכיסוי של הקוד](https://developer.chrome.com/docs/devtools/coverage) בכלי הפיתוח ל-Chrome. לאחר ההשבתה של צבירת JavaScript באתר ה-`Drupal` שלך, ניתן יהיה לזהות את העיצוב או המודול שאחראים להוספת הסקריפט לפי כתובת ה-URL. העיצובים או המודולים הבעייתיים הם אלה שברשימת הסקריפטים שלהם יש הרבה סקריפטים באדום ברמת הכיסוי של הקוד. עיצוב או מודול צריכים לצרף ספריית סקריפטים רק אם נעשה בה שימוש בפועל בדף."
+    "message": "כדאי להסיר נכסי JavaScript שלא בשימוש, ולצרף לדף הרלוונטי או לרכיב בדף רק את ספריות ה-`Drupal` שנדרשות. מידע נוסף זמין ב[מאמרי העזרה של Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). כדי לזהות ספריות מצורפות שמוסיפות תוכן JavaScript מיותר, אפשר להפעיל את האפשרות [רמת הכיסוי של הקוד](https://developer.chrome.com/docs/devtools/coverage) בכלי הפיתוח ל-Chrome. אחרי ההשבתה של צבירת JavaScript באתר ה-`Drupal` שלך, תהיה לך אפשרות לזהות את העיצוב או המודול שאחראים להוספת הסקריפט לפי כתובת ה-URL. העיצובים או המודולים הבעייתיים הם אלה שברשימת הסקריפטים שלהם יש הרבה סקריפטים באדום ברמת הכיסוי של הקוד. עיצוב או מודול צריכים לצרף ספריית סקריפטים רק אם נעשה בה שימוש בפועל בדף."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
     "message": "בדף \"Administration (ניהול) » Configuration (הגדרה) » Development (פיתוח)\" צריך להגדיר \"Browser and proxy cache maximum age (גיל מרבי של דפדפן ומטמון של שרת proxy)\". [למידע על מטמון `Drupal` ואופטימיזציה של ביצועים](https://www.drupal.org/docs/8/api/cache-api/cache-api)."

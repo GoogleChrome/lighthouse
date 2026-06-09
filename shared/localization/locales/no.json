@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]`-attributtene er gyldige og ikke feilstavet"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Attributtverdiene for `autocomplete` må være gyldige og riktig brukt for at skjermlesere skal fungere som de skal. [Finn ut mer om gyldige autofullføringsverdier](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` attributter brukes ikke riktig"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` attributter brukes riktig"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementer som ikke besto kontrollen"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>`-elementer har alternativ tekst"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Det finnes visse tilfeller der den semantiske rollen til et element med `role=\"none\"` eller `role=\"presentation\"` ikke løses til «none» eller «presentation». For å sikre at elementet forblir fjernet fra tilgjengelighetstreet, bør du ikke legge til globale ARIA-attributter i elementet eller gjøre det fokuserbart. [Finn ut mer om konflikter mellom presentasjonsroller](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Elementer med `role=\"none\"` eller `role=\"presentation\"` har konflikter"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Elementer med `role=\"none\"` eller `role=\"presentation\"` har ingen konflikter"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Skjemaelementer uten effektive etiketter kan skape frustrerende opplevelser for brukere av skjermlesere. [Finn ut mer om `select`-elementet](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Linker for å hoppe over innhold er fokuserbare."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Sikrer at SVG-elementer med rollen `img`, `graphics-document` eller `graphics-symbol` har et tilgjengelig tekstalternativ. [Finn ut mer om alt-tekst for SVG-filer](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG-elementer med `img`-rollen har ikke noe tilgjengelig tekstalternativ"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG-elementer med `img`-rollen har et tilgjengelig tekstalternativ"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Større verdier enn 0 antyder en eksplisitt navigeringsrekkefølge. Selv om dette teknisk sett er gyldig, kan det ofte være frustrerende for brukere som er avhengige av assisterende teknologi. [Finn ut mer om `tabindex`-attributtet](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementer inneholder et `<track>`-element med `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Element som ikke besto kontrollen"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Mislykket regel"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Med et riktig formatert [tilgjengelighetstre](http://goo.gle/lighthouse-agentic-a11y) kan AI-agenter navigere på og samhandle med siden."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Alle revisjoner er bestått"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Mislykkede revisjoner"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Tilgjengelighetstreet er ikke riktig formatert"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Tilgjengelighetstreet er riktig formatert"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Hvis llms.txt-filen ikke følger anbefalingene, kan det hende at store språkmodeller ikke forstår hvordan du vil at nettstedet skal gjennomsøkes eller brukes til opplæring. Filen [llms.txt](https://llmstxt.org/) må være en Markdown-fil som inneholder minst én H1-overskrift."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Mislyktes med HTTP-status {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Kunne ikke hente llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt følger ikke anbefalingene"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Filen mangler en obligatorisk H1-overskrift (f.eks. «# Tittel»)."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Filen ser ikke ut til å inneholde noen linker."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt følger anbefalingene"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Filen er mistenkelig kort."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Nåværende verdi"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Gjennomgå tokenrekkefølgen «{tokens}» i {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Nettfunksjoner"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline-status"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Lister opp nettfunksjoner som brukes på siden, og Baseline-statusen deres per {date}. [Finn ut mer om Baseline.](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Grunnleggende funksjoner"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Kan utbedres"
@@ -771,7 +855,7 @@
     "message": "Siden har HTML som doctype"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Brukere er mistroiske overfor eller blir forvirret av nettsteder som uten kontekst spør om å få se posisjonen deres. Vurder å knytte forespørselen opp mot en brukerhandling i stedet. [Finn ut mer om tillatelsen for geolokalisering](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Spør om geolokaliseringstillatelsen ved sideinnlasting"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Siden har gyldige kildekart"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Skjema"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Vurder å legge til [WebMCP](http://goo.gle/webmcp-docs)-annoteringer i skjemaene som er oppført nedenfor. Dette gjør det enklere for AI-agenter å identifisere og samhandle med disse skjemaene på en pålitelig måte."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 skjema mangler annoteringer}other{# skjemaer mangler annoteringer}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Skjemadekning for WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Beskrivelse"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Kildeplassering"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Inndataoppsett"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Verktøynavn"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Lister opp [WebMCP-verktøyene](http://goo.gle/webmcp-docs) som var registrert på analysetidspunktet."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "WebMCP-verktøy er registrert"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Deklarative verktøy"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Imperative verktøy"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problem"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Gyldige [WebMCP-oppsett](http://goo.gle/webmcp-docs) kreves for at AI-agenter skal forstå og bruke verktøy riktig. Korriger eventuelle feil eller advarsler som nettleseren rapporterer."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP-oppsettene er ugyldige"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Attributtet `name` mangler for et valgfritt felt. Legg til det for å definere parameternavnet."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Legg til en beskrivelse for å gjøre dette skjemaet mer tilgjengelig for AI-agenter."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Attributtet `name` mangler for et obligatorisk felt. Legg til det for å definere parameternavnet."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Attributtet `tooldescription` på skjemanivå mangler. Legg til en beskrivelse av verktøyet for AI-agenter."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Attributtet `toolname` på skjemanivå mangler. Legg til det for å definere verktøynavnet."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP-oppsettene er gyldige"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Disse revisjonene fremhever anbefalte fremgangsmåter for å gjøre nettstedet mer tilgjengelig for AI-agenter."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Tilgjengelighet for agenter"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Disse kontrollene sikrer [nettsteder av høy kvalitet som AI-agenter kan gjennomsøke,](https://goo.gle/lighthouse-agentic-web) og de bekrefter at WebMCP-integreringer er riktige. Denne kategorien er fortsatt under utvikling og kan endres."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentisk surfing"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Revisjoner som validerer WebMCP-integrering."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Dette er muligheter til å forbedre bruken av ARIA i programmet ditt, noe som kan gjøre opplevelsen bedre for brukere av assisterende teknologi, som skjermlesere."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabeller og lister"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Disse revisjonene fremhever anbefalte fremgangsmåter for å gjøre nettstedet mer tilgjengelig for AI-agenter."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Tilgjengelighet for agenter"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Disse kontrollene sikrer [nettsteder av høy kvalitet som AI-agenter kan gjennomsøke,](https://goo.gle/lighthouse-agentic-web) og de bekrefter at WebMCP-integreringer er riktige. Denne kategorien er fortsatt under utvikling og kan endres."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentisk surfing"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Nettleserkompatibilitet"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilvennlig"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Revisjoner som validerer WebMCP-integrering."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Den testede enheten ser ut til å ha tregere prosessor enn Lighthouse forventer. Dette kan virke negativt inn på ytelsespoengsummen din. Finn ut mer om [kalibrering av en hensiktsmessig multiplikator for prosessorforsinkelse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

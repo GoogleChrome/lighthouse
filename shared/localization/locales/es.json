@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Los atributos `[aria-*]` son válidos y están bien escritos"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Los valores del atributo `autocomplete` deben ser válidos y aplicarse correctamente para que los lectores de pantalla funcionen correctamente. [Más información sobre los valores de autocompletar válidos](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` atributos no se usan correctamente"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` atributos se usan correctamente"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elementos con errores"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Los elementos `<object>` tienen texto alternativo"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Hay ciertos casos en los que el rol semántico de un elemento con `role=\"none\"` o `role=\"presentation\"` no se resuelve como ninguno o presentación. Para asegurarte de que el elemento permanece excluido del árbol de accesibilidad, no debes añadirle ningún atributo ARIA global ni hacerlo enfocable. [Más información sobre el conflicto de roles de presentación](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Los elementos con `role=\"none\"` o `role=\"presentation\"` tienen conflictos"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Los elementos con `role=\"none\"` o `role=\"presentation\"` no tienen conflictos"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Los elementos <form> sin <label> eficaz pueden causar experiencias frustrantes para los usuarios de lectores de pantalla. [Obtén más información sobre el elemento `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Los enlaces de salto son enfocables."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Asegura que los elementos SVG con un rol `img`, `graphics-document` o `graphics-symbol` tengan una alternativa de texto accesible. [Más información sobre el texto alternativo de SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Los elementos SVG con el rol `img` no tienen una alternativa de texto accesible"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Los elementos SVG con el rol `img` tienen una alternativa de texto accesible"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Si el valor es superior a 0, significa que el orden de navegación es explícito. Aunque técnicamente es válido, esto suele producir experiencias frustrantes para los usuarios que necesitan usar tecnologías asistenciales. [Más información sobre el atributo `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Los elementos `<video>` contienen un elemento `<track>` con el atributo `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Elemento con errores"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Regla fallida"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Un [árbol de accesibilidad](http://goo.gle/lighthouse-agentic-a11y) bien formado ayuda a los agentes de IA a desplazarse por la página e interactuar con ella."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Todas las auditorías aprobadas"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Auditorías fallidas"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "El árbol de accesibilidad no tiene el formato correcto"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "El árbol de accesibilidad tiene un formato correcto"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Si el archivo llms.txt no sigue las recomendaciones, es posible que los modelos de lenguaje extensos no puedan interpretar cómo quieres que se rastree o se use tu sitio web con fines de entrenamiento. El archivo [llms.txt](https://llmstxt.org/) debe ser un archivo Markdown que contenga al menos un encabezado H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Error con código de estado HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "No se ha podido obtener el archivo llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt no sigue las recomendaciones"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Al archivo le falta un encabezado H1 obligatorio (por ejemplo, \"# Título\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Parece que el archivo no contiene ningún enlace."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt sigue las recomendaciones"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "El archivo es sospechosamente corto."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Valor actual"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Revisa el orden de tokens: \"{tokens}\" en {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Funciones web"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Estado de Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Muestra las funciones web que se usan en la página y su estado de Baseline a fecha de {date}. [Más información sobre Baseline](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Funciones de Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Se puede solucionar"
@@ -630,10 +714,10 @@
     "message": "Las extensiones de Chrome han afectado de forma negativa al rendimiento de carga de esta página. Prueba a auditarla en modo incógnito o desde un perfil de Chrome sin extensiones."
   },
   "core/audits/bootup-time.js | columnScriptEval": {
-    "message": "Evaluación de la secuencia de comandos"
+    "message": "Evaluación del script"
   },
   "core/audits/bootup-time.js | columnScriptParse": {
-    "message": "Análisis de la secuencia de comandos"
+    "message": "Análisis del script"
   },
   "core/audits/bootup-time.js | columnTotal": {
     "message": "Tiempo de CPU total"
@@ -666,7 +750,7 @@
     "message": "Minifica los archivos CSS"
   },
   "core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "Si minificas los archivos de JavaScript, se puede reducir el tamaño de la carga útil y el tiempo de análisis de la secuencia de comandos. [Consulta cómo minificar JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/)"
+    "message": "Si minificas los archivos de JavaScript, se puede reducir el tamaño de la carga útil y el tiempo de análisis del script. [Consulta cómo minificar JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/)"
   },
   "core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "Minifica los recursos JavaScript"
@@ -771,7 +855,7 @@
     "message": "La página tiene el DOCTYPE de HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Los usuarios dudan o desconfían de los sitios web que solicitan su ubicación sin contexto. Como alternativa, puedes vincular la solicitud a una acción del usuario. [Más información sobre el permiso de geolocalización](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Solicita el permiso de geolocalización al cargar la página"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "La página tiene mapas de origen válidos"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Formulario"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Te recomendamos que añadas anotaciones de [WebMCP](http://goo.gle/webmcp-docs) a los formularios que se indican a continuación. Esto ayuda a los agentes de IA a identificar e interactuar con estos formularios de forma más fiable."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{A 1 formulario le faltan anotaciones}other{A # formularios le faltan anotaciones}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Cobertura del formulario de WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Elemento"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Descripción"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Ubicación de origen"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Esquema de entrada"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Nombre de herramienta"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Muestra las [herramientas de WebMCP](http://goo.gle/webmcp-docs) registradas en el momento del análisis."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Herramientas de WebMCP registradas"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Herramientas declarativas"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Herramientas imperativas"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Elemento"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problema"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Se necesitan [esquemas de WebMCP](http://goo.gle/webmcp-docs) válidos para que los agentes de IA entiendan las herramientas e interactúen con ellas correctamente. Corrige los errores o advertencias que haya notificado el navegador."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Los esquemas de WebMCP no son válidos"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Falta el atributo `name` en un campo opcional. Añádelo para definir el nombre del parámetro."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Añade una descripción para que este formulario sea más accesible para los agentes de IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Falta el atributo `name` en un campo obligatorio. Añádelo para definir el nombre del parámetro."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Falta el atributo `tooldescription` a nivel de formulario. Añádela para describir la herramienta a los agentes de IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Falta el atributo `toolname` a nivel de formulario. Añádelo para definir el nombre de la herramienta."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Los esquemas de WebMCP son válidos"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Estas auditorías destacan las prácticas recomendadas para mejorar la accesibilidad del sitio web para los agentes de IA."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accesibilidad del agente"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Estas comprobaciones aseguran unos [sitios web de alta calidad en los que los agentes de IA puedan navegar](https://goo.gle/lighthouse-agentic-web), y validan que las integraciones de WebMCP sean correctas. Esta categoría aún está en desarrollo y puede cambiar."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegación agéntica"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Auditorías que validan la integración de WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "A continuación se indican consejos para optimizar el uso de ARIA en tu aplicación, lo que puede mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tablas y listas"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Estas auditorías destacan las prácticas recomendadas para mejorar la accesibilidad del sitio web para los agentes de IA."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accesibilidad del agente"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Estas comprobaciones aseguran unos [sitios web de alta calidad en los que los agentes de IA puedan navegar](https://goo.gle/lighthouse-agentic-web), y validan que las integraciones de WebMCP sean correctas. Esta categoría aún está en desarrollo y puede cambiar."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegación agéntica"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Compatibilidad con navegadores"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Optimización para móviles"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Auditorías que validan la integración de WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Parece que el dispositivo probado tiene una CPU más lenta de lo que espera Lighthouse. Esto puede afectar negativamente a la puntuación de rendimiento. Más información sobre cómo [calibrar un multiplicador de ralentización de CPU adecuado](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)"
@@ -1599,7 +1788,7 @@
     "message": "Otros recursos"
   },
   "core/lib/i18n/i18n.js | scriptResourceType": {
-    "message": "Secuencia de comandos"
+    "message": "Script"
   },
   "core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
@@ -2940,7 +3129,7 @@
     "message": "Te recomendamos que elimines las reglas de CSS no utilizadas y adjuntes únicamente las bibliotecas de `Drupal` necesarias para la página o el componente correspondientes de una página. Para obtener más información, consulta la [documentación de `Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Para identificar las bibliotecas adjuntas que añaden archivos de CSS no pertinentes, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage) en Chrome DevTools. Puedes identificar el tema o el módulo responsable en la URL de la hoja de estilo cuando la agregación de CSS está inhabilitada en tu sitio de `Drupal`. Presta atención a los temas o módulos con varias hojas de estilo en la lista y con muchos elementos en rojo en la cobertura de código. Un tema o un módulo solo debería adjuntar una biblioteca de hojas de estilo si esta se usa en la página."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Te recomendamos que elimines los recursos de JavaScript no utilizados y adjuntes únicamente las bibliotecas de `Drupal` necesarias para la página o el componente correspondientes de una página. Consulta la [documentación de Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) para obtener más información. Para identificar las bibliotecas adjuntas que añaden archivos de JavaScript no pertinentes, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage) en Chrome DevTools. Puedes identificar el tema o módulo responsable en la URL de la secuencia de comandos cuando la agregación de JavaScript está inhabilitada en tu sitio de `Drupal`. Presta atención a los temas o módulos con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Un tema o un módulo solo debería adjuntar una biblioteca de secuencias de comandos si esta se usa en la página."
+    "message": "Te recomendamos que elimines los recursos de JavaScript no utilizados y adjuntes únicamente las bibliotecas de `Drupal` necesarias para la página o el componente correspondientes de una página. Consulta la [documentación de Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) para obtener más información. Para identificar las bibliotecas adjuntas que añaden archivos de JavaScript no pertinentes, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage) en Chrome DevTools. Puedes identificar el tema o módulo responsable en la URL del script cuando la agregación de JavaScript está inhabilitada en tu sitio de `Drupal`. Presta atención a los temas o módulos con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Un tema o un módulo solo debería adjuntar una biblioteca de secuencias de comandos si esta se usa en la página."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
     "message": "Configura la \"Antigüedad máxima de la caché del navegador y el proxy\" en la página Administración > Configuración > Desarrollo. Más información sobre [la caché de `Drupal` y cómo optimizar para el rendimiento](https://www.drupal.org/docs/8/api/cache-api/cache-api)."
@@ -3051,7 +3240,7 @@
     "message": "Puedes reducir o cambiar la cantidad de [extensiones de Joomla](https://extensions.joomla.org/) que cargan archivos CSS sin usar en tu página. Para identificar las extensiones que añaden archivos CSS no pertinentes, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en DevTools de Chrome. Puedes identificar el tema o complemento responsable en la URL de la hoja de estilo. Presta atención a los complementos con varias hojas de estilo en la lista y con muchos elementos en rojo en la cobertura de código. Un complemento solo debería poner en cola una hoja de estilo (si esta se usa en la página)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Considera reducir o cambiar la cantidad de [extensiones de Joomla](https://extensions.joomla.org/) que cargan código de JavaScript sin usar en tu página. Para identificar los complementos que añaden código de JavaScript no pertinente, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en DevTools de Chrome. Puedes identificar la extensión responsable en la URL de la secuencia de comandos. Presta atención a las extensiones con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Una extensión solo debería poner en cola una secuencia de comandos si esta se usa en la página."
+    "message": "Considera reducir o cambiar la cantidad de [extensiones de Joomla](https://extensions.joomla.org/) que cargan código de JavaScript sin usar en tu página. Para identificar los complementos que añaden código de JavaScript no pertinente, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en DevTools de Chrome. Puedes identificar la extensión responsable en la URL del script. Presta atención a las extensiones con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Una extensión solo debería poner en cola un script si esta se usa en la página."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
     "message": "Consulta más información sobre el [almacenamiento en la memoria caché del navegador en Joomla](https://docs.joomla.org/Cache)."
@@ -3219,7 +3408,7 @@
     "message": "Puedes comprobar los [complementos](https://octobercms.com/plugins) que cargan archivos CSS sin usar en el sitio web. Para identificar los complementos que añaden archivos CSS innecesarios, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en las herramientas para desarrolladores de Chrome. Identifica el tema o el complemento responsable en la URL de la hoja de estilo. Busca complementos con varias hojas de estilo y muchos elementos en rojo en la cobertura de código. Un complemento solo debería añadir una hoja de estilo si esta se usa en la página web."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
-    "message": "Te recomendamos que revises los [complementos](https://octobercms.com/plugins?search=javascript) que cargan código de JavaScript sin usar en la página web. Para identificar los complementos que añaden código de JavaScript innecesario, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en las herramientas para desarrolladores de Chrome. Identifica el tema o el complemento responsable en la URL de la secuencia de comandos. Busca complementos con varias secuencias de comandos y muchos elementos en rojo en la cobertura de código. Un complemento solo debería añadir una secuencia de comandos si se usa en la página web."
+    "message": "Te recomendamos que revises los [complementos](https://octobercms.com/plugins?search=javascript) que cargan código de JavaScript sin usar en la página web. Para identificar los complementos que añaden código de JavaScript innecesario, ejecuta la [cobertura de código](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) en las herramientas para desarrolladores de Chrome. Identifica el tema o el complemento responsable en la URL del script. Busca complementos con varias secuencias de comandos y muchos elementos en rojo en la cobertura de código. Un complemento solo debería añadir un script si se usa en la página web."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
     "message": "Consulta más información sobre cómo [evitar solicitudes de red innecesarias con la caché de HTTP](https://web.dev/http-cache/#caching-checklist). Hay muchos [complementos](https://octobercms.com/plugins?search=Caching) que se pueden usar para acelerar el almacenamiento en caché."
@@ -3297,7 +3486,7 @@
     "message": "Puedes reducir o cambiar la cantidad de [complementos de WordPress](https://wordpress.org/plugins/) que cargan archivos CSS sin usar en tu página. Para identificar los complementos que añaden archivos CSS externos, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage/) en DevTools de Chrome. Puedes identificar el tema o complemento concreto en la URL de la hoja de estilo. Presta atención a los complementos con varias hojas de estilo en la lista y con muchos elementos en rojo en la cobertura de código. Un complemento solo debería poner en cola una hoja de estilo (si esta se usa en la página)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": {
-    "message": "Puedes reducir o cambiar la cantidad de [complementos de WordPress](https://wordpress.org/plugins/) que cargan código de JavaScript sin usar en tu página. Para identificar los complementos que añaden código de JavaScript externo, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage/) en DevTools de Chrome. Puedes identificar el tema o complemento concreto en la URL de la secuencia de comandos. Presta atención a los complementos con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Un complemento solo debería poner en cola una secuencia de comandos (si esta se usa en la página)."
+    "message": "Puedes reducir o cambiar la cantidad de [complementos de WordPress](https://wordpress.org/plugins/) que cargan código de JavaScript sin usar en tu página. Para identificar los complementos que añaden código de JavaScript externo, ejecuta la [cobertura de código](https://developer.chrome.com/docs/devtools/coverage/) en DevTools de Chrome. Puedes identificar el tema o complemento concreto en la URL del script. Presta atención a los complementos con varias secuencias de comandos en la lista y con muchos elementos en rojo en la cobertura de código. Un complemento solo debería poner en cola un script (si esta se usa en la página)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": {
     "message": "Consulta más información sobre el [almacenamiento en la memoria caché del navegador en WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."

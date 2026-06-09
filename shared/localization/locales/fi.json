@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]`-määritteet ovat kelvollisia eivätkä sisällä kirjoitusvirheitä"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "`autocomplete`-määritteen arvojen on oltava kelvollisia ja oikein lisättyjä, jotta näytönlukijat toimivat oikein. [Lue lisää hyväksyttävistä automaattisen täydennyksen arvoista](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete`-määritettä ei käytetä oikein"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete`-määritettä käytetään oikein"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Hylätyt elementit"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>`-elementeissä on vaihtoehtoista tekstiä."
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Joissakin tapauksissa elementin, jonka rooli on `role=\"none\"` tai `role=\"presentation\"`, semanttinen rooli ei ratkea arvoon \"none\" tai \"presentation\". Jos haluat varmistaa, että elementti pysyy poistettuna saavutettavuuspuusta, älä lisää elementtiin mitään yleisiä ARIA-määritteitä tai tee siitä kohdistettavaa. [Lue lisää esityksen rooliristiriidasta](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Elementeissä, joiden rooli on `role=\"none\"` tai `role=\"presentation\"`, on ristiriitoja"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Elementeillä, joiden rooli on `role=\"none\"` tai `role=\"presentation\"`, ei ole ristiriitoja"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Jos lomake-elementeillä ei ole hyödyllisiä tunnisteita, käyttökokemus voi olla turhauttava näytönlukuohjelman käyttäjille. [Lue lisää `select`-elementistä](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Ohitettavat linkit ovat kohdistettavissa."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Varmistaa, että SVG-elementeillä, joiden rooli on `img`, `graphics-document` tai `graphics-symbol`, on saavutettava tekstivaihtoehto. [Lue lisää SVG:n vaihtoehtoisesta tekstistä](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG-elementeillä, joiden rooli on `img`, ei ole saavutettavaa tekstivaihtoehtoa"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG-elementeillä, joiden rooli on `img`, on saavutettava tekstivaihtoehto"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Navigointijärjestys on eksplisiittinen, jos arvo on suurempi kuin 0. Vaikka ratkaisu on teknisesti käypä, se tekee usein kokemuksesta turhauttavaa avustustekniikkaa tarvitseville käyttäjille. [Lue lisää `tabindex`‐määritteestä](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Elementit (`<video>`) sisältävät elementin (`<track>`), jossa on `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Epäonnistunut elementti"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Epäonnistunut sääntö"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Hyvin muotoiltu [saavutettavuuspuu](http://goo.gle/lighthouse-agentic-a11y) auttaa tekoälyagentteja navigoimaan sivulla ja käyttämään sitä."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Kaikki tarkastukset läpäisty"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Epäonnistuneet tarkastukset"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Saavutettavuuspuu ei ole hyvin muotoiltu"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Saavutettavuuspuu on hyvin muotoiltu"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Jos llms.txt-tiedostosi ei noudata suosituksia, LLM-kielimallit eivät välttämättä ymmärrä, miten haluat sivustoasi indeksoitavan tai käytettävän koulutukseen. [llms.txt](https://llmstxt.org/)-tiedoston on oltava Markdown-tiedosto, joka sisältää vähintään yhden H1-otsikon."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Epäonnistui HTTP-tilassa {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt-tiedoston nouto epäonnistui"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt ei noudata suosituksia"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Tiedostosta puuttuu pakollinen H1-otsikko (esim. \"Otsikko #\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Tiedosto ei näytä sisältävän linkkejä."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt noudattaa suosituksia"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Tiedosto on epäilyttävän lyhyt."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Nykyinen arvo"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Tarkista tunnusten järjestys: {tokens} ({snippet})"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Verkko-ominaisuudet"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline-tila"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Listaa sivulla käytetyt verkkotoiminnot ja niiden Baseline-tilan {date}. [Lue lisää Baseline-palvelusta](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Baseline-ominaisuudet"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Edellyttää toimenpiteitä"
@@ -771,7 +855,7 @@
     "message": "Sivulla on HTML-dokumenttityyppi"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Sivustot, jotka pyytävät sijainnin käyttöoikeutta ilman asiayhteyttä, saavat käyttäjät epäluuloisiksi tai hämmentävät heitä. Kokeile sen sijaan yhdistää pyyntö käyttäjätoimintoon. [Lue lisää maantieteellisen sijainnin luvasta](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Pyytää maantieteellistä sijaintia sivun latauksessa"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Sivulla on kelvollisia lähdekarttoja"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Lomake"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Harkitse [WebMCP-merkintöjen](http://goo.gle/webmcp-docs) lisäämistä alla oleviin lomakkeisiin. Tämä auttaa tekoälyagentteja tunnistamaan lomakkeet ja käyttämään niitä luotettavammin."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{Yhdestä lomakkeesta puuttuu merkintöjä}other{# lomakkeesta puuttuu merkintöjä}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP-lomakkeen kattavuus"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Elementti"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Kuvaus"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Lähteen sijainti"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Syötemalli"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Työkalun nimi"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Luettele analyysin aikana rekisteröidyt [WebMCP-työkalut](http://goo.gle/webmcp-docs)."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "WebMCP-työkalut rekisteröity"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Todentavat työkalut"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Välttämättömät työkalut"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Elementti"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Ongelma"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Tekoälyagentit tarvitsevat hyväksyttäviä [WebMCP-malleja](http://goo.gle/webmcp-docs), jotta ne voivat ymmärtää työkaluja ja käyttää niitä oikein. Korjaa kaikki selaimen ilmoittamat virheet tai varoitukset."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP-mallit ovat virheellisiä"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Valinnaiselta kentältä puuttuu `name`-määrite. Lisää se parametrin nimen määrittämiseksi."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Lisää kuvaus, jotta tekoälyagentit voivat käyttää lomaketta helpommin."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Pakolliselta kentältä puuttuu `name`-määrite. Lisää se parametrin nimen määrittämiseksi."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Lomaketason `tooldescription`-määrite puuttuu. Lisää se kuvaamaan työkalua tekoälyagenteille."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Lomaketason `toolname`-määrite puuttuu. Lisää se työkalun nimen määrittämiseksi."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP-mallit ovat hyväksyttäviä"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Näissä tarkastuksissa tuodaan esiin parhaita käytäntöjä, joiden avulla voidaan parantaa verkkosivuston saavutettavuutta tekoälyagenteille."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Agentin saavutettavuus"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Näillä tarkistuksilla varmistetaan, että tekoälyagentit käyttävät laadukkaita ja [selattavissa olevia verkkosivustoja](https://goo.gle/lighthouse-agentic-web), ja todennetaan WebMCP-integraatioiden oikeellisuus. Kategoriaa kehitetään yhä, ja se voi vielä muuttua."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agenttiselaus"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP-integroinnin vahvistavat tarkastukset."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Näillä voit parantaa ARIA:n käyttöä sovelluksessasi, mikä voi tehdä avustusteknologiaa (kuten näytönlukuohjelmaa) käyttävien kokemuksesta paremman."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Taulukot ja luettelot"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Näissä tarkastuksissa tuodaan esiin parhaita käytäntöjä, joiden avulla voidaan parantaa verkkosivuston saavutettavuutta tekoälyagenteille."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Agentin saavutettavuus"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Näillä tarkistuksilla varmistetaan, että tekoälyagentit käyttävät laadukkaita ja [selattavissa olevia verkkosivustoja](https://goo.gle/lighthouse-agentic-web), ja todennetaan WebMCP-integraatioiden oikeellisuus. Kategoriaa kehitetään yhä, ja se voi vielä muuttua."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agenttiselaus"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Selainten yhteensopivuus"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobiiliystävällinen"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP-integroinnin vahvistavat tarkastukset."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Testatun laitteen CPU näyttää olevan hitaampi kuin Lighthouse olettaa. Tämä voi vaikuttaa tuloksiin negatiivisesti. Lue lisää [sopivan CPU-hidastuskertoimen kalibroinnista](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

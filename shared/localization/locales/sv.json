@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Alla attribut av typen `[aria-*]` är giltiga och rättstavade"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Attributvärdena för `autocomplete` måste vara giltiga och tillämpas korrekt för att skärmläsare ska fungera korrekt. [Läs mer om giltiga värden för autoslutför](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Attribut av typen `autocomplete` används inte korrekt"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` attribut används korrekt"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Element med fel"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` element har alt-text"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Det finns vissa fall där den semantiska rollen för ett element med `role=\"none\"` eller `role=\"presentation\"` inte löses till none eller presentation. För att säkerställa att elementet förblir borttaget från tillgänglighetsträdet bör du inte lägga till några globala ARIA-attribut i elementet eller göra det fokuserbart. [Läs mer om konflikt mellan presentationsroller](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Element med `role=\"none\"` eller `role=\"presentation\"` har konflikter"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Element med `role=\"none\"` eller `role=\"presentation\"` har inga konflikter"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Formulärelement utan effektiva etiketter kan upplevas som frustrerande för användare som använder en skärmläsare. [Läs mer om elementet `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Länkar för att hoppa över är fokuserbara."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Säkerställer att SVG-element med rollen `img`, `graphics-document` eller `graphics-symbol` har ett tillgängligt textalternativ. [Läs mer om alternativtext för SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "SVG-element med rollen `img` har inget maskinläsbart textalternativ"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "SVG-element med rollen `img` har ett tillgängligt textalternativ"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Med värden större än noll anges en explicit ordningsföljd för navigeringen. Även om detta inte är fel rent tekniskt leder det ofta till en frustrerande upplevelse för den som är beroende av tekniska hjälpmedel. [Läs mer om attributet `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Element som inte godkändes"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Regel som inte godkändes"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Ett korrekt formaterat [tillgänglighetsträd](http://goo.gle/lighthouse-agentic-a11y) hjälper AI-agenter att navigera och interagera med sidan."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Alla granskningar har godkänts"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Granskningar som inte godkändes"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Tillgänglighetsträdet är inte korrekt formaterat"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Tillgänglighetsträdet är korrekt formaterat"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Om llms.txt-filen inte följer rekommendationerna kanske stora språkmodeller inte förstår hur du vill att din webbplats ska genomsökas eller användas för träning. [llms.txt](https://llmstxt.org/)-filen ska vara en Markdown-fil som innehåller minst en H1-rubrik."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Misslyckades med HTTP-status {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Det gick inte att hämta llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt följer inte rekommendationerna"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "En obligatorisk H1-rubrik (t.ex. # Titel) saknas i filen."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Filen verkar inte innehålla några länkar."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt följer rekommendationerna"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Filen är misstänkt kort."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Aktuellt värde"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Granska ordningen på token: {tokens} i {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Webbfunktioner"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline-status"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Listar webbfunktioner som används på sidan och deras Baseline-status vid {date}. [Läs mer om Baseline](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Baseline-funktioner"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Åtgärder kan vidtas"
@@ -771,7 +855,7 @@
     "message": "Sidan har HTML som doctype"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Användare blir misstänksamma eller förvirrade av webbplatser som ber om åtkomst till deras plats utan sammanhang. Det kan vara bättre att koppla begäran till något användaren gör. [Läs mer om behörigheten för geolokalisering](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Begär åtkomst till geografisk plats vid sidinläsning"
@@ -939,7 +1023,7 @@
     "message": "{shiftCount,plural, =1{1 layoutförskjutning hittades}other{# layoutförskjutningar hittades}}"
   },
   "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "Webbteckensnittet har lästs in"
+    "message": "Webbfonten har lästs in"
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Injicerad iframe"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Sidan har giltiga källkartor"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Formulär"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Överväg att lägga till [WebMCP](http://goo.gle/webmcp-docs)-kommentarer i formulären nedan. Detta hjälper AI-agenter att identifiera och interagera med dessa formulär på ett mer tillförlitligt sätt."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 formulär saknar kommentarer}other{# formulär saknar kommentarer}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP-formulärtäckning"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Beskrivning"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Källans plats"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Inputschema"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Verktygsnamn"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Listar de [WebMCP-verktyg](http://goo.gle/webmcp-docs) som var registrerade när analysen utfördes."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Registrerade WebMCP-verktyg"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Deklarativa verktyg"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Imperativa verktyg"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problem"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Giltiga [WebMCP-scheman](http://goo.gle/webmcp-docs) krävs för att AI-agenter ska kunna förstå och interagera med verktyg på rätt sätt. Åtgärda eventuella fel eller varningar som rapporteras av webbläsaren."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP-scheman är ogiltiga"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Attributet `name` saknas för ett valfritt fält. Lägg till den för att definiera parameternamnet."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Lägg till en beskrivning för att göra formuläret mer tillgängligt för AI-agenter."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Attributet `name` saknas för ett obligatoriskt fält. Lägg till den för att definiera parameternamnet."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Attributet `tooldescription` på formulärnivå saknas. Lägg till den för att beskriva verktyget för AI-agenter."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Attributet `toolname` på formulärnivå saknas. Lägg till det för att definiera verktygets namn."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP-scheman är giltiga"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Dessa granskningar lyfter fram bästa metoderna för att förbättra webbplatsens tillgänglighet för AI-agenter."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Agenttillgänglighet"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Dessa kontroller säkerställer att webbplatser är högkvalitativa och [kan läsas av AI-agenter](https://goo.gle/lighthouse-agentic-web) samt validerar korrektheten i WebMCP-integrationer. Den här kategorin är fortfarande under utveckling och kan komma att ändras."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentisk webbläsning"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Granskningar som validerar WebMCP-integrering."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
   },
@@ -1319,6 +1490,18 @@
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabeller och listor"
   },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Dessa granskningar lyfter fram bästa metoderna för att förbättra webbplatsens tillgänglighet för AI-agenter."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Agenttillgänglighet"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Dessa kontroller säkerställer att webbplatser är högkvalitativa och [kan läsas av AI-agenter](https://goo.gle/lighthouse-agentic-web) samt validerar korrektheten i WebMCP-integrationer. Den här kategorin är fortfarande under utveckling och kan komma att ändras."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Agentisk webbläsning"
+  },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilitet med webbläsare"
   },
@@ -1365,7 +1548,7 @@
     "message": "Prestanda"
   },
   "core/config/default-config.js | seoCategoryDescription": {
-    "message": "Dessa kontroller ser till att din sida följer de grundläggande råden för sökmotoroptimering. Det finns fler faktorer som Lighthouse inte bedömer här som kan påverka rankningen i sökresultat, däribland prestandan för [Viktiga webbvärden](https://web.dev/explore/vitals). [Läs mer om Google Search Essentials](https://support.google.com/webmasters/answer/35769)."
+    "message": "Dessa kontroller ser till att din sida följer de grundläggande råden för sökmotoroptimering. Det finns fler faktorer som Lighthouse inte bedömer här som kan påverka rankingen i sökresultat, däribland prestandan för [Viktiga webbvärden](https://web.dev/explore/vitals). [Läs mer om Google Search Essentials](https://support.google.com/webmasters/answer/35769)."
   },
   "core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Kontrollera att fler av de bästa metoderna för sökmotoroptimering följs på din webbplats genom att köra dessa extra valideringar."
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilanpassad"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Granskningar som validerar WebMCP-integrering."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Enheten som testas verkar ha en lägre CPU-hastighet än vad som förväntas i Lighthouse. Det här kan påverka prestandavärdet negativt. Läs mer om att [kalibrera en lämplig CPU-multiplicerare](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
@@ -1560,7 +1749,7 @@
     "message": "Första meningsfulla skärmuppritningen"
   },
   "core/lib/i18n/i18n.js | fontResourceType": {
-    "message": "Teckensnitt"
+    "message": "Font"
   },
   "core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Bild"
@@ -2958,7 +3147,7 @@
     "message": "Textresurser bör visas komprimerade (gzip, deflate eller brotli) så att färre byte skickas via nätverket. Överväg att använda ett CDN som har inbyggt stöd för detta eller konfigurera webbservern för att utföra åtgärden. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Optimize Fonts` så att du automatiskt kan dra nytta av CSS-funktionen `font-display`, som gör text synlig för användaren medan webbteckensnitten läses in."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Optimize Fonts` så att du automatiskt kan dra nytta av CSS-funktionen `font-display`, som gör text synlig för användaren medan webbfonterna läses in."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
     "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Next-Gen Formats` så att bilder konverteras till WebP."
@@ -3072,7 +3261,7 @@
     "message": "Vi rekommenderar att du inaktiverar Magentos inbyggda [paketering och minifiering av JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) och använder [baler](https://github.com/magento/baler/) i stället."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
-    "message": "Ange `@font-display` när du [definierar anpassade teckensnitt](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+    "message": "Ange `@font-display` när du [definierar anpassade fonter](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
     "message": "Vi rekommenderar att du söker på [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) efter olika tillägg från tredje part så att du kan använda nyare bildformat."
@@ -3141,7 +3330,7 @@
     "message": "Kontakta den kontoansvariga om du vill aktivera [`HTML Lazy Load`](https://support.nitropack.io/hc/en-us/articles/17144942904337). Om du konfigurerar den prioriteras och optimeras renderingen av sidan."
   },
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | font-display": {
-    "message": "Använd alternativet [`Override Font Rendering Behavior`](https://support.nitropack.io/hc/en-us/articles/16547358865041) i NitroPack för att ställa in ett önskat värde för visningsregeln för CSS-teckensnitt."
+    "message": "Använd alternativet [`Override Font Rendering Behavior`](https://support.nitropack.io/hc/en-us/articles/16547358865041) i NitroPack för att ställa in ett önskat värde för visningsregeln för CSS-font."
   },
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | modern-image-formats": {
     "message": "Konvertera dina bilder automatiskt till WebP med [`Image Optimization`](https://support.nitropack.io/hc/en-us/articles/16547237162513)."
@@ -3339,7 +3528,7 @@
     "message": "Använd [Prefetch DNS Requests](https://docs.wp-rocket.me/article/1302-prefetch-dns-requests) i WP Rocket för att lägga till dns-prefetch och förbättra hastigheten för anslutningen till externa domäner. WP Rocket lägger dessutom automatiskt till preconnect i [Google Fonts-domänen](https://docs.wp-rocket.me/article/1312-optimize-google-fonts) och eventuella CNAME lägg till via funktionen [Enable CDN](https://docs.wp-rocket.me/article/42-using-wp-rocket-with-a-cdn)."
   },
   "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-rel-preload": {
-    "message": "Åtgärda problemet med teckensnitt genom att aktivera [Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css) i WP Rocket. Inläsning i förväg prioriteras för viktiga teckensnitt på webbplatsen."
+    "message": "Åtgärda problemet med fonter genom att aktivera [Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css) i WP Rocket. Inläsning i förväg prioriteras för viktiga fonter på webbplatsen."
   },
   "report/renderer/report-utils.js | calculatorLink": {
     "message": "Visa kalkylator."

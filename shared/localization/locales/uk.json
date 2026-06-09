@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Атрибути `[aria-*]` дійсні та написані правильно"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Щоб програми зчитування з екрана працювали належним чином, значення атрибута `autocomplete` мають бути дійсними й правильно застосованими. [Докладніше.](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Атрибути `autocomplete` використовуються неправильно"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Атрибути `autocomplete` використовуються правильно"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Елементи, що не пройшли перевірку"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Елементи `<object>` містять текст заміщення"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "У деяких випадках семантична роль елемента з атрибутами `role=\"none\"` або `role=\"presentation\"` не розпізнається як none або presentation. Щоб елемент не з’являвся в дереві доступності, не додавайте до нього глобальні атрибути ARIA і не робіть його доступним для фокусування. [Докладніше про конфлікт для ролі presentation.](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Елементи з ролями `role=\"none\"` або `role=\"presentation\"` мають конфлікти"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Елементи з ролями `role=\"none\"` або `role=\"presentation\"` не мають конфліктів"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Якщо елементи <form> не мають ефективних міток, користувачам програм зчитування з екрана буде незручно їх заповнювати. [Докладніше про елемент `select`.](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Посилання для пропуску контенту є фокусованими."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Перевірка наявності доступного альтернативного тексту для елементів SVG з ролями `img`, `graphics-document` або `graphics-symbol`. [Докладніше.](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Елементи SVG з роллю `img` не мають доступного альтернативного тексту"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Елементи SVG з роллю `img` мають доступний альтернативний текст"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Значення, що перевищує 0, передбачає явне встановлення порядку навігації. Хоча технічно воно дійсне, це часто ускладнює взаємодію для користувачів, які застосовують технології для людей з обмеженими можливостями. [Докладніше про атрибут `tabindex`.](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Елементи `<video>` містять елемент `<track>` з атрибутом `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Відхилений елемент"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Недотримане правило"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Завдяки правильній структурі [дерева доступності](http://goo.gle/lighthouse-agentic-a11y) агенти на основі ШІ можуть переміщатися сторінкою і взаємодіяти з нею."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Усі перевірки пройдено"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Непройдені перевірки"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Дерево доступності має неправильну структуру"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Дерево доступності має правильну структуру"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Якщо файл llms.txt не відповідає рекомендаціям, великі мовні моделі можуть не розуміти, як сканувати ваш вебсайт або використовувати його для навчання. Файл [llms.txt](https://llmstxt.org/) має бути у форматі Markdown і включати принаймні один заголовок H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Не вдалося виконати (код статусу HTTP: {statusCode})"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Не вдалось отримати файл llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Файл llms.txt не відповідає рекомендаціям"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "У файлі немає обов’язкового заголовка H1 (наприклад, \"# Заголовок\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Схоже, файл не містить посилань."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Файл llms.txt відповідає рекомендаціям"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Файл підозріло короткий."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Поточне значення"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Перевірка порядку маркерів: \"{tokens}\" у {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Вебфункції"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Статус Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Містить список вебфункцій, які використовуються на сторінці, і їх статус Baseline станом на {date}. [Докладніше про Baseline.](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Функції Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Можна виправити"
@@ -771,7 +855,7 @@
     "message": "Сторінка має елемент HTML doctype"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Сайти, які надсилають запит на доступ до місцезнаходження без пояснення, викликають у користувачів недовіру або спантеличеність. Радимо пов’язувати запит із діями користувача. [Докладніше про дозвіл на доступ до геолокації.](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Надсилає запит на доступ до геолокації під час завантаження сторінки"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Сторінка містить дійсні карти джерел"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Форма"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Додайте анотації [WebMCP](http://goo.gle/webmcp-docs) у наведені нижче форми, щоб агенти на основі ШІ могли надійніше виявляти такі форми й взаємодіяти з ними."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 форма без анотацій}one{# форма без анотацій}few{# форми без анотацій}many{# форм без анотацій}other{# форми без анотацій}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Покриття форм WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Елемент"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Опис"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Місцезнаходження джерела"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Схема вхідних даних"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Назва інструмента"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Містить список інструментів [WebMCP](http://goo.gle/webmcp-docs), зареєстрованих на момент аналізу."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Зареєстровані інструменти WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Інструменти для декларативного програмування"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Інструменти для імперативного програмування"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Елемент"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Проблема"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Щоб агенти на основі ШІ могли правильно розуміти інструменти й взаємодіяти з ними, потрібні дійсні схеми [WebMCP](http://goo.gle/webmcp-docs). Виправте всі помилки або перегляньте попередження, які відображаються у вебпереглядачі."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Схеми WebMCP недійсні"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Немає атрибута `name` для необов’язкового поля. Додайте його, щоб визначити назву параметра."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Додайте опис, щоб зробити цю форму доступнішою для агентів на основі ШІ."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Немає атрибута `name` для обов’язкового поля. Додайте його, щоб визначити назву параметра."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Немає атрибута `tooldescription` на рівні форми. Додайте його, щоб описати інструмент для агентів на основі ШІ."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Немає атрибута `toolname` на рівні форми. Додайте його, щоб визначити назву інструмента."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Схеми WebMCP дійсні"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Ці перевірки допоможуть покращити доступність вебсайту для агентів на основі ШІ."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Доступність агента"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Ці перевірки забезпечують високу якість вебсайтів і їх доступність для агентів на основі ШІ, а також підтверджують правильність інтеграції [WebMCP](https://goo.gle/lighthouse-agentic-web). Ця категорія ще на стадії розробки, тому може змінюватися."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Агентний вебперегляд"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Перевірки інтеграції WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Ці рекомендації допоможуть покращити використання ролей ARIA у вашому додатку, що може позитивно вплинути на взаємодію для користувачів допоміжних технологій, як-от програм зчитування з екрана."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Таблиці та списки"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Ці перевірки допоможуть покращити доступність вебсайту для агентів на основі ШІ."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Доступність агента"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Ці перевірки забезпечують високу якість вебсайтів і їх доступність для агентів на основі ШІ, а також підтверджують правильність інтеграції [WebMCP](https://goo.gle/lighthouse-agentic-web). Ця категорія ще на стадії розробки, тому може змінюватися."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Агентний вебперегляд"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Сумісність веб-переглядача"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Для мобільних пристроїв"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Перевірки інтеграції WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "ЦП пристрою для тестування працює повільніше, ніж потрібно для роботи Lighthouse. Це може негативно позначитися на оцінці ефективності. Докладніше про [калібрування відповідного множника сповільнення ЦП](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

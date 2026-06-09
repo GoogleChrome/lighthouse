@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Els atributs `[aria-*]` són vàlids i estan ben escrits"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Els valors de l'atribut `autocomplete` han de ser vàlids i s'han d'aplicar correctament perquè els lectors de pantalla funcionin bé. [Obtén més informació sobre els valors de compleció automàtica vàlids](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Els atributs `autocomplete` no s'utilitzen correctament"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Els atributs `autocomplete` s'utilitzen correctament"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Elements amb errors"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Els elements `<object>` tenen text alternatiu"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Hi ha determinats casos en què el rol semàntic d'un element amb `role=\"none\"` o `role=\"presentation\"` no es resol com a none o presentation. Per assegurar-te que l'element continuï suprimit de l'arbre d'accessibilitat, no hi afegeixis cap atribut ARIA global ni facis que sigui enfocable. [Obtén més informació sobre el conflicte del rol presentation](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Els elements amb `role=\"none\"` o `role=\"presentation\"` tenen conflictes"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Els elements amb `role=\"none\"` o `role=\"presentation\"` no tenen conflictes"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Els elements de formulari sense etiquetes eficaces poden crear experiències frustrants per als usuaris de lectors de pantalla. [Obtén més informació sobre l'element `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -480,13 +498,22 @@
     "message": "Els elements select tenen elements d'etiqueta associats."
   },
   "core/audits/accessibility/skip-link.js | description": {
-    "message": "Incloure un enllaç d'omissió pot ajudar els usuaris a passar al contingut principal per estalviar temps. [Obtén més informació sobre els enllaços d'omissió](https://dequeuniversity.com/rules/axe/4.12/skip-link)."
+    "message": "Incloure un enllaç d'omissió pot ajudar els usuaris a saltar al contingut principal per estalviar temps. [Obtén més informació sobre els enllaços d'omissió](https://dequeuniversity.com/rules/axe/4.12/skip-link)."
   },
   "core/audits/accessibility/skip-link.js | failureTitle": {
     "message": "Els enllaços d'omissió no són enfocables."
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Els enllaços d'omissió són enfocables."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Assegura't que els elements SVG amb el rol `img`, `graphics-document` o `graphics-symbol` tinguin una alternativa de text accessible. [Obtén més informació sobre el text alternatiu SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Els elements SVG amb el rol `img` no tenen una alternativa de text accessible"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Els elements SVG amb el rol `img` tenen una alternativa de text accessible"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Un valor superior a 0 implica una ordenació explícita de navegació. Tècnicament és vàlid, però sol causar experiències frustrants per als usuaris que depenen de les tecnologies assistencials. [Obtén més informació sobre l'atribut `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Els elements `<video>` contenen un element `<track>` amb `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Element que no ha seguit la regla"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Regla que no s'ha seguit"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Un [arbre d'accessibilitat](http://goo.gle/lighthouse-agentic-a11y) ben format ajuda els agents d'IA a navegar per la pàgina i a interaccionar-hi."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "S'han aprovat totes les auditories"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Auditories fallides"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "L'arbre d'accessibilitat no està ben format"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "L'arbre d'accessibilitat està ben format"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Si el fitxer llms.txt no segueix les recomanacions, és possible que els models de llenguatge extens no puguin entendre com vols que es rastregi o s'utilitzi el teu lloc web per a l'entrenament. El fitxer [llms.txt](https://llmstxt.org/) ha de ser un fitxer Markdown que contingui almenys una capçalera H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Ha fallat amb l'estat HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "No s'ha pogut recollir el fitxer llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt no segueix les recomanacions"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Al fitxer li falta una capçalera H1 necessària (p. ex., \"# Títol\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Sembla que el fitxer no conté cap enllaç."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt segueix les recomanacions"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "El fitxer és sospitosament curt."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Valor actual"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Revisa l'ordre dels testimonis: \"{tokens}\" a {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Funcions web"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Estat de Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Enumera les funcions web utilitzades a la pàgina i el seu estat de Baseline a partir del dia {date}. [Obtén més informació sobre Baseline](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Funcions de referència"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Hi ha accions aplicables"
@@ -687,7 +771,7 @@
     "message": "Gravetat"
   },
   "core/audits/clickjacking-mitigation.js | description": {
-    "message": "La capçalera `X-Frame-Options` (XFO) o la directiva `frame-ancestors` a la capçalera `Content-Security-Policy` (CSP) controlen on es pot inserir una pàgina. Poden mitigar els atacs de segrest de clics impedint que alguns llocs web, o tots, insereixin la pàgina. [Obtén més informació sobre com pots mitigar el segrest de clics](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+    "message": "La capçalera `X-Frame-Options` (XFO) o la directiva `frame-ancestors` a la capçalera `Content-Security-Policy` (CSP) controlen on es pot incrustar una pàgina. Poden mitigar els atacs de segrest de clics impedint que alguns llocs web, o tots, incrustin la pàgina. [Obtén més informació sobre com pots mitigar el segrest de clics](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
   },
   "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
     "message": "No s'ha trobat cap política de control de marcs"
@@ -771,7 +855,7 @@
     "message": "La pàgina té el tipus de document HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Els usuaris reaccionen amb desconfiança i desconcert davant dels llocs web que els sol·liciten la ubicació sense context. Et recomanem que vinculis la sol·licitud a una acció de l'usuari. [Obtén més informació sobre el permís de geolocalització](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Sol·licita el permís de geolocalització en carregar la pàgina"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "La pàgina té mapes d'origen vàlids"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Formulari"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Et recomanem que afegeixis anotacions [WebMCP](http://goo.gle/webmcp-docs) als formularis que s'enumeren a continuació. Això ajuda els agents d'IA a identificar aquests formularis i a interaccionar-hi de manera més fiable."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{Falten anotacions en 1 formulari}other{Falten anotacions en # formularis}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Cobertura del formulari WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Descripció"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Ubicació de la font"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Esquema d'entrada"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Nom de l'eina"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Enumera les [eines de WebMCP](http://goo.gle/webmcp-docs) registrades en el moment de l'anàlisi."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Eines de WebMCP registrades"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Eines declaratives"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Eines imperatives"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Element"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Problema"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Es requereixen [esquemes de WebMCP](http://goo.gle/webmcp-docs) vàlids perquè els agents d'IA entenguin les eines i hi interaccionin correctament. Corregeix els errors o els advertiments de què hagi informat el navegador."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Els esquemes de WebMCP no són vàlids"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Falta l'atribut `name` per a un camp opcional. Afegeix-lo per definir el nom del paràmetre."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Afegeix una descripció per fer que aquest formulari sigui més accessible per als agents d'IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Falta l'atribut `name` per a un camp obligatori. Afegeix-lo per definir el nom del paràmetre."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Falta l'atribut `tooldescription` del nivell de formulari. Afegeix-lo per descriure l'eina als agents d'IA."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Falta l'atribut `toolname` del nivell de formulari. Afegeix-lo per definir el nom de l'eina."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Els esquemes de WebMCP són vàlids"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Aquestes auditories destaquen les pràctiques recomanades a fi de millorar l'accessibilitat del lloc web per als agents d'IA."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accessibilitat de l'agent"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Aquestes comprovacions garanteixen [llocs web navegables d'alta qualitat per als agents d'IA](https://goo.gle/lighthouse-agentic-web) i validen la correcció de les integracions de WebMCP. Aquesta categoria encara està en desenvolupament i subjecta a canvis."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegació agentiva"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Auditories que validen la integració de WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Aquí tens recomanacions per millorar l'ús dels elements d'ARIA a l'aplicació. També poden millorar l'experiència dels usuaris de tecnologia assistencial (per exemple, de lectors de pantalla)."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Taules i llistes"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Aquestes auditories destaquen les pràctiques recomanades a fi de millorar l'accessibilitat del lloc web per als agents d'IA."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Accessibilitat de l'agent"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Aquestes comprovacions garanteixen [llocs web navegables d'alta qualitat per als agents d'IA](https://goo.gle/lighthouse-agentic-web) i validen la correcció de les integracions de WebMCP. Aquesta categoria encara està en desenvolupament i subjecta a canvis."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Navegació agentiva"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Compatibilitat amb els navegadors"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Adaptació per a mòbils"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Auditories que validen la integració de WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Sembla que el dispositiu provat té una CPU més lenta que la que espera Lighthouse. Això pot repercutir negativament en el teu resultat del rendiment. Obtén més informació sobre com pots [calibrar un multiplicador de retenció de la CPU adequat](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
@@ -2907,7 +3096,7 @@
     "message": "Pots optar per fer servir la utilitat `BreakpointObserver` del Component Dev Kit (CDK) per gestionar els punts de ruptura de la imatge. [Obtén més informació](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Pots penjar el `GIF` en un servei que permeti inserir-lo com un vídeo HTML5."
+    "message": "Pots penjar el `GIF` en un servei que permeti incrustar-lo com un vídeo HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
     "message": "Planteja't la possibilitat de configurar [formats d'imatge WebP amb un estil d'imatge Convert](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles) al teu lloc web."
@@ -3024,7 +3213,7 @@
     "message": "Utilitza el component `gatsby-plugin-image` per establir les `sizes` adequades. [Obtén més informació](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Pots penjar el GIF en un servei que permeti inserir-lo com un vídeo HTML5."
+    "message": "Pots penjar el GIF en un servei que permeti incrustar-lo com un vídeo HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
     "message": "Pots fer servir un [connector](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) o un servei que converteixi automàticament les imatges penjades als formats òptims."
@@ -3261,7 +3450,7 @@
     "message": "Penja imatges mitjançant `Wix Media Manager` per assegurar-te que es difonen automàticament com a WebP. Troba [més maneres d'optimitzar](https://support.wix.com/en/article/site-performance-optimizing-your-media) els elements multimèdia del teu lloc web."
   },
   "node_modules/lighthouse-stack-packs/packs/wix.js | render-blocking-resources": {
-    "message": "Quan [afegeixis codi de tercers](https://support.wix.com/en/article/site-performance-using-third-party-code-on-your-site) a la pestanya `Custom Code` del tauler del teu lloc web, assegura't que es difereixi o carregui a la part final del cos del codi. Sempre que sigui possible, utilitza les [integracions](https://support.wix.com/en/article/about-marketing-integrations) de Wix per inserir eines de màrqueting al teu lloc web. "
+    "message": "Quan [afegeixis codi de tercers](https://support.wix.com/en/article/site-performance-using-third-party-code-on-your-site) a la pestanya `Custom Code` del tauler del teu lloc web, assegura't que es difereixi o carregui a la part final del cos del codi. Sempre que sigui possible, utilitza les [integracions](https://support.wix.com/en/article/about-marketing-integrations) de Wix per incrustar eines de màrqueting al teu lloc web. "
   },
   "node_modules/lighthouse-stack-packs/packs/wix.js | server-response-time": {
     "message": "Wix utilitza CDN i la memòria cau per difondre respostes tan ràpid com sigui possible per a la majoria de visitants. Et recomanem que [activis manualment la memòria cau](https://support.wix.com/en/article/site-performance-caching-pages-to-optimize-loading-speed) per al teu lloc web, sobretot si fas servir `Velo`."
@@ -3270,7 +3459,7 @@
     "message": "Revisa tot el codi de tercers que hagis afegit a la pestanya `Custom Code` del tauler del teu lloc web i conserva només els serveis que siguin necessaris per al lloc web. [Obtén més informació](https://support.wix.com/en/article/site-performance-removing-unused-javascript)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Pots penjar el GIF en un servei que permeti inserir-lo com un vídeo HTML5."
+    "message": "Pots penjar el GIF en un servei que permeti incrustar-lo com un vídeo HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
     "message": "Planteja't utilitzar el connector [Performance Lab](https://wordpress.org/plugins/performance-lab/) per convertir automàticament les imatges JPEG que has penjat en WebP, sempre que s'admeti."

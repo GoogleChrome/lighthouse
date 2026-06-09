@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "Τα χαρακτηριστικά `[aria-*]` είναι έγκυρα και δεν έχουν ορθογραφικά λάθη"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "Οι τιμές του χαρακτηριστικού `autocomplete` πρέπει να είναι έγκυρες και να εφαρμόζονται σωστά, προκειμένου να λειτουργούν σωστά οι αναγνώστες οθόνης. [Μάθετε περισσότερα σχετικά με τις έγκυρες τιμές αυτόματης συμπλήρωσης](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "Τα χαρακτηριστικά `autocomplete` δεν χρησιμοποιούνται σωστά"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "Τα χαρακτηριστικά `autocomplete` χρησιμοποιούνται σωστά"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Στοιχεία που απέτυχαν"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "Τα στοιχεία `<object>` έχουν εναλλακτικό κείμενο"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "Υπάρχουν ορισμένες περιπτώσεις στις οποίες ο σημασιολογικός ρόλος ενός στοιχείου με ρόλο `role=\"none\"` ή `role=\"presentation\"` δεν αντιστοιχίζεται σε κανέναν ή σε κάποια παρουσίαση. Για να διασφαλίσετε ότι το στοιχείο παραμένει καταργημένο από το δέντρο προσβασιμότητας, δεν πρέπει να προσθέσετε καθολικά χαρακτηριστικά ARIA στο στοιχείο ή να το κάνετε εστιασμένο. [Μάθετε περισσότερα σχετικά με τη διένεξη ρόλων παρουσίασης](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "Τα στοιχεία με ρόλο `role=\"none\"` ή `role=\"presentation\"` έχουν διενέξεις"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "Τα στοιχεία με ρόλο `role=\"none\"` ή `role=\"presentation\"` δεν έχουν διενέξεις"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "Τα στοιχεία φόρμας χωρίς αποτελεσματικές ετικέτες μπορούν να δημιουργήσουν ενοχλητικές εμπειρίες για τους χρήστες του αναγνώστη οθόνης. [Μάθετε περισσότερα σχετικά με το στοιχείο `select`](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "Οι σύνδεσμοι παράβλεψης είναι εστιασμένοι."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "Εξασφαλίζει ότι τα στοιχεία SVG με ρόλο `img`, `graphics-document` ή `graphics-symbol` διαθέτουν μια προσβάσιμη εναλλακτική λύση κειμένου. [Μάθετε περισσότερα σχετικά με το εναλλακτικό κείμενο SVG](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "Τα στοιχεία SVG με ρόλο `img` δεν διαθέτουν προσβάσιμη εναλλακτική λύση κειμένου"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "Τα στοιχεία SVG με ρόλο `img` διαθέτουν μια προσβάσιμη εναλλακτική λύση κειμένου"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "Μια τιμή μεγαλύτερη από 0 υποδηλώνει μια ρητή σειρά πλοήγησης. Εάν και ορθό από τεχνικής άποψης, αυτό συχνά επηρεάζει αρνητικά την εμπειρία των χρηστών που βασίζονται στις τεχνολογίες υποβοήθησης. [Μάθετε περισσότερα σχετικά με το χαρακτηριστικό `tabindex`](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "Τα στοιχεία `<video>` περιέχουν ένα στοιχείο `<track>` με `[kind=\"captions\"]`"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "Στοιχείο που απέτυχε"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "Κανόνας που απέτυχε"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "Ένα [δέντρο προσβασιμότητας](http://goo.gle/lighthouse-agentic-a11y) με σωστή μορφή βοηθά τα agent AI να πλοηγούνται και να αλληλεπιδρούν με τη σελίδα."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "Όλοι οι έλεγχοι ολοκληρώθηκαν επιτυχώς"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "Έλεγχοι που απέτυχαν"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "Το δέντρο προσβασιμότητας δεν έχει σωστή μορφή"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "Το δέντρο προσβασιμότητας έχει σωστή μορφή"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "Εάν το αρχείο llms.txt δεν ακολουθεί τις προτάσεις, τα μεγάλα γλωσσικά μοντέλα ενδέχεται να μην μπορούν να κατανοήσουν με ποιον τρόπο θέλετε να γίνεται η ανίχνευση ή η χρήση του ιστοτόπου σας για εκπαίδευση. Το αρχείο [llms.txt](https://llmstxt.org/) πρέπει να είναι ένα αρχείο Γρήγορης προσθήκης που περιέχει τουλάχιστον μία κεφαλίδα H1."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "Απέτυχε με την κατάσταση HTTP {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "Η λήψη του αρχείου llms.txt απέτυχε"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "Το αρχείο llms.txt δεν ακολουθεί τις προτάσεις"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "Λείπει μια απαιτούμενη κεφαλίδα H1 από το αρχείο (π.χ. \"# Τίτλος\")."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "Το αρχείο δεν φαίνεται να περιέχει συνδέσμους."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "Το αρχείο llms.txt ακολουθεί τις προτάσεις"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "Το αρχείο είναι υπερβολικά σύντομο με αποτέλεσμα να δημιουργεί υποψίες."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "Τρέχουσα τιμή"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Έλεγχος σειράς διακριτικών: \"{tokens}\" στο {snippet}"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "Λειτουργίες ιστού"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Κατάσταση Baseline"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "Παραθέτει τις λειτουργίες ιστού που χρησιμοποιούνται στη σελίδα και τις αντίστοιχες καταστάσεις Baseline από {date}. [Μάθετε περισσότερα σχετικά με το Baseline](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Λειτουργίες Baseline"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Με δυνατότητα ενέργειας"
@@ -771,7 +855,7 @@
     "message": "Η σελίδα έχει τύπο εγγράφου (doctype) HTML"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "Οι ιστότοποι που απαιτούν τη γνωστοποίηση τοποθεσίας χωρίς προφανή αιτία προκαλούν σύγχυση ή φαίνονται ύποπτοι στους χρήστες. Συνιστάται τα αιτήματα να συνδέονται με τις ενέργειες των χρηστών. [Μάθετε περισσότερα σχετικά με την άδεια γεωγραφικής τοποθεσίας](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Αίτημα για άδεια εντοπισμού γεωγραφικής τοποθεσίας κατά τη φόρτωση σελίδων"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "Η σελίδα έχει έγκυρες αντιστοιχίσεις πηγής"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "Φόρμα"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "Εξετάστε το ενδεχόμενο να προσθέσετε σχολιασμούς [WebMCP](http://goo.gle/webmcp-docs) στις φόρμες που παρατίθενται παρακάτω. Αυτό βοηθά τα agent AI να εντοπίζουν αυτές τις φόρμες και να αλληλεπιδρούν μαζί τους με μεγαλύτερη αξιοπιστία."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{Λείπουν σχολιασμοί από 1 φόρμα}other{Λείπουν σχολιασμοί από # φόρμες}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "Κάλυψη φόρμας WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "Στοιχείο"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "Περιγραφή"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "Τοποθεσία πηγής"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "Σχήμα εισόδου"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "Όνομα εργαλείου"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "Παραθέτει τα [εργαλεία WebMCP](http://goo.gle/webmcp-docs) που ήταν καταχωρισμένα κατά τη στιγμή της ανάλυσης."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "Καταχωρισμένα εργαλεία WebMCP"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "Δηλωτικά εργαλεία"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "Προστακτικά εργαλεία"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "Στοιχείο"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "Πρόβλημα"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "Απαιτούνται έγκυρα [σχήματα WebMCP](http://goo.gle/webmcp-docs), προκειμένου τα agent AI να κατανοούν και να αλληλεπιδρούν σωστά με τα εργαλεία. Διορθώστε τυχόν σφάλματα ή προειδοποιήσεις που αναφέρονται από το πρόγραμμα περιήγησης."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "Τα σχήματα WebMCP δεν είναι έγκυρα"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "Λείπει το χαρακτηριστικό `name` για ένα προαιρετικό πεδίο. Προσθέστε το για να ορίσετε το όνομα της παραμέτρου."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "Προσθέστε μια περιγραφή, για να κάνετε αυτή τη φόρμα πιο προσβάσιμη για τα agent AI."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "Λείπει το χαρακτηριστικό `name` για ένα απαιτούμενο πεδίο. Προσθέστε το για να ορίσετε το όνομα της παραμέτρου."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "Λείπει το χαρακτηριστικό `tooldescription` σε επίπεδο φόρμας. Προσθέστε το για να περιγράψετε το εργαλείο για τα agent AI."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "Λείπει το χαρακτηριστικό `toolname` σε επίπεδο φόρμας. Προσθέστε το για να ορίσετε το όνομα του εργαλείου."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "Τα σχήματα WebMCP είναι έγκυρα"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "Αυτοί οι έλεγχοι επισημαίνουν τις βέλτιστες πρακτικές για τη βελτίωση της προσβασιμότητας του ιστοτόπου για agent AI."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "Προσβασιμότητα agent"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Αυτοί οι έλεγχοι διασφαλίζουν [ιστοτόπους υψηλής ποιότητας με δυνατότητα περιήγησης για agent AI](https://goo.gle/lighthouse-agentic-web) και επικυρώνουν την ορθότητα των ενσωματώσεων WebMCP. Αυτή η κατηγορία βρίσκεται ακόμα σε φάση ανάπτυξης και υπόκειται σε αλλαγές."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Περιήγηση μέσω agent"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "Έλεγχοι επικύρωσης της ενσωμάτωσης του WebMCP."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Αυτές είναι ευκαιρίες να βελτιώσετε τη χρήση των ARIA στην εφαρμογή σας, κάνοντας καλύτερη την εμπειρία χρήστη σε τεχνολογίες υποβοήθησης, όπως στον αναγνώστη οθόνης."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Πίνακες και λίστες"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "Αυτοί οι έλεγχοι επισημαίνουν τις βέλτιστες πρακτικές για τη βελτίωση της προσβασιμότητας του ιστοτόπου για agent AI."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "Προσβασιμότητα agent"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "Αυτοί οι έλεγχοι διασφαλίζουν [ιστοτόπους υψηλής ποιότητας με δυνατότητα περιήγησης για agent AI](https://goo.gle/lighthouse-agentic-web) και επικυρώνουν την ορθότητα των ενσωματώσεων WebMCP. Αυτή η κατηγορία βρίσκεται ακόμα σε φάση ανάπτυξης και υπόκειται σε αλλαγές."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "Περιήγηση μέσω agent"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Συμβατότητα προγράμματος περιήγησης"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Φιλική προς κινητά"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "Έλεγχοι επικύρωσης της ενσωμάτωσης του WebMCP."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "Η δοκιμασμένη συσκευή φαίνεται να έχει πιο αργή CPU από ό,τι αναμένει το Lighthouse. Αυτό μπορεί να επηρεάσει αρνητικά τη βαθμολογία απόδοσης. Μάθετε περισσότερα σχετικά με τη [βαθμονόμηση ενός κατάλληλου πολλαπλασιαστή επιβράδυνσης CPU](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."

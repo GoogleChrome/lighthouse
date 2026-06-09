@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` 속성이 유효하며 맞춤법 오류가 없음"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "스크린 리더가 제대로 작동하려면 `autocomplete` 속성 값이 유효하고 올바르게 적용되어야 합니다. [유효한 자동 완성 값에 대해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "속성 `autocomplete`개가 올바르게 사용되지 않음"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "속성 `autocomplete`개가 올바르게 사용됨"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "통과하지 못한 요소"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` 요소에 대체 텍스트가 있음"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "`role=\"none\"` 또는 `role=\"presentation\"` 역할을 가진 요소의 의미론적 역할이 '없음' 또는 '프레젠테이션'으로 확인되지 않는 경우가 있습니다. 요소가 접근성 트리에서 삭제된 상태로 유지되도록 하려면, 해당 요소에 전역 ARIA 속성을 추가하거나 포커스가 가능하게 하면 안 됩니다. [프레젠테이션 역할 충돌에 대해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "`role=\"none\"` 또는 `role=\"presentation\"` 역할을 가진 요소에 충돌이 있습니다"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "`role=\"none\"` 또는 `role=\"presentation\"` 역할을 가진 요소에 충돌이 없습니다"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "효과적인 라벨이 없는 양식 요소로 인해 스크린 리더 사용자가 불편을 겪을 수 있습니다. [`select` 요소에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "건너뛰기 링크는 포커스 가능합니다"
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "`img`, `graphics-document` 또는 `graphics-symbol` 역할을 가진 SVG 요소에 액세스 가능한 대체 텍스트가 있는지 확인합니다. [SVG 대체 텍스트에 대해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "`img` 역할을 가진 SVG 요소에 액세스 가능한 대체 텍스트가 없습니다"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "`img` 역할을 가진 SVG 요소에 액세스 가능한 대체 텍스트가 있습니다"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "0보다 큰 값은 명시적인 탐색 순서를 나타냅니다. 기술적으로는 유효하나 보조 기술에 의존하는 사용자에게 불편한 환경이 생기는 경우가 많습니다. [`tabindex` 속성에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 요소에 `[kind=\"captions\"]` 지원 `<track>` 요소가 포함됨"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "실패한 요소"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "통과하지 못한 규칙"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "올바르게 구성된 [접근성 트리](http://goo.gle/lighthouse-agentic-a11y)는 AI 에이전트가 페이지를 탐색하고 페이지와 상호작용하는 데 도움이 됩니다."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "모든 감사를 통과했습니다"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "통과하지 못한 감사"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "접근성 트리가 올바르게 구성되지 않음"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "접근성 트리가 올바르게 구성됨"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "llms.txt 파일이 권장사항을 준수하지 않는 경우 대규모 언어 모델이 사용자가 웹사이트를 크롤링하고 학습에 사용하려는 방식을 파악하지 못할 수 있습니다. [llms.txt](https://llmstxt.org/) 파일은 H1 헤더가 하나 이상 포함된 마크다운 파일이어야 합니다."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "HTTP 상태 {statusCode}(으)로 실패함"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt를 가져올 수 없음"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt가 권장사항을 준수하지 않음"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "파일에 필수 H1 헤더(예: '# 제목')가 없습니다."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "파일에 링크가 포함되어 있지 않은 것으로 보입니다."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt가 권장사항을 준수함"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "파일이 의심스러울 정도로 짧습니다."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "현재 값"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "{snippet}에서 '{tokens}' 토큰의 순서를 검토하세요."
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "웹 기능"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "기준 상태"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "{date} 기준으로 페이지에서 사용된 웹 기능과 기준 상태를 나열합니다. [기준에 관해 자세히 알아보기](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "기준 기능"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "조치 실행 가능"
@@ -771,7 +855,7 @@
     "message": "페이지에 HTML Doctype 있음"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "사용자가 컨텍스트 없이 위치 정보를 요청한 사이트를 신뢰할 수 없거나 이로 인해 혼란스러운 상태입니다. 대신 사용자 작업 요청 입력을 고려해 보세요. [위치정보 권한에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "페이지 로드 시 위치정보 권한 요청"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "페이지에 유효한 소스 맵이 있음"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "양식"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "아래에 나열된 양식에 [WebMCP](http://goo.gle/webmcp-docs) 주석을 추가해 보세요. 이렇게 하면 AI 에이전트가 해당 양식을 더 안정적으로 식별하고 상호작용할 수 있습니다."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{주석이 누락된 양식 1개}other{주석이 누락된 양식 #개}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP 양식 적용 범위"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "요소"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "설명"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "소스 위치"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "입력 스키마"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "도구 이름"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "분석 시점에 등록된 [WebMCP 도구](http://goo.gle/webmcp-docs)를 나열합니다."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "등록된 WebMCP 도구"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "선언적 도구"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "명령형 도구"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "요소"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "문제"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "AI 에이전트가 도구를 올바르게 이해하고 상호작용할 수 있으려면 유효한 [WebMCP 스키마](http://goo.gle/webmcp-docs)가 필요합니다. 브라우저에서 보고된 오류 또는 경고를 수정하세요."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP 스키마가 유효하지 않음"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "옵션 필드의 `name` 속성이 누락되었습니다. 이 속성을 추가하여 파라미터 이름을 정의하세요."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "설명을 추가하여 이 양식에 대한 AI 에이전트의 접근성을 높이세요."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "필수 입력란의 `name` 속성이 누락되었습니다. 이 속성을 추가하여 파라미터 이름을 정의하세요."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "양식 수준의 `tooldescription` 속성이 누락되었습니다. 이 속성을 추가하여 AI 에이전트에게 도구에 대해 설명하세요."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "양식 수준의 `toolname` 속성이 누락되었습니다. 이 속성을 추가하여 도구 이름을 정의하세요."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP 스키마가 유효함"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "이러한 감사는 AI의 웹사이트 접근성을 높일 수 있도록 권장사항을 강조 표시합니다."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "에이전트 접근성"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "이러한 검사를 통해 [AI 에이전트가 탐색할 수 있는 고품질 웹사이트](https://goo.gle/lighthouse-agentic-web)를 보장하고 WebMCP 통합의 정확성을 검증합니다. 이 카테고리는 아직 개발 중이며 변경될 수 있습니다."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "에이전트형 브라우징"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP 통합을 검증하는 감사입니다."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "애플리케이션의 ARIA 사용을 개선하도록 추천된 사항입니다. 이를 통해 스크린 리더와 같은 지원 기술을 사용하는 사용자의 환경을 개선할 수 있습니다."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "표와 목록"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "이러한 감사는 AI의 웹사이트 접근성을 높일 수 있도록 권장사항을 강조 표시합니다."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "에이전트 접근성"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "이러한 검사를 통해 [AI 에이전트가 탐색할 수 있는 고품질 웹사이트](https://goo.gle/lighthouse-agentic-web)를 보장하고 WebMCP 통합의 정확성을 검증합니다. 이 카테고리는 아직 개발 중이며 변경될 수 있습니다."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "에이전트형 브라우징"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "브라우저 호환성"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "모바일 친화적"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP 통합을 검증하는 감사입니다."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "테스트된 기기의 CPU가 Lighthouse의 예상보다 느린 것으로 보입니다. 이는 성능 점수에 부정적인 영향을 줄 수 있습니다. [적절한 CPU 감속 배율기 보정](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)에 관해 자세히 알아보세요."

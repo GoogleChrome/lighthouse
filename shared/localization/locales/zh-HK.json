@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` 屬性有效且無拼字錯誤"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "`autocomplete` 屬性值必須有效且正確套用，螢幕閱讀器才能正常運作。[進一步瞭解有效的自動完成值](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)。"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` 屬性使用方式不當"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` 屬性使用方式正確"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "審核失敗的元素"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` 元素具有替代文字"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "在某些時候，具有 `role=\"none\"` 或 `role=\"presentation\"` 的元素語義角色不會解析為「無」或「展示」。為確保元素在無障礙樹狀圖中保持移除狀態，你不應為元素加入任何全域 ARIA 屬性或允許聚焦元素。[進一步瞭解展示角色衝突](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)。"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "具有 `role=\"none\"` 或者 `role=\"presentation\"` 嘅元素有衝突"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "具有 `role=\"none\"` 或者 `role=\"presentation\"` 嘅元素冇衝突"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "沒有有效標籤的 Form 元素可能對螢幕閱讀器使用者造成困擾。[進一步瞭解 `select` 元素](https://dequeuniversity.com/rules/axe/4.12/select-name)。"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "跳過連結可聚焦。"
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "確保具有 `img`、`graphics-document` 或 `graphics-symbol` 角色的 SVG 元素有無障礙文字替代內容。[進一步瞭解 SVG 說明文字](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)。"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "具有 `img` 角色嘅 SVG 元素缺少無障礙文字替代內容"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "具有 `img` 角色嘅 SVG 元素有無障礙文字替代內容"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "如果值大於 0，代表已採用明確的瀏覽排序。雖然此做法在技術上可行，但通常會對依賴輔助技術的使用者造成困擾。[進一步瞭解此 `tabindex` 屬性](https://dequeuniversity.com/rules/axe/4.12/tabindex)。"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 元素包含帶有 `[kind=\"captions\"]` 的 `<track>` 元素"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "違規的元素"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "違反的規則"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "格式正確的[無障礙樹狀結構](http://goo.gle/lighthouse-agentic-a11y)有助 AI 代理導覽網頁並與之互動。"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "通過所有審核"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "未通過的審核"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "無障礙功能樹狀結構格式不正確"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "無障礙功能樹狀結構格式正確"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "如果 llms.txt 檔案不符合建議，大型語言模型可能無法理解你偏好的網站檢索方式或訓練用途。[llms.txt](https://llmstxt.org/) 檔案應為 Markdown 檔案，且包含至少一個 H1 標題。"
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "要求失敗，HTTP 狀態為 {statusCode}"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "無法擷取 llms.txt"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt 不符合建議"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "檔案缺少必要的 H1 標題 (例如「# 標題」)。"
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "檔案似乎不包含任何連結。"
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt 符合建議"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "檔案長度過短。"
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "目前的值"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "查看憑證次序：{snippet} 中的「{tokens}」"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "網絡功能"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline 狀態"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "列出頁面使用的網絡功能及其截至 {date}的 Baseline 狀態。[進一步瞭解 Baseline](https://webstatus.dev/)。"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Baseline 功能"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "可以採取行動"
@@ -771,7 +855,7 @@
     "message": "網頁含有 HTML DOCTYPE"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "如果未提供其他資訊就要求存取使用者的位置，會讓使用者感到困惑而不信任網站。建議您在使用者執行特定動作時，再提出這項要求。[進一步瞭解地理位置權限](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)。"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "在載入網頁時要求存取使用者的地理位置"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "頁面包含有效的來源對應"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "表格"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "建議在以下表格中加入 [WebMCP](http://goo.gle/webmcp-docs) 註解，讓 AI 專員更精準地識別及處理這些表格。"
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 份表格缺少註解}other{# 份表格缺少註解}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP 表格覆蓋率"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "元素"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "描述"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "來源位置"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "輸入綱要"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "工具名稱"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "列出分析時已註冊的 [WebMCP 工具](http://goo.gle/webmcp-docs)。"
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "已註冊 WebMCP 工具"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "宣告式工具"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "命令式工具"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "元素"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "問題"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "AI 代理需要有效的 [WebMCP 綱要](http://goo.gle/webmcp-docs)，才能正確瞭解工具並與之互動。請修正瀏覽器報告的任何錯誤或警告。"
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP 綱要無效"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "缺少選填欄位的 `name` 屬性，請加入以界定參數名稱。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "加入描述，讓 AI 代理更易存取此表格。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "缺少必填欄位的 `name` 屬性，請加入以界定參數名稱。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "缺少表格級別的 `tooldescription` 屬性，請加入以向 AI 代理描述工具。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "缺少表格級別的 `toolname` 屬性，請加入以界定工具名稱。"
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP 綱要有效"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "有關審核旨在突顯最佳做法，改善 AI 代理應用程式的網站無障礙功能。"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "代理應用程式無障礙功能"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "這些檢查可確保網站高品質並[適合 AI 代理瀏覽](https://goo.gle/lighthouse-agentic-web)，同時驗證 WebMCP 整合的正確度。此類別仍在開發階段，可能隨時會有變動。"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "代理式瀏覽"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "有關審核旨在驗證 WebMCP 整合項目。"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "這些提示可協助改善 ARIA 在應用程式中的使用情況，進而提升輔助技術 (例如螢幕閱讀器) 使用者的體驗。"
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "表格和清單"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "有關審核旨在突顯最佳做法，改善 AI 代理應用程式的網站無障礙功能。"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "代理應用程式無障礙功能"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "這些檢查可確保網站高品質並[適合 AI 代理瀏覽](https://goo.gle/lighthouse-agentic-web)，同時驗證 WebMCP 整合的正確度。此類別仍在開發階段，可能隨時會有變動。"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "代理式瀏覽"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "瀏覽器兼容性"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "適合透過流動裝置瀏覽"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "有關審核旨在驗證 WebMCP 整合項目。"
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "已測試裝置的 CPU 似乎比 Lighthouse 所預期的慢，因此可能會對您的效能分數產生負面影響。進一步瞭解[如何校準適當的 CPU 減速乘數](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)。"
@@ -1488,7 +1677,7 @@
     "message": "快取 TTL"
   },
   "core/lib/i18n/i18n.js | columnDescription": {
-    "message": "說明"
+    "message": "描述"
   },
   "core/lib/i18n/i18n.js | columnDuration": {
     "message": "時間長度"
@@ -3357,7 +3546,7 @@
     "message": "複製 JSON"
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
-    "message": "切換至深色主題背景"
+    "message": "切換至深色主題"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "已展開列印"

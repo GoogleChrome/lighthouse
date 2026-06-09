@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` 属性は有効で、スペルミスもありません"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "スクリーン リーダーが正しく機能するには、`autocomplete` 属性の値が有効で、正しく適用されている必要があります。[autocomplete の有効な値の詳細](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` 属性が正しく使用されていません"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` 属性が正しく使用されています"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "問題のある要素"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` 要素に代替テキストが指定されています"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "`role=\"none\"` または `role=\"presentation\"` が指定された要素のセマンティック ロールが none または presentation として解決されない場合があります。要素がアクセシビリティ ツリーから削除された状態を維持するには、要素にグローバル ARIA 属性を追加したり、要素をフォーカス可能にしたりしないでください。[presentation ロールの競合の詳細](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "`role=\"none\"` または `role=\"presentation\"` が指定された要素に競合があります"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "`role=\"none\"` または `role=\"presentation\"` が指定された要素に競合はありません"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "効果的なラベルのないフォーム要素は、スクリーン リーダーのユーザーにとって不便となる可能性があります。[`select` 要素の詳細](https://dequeuniversity.com/rules/axe/4.12/select-name)"
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "スキップリンクはフォーカス可能です。"
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "`img`、`graphics-document`、または `graphics-symbol` ロールが指定された SVG 要素に、アクセシブルな代替テキストがあることを確認してください。[SVG の代替テキストの詳細](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)"
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "`img` ロールが指定された SVG 要素に、アクセシブルな代替テキストがありません"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "`img` ロールが指定された SVG 要素に、アクセシブルな代替テキストがあります"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "値が 0 より大きい場合は、明示的なナビゲーション順序を示します。技術的には有効ですが、多くの場合、支援技術を使用しているユーザーにとって利便性が低下します。[`tabindex` 属性の詳細](https://dequeuniversity.com/rules/axe/4.12/tabindex)"
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素が含まれています"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "エラーとなった要素"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "エラーとなったルール"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "適切な形式の[ユーザー補助ツリー](http://goo.gle/lighthouse-agentic-a11y)を使用することで、AI エージェントがページを移動して処理できるようになります。"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "すべての監査に合格しました"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "不合格となった監査"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "ユーザー補助ツリーの形式が不適切です"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "ユーザー補助ツリーの形式は適切です"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "llms.txt ファイルが推奨事項に準拠していない場合、大規模言語モデルにウェブサイトのクロールやトレーニングへの使用について指示できない可能性があります。[llms.txt](https://llmstxt.org/) ファイルは、少なくとも 1 つの H1 ヘッダーを含む Markdown ファイルである必要があります。"
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "HTTP ステータス {statusCode} で失敗しました"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt を取得できませんでした"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt が推奨事項に準拠していません"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "ファイルに必須の H1 ヘッダー（例: 「# タイトル」）がありません。"
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "ファイルにリンクが含まれていないようです。"
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt は推奨事項に準拠しています"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "ファイルが不自然に短くなっています。"
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "現在の値"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "トークンの順序を確認: {snippet} の「{tokens}」"
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "ウェブ機能"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "ベースラインのステータス"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "{date} 現在、ページで使用されているウェブ機能とそのベースラインのステータスを一覧表示します。[ベースラインの詳細](https://webstatus.dev/)"
+  },
+  "core/audits/baseline.js | title": {
+    "message": "ベースライン機能"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "対応可能"
@@ -771,7 +855,7 @@
     "message": "ページに HTML doctype が指定されています"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "サイトから脈絡なしに位置情報の許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[位置情報の権限に関する詳細](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "ページの読み込み時に位置情報の許可がリクエストされます"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "ページで有効なソースマップが使用されています"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "フォーム"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "以下のフォームに [WebMCP](http://goo.gle/webmcp-docs) アノテーションを追加することを検討してください。追加することで、AI エージェントがこれらのフォームをより確実に識別して操作できるようになります。"
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 個のフォームにアノテーションがありません}other{# 個のフォームにアノテーションがありません}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP フォームのカバレッジ"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "要素"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "説明"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "ソースの場所"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "入力スキーマ"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "ツール名"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "分析時に登録されている [WebMCP ツール](http://goo.gle/webmcp-docs)の一覧を表示します。"
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "登録済みの WebMCP ツール"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "宣言型ツール"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "命令型ツール"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "要素"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "問題"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "AI エージェントがツールを正しく理解して操作するには、有効な [WebMCP スキーマ](http://goo.gle/webmcp-docs)が必要です。ブラウザで報告されたエラーや警告を修正してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP スキーマは無効です"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "オプション フィールドの `name` 属性がありません。パラメータ名を定義するには、属性を追加してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "AI エージェントがこのフォームにアクセスしやすくするには、説明を追加してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "必須フィールドの `name` 属性がありません。パラメータ名を定義するには、属性を追加してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "フォームレベルの `tooldescription` 属性がありません。AI エージェントにツールについて説明するには、属性を追加してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "フォームレベルの `toolname` 属性がありません。ツール名を定義するには、属性を追加してください。"
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP スキーマは有効です"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "これらの監査では、ウェブサイトの AI エージェントに対するアクセシビリティを向上させるためのベスト プラクティスが示されます。"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "エージェントのアクセシビリティ"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "これらのチェックを行うことで、[AI エージェントによるブラウジングが可能な質の高いウェブサイト](https://goo.gle/lighthouse-agentic-web)であるかどうかと、WebMCP が正確に統合されているかどうかを検証できます。このカテゴリは現在開発中で、変更される可能性があります。"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "エージェントによるブラウジング"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP の統合を検証する監査。"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "ここには、アプリでの ARIA の使用方法に関する改善点が表示されます。修正すると、支援技術（スクリーン リーダーなど）の利便性が向上する可能性があります。"
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "表とリスト"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "これらの監査では、ウェブサイトの AI エージェントに対するアクセシビリティを向上させるためのベスト プラクティスが示されます。"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "エージェントのアクセシビリティ"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "これらのチェックを行うことで、[AI エージェントによるブラウジングが可能な質の高いウェブサイト](https://goo.gle/lighthouse-agentic-web)であるかどうかと、WebMCP が正確に統合されているかどうかを検証できます。このカテゴリは現在開発中で、変更される可能性があります。"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "エージェントによるブラウジング"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "ブラウザの互換性"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "スマホ対応"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP の統合を検証する監査。"
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "テストしたデバイスの CPU が Lighthouse の推定より遅いようです。これは、パフォーマンス スコアに悪影響を与える可能性があります。詳しくは、[適切な CPU 速度低下乗数の調整](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)についての説明をご覧ください。"

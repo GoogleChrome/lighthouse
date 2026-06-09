@@ -206,6 +206,15 @@
   "core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "`[aria-*]` विशेषताएं सही हैं और उनकी स्पेलिंग गलत नहीं है"
   },
+  "core/audits/accessibility/autocomplete-valid.js | description": {
+    "message": "स्क्रीन रीडर सही से काम करे, इसके लिए यह ज़रूरी है कि `autocomplete` एट्रिब्यूट की वैल्यू सही हो और उसे सही तरीके से इस्तेमाल किया गया हो. [ऑटोकंप्लीट एट्रिब्यूट की मान्य वैल्यू के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.12/autocomplete-valid)."
+  },
+  "core/audits/accessibility/autocomplete-valid.js | failureTitle": {
+    "message": "`autocomplete` एट्रिब्यूट सही तरीके से इस्तेमाल नहीं किए गए हैं"
+  },
+  "core/audits/accessibility/autocomplete-valid.js | title": {
+    "message": "`autocomplete` एट्रिब्यूट सही तरीके से इस्तेमाल किए गए हैं"
+  },
   "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "फ़ेल होने वाले एलिमेंट"
   },
@@ -470,6 +479,15 @@
   "core/audits/accessibility/object-alt.js | title": {
     "message": "`<object>` एलिमेंट में वैकल्पिक टेक्स्ट है"
   },
+  "core/audits/accessibility/presentation-role-conflict.js | description": {
+    "message": "कुछ मामलों में, `role=\"none\"` या `role=\"presentation\"` का इस्तेमाल करने पर, एलिमेंट का सिमैंटिक रोल, 'कोई नहीं' या 'प्रज़ेंटेशन' के तौर तय नहीं हो पाता. एलिमेंट को सुलभता ट्री से हटाए रखने के लिए, यह पक्का करें कि आपने उस पर कोई भी ग्लोबल ARIA एट्रिब्यूट न जोड़ा हो और न ही उसे फ़ोकस करने लायक बनाया हो. [प्रज़ेंटेशन की भूमिकाओं से जुड़ी समस्याओं के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.12/presentation-role-conflict)."
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | failureTitle": {
+    "message": "`role=\"none\"` या `role=\"presentation\"` वाले एलिमेंट में समस्याएं है"
+  },
+  "core/audits/accessibility/presentation-role-conflict.js | title": {
+    "message": "`role=\"none\"` या `role=\"presentation\"` वाले एलिमेंट में कोई समस्या नहीं है"
+  },
   "core/audits/accessibility/select-name.js | description": {
     "message": "सही और असरदार लेबल के बिना फ़ॉर्म के एलिमेंट, स्क्रीन रीडर इस्तेमाल करने वालों के अनुभव को खराब कर सकते हैं. [`select` एलिमेंट के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.12/select-name)."
   },
@@ -487,6 +505,15 @@
   },
   "core/audits/accessibility/skip-link.js | title": {
     "message": "स्किप लिंक पर फ़ोकस किया जा सकता है."
+  },
+  "core/audits/accessibility/svg-img-alt.js | description": {
+    "message": "इससे यह पक्का होता है कि `img`, `graphics-document` या `graphics-symbol` की भूमिका वाले SVG एलिमेंट के लिए, ऐक्सेस किया जा सकने वाला वैकल्पिक टेक्स्ट मौजूद हो. [SVG के वैकल्पिक टेक्स्ट के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt)."
+  },
+  "core/audits/accessibility/svg-img-alt.js | failureTitle": {
+    "message": "`img` भूमिका वाले SVG एलिमेंट के लिए, ऐक्सेस किया जा सकने वाला कोई वैकल्पिक टेक्स्ट मौजूद नहीं है"
+  },
+  "core/audits/accessibility/svg-img-alt.js | title": {
+    "message": "`img` भूमिका वाले SVG एलिमेंट के लिए, ऐक्सेस किया जा सकने वाला वैकल्पिक टेक्स्ट मौजूद है"
   },
   "core/audits/accessibility/tabindex.js | description": {
     "message": "शून्य से ज़्यादा की वैल्यू साफ़ तौर पर, नेविगेशन के क्रम को दिखाती है. हालांकि, यह वैल्यू तकनीकी रूप से मान्य है. इसके बावजूद, सहायक टेक्नोलॉजी पर भरोसा करने वाले लोगों को यह वैल्यू अक्सर परेशान करती है. [`tabindex` एट्रिब्यूट के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.12/tabindex)."
@@ -569,6 +596,51 @@
   "core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाला एक `<track>` एलिमेंट है"
   },
+  "core/audits/agentic/agent-accessibility-tree.js | columnElement": {
+    "message": "यह एलिमेंट नियमों का पालन नहीं करता"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | columnRule": {
+    "message": "इस नियम का पालन नहीं हुआ है"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | description": {
+    "message": "सही तरीके से बना [सुलभता ट्री](http://goo.gle/lighthouse-agentic-a11y), एआई एजेंट को पेज पर नेविगेट करने और उससे इंटरैक्ट करने में मदद करता है."
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": {
+    "message": "सभी ऑडिट पास हो गए हैं"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failedSectionTitle": {
+    "message": "ये ऑडिट पास नहीं हुए"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | failureTitle": {
+    "message": "सुलभता ट्री सही तरीके से नहीं बना है"
+  },
+  "core/audits/agentic/agent-accessibility-tree.js | title": {
+    "message": "सुलभता ट्री सही तरीके से बना है"
+  },
+  "core/audits/agentic/llms-txt.js | description": {
+    "message": "अगर आपकी llms.txt फ़ाइल ज़रूरी शर्तों के मुताबिक नहीं है, तो ऐसा हो सकता है कि लार्ज लैंग्वेज मॉडल यह न समझ पाएं कि आपको अपनी वेबसाइट किस तरह से क्रॉल करवानी है या इसे ट्रेनिंग के लिए कैसे इस्तेमाल करना है. [llms.txt](https://llmstxt.org/) फ़ाइल, एक ऐसी मार्कडाउन फ़ाइल होनी चाहिए जिसमें कम से कम एक H1 हेडर हो."
+  },
+  "core/audits/agentic/llms-txt.js | displayValueHttpBadCode": {
+    "message": "एचटीटीपी स्टेटस {statusCode} के साथ यह अनुरोध पूरा नहीं हो सका"
+  },
+  "core/audits/agentic/llms-txt.js | explanation": {
+    "message": "llms.txt फ़ाइल फ़ेच नहीं की जा सकी"
+  },
+  "core/audits/agentic/llms-txt.js | failureTitle": {
+    "message": "llms.txt फ़ाइल, ज़रूरी शर्तों के मुताबिक नहीं है"
+  },
+  "core/audits/agentic/llms-txt.js | missingH1": {
+    "message": "फ़ाइल में ज़रूरी H1 हेडर मौजूद नहीं है. जैसे, \"# टाइटल\"."
+  },
+  "core/audits/agentic/llms-txt.js | missingLinks": {
+    "message": "ऐसा लगता है कि फ़ाइल में कोई लिंक मौजूद नहीं है."
+  },
+  "core/audits/agentic/llms-txt.js | title": {
+    "message": "llms.txt फ़ाइल, ज़रूरी शर्तों के मुताबिक है"
+  },
+  "core/audits/agentic/llms-txt.js | tooShort": {
+    "message": "फ़ाइल काफ़ी छोटी है."
+  },
   "core/audits/autocomplete.js | columnCurrent": {
     "message": "मौजूदा मान"
   },
@@ -595,6 +667,18 @@
   },
   "core/audits/autocomplete.js | warningOrder": {
     "message": "टोकन के ऑर्डर की समीक्षा करें: {snippet} में \"{tokens}\""
+  },
+  "core/audits/baseline.js | columnFeature": {
+    "message": "वेब की सुविधाएं"
+  },
+  "core/audits/baseline.js | columnStatus": {
+    "message": "Baseline स्टेटस"
+  },
+  "core/audits/baseline.js | description": {
+    "message": "इसमें पेज पर इस्तेमाल की गई वेब सुविधाओं और {date} तक उनके Baseline स्टेटस की जानकारी दी गई है. [Baseline के बारे में ज़्यादा जानें](https://webstatus.dev/)."
+  },
+  "core/audits/baseline.js | title": {
+    "message": "Baseline की सुविधाएं"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "कार्रवाई की जा सकती है"
@@ -771,7 +855,7 @@
     "message": "पेज में एचटीएमएल doctype है"
   },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "ऐसी साइटों पर लोग भरोसा नहीं करते या उनकी वजह से उलझन में रहते हैं जो बिना किसी संदर्भ के, उनकी जगह की जानकारी पता करने का अनुरोध करती हैं. इसके बजाय, लोगों की कार्रवाई के आधार पर अनुरोध करें. [किसी भौगोलिक स्थान की अनुमति के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
+    "message": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element)."
   },
   "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "पेज लोड पर भौगोलिक स्थान जानने का अनुरोध किया जाता है"
@@ -1262,6 +1346,93 @@
   "core/audits/valid-source-maps.js | title": {
     "message": "पेज में मान्य सोर्स मैप हैं"
   },
+  "core/audits/webmcp-form-coverage.js | columnForm": {
+    "message": "फ़ॉर्म"
+  },
+  "core/audits/webmcp-form-coverage.js | description": {
+    "message": "यहां दिए गए फ़ॉर्म में [WebMCP](http://goo.gle/webmcp-docs) एनोटेशन जोड़ें. इससे एआई एजेंट को इन फ़ॉर्म की पहचान करने और इनके साथ ज़्यादा भरोसेमंद तरीके से इंटरैक्ट करने में मदद मिलती है."
+  },
+  "core/audits/webmcp-form-coverage.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 फ़ॉर्म में एनोटेशन मौजूद नहीं हैं}one{# फ़ॉर्म में एनोटेशन मौजूद नहीं हैं}other{# फ़ॉर्म में एनोटेशन मौजूद नहीं हैं}}"
+  },
+  "core/audits/webmcp-form-coverage.js | title": {
+    "message": "WebMCP फ़ॉर्म का कवरेज"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDeclarativeElement": {
+    "message": "एलिमेंट"
+  },
+  "core/audits/webmcp-registered-tools.js | columnDescription": {
+    "message": "ब्यौरा"
+  },
+  "core/audits/webmcp-registered-tools.js | columnImperativeLocation": {
+    "message": "सोर्स की जगह"
+  },
+  "core/audits/webmcp-registered-tools.js | columnInputSchema": {
+    "message": "इनपुट स्कीमा"
+  },
+  "core/audits/webmcp-registered-tools.js | columnTool": {
+    "message": "टूल का नाम"
+  },
+  "core/audits/webmcp-registered-tools.js | description": {
+    "message": "इससे विश्लेषण के समय रजिस्टर किए गए [WebMCP टूल](http://goo.gle/webmcp-docs) की सूची दिखती है."
+  },
+  "core/audits/webmcp-registered-tools.js | title": {
+    "message": "WebMCP टूल रजिस्टर किए गए"
+  },
+  "core/audits/webmcp-registered-tools.js | titleDeclarativeTools": {
+    "message": "डिक्लेरेटिव टूल"
+  },
+  "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
+    "message": "इंपेरेटिव टूल"
+  },
+  "core/audits/webmcp-schema-validity.js | columnElement": {
+    "message": "एलिमेंट"
+  },
+  "core/audits/webmcp-schema-validity.js | columnIssue": {
+    "message": "समस्या"
+  },
+  "core/audits/webmcp-schema-validity.js | description": {
+    "message": "[WebMCP स्कीमा](http://goo.gle/webmcp-docs) मान्य होने ज़रूरी हैं. इससे एआई एजेंट को सही तरीके से टूल समझने और उनके साथ इंटरैक्ट करने में मदद मिलती है. कृपया ब्राउज़र से मिली किसी भी गड़बड़ी या चेतावनी को ठीक करें."
+  },
+  "core/audits/webmcp-schema-validity.js | failureTitle": {
+    "message": "WebMCP स्कीमा अमान्य हैं"
+  },
+  "core/audits/webmcp-schema-validity.js | missingOptionalParamName": {
+    "message": "एक वैकल्पिक फ़ील्ड के लिए `name` एट्रिब्यूट की वैल्यू मौजूद नहीं है. पैरामीटर का नाम तय करने के लिए इसे जोड़ें."
+  },
+  "core/audits/webmcp-schema-validity.js | missingParamDescription": {
+    "message": "जानकारी जोड़ें, ताकि एआई एजेंट इस फ़ॉर्म को और बेहतर तरीके से ऐक्सेस कर सकें."
+  },
+  "core/audits/webmcp-schema-validity.js | missingRequiredParamName": {
+    "message": "ज़रूरी फ़ील्ड के लिए `name` एट्रिब्यूट की वैल्यू मौजूद नहीं है. पैरामीटर का नाम तय करने के लिए इसे जोड़ें."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolDescription": {
+    "message": "फ़ॉर्म लेवल पर `tooldescription` एट्रिब्यूट मौजूद नहीं है. एआई एजेंट के टूल के बारे में बताने के लिए इसे जोड़ें."
+  },
+  "core/audits/webmcp-schema-validity.js | missingToolName": {
+    "message": "फ़ॉर्म लेवल पर `toolname` एट्रिब्यूट मौजूद नहीं है. टूल का नाम तय करने के लिए इसे जोड़ें."
+  },
+  "core/audits/webmcp-schema-validity.js | title": {
+    "message": "WebMCP स्कीमा मान्य हैं"
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupDescription": {
+    "message": "ये ऑडिट, एआई एजेंट के लिए वेबसाइट की सुलभता को बेहतर बनाने के सबसे सही तरीकों को हाइलाइट करते हैं."
+  },
+  "core/config/agentic-browsing-config.js | agentAccessibilityGroupTitle": {
+    "message": "एजेंट के लिए सुलभता"
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryDescription": {
+    "message": "इन जांचों से यह पक्का किया जाता है कि [एआई एजेंट के लिए ब्राउज़ की जा सकने वाली अच्छी क्वालिटी की वेबसाइटें](https://goo.gle/lighthouse-agentic-web) उपलब्ध हों. साथ ही, यह पुष्टि की जाती है कि WebMCP इंटिग्रेशन सही तरीके से किए गए हों. इस कैटगरी पर अब भी काम चल रहा है और इसमें बदलाव हो सकते हैं."
+  },
+  "core/config/agentic-browsing-config.js | agenticBrowsingCategoryTitle": {
+    "message": "एजेंटिक ब्राउज़िंग"
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupDescription": {
+    "message": "WebMCP इंटिग्रेशन की पुष्टि करने वाले ऑडिट."
+  },
+  "core/config/agentic-browsing-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
+  },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "ये आपके ऐप्लिकेशन में ARIA के इस्तेमाल को बेहतर बनाने के अवसर हैं, जिससे उपयोगकर्ताओं का स्क्रीन रीडर जैसी सहायक तकनीक का अनुभव बेहतर हो सकता है."
   },
@@ -1318,6 +1489,18 @@
   },
   "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "टेबल और सूचियां"
+  },
+  "core/config/default-config.js | agentAccessibilityGroupDescription": {
+    "message": "ये ऑडिट, एआई एजेंट के लिए वेबसाइट की सुलभता को बेहतर बनाने के सबसे सही तरीकों को हाइलाइट करते हैं."
+  },
+  "core/config/default-config.js | agentAccessibilityGroupTitle": {
+    "message": "एजेंट के लिए सुलभता"
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryDescription": {
+    "message": "इन जांचों से यह पक्का किया जाता है कि [एआई एजेंट के लिए ब्राउज़ की जा सकने वाली अच्छी क्वालिटी की वेबसाइटें](https://goo.gle/lighthouse-agentic-web) उपलब्ध हों. साथ ही, यह पुष्टि की जाती है कि WebMCP इंटिग्रेशन सही तरीके से किए गए हों. इस कैटगरी पर अब भी काम चल रहा है और इसमें बदलाव हो सकते हैं."
+  },
+  "core/config/default-config.js | agenticBrowsingCategoryTitle": {
+    "message": "एजेंटिक ब्राउज़िंग"
   },
   "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "ब्राउज़र किस-किस के साथ काम करता है"
@@ -1390,6 +1573,12 @@
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "मोबाइल फ़्रेंडली"
+  },
+  "core/config/default-config.js | webmcpGroupDescription": {
+    "message": "WebMCP इंटिग्रेशन की पुष्टि करने वाले ऑडिट."
+  },
+  "core/config/default-config.js | webmcpGroupTitle": {
+    "message": "WebMCP"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
     "message": "ऐसा लगता है कि जांचे गए डिवाइस का सीपीयू, अनुमानित Lighthouse बेसलाइन से धीमा है. इससे आपके परफ़ॉर्मेंस स्कोर पर बुरा असर पड़ सकता है. [सही सीपीयू स्लोडाउन मल्टिप्लायर को कैलिब्रेट करने](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling) के बारे में ज़्यादा जानें."
@@ -1494,7 +1683,7 @@
     "message": "कुल समय"
   },
   "core/lib/i18n/i18n.js | columnElement": {
-    "message": "तत्व"
+    "message": "एलिमेंट"
   },
   "core/lib/i18n/i18n.js | columnFailingElem": {
     "message": "काम नहीं कर पाने वाले एलिमेंट"
