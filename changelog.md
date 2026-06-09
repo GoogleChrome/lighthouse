@@ -1,3 +1,77 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thomas Steiner @tomayac
+KS Nithin @Nithin0620
+Emanuele @emazack
+Kirtikumar Anandrao Ramchandani @KirtiRamchandani
+Rin @RinZ27
+Michael Hablich @natorion
+ <a name="13.4.0"></a>
+# 13.4.0 (2026-06-09)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.3.0...v13.4.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* match scripts to network requests using frameId ([#16774](https://github.com/GoogleChrome/lighthouse/pull/16774))
+* add public Lighthouse types entrypoint ([#17028](https://github.com/GoogleChrome/lighthouse/pull/17028))
+* canonical: improve validation for invalid URLs ([#16765](https://github.com/GoogleChrome/lighthouse/pull/16765))
+* config: import LH types ([#17048](https://github.com/GoogleChrome/lighthouse/pull/17048))
+* driver: add ExecutionContext.evaluateOnObject ([#17050](https://github.com/GoogleChrome/lighthouse/pull/17050))
+* driver: check if usage data exists before using ([#17033](https://github.com/GoogleChrome/lighthouse/pull/17033))
+* geolocation-on-start: mention `geolocation` element ([#16835](https://github.com/GoogleChrome/lighthouse/pull/16835))
+* llms-txt: allow leading whitespace for header check ([#17057](https://github.com/GoogleChrome/lighthouse/pull/17057))
+
+## Report
+
+* decouple link creation from link details rendering ([#17049](https://github.com/GoogleChrome/lighthouse/pull/17049))
+* fix performance gauge label, improve load animation ([#17045](https://github.com/GoogleChrome/lighthouse/pull/17045))
+* viewer: persist dark mode when when changing langauge ([#17063](https://github.com/GoogleChrome/lighthouse/pull/17063))
+
+## Deps
+
+* upgrade deps ([#17070](https://github.com/GoogleChrome/lighthouse/pull/17070))
+* upgrade typescript to 6.0.3 ([#17060](https://github.com/GoogleChrome/lighthouse/pull/17060))
+* upgrade terser to 5.48.0 ([#17059](https://github.com/GoogleChrome/lighthouse/pull/17059))
+* upgrade esbuild to 0.28.0 ([#17058](https://github.com/GoogleChrome/lighthouse/pull/17058))
+* upgrade trace_engine to 0.0.65 ([#17046](https://github.com/GoogleChrome/lighthouse/pull/17046))
+* upgrade puppeteer to 25.0.2 ([#17019](https://github.com/GoogleChrome/lighthouse/pull/17019))
+
+## Clients
+
+* viewer: prevent toast showing on load ([#17069](https://github.com/GoogleChrome/lighthouse/pull/17069))
+* viewer: clear github auth token on 401 error ([#17064](https://github.com/GoogleChrome/lighthouse/pull/17064))
+* viewer: disable agentic-browsing in PSI api call ([#17041](https://github.com/GoogleChrome/lighthouse/pull/17041))
+* viewer: rotate PSI API key ([#17035](https://github.com/GoogleChrome/lighthouse/pull/17035))
+
+## I18n
+
+* import ([#17071](https://github.com/GoogleChrome/lighthouse/pull/17071))
+
+## Docs
+
+* add agentic web issue template ([#17020](https://github.com/GoogleChrome/lighthouse/pull/17020))
+
+## Tests
+
+* exclude origin-isolation-coop-present smoke test ([#17072](https://github.com/GoogleChrome/lighthouse/pull/17072))
+* remove accidental .only ([#17042](https://github.com/GoogleChrome/lighthouse/pull/17042))
+* remove unused c8 ([#16845](https://github.com/GoogleChrome/lighthouse/pull/16845))
+* llms-txt: add coverage for network failure and heading edge cases ([#17040](https://github.com/GoogleChrome/lighthouse/pull/17040))
+* viewer: update psi key ([#17037](https://github.com/GoogleChrome/lighthouse/pull/17037))
+
+## Misc
+
+* migrate typescript moduleResolution to bundler ([#17061](https://github.com/GoogleChrome/lighthouse/pull/17061))
+* build: generate subset of web-features data ([#17047](https://github.com/GoogleChrome/lighthouse/pull/17047))
+* ci: add Node 26 to unit matrix ([#17062](https://github.com/GoogleChrome/lighthouse/pull/17062))
+* ci: bump actions/upload-artifact from 4 to 7 ([#16938](https://github.com/GoogleChrome/lighthouse/pull/16938))
+
  <a name="13.3.0"></a>
 # 13.3.0 (2026-05-07)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.2.0...v13.3.0)
