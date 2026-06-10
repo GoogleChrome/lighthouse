@@ -20,6 +20,8 @@
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number}, frame: string}}} LCPCandidateEvent */
+/** @typedef {LH.TraceEvent & {name: 'SoftNavigationStart', args: {context: {URL?: string, firstContentfulPaint?: number, performanceTimelineNavigationId?: number, softNavContextId?: number, timeOrigin: number}}}} SoftNavigationStartEvent */
+/** @typedef {LH.TraceEvent & {name: 'largestContentfulPaint::CandidateForSoftNavigation', args: {data: {performanceTimelineNavigationId?: number}}}} SoftNavigationLCPCandidateEvent */
 
 import log from 'lighthouse-logger';
 
@@ -926,6 +928,92 @@ class TraceProcessor {
       domContentLoadedEvt: frameTimings.domContentLoadedEvt,
       lcpInvalidated: frameTimings.lcpInvalidated,
     };
+  }
+
+  /**
+   * Finds detected soft navigations and computes their paint timings in milliseconds since each
+   * soft navigation's time origin.
+   * @param {LH.Artifacts.ProcessedTrace} processedTrace
+   * @return {LH.Artifacts.ProcessedSoftNavigation[]}
+   */
+  static processSoftNavigations(processedTrace) {
+    const {frameEvents, timeOriginEvt, timestamps} = processedTrace;
+
+    const softNavigationStartEvents =
+      /** @type {SoftNavigationStartEvent[]} */ (frameEvents
+        .filter(event => event.name === 'SoftNavigationStart'))
+        .filter(event => event.args.context.timeOrigin >= timeOriginEvt.ts)
+        .sort((a, b) => a.args.context.timeOrigin - b.args.context.timeOrigin);
+
+    /** @type {Map<number, SoftNavigationLCPCandidateEvent[]>} */
+    const lcpEventsByNavigationId = new Map();
+    for (const traceEvent of frameEvents) {
+      if (traceEvent.name !== 'largestContentfulPaint::CandidateForSoftNavigation') continue;
+
+      const lcpEvent = /** @type {SoftNavigationLCPCandidateEvent} */ (traceEvent);
+      const navigationId = lcpEvent.args.data.performanceTimelineNavigationId;
+      if (!navigationId) continue;
+
+      const lcpEvents = lcpEventsByNavigationId.get(navigationId) ?? [];
+      lcpEvents.push(lcpEvent);
+      lcpEventsByNavigationId.set(navigationId, lcpEvents);
+    }
+
+    return softNavigationStartEvents.map((softNavigationStartEvt, index) => {
+      const context = softNavigationStartEvt.args.context;
+      const timeOrigin = context.timeOrigin;
+      const windowEnd =
+        softNavigationStartEvents[index + 1]?.args.context.timeOrigin ?? timestamps.traceEnd;
+      const isLastSoftNavigation = index === softNavigationStartEvents.length - 1;
+      /** @param {number} timestamp */
+      const isInNavigationWindow = timestamp => {
+        return timestamp >= timeOrigin &&
+          (timestamp < windowEnd || (isLastSoftNavigation && timestamp === windowEnd));
+      };
+
+      const navigationId = context.performanceTimelineNavigationId;
+      const lcpEvents = navigationId ?
+        (lcpEventsByNavigationId.get(navigationId) ?? []).filter(event => {
+          return isInNavigationWindow(event.ts);
+        }) : [];
+      const largestContentfulPaintEvt = lcpEvents.reduce(
+        (latest, event) => !latest || event.ts > latest.ts ? event : latest,
+        /** @type {SoftNavigationLCPCandidateEvent|undefined} */ (undefined)
+      );
+      const firstContentfulPaintTs = context.firstContentfulPaint &&
+        isInNavigationWindow(context.firstContentfulPaint) ?
+        context.firstContentfulPaint : undefined;
+
+      /** @type {LH.Artifacts.ProcessedSoftNavigation} */
+      const processedSoftNavigation = {
+        softNavigationStartEvt,
+        timestamps: {
+          timeOrigin,
+          firstContentfulPaint: firstContentfulPaintTs,
+          largestContentfulPaint: largestContentfulPaintEvt?.ts,
+          windowEnd,
+        },
+        timings: {
+          timeOrigin: 0,
+          firstContentfulPaint: firstContentfulPaintTs === undefined ?
+            undefined : (firstContentfulPaintTs - timeOrigin) / 1000,
+          largestContentfulPaint: largestContentfulPaintEvt === undefined ?
+            undefined : (largestContentfulPaintEvt.ts - timeOrigin) / 1000,
+          windowEnd: (windowEnd - timeOrigin) / 1000,
+        },
+      };
+
+      if (navigationId) processedSoftNavigation.navigationId = String(navigationId);
+      if (context.softNavContextId) {
+        processedSoftNavigation.softNavigationContextId = context.softNavContextId;
+      }
+      if (context.URL) processedSoftNavigation.url = context.URL;
+      if (largestContentfulPaintEvt) {
+        processedSoftNavigation.largestContentfulPaintEvt = largestContentfulPaintEvt;
+      }
+
+      return processedSoftNavigation;
+    });
   }
 
   /**
