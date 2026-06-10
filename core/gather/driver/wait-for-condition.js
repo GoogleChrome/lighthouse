@@ -422,9 +422,10 @@ const DEFAULT_WAIT_FUNCTIONS = {waitForFcp, waitForLoadEvent, waitForCPUIdle, wa
  * @param {LH.Gatherer.ProtocolSession} session
  * @param {NetworkMonitor} networkMonitor
  * @param {WaitOptions} options
+ * @param {AbortSignal} [signal]
  * @return {Promise<{timedOut: boolean}>}
  */
-async function waitForFullyLoaded(session, networkMonitor, options) {
+async function waitForFullyLoaded(session, networkMonitor, options, signal) {
   const {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs,
     cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs} = options;
   const {waitForFcp, waitForLoadEvent, waitForNetworkIdle, waitForCPUIdle} =
@@ -528,12 +529,23 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
     };
   });
 
+  /** @type {(event: Event) => void} */
+  let onAbort = () => {};
+  /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
+  const abortPromise = new Promise((resolve) => {
+    signal?.throwIfAborted();
+    onAbort = () => resolve(async () => ({timedOut: false}));
+    signal?.addEventListener('abort', onAbort, {once: true});
+  });
+
   // Wait for load or timeout and run the cleanup function the winner returns.
   const cleanupFn = await Promise.race([
     loadPromise,
     maxTimeoutPromise,
+    abortPromise,
   ]);
 
+  signal?.removeEventListener('abort', onAbort);
   maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
   resolveOnFcp.cancel();
   resolveOnLoadEvent.cancel();

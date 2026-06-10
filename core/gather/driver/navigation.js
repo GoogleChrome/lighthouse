@@ -39,7 +39,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
-/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & Partial<LH.Config.Settings>} NavigationOptions */
+/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>, signal?: AbortSignal} & Partial<LH.Config.Settings>} NavigationOptions */
 
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
@@ -115,7 +115,9 @@ async function gotoURL(driver, requestor, options) {
 
   if (waitForLoad) {
     const waitOptions = resolveWaitForFullyLoadedOptions(options);
-    waitConditionPromises.push(waitForFullyLoaded(session, networkMonitor, waitOptions));
+    waitConditionPromises.push(
+      waitForFullyLoaded(session, networkMonitor, waitOptions, options.signal)
+    );
   } else if (waitForFcp) {
     throw new Error('Cannot wait for FCP without waiting for page load');
   }
