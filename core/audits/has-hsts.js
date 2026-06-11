@@ -36,6 +36,67 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
+// Keep in sync with Chromium HSTS preload entries whose `policy` is
+// `public-suffix`, `mode` is `force-https`, and `include_subdomains` is true.
+const HSTS_PRELOADED_PUBLIC_SUFFIXES = new Set([
+  'amazon',
+  'android',
+  'app',
+  'audible',
+  'azure',
+  'bank',
+  'bing',
+  'bmoattachments.org',
+  'boo',
+  'channel',
+  'chrome',
+  'cnpy.gdn',
+  'dad',
+  'day',
+  'dev',
+  'eat',
+  'esq',
+  'fire',
+  'fly',
+  'foo',
+  'fujitsu',
+  'gentapps.com',
+  'gle',
+  'gmail',
+  'google',
+  'hangout',
+  'hotmail',
+  'imdb',
+  'ing',
+  'insurance',
+  'kindle',
+  'meet',
+  'meme',
+  'microsoft',
+  'mov',
+  'new',
+  'nexus',
+  'now.sh',
+  'office',
+  'onavstack.net',
+  'page',
+  'phd',
+  'play',
+  'prime',
+  'prof',
+  'rsvp',
+  'search',
+  'silk',
+  'skype',
+  'windows',
+  'xbox',
+  'xn--cckwcxetd',
+  'xn--jlq480n2rg',
+  'youtube',
+  'zappos',
+  'zip',
+]);
+
 class HasHsts extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -90,15 +151,41 @@ class HasHsts extends Audit {
   }
 
   /**
+   * @param {string=} url
+   * @return {boolean}
+   */
+  static isUrlCoveredByHstsPreloadedPublicSuffix(url) {
+    if (!url) return false;
+
+    let hostname;
+    try {
+      hostname = new URL(url).hostname.toLowerCase();
+    } catch {
+      return false;
+    }
+
+    for (const suffix of HSTS_PRELOADED_PUBLIC_SUFFIXES) {
+      if (hostname === suffix || hostname.endsWith(`.${suffix}`)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * @param {string[]} hstsHeaders
+   * @param {string=} finalDisplayedUrl
    * @return {{score: number, results: LH.Audit.Details.TableItem[]}}
    */
-  static constructResults(hstsHeaders) {
+  static constructResults(hstsHeaders, finalDisplayedUrl) {
     const rawHsts = [...hstsHeaders];
     const allowedDirectives = ['max-age', 'includesubdomains', 'preload'];
     const violations = [];
     const warnings = [];
     const syntax = [];
+    const hasPublicSuffixPreload =
+        this.isUrlCoveredByHstsPreloadedPublicSuffix(finalDisplayedUrl);
 
     if (!rawHsts.length) {
       return {
@@ -129,7 +216,7 @@ class HasHsts extends Audit {
       });
     }
 
-    if (!hstsHeaders.toString().includes('preload')) {
+    if (!hstsHeaders.toString().includes('preload') && !hasPublicSuffixPreload) {
       // No preload might be even wanted. But would be preferred.
       warnings.push({
         severity: str_(i18n.UIStrings.itemSeverityMedium),
@@ -184,7 +271,8 @@ class HasHsts extends Audit {
    */
   static async audit(artifacts, context) {
     const hstsHeaders = await this.getRawHsts(artifacts, context);
-    const {score, results} = this.constructResults(hstsHeaders);
+    const {score, results} =
+      this.constructResults(hstsHeaders, artifacts.URL.finalDisplayedUrl);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
