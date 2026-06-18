@@ -25,6 +25,11 @@ const UIStrings = {
    * @example {500} statusCode
    * */
   displayValueHttpBadCode: 'Failed with HTTP status {statusCode}',
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated.
+   * @example {Timed out fetching resource} error
+   * */
+  explanationWithError: 'Fetch of llms.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated. */
   explanation: 'Fetch of llms.txt failed',
   /** Message indicating that the file is missing a required H1 header. */
@@ -59,7 +64,15 @@ class LlmsTxt extends Audit {
     const {
       status,
       content,
+      errorMessage,
     } = artifacts.LlmsTxt;
+
+    if (errorMessage) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWithError, {error: errorMessage}),
+      };
+    }
 
     if (!status) {
       return {
