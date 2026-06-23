@@ -243,6 +243,66 @@ describe('.gotoURL', () => {
       message: 'Cannot wait for FCP without waiting for page load',
     });
   });
+
+  it('aborts when signal is already aborted before gotoURL is called', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+    await driver.networkMonitor.enable();
+
+    const url = 'https://www.example.com';
+    const controller = new AbortController();
+    controller.abort();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, url, {waitUntil: ['navigated'], signal: controller.signal})
+    );
+
+    await expect(loadPromise).rejects.toThrow('This operation was aborted');
+  });
+
+  it('aborts when signal is aborted before wait conditions resolve', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+    await driver.networkMonitor.enable();
+
+    const url = 'https://www.example.com';
+    const controller = new AbortController();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, url, {waitUntil: ['navigated'], signal: controller.signal})
+    );
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
+
+    controller.abort();
+    await flushAllTimersAndMicrotasks();
+
+    await expect(loadPromise).rejects.toThrow('Navigation aborted by signal');
+  });
+
+  it('aborts when signal is aborted while waiting for navigated', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+    await driver.networkMonitor.enable();
+
+    const url = 'https://www.example.com';
+    const controller = new AbortController();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, url, {waitUntil: ['navigated', 'load'], signal: controller.signal})
+    );
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for frameNavigated/load');
+
+    // Simulate navigation resolving
+    const [_, navigatedListener] = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    navigatedListener({frame: {url: 'https://www.example.com'}});
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for load');
+
+    // Abort before load happens
+    controller.abort();
+    await flushAllTimersAndMicrotasks();
+
+    await expect(loadPromise).rejects.toThrow('Navigation aborted by signal');
+  });
 });
 
 describe('.getNavigationWarnings()', () => {
