@@ -271,6 +271,7 @@ describe('waitForFullyLoaded()', () => {
     const signal = /** @type {AbortSignal} */ ({
       addEventListener: fnAny(),
       removeEventListener: fnAny(),
+      throwIfAborted: fnAny(),
     });
 
     const loadPromise = wait.waitForFullyLoaded(

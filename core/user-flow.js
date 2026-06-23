@@ -173,6 +173,7 @@ class UserFlow {
       () => new Promise(continueNavigation => completeSetup(continueNavigation)),
       stepOptions
     ).catch(err => {
+      if (this._controller.signal.aborted) return;
       if (this.currentNavigation) {
         // If the navigation already started, re-throw the error so it is emitted when `navigationResultPromise` is awaited.
         throw err;

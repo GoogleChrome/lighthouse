@@ -8,7 +8,6 @@
  * @fileoverview Mock driver for testing.
  */
 
-import {EventEmitter} from 'node:events';
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 

@@ -107,10 +107,26 @@ async function gotoURL(driver, requestor, options) {
 
   /** @type {Array<Promise<{timedOut: boolean}>>} */
   const waitConditionPromises = [];
+  /** @type {Array<() => void>} */
+  const cleanups = [];
+
+  /** @type {(event: Event) => void} */
+  let onAbort = () => {};
+  /** @type {Promise<never>} */
+  const abortPromise = new Promise((_, reject) => {
+    if (!options.signal) return;
+    options.signal.throwIfAborted();
+    onAbort = () => reject(new Error('Navigation aborted by signal'));
+    options.signal.addEventListener('abort', onAbort, {once: true});
+  });
+  if (options.signal) cleanups.push(() => options.signal?.removeEventListener('abort', onAbort));
 
   if (waitForNavigated) {
-    const navigatedPromise = waitForFrameNavigated(session).promise;
-    waitConditionPromises.push(navigatedPromise.then(() => ({timedOut: false})));
+    const {promise, cancel} = waitForFrameNavigated(session);
+    cleanups.push(() => cancel());
+    waitConditionPromises.push(promise
+      .then(() => ({timedOut: false}))
+      .catch(() => ({timedOut: false})));
   }
 
   if (waitForLoad) {
@@ -122,10 +138,18 @@ async function gotoURL(driver, requestor, options) {
     throw new Error('Cannot wait for FCP without waiting for page load');
   }
 
-  const waitConditions = await Promise.race([
+  const waitConditionsRace = [
     session.onCrashPromise(),
     Promise.all(waitConditionPromises),
-  ]);
+  ];
+  if (options.signal) waitConditionsRace.push(abortPromise);
+
+  let waitConditions;
+  try {
+    waitConditions = await Promise.race(waitConditionsRace);
+  } finally {
+    for (const cleanup of cleanups) cleanup();
+  }
   const timedOut = waitConditions.some(condition => condition.timedOut);
   const navigationUrls = await networkMonitor.getNavigationUrls();
 
@@ -144,7 +168,9 @@ async function gotoURL(driver, requestor, options) {
   const mainDocumentUrl = navigationUrls.mainDocumentUrl || requestedUrl;
 
   // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
-  await waitForNavigationTriggered;
+  await Promise.race(options.signal ?
+    [waitForNavigationTriggered, abortPromise] :
+    [waitForNavigationTriggered]);
 
   if (options.debugNavigation) {
     await waitForUserToContinue(driver);
