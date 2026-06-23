@@ -50,8 +50,13 @@ const UIStrings = {
     =1 {1 error found}
     other {# errors found}
     }`,
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the robots.txt file for the site.  Note: "robots.txt" is a canonical filename and should not be translated.
+   * @example {Timed out fetching resource} error
+   * */
+  explanationWithError: 'Fetch of robots.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the robots.txt file for the site.  Note: "robots.txt" is a canonical filename and should not be translated. */
-  explanation: 'Lighthouse was unable to download a robots.txt file',
+  explanation: 'Fetch of robots.txt failed',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -200,24 +205,33 @@ class RobotsTxt extends Audit {
     const {
       status,
       content,
+      errorMessage,
     } = artifacts.RobotsTxt;
+
+    // Do specific error messages first.
+    if (status && status >= HTTP_SERVER_ERROR_CODE_LOW) {
+      return {
+        score: 0,
+        displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
+      };
+    } else if (status && status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
+    if (errorMessage) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWithError, {error: errorMessage}),
+      };
+    }
 
     if (!status) {
       return {
         score: 0,
         explanation: str_(UIStrings.explanation),
-      };
-    }
-
-    if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
-      return {
-        score: 0,
-        displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
-      };
-    } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
-      return {
-        score: 1,
-        notApplicable: true,
       };
     }
 
