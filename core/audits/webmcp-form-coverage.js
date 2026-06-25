@@ -11,7 +11,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that lists forms found in the page for WebMCP coverage. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   title: 'WebMCP form coverage',
   /** Description of a Lighthouse audit that lists forms found in the page and indicates whether they have WebMCP declarative tool annotations. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
-  description: 'Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI ' +
+  description: 'Consider adding [WebMCP](https://developer.chrome.com/docs/ai/webmcp) annotations to the forms listed below. This helps AI ' +
   'agents identify and interact with these forms more reliably.',
   /** [ICU Syntax] Label for the audit identifying the number of forms missing annotations. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   displayValue: `{itemCount, plural,
