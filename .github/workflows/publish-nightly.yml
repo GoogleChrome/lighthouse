@@ -1,8 +1,7 @@
 name: Publish nightly
 on:
-# Recurring publish disabled as tokens were revoked https://github.com/orgs/community/discussions/179562 and this is not a big priority. 
-#   schedule:
-#     - cron: '0 5 * * *'
+  schedule:
+    - cron: '0 5 * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -39,6 +38,9 @@ jobs:
       github.event_name != 'schedule' ||
       (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,15 +48,9 @@ jobs:
           node-version: '22.19'
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
-
-      # Build report bundles needed for publishing.
-      - run: yarn build-report
-
+      - run: yarn build-all
       - name: Publish to npm
         run: |
           npm whoami
           bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
-          npm publish --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          CI: true
+          npm publish --provenance --access public --registry https://registry.npmjs.org/ --tag next
