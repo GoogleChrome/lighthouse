@@ -1,4 +1,5 @@
 name: Publish
+run-name: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && 'Publish (Nightly)' || format('Publish {0}', github.ref_name) }}
 on:
   # For the real release.
   push:
@@ -7,13 +8,8 @@ on:
   # For the nightly release.
   schedule:
     - cron: '0 5 * * *'
-  workflow_dispatch:
-    inputs:
-      publish_nightly:
-        description: 'Publish nightly version'
-        required: false
-        type: boolean
-        default: false
+  # For the nightly release.
+  workflow_dispatch: {}
 
 jobs:
   check_date:
@@ -45,7 +41,7 @@ jobs:
       (needs.check_date.result == 'success' || needs.check_date.result == 'skipped') &&
       (
         (github.event_name == 'schedule' && needs.check_date.outputs.should_run != 'false' && github.repository == 'GoogleChrome/lighthouse') ||
-        github.event.inputs.publish_nightly == 'true'
+        github.event_name == 'workflow_dispatch'
       )
     runs-on: ubuntu-latest
     permissions:
@@ -66,7 +62,7 @@ jobs:
 
   publish_release:
     name: Publish release
-    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_nightly != 'true')
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
