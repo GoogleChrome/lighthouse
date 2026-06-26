@@ -1,8 +1,10 @@
 name: Publish
 on:
+  # For the real release.
   push:
     tags:
       - 'v*' # Runs on pushing version tags
+  # For the nightly release.
   schedule:
     - cron: '0 5 * * *'
   workflow_dispatch:
