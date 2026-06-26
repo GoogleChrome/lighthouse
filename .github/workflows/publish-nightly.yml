@@ -51,6 +51,5 @@ jobs:
       - run: yarn build-all
       - name: Publish to npm
         run: |
-          npm whoami
           bash $GITHUB_WORKSPACE/.github/scripts/bump-nightly-version.sh
           npm publish --provenance --access public --registry https://registry.npmjs.org/ --tag next
