@@ -52,6 +52,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.19'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Update npm for Trusted Publishing
+        run: npm install -g npm@latest
       - run: yarn --frozen-lockfile
       - run: yarn build-all
       - name: Publish to npm
@@ -71,6 +74,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.19'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Update npm for Trusted Publishing
+        run: npm install -g npm@latest
       - run: yarn --frozen-lockfile
       - run: yarn build-all
       - name: Publish to npm
