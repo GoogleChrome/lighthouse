@@ -166,6 +166,7 @@ describe('Individual modes API', function() {
       expect(notApplicableAudits
         .filter(audit => audit.id !== 'interaction-to-next-paint')
         .map(audit => audit.id)
+        .sort()
       ).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
