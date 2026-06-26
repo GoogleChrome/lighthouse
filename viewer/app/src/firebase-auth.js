@@ -5,7 +5,7 @@
  */
 
 import {initializeApp} from 'firebase/app';
-import {getAuth, signInWithPopup, GithubAuthProvider} from 'firebase/auth';
+import {getAuth, signInWithPopup, GithubAuthProvider, signOut} from 'firebase/auth';
 import idbKeyval from 'idb-keyval';
 
 /**
@@ -77,5 +77,15 @@ export class FirebaseAuth {
     // of GitHub's oauth token. Since GitHub's tokens never expire, stash the access token in IDB.
     await idbKeyval.set('accessToken', accessToken);
     return accessToken;
+  }
+
+  /**
+   * Signs out the user.
+   * @return {Promise<void>}
+   */
+  async signOut() {
+    this._accessToken = null;
+    await idbKeyval.delete('accessToken');
+    await signOut(this._auth);
   }
 }

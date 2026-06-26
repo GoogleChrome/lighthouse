@@ -122,6 +122,13 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   FullPageScreenshot: LHResult.FullPageScreenshot | null;
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
+  /** The status and tools registered via WebMCP. */
+  WebMCP: {isSupported: boolean, tools: Artifacts.WebMCPTool[]};
+  /** 
+   * The WebMCP schema validation issues. 
+   * TODO: fold this into the WebMCP artifact. 
+   */
+  WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */
   // 'url' is excluded because it can be overridden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
   JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
@@ -129,6 +136,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   NetworkUserAgent: string;
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: { status: number | null, content: string | null, errorMessage?: string };
+  /** Information on fetching and the content of the /llm.txt file. */
+  LlmsTxt: { status: number | null, content: string | null, errorMessage?: string };
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
@@ -141,7 +150,17 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceElements: Artifacts.TraceElement[];
 }
 
-declare module Artifacts {
+declare namespace Artifacts {
+  interface WebMcpSchemaIssue {
+    errorType: string;
+    violatingNodeId?: number;
+    nodeDetails?: NodeDetails;
+    formToolName?: string | null;
+    formToolDescription?: string | null;
+    paramName?: string | null;
+    paramDescription?: string | null;
+  }
+
   type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
@@ -194,6 +213,8 @@ declare module Artifacts {
       relatedNodes: NodeDetails[];
     }>;
     error?: RuleExecutionError;
+    help?: string;
+    description?: string;
   }
 
   interface Accessibility {
@@ -641,11 +662,23 @@ declare module Artifacts {
     observedSpeedIndexTs: number;
   }
 
+  interface WebMCPTool {
+    name: string;
+    description: string;
+    inputSchema: Record<string, any>;
+    frameId: string;
+    backendNodeId?: number;
+    stackTrace?: any;
+    nodeDetails?: NodeDetails;
+  }
+
   interface FormElement {
     id: string;
     name: string;
     autocomplete: string;
     node: NodeDetails;
+    webMcpToolname?: string | null;
+    webMcpTooldescription?: string | null;
   }
 
   /** Attributes collected for every input element in the inputs array from the forms interface. */

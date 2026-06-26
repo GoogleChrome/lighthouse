@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import data from 'web-features/data.json' with {type: 'json'};
-
+import data from '../lib/baseline/web-features-data.json' with {type: 'json'};
 import {Audit} from './audit.js';
 import metadata from '../lib/baseline/web-features-metadata.json' with {type: 'json'};
 import * as i18n from '../lib/i18n/i18n.js';
@@ -27,7 +26,6 @@ const UIStrings = {
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
-const {features} = /** @type {any} */ (data);
 
 
 /** @typedef {LH.TraceEvent & {args: {feature: string, url?: string, lineNumber?: number, columnNumber?: number}}} DXFeatureEvent */
@@ -90,21 +88,21 @@ class Baseline extends Audit {
         continue;
       }
 
-      const featureData = features[feature.featureId];
-
-      if (!featureData || !('status' in featureData)) {
-        continue;
-      }
+      const featureId = feature.featureId;
 
       let displayStatus = 'Limited Availability';
       let baselineTier = 'limited';
 
-      if (featureData.status.baseline === 'high') {
-        displayStatus = `Widely Available (${featureData.status.baseline_low_date})`;
+      if (featureId in data.high) {
+        const highData = /** @type {Record<string, string>} */ (data.high);
+        displayStatus = `Widely Available (${highData[featureId]})`;
         baselineTier = 'high';
-      } else if (featureData.status.baseline === 'low') {
-        displayStatus = `Newly Available (${featureData.status.baseline_low_date})`;
+      } else if (featureId in data.low) {
+        const lowData = /** @type {Record<string, string>} */ (data.low);
+        displayStatus = `Newly Available (${lowData[featureId]})`;
         baselineTier = 'low';
+      } else if (!data.limited.includes(featureId)) {
+        continue;
       }
 
       baselineStatus.push({

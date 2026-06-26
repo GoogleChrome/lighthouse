@@ -10,7 +10,7 @@ import LHResult from '../lhr/lhr.js';
 import {LocalConsole} from '../../cli/test/smokehouse/lib/local-console.js';
 
 declare global {
-  module Smokehouse {
+  namespace Smokehouse {
     interface ExpectedLHR {
       audits: Record<string, any>;
       requestedUrl: string;
@@ -42,6 +42,10 @@ declare global {
       config?: Config;
       /** If test is performance sensitive, set to true so that it won't be run parallel to other tests. */
       runSerially?: boolean;
+      /** Custom options for the test runner (e.g., custom Chrome flags). */
+      testRunnerOptions?: {
+        chromeFlags?: string;
+      };
     }
 
     /**
@@ -54,7 +58,7 @@ declare global {
       {expectations: Smokehouse.ExpectedRunnerResult | Array<Smokehouse.ExpectedRunnerResult>}
 
     export type LighthouseRunner =
-      {runnerName?: string} & ((url: string, config?: Config, logger?: LocalConsole, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts}>);
+      {runnerName?: string} & ((url: string, config?: Config, logger?: LocalConsole, runnerOptions?: SmokehouseOptions['testRunnerOptions']) => Promise<{lhr: LHResult, artifacts: Artifacts}>);
 
     export interface SmokehouseOptions {
       /** Options to pass to the specific Lighthouse runner. */
@@ -63,6 +67,8 @@ declare global {
         isDebug?: boolean;
         /** Launch Chrome in the new headless mode (`--headless=new`), rather than the typical desktop headful mode. */
         headless?: boolean;
+        /** Custom Chrome flags to pass to the launched browser. */
+        chromeFlags?: string;
       };
       /** Manually set the number of jobs to run at once. `1` runs all tests serially. */
       jobs: number;

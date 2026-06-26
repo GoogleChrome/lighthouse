@@ -32,7 +32,7 @@ function collectMetaElements() {
       property: getAttribute('property'),
       httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
       charset: getAttribute('charset'),
-      node: functions.getNodeDetails(meta),
+      node: /** @type {LH.Artifacts.NodeDetails} */ (functions.getNodeDetails(meta)),
     };
   });
 }

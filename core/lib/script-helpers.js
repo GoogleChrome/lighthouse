@@ -20,7 +20,19 @@ function isInline(script) {
  * @return {LH.Artifacts.NetworkRequest|undefined}
  */
 function getRequestForScript(networkRecords, script) {
-  let networkRequest = networkRecords.find(request => request.url === script.url);
+  const frameId = script.executionContextAuxData?.frameId;
+  let networkRequest;
+
+  if (frameId) {
+    networkRequest = networkRecords.find(
+      request => request.url === script.url && request.frameId === frameId
+    );
+  }
+
+  if (!networkRequest) {
+    networkRequest = networkRecords.find(request => request.url === script.url);
+  }
+
   while (networkRequest?.redirectDestination) {
     networkRequest = networkRequest.redirectDestination;
   }

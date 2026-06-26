@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// eslint-disable-next-line spaced-comment
+/// <reference types="chrome" />
+
 const BACKENDS = [{
   id: 'psi',
   title: 'PSI Frontend (pagespeed.web.dev)',
@@ -25,6 +28,9 @@ const DEFAULT_CATEGORIES = [{
 }, {
   id: 'seo',
   title: 'SEO',
+}, {
+  id: 'agentic-browsing',
+  title: 'Agentic Browsing',
 }];
 
 /** @typedef {{backend: string, selectedCategories: string[], device: string, locale: string}} Settings */
@@ -83,16 +89,19 @@ function loadSettings() {
 
       // Load saved categories and settings, overwriting defaults with any
       // saved selections.
-      const savedCategories = {...defaultCategories, ...result[STORAGE_KEYS.Categories]};
+      /** @type {Record<string, boolean>} */
+      const savedCategories = {...defaultCategories, ...(result[STORAGE_KEYS.Categories] || {})};
 
+      /** @type {Partial<Settings>} */
       const defaultSettings = {
         device: 'mobile',
       };
-      const savedSettings = {...defaultSettings, ...result[STORAGE_KEYS.Settings]};
+      /** @type {Partial<Settings>} */
+      const savedSettings = {...defaultSettings, ...(result[STORAGE_KEYS.Settings] || {})};
 
       resolve({
         backend: savedSettings.backend ?? 'psi',
-        device: savedSettings.device,
+        device: savedSettings.device ?? 'mobile',
         locale: savedSettings.locale ?? navigator.language,
         selectedCategories: Object.keys(savedCategories).filter(cat => savedCategories[cat]),
       });

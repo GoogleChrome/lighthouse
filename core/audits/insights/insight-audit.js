@@ -27,8 +27,10 @@ async function getInsightSet(artifacts, context) {
     await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
-  const key = navigationId ?? NO_NAVIGATION;
-  const insights = traceEngineResult.insights.get(key);
+  const insights = navigationId ?
+    [...traceEngineResult.insights.values()]
+      .find(insightSet => insightSet.navigation?.args.data?.navigationId) :
+    traceEngineResult.insights.get(NO_NAVIGATION);
 
   return {insights, data: traceEngineResult.data};
 }
@@ -43,7 +45,7 @@ async function getInsightSet(artifacts, context) {
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
  * @param {T} insightName
- * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => {details: LH.Audit.Details, warnings?: Array<string | LH.IcuMessage>, numericValue?: number, numericUnit?: LH.Audit.NumericProduct['numericUnit']}|LH.Audit.Details|undefined} createDetails
+ * @param {(insight: NonNullable<import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T]>, extras: CreateDetailsExtras) => {details: LH.Audit.Details, warnings?: Array<string | LH.IcuMessage>, numericValue?: number, numericUnit?: LH.Audit.NumericProduct['numericUnit']}|LH.Audit.Details|undefined} createDetails
  * @template {keyof import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModelsType} T
  * @return {Promise<LH.Audit.Product>}
  */
@@ -56,11 +58,19 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
-  const insight = insights.model[insightName];
-  if (insight instanceof Error) {
+  const error = insights.modelErrors[insightName];
+  if (error) {
     return {
-      errorMessage: insight.message,
-      errorStack: insight.stack,
+      errorMessage: error.message,
+      errorStack: error.stack,
+      score: null,
+    };
+  }
+
+  const insight = insights.model[insightName];
+  if (!insight) {
+    return {
+      scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,
     };
   }

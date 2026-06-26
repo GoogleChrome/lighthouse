@@ -59,6 +59,7 @@ declare namespace Config {
     description?: string | IcuMessage;
     manualDescription?: string | IcuMessage;
     supportedModes?:  Gatherer.GatherMode[];
+    categoryScoreDisplayMode?: Result.CategoryScoreDisplayMode;
   }
 
   interface GroupJson {

@@ -11,7 +11,7 @@ import '../../report/types/augment-dom';
 
 declare global {
   // Expose global types in LH namespace.
-  module LH {
+  namespace LH {
     export import Treemap = Treemap_;
     export import Result = LHResult;
     export import Locale = Settings.Locale;

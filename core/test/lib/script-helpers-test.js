@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import {estimateCompressedContentSize, estimateTransferSize} from '../../lib/script-helpers.js';
+import {estimateCompressedContentSize, estimateTransferSize, getRequestForScript} from '../../lib/script-helpers.js';
 
 describe('Script helpers', () => {
   describe('#estimateTransferSize', () => {
@@ -92,6 +92,87 @@ describe('Script helpers', () => {
         {transferSize: 1000, resourceSize: 0, resourceType, responseHeaders: []},
         100);
       assert.equal(result, 100);
+    });
+  });
+
+  describe('#getRequestForScript', () => {
+    it('should find request by url', () => {
+      const networkRecords = [
+        {url: 'https://example.com/script.js', requestId: '1'},
+      ];
+      // @ts-expect-error
+      const script = {url: 'https://example.com/script.js'};
+      const result = getRequestForScript(networkRecords, script);
+      assert.ok(result);
+      assert.equal(result.requestId, '1');
+    });
+
+    it('should follow redirect destination', () => {
+      // @ts-expect-error
+      const req2 = {url: 'https://example.com/script-final.js', requestId: '2'};
+      // @ts-expect-error
+      const req1 = {url: 'https://example.com/script.js', requestId: '1', redirectDestination: req2};
+      const networkRecords = [req1, req2];
+      // @ts-expect-error
+      const script = {url: 'https://example.com/script.js'};
+      const result = getRequestForScript(networkRecords, script);
+      assert.ok(result);
+      assert.equal(result.requestId, '2');
+    });
+
+    it('should match by frameId when multiple requests for the same URL exist', () => {
+      const mainFrameRequest = {
+        url: 'https://example.com/script.js',
+        requestId: '1',
+        frameId: 'MAIN_FRAME',
+        transferSize: 341000,
+      };
+      const iframeRequest = {
+        url: 'https://example.com/script.js',
+        requestId: '2',
+        frameId: 'IFRAME',
+        transferSize: 0,
+        fromDiskCache: true,
+      };
+      // @ts-expect-error
+      const networkRecords = [mainFrameRequest, iframeRequest];
+
+      const script1 = {
+        url: 'https://example.com/script.js',
+        executionContextAuxData: {frameId: 'MAIN_FRAME'},
+      };
+      const script2 = {
+        url: 'https://example.com/script.js',
+        executionContextAuxData: {frameId: 'IFRAME'},
+      };
+
+      // @ts-expect-error
+      const result1 = getRequestForScript(networkRecords, script1);
+      assert.ok(result1);
+      assert.equal(result1.requestId, '1');
+
+      // @ts-expect-error
+      const result2 = getRequestForScript(networkRecords, script2);
+      assert.ok(result2);
+      assert.equal(result2.requestId, '2');
+    });
+
+    it('should fallback to URL match if no frameId matches', () => {
+      const req = {
+        url: 'https://example.com/script.js',
+        requestId: '1',
+        frameId: 'SOME_FRAME',
+      };
+      // @ts-expect-error
+      const networkRecords = [req];
+      const script = {
+        url: 'https://example.com/script.js',
+        executionContextAuxData: {frameId: 'DIFFERENT_FRAME'},
+      };
+      // @ts-expect-error
+      const result = getRequestForScript(networkRecords, script);
+      assert.ok(result);
+      assert.equal(result.requestId, '1');
     });
   });
 });

@@ -18,6 +18,7 @@ function stringify(mainFn, args, deps) {
   const argsSerialized = ExecutionContext.serializeArguments(args);
   const depsSerialized = ExecutionContext.serializeDeps(deps);
   const expression = `(() => {
+    ${pageFunctions.esbuildFunctionWrapperString}
     ${depsSerialized}
     return (${mainFn})(${argsSerialized});
   })()`;

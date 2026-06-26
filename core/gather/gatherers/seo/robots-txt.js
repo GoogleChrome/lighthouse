@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
 import BaseGatherer from '../../base-gatherer.js';
 
 class RobotsTxt extends BaseGatherer {
@@ -20,7 +22,10 @@ class RobotsTxt extends BaseGatherer {
     const {finalDisplayedUrl} = passContext.baseArtifacts.URL;
     const robotsUrl = new URL('/robots.txt', finalDisplayedUrl).href;
     return passContext.driver.fetcher.fetchResource(robotsUrl)
-      .catch(err => ({status: null, content: null, errorMessage: err.message}));
+      .catch(err => {
+        log.error('RobotsTxt', err);
+        return {status: null, content: null, errorMessage: err.message};
+      });
   }
 }
 

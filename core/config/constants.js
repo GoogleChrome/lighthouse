@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as LH from '../../types/lh.js';
 import * as Lantern from '../lib/lantern/lantern.js';
 
 const throttling = Lantern.Simulation.Constants.throttling;

@@ -36,7 +36,7 @@ async function toBase64(string, options) {
     } else {
       /** @type {import('pako')=} */
       const pako = window.pako;
-      bytes = pako.gzip(string);
+      bytes = /** @type {any} */ (pako.gzip(string));
     }
   }
 

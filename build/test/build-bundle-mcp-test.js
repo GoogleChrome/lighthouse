@@ -26,8 +26,8 @@ const TEST_HTML = `
 </html>
 `;
 
-/** Categories included in the MCP bundle (accessibility, SEO, Best practices). */
-const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices'];
+/** Categories included in the MCP bundle (accessibility, SEO, Best practices, Agentic browsing). */
+const MCP_CATEGORIES = ['accessibility', 'seo', 'best-practices', 'agentic-browsing'];
 
 describe('MCP Bundle build', () => {
   const bundlePath = `${LH_ROOT}/dist/lighthouse-devtools-mcp-bundle.js`;
@@ -89,7 +89,8 @@ describe('MCP Bundle build', () => {
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {
@@ -164,13 +165,15 @@ describe('MCP Bundle build', () => {
 
   describe('generateReport', () => {
     it('generates HTML report from LHR result', async () => {
-      const {snapshot, generateReport} = await import(bundlePath);
+      const mcpBundle = await import(bundlePath);
+      const {snapshot, generateReport} = mcpBundle;
 
       const browser = await puppeteer.launch({
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {
@@ -196,7 +199,8 @@ describe('MCP Bundle build', () => {
         executablePath: getChromePath(),
       });
       const page = await browser.newPage();
-      await page.setContent(TEST_HTML, {waitUntil: 'networkidle0'});
+      await page.setContent(TEST_HTML);
+      await page.waitForNetworkIdle();
 
       const result = await snapshot(page, {
         config: {

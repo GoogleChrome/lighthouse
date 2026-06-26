@@ -23,16 +23,17 @@ import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices. */
-const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices'];
+/** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices, agentic browsing. */
+const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices', 'agentic-browsing'];
 
 /**
- * Audit IDs from default config for MCP categories (accessibility, seo, best-practices).
+ * Audit IDs from default and agentic browsing config for MCP categories
+ * (accessibility, seo, best-practices, agentic-browsing).
  * @return {Set<string>}
  */
 function getMcpCategoryAuditIds() {
   const ids = new Set();
-  for (const categoryId of MCP_CATEGORY_IDS) {
+  for (const categoryId of [...MCP_CATEGORY_IDS]) {
     const category = defaultConfig.categories?.[categoryId];
     if (!category?.auditRefs) continue;
     for (const ref of category.auditRefs) {
@@ -48,10 +49,13 @@ function getMcpCategoryAuditIds() {
  * @return {Set<string>}
  */
 function getMcpRequiredGathererNames() {
-  // We need gatherers for all artifacts that might be required by a11y/seo/best-practices audits.
-  // From default config, these artifacts (and their gatherers) are used by those categories.
+  // We need gatherers for all artifacts that might be required by
+  // a11y/seo/best-practices audits.
+  // From default config and agentic config, these artifacts (and their gatherers)
+  // are used by those categories.
   const artifactToGatherer = new Map();
-  for (const artifact of defaultConfig.artifacts || []) {
+  const allArtifacts = defaultConfig.artifacts || [];
+  for (const artifact of allArtifacts) {
     if (artifact.gatherer) {
       artifactToGatherer.set(artifact.id, artifact.gatherer);
     }
@@ -68,7 +72,9 @@ function getMcpRequiredGathererNames() {
     'MainDocumentContent', 'MetaElements', 'Stacks', 'Trace',
   ];
   const a11yArtifacts = ['Accessibility'];
-  for (const id of [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts]) {
+  const agenticArtifacts = ['WebMCP', 'LlmsTxt', 'WebMcpSchemaIssues'];
+  for (const id of
+    [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts, ...agenticArtifacts]) {
     const g = artifactToGatherer.get(id);
     if (g) gathererNames.add(g);
   }
@@ -377,6 +383,7 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
       path.join(nodeModulePath, 'LICENSE'),
       path.join(nodeModulePath, 'LICENSE.txt'),
       path.join(nodeModulePath, 'LICENSE.md'),
+      path.join(nodeModulePath, 'license.md'),
       path.join(nodeModulePath, 'LICENSE.MIT'),
       path.join(nodeModulePath, 'LICENSE.APACHE'),
     ];

@@ -8,6 +8,7 @@ import path from 'path';
 
 import log from 'lighthouse-logger';
 
+import * as LH from '../../types/lh.js';
 import {Runner} from '../runner.js';
 import defaultConfig from './default-config.js';
 import {nonSimulatedSettingsOverrides} from './constants.js';

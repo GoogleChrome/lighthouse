@@ -261,6 +261,10 @@ export class LighthouseReportViewer {
   _replaceReportHtml(json) {
     const container = dom.find('main');
 
+    // Find the old root element to preserve the dark mode state.
+    const oldRoot = container.querySelector('.lh-root');
+    const wasDark = oldRoot ? oldRoot.classList.contains('lh-dark') : null;
+
     // Reset container content.
     container.textContent = '';
     const rootEl = dom.createElement('div');
@@ -279,6 +283,11 @@ export class LighthouseReportViewer {
       } else {
         this._renderLhr(json, rootEl);
         if (window.gtag) window.gtag('event', 'report', {type: 'report'});
+      }
+
+      // Restore the dark mode state.
+      if (wasDark !== null) {
+        rootEl.classList.toggle('lh-dark', wasDark);
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
