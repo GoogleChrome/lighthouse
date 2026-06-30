@@ -13,8 +13,9 @@ const UIStrings = {
   /** Title shown when one or more agent accessibility checks fail. */
   failureTitle: 'Accessibility tree is not well-formed',
   /** Description of a Lighthouse audit that tells the user *why* they need a well-formed accessibility tree. */
-  description: 'A well-formed [accessibility tree](http://goo.gle/lighthouse-agentic-a11y) helps AI agents to ' +
-    'navigate and interact with the page.',
+  description: 'A well-formed ' +
+  '[accessibility tree](https://developer.chrome.com/docs/lighthouse/agentic-browsing/accessibility-for-agents) ' +
+  'helps AI agents to navigate and interact with the page.',
   /** Label of a table column that identifies the accessibility rule that failed. */
   columnRule: 'Failing Rule',
   /** Label of a table column that identifies the HTML element that failed the rule. */

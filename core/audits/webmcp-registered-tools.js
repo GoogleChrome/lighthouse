@@ -15,7 +15,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that lists registered WebMCP tools. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   title: 'WebMCP tools registered',
   /** Description of a Lighthouse audit that lists registered WebMCP tools. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol", neither should be translated. */
-  description: 'Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.',
+  description: 'Lists the [WebMCP tools](https://developer.chrome.com/docs/ai/webmcp) registered at the time of analysis.',
   /** Label for a column in a data table; entries will be the name of a WebMCP tool. */
   columnTool: 'Tool name',
   /** Label for a column in a data table; entries will be the description of a WebMCP tool. */

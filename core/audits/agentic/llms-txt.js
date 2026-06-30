@@ -19,7 +19,8 @@ const UIStrings = {
   description: 'If your llms.txt file does not follow recommendations, ' +
     'large language models may not be able to ' +
     'understand how you want your website to be crawled or used for training. The ' +
-    '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.',
+    '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header. ' +
+    '[Learn more about the llms.txt audit](https://developer.chrome.com/docs/lighthouse/agentic-browsing/llms-txt).',
   /**
    * @description Label for the audit identifying that the request failed with a specific HTTP status code.
    * @example {500} statusCode
