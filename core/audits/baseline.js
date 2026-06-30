@@ -31,6 +31,8 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /** @typedef {LH.TraceEvent & {args: {feature: string, url?: string, lineNumber?: number, columnNumber?: number}}} DXFeatureEvent */
 
 class Baseline extends Audit {
+  static featureData = data;
+
   /**
    * @return {LH.Audit.Meta}
    */
@@ -42,6 +44,51 @@ class Baseline extends Audit {
       description: str_(UIStrings.description, {date: metadata.date}),
       requiredArtifacts: ['Trace'],
     };
+  }
+
+  /**
+   * Determines the baseline status and display string for a given feature ID.
+   * @param {string} featureId
+   * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
+   * @param {Date} currentDate
+   * @return {{displayStatus: string, baselineTier: 'high' | 'low' | 'limited'} | null}
+   */
+  static getFeatureStatus(featureId, featureData, currentDate) {
+    if (featureId in featureData.high) {
+      const highData = /** @type {Record<string, string>} */ (featureData.high);
+      return {
+        displayStatus: `Widely Available (${highData[featureId]})`,
+        baselineTier: 'high',
+      };
+    }
+
+    if (featureId in featureData.low) {
+      const lowData = /** @type {Record<string, string>} */ (featureData.low);
+      const widelyAvailableDate = new Date(lowData[featureId]);
+      widelyAvailableDate.setUTCMonth(widelyAvailableDate.getUTCMonth() + 30);
+      const widelyAvailableDateStr = widelyAvailableDate.toISOString().slice(0, 10);
+
+      if (widelyAvailableDate <= currentDate) {
+        return {
+          displayStatus: `Widely Available (${widelyAvailableDateStr})`,
+          baselineTier: 'high',
+        };
+      } else {
+        return {
+          displayStatus: `Newly Available (${lowData[featureId]})`,
+          baselineTier: 'low',
+        };
+      }
+    }
+
+    if (featureData.limited.includes(featureId)) {
+      return {
+        displayStatus: 'Limited Availability',
+        baselineTier: 'limited',
+      };
+    }
+
+    return null;
   }
 
   /**
@@ -82,6 +129,7 @@ class Baseline extends Audit {
 
     const baselineFeatures = Array.from(featuresMap.values());
     const baselineStatus = [];
+    const currentDate = new Date;
 
     for (const feature of baselineFeatures) {
       if (!feature.featureId) {
@@ -90,20 +138,9 @@ class Baseline extends Audit {
 
       const featureId = feature.featureId;
 
-      let displayStatus = 'Limited Availability';
-      let baselineTier = 'limited';
-
-      if (featureId in data.high) {
-        const highData = /** @type {Record<string, string>} */ (data.high);
-        displayStatus = `Widely Available (${highData[featureId]})`;
-        baselineTier = 'high';
-      } else if (featureId in data.low) {
-        const lowData = /** @type {Record<string, string>} */ (data.low);
-        displayStatus = `Newly Available (${lowData[featureId]})`;
-        baselineTier = 'low';
-      } else if (!data.limited.includes(featureId)) {
-        continue;
-      }
+      const status = Baseline.getFeatureStatus(featureId, Baseline.featureData, currentDate);
+      if (!status) continue;
+      const {displayStatus, baselineTier} = status;
 
       baselineStatus.push({
         featureId: {

@@ -5,8 +5,34 @@
  */
 
 import Baseline from '../../audits/baseline.js';
+import {timers} from '../test-utils.js';
 
 describe('Baseline Audit', () => {
+  let originalData;
+
+  beforeEach(() => {
+    originalData = Baseline.featureData;
+    timers.useFakeTimers();
+    // Freeze time at June 30, 2026
+    timers.setSystemTime(new Date('2026-06-30T15:00:00Z').getTime());
+
+    Baseline.featureData = {
+      high: {
+        'forced-colors': '2022-09-12',
+        'aborting': '2019-03-25',
+      },
+      low: {
+        'abortsignal-any': '2024-03-19',
+      },
+      limited: ['accelerometer'],
+    };
+  });
+
+  afterEach(() => {
+    timers.dispose();
+    Baseline.featureData = originalData;
+  });
+
   it('should return an empty list when no features are used', async () => {
     const artifacts = {
       Trace: {
@@ -165,6 +191,58 @@ describe('Baseline Audit', () => {
         column: 4,
         original: undefined,
       },
+    });
+  });
+
+  describe('getFeatureStatus', () => {
+    const fakeData = {
+      high: {
+        'high-feature': '2022-09-12',
+      },
+      low: {
+        'low-feature': '2024-03-01',
+      },
+      limited: ['limited-feature'],
+    };
+
+    const dateJune = new Date('2026-06-30T15:00:00Z');
+    const dateOct = new Date('2026-10-01T15:00:00Z');
+
+    it('should return high status for high features', () => {
+      const status = Baseline.getFeatureStatus('high-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Widely Available (2022-09-12)',
+        baselineTier: 'high',
+      });
+    });
+
+    it('should return low status for low features if under 30 months', () => {
+      const status = Baseline.getFeatureStatus('low-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Newly Available (2024-03-01)',
+        baselineTier: 'low',
+      });
+    });
+
+    it('should return high status for low features if over 30 months', () => {
+      const status = Baseline.getFeatureStatus('low-feature', fakeData, dateOct);
+      expect(status).toEqual({
+        displayStatus: 'Widely Available (2026-09-01)',
+        baselineTier: 'high',
+      });
+    });
+
+    it('should return limited status for limited features', () => {
+      const status = Baseline.getFeatureStatus('limited-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Limited Availability',
+        baselineTier: 'limited',
+      });
+    });
+
+    it('should return null for unknown features', () => {
+      const status = Baseline.getFeatureStatus('unknown-feature-id', fakeData, dateJune);
+      expect(status).toBeNull();
     });
   });
 });
