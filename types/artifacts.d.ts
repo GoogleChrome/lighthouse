@@ -596,6 +596,28 @@ declare namespace Artifacts {
     lcpInvalidated: boolean;
   }
 
+  interface SoftNavigationTraceTimes {
+    timeOrigin: number;
+    firstContentfulPaint?: number;
+    largestContentfulPaint?: number;
+    /** The end of this soft navigation's observation window. */
+    windowEnd: number;
+  }
+
+  interface ProcessedSoftNavigation {
+    navigationId?: string;
+    softNavigationContextId?: number;
+    url?: string;
+    /** The raw timestamps of the soft-navigation window and its paint events, in microseconds. */
+    timestamps: SoftNavigationTraceTimes;
+    /** The relative times from the soft-navigation start, in milliseconds. */
+    timings: SoftNavigationTraceTimes;
+    /** The trace event containing the soft-navigation metadata. */
+    softNavigationStartEvt: TraceEvent;
+    /** The final LCP candidate within the soft-navigation window. */
+    largestContentfulPaintEvt?: TraceEvent;
+  }
+
   /** Information on a tech stack (e.g. a JS library) used by the page. */
   interface DetectedStack {
     /** The identifier for how this stack was detected. */
