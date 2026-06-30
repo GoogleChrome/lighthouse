@@ -21,3 +21,5 @@ yarn lint --fix
 ```
 
 Make sure to run some unit tests and the type-checker / linter after making changes.
+
+Always run `yarn update:sample-json` after making any change.
