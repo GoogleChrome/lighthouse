@@ -311,6 +311,7 @@ const defaultConfig = {
     'agentic/ard-schema',
     'bf-cache',
     'insights/cache-insight',
+    'insights/character-set-insight',
     'insights/cls-culprits-insight',
     'insights/document-latency-insight',
     'insights/dom-size-insight',
@@ -425,6 +426,7 @@ const defaultConfig = {
 
         // Insight audits.
         {id: 'cache-insight', weight: 0, group: 'insights'},
+        {id: 'character-set-insight', weight: 0, group: 'insights'},
         {id: 'cls-culprits-insight', weight: 0, group: 'insights'},
         {id: 'document-latency-insight', weight: 0, group: 'insights'},
         {id: 'dom-size-insight', weight: 0, group: 'insights'},
