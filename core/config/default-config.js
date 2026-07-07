@@ -281,7 +281,6 @@ const defaultConfig = {
     'byte-efficiency/unused-css-rules',
     'byte-efficiency/unused-javascript',
     'dobetterweb/doctype',
-    'dobetterweb/charset',
     'dobetterweb/geolocation-on-start',
     'dobetterweb/inspector-issues',
     'dobetterweb/js-libraries',
@@ -598,7 +597,6 @@ const defaultConfig = {
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
-        {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'baseline', weight: 0, group: 'best-practices-browser-compat'},
         // General Group
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
