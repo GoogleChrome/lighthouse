@@ -37,7 +37,7 @@ export const UIStrings = {
   categories: 'Categories',
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
   categoryPerformance: 'Performance',
-  /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. */
+  /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. Here "Accessibility" refers to usability for people with disabilities and assistive technology, not to the page being available. Use your locale's established accessibility terminology. */
   categoryAccessibility: 'Accessibility',
   /** Title of the Best Practices category of audits. This is displayed at the top of a list of audits focused on topics related to following web development best practices and accepted guidelines. Also used as a label of a score gauge; try to limit to 20 characters. */
   categoryBestPractices: 'Best Practices',

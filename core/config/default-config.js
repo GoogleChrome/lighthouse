@@ -31,7 +31,7 @@ const UIStrings = {
   diagnosticsGroupTitle: 'Diagnostics',
   /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on a web page's load performance characteristics. Within this section, the user may read the details and deduce additional actions they could take to improve performance. */
   diagnosticsGroupDescription: 'More information about the performance of your application. These numbers don\'t [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score.',
-  /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. */
+  /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. Here "Accessibility" refers to usability for people with disabilities and assistive technology, not to the page being available. Use your locale's established accessibility terminology. */
   a11yCategoryTitle: 'Accessibility',
   /** Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to all users. No character length limits. 'improve the accessibility of your web app' and 'manual testing' become link texts to additional documentation. */
   a11yCategoryDescription: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Automatic detection can only detect a subset of issues and does not guarantee the accessibility of your web app, so [manual testing](https://web.dev/articles/how-to-review) is also encouraged.',
@@ -110,9 +110,9 @@ const UIStrings = {
   webmcpGroupTitle: 'WebMCP',
   /** Description of the WebMCP group. */
   webmcpGroupDescription: 'Audits validating WebMCP integration.',
-  /** Title of the Agent Accessibility group of audits. */
+  /** Title of the Agent Accessibility group of audits. These audits check how well an AI agent can perceive and operate the site, using the same semantics that assistive technology relies on. Here "Accessibility" refers to that usability, not to the site being available. Use your locale's established accessibility terminology. */
   agentAccessibilityGroupTitle: 'Agent Accessibility',
-  /** Description of the Agent Accessibility group of audits. */
+  /** Description of the Agent Accessibility group of audits. Here "Accessibility" refers to how well an AI agent can perceive and operate the site, not to the site being available. Use your locale's established accessibility terminology. */
   agentAccessibilityGroupDescription: 'These audits highlight best practices for improving the ' +
   'accessibility of the website for AI agents.',
 };
