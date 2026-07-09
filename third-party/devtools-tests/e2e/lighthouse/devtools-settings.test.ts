@@ -4,6 +4,7 @@
 import {assert} from 'chai';
 import * as path from 'node:path';
 
+import type * as Common from '../../../front_end/core/common/common.js';
 import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
 import {getZoom, openDeviceToolbar, selectDevice, selectZoomLevel} from '../helpers/emulation-helpers.js';
@@ -47,10 +48,12 @@ async function blockCss(devToolsPage: DevToolsPage) {
   await devToolsPage.evaluate(async () => {
     // @ts-expect-error executed from DevTools
     const SDKModule: typeof SDK = await import('./core/sdk/sdk.js');
+    // @ts-expect-error executed from DevTools
+    const CommonModule: typeof Common = await import('./core/common/common.js');
     const networkManager = SDKModule.NetworkManager.MultitargetNetworkManager.instance();
     networkManager.requestConditions.conditionsEnabled = true;
-    networkManager.requestConditions.add(
-        SDKModule.NetworkManager.RequestCondition.createFromSetting({enabled: true, url: '*.css'}));
+    networkManager.requestConditions.add(SDKModule.NetworkManager.RequestCondition.createFromSetting(
+        {enabled: true, url: '*://*:*/*.css'}, CommonModule.Settings.Settings.instance()));
   });
 }
 
@@ -59,8 +62,7 @@ describe('DevTools', function() {
   this.timeout(60_000);
 
   describe('request blocking', () => {
-    // https://crbug.com/466057104 the feature roll has make this test fail
-    it.skip('[crbug.com/466057104] is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
+    it('is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       expectErrors();
       await blockCss(devToolsPage);
       await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
