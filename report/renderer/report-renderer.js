@@ -132,6 +132,15 @@ export class ReportRenderer {
       devicesTooltipTextLines.push(`${Globals.strings.runtimeSettingsAxeVersion}: ${axeVersion}`);
     }
 
+    // Plugin categories are keyed by the plugin name, which is required to
+    // start with 'lighthouse-plugin-'.
+    const pluginNames = Object.keys(report.categories || {})
+      .filter(categoryId => categoryId.startsWith('lighthouse-plugin-'));
+    if (pluginNames.length > 0) {
+      devicesTooltipTextLines.push(
+        `${Globals.strings.runtimeSettingsPlugins}: ${pluginNames.join(', ')}`);
+    }
+
     let stopwatchLabel = Globals.strings.runtimeAnalysisWindow;
     if (report.gatherMode === 'timespan') {
       stopwatchLabel = Globals.strings.runtimeAnalysisWindowTimespan;
