@@ -136,7 +136,7 @@ class WebMCP extends BaseGatherer {
   async getArtifact(context) {
     const isSupported = await context.driver.executionContext.evaluate(
       // @ts-expect-error - modelContext is not in types
-      () => typeof navigator.modelContext !== 'undefined',
+      () => typeof navigator.modelContext !== 'undefined' && document.modelContext !== 'undefined',
       {args: [], useIsolation: true}
     );
     if (!isSupported || !this._isSupported) {
