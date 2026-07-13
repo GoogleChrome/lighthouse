@@ -731,7 +731,31 @@ class App extends m {
   }
 
   onDeviceChange(e) {
-    this.setState({device: e.target.value});
+    const device = e.target.value;
+    this.setState(({versions, metricValues}) => ({
+      device,
+      // Clamp existing values into the new device's min/max. Without this,
+      // a value that was valid for e.g. mobile (values are shared across
+      // device types) can be out of range for desktop; the range input
+      // then silently clamps its own displayed value, but the underlying
+      // metricValues never updates, so the computed score is wrong
+      // (and reverts to the stale value if the device is switched back).
+      metricValues: this.clampMetricValuesToDevice(metricValues, versions, device),
+    }));
+  }
+
+  clampMetricValuesToDevice(metricValues, versions, device) {
+    const clamped = {...metricValues};
+    for (const version of this.normalizeVersions(versions)) {
+      const scoring = scoringGuides[`v${version}`][device];
+      for (const id of Object.keys(clamped)) {
+        const metricScoring = scoring[id];
+        if (!metricScoring) continue;
+        const {min, max} = determineMinMax(metricScoring);
+        clamped[id] = Math.max(Math.min(clamped[id], max), min);
+      }
+    }
+    return clamped;
   }
 
   onVersionsChange(e) {
