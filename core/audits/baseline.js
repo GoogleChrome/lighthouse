@@ -92,6 +92,25 @@ class Baseline extends Audit {
   }
 
   /**
+   * @param {string} featureId
+   * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
+   * @return {string|null}
+   */
+  static getLowDate(featureId, featureData) {
+    if (featureId in featureData.low) {
+      const lowData = /** @type {Record<string, string>} */ (featureData.low);
+      return lowData[featureId];
+    }
+    if (featureId in featureData.high) {
+      const highData = /** @type {Record<string, string>} */ (featureData.high);
+      const date = new Date(highData[featureId]);
+      date.setUTCMonth(date.getUTCMonth() - 30);
+      return date.toISOString().slice(0, 10);
+    }
+    return null;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
@@ -101,15 +120,14 @@ class Baseline extends Audit {
     /** @type {Map<string, {featureId: string, source: LH.Audit.Details.SourceLocationValue | undefined}>} */
     const featuresMap = new Map();
 
-    const dxEvents = /** @type {DXFeatureEvent[]} */ (
-      (trace.traceEvents || []).filter(e => e.cat === 'blink.webdx_feature_usage' &&
-        e.args?.feature)
-    );
+    for (const e of trace.traceEvents || []) {
+      if (e.cat !== 'blink.webdx_feature_usage' || !e.args?.feature) {
+        continue;
+      }
+      const event = /** @type {DXFeatureEvent} */ (e);
 
-    for (const event of dxEvents) {
-      const key = `${event.args.feature}`;
-
-      if (featuresMap.has(key)) continue;
+      const feature = /** @type {string} */ (event.args.feature);
+      if (featuresMap.has(feature)) continue;
 
       /** @type {LH.Audit.Details.SourceLocationValue | undefined} */
       let source;
@@ -121,8 +139,8 @@ class Baseline extends Audit {
         source = Audit.makeSourceLocation(event.args.url, line, column);
       }
 
-      featuresMap.set(key, {
-        featureId: event.args.feature,
+      featuresMap.set(feature, {
+        featureId: feature,
         source,
       });
     }
@@ -142,6 +160,8 @@ class Baseline extends Audit {
       if (!status) continue;
       const {displayStatus, baselineTier} = status;
 
+      const lowDate = Baseline.getLowDate(featureId, Baseline.featureData) || '';
+
       baselineStatus.push({
         featureId: {
           type: /** @type {const} */ ('link'),
@@ -154,11 +174,12 @@ class Baseline extends Audit {
           displayString: displayStatus,
         },
         source: feature.source,
+        lowDate,
       });
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
+    const webFeatureHeadings = [
       {
         key: 'featureId',
         valueType: 'link',
@@ -176,46 +197,48 @@ class Baseline extends Audit {
       },
     ];
 
-    /**
-     * Determines the sorting rank of a baseline status.
-     * @param {string} status The display status string.
-     * @return {number} The numerical rank (1 is the highest priority).
-     */
-    const getStatusRank = (status) => {
-      if (status.startsWith('Limited')) {
-        return 1;
-      }
-      if (status.startsWith('Newly')) {
-        return 2;
-      }
-      if (status.startsWith('Widely')) {
-        return 3;
-      }
-      return 4;
+    /** @type {Record<string, number>} */
+    const TIER_RANKS = {
+      limited: 1,
+      low: 2,
+      high: 3,
     };
 
     const sortedStatuses = baselineStatus.sort((featureA, featureB) => {
-      const rankA = getStatusRank(featureA.displayStatus.displayString);
-      const rankB = getStatusRank(featureB.displayStatus.displayString);
+      const rankA = TIER_RANKS[featureA.displayStatus.status] || 4;
+      const rankB = TIER_RANKS[featureB.displayStatus.status] || 4;
 
       if (rankA !== rankB) {
         return rankA - rankB;
       }
 
-      const hasSourceA = !!featureA.source;
-      const hasSourceB = !!featureB.source;
-
-      if (hasSourceA !== hasSourceB) {
-        return hasSourceA ? -1 : 1;
-      }
-
-      return 0;
+      return featureB.lowDate.localeCompare(featureA.lowDate);
     });
 
-    const details = Audit.makeTableDetails(headings, sortedStatuses);
+    const hasLimited = baselineStatus.some(item => item.displayStatus.status === 'limited');
+
+    let displayValue;
+    if (!hasLimited && sortedStatuses.length > 0) {
+      const newestFeature = sortedStatuses[0];
+      const featureName = newestFeature.featureId.text;
+      const lowDate = newestFeature.lowDate;
+      if (lowDate) {
+        const year = lowDate.substring(0, 4);
+        displayValue = `Baseline ${year} based on ${featureName} (${lowDate})`;
+      }
+    }
+
+    // Remove `lowDate` property from items before generating details table.
+    const tableItems = sortedStatuses.map(item => {
+      const {lowDate: _, ...rest} = item;
+      return rest;
+    });
+
+    const details = Audit.makeTableDetails(webFeatureHeadings, tableItems);
 
     return {
       score: 1,
+      displayValue,
       details,
     };
   }
