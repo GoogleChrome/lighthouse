@@ -194,7 +194,7 @@ describe('Baseline Audit', () => {
     });
   });
 
-  it('should not set displayValue when a limited availability feature ' +
+  it('should not set debugData when a limited availability feature ' +
     'is present (newest is newly available)', async () => {
     const traceEvents = [
       {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
@@ -206,9 +206,10 @@ describe('Baseline Audit', () => {
     ];
     const result = await Baseline.audit({Trace: {traceEvents}});
     expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
   });
 
-  it('should not set displayValue when a limited availability feature ' +
+  it('should not set debugData when a limited availability feature ' +
     'is present (newest is widely available)', async () => {
     const traceEvents = [
       {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
@@ -216,34 +217,48 @@ describe('Baseline Audit', () => {
     ];
     const result = await Baseline.audit({Trace: {traceEvents}});
     expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
   });
 
-  it('should not set displayValue when a limited availability feature ' +
+  it('should not set debugData when a limited availability feature ' +
     'is present (only limited)', async () => {
     const traceEvents = [
       {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
     ];
     const result = await Baseline.audit({Trace: {traceEvents}});
     expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
   });
 
-  it('should set correct displayValue when no limited availability features ' +
+  it('should set correct debugData when no limited availability features ' +
     'are present (newest is newly available)', async () => {
     const traceEvents = [
       {args: {feature: 'abortsignal-any'}, cat: 'blink.webdx_feature_usage'}, // low (2024-03-19)
       {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
     ];
     const result = await Baseline.audit({Trace: {traceEvents}});
-    expect(result.displayValue).toEqual('Baseline 2024 based on abortsignal-any (2024-03-19)');
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toEqual({
+      type: 'debugdata',
+      newestFeatureId: 'abortsignal-any',
+      newestFeatureYear: '2024',
+      newestFeatureLowDate: '2024-03-19',
+    });
   });
 
-  it('should set correct displayValue when no limited availability features ' +
+  it('should set correct debugData when no limited availability features ' +
     'are present (newest is widely available)', async () => {
     const traceEvents = [
       {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
     ];
     const result = await Baseline.audit({Trace: {traceEvents}});
-    expect(result.displayValue).toEqual('Baseline 2020 based on forced-colors (2020-03-12)');
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toEqual({
+      type: 'debugdata',
+      newestFeatureId: 'forced-colors',
+      newestFeatureYear: '2020',
+      newestFeatureLowDate: '2020-03-12',
+    });
   });
 
   describe('getFeatureStatus', () => {

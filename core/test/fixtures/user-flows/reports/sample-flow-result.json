@@ -14592,33 +14592,6 @@
             "scoreDisplayMode": "binary",
             "displayValue": "All audits passed"
           },
-          "webmcp-registered-tools": {
-            "id": "webmcp-registered-tools",
-            "title": "WebMCP tools registered",
-            "description": "Lists the [WebMCP tools](https://developer.chrome.com/docs/ai/webmcp) registered at the time of analysis.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required WebMCP gatherer did not run.",
-            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
-          },
-          "webmcp-form-coverage": {
-            "id": "webmcp-form-coverage",
-            "title": "WebMCP form coverage",
-            "description": "Consider adding [WebMCP](https://developer.chrome.com/docs/ai/webmcp) annotations to the forms listed below. This helps AI agents identify and interact with these forms more reliably.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required WebMCP gatherer did not run.",
-            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
-          },
-          "webmcp-schema-validity": {
-            "id": "webmcp-schema-validity",
-            "title": "WebMCP schemas are valid",
-            "description": "Valid [WebMCP schemas](https://developer.chrome.com/docs/ai/webmcp) are required for AI agents to understand and interact with tools correctly. Please fix any errors or warnings reported by the browser.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required WebMCP gatherer did not run.",
-            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
-          },
           "llms-txt": {
             "id": "llms-txt",
             "title": "llms.txt follows recommendations",
@@ -15180,21 +15153,6 @@
                 "id": "agent-accessibility-tree",
                 "weight": 1,
                 "group": "agent-accessibility"
-              },
-              {
-                "id": "webmcp-form-coverage",
-                "weight": 1,
-                "group": "webmcp"
-              },
-              {
-                "id": "webmcp-registered-tools",
-                "weight": 1,
-                "group": "webmcp"
-              },
-              {
-                "id": "webmcp-schema-validity",
-                "weight": 1,
-                "group": "webmcp"
               },
               {
                 "id": "llms-txt",
@@ -16720,36 +16678,18 @@
             },
             {
               "startTime": 111,
-              "name": "lh:audit:webmcp-registered-tools",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 112,
-              "name": "lh:audit:webmcp-form-coverage",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 113,
-              "name": "lh:audit:webmcp-schema-validity",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 114,
               "name": "lh:audit:llms-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 115,
+              "startTime": 112,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 116
+          "total": 113
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -17345,34 +17285,13 @@
             "core/audits/agentic/agent-accessibility-tree.js | displayValuePassed": [
               "audits[agent-accessibility-tree].displayValue"
             ],
-            "core/audits/webmcp-registered-tools.js | title": [
-              "audits[webmcp-registered-tools].title"
+            "core/audits/agentic/llms-txt.js | title": [
+              "audits[llms-txt].title"
             ],
-            "core/audits/webmcp-registered-tools.js | description": [
-              "audits[webmcp-registered-tools].description"
+            "core/audits/agentic/llms-txt.js | description": [
+              "audits[llms-txt].description"
             ],
             "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "WebMCP"
-                },
-                "path": "audits[webmcp-registered-tools].errorMessage"
-              },
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "WebMCP"
-                },
-                "path": "audits[webmcp-form-coverage].errorMessage"
-              },
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "WebMCP"
-                },
-                "path": "audits[webmcp-schema-validity].errorMessage"
-              },
               {
                 "values": {
                   "errorCode": "MISSING_REQUIRED_ARTIFACT",
@@ -17380,24 +17299,6 @@
                 },
                 "path": "audits[llms-txt].errorMessage"
               }
-            ],
-            "core/audits/webmcp-form-coverage.js | title": [
-              "audits[webmcp-form-coverage].title"
-            ],
-            "core/audits/webmcp-form-coverage.js | description": [
-              "audits[webmcp-form-coverage].description"
-            ],
-            "core/audits/webmcp-schema-validity.js | title": [
-              "audits[webmcp-schema-validity].title"
-            ],
-            "core/audits/webmcp-schema-validity.js | description": [
-              "audits[webmcp-schema-validity].description"
-            ],
-            "core/audits/agentic/llms-txt.js | title": [
-              "audits[llms-txt].title"
-            ],
-            "core/audits/agentic/llms-txt.js | description": [
-              "audits[llms-txt].description"
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
