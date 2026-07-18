@@ -25,7 +25,7 @@ import {pageFunctions} from '../../lib/page-functions.js';
 class WebMCP extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['navigation', 'snapshot'],
+    supportedModes: ['navigation'],
   };
 
   constructor() {
@@ -135,8 +135,8 @@ class WebMCP extends BaseGatherer {
    */
   async getArtifact(context) {
     const isSupported = await context.driver.executionContext.evaluate(
-      // @ts-expect-error - modelContext is not in types
-      () => typeof navigator.modelContext !== 'undefined',
+      () => typeof (/** @type {any} */ (navigator)).modelContext !== 'undefined' ||
+        typeof (/** @type {any} */ (document)).modelContext !== 'undefined',
       {args: [], useIsolation: true}
     );
     if (!isSupported || !this._isSupported) {
