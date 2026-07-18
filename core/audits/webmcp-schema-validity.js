@@ -48,7 +48,7 @@ class WebMcpSchemaValidity extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: ['WebMCP', 'WebMcpSchemaIssues'],
-      supportedModes: ['navigation', 'snapshot'],
+      supportedModes: ['navigation'],
     };
   }
 

@@ -35,7 +35,7 @@ class WebMcpFormCoverage extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       requiredArtifacts: ['Inputs', 'WebMCP'],
-      supportedModes: ['navigation', 'snapshot'],
+      supportedModes: ['navigation'],
     };
   }
 

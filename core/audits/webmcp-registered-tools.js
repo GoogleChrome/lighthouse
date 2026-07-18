@@ -45,7 +45,7 @@ class WebMCPRegisteredTools extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       requiredArtifacts: ['WebMCP'],
-      supportedModes: ['navigation', 'snapshot'],
+      supportedModes: ['navigation'],
     };
   }
 

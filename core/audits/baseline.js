@@ -217,14 +217,20 @@ class Baseline extends Audit {
 
     const hasLimited = baselineStatus.some(item => item.displayStatus.status === 'limited');
 
-    let displayValue;
+    /** @type {LH.Audit.Details.DebugData | undefined} */
+    let debugData;
     if (!hasLimited && sortedStatuses.length > 0) {
       const newestFeature = sortedStatuses[0];
       const featureName = newestFeature.featureId.text;
       const lowDate = newestFeature.lowDate;
       if (lowDate) {
         const year = lowDate.substring(0, 4);
-        displayValue = `Baseline ${year} based on ${featureName} (${lowDate})`;
+        debugData = {
+          type: 'debugdata',
+          newestFeatureId: featureName,
+          newestFeatureYear: year,
+          newestFeatureLowDate: lowDate,
+        };
       }
     }
 
@@ -235,10 +241,12 @@ class Baseline extends Audit {
     });
 
     const details = Audit.makeTableDetails(webFeatureHeadings, tableItems);
+    if (debugData) {
+      details.debugData = debugData;
+    }
 
     return {
       score: 1,
-      displayValue,
       details,
     };
   }
