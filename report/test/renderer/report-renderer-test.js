@@ -239,6 +239,32 @@ describe('ReportRenderer', () => {
       expect(itemsTxt).toContain('Initial page load');
     });
 
+    it('renders plugins in the footer tooltip', () => {
+      const pluginResults = {
+        ...sampleResults,
+        categories: {
+          ...sampleResults.categories,
+          'lighthouse-plugin-someplugin': {
+            id: 'lighthouse-plugin-someplugin',
+            title: 'Some Plugin',
+            score: 1,
+            auditRefs: [],
+          },
+        },
+      };
+      const footer = renderer._renderReportFooter(pluginResults);
+      const tooltipsTxt = Array.from(footer.querySelectorAll('.lh-tooltip'))
+        .map(el => el.textContent).join('\n');
+      expect(tooltipsTxt).toContain('Plugins: lighthouse-plugin-someplugin');
+    });
+
+    it('does not render a plugins line in the footer tooltip without plugins', () => {
+      const footer = renderer._renderReportFooter(sampleResults);
+      const tooltipsTxt = Array.from(footer.querySelectorAll('.lh-tooltip'))
+        .map(el => el.textContent).join('\n');
+      expect(tooltipsTxt).not.toContain('Plugins:');
+    });
+
     it('renders a timespan footer', () => {
       sampleResults.gatherMode = 'timespan';
       const footer = renderer._renderReportFooter(sampleResults);
