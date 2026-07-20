@@ -1,3 +1,55 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="13.4.1"></a>
+# 13.4.1 (2026-07-20)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.0...v13.4.1)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* add documentation links to agentic audits ([#17108](https://github.com/GoogleChrome/lighthouse/pull/17108))
+* show details when fetch fails for robots.txt, llms.txt ([#17083](https://github.com/GoogleChrome/lighthouse/pull/17083))
+* baseline: store newest feature year in debugData, remove displayValue ([#17132](https://github.com/GoogleChrome/lighthouse/pull/17132))
+* baseline: report newest feature summary in displayValue ([#17112](https://github.com/GoogleChrome/lighthouse/pull/17112))
+* baseline: calculate Baseline High date dynamically from Low date ([#17107](https://github.com/GoogleChrome/lighthouse/pull/17107))
+* webmcp: remove snapshot mode from webmcp audits ([#17128](https://github.com/GoogleChrome/lighthouse/pull/17128))
+* webmcp: use document.modelContext check in webmcp gatherers ([#17129](https://github.com/GoogleChrome/lighthouse/pull/17129))
+
+## Deps
+
+* upgrade deps ([#17135](https://github.com/GoogleChrome/lighthouse/pull/17135))
+* upgrade deps ([#17093](https://github.com/GoogleChrome/lighthouse/pull/17093))
+* upgrade `@sentry/node` to v10 ([#17079](https://github.com/GoogleChrome/lighthouse/pull/17079))
+
+## Clients
+
+* extension: bump version ([#17094](https://github.com/GoogleChrome/lighthouse/pull/17094))
+* viewer: enable Agentic Browsing category via psi api ([#17090](https://github.com/GoogleChrome/lighthouse/pull/17090))
+
+## Tests
+
+* fix failing test in api-test-pptr.js ([#17096](https://github.com/GoogleChrome/lighthouse/pull/17096))
+* add bundle size check ([#17088](https://github.com/GoogleChrome/lighthouse/pull/17088))
+* devtools: sync e2e tests from devtools-frontend ([#17121](https://github.com/GoogleChrome/lighthouse/pull/17121))
+
+## Misc
+
+* mention "yarn update:sample-json" in verification skill ([#17109](https://github.com/GoogleChrome/lighthouse/pull/17109))
+* fix OIDC Trusted Publishing authentication ([#17100](https://github.com/GoogleChrome/lighthouse/pull/17100))
+* improve names for publish jobs ([#17099](https://github.com/GoogleChrome/lighthouse/pull/17099))
+* merge nightly publish workflow into publish.yml ([#17098](https://github.com/GoogleChrome/lighthouse/pull/17098))
+* remove "npm whoami" from nightly publish job ([#17097](https://github.com/GoogleChrome/lighthouse/pull/17097))
+* set up npm trusted publishing ([#16944](https://github.com/GoogleChrome/lighthouse/pull/16944))
+* add simple verification skill ([#17091](https://github.com/GoogleChrome/lighthouse/pull/17091))
+* build: minify Lightrider bundle ([#17117](https://github.com/GoogleChrome/lighthouse/pull/17117))
+* release: add manual google3 step to dep upgrade process ([#17137](https://github.com/GoogleChrome/lighthouse/pull/17137))
+
 <a name="13.4.0"></a>
 # 13.4.0 (2026-06-09)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.3.0...v13.4.0)
