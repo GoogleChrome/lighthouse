@@ -1,3 +1,36 @@
+ <a name="13.4.1"></a>
+# 13.4.1 (2026-07-20)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.0...v13.4.1)
+
+We expect this release to ship in the DevTools of [Chrome 152](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* **baseline**: Dynamic Baseline High calculation and feature summary improvements ([#17107](https://github.com/GoogleChrome/lighthouse/pull/17107), [#17112](https://github.com/GoogleChrome/lighthouse/pull/17112), [#17132](https://github.com/GoogleChrome/lighthouse/pull/17132))
+* **webmcp**: Refined WebMCP gatherers to check `document.modelContext` and removed snapshot mode ([#17128](https://github.com/GoogleChrome/lighthouse/pull/17128), [#17129](https://github.com/GoogleChrome/lighthouse/pull/17129))
+* **docs**: Added documentation links for agentic audits ([#17108](https://github.com/GoogleChrome/lighthouse/pull/17108))
+* **network**: Detailed error messages when fetching `robots.txt` or `llms.txt` fails ([#17083](https://github.com/GoogleChrome/lighthouse/pull/17083))
+
+## Clients
+
+* **viewer**: Enabled Agentic Browsing category via PSI API ([#17090](https://github.com/GoogleChrome/lighthouse/pull/17090))
+* **extension**: Version bump ([#17094](https://github.com/GoogleChrome/lighthouse/pull/17094))
+
+## Deps
+
+* Upgraded dependencies, including `@sentry/node` to v10 ([#17079](https://github.com/GoogleChrome/lighthouse/pull/17079), [#17093](https://github.com/GoogleChrome/lighthouse/pull/17093), [#17135](https://github.com/GoogleChrome/lighthouse/pull/17135))
+
+## Tests & Build
+
+* **build**: Minified Lightrider bundle ([#17117](https://github.com/GoogleChrome/lighthouse/pull/17117))
+* **tests**: Added bundle size check and updated Puppeteer API tests ([#17088](https://github.com/GoogleChrome/lighthouse/pull/17088), [#17096](https://github.com/GoogleChrome/lighthouse/pull/17096))
+* **devtools**: Synced e2e tests from `devtools-frontend` ([#17121](https://github.com/GoogleChrome/lighthouse/pull/17121))
+
+## Infrastructure & Workflow
+
+* **ci**: Configured npm Trusted Publishing via OIDC and consolidated release workflows ([#16944](https://github.com/GoogleChrome/lighthouse/pull/16944), [#17097](https://github.com/GoogleChrome/lighthouse/pull/17097), [#17098](https://github.com/GoogleChrome/lighthouse/pull/17098), [#17099](https://github.com/GoogleChrome/lighthouse/pull/17099), [#17100](https://github.com/GoogleChrome/lighthouse/pull/17100))
+* **docs**: Added verification skill and documentation updates ([#17091](https://github.com/GoogleChrome/lighthouse/pull/17091), [#17109](https://github.com/GoogleChrome/lighthouse/pull/17109), [#17137](https://github.com/GoogleChrome/lighthouse/pull/17137))
+
 <a name="13.4.0"></a>
 # 13.4.0 (2026-06-09)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.3.0...v13.4.0)
