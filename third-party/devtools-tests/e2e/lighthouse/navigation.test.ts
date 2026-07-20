@@ -236,7 +236,7 @@ describe('Navigation', function() {
 
       const {lhr} = await waitForResult(devToolsPage, inspectedPage);
 
-      assert.strictEqual(lhr.lighthouseVersion, '13.4.0');
+      assert.strictEqual(lhr.lighthouseVersion, '13.4.1');
     } catch (e) {
       console.error(consoleLog.join('\n'));
       throw e;
@@ -274,7 +274,7 @@ describe('Navigation', function() {
          const {erroredAudits} = getAuditsBreakdown(lhr);
          assert.deepEqual(erroredAudits, []);
 
-         assert.strictEqual(lhr.lighthouseVersion, '13.4.0');
+         assert.strictEqual(lhr.lighthouseVersion, '13.4.1');
        } catch (e) {
          console.error(consoleLog.join('\n'));
          throw e;
