@@ -66,6 +66,16 @@ class UserFlow {
     this._gatherSteps = [];
     /** @type {GatherStepRunnerOptions} */
     this._gatherStepRunnerOptions = new WeakMap();
+    /** @type {AbortController} */
+    this._controller = new AbortController();
+
+    page.on('close', () => {
+      this.dispose();
+    });
+  }
+
+  dispose() {
+    this._controller.abort();
   }
 
   /**
@@ -131,6 +141,7 @@ class UserFlow {
     const gatherResult = await navigationGather(this._page, requestor, {
       config: this._options?.config,
       flags: nextFlags,
+      signal: this._controller.signal,
     });
 
     this._addGatherStep(gatherResult, nextFlags);
@@ -162,6 +173,7 @@ class UserFlow {
       () => new Promise(continueNavigation => completeSetup(continueNavigation)),
       stepOptions
     ).catch(err => {
+      if (this._controller.signal.aborted) return;
       if (this.currentNavigation) {
         // If the navigation already started, re-throw the error so it is emitted when `navigationResultPromise` is awaited.
         throw err;
