@@ -281,7 +281,6 @@ const defaultConfig = {
     'byte-efficiency/unused-css-rules',
     'byte-efficiency/unused-javascript',
     'dobetterweb/doctype',
-    'dobetterweb/charset',
     'dobetterweb/geolocation-on-start',
     'dobetterweb/inspector-issues',
     'dobetterweb/js-libraries',
@@ -304,6 +303,7 @@ const defaultConfig = {
     'agentic/llms-txt',
     'bf-cache',
     'insights/cache-insight',
+    'insights/character-set-insight',
     'insights/cls-culprits-insight',
     'insights/document-latency-insight',
     'insights/dom-size-insight',
@@ -414,6 +414,7 @@ const defaultConfig = {
 
         // Insight audits.
         {id: 'cache-insight', weight: 0, group: 'insights'},
+        {id: 'character-set-insight', weight: 0, group: 'insights'},
         {id: 'cls-culprits-insight', weight: 0, group: 'insights'},
         {id: 'document-latency-insight', weight: 0, group: 'insights'},
         {id: 'dom-size-insight', weight: 0, group: 'insights'},
@@ -596,7 +597,6 @@ const defaultConfig = {
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
-        {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'baseline', weight: 0, group: 'best-practices-browser-compat'},
         // General Group
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
