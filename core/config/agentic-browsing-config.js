@@ -18,9 +18,9 @@ const UIStrings = {
   webmcpGroupTitle: 'WebMCP',
   /** Description of the WebMCP group. */
   webmcpGroupDescription: 'Audits validating WebMCP integration.',
-  /** Title of the Agent Accessibility group of audits. */
+  /** Title of the Agent Accessibility group of audits. These audits check how well an AI agent can perceive and operate the site, using the same semantics that assistive technology relies on. Here "Accessibility" refers to that usability, not to the site being available. Use your locale's established accessibility terminology. */
   agentAccessibilityGroupTitle: 'Agent Accessibility',
-  /** Description of the Agent Accessibility group of audits. */
+  /** Description of the Agent Accessibility group of audits. Here "Accessibility" refers to how well an AI agent can perceive and operate the site, not to the site being available. Use your locale's established accessibility terminology. */
   agentAccessibilityGroupDescription: 'These audits highlight best practices for improving the ' +
   'accessibility of the website for AI agents.',
 };

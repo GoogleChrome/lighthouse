@@ -8,11 +8,11 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title shown when all agent accessibility checks pass. */
+  /** Title shown when all agent accessibility checks pass. "accessibility tree" is the standard term for the structure a browser exposes to assistive technology and to AI agents. Here "accessibility" does not mean "availability". Use your locale's established accessibility terminology. */
   title: 'Accessibility tree is well-formed',
-  /** Title shown when one or more agent accessibility checks fail. */
+  /** Title shown when one or more agent accessibility checks fail. "accessibility tree" is the standard term for the structure a browser exposes to assistive technology and to AI agents. Here "accessibility" does not mean "availability". Use your locale's established accessibility terminology. */
   failureTitle: 'Accessibility tree is not well-formed',
-  /** Description of a Lighthouse audit that tells the user *why* they need a well-formed accessibility tree. */
+  /** Description of a Lighthouse audit that tells the user *why* they need a well-formed accessibility tree. "accessibility tree" is the standard term for the structure a browser exposes to assistive technology and to AI agents. Here "accessibility" does not mean "availability". Use your locale's established accessibility terminology. */
   description: 'A well-formed ' +
   '[accessibility tree](https://developer.chrome.com/docs/lighthouse/agentic-browsing/accessibility-for-agents) ' +
   'helps AI agents to navigate and interact with the page.',

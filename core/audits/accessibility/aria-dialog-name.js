@@ -13,12 +13,12 @@ import AxeAudit from './axe-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title of an accessibility audit that evaluates if ARIA dialog elements have an accessible name. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accessibility audit that evaluates if ARIA dialog elements have an accessible name. This title is descriptive of the successful state and is shown to users when no user action is required. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   title: 'Elements with `role="dialog"` or `role="alertdialog"` have accessible names.',
-  /** Title of an accessibility audit that evaluates if ARIA dialog elements do not have accessible names. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  /** Title of an accessibility audit that evaluates if ARIA dialog elements do not have accessible names. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   failureTitle: 'Elements with `role="dialog"` or `role="alertdialog"` do not have accessible ' +
       'names.',
-  /** Description of a Lighthouse audit that tells the user *why* they should have accessible names for ARIA dialog elements. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should have accessible names for ARIA dialog elements. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   description: 'ARIA dialog elements without accessible names may prevent screen readers users ' +
       'from discerning the purpose of these elements. ' +
       '[Learn how to make ARIA dialog elements more accessible](https://dequeuniversity.com/rules/axe/4.12/aria-dialog-name).',

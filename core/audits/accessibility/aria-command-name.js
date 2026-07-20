@@ -13,11 +13,11 @@ import AxeAudit from './axe-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title of an accessibility audit that evaluates if important HTML elements have an accessible name. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accessibility audit that evaluates if important HTML elements have an accessible name. This title is descriptive of the successful state and is shown to users when no user action is required. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   title: '`button`, `link`, and `menuitem` elements have accessible names',
-  /** Title of an accessibility audit that evaluates if important HTML elements do not have accessible names. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  /** Title of an accessibility audit that evaluates if important HTML elements do not have accessible names. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   failureTitle: '`button`, `link`, and `menuitem` elements do not have accessible names.',
-  /** Description of a Lighthouse audit that tells the user *why* they should have accessible names for HTML elements. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should have accessible names for HTML elements. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "accessible name" is the standard WAI-ARIA term for the name an element exposes to assistive technology. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   description: 'When an element doesn\'t have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to make command elements more accessible](https://dequeuniversity.com/rules/axe/4.12/aria-command-name).',
 };
 
