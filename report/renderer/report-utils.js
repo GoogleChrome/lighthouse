@@ -443,6 +443,8 @@ const UIStrings = {
   runtimeSettingsAxeVersion: 'Axe version',
   /** Label for a row in a table that shows the screen resolution and DPR that was emulated for the Lighthouse run. Example values: '800x600, DPR: 3' */
   runtimeSettingsScreenEmulation: 'Screen emulation',
+  /** Label preceding a list of the Lighthouse plugins that were used for this run and added extra categories to the report. Example plugin names: 'lighthouse-plugin-publisher-ads', 'lighthouse-plugin-field-performance' */
+  runtimeSettingsPlugins: 'Plugins',
 
   /** Label for button to create an issue against the Lighthouse GitHub project. */
   footerIssue: 'File an issue',
