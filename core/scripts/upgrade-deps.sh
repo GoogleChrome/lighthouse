@@ -55,10 +55,34 @@ yarn update:sample-json
 yarn type-check
 yarn lint --fix
 
-# Just print something nice to copy/paste as a PR description.
-
 set +x
 
+echo "----------"
+echo """
+1. Test in google3
+
+Test this in Lightrider: roll to canary and run all the tests in the Lightrider folder. Dependency
+updates, especially for Puppeteer, have potential to break us there.
+
+Roll:
+
+blaze run //chrome/headless/lightrider/util/import_tool:import -- --feed=canary --apply=local
+
+Test:
+
+blaze test --test_output=errors --force_citc_update -- //chrome/headless/lightrider/...
+
+Note: Don't actually make a CL / land this - we only update from main branch. Just roll and run the tests for validation.
+"""
+
+echo
+echo """
+2. Open PR on GitHub
+
+Once validated in google3, open a PR to Lighthouse with the following PR description:
+"""
+echo "- [ ] Validated against Lightrider"
+echo
 echo '```diff'
 git diff -U0 package.json | grep -E '^[-] ' | sort
 echo

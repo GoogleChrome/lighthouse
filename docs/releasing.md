@@ -42,6 +42,8 @@ In general, Lighthouse should be using the latest version of its critical depend
 bash core/scripts/upgrade-deps.sh
 ```
 
+Follow the instructions printed to stdout re: testing in LR.
+
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
