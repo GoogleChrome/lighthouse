@@ -95,7 +95,7 @@ describe('The Lighthouse start view', () => {
 
     warningElem = await devToolsPage.waitFor('.lighthouse-warning-text:not(.hidden)');
     const expected =
-        'There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to prevent those resources from affecting your scores.';
+        'There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to stop those resources from affecting your scores.';
     const warningText2 = await warningElem.evaluate(node => node.textContent?.trim());
     assert.strictEqual(warningText2, expected);
   });
