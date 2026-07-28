@@ -287,6 +287,11 @@ describe('Navigation', function() {
 describe('with changed settings', function() {
   setup({devToolsSettings: {language: 'es'}});
 
+  // The tests in this suite are particularly slow
+  if (this.timeout() !== 0) {
+    this.timeout(60_000);
+  }
+
   const consoleLog: string[] = [];
   const consoleListener = (e: puppeteer.ConsoleMessage) => {
     consoleLog.push(e.text());

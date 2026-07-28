@@ -129,8 +129,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       'export const reportAssets = {}';
   }
 
-  // Don't include locales in DevTools.
-  if (isDevtools(entryPath)) {
+  // Don't include locales in DevTools or Lightrider.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
     shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
   }
 
