@@ -17,6 +17,7 @@ import * as assetSaver from '../../core/lib/asset-saver.js';
 import mobileConfig from '../../core/config/lr-mobile-config.js';
 import desktopConfig from '../../core/config/lr-desktop-config.js';
 import {pageFunctions} from '../../core/lib/page-functions.js';
+import {registerLocaleData} from '../../shared/localization/format.js';
 
 /** @type {Record<'mobile'|'desktop', LH.Config>} */
 const LR_PRESETS = {
@@ -71,14 +72,27 @@ async function getPageFromConnection(connection) {
  * Run lighthouse for connection and provide similar results as in CLI.
  *
  * If configOverride is provided, lrDevice and categoryIDs are ignored.
+ *
  * @param {any} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config, ignoreStatusCode?: boolean}} lrOpts Options coming from Lightrider
+ * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config, ignoreStatusCode?: boolean, locale?: string, localeData?: any}} lrOpts Options coming from Lightrider
  * @return {Promise<string>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
-  const {lrDevice, categoryIDs, logAssets, configOverride, ignoreStatusCode} = lrOpts;
+  const {lrDevice,
+    categoryIDs,
+    logAssets,
+    configOverride,
+    ignoreStatusCode,
+    locale,
+    localeData,
+  } = lrOpts;
+
+  if (locale && localeData) {
+    registerLocaleData(/** @type {LH.Locale} */(locale), localeData);
+    flags.locale = /** @type {LH.Locale} */(locale);
+  }
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightrider = true;
