@@ -61,7 +61,7 @@ describe('Navigation', function() {
     devToolsPage.page.on('console', consoleListener);
     try {
       expectErrors();
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
       await registerServiceWorker(inspectedPage);
 
       await devToolsPage.waitFor('.lighthouse-start-view');
@@ -136,7 +136,7 @@ describe('Navigation', function() {
       });
       assert.strictEqual(selectedTabText, 'Performance');
 
-      await navigateToLighthouseTab(undefined, devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, undefined);
 
       // Test .lh-node is linkified to Elements panel.
       const lcpBreakdownAudit = await devToolsPage.waitForElementWithTextContent('LCP breakdown', reportEl);
@@ -166,7 +166,7 @@ describe('Navigation', function() {
           'a[data-action="save-html"]:not(.hidden)', saveHtmlEl => (saveHtmlEl as HTMLElement).click());
 
       const htmlContent = await waitForHtml();
-      const iframeHandle = await renderHtmlInIframe(htmlContent, inspectedPage);
+      const iframeHandle = await renderHtmlInIframe(inspectedPage, htmlContent);
       const iframeAuditDivs = await iframeHandle.$$('.lh-audit');
       const frontendAuditDivs = await reportEl.$$('.lh-audit');
       assert.strictEqual(frontendAuditDivs.length, iframeAuditDivs.length);
@@ -186,9 +186,9 @@ describe('Navigation', function() {
     try {
       expectErrors();
 
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
 
-      await setThrottlingMethod('devtools', devToolsPage);
+      await setThrottlingMethod(devToolsPage, 'devtools');
 
       await clickStartButton(devToolsPage);
 
@@ -230,7 +230,7 @@ describe('Navigation', function() {
     try {
       expectErrors();
 
-      await navigateToLighthouseTab('lighthouse/busy-worker.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/busy-worker.html');
 
       await clickStartButton(devToolsPage);
 
@@ -263,9 +263,9 @@ describe('Navigation', function() {
        try {
          expectErrors();
 
-         await navigateToLighthouseTab('lighthouse/protocol-error.html', devToolsPage, inspectedPage);
+         await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/protocol-error.html');
 
-         await selectCategories(['seo'], devToolsPage);
+         await selectCategories(devToolsPage, ['seo']);
 
          await clickStartButton(devToolsPage);
 
@@ -301,12 +301,12 @@ describe('with changed settings', function() {
     devToolsPage.page.on('console', consoleListener);
     try {
       expectErrors();
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
       await registerServiceWorker(inspectedPage);
-      await setToolbarCheckboxWithText(true, 'Habilitar muestreo de JS', devToolsPage);
-      await setToolbarCheckboxWithText(false, 'Borrar almacenamiento', devToolsPage);
-      await selectCategories(['performance', 'best-practices'], devToolsPage);
-      await selectDevice('desktop', devToolsPage);
+      await setToolbarCheckboxWithText(devToolsPage, true, 'Habilitar muestreo de JS');
+      await setToolbarCheckboxWithText(devToolsPage, false, 'Borrar almacenamiento');
+      await selectCategories(devToolsPage, ['performance', 'best-practices']);
+      await selectDevice(devToolsPage, 'desktop');
 
       await clickStartButton(devToolsPage);
 

@@ -19,7 +19,7 @@ describe('The Lighthouse start view', () => {
   setup({dockingMode: 'undocked'});
 
   it('shows a button to generate a new report', async ({devToolsPage, inspectedPage}) => {
-    await navigateToLighthouseTab('empty.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'empty.html');
 
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
     const helpText = await getHelpText(devToolsPage);
@@ -28,9 +28,9 @@ describe('The Lighthouse start view', () => {
   });
 
   it('disables the start button when no categories are selected', async ({devToolsPage, inspectedPage}) => {
-    await navigateToLighthouseTab('empty.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'empty.html');
 
-    await selectCategories([], devToolsPage);
+    await selectCategories(devToolsPage, []);
 
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
     const helpText = await getHelpText(devToolsPage);
@@ -39,9 +39,9 @@ describe('The Lighthouse start view', () => {
   });
 
   it('enables the start button if only one category is selected', async ({devToolsPage, inspectedPage}) => {
-    await navigateToLighthouseTab('empty.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'empty.html');
 
-    await selectCategories(['performance'], devToolsPage);
+    await selectCategories(devToolsPage, ['performance']);
 
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
     const helpText = await getHelpText(devToolsPage);
@@ -50,7 +50,7 @@ describe('The Lighthouse start view', () => {
   });
 
   it('disables the start button for internal pages in navigation mode', async ({devToolsPage, inspectedPage}) => {
-    await navigateToLighthouseTab(undefined, devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, undefined);
     await inspectedPage.goTo('about:blank');
 
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
@@ -60,9 +60,9 @@ describe('The Lighthouse start view', () => {
   });
 
   it('disables the start button for internal pages in non-navigation mode', async ({devToolsPage, inspectedPage}) => {
-    await navigateToLighthouseTab(undefined, devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, undefined);
     await inspectedPage.goTo('about:blank');
-    await selectMode('timespan', devToolsPage);
+    await selectMode(devToolsPage, 'timespan');
 
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
     const helpText = await getHelpText(devToolsPage);
@@ -72,7 +72,7 @@ describe('The Lighthouse start view', () => {
 
   it('shows generate report button even when navigating to an unreachable page',
      async ({devToolsPage, inspectedPage}) => {
-       await navigateToLighthouseTab('empty.html', devToolsPage, inspectedPage);
+       await navigateToLighthouseTab(devToolsPage, inspectedPage, 'empty.html');
 
        await inspectedPage.goToResource('network/unreachable.rawresponse');
        const disabled = await isGenerateReportButtonDisabled(devToolsPage);
@@ -83,13 +83,13 @@ describe('The Lighthouse start view', () => {
     // e2e tests in application/ create indexeddb items and don't clean up after themselves
     await clearSiteData(devToolsPage, inspectedPage);
 
-    await navigateToLighthouseTab('empty.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'empty.html');
 
     let warningElem = await devToolsPage.waitFor('.lighthouse-warning-text.hidden');
     const warningText1 = await warningElem.evaluate(node => node.textContent?.trim());
     assert.strictEqual(warningText1, '');
 
-    await navigateToLighthouseTab('lighthouse/lighthouse-storage.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/lighthouse-storage.html');
     // Wait for storage state to lazily update
     await waitForStorageUsage(quota => quota > 0, devToolsPage);
 
