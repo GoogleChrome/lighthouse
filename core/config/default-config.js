@@ -143,6 +143,7 @@ const defaultConfig = {
     {id: 'LinkElements', gatherer: 'link-elements'},
     {id: 'MainDocumentContent', gatherer: 'main-document-content'},
     {id: 'MetaElements', gatherer: 'meta-elements'},
+    { id: 'ReactDevModeGatherer', gatherer: 'react-dev-mode' },
     {id: 'NetworkUserAgent', gatherer: 'network-user-agent'},
     {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
     {id: 'Scripts', gatherer: 'scripts'},
@@ -320,6 +321,7 @@ const defaultConfig = {
     'insights/render-blocking-insight',
     'insights/third-parties-insight',
     'insights/viewport-insight',
+    'react-dev-mode',
   ],
   groups: {
     'metrics': {
@@ -599,6 +601,7 @@ const defaultConfig = {
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'baseline', weight: 0, group: 'best-practices-browser-compat'},
         // General Group
+        {id: 'react-dev-mode', weight: 1, group: 'best-practices-general'},
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 5, group: 'best-practices-general'},
         {id: 'third-party-cookies', weight: 5, group: 'best-practices-general'},
