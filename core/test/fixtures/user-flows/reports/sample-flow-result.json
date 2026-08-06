@@ -3356,6 +3356,15 @@
             "errorMessage": "Required LlmsTxt gatherer did not run.",
             "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
           },
+          "ard-schema": {
+            "id": "ard-schema",
+            "title": "`ai-catalog.json` schema is valid",
+            "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required AgentResourceDiscovery gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
           "bf-cache": {
             "id": "bf-cache",
             "title": "Page didn't prevent back/forward cache restoration",
@@ -4442,6 +4451,11 @@
                 "id": "llms-txt",
                 "weight": 1,
                 "group": "agent-accessibility"
+              },
+              {
+                "id": "ard-schema",
+                "weight": 1,
+                "group": "agent-resource-discovery"
               }
             ],
             "id": "agentic-browsing",
@@ -4523,6 +4537,10 @@
           "agent-accessibility": {
             "title": "Agent Accessibility",
             "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
+          },
+          "agent-resource-discovery": {
+            "title": "Agentic Resource Discovery",
+            "description": "These audits validate that agentic resources are discoverable, reachable, and conform to the ARD specification."
           },
           "hidden": {
             "title": ""
@@ -6423,114 +6441,120 @@
             },
             {
               "startTime": 224,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:ard-schema",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 232,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 233,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 234,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:inp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 235,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:lcp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 236,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 237,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:legacy-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 238,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 239,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 240,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 241,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 242,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 242
+          "total": 243
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -6767,6 +6791,13 @@
                   "artifactName": "LlmsTxt"
                 },
                 "path": "audits[llms-txt].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "AgentResourceDiscovery"
+                },
+                "path": "audits[ard-schema].errorMessage"
               },
               {
                 "values": {
@@ -7846,6 +7877,12 @@
             "core/audits/agentic/llms-txt.js | description": [
               "audits[llms-txt].description"
             ],
+            "core/audits/agentic/ard-schema.js | title": [
+              "audits[ard-schema].title"
+            ],
+            "core/audits/agentic/ard-schema.js | description": [
+              "audits[ard-schema].description"
+            ],
             "core/audits/bf-cache.js | title": [
               "audits[bf-cache].title"
             ],
@@ -8082,6 +8119,12 @@
             ],
             "core/config/default-config.js | agentAccessibilityGroupDescription": [
               "categoryGroups[agent-accessibility].description"
+            ],
+            "core/config/default-config.js | ardGroupTitle": [
+              "categoryGroups[agent-resource-discovery].title"
+            ],
+            "core/config/default-config.js | ardGroupDescription": [
+              "categoryGroups[agent-resource-discovery].description"
             ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"
@@ -10079,6 +10122,10 @@
             "title": "Agent Accessibility",
             "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
           },
+          "agent-resource-discovery": {
+            "title": "Agentic Resource Discovery",
+            "description": "These audits validate that agentic resources are discoverable, reachable, and conform to the ARD specification."
+          },
           "hidden": {
             "title": ""
           }
@@ -11617,6 +11664,12 @@
             ],
             "core/config/default-config.js | agentAccessibilityGroupDescription": [
               "categoryGroups[agent-accessibility].description"
+            ],
+            "core/config/default-config.js | ardGroupTitle": [
+              "categoryGroups[agent-resource-discovery].title"
+            ],
+            "core/config/default-config.js | ardGroupDescription": [
+              "categoryGroups[agent-resource-discovery].description"
             ]
           }
         }
@@ -14600,6 +14653,15 @@
             "scoreDisplayMode": "error",
             "errorMessage": "Required LlmsTxt gatherer did not run.",
             "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
+          "ard-schema": {
+            "id": "ard-schema",
+            "title": "`ai-catalog.json` schema is valid",
+            "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required AgentResourceDiscovery gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
           }
         },
         "configSettings": {
@@ -15158,6 +15220,11 @@
                 "id": "llms-txt",
                 "weight": 1,
                 "group": "agent-accessibility"
+              },
+              {
+                "id": "ard-schema",
+                "weight": 1,
+                "group": "agent-resource-discovery"
               }
             ],
             "id": "agentic-browsing",
@@ -15239,6 +15306,10 @@
           "agent-accessibility": {
             "title": "Agent Accessibility",
             "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
+          },
+          "agent-resource-discovery": {
+            "title": "Agentic Resource Discovery",
+            "description": "These audits validate that agentic resources are discoverable, reachable, and conform to the ARD specification."
           },
           "hidden": {
             "title": ""
@@ -16684,12 +16755,18 @@
             },
             {
               "startTime": 112,
+              "name": "lh:audit:ard-schema",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 113,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 113
+          "total": 114
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -17298,7 +17375,20 @@
                   "artifactName": "LlmsTxt"
                 },
                 "path": "audits[llms-txt].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "AgentResourceDiscovery"
+                },
+                "path": "audits[ard-schema].errorMessage"
               }
+            ],
+            "core/audits/agentic/ard-schema.js | title": [
+              "audits[ard-schema].title"
+            ],
+            "core/audits/agentic/ard-schema.js | description": [
+              "audits[ard-schema].description"
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
@@ -17434,6 +17524,12 @@
             ],
             "core/config/default-config.js | agentAccessibilityGroupDescription": [
               "categoryGroups[agent-accessibility].description"
+            ],
+            "core/config/default-config.js | ardGroupTitle": [
+              "categoryGroups[agent-resource-discovery].title"
+            ],
+            "core/config/default-config.js | ardGroupDescription": [
+              "categoryGroups[agent-resource-discovery].description"
             ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"
@@ -20966,6 +21062,15 @@
             "errorMessage": "Required LlmsTxt gatherer did not run.",
             "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
           },
+          "ard-schema": {
+            "id": "ard-schema",
+            "title": "`ai-catalog.json` schema is valid",
+            "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required AgentResourceDiscovery gatherer did not run.",
+            "errorStack": "LighthouseError: MISSING_REQUIRED_ARTIFACT\n    at Runner._runAudit (file:///core/runner.js)\n    at Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js"
+          },
           "bf-cache": {
             "id": "bf-cache",
             "title": "Page didn't prevent back/forward cache restoration",
@@ -22052,6 +22157,11 @@
                 "id": "llms-txt",
                 "weight": 1,
                 "group": "agent-accessibility"
+              },
+              {
+                "id": "ard-schema",
+                "weight": 1,
+                "group": "agent-resource-discovery"
               }
             ],
             "id": "agentic-browsing",
@@ -22133,6 +22243,10 @@
           "agent-accessibility": {
             "title": "Agent Accessibility",
             "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
+          },
+          "agent-resource-discovery": {
+            "title": "Agentic Resource Discovery",
+            "description": "These audits validate that agentic resources are discoverable, reachable, and conform to the ARD specification."
           },
           "hidden": {
             "title": ""
@@ -24090,114 +24204,120 @@
             },
             {
               "startTime": 223,
-              "name": "lh:audit:bf-cache",
+              "name": "lh:audit:ard-schema",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 224,
-              "name": "lh:audit:cache-insight",
+              "name": "lh:audit:bf-cache",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 225,
-              "name": "lh:audit:cls-culprits-insight",
+              "name": "lh:audit:cache-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 226,
-              "name": "lh:audit:document-latency-insight",
+              "name": "lh:audit:cls-culprits-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 227,
-              "name": "lh:audit:dom-size-insight",
+              "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 228,
-              "name": "lh:audit:duplicated-javascript-insight",
+              "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 229,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicated-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 230,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 231,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 232,
-              "name": "lh:audit:inp-breakdown-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 233,
-              "name": "lh:audit:lcp-breakdown-insight",
+              "name": "lh:audit:inp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 234,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:lcp-breakdown-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 235,
-              "name": "lh:audit:legacy-javascript-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 236,
-              "name": "lh:audit:network-dependency-tree-insight",
+              "name": "lh:audit:legacy-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 237,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 238,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 239,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 240,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 241,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 241
+          "total": 242
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -24434,6 +24554,13 @@
                   "artifactName": "LlmsTxt"
                 },
                 "path": "audits[llms-txt].errorMessage"
+              },
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "AgentResourceDiscovery"
+                },
+                "path": "audits[ard-schema].errorMessage"
               },
               {
                 "values": {
@@ -25513,6 +25640,12 @@
             "core/audits/agentic/llms-txt.js | description": [
               "audits[llms-txt].description"
             ],
+            "core/audits/agentic/ard-schema.js | title": [
+              "audits[ard-schema].title"
+            ],
+            "core/audits/agentic/ard-schema.js | description": [
+              "audits[ard-schema].description"
+            ],
             "core/audits/bf-cache.js | title": [
               "audits[bf-cache].title"
             ],
@@ -25749,6 +25882,12 @@
             ],
             "core/config/default-config.js | agentAccessibilityGroupDescription": [
               "categoryGroups[agent-accessibility].description"
+            ],
+            "core/config/default-config.js | ardGroupTitle": [
+              "categoryGroups[agent-resource-discovery].title"
+            ],
+            "core/config/default-config.js | ardGroupDescription": [
+              "categoryGroups[agent-resource-discovery].description"
             ],
             "node_modules/lighthouse-stack-packs/packs/next.js.js | unused-css-rules": [
               "stackPacks[0].descriptions[unused-css-rules]"
