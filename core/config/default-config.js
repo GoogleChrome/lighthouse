@@ -115,6 +115,11 @@ const UIStrings = {
   /** Description of the Agent Accessibility group of audits. */
   agentAccessibilityGroupDescription: 'These audits highlight best practices for improving the ' +
   'accessibility of the website for AI agents.',
+  /** Title of the Agentic Resource Discovery (ARD, https://agenticresourcediscovery.org/spec/) group of audits. */
+  ardGroupTitle: 'Agentic Resource Discovery',
+  /** Description of the Agentic Resource Discovery (ARD, https://agenticresourcediscovery.org/spec/) group of audits. */
+  ardGroupDescription: 'These audits validate that agentic resources are ' +
+    'discoverable, reachable, and conform to the ARD specification.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -145,6 +150,7 @@ const defaultConfig = {
     {id: 'MetaElements', gatherer: 'meta-elements'},
     {id: 'NetworkUserAgent', gatherer: 'network-user-agent'},
     {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
+    {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
     {id: 'Stacks', gatherer: 'stacks'},
@@ -302,6 +308,7 @@ const defaultConfig = {
     'webmcp-form-coverage',
     'webmcp-schema-validity',
     'agentic/llms-txt',
+    'agentic/ard-schema',
     'bf-cache',
     'insights/cache-insight',
     'insights/cls-culprits-insight',
@@ -396,6 +403,10 @@ const defaultConfig = {
     'agent-accessibility': {
       title: str_(UIStrings.agentAccessibilityGroupTitle),
       description: str_(UIStrings.agentAccessibilityGroupDescription),
+    },
+    'agent-resource-discovery': {
+      title: str_(UIStrings.ardGroupTitle),
+      description: str_(UIStrings.ardGroupDescription),
     },
     // Group for audits that should not be displayed.
     'hidden': {title: ''},
@@ -644,6 +655,7 @@ const defaultConfig = {
         {id: 'webmcp-schema-validity', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
         {id: 'llms-txt', weight: 1, group: 'agent-accessibility'},
+        {id: 'ard-schema', weight: 1, group: 'agent-resource-discovery'},
       ],
     },
   },

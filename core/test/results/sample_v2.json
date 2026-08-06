@@ -4865,6 +4865,13 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
+    "ard-schema": {
+      "id": "ard-schema",
+      "title": "`ai-catalog.json` schema is valid",
+      "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "bf-cache": {
       "id": "bf-cache",
       "title": "Page prevented back/forward cache restoration",
@@ -7004,6 +7011,11 @@
           "id": "llms-txt",
           "weight": 0,
           "group": "agent-accessibility"
+        },
+        {
+          "id": "ard-schema",
+          "weight": 0,
+          "group": "agent-resource-discovery"
         }
       ],
       "id": "agentic-browsing",
@@ -7085,6 +7097,10 @@
     "agent-accessibility": {
       "title": "Agent Accessibility",
       "description": "These audits highlight best practices for improving the accessibility of the website for AI agents."
+    },
+    "agent-resource-discovery": {
+      "title": "Agentic Resource Discovery",
+      "description": "These audits validate that agentic resources are discoverable, reachable, and conform to the ARD specification."
     },
     "hidden": {
       "title": ""
@@ -9987,6 +10003,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:ard-schema",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:bf-cache",
         "duration": 100,
         "entryType": "measure"
@@ -11384,6 +11406,12 @@
       "core/audits/agentic/llms-txt.js | description": [
         "audits[llms-txt].description"
       ],
+      "core/audits/agentic/ard-schema.js | title": [
+        "audits[ard-schema].title"
+      ],
+      "core/audits/agentic/ard-schema.js | description": [
+        "audits[ard-schema].description"
+      ],
       "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
       ],
@@ -11779,6 +11807,12 @@
       ],
       "core/config/default-config.js | agentAccessibilityGroupDescription": [
         "categoryGroups[agent-accessibility].description"
+      ],
+      "core/config/default-config.js | ardGroupTitle": [
+        "categoryGroups[agent-resource-discovery].title"
+      ],
+      "core/config/default-config.js | ardGroupDescription": [
+        "categoryGroups[agent-resource-discovery].description"
       ],
       "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": [
         "stackPacks[0].descriptions[unused-css-rules]"

@@ -23,6 +23,11 @@ const UIStrings = {
   /** Description of the Agent Accessibility group of audits. */
   agentAccessibilityGroupDescription: 'These audits highlight best practices for improving the ' +
   'accessibility of the website for AI agents.',
+  /** Title of the Agentic Resource Discovery (ARD, https://agenticresourcediscovery.org/spec/) group of audits. */
+  ardGroupTitle: 'Agentic Resource Discovery',
+  /** Description of the Agentic Resource Discovery (ARD, https://agenticresourcediscovery.org/spec/) group of audits. */
+  ardGroupDescription: 'These audits validate that agentic resources are ' +
+    'discoverable, reachable, and conform to the ARD specification.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -36,11 +41,13 @@ const config = {
     'webmcp-form-coverage',
     'webmcp-schema-validity',
     'agentic/llms-txt',
+    'agentic/ard-schema',
   ],
   artifacts: [
     {id: 'WebMCP', gatherer: 'webmcp'},
     {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
     {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
+    {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
   ],
   groups: {
     'webmcp': {
@@ -50,6 +57,10 @@ const config = {
     'agent-accessibility': {
       title: str_(UIStrings.agentAccessibilityGroupTitle),
       description: str_(UIStrings.agentAccessibilityGroupDescription),
+    },
+    'agent-resource-discovery': {
+      title: str_(UIStrings.ardGroupTitle),
+      description: str_(UIStrings.ardGroupDescription),
     },
   },
   categories: {
@@ -65,6 +76,7 @@ const config = {
         {id: 'webmcp-schema-validity', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
         {id: 'llms-txt', weight: 1, group: 'agent-accessibility'},
+        {id: 'ard-schema', weight: 1, group: 'agent-resource-discovery'},
       ],
     },
   },
