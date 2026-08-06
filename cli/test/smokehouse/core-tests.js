@@ -5,6 +5,8 @@
  */
 
 import a11y from './test-definitions/a11y.js';
+import ard from './test-definitions/ard.js';
+import ardInvalid from './test-definitions/ard-invalid.js';
 import baseline from './test-definitions/baseline.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
@@ -72,6 +74,8 @@ import webmcp from './test-definitions/webmcp.js';
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
   a11y,
+  ard,
+  ardInvalid,
   baseline,
   byteEfficiency,
   byteGzip,
