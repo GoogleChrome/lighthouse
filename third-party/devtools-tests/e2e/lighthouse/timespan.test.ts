@@ -43,14 +43,14 @@ describe('Timespan', function() {
   it('successfully returns a Lighthouse report for user interactions', async ({devToolsPage, inspectedPage}) => {
     expectErrors();
 
-    await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
     await registerServiceWorker(inspectedPage);
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=1364257
-    await selectDevice('desktop', devToolsPage);
+    await selectDevice(devToolsPage, 'desktop');
 
-    await selectMode('timespan', devToolsPage);
-    await setThrottlingMethod('simulate', devToolsPage);
+    await selectMode(devToolsPage, 'timespan');
+    await setThrottlingMethod(devToolsPage, 'simulate');
 
     let numNavigations = 0;
     inspectedPage.page.on('framenavigated', () => ++numNavigations);
