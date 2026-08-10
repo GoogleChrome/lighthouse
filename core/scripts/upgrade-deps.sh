@@ -50,6 +50,8 @@ node -e "
 
 # Do some stuff that may update checked-in files.
 yarn generate-insight-audits
+yarn update:ard-spec
+yarn build-ard-schema
 yarn build-all
 yarn update:sample-json
 yarn type-check

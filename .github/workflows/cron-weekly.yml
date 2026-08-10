@@ -47,3 +47,20 @@ jobs:
     - run: yarn --frozen-lockfile
 
     - run: yarn mocha --testMatch=third-party/chromium-synchronization/*-test.js
+
+  up-to-date-with-ard-spec:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
+    - name: Use Node.js 22.19
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      with:
+        node-version: '22.19'
+    - run: yarn --frozen-lockfile
+
+    - run: node core/scripts/update-ard-spec.js --check
+
