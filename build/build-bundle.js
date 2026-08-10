@@ -150,6 +150,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     format: 'iife',
     charset: 'utf8',
     bundle: true,
+    metafile: true,
     minify: opts.minify,
     treeShaking: true,
     sourcemap: 'linked',
