@@ -409,17 +409,133 @@ function postprocess(options = {}) {
           // https://stackoverflow.com/a/35923766
           const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
           let hasSeenFirst = false;
-          code = code.replace(re, (match) => {
+          /** @param {string} match */
+          const replaceFn = (match) => {
             if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
               if (hasSeenFirst) return '';
               hasSeenFirst = true;
             }
             return match;
-          });
+          };
+
+          code = code.replace(re, replaceFn);
         }
 
+        let allDepsList = '';
+        let thirdPartyNoticesText = '';
+        const allDeps = new Set();
+
+        if (result.metafile && result.metafile.inputs) {
+          for (const inputPath of Object.keys(result.metafile.inputs)) {
+            let modulePath = inputPath;
+            if (modulePath.startsWith('node_modules/')) {
+              modulePath = modulePath.slice('node_modules/'.length);
+            } else if (modulePath.includes('/node_modules/')) {
+              modulePath = modulePath.split('/node_modules/').pop() || '';
+            } else {
+              continue;
+            }
+
+            const pkgNameMatch = modulePath.match(/^(@[^/]+\/[^/]+|[^/]+)/);
+            if (pkgNameMatch) {
+              allDeps.add(pkgNameMatch[1]);
+            }
+          }
+
+          // Hardcode axe-core as it is loaded via fs.readFileSync and doesn't appear in metafile.inputs
+          if (code.includes('Deque Systems') || code.includes('axe-core')) {
+            allDeps.add('axe-core');
+          }
+
+          if (allDeps.size > 0) {
+            /* eslint-disable max-len */
+            const require = createRequire(import.meta.url);
+            const sortedDeps = Array.from(allDeps).sort();
+            allDepsList = 'Bundled Dependencies:\n\n';
+            thirdPartyNoticesText = '========================================================================\nThird-Party Software Notices and Licenses\n========================================================================\n\nThe Lighthouse bundle incorporates code from the following third-party\ndependencies under their respective open-source licenses:\n';
+
+            for (const dep of sortedDeps) {
+              let licenseStr = 'Unknown';
+              let repoUrl = '';
+              let versionStr = '';
+              let licenseFullText = '';
+              try {
+                let pkgJsonPath;
+                try {
+                  pkgJsonPath = require.resolve(dep + '/package.json');
+                } catch (e) {
+                  pkgJsonPath = path.resolve(process.cwd(), 'node_modules', dep, 'package.json');
+                }
+                const pkgJson = JSON.parse(await fs.promises.readFile(pkgJsonPath, 'utf8'));
+
+                if (pkgJson.version) {
+                  versionStr = pkgJson.version;
+                }
+
+                if (pkgJson.license) {
+                  licenseStr = typeof pkgJson.license === 'string' ? pkgJson.license : pkgJson.license.type;
+                } else if (pkgJson.licenses && Array.isArray(pkgJson.licenses)) {
+                  licenseStr = pkgJson.licenses.map((/** @type {any} */ l) => l.type || l).join(', ');
+                }
+
+                if (pkgJson.repository) {
+                  let url = typeof pkgJson.repository === 'string' ? pkgJson.repository : pkgJson.repository.url;
+                  if (url) {
+                    url = url.replace(/^git\+/, '').replace(/\.git$/, '');
+                    if (url.startsWith('github:')) {
+                      url = `https://github.com/${url.substring(7)}`;
+                    } else if (url.startsWith('gitlab:')) {
+                      url = `https://gitlab.com/${url.substring(7)}`;
+                    } else if (url.startsWith('bitbucket:')) {
+                      url = `https://bitbucket.org/${url.substring(10)}`;
+                    } else if (url.startsWith('ssh://git@github.com/')) {
+                      url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
+                    } else if (url.startsWith('git://github.com/')) {
+                      url = `https://github.com/${url.substring('git://github.com/'.length)}`;
+                    } else if (url.startsWith('git@github.com:')) {
+                      url = `https://github.com/${url.substring('git@github.com:'.length)}`;
+                    } else if (!url.startsWith('http')) {
+                      const parts = url.split('/');
+                      if (parts.length === 2) {
+                        url = `https://github.com/${url}`;
+                      }
+                    }
+                    repoUrl = url;
+                  }
+                }
+
+                const pkgJsonDir = path.dirname(pkgJsonPath);
+                const files = await fs.promises.readdir(pkgJsonDir);
+                const licenseFile = files.find((/** @type {string} */ f) => f.toLowerCase().startsWith('license') || f.toLowerCase() === 'copying');
+                if (licenseFile) {
+                  licenseFullText = await fs.promises.readFile(path.join(pkgJsonDir, licenseFile), 'utf8');
+                } else {
+                  licenseFullText = '(License text not found)';
+                }
+              } catch (e) {
+                licenseFullText = '(License text not found)';
+              }
+
+              allDepsList += `- ${dep}${versionStr ? `@${versionStr}` : ''}: ${licenseStr}${repoUrl ? ` <${repoUrl}>` : ''}\n`;
+              thirdPartyNoticesText += `\n------------------------------------------------------------------------\n${dep}${versionStr ? ` (v${versionStr})` : ''}\nLicense: ${licenseStr}\nURL: ${repoUrl || 'Unknown'}\n------------------------------------------------------------------------\n${licenseFullText}\n`;
+            }
+            /* eslint-enable max-len */
+          }
+        }
+
+        await fs.promises.mkdir(path.dirname(codeFile.path), {recursive: true});
         await fs.promises.writeFile(codeFile.path, code);
         if (mapFile) await fs.promises.writeFile(mapFile.path, mapFile.text);
+        if (allDepsList) await fs.promises.writeFile(codeFile.path + '.LEGAL.txt', allDepsList);
+        if (thirdPartyNoticesText) {
+          let lhLicenseText = '';
+          try {
+            lhLicenseText = await fs.promises.readFile(path.join(LH_ROOT, 'LICENSE'), 'utf8');
+            lhLicenseText += '\n\n';
+          } catch (e) {}
+          const noticesPath = path.join(path.dirname(codeFile.path), 'LICENSE');
+          await fs.promises.writeFile(noticesPath, lhLicenseText + thirdPartyNoticesText);
+        }
       });
     },
   };

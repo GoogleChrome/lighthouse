@@ -65,7 +65,7 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   }
 
   // Load bundle, which creates a `global.runBundledLighthouse`.
-  await import(LH_ROOT + '/dist/lighthouse-dt-bundle.js');
+  await import(LH_ROOT + '/dist/devtools/lighthouse-dt-bundle.js');
 
   global.require = originalRequire;
   global.Buffer = originalBuffer;
