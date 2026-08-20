@@ -133,7 +133,7 @@ class TraceEngineResult {
      * @param {Set<object>} seen
      */
     function recursiveReplaceLocalizableStrings(obj, cb, seen) {
-      if (seen.has(seen)) {
+      if (seen.has(obj)) {
         return;
       }
 
