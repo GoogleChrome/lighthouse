@@ -17,7 +17,7 @@ const mockAskPermission = fnAny();
 const mockSentryInit = fnAny();
 const mockLoggerSetLevel = fnAny();
 
-/** @type {import('../../bin.js')} */
+/** @type {typeof import('../../bin.js')} */
 let bin;
 before(async () => {
   await td.replaceEsm('../../run.js', {

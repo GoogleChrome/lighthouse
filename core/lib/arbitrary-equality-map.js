@@ -19,7 +19,7 @@ class ArbitraryEqualityMap {
   }
 
   /**
-   * @param {function(*,*):boolean} equalsFn
+   * @param {(a: any, b: any) => boolean} equalsFn
    */
   setEqualityFn(equalsFn) {
     this._equalsFn = equalsFn;

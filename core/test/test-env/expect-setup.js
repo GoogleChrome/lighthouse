@@ -83,7 +83,7 @@ expect.extend({
     * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
     * This is useful for situations where we want to test that we are actually waiting for a particular event.
     *
-    * @param {ReturnType<import('../test-utils.js')['makePromiseInspectable']>} received
+    * @param {ReturnType<typeof import('../test-utils.js')['makePromiseInspectable']>} received
     * @param {string} failureMessage
     */
   toBeDone(received, failureMessage) {

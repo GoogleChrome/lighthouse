@@ -33,9 +33,9 @@ const LineContentType = {
 /** @typedef {{
     content: string;
     lineNumber: string | number;
-    contentType: LineContentType;
+    contentType: number;
     truncated?: boolean;
-    visibility?: LineVisibility;
+    visibility?: number;
 }} LineDetails */
 
 const classNamesByContentType = {
@@ -194,7 +194,7 @@ export class SnippetRenderer {
   /**
    * @param {DOM} dom
    * @param {DocumentFragment} tmpl
-   * @param {LineVisibility} visibility
+   * @param {number} visibility
    * @return {Element}
    */
   static renderOmittedLinesPlaceholder(dom, tmpl, visibility) {

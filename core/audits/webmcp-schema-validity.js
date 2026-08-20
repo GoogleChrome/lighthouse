@@ -70,7 +70,7 @@ class WebMcpSchemaValidity extends Audit {
       WARNING: 2,
     };
 
-    /** @type {Record<string, {severity: Severity, description: LH.IcuMessage}>} */
+    /** @type {Record<string, {severity: number, description: LH.IcuMessage}>} */
     const issueConfigs = {
       'FormModelContextMissingToolName': {
         severity: Severity.ERROR,

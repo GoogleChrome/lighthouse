@@ -189,7 +189,7 @@ function findSizeDeclaration(rule, property) {
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
- * @param {function(LH.Crdp.CSS.CSSStyle):boolean|string|undefined} isDeclarationOfInterest
+ * @param {(style: LH.Crdp.CSS.CSSStyle) => boolean|string|undefined} isDeclarationOfInterest
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
   let mostSpecificRule;
