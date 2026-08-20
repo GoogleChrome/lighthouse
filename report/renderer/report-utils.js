@@ -330,8 +330,11 @@ class ReportUtils {
 
       ++numPassableAudits;
       totalWeight += auditRef.weight;
-      if (auditPassed) numPassed++;
+      if (typeof auditRef.result.score === 'number' && auditRef.result.score > 0) {
+        numPassed += auditRef.result.score;
+      }
     }
+    numPassed = Math.round(numPassed * 100) / 100;
     return {numPassed, numPassableAudits, numInformative, totalWeight};
   }
 
