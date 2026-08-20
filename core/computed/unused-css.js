@@ -70,9 +70,20 @@ class UnusedCSS {
       usedUncompressedBytes += usedRule.endOffset - usedRule.startOffset;
     }
 
+    // CSS coverage can report overlapping ranges (e.g. a nested rule that lives
+    // inside its parent rule's range) or the same rule more than once, so the
+    // summed used bytes can exceed the stylesheet size. Clamp to avoid computing
+    // a negative amount of unused (wasted) bytes.
+    // See https://github.com/GoogleChrome/lighthouse/issues/14718.
+    usedUncompressedBytes = Math.min(usedUncompressedBytes, totalUncompressedBytes);
+
     const compressedSize = estimateCompressedContentSize(
         stylesheetInfo.networkRecord, totalUncompressedBytes, 'Stylesheet');
-    const percentUnused = (totalUncompressedBytes - usedUncompressedBytes) / totalUncompressedBytes;
+    // Guard against empty stylesheets, whose 0-length content would otherwise
+    // make percentUnused NaN.
+    const percentUnused = totalUncompressedBytes > 0 ?
+      (totalUncompressedBytes - usedUncompressedBytes) / totalUncompressedBytes :
+      0;
     const wastedBytes = Math.round(percentUnused * compressedSize);
 
     return {
