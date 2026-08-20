@@ -15,7 +15,7 @@ import {pageFunctions} from '../../lib/page-functions.js';
  */
 /* c8 ignore start */
 async function runA11yChecks() {
-  /** @type {import('axe-core/axe')} */
+  /** @type {typeof import('axe-core/axe')} */
   // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
   const application = `lighthouse-${Math.random()}`;

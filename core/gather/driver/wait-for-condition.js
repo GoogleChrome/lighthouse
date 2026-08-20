@@ -11,7 +11,7 @@ import log from 'lighthouse-logger';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {ExecutionContext} from './execution-context.js';
 
-/** @typedef {InstanceType<import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
+/** @typedef {InstanceType<typeof import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
 /** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
 
 /**
@@ -36,7 +36,7 @@ import {ExecutionContext} from './execution-context.js';
  * Returns a promise that resolves immediately.
  * Used for placeholder conditions that we don't want to start waiting for just yet, but still want
  * to satisfy the same interface.
- * @return {{promise: Promise<void>, cancel: function(): void}}
+ * @return {CancellableWait<void>}
  */
 function waitForNothing() {
   return {promise: Promise.resolve(), cancel() {}};
