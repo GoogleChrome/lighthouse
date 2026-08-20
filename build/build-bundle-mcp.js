@@ -399,6 +399,27 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
     if (url && typeof url === 'object') {
       url = url.url;
     }
+    if (url && typeof url === 'string') {
+      url = url.replace(/^git\+/, '').replace(/\.git$/, '');
+      if (url.startsWith('github:')) {
+        url = `https://github.com/${url.substring(7)}`;
+      } else if (url.startsWith('gitlab:')) {
+        url = `https://gitlab.com/${url.substring(7)}`;
+      } else if (url.startsWith('bitbucket:')) {
+        url = `https://bitbucket.org/${url.substring(10)}`;
+      } else if (url.startsWith('ssh://git@github.com/')) {
+        url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
+      } else if (url.startsWith('git://github.com/')) {
+        url = `https://github.com/${url.substring('git://github.com/'.length)}`;
+      } else if (url.startsWith('git@github.com:')) {
+        url = `https://github.com/${url.substring('git@github.com:'.length)}`;
+      } else if (!url.startsWith('http')) {
+        const parts = url.split('/');
+        if (parts.length === 2) {
+          url = `https://github.com/${url}`;
+        }
+      }
+    }
     parts.push(`URL: ${url ?? 'N/A'}`);
     parts.push(`Version: ${dependency.version ?? 'N/A'}`);
     parts.push(`License: ${dependency.license ?? 'N/A'}`);
@@ -409,7 +430,8 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
     return parts.join('\n');
   }).join(divider);
 
-  fs.writeFileSync('dist/LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES', stringifiedDependencies);
+  fs.writeFileSync(
+    path.join(distDir, 'LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES'), stringifiedDependencies);
 }
 
 /**
