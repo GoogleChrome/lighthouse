@@ -159,6 +159,13 @@ export class ReportRenderer {
         `${Globals.strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
     ];
 
+    const pluginNames = Object.keys(report.categories)
+      .filter(categoryId => ReportUtils.isPluginCategory(categoryId));
+    if (pluginNames.length > 0) {
+      metaItems.push(['plugin',
+        `${Globals.strings.runtimeSettingsPlugins}: ${pluginNames.join(', ')}`]);
+    }
+
     const metaItemsEl = this._dom.find('.lh-meta__items', footer);
     for (const [iconname, text, tooltip] of metaItems) {
       const itemEl = this._dom.createChildOf(metaItemsEl, 'li', 'lh-meta__item');
