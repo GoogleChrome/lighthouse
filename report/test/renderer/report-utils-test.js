@@ -235,5 +235,23 @@ describe('util helpers', () => {
         totalWeight: 2,
       });
     });
+
+    it('supports partial scores in fraction calculation', () => {
+      const category = {
+        id: 'agentic-browsing',
+        auditRefs: [
+          {weight: 1, result: {score: 1, scoreDisplayMode: 'binary'}, group: 'a11y'},
+          {weight: 1, result: {score: 0.5, scoreDisplayMode: 'binary'}, group: 'ard'},
+          {weight: 1, result: {score: 0, scoreDisplayMode: 'binary'}, group: 'a11y'},
+        ],
+      };
+      const fraction = ReportUtils.calculateCategoryFraction(category);
+      expect(fraction).toEqual({
+        numPassableAudits: 3,
+        numPassed: 1.5,
+        numInformative: 0,
+        totalWeight: 3,
+      });
+    });
   });
 });
