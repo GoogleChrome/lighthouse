@@ -100,10 +100,7 @@ export default ${insightName}Insight;
 `.trim() + '\n';
 }
 
-const ignoredInsights = [
-  'CharacterSet', // TODO: add new insight audit.
-];
-const insightNames = getAllInsightNames().filter(name => !ignoredInsights.includes(name));
+const insightNames = getAllInsightNames();
 
 const allAuditIds = [];
 for (const insightName of insightNames) {
