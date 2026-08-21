@@ -23,7 +23,7 @@ class RenderBlockingInsight extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3,
+      guidanceLevel: 2,
       requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps', 'HostDPR'],
       replacesAudits: ['render-blocking-resources'],
     };
