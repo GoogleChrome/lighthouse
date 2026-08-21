@@ -49,6 +49,7 @@ node -e "
 "
 
 # Do some stuff that may update checked-in files.
+yarn update:ard-spec
 yarn generate-insight-audits
 yarn build-all
 yarn update:sample-json
