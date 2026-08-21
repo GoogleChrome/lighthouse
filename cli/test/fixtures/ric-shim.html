@@ -37,11 +37,11 @@ Request Idle Callback Shim Smoke Test
 
     if (count < iterations - 1) {
       count++;
-      requestIdleCallback(task);
+      requestIdleCallback(task, {timeout: 100});
     }
   }
 
-  requestIdleCallback(task);
+  requestIdleCallback(task, {timeout: 100});
 </script>
 </body>
 </html>
