@@ -28,6 +28,7 @@ import lanternFetch from './test-definitions/lantern-fetch.js';
 import lanternIdleCallbackLong from './test-definitions/lantern-idle-callback-long.js';
 import lanternIdleCallbackShort from './test-definitions/lantern-idle-callback-short.js';
 import lanternOnline from './test-definitions/lantern-online.js';
+import lanternSchedulerApis from './test-definitions/lantern-scheduler-apis.js';
 import lanternSetTimeout from './test-definitions/lantern-set-timeout.js';
 import lanternXhr from './test-definitions/lantern-xhr.js';
 import legacyJavascript from './test-definitions/legacy-javascript.js';
@@ -95,6 +96,7 @@ const smokeTests = [
   lanternIdleCallbackLong,
   lanternIdleCallbackShort,
   lanternOnline,
+  lanternSchedulerApis,
   lanternSetTimeout,
   lanternXhr,
   legacyJavascript,
