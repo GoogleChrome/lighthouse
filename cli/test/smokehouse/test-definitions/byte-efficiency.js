@@ -102,7 +102,7 @@ const expectations = {
         details: {
           overallSavingsBytes: '>17000',
           items: {
-            length: 2,
+            length: 3,
           },
         },
       },
@@ -141,9 +141,18 @@ const expectations = {
       },
       'unused-css-rules': {
         details: {
-          overallSavingsBytes: '>40000',
+          overallSavingsBytes: '>50000',
           items: {
-            length: 2,
+            length: 3,
+            // Unused rules created with CSS nesting should be counted as wasted bytes.
+            // https://github.com/GoogleChrome/lighthouse/issues/14718
+            _includes: [
+              {url: /nested-definitely-unused/, wastedPercent: '>95'},
+            ],
+            // Used nested rules should not be reported as unused.
+            _excludes: [
+              {url: /nested-mostly-used/},
+            ],
           },
         },
       },
