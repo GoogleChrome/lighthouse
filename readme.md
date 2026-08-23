@@ -381,6 +381,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
 
+* **[AwesomeTechStack](https://awesometechstack.com)** — AwesomeTechStack analyzes a website's technology stack and rates it for security, up-to-dateness and quality. Lighthouse supplies the quality part of that rating, with performance, accessibility, best practices and SEO weighted equally, and scores are tracked over time and available through an audit API. AwesomeTechStack is offered via free and paid plans.
+
 ## Plugins
 
 * **[lighthouse-plugin-field-performance](https://github.com/treosh/lighthouse-plugin-field-performance)** - a plugin that adds real-user performance metrics for the URL using the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
