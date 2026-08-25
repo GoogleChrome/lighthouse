@@ -176,8 +176,10 @@ const {computeBenchmarkIndex} = pageFunctions;
 runLighthouseInLR.getPageFromConnection = getPageFromConnection;
 
 export {
+  lighthouse,
   runLighthouseInLR,
   api,
+  api as index,
   listenForStatus,
   LR_PRESETS,
   computeBenchmarkIndex,

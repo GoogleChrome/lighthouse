@@ -98,7 +98,7 @@ class TraceElements extends BaseGatherer {
      * @param {Set<object>} seen
      */
     function recursiveObjectEnumerate(obj, cb, seen) {
-      if (seen.has(seen)) {
+      if (seen.has(obj)) {
         return;
       }
 
