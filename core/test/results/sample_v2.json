@@ -4124,6 +4124,38 @@
       },
       "guidanceLevel": 1
     },
+    "modern-font-formats": {
+      "id": "modern-font-formats",
+      "title": "Serve fonts in WOFF2 format",
+      "description": "WOFF2 offers better compression than TTF, OTF, and WOFF, reducing font download sizes. Convert legacy font files to WOFF2 and update the `@font-face` declaration. [Learn how to optimize web fonts](https://web.dev/articles/font-best-practices#use_woff2).",
+      "score": 1,
+      "scoreDisplayMode": "metricSavings",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 0
+      },
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0,
+        "sortedBy": [
+          "wastedBytes"
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 0
+          }
+        }
+      },
+      "guidanceLevel": 3
+    },
     "doctype": {
       "id": "doctype",
       "title": "Page has the HTML doctype",
@@ -6287,6 +6319,11 @@
         },
         {
           "id": "unused-javascript",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "modern-font-formats",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -9855,6 +9892,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:modern-font-formats",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:doctype",
         "duration": 100,
         "entryType": "measure"
@@ -11192,6 +11235,12 @@
       ],
       "core/audits/byte-efficiency/unused-javascript.js | description": [
         "audits[unused-javascript].description"
+      ],
+      "core/audits/byte-efficiency/modern-font-formats.js | title": [
+        "audits[modern-font-formats].title"
+      ],
+      "core/audits/byte-efficiency/modern-font-formats.js | description": [
+        "audits[modern-font-formats].description"
       ],
       "core/audits/dobetterweb/doctype.js | title": [
         "audits.doctype.title"

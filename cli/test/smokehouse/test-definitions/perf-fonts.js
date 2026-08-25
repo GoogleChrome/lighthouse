@@ -24,7 +24,7 @@ const expectations = {
   networkRequests: {
     // DevTools loads the page three times, so this request count will not be accurate.
     _excludeRunner: 'devtools',
-    length: 3,
+    length: 4,
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/fonts.html',
@@ -36,6 +36,17 @@ const expectations = {
           items: [
             {
               url: 'http://localhost:10200/perf/lobster-v20-latin-regular.woff2',
+            },
+          ],
+        },
+      },
+      'modern-font-formats': {
+        score: 0.5,
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/RubikBrokenFax-Regular.ttf',
+              format: 'TTF',
             },
           ],
         },
