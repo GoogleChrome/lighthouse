@@ -4131,13 +4131,6 @@
       "score": 1,
       "scoreDisplayMode": "binary"
     },
-    "charset": {
-      "id": "charset",
-      "title": "Properly defines charset",
-      "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://developer.chrome.com/docs/lighthouse/best-practices/charset/).",
-      "score": 1,
-      "scoreDisplayMode": "binary"
-    },
     "geolocation-on-start": {
       "id": "geolocation-on-start",
       "title": "Requests the geolocation permission on page load",
@@ -5072,6 +5065,27 @@
         "debugData": {
           "type": "debugdata",
           "wastedBytes": 1834075
+        }
+      },
+      "guidanceLevel": 3
+    },
+    "character-set-insight": {
+      "id": "character-set-insight",
+      "title": "Declare a character encoding",
+      "description": "A character encoding declaration is required. It can be done with a meta charset tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://developer.chrome.com/docs/insights/charset/).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "details": {
+        "type": "checklist",
+        "items": {
+          "httpCharset": {
+            "label": "Declares charset in HTTP header",
+            "value": true
+          },
+          "metaCharset": {
+            "label": "Could not determine meta charset declaration from trace",
+            "value": false
+          }
         }
       },
       "guidanceLevel": 3
@@ -6180,6 +6194,11 @@
           "group": "insights"
         },
         {
+          "id": "character-set-insight",
+          "weight": 0,
+          "group": "insights"
+        },
+        {
           "id": "cls-culprits-insight",
           "weight": 0,
           "group": "insights"
@@ -6856,11 +6875,6 @@
           "group": "best-practices-browser-compat"
         },
         {
-          "id": "charset",
-          "weight": 1,
-          "group": "best-practices-browser-compat"
-        },
-        {
           "id": "baseline",
           "weight": 0,
           "group": "best-practices-browser-compat"
@@ -6897,7 +6911,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.31
+      "score": 0.28
     },
     "seo": {
       "title": "SEO",
@@ -9861,12 +9875,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:charset",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:geolocation-on-start",
         "duration": 100,
         "entryType": "measure"
@@ -9994,6 +10002,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:cache-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:character-set-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -11199,12 +11213,6 @@
       "core/audits/dobetterweb/doctype.js | description": [
         "audits.doctype.description"
       ],
-      "core/audits/dobetterweb/charset.js | title": [
-        "audits.charset.title"
-      ],
-      "core/audits/dobetterweb/charset.js | description": [
-        "audits.charset.description"
-      ],
       "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"
       ],
@@ -11421,6 +11429,18 @@
       ],
       "core/lib/i18n/i18n.js | columnCacheTTL": [
         "audits[cache-insight].details.headings[1].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | title": [
+        "audits[character-set-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | description": [
+        "audits[character-set-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": [
+        "audits[character-set-insight].details.items.httpCharset.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": [
+        "audits[character-set-insight].details.items.metaCharset.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": [
         "audits[cls-culprits-insight].title"
