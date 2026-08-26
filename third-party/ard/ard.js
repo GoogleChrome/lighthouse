@@ -4,12 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import log from 'lighthouse-logger';
-import Ajv2020 from 'ajv/dist/2020.js';
-import addFormats from 'ajv-formats';
+import validateAiCatalog from './schema-validator.js';
 
 // Strict URN Regex matching urn:air:<publisher>:<namespace>:<agent-name>
 const URN_REGEX = /^urn:air:([a-zA-Z0-9.-]+)(?::([a-zA-Z0-9._:-]+))?:([a-zA-Z0-9._-]+)$/;
@@ -49,24 +45,15 @@ class ConformanceTester {
 
     /** @param {any} manifest_data */
     run_json_schema_validation(manifest_data) {
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
-
         try {
-            const schema_data = JSON.parse(
-                fs.readFileSync(path.join(__dirname, 'spec/schemas/ai-catalog.schema.json'), 'utf8')
-            );
-            const validator = new Ajv2020({allErrors: true, allowUnionTypes: true});
-            addFormats(validator, ['uri', 'date-time']);
-
-            const validate = validator.compile(schema_data);
-            const valid = validate(manifest_data);
+            const valid = validateAiCatalog(manifest_data);
 
             if (valid) {
                 log.verbose('ARD', 'Strict JSON Schema validation passed.');
                 return true;
             } else {
-                const e = validate.errors?.[0];
+                const errors = /** @type {any} */ (validateAiCatalog).errors;
+                const e = errors?.[0];
                 const propertyPath = e?.instancePath ? e.instancePath.replace(/^\//, '').replace(/\//g, '.') : 'root';
                 let msg = e?.message || 'unknown schema error';
                 if (e?.keyword === 'required') {
