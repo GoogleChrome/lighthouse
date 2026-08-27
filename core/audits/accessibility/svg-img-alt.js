@@ -13,11 +13,11 @@ import AxeAudit from './axe-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title of an accessibility audit that evaluates if SVG elements with an img role have an accessible text alternative. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accessibility audit that evaluates if SVG elements with an img role have an accessible text alternative. This title is descriptive of the successful state and is shown to users when no user action is required. "accessible text alternative" is text that assistive technology announces in place of the graphic. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   title: 'SVG elements with an `img` role have an accessible text alternative',
-  /** Title of an accessibility audit that evaluates if SVG elements with an img role have an accessible text alternative. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  /** Title of an accessibility audit that evaluates if SVG elements with an img role have an accessible text alternative. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. "accessible text alternative" is text that assistive technology announces in place of the graphic. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   failureTitle: 'SVG elements with an `img` role do not have an accessible text alternative',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with \'Learn\' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with \'Learn\' becomes link text to additional documentation. "accessible text alternative" is text that assistive technology announces in place of the graphic. Here "accessible" does not mean "available". Use your locale's established accessibility terminology. */
   description: 'Ensures SVG elements with an `img`, `graphics-document` or `graphics-symbol` ' +
       'role have an accessible text alternative. ' +
       '[Learn more about SVG alt text](https://dequeuniversity.com/rules/axe/4.12/svg-img-alt).',
