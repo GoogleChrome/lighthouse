@@ -4,17 +4,24 @@
   "title": "AICatalogManifest",
   "description": "JSON Schema for the ai-catalog.json capability manifest, defining how AI artifacts are advertised.",
   "type": "object",
-  "required": ["specVersion", "entries"],
+  "required": [
+    "specVersion",
+    "entries"
+  ],
   "properties": {
     "specVersion": {
       "type": "string",
       "description": "Version of the ai-catalog specification used in this manifest.",
-      "enum": ["1.0"]
+      "enum": [
+        "1.0"
+      ]
     },
     "host": {
       "type": "object",
       "description": "Information about the catalog publisher or hosting entity.",
-      "required": ["displayName"],
+      "required": [
+        "displayName"
+      ],
       "properties": {
         "displayName": {
           "type": "string",
@@ -53,15 +60,31 @@
     "catalogEntry": {
       "type": "object",
       "description": "A single AI capability entry within the catalog.",
-      "required": ["identifier", "displayName", "type"],
+      "required": [
+        "identifier",
+        "displayName",
+        "type"
+      ],
       "oneOf": [
         {
-          "required": ["url"],
-          "not": { "required": ["data"] }
+          "required": [
+            "url"
+          ],
+          "not": {
+            "required": [
+              "data"
+            ]
+          }
         },
         {
-          "required": ["data"],
-          "not": { "required": ["url"] }
+          "required": [
+            "data"
+          ],
+          "not": {
+            "required": [
+              "url"
+            ]
+          }
         }
       ],
       "properties": {
@@ -93,19 +116,25 @@
         },
         "tags": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Tags or keywords for basic categorizing and filtering."
         },
         "capabilities": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Explicit high-performance indexing tags representing skills, tools, or functions (e.g. ['WeatherTool', 'ForecastTool'])."
         },
         "representativeQueries": {
           "type": "array",
           "minItems": 2,
           "maxItems": 5,
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Representative natural-language search queries used for indexing and vector embedding generation."
         },
         "version": {
@@ -121,7 +150,12 @@
           "type": "object",
           "description": "Arbitrary key-value pairs for custom extensions.",
           "additionalProperties": {
-            "type": ["string", "number", "boolean", "null"]
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
           }
         },
         "trustManifest": {
@@ -132,7 +166,9 @@
     "trustManifest": {
       "type": "object",
       "description": "Zero-trust security, identity, and compliance envelope metadata.",
-      "required": ["identity"],
+      "required": [
+        "identity"
+      ],
       "properties": {
         "identity": {
           "type": "string",
@@ -140,7 +176,12 @@
         },
         "identityType": {
           "type": "string",
-          "enum": ["spiffe", "did", "https", "other"],
+          "enum": [
+            "spiffe",
+            "did",
+            "https",
+            "other"
+          ],
           "description": "Hint representing the cryptographic format of the identity."
         },
         "trustSchema": {
@@ -151,7 +192,11 @@
           "description": "List of verifiable claims (SOC 2 audits, compliance statements, HIPAA checks).",
           "items": {
             "type": "object",
-            "required": ["type", "uri", "mediaType"],
+            "required": [
+              "type",
+              "uri",
+              "mediaType"
+            ],
             "properties": {
               "type": {
                 "type": "string",
@@ -179,11 +224,18 @@
           "description": "Cryptographic lineage trail of the artifact.",
           "items": {
             "type": "object",
-            "required": ["relation", "sourceId"],
+            "required": [
+              "relation",
+              "sourceId"
+            ],
             "properties": {
               "relation": {
                 "type": "string",
-                "enum": ["derivedFrom", "publishedFrom", "copiedFrom"],
+                "enum": [
+                  "derivedFrom",
+                  "publishedFrom",
+                  "copiedFrom"
+                ],
                 "description": "Lineage relation."
               },
               "sourceId": {
@@ -208,7 +260,10 @@
     "trustSchema": {
       "type": "object",
       "description": "Describes the trust framework applied to the artifact.",
-      "required": ["identifier", "version"],
+      "required": [
+        "identifier",
+        "version"
+      ],
       "properties": {
         "identifier": {
           "type": "string",
@@ -225,7 +280,9 @@
         },
         "verificationMethods": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Verification methods supported by the schema (e.g., ['did', 'x509', 'dns-01'])."
         }
       },

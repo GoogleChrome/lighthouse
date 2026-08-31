@@ -63,12 +63,12 @@ echo "----------"
 echo """
 1. Test in google3
 
-Test this in Lightrider: roll to canary and run all the tests in the Lightrider folder. Dependency
+Test this in Lightrider: roll to google3 and run all the tests in the Lightrider folder. Dependency
 updates, especially for Puppeteer, have potential to break us there.
 
 Roll:
 
-blaze run //chrome/headless/lightrider/util/import_tool:import -- --feed=canary --apply=local
+blaze run //chrome/headless/lightrider/util/import_tool:import -- --apply=local
 
 Test:
 

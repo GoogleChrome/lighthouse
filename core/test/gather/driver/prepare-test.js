@@ -259,12 +259,12 @@ describe('.prepareTargetForNavigationMode()', () => {
     await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
       ...constants.defaultSettings,
       disableStorageReset: false,
-      clearStorageTypes: ['cookies', 'shared_storage']},
+      clearStorageTypes: ['cookies', 'cache_storage']},
       url);
 
     expect(storageMock.clearDataForOrigin).toHaveBeenCalledWith(expect.anything(),
       url,
-      ['cookies', 'shared_storage']);
+      ['cookies', 'cache_storage']);
     expect(storageMock.clearBrowserCaches).toHaveBeenCalled();
   });
 
