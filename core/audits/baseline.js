@@ -18,7 +18,7 @@ const UIStrings = {
    */
   description:
     'Lists web features used on the page and their Baseline status as of {date}. ' +
-    '[Learn more about Baseline](https://webstatus.dev/).',
+    '[Learn more about the Baseline Features audit](https://developer.chrome.com/docs/lighthouse/best-practices/baseline-features).',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
   /** Label for the column displaying the feature\'s baseline status. */
