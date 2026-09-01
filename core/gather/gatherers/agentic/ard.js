@@ -10,13 +10,10 @@ import LinkHeader from 'http-link-header';
 import BaseGatherer from '../../base-gatherer.js';
 import RobotsTxt from '../seo/robots-txt.js';
 import {pageFunctions} from '../../../lib/page-functions.js';
-
-/* c8 ignore start */
 function getAiCatalogLinkInDOM() {
   const link = document.querySelector('link[rel~="ai-catalog" i]');
   return link instanceof HTMLLinkElement ? link.href : null;
 }
-/* c8 ignore stop */
 
 class AgentResourceDiscovery extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'RobotsTxt'>} */

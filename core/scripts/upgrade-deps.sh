@@ -46,6 +46,20 @@ node -e "
       const metadataPath = '$LH_ROOT/core/lib/baseline/web-features-metadata.json';
       fs.writeFileSync(metadataPath, JSON.stringify({date}, null, 2) + '\n');
     }
+
+    // Update axe-core rule links in accessibility audits to match the installed version.
+    const axePkg = require('$LH_ROOT/node_modules/axe-core/package.json');
+    const [axeVer] = /^\d+\.\d+/.exec(axePkg.version);
+    const accessibilityDir = '$LH_ROOT/core/audits/accessibility';
+    for (const file of fs.readdirSync(accessibilityDir)) {
+      if (!file.endsWith('.js')) continue;
+      const filePath = accessibilityDir + '/' + file;
+      let content = fs.readFileSync(filePath, 'utf8');
+      if (content.includes('dequeuniversity.com/rules/axe/')) {
+        content = content.replace(/dequeuniversity\.com\/rules\/axe\/\d+\.\d+/g, 'dequeuniversity.com/rules/axe/' + axeVer);
+        fs.writeFileSync(filePath, content, 'utf8');
+      }
+    }
 "
 
 # Do some stuff that may update checked-in files.
@@ -63,12 +77,12 @@ echo "----------"
 echo """
 1. Test in google3
 
-Test this in Lightrider: roll to canary and run all the tests in the Lightrider folder. Dependency
+Test this in Lightrider: roll to google3 and run all the tests in the Lightrider folder. Dependency
 updates, especially for Puppeteer, have potential to break us there.
 
 Roll:
 
-blaze run //chrome/headless/lightrider/util/import_tool:import -- --feed=canary --apply=local
+blaze run //chrome/headless/lightrider/util/import_tool:import -- --apply=local
 
 Test:
 

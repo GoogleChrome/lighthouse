@@ -14,7 +14,6 @@ import {pageFunctions} from '../../lib/page-functions.js';
 /**
  * @return {LH.Artifacts['Inputs']}
  */
-/* c8 ignore start */
 function collectElements() {
   /** @type {LH.Artifacts.InputElement[]} */
   const inputArtifacts = [];
@@ -93,7 +92,6 @@ function collectElements() {
     labels: [...labelElToArtifact.values()],
   };
 }
-/* c8 ignore stop */
 
 class Inputs extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
