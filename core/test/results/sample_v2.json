@@ -4888,10 +4888,52 @@
     },
     "ard-schema": {
       "id": "ard-schema",
-      "title": "`ai-catalog.json` schema is valid",
+      "title": "`ai-catalog.json` schema is invalid",
       "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "element",
+            "valueType": "text",
+            "label": "Element"
+          },
+          {
+            "key": "issue",
+            "valueType": "text",
+            "label": "Issue"
+          },
+          {
+            "key": "severity",
+            "valueType": "text",
+            "label": "Severity"
+          }
+        ],
+        "items": [
+          {
+            "element": "Root",
+            "issue": "JSON Schema Validation Failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'entries.0.identifier'",
+            "severity": "Error"
+          },
+          {
+            "element": "Invalid Service",
+            "issue": "Identifier 'invalid-urn-format' does not match RFC 8141 URN pattern 'urn:air:<publisher>:<namespace>:<agent-name>'.",
+            "severity": "Error"
+          },
+          {
+            "element": "Invalid Service",
+            "issue": "Media type 'application/json' is not one of standard discovery types: application/ai-catalog+json,application/agent-card+json,application/a2a-agent-card+json,application/mcp-server-card+json,application/agent-skills+zip,application/agent-skills+gzip,text/markdown; profile=\"urn:air:agent-skills\",application/ai-registry,application/ai-registry+json.",
+            "severity": "Low"
+          },
+          {
+            "element": "Invalid Service",
+            "issue": "Missing 'representativeQueries'. 2 to 5 queries are recommended for vector index embedding.",
+            "severity": "Low"
+          }
+        ]
+      }
     },
     "bf-cache": {
       "id": "bf-cache",
@@ -7035,12 +7077,12 @@
         },
         {
           "id": "ard-schema",
-          "weight": 0,
+          "weight": 1,
           "group": "agent-discoverability"
         }
       ],
       "id": "agentic-browsing",
-      "score": 0.23
+      "score": 0.18
     }
   },
   "categoryGroups": {
@@ -10601,6 +10643,7 @@
         "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
         "audits[webmcp-registered-tools].details.items[1].value.headings[2].label",
+        "audits[ard-schema].details.headings[0].label",
         "audits[cls-culprits-insight].details.items[0].headings[0].label",
         "audits[dom-size-insight].details.headings[1].label"
       ],
@@ -11436,11 +11479,25 @@
       "core/audits/agentic/llms-txt.js | tooShort": [
         "audits[llms-txt].details.items[2].message"
       ],
-      "core/audits/agentic/ard-schema.js | title": [
+      "core/audits/agentic/ard-schema.js | failureTitle": [
         "audits[ard-schema].title"
       ],
       "core/audits/agentic/ard-schema.js | description": [
         "audits[ard-schema].description"
+      ],
+      "core/audits/agentic/ard-schema.js | columnIssue": [
+        "audits[ard-schema].details.headings[1].label"
+      ],
+      "core/audits/agentic/ard-schema.js | columnSeverity": [
+        "audits[ard-schema].details.headings[2].label"
+      ],
+      "core/audits/agentic/ard-schema.js | itemSeverityError": [
+        "audits[ard-schema].details.items[0].severity",
+        "audits[ard-schema].details.items[1].severity"
+      ],
+      "core/lib/i18n/i18n.js | itemSeverityLow": [
+        "audits[ard-schema].details.items[2].severity",
+        "audits[ard-schema].details.items[3].severity"
       ],
       "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
