@@ -277,8 +277,6 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
   };
 }
 
-/* c8 ignore start */
-
 /**
  * This function is executed in the page itself when the document is first loaded.
  *
@@ -337,8 +335,6 @@ function checkTimeSinceLastLongTaskInPage() {
     }, 150);
   });
 }
-
-/* c8 ignore stop */
 
 /**
  * Return a promise that resolves `pauseAfterLoadMs` after the load event
@@ -547,7 +543,6 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
  * @param {LH.Gatherer.Driver} driver
  */
 function waitForUserToContinue(driver) {
-  /* c8 ignore start */
   function createInPagePromise() {
     let resolve = () => {};
     /** @type {Promise<void>} */
@@ -563,7 +558,6 @@ function waitForUserToContinue(driver) {
     window.continueLighthouseRun = resolve;
     return promise;
   }
-  /* c8 ignore stop */
 
   driver.defaultSession.setNextProtocolTimeout(Infinity);
   return driver.executionContext.evaluate(createInPagePromise, {args: []});

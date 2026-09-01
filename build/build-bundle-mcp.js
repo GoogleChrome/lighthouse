@@ -72,7 +72,7 @@ function getMcpRequiredGathererNames() {
     'MainDocumentContent', 'MetaElements', 'Stacks', 'Trace',
   ];
   const a11yArtifacts = ['Accessibility'];
-  const agenticArtifacts = ['WebMCP', 'LlmsTxt', 'WebMcpSchemaIssues'];
+  const agenticArtifacts = ['WebMCP', 'LlmsTxt', 'WebMcpSchemaIssues', 'AgentResourceDiscovery'];
   for (const id of
     [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts, ...agenticArtifacts]) {
     const g = artifactToGatherer.get(id);

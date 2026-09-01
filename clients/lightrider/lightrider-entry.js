@@ -43,8 +43,10 @@ async function getPageFromConnection(connection) {
   const channel = connection.channel_ || connection.rootSessionConnection_;
   const transport = channel.root_.transport_;
 
+  // @ts-expect-error Connection constructor expects more arguments in puppeteer-core types, but optional in js.
   const pptrConnection = new PptrConnection(mainTargetInfo.url, transport);
 
+  // @ts-expect-error CdpBrowser._create expects more arguments in puppeteer-core types, but optional in js.
   const browser = await CdpBrowser._create(
     pptrConnection,
     [] /* contextIds */,
