@@ -53,6 +53,7 @@ describe('Link Elements gatherer', () => {
         finalDisplayedUrl: url,
       },
       LighthouseRunWarnings: [],
+      LighthouseRuntimeWarnings: [],
     };
     return {driver, url, baseArtifacts, dependencies: {}, computedCache: new Map()};
   }
@@ -119,6 +120,12 @@ describe('Link Elements gatherer', () => {
     expect(result).toEqual([]);
     expect(context.baseArtifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(context.baseArtifacts.LighthouseRunWarnings[0]).toBeDisplayString(
+      'Error parsing `link` header (Unexpected character "a" at offset 22): `<https://example.com/>a`'
+    );
+    expect(context.baseArtifacts.LighthouseRuntimeWarnings).toHaveLength(1);
+    expect(context.baseArtifacts.LighthouseRuntimeWarnings[0].code)
+      .toEqual('LINK_HEADER_PARSE_ERROR');
+    expect(context.baseArtifacts.LighthouseRuntimeWarnings[0].message).toBeDisplayString(
       'Error parsing `link` header (Unexpected character "a" at offset 22): `<https://example.com/>a`'
     );
   });

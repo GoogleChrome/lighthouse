@@ -144,6 +144,10 @@ class LinkElements extends BaseGatherer {
           header: truncatedHeader,
         });
         context.baseArtifacts.LighthouseRunWarnings.push(warning);
+        context.baseArtifacts.LighthouseRuntimeWarnings.push({
+          code: 'LINK_HEADER_PARSE_ERROR',
+          message: warning,
+        });
       }
 
       for (const link of parsedRefs) {

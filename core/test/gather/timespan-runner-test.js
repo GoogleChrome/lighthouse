@@ -196,5 +196,9 @@ describe('Timespan Runner', () => {
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.LighthouseRunWarnings[0])
       .toBeDisplayString(/A page navigation was detected during the run. Using timespan mode/);
+    expect(artifacts.LighthouseRuntimeWarnings).toHaveLength(1);
+    expect(artifacts.LighthouseRuntimeWarnings[0].code).toEqual('TIMESPAN_NAVIGATION_DETECTED');
+    expect(artifacts.LighthouseRuntimeWarnings[0].message)
+      .toBeDisplayString(/A page navigation was detected during the run. Using timespan mode/);
   });
 });
