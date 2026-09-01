@@ -26,16 +26,8 @@ const expectations = {
     finalDisplayedUrl: 'http://localhost:10200/agentic/llms_tester.html',
     audits: {
       'llms-txt': {
-        score: 0,
+        score: 1,
         scoreDisplayMode: 'binary',
-        details: {
-          type: 'table',
-          items: [
-            {message: 'File is missing a required H1 header (e.g., "# Title").'},
-            {message: 'File does not appear to contain any links.'},
-            {message: 'File is suspiciously short.'},
-          ],
-        },
       },
     },
   },

@@ -69,6 +69,7 @@ import timing from './test-definitions/timing.js';
 import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
 import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
 import llmsTxt from './test-definitions/llms-txt.js';
+import llmsTxtInvalid from './test-definitions/llms-txt-invalid.js';
 import webmcp from './test-definitions/webmcp.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
@@ -103,6 +104,7 @@ const smokeTests = [
   lanternXhr,
   legacyJavascript,
   llmsTxt,
+  llmsTxtInvalid,
   metricsDebugger,
   metricsDelayedFcp,
   metricsDelayedLcp,
