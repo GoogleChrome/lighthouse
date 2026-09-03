@@ -48,6 +48,9 @@ class Runner {
        */
       const lighthouseRunWarnings = [];
 
+      /** @type {Array<{code: string; message: string | LH.IcuMessage}>} */
+      const lighthouseRuntimeWarnings = [];
+
       // Potentially quit early
       if (settings.gatherMode && !settings.auditMode) return;
 
@@ -63,6 +66,10 @@ class Runner {
 
       if (artifacts.LighthouseRunWarnings) {
         lighthouseRunWarnings.push(...artifacts.LighthouseRunWarnings);
+      }
+
+      if (artifacts.LighthouseRuntimeWarnings) {
+        lighthouseRuntimeWarnings.push(...artifacts.LighthouseRuntimeWarnings);
       }
 
       // Entering: conclusion of the lighthouse result object
@@ -101,6 +108,7 @@ class Runner {
         gatherMode: artifacts.GatherContext.gatherMode,
         runtimeError: Runner.getArtifactRuntimeError(artifacts),
         runWarnings: lighthouseRunWarnings,
+        runtimeWarnings: lighthouseRuntimeWarnings,
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,
