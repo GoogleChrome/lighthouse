@@ -36,7 +36,7 @@ Lighthouse is integrated directly into the Chrome DevTools, under the "Lighthous
 
 **Installation**: install [Chrome](https://www.google.com/chrome/browser).
 
-**Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Generate report".
+**Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Analyze page load".
 
 <img width="550" alt="Lighthouse integration in Chrome DevTools." src="https://user-images.githubusercontent.com/2766281/204185043-9c49abe5-baee-4b26-b5ce-ece410661213.png">
 
