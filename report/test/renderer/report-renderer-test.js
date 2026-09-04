@@ -278,6 +278,27 @@ describe('ReportRenderer', () => {
       expect(itemsTxt).toMatch('412x823, DPR 1.75');
       expect(itemsTxt).toContain('Point-in-time snapshot');
     });
+
+    it('renders plugins in the footer', () => {
+      sampleResults.categories['lighthouse-plugin-someplugin'] = {
+        id: 'lighthouse-plugin-someplugin',
+        title: 'Some Plugin',
+        auditRefs: [],
+      };
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
+      const itemsTxt = items.map(el => el.textContent).join('\n');
+      expect(itemsTxt).toContain('Plugins: lighthouse-plugin-someplugin');
+    });
+
+    it('renders no plugins footer item when no plugins were used', () => {
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
+      const itemsTxt = items.map(el => el.textContent).join('\n');
+      expect(itemsTxt).not.toContain('Plugins:');
+    });
   });
 
   it('should add LHR channel to doc link parameters', () => {
