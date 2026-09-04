@@ -6,6 +6,19 @@
 
 import {LighthouseError} from '../../lib/lh-error.js';
 
+/**
+ * `LighthouseError.stringifyReplacer` takes just the error value, not the
+ * `(key, value)` pair that `JSON.stringify` passes to a replacer, so it must be
+ * wrapped before use. This mirrors the production helper in
+ * `core/lib/asset-saver.js`.
+ * @param {string} key
+ * @param {any} value
+ */
+function errorReplacer(key, value) {
+  if (value instanceof Error) return LighthouseError.stringifyReplacer(value);
+  return value;
+}
+
 describe('LighthouseError', () => {
   describe('#constructor', () => {
     it('sets code, name, message, and a friendlyMessage containing the code', () => {
@@ -17,16 +30,17 @@ describe('LighthouseError', () => {
       expect(err.name).toBe('LighthouseError');
       // `super(code, options)` makes the raw Error message the code.
       expect(err.message).toBe('NO_FCP');
-      // The friendly message is the ICU-stringified definition, with `errorCode` auto-filled.
-      expect(err.friendlyMessage).toContain('NO_FCP');
+      // The friendly message is an i18n object, with `errorCode` auto-filled from the code.
+      expect(err.friendlyMessage.formattedDefault).toContain('NO_FCP');
+      expect(err.friendlyMessage.values).toEqual({errorCode: 'NO_FCP'});
     });
 
     it('reflects lhrRuntimeError from the error definition', () => {
       const runtimeErr = new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
       expect(runtimeErr.lhrRuntimeError).toBe(true);
 
-      // NO_FCP has no `lhrRuntimeError`, so it must default to false.
-      const nonRuntimeErr = new LighthouseError(LighthouseError.errors.NO_FCP);
+      // NO_LCP omits `lhrRuntimeError`, so the constructor must default it to false.
+      const nonRuntimeErr = new LighthouseError(LighthouseError.errors.NO_LCP);
       expect(nonRuntimeErr.lhrRuntimeError).toBe(false);
     });
 
@@ -35,7 +49,12 @@ describe('LighthouseError', () => {
           {statusCode: '404'});
 
       expect(err.statusCode).toBe('404');
-      expect(err.friendlyMessage).toContain('404');
+      // Custom properties are substituted into the ICU message.
+      expect(err.friendlyMessage.formattedDefault).toContain('Status code: 404');
+      expect(err.friendlyMessage.values).toEqual({
+        errorCode: 'ERRORED_DOCUMENT_REQUEST',
+        statusCode: '404',
+      });
     });
 
     it('preserves the cause passed via ErrorOptions', () => {
@@ -121,24 +140,28 @@ describe('LighthouseError', () => {
       const err = new LighthouseError(LighthouseError.errors.ERRORED_DOCUMENT_REQUEST,
           {statusCode: '404'});
 
-      const json = JSON.stringify(err, LighthouseError.stringifyReplacer);
+      const json = JSON.stringify(err, errorReplacer);
       const revived = JSON.parse(json, LighthouseError.parseReviver);
 
       expect(revived).toBeInstanceOf(LighthouseError);
       expect(revived).not.toBe(err);
       expect(revived.code).toBe('ERRORED_DOCUMENT_REQUEST');
+      // Custom properties survive the round trip.
       expect(revived.statusCode).toBe('404');
-      expect(revived.friendlyMessage).toContain('404');
+      expect(revived.friendlyMessage.formattedDefault).toContain('Status code: 404');
+      expect(revived.lhrRuntimeError).toBe(true);
     });
 
     it('round-trips a plain Error', () => {
       const baseErr = new Error('base failure');
 
-      const json = JSON.stringify(baseErr, LighthouseError.stringifyReplacer);
+      const json = JSON.stringify(baseErr, errorReplacer);
       const revived = JSON.parse(json, LighthouseError.parseReviver);
 
       expect(revived).toBeInstanceOf(Error);
+      expect(revived).not.toBeInstanceOf(LighthouseError);
       expect(revived.message).toBe('base failure');
+      expect(revived.stack).toBe(baseErr.stack);
     });
 
     it('returns non-sentinel values unchanged', () => {
