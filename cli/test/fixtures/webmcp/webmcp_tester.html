@@ -34,10 +34,12 @@
     const testingApi = window.navigator.modelContextTesting || window.navigator.modelContext;
     if (testingApi && typeof testingApi.listTools === 'function') {
       testingApi.listTools();
-    } else if (navigator.modelContext && typeof navigator.modelContext.getRegisteredTools === 'function') {
-      navigator.modelContext.getRegisteredTools();
+    } else if (document.modelContext && typeof document.modelContext.getTools === 'function') {
+      document.modelContext.getTools();
     } else if (document.modelContext && typeof document.modelContext.getRegisteredTools === 'function') {
       document.modelContext.getRegisteredTools();
+    } else if (navigator.modelContext && typeof navigator.modelContext.getRegisteredTools === 'function') {
+      navigator.modelContext.getRegisteredTools();
     }
   </script>
 </body>

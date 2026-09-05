@@ -19,7 +19,6 @@ import {resolveDevtoolsNodePathToObjectId} from '../driver/dom.js';
  *
  * @return {LH.Artifacts['AnchorElements']}
  */
-/* c8 ignore start */
 function collectAnchorElements() {
   /** @param {string} url */
   const resolveURLOrEmpty = url => {
@@ -114,7 +113,6 @@ function collectAnchorElements() {
     };
   });
 }
-/* c8 ignore stop */
 
 /**
  * @param {LH.Gatherer.ProtocolSession} session

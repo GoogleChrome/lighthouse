@@ -30,7 +30,6 @@ const MAX_LAYOUT_SHIFTS = 15;
 /**
  * @param {Element | ShadowRoot | Text} node
  */
-/* c8 ignore start */
 function getNodeDetailsData(node) {
   /** @type {Element | ShadowRoot | Text | null} */
   let elem = node.nodeType === document.ELEMENT_NODE ? node : node.parentElement;
@@ -45,7 +44,6 @@ function getNodeDetailsData(node) {
   }
   return traceElement;
 }
-/* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
@@ -98,7 +96,7 @@ class TraceElements extends BaseGatherer {
      * @param {Set<object>} seen
      */
     function recursiveObjectEnumerate(obj, cb, seen) {
-      if (seen.has(seen)) {
+      if (seen.has(obj)) {
         return;
       }
 

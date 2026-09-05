@@ -33,7 +33,7 @@ const deprecationsStr_ = i18n.createIcuMessageFn(
  */
 function getIssueDetailDescription(issueDetails) {
   let message;
-  const type = /** @type {keyof DEPRECATIONS_METADATA} */ (issueDetails.type);
+  const type = /** @type {keyof typeof DEPRECATIONS_METADATA} */ (issueDetails.type);
   const maybeEnglishMessage = DeprecationUIStrings[type];
   if (maybeEnglishMessage) {
     message = deprecationsStr_(maybeEnglishMessage);

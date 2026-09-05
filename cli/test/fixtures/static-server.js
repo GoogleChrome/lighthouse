@@ -99,6 +99,9 @@ class Server {
     const filePath = requestUrl.pathname;
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
     let absoluteFilePath = path.join(this.baseDir, filePath);
+    if (this._port === 10503 && filePath === '/llms.txt') {
+      absoluteFilePath = path.join(this.baseDir, 'agentic/llms-invalid.txt');
+    }
     const sendResponse = (statusCode, data) => {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);

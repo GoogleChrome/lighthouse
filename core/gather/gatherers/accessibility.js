@@ -13,9 +13,8 @@ import {pageFunctions} from '../../lib/page-functions.js';
 /**
  * @return {Promise<LH.Artifacts.Accessibility>}
  */
-/* c8 ignore start */
 async function runA11yChecks() {
-  /** @type {import('axe-core/axe')} */
+  /** @type {typeof import('axe-core/axe')} */
   // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
   const application = `lighthouse-${Math.random()}`;
@@ -183,7 +182,6 @@ function createAxeRuleResultArtifact(result) {
     description: result.description,
   };
 }
-/* c8 ignore stop */
 
 class Accessibility extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */

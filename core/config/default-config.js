@@ -115,6 +115,11 @@ const UIStrings = {
   /** Description of the Agent Accessibility group of audits. */
   agentAccessibilityGroupDescription: 'These audits highlight best practices for improving the ' +
   'accessibility of the website for AI agents.',
+  /** Title of the Agent Discoverability group of audits. */
+  agentDiscoverabilityGroupTitle: 'Agent Discoverability',
+  /** Description of the Agent Discoverability group of audits. */
+  agentDiscoverabilityGroupDescription: 'These audits validate that websites expose discoverable resources, ' +
+    'documentation, and catalogs for AI agents.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -146,6 +151,7 @@ const defaultConfig = {
     { id: 'ReactDevModeGatherer', gatherer: 'react-dev-mode' },
     {id: 'NetworkUserAgent', gatherer: 'network-user-agent'},
     {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
+    {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
     {id: 'Stacks', gatherer: 'stacks'},
@@ -303,6 +309,7 @@ const defaultConfig = {
     'webmcp-form-coverage',
     'webmcp-schema-validity',
     'agentic/llms-txt',
+    'agentic/ard-schema',
     'bf-cache',
     'insights/cache-insight',
     'insights/cls-culprits-insight',
@@ -398,6 +405,10 @@ const defaultConfig = {
     'agent-accessibility': {
       title: str_(UIStrings.agentAccessibilityGroupTitle),
       description: str_(UIStrings.agentAccessibilityGroupDescription),
+    },
+    'agent-discoverability': {
+      title: str_(UIStrings.agentDiscoverabilityGroupTitle),
+      description: str_(UIStrings.agentDiscoverabilityGroupDescription),
     },
     // Group for audits that should not be displayed.
     'hidden': {title: ''},
@@ -646,7 +657,8 @@ const defaultConfig = {
         {id: 'webmcp-registered-tools', weight: 1, group: 'webmcp'},
         {id: 'webmcp-schema-validity', weight: 1, group: 'webmcp'},
         {id: 'cumulative-layout-shift', weight: 1, acronym: 'CLS'},
-        {id: 'llms-txt', weight: 1, group: 'agent-accessibility'},
+        {id: 'llms-txt', weight: 1, group: 'agent-discoverability'},
+        {id: 'ard-schema', weight: 1, group: 'agent-discoverability'},
       ],
     },
   },

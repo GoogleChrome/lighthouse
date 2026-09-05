@@ -11,7 +11,7 @@ import log from 'lighthouse-logger';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {ExecutionContext} from './execution-context.js';
 
-/** @typedef {InstanceType<import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
+/** @typedef {InstanceType<typeof import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
 /** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
 
 /**
@@ -36,7 +36,7 @@ import {ExecutionContext} from './execution-context.js';
  * Returns a promise that resolves immediately.
  * Used for placeholder conditions that we don't want to start waiting for just yet, but still want
  * to satisfy the same interface.
- * @return {{promise: Promise<void>, cancel: function(): void}}
+ * @return {CancellableWait<void>}
  */
 function waitForNothing() {
   return {promise: Promise.resolve(), cancel() {}};
@@ -277,8 +277,6 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
   };
 }
 
-/* c8 ignore start */
-
 /**
  * This function is executed in the page itself when the document is first loaded.
  *
@@ -337,8 +335,6 @@ function checkTimeSinceLastLongTaskInPage() {
     }, 150);
   });
 }
-
-/* c8 ignore stop */
 
 /**
  * Return a promise that resolves `pauseAfterLoadMs` after the load event
@@ -547,7 +543,6 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
  * @param {LH.Gatherer.Driver} driver
  */
 function waitForUserToContinue(driver) {
-  /* c8 ignore start */
   function createInPagePromise() {
     let resolve = () => {};
     /** @type {Promise<void>} */
@@ -563,7 +558,6 @@ function waitForUserToContinue(driver) {
     window.continueLighthouseRun = resolve;
     return promise;
   }
-  /* c8 ignore stop */
 
   driver.defaultSession.setNextProtocolTimeout(Infinity);
   return driver.executionContext.evaluate(createInPagePromise, {args: []});
