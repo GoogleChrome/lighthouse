@@ -129,8 +129,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       'export const reportAssets = {}';
   }
 
-  // Don't include locales in DevTools.
-  if (isDevtools(entryPath)) {
+  // Don't include locales in DevTools or Lightrider.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
     shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
   }
 
@@ -148,8 +148,14 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     outfile: distPath,
     write: false,
     format: 'iife',
+    globalName: isLightrider(entryPath) ? 'lighthouseBundle' : undefined,
+    footer: isLightrider(entryPath) ? {
+      js: 'if (typeof module !== \'undefined\' && module.exports) ' +
+        'module.exports = lighthouseBundle;',
+    } : undefined,
     charset: 'utf8',
     bundle: true,
+    metafile: true,
     minify: opts.minify,
     treeShaking: true,
     sourcemap: 'linked',

@@ -54,7 +54,8 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   }
 
   // Load bundle.
-  const {navigation} = await import(LH_ROOT + '/dist/lighthouse-devtools-mcp-bundle.js');
+  const {navigation} =
+    await import(LH_ROOT + '/dist/devtools-mcp/lighthouse-devtools-mcp-bundle.js');
 
   const chromeFlags = [];
   if (testRunnerOptions?.headless) chromeFlags.push('--headless=new');

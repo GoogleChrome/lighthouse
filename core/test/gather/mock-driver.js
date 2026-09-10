@@ -21,7 +21,7 @@ import {fnAny} from '../test-utils.js';
 import {NetworkMonitor} from '../../gather/driver/network-monitor.js';
 
 /** @typedef {import('../../gather/driver.js').Driver} Driver */
-/** @typedef {import('../../gather/driver/execution-context.js')} ExecutionContext */
+/** @typedef {typeof import('../../gather/driver/execution-context.js')} ExecutionContext */
 
 function createMockSession() {
   const mockSendCommand = createMockSendCommandFn();

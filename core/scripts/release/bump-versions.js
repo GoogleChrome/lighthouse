@@ -35,10 +35,10 @@ for (const file of glob.sync('**/{package.json,*.md,*-expected.txt,navigation.te
   } else if (file.endsWith('.md')) {
     // Replace `package.json`-like examples in markdown files.
     text = fs.readFileSync(file, 'utf-8');
-    text = text.replace(/"lighthouse": ".*?"/g, `"lighthouse": "^${NEW_VERSION}"`);
+    text = text.replaceAll(/"lighthouse": ".*?"/g, `"lighthouse": "^${NEW_VERSION}"`);
   } else {
     text = fs.readFileSync(file, 'utf-8');
-    text = text.replace(OLD_VERSION, NEW_VERSION);
+    text = text.replaceAll(OLD_VERSION, NEW_VERSION);
   }
 
   fs.writeFileSync(file, text);

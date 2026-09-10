@@ -35,7 +35,7 @@ describe('Snapshot', function() {
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
 
-    await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+    await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
     await registerServiceWorker(inspectedPage);
 
     await inspectedPage.evaluate(() => {
@@ -51,7 +51,7 @@ describe('Snapshot', function() {
     let numNavigations = 0;
     inspectedPage.page.on('framenavigated', () => ++numNavigations);
 
-    await selectMode('snapshot', devToolsPage);
+    await selectMode(devToolsPage, 'snapshot');
     await clickStartButton(devToolsPage);
 
     const {lhr, artifacts, reportEl} = await waitForResult(devToolsPage, inspectedPage);

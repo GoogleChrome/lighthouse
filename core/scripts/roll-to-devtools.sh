@@ -35,7 +35,7 @@ fi
 fe_lh_dir="$dt_dir/front_end/third_party/lighthouse"
 mkdir -p "$fe_lh_dir"
 
-lh_bg_js="dist/lighthouse-dt-bundle.js"
+lh_bg_js="dist/devtools/lighthouse-dt-bundle.js"
 
 yarn build-report
 yarn build-devtools

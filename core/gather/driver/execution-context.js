@@ -320,14 +320,12 @@ class ExecutionContext {
    */
   async cacheNativesOnNewDocument() {
     await this.evaluateOnNewDocument(() => {
-      /* c8 ignore start */
       window.__nativePromise = window.Promise;
       window.__nativeURL = window.URL;
       window.__nativePerformance = window.performance;
       window.__nativeFetch = window.fetch;
       window.__ElementMatches = window.Element.prototype.matches;
       window.__HTMLElementBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect;
-      /* c8 ignore stop */
     }, {args: []});
   }
 

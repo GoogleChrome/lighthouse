@@ -65,9 +65,9 @@ describe('DevTools', function() {
     it('is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       expectErrors();
       await blockCss(devToolsPage);
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
 
-      await selectCategories(['performance'], devToolsPage);
+      await selectCategories(devToolsPage, ['performance']);
 
       await clickStartButton(devToolsPage);
 
@@ -94,15 +94,15 @@ describe('DevTools', function() {
     it('is restored after a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       await openDeviceToolbar(devToolsPage, inspectedPage);
       // Use iPad Mini in landscape mode and custom zoom.
-      await selectDevice('iPad Mini', devToolsPage);
+      await selectDevice(devToolsPage, 'iPad Mini');
       const rotateButton = await devToolsPage.waitForAria('Rotate');
       await rotateButton.click();
       await selectZoomLevel(devToolsPage, '75%');
 
       assert.deepEqual(await getTargetViewport(inspectedPage), IPAD_MINI_LANDSCAPE_VIEWPORT_DIMENSIONS);
 
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
-      await selectCategories(['performance', 'best-practices'], devToolsPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
+      await selectCategories(devToolsPage, ['performance', 'best-practices']);
       await clickStartButton(devToolsPage);
 
       const {artifacts} = await waitForResult(devToolsPage, inspectedPage);

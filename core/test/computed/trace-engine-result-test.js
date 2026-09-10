@@ -24,6 +24,25 @@ describe('TraceEngineResult', () => {
     settings = JSON.parse(JSON.stringify(defaultSettings));
   });
 
+  describe('localizeObject', () => {
+    it('handles circular references without infinite recursion', () => {
+      const circular = {};
+      circular.self = circular;
+      expect(() => {
+        TraceEngineResult.localizeObject(() => ({formattedDefault: 'x'}), circular);
+      }).not.toThrow();
+    });
+
+    it('localizes nested i18nId objects', () => {
+      const object = {foo: {i18nId: 'a.b', values: {count: 3}}};
+      TraceEngineResult.localizeObject(
+        (id, values) => ({formattedDefault: `${id}:${values?.count ?? 0}`}),
+        object
+      );
+      assert.equal(object.foo.formattedDefault, 'a.b:3');
+    });
+  });
+
   describe('compute_', () => {
     it('works on a basic trace', async () => {
       const result = await TraceEngineResult.request(

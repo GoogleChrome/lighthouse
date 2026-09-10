@@ -84,7 +84,27 @@ describe('._fetchResourceOverProtocol', () => {
       });
 
     const data = await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 500});
-    expect(data).toEqual({content: streamContents, status: 200});
+    expect(data).toEqual({content: streamContents, status: 200, headers: null});
+  });
+
+  it('fetches a file with headers', async () => {
+    mockSession.sendCommand
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'FRAME'}}})
+      .mockResponse('Network.loadNetworkResource', {
+        resource: {
+          success: true,
+          httpStatusCode: 200,
+          stream: '1',
+          headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+        },
+      });
+
+    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 500});
+    expect(data).toEqual({
+      content: streamContents,
+      status: 200,
+      headers: {'content-type': 'application/json', 'access-control-allow-origin': '*'},
+    });
   });
 
   it('returns null when resource could not be fetched', async () => {
@@ -95,7 +115,7 @@ describe('._fetchResourceOverProtocol', () => {
       });
 
     const data = await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 500});
-    expect(data).toEqual({content: null, status: 404});
+    expect(data).toEqual({content: null, status: 404, headers: null});
   });
 
   it('throws on timeout', async () => {
@@ -125,3 +145,34 @@ describe('._fetchResourceOverProtocol', () => {
     expect(timeout).toBeCloseTo(500, -2);
   });
 });
+
+describe('._normalizeHeaders', () => {
+  it('returns null when passed null or undefined', () => {
+    expect(fetcher._normalizeHeaders(null)).toBeNull();
+    expect(fetcher._normalizeHeaders(undefined)).toBeNull();
+  });
+
+  it('normalizes plain object headers with lowercase keys and string values', () => {
+    const raw = {
+      'Content-Type': 'application/json',
+      'Content-Length': 1234,
+      'X-Custom-Header': 'CustomValue',
+    };
+    expect(fetcher._normalizeHeaders(raw)).toEqual({
+      'content-type': 'application/json',
+      'content-length': '1234',
+      'x-custom-header': 'CustomValue',
+    });
+  });
+
+  it('normalizes Headers instance with lowercase keys', () => {
+    const headers = new Headers();
+    headers.append('Content-Type', 'text/html');
+    headers.append('X-Rate-Limit', '100');
+    expect(fetcher._normalizeHeaders(headers)).toEqual({
+      'content-type': 'text/html',
+      'x-rate-limit': '100',
+    });
+  });
+});
+

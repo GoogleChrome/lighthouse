@@ -5,6 +5,8 @@
  */
 
 import a11y from './test-definitions/a11y.js';
+import ard from './test-definitions/ard.js';
+import ardInvalid from './test-definitions/ard-invalid.js';
 import baseline from './test-definitions/baseline.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
@@ -67,11 +69,14 @@ import timing from './test-definitions/timing.js';
 import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
 import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
 import llmsTxt from './test-definitions/llms-txt.js';
+import llmsTxtInvalid from './test-definitions/llms-txt-invalid.js';
 import webmcp from './test-definitions/webmcp.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
   a11y,
+  ard,
+  ardInvalid,
   baseline,
   byteEfficiency,
   byteGzip,
@@ -99,6 +104,7 @@ const smokeTests = [
   lanternXhr,
   legacyJavascript,
   llmsTxt,
+  llmsTxtInvalid,
   metricsDebugger,
   metricsDelayedFcp,
   metricsDelayedLcp,

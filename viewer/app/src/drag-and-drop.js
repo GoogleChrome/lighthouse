@@ -11,7 +11,7 @@
  */
 export class DragAndDrop {
   /**
-   * @param {function(string): void} fileHandlerCallback Invoked when the user chooses a new file.
+   * @param {(file: string) => void} fileHandlerCallback Invoked when the user chooses a new file.
    */
   constructor(fileHandlerCallback) {
     const dropZone = document.querySelector('.drop_zone');

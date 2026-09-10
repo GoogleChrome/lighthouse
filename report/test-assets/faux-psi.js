@@ -6,7 +6,7 @@
 
 /** @fileoverview This file exercises two LH reports within the same DOM. */
 
-/** @typedef {import('../clients/bundle.js')} lighthouseRenderer */
+/** @typedef {typeof import('../clients/bundle.js')} lighthouseRenderer */
 /** @type {lighthouseRenderer} */
 // @ts-expect-error
 const lighthouseRenderer = window['report'];
