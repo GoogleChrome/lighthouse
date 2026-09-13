@@ -159,6 +159,31 @@ it('preload missing, but other directives present', async () => {
   ]);
 });
 
+it('preload missing on a preloaded public suffix', async () => {
+  const artifacts = {
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://expo.dev',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=63072000; includeSubDomains`,
+          },
+        ],
+      },
+    ]),
+    URL: {
+      requestedUrl: 'https://expo.dev',
+      mainDocumentUrl: 'https://expo.dev',
+      finalDisplayedUrl: 'https://expo.dev',
+    },
+  };
+
+  const results = await HasHsts.audit(artifacts, {computedCache: new Map()});
+  expect(results.details.items).toHaveLength(0);
+  expect(results.notApplicable).toBeTruthy();
+});
+
 it('No HSTS header found', async () => {
   const artifacts = {
     DevtoolsLog: networkRecordsToDevtoolsLog([
@@ -363,6 +388,14 @@ describe('constructResults', () => {
         directive: 'foo-directive',
       },
     ]);
+  });
+
+  it('omits the preload warning for preloaded public suffixes', () => {
+    const {score, results} = HasHsts.constructResults(
+        ['max-age=31536000', 'includesubdomains'],
+        'https://example.now.sh');
+    expect(score).toEqual(1);
+    expect(results).toEqual([]);
   });
 
   it('returns single item for no HSTS', () => {
