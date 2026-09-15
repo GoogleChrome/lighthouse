@@ -137,6 +137,74 @@ writeFileSync('report.html', await flow.generateReport());
 </details>
 <br>
 
+
+## Standalone mode runners
+
+If you only need a single navigation, timespan, or snapshot report (the Node equivalent of choosing a mode in the DevTools Lighthouse panel), you can call the top-level helpers exported from `lighthouse` directly:
+
+* `navigation(page, urlOrRequestor, options?)`
+* `startTimespan(page, options?)` → returns `{endTimespan}`
+* `snapshot(page, options?)`
+
+These are intentional public APIs. They are separate from the flow-attached methods on a `UserFlow` instance (`flow.navigate`, `flow.startTimespan` / `flow.endTimespan`, `flow.snapshot`).
+
+| Goal | Use |
+| --- | --- |
+| One-shot audit (DevTools-style) | `navigation`, `startTimespan`, or `snapshot` |
+| Multi-step flow report | `startFlow`, then `flow.navigate` / `flow.startTimespan` / `flow.snapshot` |
+
+Standalone runners do **not** attach to a flow. If you call `startTimespan(page)` (or `navigation` / `snapshot`) while a `startFlow` session is open, that run will not appear in `flow.generateReport()`. To include a timespan in a flow report you must use `flow.startTimespan()` / `flow.endTimespan()`.
+
+Each standalone call returns a Lighthouse `RunnerResult` (`{lhr, report, artifacts}`). You can write `result.report` for HTML, `JSON.stringify(result.lhr)` for JSON (also viewable in the [Lighthouse Viewer](https://googlechrome.github.io/lighthouse/viewer/)), or pass `result.lhr` to `generateReport`.
+
+### Standalone timespan example
+
+```js
+import {writeFileSync} from 'fs';
+import puppeteer from 'puppeteer';
+import {startTimespan, generateReport} from 'lighthouse';
+
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+
+await page.goto('https://example.com');
+
+const timespan = await startTimespan(page);
+
+// Interact within the timespan (avoid hard navigations here; use navigation mode for those).
+await page.type('#search', 'performance');
+await page.click('#submit');
+await page.waitForSelector('#results');
+
+const result = await timespan.endTimespan();
+if (!result) throw new Error('Lighthouse failed to produce a result');
+
+writeFileSync('timespan-result.json', JSON.stringify(result.lhr, null, 2));
+writeFileSync('timespan-report.html', result.report);
+// Or: writeFileSync('timespan-report.html', generateReport(result.lhr));
+
+await browser.close();
+```
+
+### Standalone navigation and snapshot
+
+```js
+import puppeteer from 'puppeteer';
+import {navigation, snapshot} from 'lighthouse';
+
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+
+const navResult = await navigation(page, 'https://example.com');
+console.log(navResult.lhr.categories.performance.score);
+
+await page.click('#expand-sidebar');
+const snapResult = await snapshot(page);
+console.log(snapResult.lhr.categories.accessibility.score);
+
+await browser.close();
+```
+
 ## Creating a Flow
 
 <img src="https://user-images.githubusercontent.com/39191/170560932-f10c8465-de49-4e75-be6c-1cf408cf84f6.png" height=240>
