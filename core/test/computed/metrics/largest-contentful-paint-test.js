@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {LanternLargestContentfulPaint} from '../../../computed/metrics/lantern-largest-contentful-paint.js';
 import {LargestContentfulPaint} from '../../../computed/metrics/largest-contentful-paint.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
@@ -31,9 +32,9 @@ describe('Metrics: LCP', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 1445,
-  "pessimistic": 1603,
-  "timing": 1524,
+  "optimistic": 1059,
+  "pessimistic": 1059,
+  "timing": 1059,
 }
 `);
   });
@@ -52,4 +53,41 @@ Object {
 }
 `);
   });
+
+  it(
+    'when simulating, should return the FCP result ' +
+      'when original FCP and LCP timestamps are the same',
+    async () => {
+      const settings = {throttlingMethod: 'simulate'};
+      const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+
+      const simulatedLcpOnlyResult =
+        await LanternLargestContentfulPaint.withFcpShortCircuitDisabled(() =>
+          LanternLargestContentfulPaint.request({
+            trace,
+            devtoolsLog,
+            gatherContext,
+            settings,
+            URL,
+            SourceMaps: [],
+            simulator: null,
+          }, {settings, computedCache: new Map()})
+        );
+
+      const simulatedLcpWithFcpResult = await LargestContentfulPaint.request({
+        trace,
+        devtoolsLog,
+        gatherContext,
+        settings,
+        URL,
+        SourceMaps: [],
+        simulator: null,
+      }, {settings, computedCache: new Map()});
+
+      expect(simulatedLcpOnlyResult.timing).not.toBe(simulatedLcpWithFcpResult.timing);
+      expect(simulatedLcpOnlyResult.optimisticEstimate.timeInMs)
+      .not.toBe(simulatedLcpWithFcpResult.optimisticEstimate.timeInMs);
+      expect(simulatedLcpOnlyResult.pessimisticEstimate.timeInMs)
+      .not.toBe(simulatedLcpWithFcpResult.pessimisticEstimate.timeInMs);
+    });
 });
