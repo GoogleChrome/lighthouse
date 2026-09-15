@@ -166,6 +166,11 @@ async function _computeNavigationResult(
     }
 
     navigationContext.baseArtifacts.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);
+    navigationContext.baseArtifacts.LighthouseRuntimeWarnings.push({
+      code: pageLoadError.code,
+      message: pageLoadError.friendlyMessage,
+    });
+
     navigationContext.baseArtifacts.PageLoadError = pageLoadError;
 
     return artifacts;

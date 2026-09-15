@@ -228,6 +228,7 @@ function createMockBaseArtifacts() {
     BenchmarkIndex: 500,
     HostDPR: 1,
     LighthouseRunWarnings: [],
+    LighthouseRuntimeWarnings: [],
     Timing: [],
     HostFormFactor: 'desktop',
     HostUserAgent: 'Chrome/93.0.0.0',
