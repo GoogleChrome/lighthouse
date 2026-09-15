@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import WebMCPRegisteredTools from '../../audits/webmcp-registered-tools.js';
+import WebMCPRegisteredTools, {
+  MAX_RECOMMENDED_TOOLS,
+} from '../../audits/webmcp-registered-tools.js';
 
 describe('WebMCPRegisteredTools Audit', () => {
   it('renders a table with registered tools', async () => {
@@ -108,5 +110,50 @@ describe('WebMCPRegisteredTools Audit', () => {
 
     expect(result.score).toEqual(1);
     expect(result.notApplicable).toEqual(true);
+  });
+
+  it('does not warn when number of tools does not exceed threshold', async () => {
+    const tools = Array.from({length: MAX_RECOMMENDED_TOOLS}, (_, i) => ({
+      name: `tool_${i}`,
+      description: `Description ${i}`,
+      inputSchema: {type: 'object'},
+      frameId: 'F1',
+      ...(i % 2 === 0
+        ? {backendNodeId: i}
+        : {stackTrace: {callFrames: [{url: 'https://example.com/test.js', lineNumber: 1}]}}),
+    }));
+
+    const artifacts = {
+      WebMCP: {isSupported: true, tools},
+    };
+
+    const result = await WebMCPRegisteredTools.audit(artifacts);
+
+    expect(result.score).toEqual(1);
+    expect(result.warnings).toBeUndefined();
+  });
+
+  it('warns when the number of imperative and declarative tools exceeds threshold', async () => {
+    const tools = Array.from({length: MAX_RECOMMENDED_TOOLS + 1}, (_, i) => ({
+      name: `tool_${i}`,
+      description: `Description ${i}`,
+      inputSchema: {type: 'object'},
+      frameId: 'F1',
+      ...(i % 2 === 0
+        ? {backendNodeId: i}
+        : {stackTrace: {callFrames: [{url: 'https://example.com/test.js', lineNumber: 1}]}}),
+    }));
+
+    const artifacts = {
+      WebMCP: {isSupported: true, tools},
+    };
+
+    const result = await WebMCPRegisteredTools.audit(artifacts);
+
+    expect(result.score).toEqual(1);
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings?.[0]).toBeDisplayString(
+      new RegExp(`Lighthouse recommends registering at most ${MAX_RECOMMENDED_TOOLS} tools`)
+    );
   });
 });

@@ -30,9 +30,18 @@ const UIStrings = {
   titleImperativeTools: 'Imperative Tools',
   /** Title for the table listing declarative WebMCP tools. */
   titleDeclarativeTools: 'Declarative Tools',
+  /**
+   * @description Warning message shown when the number of registered tools exceeds the recommended limit.
+   * @example {40} maxTools
+   */
+  warningMaxRecommendedTools: 'Lighthouse recommends registering at most {maxTools} tools. ' +
+    'Exceeding this recommendation consumes model context tokens, adds latency, ' +
+    'and increases the risk of tool confusion.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+
+const MAX_RECOMMENDED_TOOLS = 40;
 
 class WebMCPRegisteredTools extends Audit {
   /**
@@ -138,12 +147,18 @@ class WebMCPRegisteredTools extends Audit {
       };
     }
 
+    const warnings = [];
+    if (imperativeResults.length + declarativeResults.length > MAX_RECOMMENDED_TOOLS) {
+      warnings.push(str_(UIStrings.warningMaxRecommendedTools, {maxTools: MAX_RECOMMENDED_TOOLS}));
+    }
+
     return {
       score: 1,
       details: Audit.makeListDetails(list),
+      warnings: warnings.length ? warnings : undefined,
     };
   }
 }
 
 export default WebMCPRegisteredTools;
-export {UIStrings};
+export {UIStrings, MAX_RECOMMENDED_TOOLS};
