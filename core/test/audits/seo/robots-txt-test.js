@@ -211,6 +211,7 @@ User-agent: BadBot
 Disallow: / # go away!
 
 Sitemap: https://example.com/sitemap.xml
+License: https://example.com/license.xml
 
 User-agent: Yandex
 Host: https://brainly.com
