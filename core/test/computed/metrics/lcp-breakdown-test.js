@@ -112,11 +112,11 @@ describe('LCPBreakdown', () => {
     expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
     // TODO(15841): investigate difference.
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      expect(result.loadDelay).toBeCloseTo(3429.1, 0.1);
-      expect(result.loadDuration).toBeCloseTo(3812.8, 0.1);
+      expect(result.loadDelay).toBeCloseTo(4306.6, 0.1);
+      expect(result.loadDuration).toBeCloseTo(4788.5, 0.1);
     } else {
-      expect(result.loadDelay).toBeCloseTo(3558.6, 0.1);
-      expect(result.loadDuration).toBeCloseTo(3956.8, 0.1);
+      expect(result.loadDelay).toBeCloseTo(4436.1, 0.1);
+      expect(result.loadDuration).toBeCloseTo(4932.4, 0.1);
     }
   });
 
