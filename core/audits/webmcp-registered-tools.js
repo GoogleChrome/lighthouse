@@ -34,8 +34,8 @@ const UIStrings = {
    * @description Warning message shown when the number of registered tools exceeds the recommended limit.
    * @example {40} maxTools
    */
-  warningMaxRecommendedTools: 'Lighthouse recommends registering at most {maxTools} tools. ' +
-    'Exceeding this recommendation consumes model context tokens, adds latency, ' +
+  warningMaxRecommendedTools: 'Registering more than {maxTools} tools is not recommended. ' +
+    'Doing so consumes model context tokens, adds latency, ' +
     'and increases the risk of tool confusion.',
 };
 

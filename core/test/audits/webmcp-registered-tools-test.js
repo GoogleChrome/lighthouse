@@ -153,7 +153,7 @@ describe('WebMCPRegisteredTools Audit', () => {
     expect(result.score).toEqual(1);
     expect(result.warnings).toHaveLength(1);
     expect(result.warnings?.[0]).toBeDisplayString(
-      new RegExp(`Lighthouse recommends registering at most ${MAX_RECOMMENDED_TOOLS} tools`)
+      new RegExp(`Registering more than ${MAX_RECOMMENDED_TOOLS} tools is not recommended`)
     );
   });
 });
