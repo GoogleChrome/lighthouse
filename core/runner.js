@@ -70,9 +70,30 @@ class Runner {
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.
       const axeVersion = artifacts.Accessibility?.version;
+      /** @type {Record<string, string|undefined>} */
       const credits = {
         'axe-core': axeVersion,
       };
+
+      // Add plugins to the credits.
+      //
+      // This won't work in bundled environments, but we currently don't ship plugins
+      // in DevTools or PSI. So until we do, don't bother figuring out how to support
+      // bundled code.
+      if (resolvedConfig.categories) {
+        for (const categoryId of Object.keys(resolvedConfig.categories)) {
+          const isPlugin = categoryId.startsWith('lighthouse-plugin-') ||
+                           categoryId.startsWith('@') && categoryId.includes('/lighthouse-plugin-');
+          if (!isPlugin) continue;
+
+          try {
+            const require = (await import('module')).createRequire(import.meta.url);
+            credits[categoryId] = require(`${categoryId}/package.json`).version;
+          } catch {
+            // Ignore if we can't find it.
+          }
+        }
+      }
 
       /** @type {Record<string, LH.RawIcu<LH.Result.Category>>} */
       let categories = {};
