@@ -166,9 +166,8 @@ export class ReportRenderer {
       .filter(categoryId => ReportUtils.isPluginCategory(categoryId));
     for (const pluginId of pluginIds) {
       const version = report.environment.credits?.[pluginId];
-      const label = version ? `${pluginId} ${version}` : pluginId;
       metaItems.push(['plugin',
-        `${Globals.strings.runtimeSettingsPlugin}: ${label}`,
+        version ? `${pluginId} ${version}` : pluginId,
         undefined,
         `https://www.npmjs.com/package/${pluginId}`]);
     }

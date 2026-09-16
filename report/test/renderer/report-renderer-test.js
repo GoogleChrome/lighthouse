@@ -292,12 +292,15 @@ describe('ReportRenderer', () => {
       };
       const footer = renderer._renderReportFooter(sampleResults);
 
-      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
-      const pluginItems = items.filter(el => el.textContent.startsWith('Plugin:'));
+      const pluginItems = Array.from(footer.querySelectorAll('.lh-report-icon--plugin'));
       expect(pluginItems).toHaveLength(2);
 
-      const hrefs = pluginItems.map(el => el.querySelector('a').href);
-      expect(hrefs).toEqual([
+      // The package name alone -- no label prefix, since 'plugin' is already in the name.
+      expect(pluginItems.map(el => el.textContent)).toEqual([
+        'lighthouse-plugin-someplugin',
+        'lighthouse-plugin-other',
+      ]);
+      expect(pluginItems.map(el => el.querySelector('a').href)).toEqual([
         'https://www.npmjs.com/package/lighthouse-plugin-someplugin',
         'https://www.npmjs.com/package/lighthouse-plugin-other',
       ]);
@@ -315,9 +318,8 @@ describe('ReportRenderer', () => {
       };
       const footer = renderer._renderReportFooter(sampleResults);
 
-      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
-      const itemsTxt = items.map(el => el.textContent).join('\n');
-      expect(itemsTxt).toContain('Plugin: lighthouse-plugin-someplugin 1.2.3');
+      const pluginItem = footer.querySelector('.lh-report-icon--plugin');
+      expect(pluginItem.textContent).toEqual('lighthouse-plugin-someplugin 1.2.3');
     });
 
     it('renders a plugin without a version when the LHR credits lack one', () => {
@@ -328,17 +330,14 @@ describe('ReportRenderer', () => {
       };
       const footer = renderer._renderReportFooter(sampleResults);
 
-      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
-      const itemsTxt = items.map(el => el.textContent).join('\n');
-      expect(itemsTxt).toContain('Plugin: lighthouse-plugin-someplugin');
+      const pluginItem = footer.querySelector('.lh-report-icon--plugin');
+      expect(pluginItem.textContent).toEqual('lighthouse-plugin-someplugin');
     });
 
     it('renders no plugins footer item when no plugins were used', () => {
       const footer = renderer._renderReportFooter(sampleResults);
 
-      const items = Array.from(footer.querySelectorAll('.lh-meta__item'));
-      const itemsTxt = items.map(el => el.textContent).join('\n');
-      expect(itemsTxt).not.toContain('Plugin:');
+      expect(footer.querySelectorAll('.lh-report-icon--plugin')).toHaveLength(0);
     });
   });
 
