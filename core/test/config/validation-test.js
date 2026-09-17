@@ -80,6 +80,11 @@ describe('Config Validation', () => {
       const invocation = () => validation.assertValidPluginName(config, 'lighthouse-plugin-test');
       expect(invocation).toThrow(/not allowed because.*already found/);
     });
+    it('should throw if plugin has invalid npm package name characters', () => {
+      const invocation = () =>
+        validation.assertValidPluginName(defaultConfig, 'lighthouse-plugin- invalid');
+      expect(invocation).toThrow(/has invalid npm package name characters/);
+    });
   });
 
   describe('.assertValidArtifacts', () => {

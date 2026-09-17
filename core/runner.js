@@ -23,6 +23,7 @@ import {lighthouseVersion} from '../shared/root.js';
 import {getModuleDirectory} from '../shared/esm-utils.js';
 import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
+import {Util} from '../shared/util.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 
@@ -82,8 +83,7 @@ class Runner {
       // bundled code.
       if (resolvedConfig.categories) {
         for (const categoryId of Object.keys(resolvedConfig.categories)) {
-          const isPlugin = categoryId.startsWith('lighthouse-plugin-') ||
-                           categoryId.startsWith('@') && categoryId.includes('/lighthouse-plugin-');
+          const isPlugin = Util.isPluginCategory(categoryId);
           if (!isPlugin) continue;
 
           try {
