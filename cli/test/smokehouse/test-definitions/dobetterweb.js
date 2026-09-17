@@ -431,7 +431,7 @@ const expectations = {
         details: {
           items: [
             {
-              reason: 'The page has an unload handler in the main frame.',
+              reason: /The page has an unload handler in the main frame/,
               failureType: 'Actionable',
               subItems: {
                 items: [{

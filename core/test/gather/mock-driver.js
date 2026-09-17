@@ -110,6 +110,7 @@ function createMockPage() {
   return {
     url: fnAny().mockReturnValue('https://example.com'),
     goto: fnAny(),
+    on: fnAny(),
     target: () => ({createCDPSession: () => createMockSession()}),
 
     /** @return {LH.Puppeteer.Page} */
