@@ -256,10 +256,13 @@ class Util {
     // Elide too long names next
     if (name.length > MAX_LENGTH) {
       const dotIndex = name.lastIndexOf('.');
-      if (dotIndex >= 0) {
-        name = name.slice(0, MAX_LENGTH - 1 - (name.length - dotIndex)) +
-          // Show file extension
-          `${ELLIPSIS}${name.slice(dotIndex)}`;
+      // Keep the extension, but only when it leaves room for some of the name in front of it.
+      // A long stretch after the last dot (e.g. `/api.v2/<70 chars>`) is not really an
+      // extension - keeping it whole would make the elided name longer than the original.
+      const extension = dotIndex >= 0 ? name.slice(dotIndex) : '';
+      const prefixLength = MAX_LENGTH - 1 - extension.length;
+      if (prefixLength > 0) {
+        name = name.slice(0, prefixLength) + `${ELLIPSIS}${extension}`;
       } else {
         name = name.slice(0, MAX_LENGTH - 1) + ELLIPSIS;
       }
