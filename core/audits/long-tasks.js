@@ -199,7 +199,21 @@ class LongTasks extends Audit {
       const simulation = simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
       for (const [node, timing] of simulation.nodeTimings.entries()) {
         if (node.type !== 'cpu') continue;
-        taskTimingsByEvent.set(node.event, timing);
+
+        let duration = timing.duration;
+        // @ts-expect-error - childEvents is not typed
+        const isYieldBounded = node.childEvents?.some(e => {
+          return e.name === 'ScheduleYieldContinuation' ||
+                 e.name === 'RunYieldContinuation' ||
+                 e.name === 'SchedulePostTaskCallback' ||
+                 e.name === 'RunPostTaskCallback';
+        });
+
+        if (isYieldBounded) {
+          duration = node.duration / 1000;
+        }
+
+        taskTimingsByEvent.set(node.event, {...timing, duration});
       }
     }
 
