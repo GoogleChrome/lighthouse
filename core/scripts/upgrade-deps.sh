@@ -11,18 +11,19 @@ cd $LH_ROOT
 
 set -ex
 
+# Temporarily commented out due to build breakage
+#    @paulirish/trace_engine \
+#    chrome-devtools-frontend \
+#    devtools-protocol \
+#    puppeteer \
+#    puppeteer-core \
 yarn upgrade --latest \
-    @paulirish/trace_engine \
     axe-core \
-    chrome-devtools-frontend \
     chrome-launcher \
     csp_evaluator \
-    devtools-protocol \
     js-library-detector \
     lighthouse-logger \
     lighthouse-stack-packs \
-    puppeteer \
-    puppeteer-core \
     speedline-core \
     third-party-web \
     tldts-icann \

@@ -6,7 +6,7 @@ The original Python script is located in the `ards-project/ard-spec` repository:
 - **Upstream Repository**: https://github.com/ards-project/ard-spec
 - **Source Script**: `conformance/bin/conformance-test`
 - **Schema**: `spec/schemas/ai-catalog.schema.json`
-- **Pinned Commit SHA**: `aa3e598bb7752a9175897823234311216acfa864`
+- **Pinned Commit SHA**: `b76f235a8f461876ad4f1e77abd0eb0eb302b48d`
 
 ## Modifications for Lighthouse:
 While the validation rules and test suite maintain 1:1 parity with the reference suite, the following adaptations were made for Lighthouse integration:
