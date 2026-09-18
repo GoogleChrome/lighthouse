@@ -57,6 +57,13 @@ jobs:
     - run: yarn diff:flow-sample-json
     - run: yarn lint
 
+    - name: Check changelog for unreplaced Chrome version
+      run: |
+        if grep -q "Chrome XXX" changelog.md; then
+          echo "Error: 'Chrome XXX' found in changelog.md. Please replace it with the actual Chrome version."
+          exit 1
+        fi
+
     - run: yarn test-legacy-javascript
       env:
         # https://github.com/nodejs/node/issues/51555#issuecomment-1974877052

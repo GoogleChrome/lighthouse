@@ -1,4 +1,4 @@
- <a name="13.5.0"></a>
+<a name="13.5.0"></a>
 # 13.5.0 (2026-09-17)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.1...v13.5.0)
 
