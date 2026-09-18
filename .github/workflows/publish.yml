@@ -85,6 +85,7 @@ jobs:
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           node -e "
             const fs = require('fs');
@@ -104,4 +105,4 @@ jobs:
             const releaseNotes = nextIdx === -1 ? changelog.substring(contentStartIdx) : changelog.substring(contentStartIdx, nextIdx);
             fs.writeFileSync('latest-release-notes.md', releaseNotes.trim());
           "
-          gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --notes-file latest-release-notes.md
+          gh release create "$REF_NAME" --title "$REF_NAME" --notes-file latest-release-notes.md
