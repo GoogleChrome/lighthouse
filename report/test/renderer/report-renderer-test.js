@@ -278,6 +278,67 @@ describe('ReportRenderer', () => {
       expect(itemsTxt).toMatch('412x823, DPR 1.75');
       expect(itemsTxt).toContain('Point-in-time snapshot');
     });
+
+    it('renders one footer row per plugin, linking each to npm', () => {
+      sampleResults.categories['lighthouse-plugin-someplugin'] = {
+        id: 'lighthouse-plugin-someplugin',
+        title: 'Some Plugin',
+        auditRefs: [],
+      };
+      sampleResults.categories['lighthouse-plugin-other'] = {
+        id: 'lighthouse-plugin-other',
+        title: 'Other Plugin',
+        auditRefs: [],
+      };
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      const pluginItems = Array.from(footer.querySelectorAll('.lh-report-icon--plugin'));
+      expect(pluginItems).toHaveLength(2);
+
+      // The package name alone -- no label prefix, since 'plugin' is already in the name.
+      expect(pluginItems.map(el => el.textContent)).toEqual([
+        'lighthouse-plugin-someplugin',
+        'lighthouse-plugin-other',
+      ]);
+      expect(pluginItems.map(el => el.querySelector('a').href)).toEqual([
+        'https://www.npmjs.com/package/lighthouse-plugin-someplugin',
+        'https://www.npmjs.com/package/lighthouse-plugin-other',
+      ]);
+    });
+
+    it('renders a plugin version when the LHR credits carry one', () => {
+      sampleResults.categories['lighthouse-plugin-someplugin'] = {
+        id: 'lighthouse-plugin-someplugin',
+        title: 'Some Plugin',
+        auditRefs: [],
+      };
+      sampleResults.environment.credits = {
+        ...sampleResults.environment.credits,
+        'lighthouse-plugin-someplugin': '1.2.3',
+      };
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      const pluginItem = footer.querySelector('.lh-report-icon--plugin');
+      expect(pluginItem.textContent).toEqual('lighthouse-plugin-someplugin 1.2.3');
+    });
+
+    it('renders a plugin without a version when the LHR credits lack one', () => {
+      sampleResults.categories['lighthouse-plugin-someplugin'] = {
+        id: 'lighthouse-plugin-someplugin',
+        title: 'Some Plugin',
+        auditRefs: [],
+      };
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      const pluginItem = footer.querySelector('.lh-report-icon--plugin');
+      expect(pluginItem.textContent).toEqual('lighthouse-plugin-someplugin');
+    });
+
+    it('renders no plugins footer item when no plugins were used', () => {
+      const footer = renderer._renderReportFooter(sampleResults);
+
+      expect(footer.querySelectorAll('.lh-report-icon--plugin')).toHaveLength(0);
+    });
   });
 
   it('should add LHR channel to doc link parameters', () => {

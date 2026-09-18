@@ -6,13 +6,13 @@
 
 /**
  * @typedef ExportType
- * @property {import('./index.js')['startFlow']} startFlow
- * @property {import('./index.js')['navigation']} navigation
- * @property {import('./index.js')['startTimespan']} startTimespan
- * @property {import('./index.js')['snapshot']} snapshot
+ * @property {typeof import('./index.js')['startFlow']} startFlow
+ * @property {typeof import('./index.js')['navigation']} navigation
+ * @property {typeof import('./index.js')['startTimespan']} startTimespan
+ * @property {typeof import('./index.js')['snapshot']} snapshot
  */
 
-/** @type {import('./index.js')['default'] & ExportType} */
+/** @type {typeof import('./index.js')['default'] & ExportType} */
 const lighthouse = async function lighthouse(...args) {
   const {default: lighthouse} = await import('./index.js');
   return lighthouse(...args);

@@ -1,3 +1,75 @@
+ <a name="13.5.0"></a>
+# 13.5.0 (2026-09-17)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.1...v13.5.0)
+
+We expect this release to ship in the DevTools of [Chrome 156](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+* NickNojiri @NickNojiri
+* Alina Varkki @AlinaVarkki
+
+## New Audits
+
+* ard-schema: add Agent Resource Discovery audit ([#17168](https://github.com/GoogleChrome/lighthouse/pull/17168))
+
+## Core
+
+* centralize and enforce plugin category validation ([#17243](https://github.com/GoogleChrome/lighthouse/pull/17243))
+* add plugin version to LHR credits ([#17232](https://github.com/GoogleChrome/lighthouse/pull/17232))
+* config: group llms.txt and ARD audits under agent discovery ([#17210](https://github.com/GoogleChrome/lighthouse/pull/17210))
+* deprecations: handle new column offset ([#17234](https://github.com/GoogleChrome/lighthouse/pull/17234))
+* fetcher: add response header capture support ([#17167](https://github.com/GoogleChrome/lighthouse/pull/17167))
+* gather: fix broken cycle detection in recurse functions ([#17173](https://github.com/GoogleChrome/lighthouse/pull/17173))
+* user-flow: support aborting pending navigations ([#17067](https://github.com/GoogleChrome/lighthouse/pull/17067))
+* webmcp-form-coverage: pass instead of n/a when all forms covered ([#17242](https://github.com/GoogleChrome/lighthouse/pull/17242))
+* webmcp-registered-tools: warn when exceeding recommended limit ([#17221](https://github.com/GoogleChrome/lighthouse/pull/17221))
+
+## Report
+
+* display plugins in footer ([#17125](https://github.com/GoogleChrome/lighthouse/pull/17125))
+* sanitize entity homepage URLs ([#17178](https://github.com/GoogleChrome/lighthouse/pull/17178))
+
+## Deps
+
+* upgrade deps ([#17245](https://github.com/GoogleChrome/lighthouse/pull/17245))
+* upgrade deps ([#17206](https://github.com/GoogleChrome/lighthouse/pull/17206))
+
+## Clients
+
+* lightrider: export bundle w/ cjs compat ([#17161](https://github.com/GoogleChrome/lighthouse/pull/17161))
+* lr: split locales out of bundle ([#17149](https://github.com/GoogleChrome/lighthouse/pull/17149))
+
+## I18n
+
+* import ([#17241](https://github.com/GoogleChrome/lighthouse/pull/17241))
+
+## Tests
+
+* fix dbw expectation to exclude period ([#17246](https://github.com/GoogleChrome/lighthouse/pull/17246))
+* remove c8 comments ([#17205](https://github.com/GoogleChrome/lighthouse/pull/17205))
+* sync e2e tests from devtools-frontend ([#17144](https://github.com/GoogleChrome/lighthouse/pull/17144))
+* ard: add .well-known ai-catalog fixture and update sample artifacts ([#17212](https://github.com/GoogleChrome/lighthouse/pull/17212))
+* devtools: fix build and e2e test integration ([#17233](https://github.com/GoogleChrome/lighthouse/pull/17233))
+* devtools: fix device mode readiness check for latest devtools-frontend ([#17164](https://github.com/GoogleChrome/lighthouse/pull/17164))
+* devtools: sync e2e tests ([#17153](https://github.com/GoogleChrome/lighthouse/pull/17153))
+* llms-txt: add passing and failing smoke tests and fixtures ([#17211](https://github.com/GoogleChrome/lighthouse/pull/17211))
+* smoke: add ARD smoke tests ([#17165](https://github.com/GoogleChrome/lighthouse/pull/17165))
+* smoke: pass timeout to requestIdleCallback in ric-shim fixture ([#17189](https://github.com/GoogleChrome/lighthouse/pull/17189))
+* smoke: remove order constraint in dbw render-blocking ([#17184](https://github.com/GoogleChrome/lighthouse/pull/17184))
+* webmcp: support document.modelContext.getTools in fixture ([#17188](https://github.com/GoogleChrome/lighthouse/pull/17188))
+
+## Misc
+
+* use replaceAll in bump version script ([#17143](https://github.com/GoogleChrome/lighthouse/pull/17143))
+* build: add precompiled standalone schema validator ([#17195](https://github.com/GoogleChrome/lighthouse/pull/17195))
+* build: extract bundled dependency licenses into generated LICENSE ([#17172](https://github.com/GoogleChrome/lighthouse/pull/17172))
+* ci: add weekly ARD conformance script sync check ([#17171](https://github.com/GoogleChrome/lighthouse/pull/17171))
+* ci: pin action hashes and restrict permissions in cron-weekly ([#17201](https://github.com/GoogleChrome/lighthouse/pull/17201))
+* types: update JSDoc for TypeScript 7 ([#17183](https://github.com/GoogleChrome/lighthouse/pull/17183))
+
  <a name="13.4.1"></a>
 # 13.4.1 (2026-07-20)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.0...v13.4.1)
@@ -39,7 +111,7 @@ We expect this release to ship in the DevTools of [Chrome 151](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - Thomas Steiner @tomayac
 - KS Nithin @Nithin0620
@@ -194,7 +266,7 @@ We expect this release to ship in the DevTools of [Chrome 148](https://chromiumd
 
 ## New contributors
 
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 - Iaroslav Shvets @iaroslavshvets
 

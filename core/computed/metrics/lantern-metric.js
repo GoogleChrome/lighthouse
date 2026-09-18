@@ -61,7 +61,7 @@ function lanternErrorAdapter(err) {
     throw err;
   }
 
-  const code = /** @type {keyof LighthouseError.errors} */ (err.message);
+  const code = /** @type {keyof typeof LighthouseError.errors} */ (err.message);
   if (LighthouseError.errors[code]) {
     throw new LighthouseError(LighthouseError.errors[code]);
   }

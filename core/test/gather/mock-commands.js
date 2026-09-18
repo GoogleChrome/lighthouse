@@ -21,6 +21,16 @@ import {fnAny} from '../test-utils.js';
  */
 
 /**
+ * @template {keyof LH.CrdpCommands} [C=keyof LH.CrdpCommands]
+ * @typedef {{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}} MockSendCommandEntry
+ */
+
+/**
+ * @template {keyof LH.CrdpEvents} [E=keyof LH.CrdpEvents]
+ * @typedef {{event: E|any, response?: MockEvent<E>}} MockEventEntry
+ */
+
+/**
  * Creates a jest mock function whose implementation consumes mocked protocol responses matching the
  * requested command in the order they were mocked.
  *
@@ -36,8 +46,7 @@ function createMockSendCommandFn() {
    * Typescript fails to equate template type `C` here with `C` when pushing to this array.
    * Instead of sprinkling a couple ts-ignores, make `command` be any, but leave `C` for just
    * documentation purposes. This is an internal type, so it doesn't matter much.
-   * @template {keyof LH.CrdpCommands} C
-   * @type {Array<{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}>}
+   * @type {Array<MockSendCommandEntry>}
    */
   const mockResponses = [];
   const mockFnImpl = fnAny().mockImplementation(
@@ -112,8 +121,7 @@ function createMockSendCommandFn() {
  */
 function createMockOnceFn() {
   /**
-   * @template {keyof LH.CrdpEvents} E
-   * @type {Array<{event: E|any, response?: MockEvent<E>}>}
+   * @type {Array<MockEventEntry>}
    */
   const mockEvents = [];
   const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {
@@ -161,8 +169,7 @@ function createMockOnceFn() {
  */
 function createMockOnFn() {
   /**
-   * @template {keyof LH.CrdpEvents} E
-   * @type {Array<{event: E|any, response?: MockEvent<E>}>}
+   * @type {Array<MockEventEntry>}
    */
   const mockEvents = [];
   const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {

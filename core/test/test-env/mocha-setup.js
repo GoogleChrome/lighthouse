@@ -47,7 +47,7 @@ global.performance = undefined;
 await import('marky');
 global.performance = performance;
 
-/** @type {Map<string, SnapshotState['prototype']>} */
+/** @type {Map<string, InstanceType<typeof SnapshotState>>} */
 const snapshotStatesByTestFile = new Map();
 let snapshotTestFailed = false;
 

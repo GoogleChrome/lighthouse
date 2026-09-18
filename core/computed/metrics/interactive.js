@@ -88,7 +88,7 @@ class Interactive extends NavigationMetric {
   static findOverlappingQuietPeriods(longTasks, networkRecords, processedNavigation) {
     const FcpTsInMs = processedNavigation.timestamps.firstContentfulPaint / 1000;
 
-    /** @type {function(TimePeriod):boolean} */
+    /** @type {(period: TimePeriod) => boolean} */
     const isLongEnoughQuietPeriod = period =>
         period.end > FcpTsInMs + REQUIRED_QUIET_WINDOW &&
         period.end - period.start >= REQUIRED_QUIET_WINDOW;
