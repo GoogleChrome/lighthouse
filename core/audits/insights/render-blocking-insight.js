@@ -36,7 +36,8 @@ class RenderBlockingInsight extends Audit {
    */
   static async audit(artifacts, context) {
     // TODO: show UIStrings.noRenderBlocking if nothing was blocking?
-    return adaptInsightToAuditProduct(artifacts, context, 'RenderBlocking', (insight) => {
+    // eslint-disable-next-line max-len
+    const product = await adaptInsightToAuditProduct(artifacts, context, 'RenderBlocking', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
@@ -51,6 +52,12 @@ class RenderBlockingInsight extends Audit {
       }));
       return Audit.makeTableDetails(headings, items);
     });
+
+    if (product.score === 0) {
+      return {...product, scoreDisplayMode: Audit.SCORING_MODES.NUMERIC, score: 0.5};
+    }
+
+    return product;
   }
 }
 
