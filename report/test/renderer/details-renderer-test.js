@@ -761,6 +761,48 @@ describe('DetailsRenderer', () => {
             'did not render 1st party grouped row correctly'
           );
         });
+
+        it(`safely sets the entity homepage URL and only appends if valid`, () => {
+          createRenderer({
+            entities: [
+              {name: 'valid.com', homepage: 'https://valid.com'},
+              // Invalid because only http/https URLs are allowed, not local files.
+              {name: 'invalid.com', homepage: 'file:///etc/passwd'},
+            ],
+          });
+
+          const el = renderer.render({
+            type: tableType,
+            headings: [
+              {key: 'url', valueType: 'url', label: 'URL'},
+              {key: 'totalBytes', valueType: 'bytes', label: 'Size (KiB)'},
+            ],
+            items: [
+              {url: 'https://valid.com/1', totalBytes: 100, entity: 'valid.com'},
+              {url: 'https://invalid.com/1', totalBytes: 200, entity: 'invalid.com'},
+            ],
+          });
+
+          const rows = el.querySelectorAll('.lh-row--group');
+          assert.equal(rows.length, 2);
+
+          // Row 0 is valid.com, should have the external link anchor tag
+          assert.deepStrictEqual(
+            [...rows[0].children].map(td => td.textContent.trim()),
+            ['valid.com', '0.1 KiB']
+          );
+          const validLinks = rows[0].querySelectorAll('a.lh-report-icon--external');
+          assert.equal(validLinks.length, 1);
+          assert.equal(validLinks[0].href, 'https://valid.com/');
+
+          // Row 1 is invalid.com, should NOT have the external link anchor tag
+          assert.deepStrictEqual(
+            [...rows[1].children].map(td => td.textContent.trim()),
+            ['invalid.com', '0.2 KiB']
+          );
+          const invalidLinks = rows[1].querySelectorAll('a.lh-report-icon--external');
+          assert.equal(invalidLinks.length, 0);
+        });
       })
     );
 

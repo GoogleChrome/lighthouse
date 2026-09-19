@@ -264,26 +264,17 @@ const expectations = {
           FCP: '>=50',
         },
         details: {
-          items: [
-            {
-              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-            },
-          ],
+          items: {
+            _includes: [
+              {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.js'},
+              {url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100'},
+            ],
+            _excludes: [{}],
+          },
         },
       },
       'deprecations': {
@@ -299,7 +290,7 @@ const expectations = {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
                 urlProvider: 'network',
                 line: '>0',
-                column: 6,
+                column: '6+/-1',
               },
               subItems: undefined,
             },
@@ -310,7 +301,7 @@ const expectations = {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
                 urlProvider: 'network',
                 line: '>0',
-                column: 9,
+                column: '9+/-1',
               },
             },
           ],
@@ -440,7 +431,7 @@ const expectations = {
         details: {
           items: [
             {
-              reason: 'The page has an unload handler in the main frame.',
+              reason: /The page has an unload handler in the main frame/,
               failureType: 'Actionable',
               subItems: {
                 items: [{

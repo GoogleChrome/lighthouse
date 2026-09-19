@@ -41,6 +41,15 @@ class Util {
   }
 
   /**
+   * Optionally scoped. Ignoring the scope, package name must begin with "lighthouse-plugin-".
+   *
+   * @param {string} categoryId
+   */
+  static isPluginCategory(categoryId) {
+    return /^(@[a-z0-9-~][a-z0-9-._~]*\/)?lighthouse-plugin-[a-z0-9-._~]*$/.test(categoryId);
+  }
+
+  /**
    * If LHR is older than 10.0 it will not have the `finalDisplayedUrl` property.
    * Old LHRs should have the `finalUrl` property which will work fine for the report.
    *

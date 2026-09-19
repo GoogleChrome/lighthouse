@@ -31,8 +31,6 @@ function kebabCaseToCamelCase(str) {
   );
 }
 
-/* c8 ignore start */
-
 function getObservedDeviceMetrics() {
   // Convert the Web API's kebab case (landscape-primary) to camel case (landscapePrimary).
   const screenOrientationType = kebabCaseToCamelCase(window.screen.orientation.type);
@@ -52,8 +50,6 @@ function waitForDoubleRaf() {
     requestAnimationFrame(() => requestAnimationFrame(resolve));
   });
 }
-
-/* c8 ignore stop */
 
 class FullPageScreenshot extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
