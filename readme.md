@@ -341,6 +341,9 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
+* **[GEOREX](https://georex.ai)** - GEOREX is an AI Visibility and Generative Engine Optimization (GEO) platform that shows businesses how they are represented across ChatGPT, Claude, Gemini, and Perplexity. It tracks brand mentions and AI citations, benchmarks Share of Voice against real competitors, and turns every gap it finds into an evidence-backed task, not a generic checklist.Free accounts get a live ChatGPT scan; paid plans unlock all four engines, the full competitor and task lists, and a shareable PDF report. Built for founders, marketing teams, and agencies who want their brand to be the one AI engines actually recommend.
+
+
 * **[Siteimprove Performance](https://siteimprove.com/en/performance/)** — Siteimprove Performance is a web Performance monitoring solution that enables a marketer, manager or decision maker to understand and optimize website load times. Get easy-to-use insights with a focus on quick and impactful wins. Siteimprove Performance is a paid product with a free 14-day trial.
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
