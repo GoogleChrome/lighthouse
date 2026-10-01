@@ -4888,8 +4888,8 @@
     },
     "ard-schema": {
       "id": "ard-schema",
-      "title": "`ai-catalog.json` schema is invalid",
-      "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+      "title": "ARD manifest is invalid",
+      "description": "A valid Agentic Resource Discovery (ARD) manifest, served at `/.well-known/ard.json` or linked with `rel=\"ard\"`, lets AI agents and registries discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -4930,6 +4930,11 @@
           {
             "element": "Invalid Service",
             "issue": "No 'representativeQueries'. The semantic index is built from this term, so the entry will not be found by search — it is a valid catalog entry but not a discoverable ARD entry.",
+            "severity": "Low"
+          },
+          {
+            "element": "http://localhost:10200/.well-known/ai-catalog.json",
+            "issue": "Manifest was only found through a predecessor name (`/.well-known/ai-catalog.json` or `rel=\"ai-catalog\"`). ARD consumers are not required to check these, so your resources may not be discovered. Serve the manifest at `/.well-known/ard.json` or link it with `rel=\"ard\"`.",
             "severity": "Low"
           }
         ]
@@ -11492,7 +11497,11 @@
         "audits[ard-schema].details.items[2].severity"
       ],
       "core/lib/i18n/i18n.js | itemSeverityLow": [
-        "audits[ard-schema].details.items[3].severity"
+        "audits[ard-schema].details.items[3].severity",
+        "audits[ard-schema].details.items[4].severity"
+      ],
+      "core/audits/agentic/ard-schema.js | legacyDiscovery": [
+        "audits[ard-schema].details.items[4].issue"
       ],
       "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
