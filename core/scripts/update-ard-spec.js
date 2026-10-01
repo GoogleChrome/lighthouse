@@ -29,7 +29,7 @@ const RELEVANT_PREFIXES = [
   'conformance/',
 ];
 
-const LOCAL_SCHEMA_PATH = path.join(LH_ROOT, 'third-party/ard/spec/schemas/ai-catalog.schema.json');
+const LOCAL_SCHEMA_PATH = path.join(LH_ROOT, 'third-party/ard/spec/schemas/ard-entry.schema.json');
 const LOCAL_README_PATH = path.join(LH_ROOT, 'third-party/ard/README.md');
 
 const HEADERS = {'User-Agent': 'Lighthouse-ARD-Update-Script'};
@@ -159,7 +159,7 @@ async function main() {
   }
 
   const schemaRemoteUrl =
-    `https://raw.githubusercontent.com/${REPO}/${latestSha}/spec/schemas/ai-catalog.schema.json`;
+    `https://raw.githubusercontent.com/${REPO}/${latestSha}/spec/schemas/ard-entry.schema.json`;
   const schemaRes = await fetch(schemaRemoteUrl);
   if (!schemaRes.ok) {
     throw new Error(`Failed to fetch schema: ${schemaRes.status} ${schemaRes.statusText}`);
