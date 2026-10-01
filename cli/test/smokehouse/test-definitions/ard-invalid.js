@@ -48,6 +48,16 @@ const expectations = {
               issue: /No 'representativeQueries'/,
               severity: 'Low',
             },
+            {
+              element: 'http://localhost:10200/agentic/missing-ard.json',
+              issue: /Advertised ARD manifest location could not be loaded \(HTTP status 404\)/,
+              severity: 'Low',
+            },
+            {
+              element: 'http://localhost:10200/agentic/ai-catalog-invalid.json',
+              issue: /Manifest was only found through a predecessor name/,
+              severity: 'Low',
+            },
           ],
         },
       },
