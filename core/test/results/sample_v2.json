@@ -4914,7 +4914,12 @@
         "items": [
           {
             "element": "Root",
-            "issue": "JSON Schema Validation Failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'entries.0.identifier'",
+            "issue": "ArdManifest validation failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'entries.0.identifier'",
+            "severity": "Error"
+          },
+          {
+            "element": "Invalid Service",
+            "issue": "ArdEntry validation failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'identifier'",
             "severity": "Error"
           },
           {
@@ -4924,12 +4929,7 @@
           },
           {
             "element": "Invalid Service",
-            "issue": "Media type 'application/json' is not one of standard discovery types: application/ai-catalog+json,application/agent-card+json,application/a2a-agent-card+json,application/mcp-server-card+json,application/agent-skills+zip,application/agent-skills+gzip,text/markdown; profile=\"urn:air:agent-skills\",application/ai-registry,application/ai-registry+json.",
-            "severity": "Low"
-          },
-          {
-            "element": "Invalid Service",
-            "issue": "Missing 'representativeQueries'. 2 to 5 queries are recommended for vector index embedding.",
+            "issue": "No 'representativeQueries'. The semantic index is built from this term, so the entry will not be found by search — it is a valid catalog entry but not a discoverable ARD entry.",
             "severity": "Low"
           }
         ]
@@ -11493,10 +11493,10 @@
       ],
       "core/audits/agentic/ard-schema.js | itemSeverityError": [
         "audits[ard-schema].details.items[0].severity",
-        "audits[ard-schema].details.items[1].severity"
+        "audits[ard-schema].details.items[1].severity",
+        "audits[ard-schema].details.items[2].severity"
       ],
       "core/lib/i18n/i18n.js | itemSeverityLow": [
-        "audits[ard-schema].details.items[2].severity",
         "audits[ard-schema].details.items[3].severity"
       ],
       "core/audits/bf-cache.js | failureTitle": [

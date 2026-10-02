@@ -111,7 +111,7 @@ describe('ARD Schema Audit', () => {
     expect(result.score).toEqual(0.9);
     expect(result.details.items[0].severity).toBeDisplayString('Low');
     expect(result.details.items[0].issue).toContain(
-      'Missing \'representativeQueries\''
+      'No \'representativeQueries\''
     );
   });
 });

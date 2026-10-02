@@ -30,7 +30,12 @@ const expectations = {
           items: [
             {
               element: 'Root',
-              issue: /JSON Schema Validation Failed/,
+              issue: /ArdManifest validation failed: .* at path 'entries.0.identifier'/,
+              severity: 'Error',
+            },
+            {
+              element: 'Invalid Service',
+              issue: /ArdEntry validation failed: .* at path 'identifier'/,
               severity: 'Error',
             },
             {
@@ -40,12 +45,7 @@ const expectations = {
             },
             {
               element: 'Invalid Service',
-              issue: /Media type 'application\/json' is not one of standard discovery types/,
-              severity: 'Low',
-            },
-            {
-              element: 'Invalid Service',
-              issue: /Missing ['`]representativeQueries['`]/,
+              issue: /No 'representativeQueries'/,
               severity: 'Low',
             },
           ],
