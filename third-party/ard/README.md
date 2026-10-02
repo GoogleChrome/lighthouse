@@ -7,6 +7,9 @@ The original Python script is located in the `ards-project/ard-spec` repository:
 - **Source Script**: `conformance/bin/conformance-test`
 - **Schema**: `spec/schemas/ard-entry.schema.json` (`$defs/ArdManifest` and `$defs/ArdEntry`)
 - **Pinned Commit SHA**: `b76f235a8f461876ad4f1e77abd0eb0eb302b48d`
+- **Reviewed Upstream Files** (SHA-256 of the upstream content the port was last verified against; maintained by `yarn update:ard-spec --ack-port`, do not edit by hand):
+  - `conformance/bin/conformance-test`: `ac2f3cae1c4ac75261fe45786a117aaad275322c92b74110529ad03a794275b4`
+  - `spec/ard.md`: `6deb2cc58216fb279569d8ff61bd4595ccdf6ceaeef6766a1a1c9f25b6b68a62`
 
 ## Modifications for Lighthouse:
 While the validation rules and test suite maintain 1:1 parity with the reference suite, the following adaptations were made for Lighthouse integration:
@@ -21,10 +24,13 @@ Publisher resolution (upstream's `resolve_publisher`, spec §5.1) is implemented
 
 ## Updating Conformance Script
 
-Upstream schema and conformance test synchronization is checked regularly during dependency upgrades (via `core/scripts/upgrade-deps.sh`) and monitored weekly via CI (`.github/workflows/cron-weekly.yml` with `node core/scripts/update-ard-spec.js --check`).
+`yarn check:ard-spec` (`core/scripts/update-ard-spec.js --check`) compares upstream `main` against what Lighthouse has: the vendored schema must match byte-for-byte, and the hand-ported files must match the **Reviewed Upstream Files** hashes above. It runs weekly in CI (`.github/workflows/cron-weekly.yml`) and during dependency upgrades (`core/scripts/upgrade-deps.sh`). Neither of those can mark upstream changes as handled; only `--ack-port` does.
 
-When upstream changes are detected:
-1. Run `yarn update:ard-spec` to fetch the latest `ard-entry.schema.json` and bump the pinned commit SHA.
-2. Review the printed diff of `conformance/bin/conformance-test` and adapt `third-party/ard/ard.js` to match any updated validation rules.
-3. Run `yarn build-ard-schema` to regenerate the standalone validator (`schema-validator.js`).
-4. Run `yarn mocha third-party/ard/ard-test.js` to verify test conformance.
+When it reports changes (the `update-ard-port` agent skill walks through this in detail):
+1. Run `yarn update:ard-spec`. This syncs `ard-entry.schema.json` verbatim and prints the upstream `conformance-test` diff. If a hand-ported file changed, it exits 1 **without** bumping the pinned SHA.
+2. Port `conformance/bin/conformance-test` changes into `third-party/ard/ard.js` (keep rules, severities and message text 1:1; see modifications above) and update `third-party/ard/ard-test.js`.
+3. If `spec/ard.md` changed, check §5.1 (Discovery Mechanisms) against `core/gather/gatherers/agentic/ard.js`.
+4. If the schema changed, run `yarn build-ard-schema` to regenerate `schema-validator.js`.
+5. Verify: `yarn mocha third-party/ard/ard-test.js core/test/gather/gatherers/agentic/ard-test.js core/test/audits/agentic/ard-schema-test.js` and `yarn smoke ard ardInvalid`.
+6. Run `yarn update:ard-spec --ack-port` to record the reviewed hashes and bump the pinned SHA. `yarn check:ard-spec` should now pass.
+
