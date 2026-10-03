@@ -7,6 +7,7 @@
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {FirstContentfulPaint as ComputedFcp} from '../../computed/metrics/first-contentful-paint.js';
+import {ProcessedSoftNavigations} from '../../computed/processed-soft-navigations.js';
 
 const UIStrings = {
   /** Description of the First Contentful Paint (FCP) metric, which marks the time at which the first text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
@@ -26,7 +27,7 @@ class FirstContentfulPaint extends Audit {
       title: str_(i18n.UIStrings.firstContentfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      supportedModes: ['navigation'],
+      supportedModes: ['navigation', 'timespan'],
       requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'SourceMaps', 'HostDPR'],
     };
   }
@@ -64,6 +65,27 @@ class FirstContentfulPaint extends Audit {
     const trace = artifacts.Trace;
     const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
+
+    // TODO concern of the gather mode and switching the navigations modes does not belong here
+    if (gatherContext.gatherMode === 'timespan') {
+      const softNavigations = await ProcessedSoftNavigations.request(trace, context);
+      const timings = softNavigations.flatMap(navigation => {
+        const timing = navigation.timings.firstContentfulPaint;
+        return timing === undefined ? [] : [timing];
+      });
+      const timing = timings.length === 1 ? timings[0] : undefined;
+      if (timing === undefined) return {score: 1, notApplicable: true};
+
+      const options = context.options[context.settings.formFactor];
+      return {
+        score: Audit.computeLogNormalScore(options.scoring, timing),
+        scoringOptions: options.scoring,
+        numericValue: timing,
+        numericUnit: 'millisecond',
+        displayValue: str_(i18n.UIStrings.seconds, {timeInMs: timing}),
+      };
+    }
+
     const metricComputationData = {trace, devtoolsLog, gatherContext,
       settings: context.settings, URL: artifacts.URL,
       SourceMaps: artifacts.SourceMaps, simulator: null,
