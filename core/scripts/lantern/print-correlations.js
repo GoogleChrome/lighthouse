@@ -237,10 +237,9 @@ evaluateAndPrintAccuracy('largestContentfulPaint', 'optimisticLCP');
 evaluateAndPrintAccuracy('largestContentfulPaint', 'pessimisticLCP');
 evaluateAndPrintAccuracy('largestContentfulPaint', 'roughEstimateOfLCP');
 
-// TODO: enable when new traces are collected (also, do calls to findAndPrintWorst10Sites)
-// evaluateAndPrintAccuracy('timeToFirstByte', 'roughEstimateOfTTFB');
-// evaluateAndPrintAccuracy('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay');
-// evaluateAndPrintAccuracy('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration');
+evaluateAndPrintAccuracy('timeToFirstByte', 'roughEstimateOfTTFB');
+evaluateAndPrintAccuracy('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay');
+evaluateAndPrintAccuracy('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration');
 
 const estimates = allEvaluations.filter(entry => entry.lanternMetric.includes('roughEstimate'));
 const baselineEstimates = baselineEvaluations.filter(entry =>
@@ -263,6 +262,10 @@ findAndPrintWorst10Sites('largestContentfulPaint', [
   'pessimisticLCP',
   'roughEstimateOfLCP',
 ]);
+
+findAndPrintWorst10Sites('timeToFirstByte', ['roughEstimateOfTTFB']);
+findAndPrintWorst10Sites('lcpLoadDelay', ['roughEstimateOfLCPLoadDelay']);
+findAndPrintWorst10Sites('lcpLoadDuration', ['roughEstimateOfLCPLoadDuration']);
 
 findAndPrintFixesRegressions();
 
