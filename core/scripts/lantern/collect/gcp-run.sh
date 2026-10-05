@@ -16,18 +16,11 @@ fi
 cd ./lighthouse
 
 git fetch origin
-git checkout -f origin/main
+# git checkout -f origin/main
+git checkout -f origin/lantern-traces-2026
 yarn install
 yarn build-report
 
-# Import WPT_KEY vars
-source /home/lighthouse/.env
+# Run the collection (includes golden generation and archiving)
+CHROME_PATH=/usr/bin/google-chrome-canary DEBUG=1 xvfb-run node --max-old-space-size=4096 ./core/scripts/lantern/collect/collect.js
 
-# Run the collection
-DEBUG=1 xvfb-run node --max-old-space-size=4096 ./core/scripts/lantern/collect/collect.js
-
-# Create golden
-DEBUG=1 node --max-old-space-size=4096 ./core/scripts/lantern/collect/golden.js
-
-# Kill xvfb
-kill $!

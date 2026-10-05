@@ -62,7 +62,7 @@ if (diffs.length) {
   diffs.sort((a, b) => b.maxDiff - a.maxDiff).forEach(site => {
     console.log(styleText('magenta', site.url));
     site.diffsForSite.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).forEach(entry => {
-      const metric = `    - ${entry.metricName.padEnd(25)}`;
+      const metric = `    - ${entry.metricName.padEnd(28)}`;
       const diff = entry.diff > 0
         ? styleText('yellow', `+${entry.diff}`)
         : styleText('cyan', `${entry.diff}`);
