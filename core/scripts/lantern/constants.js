@@ -199,10 +199,9 @@ export default {
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),
-      // TODO: enable when new traces are collected.
-      // roughEstimateOfTTFB: evaluate('timeToFirstByte', 'roughEstimateOfTTFB'),
-      // roughEstimateOfLCPLoadDelay: evaluate('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay'),
-      // roughEstimateOfLCPLoadDuration: evaluate('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration'),
+      roughEstimateOfTTFB: evaluate('timeToFirstByte', 'roughEstimateOfTTFB'),
+      roughEstimateOfLCPLoadDelay: evaluate('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay'),
+      roughEstimateOfLCPLoadDuration: evaluate('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration'),
     };
   },
 };

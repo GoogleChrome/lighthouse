@@ -63,7 +63,7 @@ if (diffs.length) {
   diffs.sort((a, b) => b.maxDiff - a.maxDiff).forEach(site => {
     console.log(chalk.magenta(site.url));
     site.diffsForSite.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).forEach(entry => {
-      const metric = `    - ${entry.metricName.padEnd(25)}`;
+      const metric = `    - ${entry.metricName.padEnd(28)}`;
       const diff = entry.diff > 0 ? chalk.yellow(`+${entry.diff}`) : chalk.cyan(`${entry.diff}`);
       const actual = `${entry.actual} ${chalk.gray('(HEAD)')}`;
       const expected = `${entry.expected} ${chalk.gray('(baseline)')}`;

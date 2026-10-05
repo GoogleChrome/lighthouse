@@ -1,27 +1,12 @@
 # Lantern Collect Traces
 
-Collects many traces using a local machine and mobile devices via WPT.
+Collects many traces using a local machine (optionally on GCP).
 
-There are 9 runs for each URL in the big zip. The golden zip contains just the median runs (by performance score), along with a dump of the `metrics` collected by Lighthouse.
+Each URL is processed one a time: first as unthrottled (but still with mobile UA/viewport emulation), then again right after but with DevTools applied throttling. The runs are done back-to-back to avoid potential variance introduced by a site changing its content.
 
-[Download all](https://drive.google.com/open?id=17WsQ3CU0R1072sezXw5Np2knV_NvGAfO) traces (3.2GB zipped, 19GB unzipped).
-[Download golden](https://drive.google.com/open?id=1aQp-oqX7jeFq9RFwNik6gkEZ0FLtjlHp) traces (363MB zipped, 2.1GB unzipped).
+These traces are used to evaluate changes to the Lantern network and CPU emulation. The unthrottled results are run through Lantern, and we snapshot how closely they match against the results that were throttled (via `yarn test-lantern`).
 
-Note: Only 45/80 of the URLs in `./urls.js` have been processed.
-
-## Get a WPT key
-
-This is how you get a regular key:
-
-http://www.webpagetest.org/getkey.php -> "Login with Google" -> fill form. Key will be emailed to you.
-
-But you'll really need a privileged key to run the collection in a reasonable amount of time.
-
-Note: to actually run this, you want a better key than the default. Ask @connorjclark for it.
-
-## Lighthouse Version
-
-Check what version of Lighthouse WPT is using. You should use the same version of lighthouse for the desktop collection.
+Historical note: we used to collect the mobile traces from WebPageTest, however their API no longer supports real mobile devices.
 
 ## Verify URLs
 
@@ -33,19 +18,29 @@ node --input-type=module -e "import urls from './urls.js'; console.log(urls.join
 
 Note: some good URLs will 4xx b/c the site blocks such usages of `curl`.
 
-## Run
+## Run locally
 
 ```sh
-DEBUG=1 WPT_KEY=... node --max-old-space-size=4096 collect.js
+DEBUG=1 node --max-old-space-size=4096 collect.js
 ```
 
 Output will be in `dist/collect-lantern-traces`, and zipped at `dist/collect-lantern-traces.zip`.
 
-Update the zip on http://go/lhsth, upload the golden zip to the `lantern-test-data` GitHub release (`gh release upload lantern-test-data golden-lantern-traces-$VERSION.zip`), and update `VERSION` in `download-traces.sh`.
-
+But - don't upload this for official updates to the test traces. Run from GCP instead.
 
 ## Run in GCP
 
 ```sh
-WPT_KEY=... core/scripts/lantern/collect/gcp-create-and-run.sh
+core/scripts/lantern/collect/gcp-create-and-run.sh
 ```
+
+Rename the zip with the current date (ex: `golden-lantern-traces-2026-10-10.zip`), upload it to http://go/lhsth and the `lantern-test-data` GitHub release (`gh release upload lantern-test-data golden-lantern-traces-$VERSION.zip`), and update `VERSION` in `download-traces.sh`.
+
+## Historical trace databases
+
+### December 2019
+
+There are 9 runs for each URL in the big zip. The golden zip contains just the median runs (by performance score), along with a dump of the `metrics` collected by Lighthouse. This sampling method was dropped for future trace database updates. The mobile traces here came from a Moto G4 via WPT.
+
+[Download all](https://drive.google.com/open?id=17WsQ3CU0R1072sezXw5Np2knV_NvGAfO) traces (3.2GB zipped, 19GB unzipped).
+[Download golden](https://drive.google.com/open?id=1aQp-oqX7jeFq9RFwNik6gkEZ0FLtjlHp) traces (363MB zipped, 2.1GB unzipped).

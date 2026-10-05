@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {{devtoolsLog?: string, lhr: string, trace: string}} Result */
+/** @typedef {{devtoolsLog: string, lhr: string, trace: string}} Result */
 /** @typedef {{url: string, wpt: Result|null, wptRetries: number, unthrottled: Result|null, unthrottledRetries: number, errors?: string[]}} ResultsForUrl */
 /** @typedef {Result & {metrics: LH.Artifacts.TimingSummary}} ResultWithMetrics */
 /** @typedef {{results: ResultsForUrl[]}} Summary */
@@ -53,6 +53,10 @@ class ProgressLogger {
    */
   progress(message) {
     this._currentProgressMessage = message;
+    if (!IS_INTERACTIVE) {
+      if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}\n`);
+      return;
+    }
     readline.clearLine(process.stdout, 0);
     readline.cursorTo(process.stdout, 0);
     if (message) process.stdout.write(`${this._nextLoadingChar()} ${message}`);
