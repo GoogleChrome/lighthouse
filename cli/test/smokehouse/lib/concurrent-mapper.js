@@ -20,6 +20,12 @@ class ConcurrentMapper {
      * @type {Array<number>}
      */
     this._allConcurrencyLimits = [];
+
+    /**
+     * A promise chain used to serialize job acquisition in FIFO order.
+     * @type {Promise<void>}
+     */
+    this._queue = Promise.resolve();
   }
 
   /**
@@ -29,12 +35,25 @@ class ConcurrentMapper {
    * @template T, U
    * @param {Array<T>} values
    * @param {(value: T, index: number, array: Array<T>) => Promise<U>} callbackfn
-   * @param {{concurrency: number}} [options]
+   * @param {{concurrency?: number}} [options]
    * @return {Promise<Array<U>>}
    */
   static async map(values, callbackfn, options) {
     const cm = new ConcurrentMapper();
     return cm.pooledMap(values, callbackfn, options);
+  }
+
+  /**
+   * Acquires the queue lock so jobs wait for pool capacity in FIFO order.
+   * @return {Promise<() => void>}
+   */
+  _acquireLock() {
+    const prevQueue = this._queue;
+    let releaseLock = () => {};
+    this._queue = new Promise(resolve => {
+      releaseLock = resolve;
+    });
+    return prevQueue.then(() => releaseLock);
   }
 
   /**
@@ -80,27 +99,37 @@ class ConcurrentMapper {
    * @template T, U
    * @param {Array<T>} values
    * @param {(value: T, index: number, array: Array<T>) => Promise<U>} callbackfn
-   * @param {{concurrency: number}} [options]
+   * @param {{concurrency?: number}} [options]
    * @return {Promise<Array<U>>}
    */
   async pooledMap(values, callbackfn, options = {concurrency: Infinity}) {
-    const {concurrency} = options;
+    const {concurrency = Infinity} = options;
+    if (typeof concurrency !== 'number' || !(concurrency >= 1)) {
+      throw new Error(`Invalid concurrency: ${concurrency}`);
+    }
+
     const result = [];
 
     for (let i = 0; i < values.length; i++) {
-      // Wait until concurrency allows another run.
-      while (!this._canRunMoreAtLimit(concurrency)) {
-        // Unconditionally catch since we only care about our own failures
-        // (caught in the Promise.all below), not other callers.
-        await Promise.race(this._promisePool).catch(() => {});
+      const releaseLock = await this._acquireLock();
+      try {
+        // Wait until concurrency allows another run.
+        while (!this._canRunMoreAtLimit(concurrency)) {
+          // Unconditionally catch since we only care about our own failures
+          // (caught in the Promise.all below), not other callers.
+          await Promise.race(this._promisePool).catch(() => {});
+        }
+
+        // innerPromise removes itself from the pool and resolves on return from callback.
+        const innerPromise = callbackfn(values[i], i, values)
+          .finally(() => this._removeJob(innerPromise, concurrency));
+        innerPromise.catch(() => {});
+
+        this._addJob(innerPromise, concurrency);
+        result.push(innerPromise);
+      } finally {
+        releaseLock();
       }
-
-      // innerPromise removes itself from the pool and resolves on return from callback.
-      const innerPromise = callbackfn(values[i], i, values)
-        .finally(() => this._removeJob(innerPromise, concurrency));
-
-      this._addJob(innerPromise, concurrency);
-      result.push(innerPromise);
     }
 
     return Promise.all(result);
@@ -112,12 +141,17 @@ class ConcurrentMapper {
    * `concurrency` limit is `Infinity`.
    * @template U
    * @param {() => Promise<U>} fn
-   * @param {{concurrency: number}} [options]
+   * @param {{concurrency?: number}} [options]
    * @return {Promise<U>}
    */
   async runInPool(fn, options = {concurrency: Infinity}) {
+    const {concurrency = Infinity} = options;
+    if (typeof concurrency !== 'number' || !(concurrency >= 1)) {
+      throw new Error(`Invalid concurrency: ${concurrency}`);
+    }
+
     // Let pooledMap handle the pool management for the cost of boxing a fake `value`.
-    const result = await this.pooledMap([''], fn, options);
+    const result = await this.pooledMap([''], fn, {concurrency});
     return result[0];
   }
 }
