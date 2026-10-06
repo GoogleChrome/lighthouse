@@ -169,15 +169,16 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     const logger = new LocalConsole();
 
     // Run Lighthouse.
+    let isTimeout = false;
     try {
-      if (takeNetworkRequestUrls) takeNetworkRequestUrls();
-
       // Each individual runner has internal timeouts, but we've had bugs where
       // that didn't cover some edge case. So to be safe give a (long) timeout here.
       let timeoutId;
       const timeoutPromise = new Promise((_, reject) => {
-        timeoutId = setTimeout(() =>
-          reject(new Error('Timed out waiting for provided lighthouseRunner')), 1000 * 120);
+        timeoutId = setTimeout(() => {
+          isTimeout = true;
+          reject(new Error('Timed out waiting for provided lighthouseRunner'));
+        }, 1000 * 120);
       });
       let timedResult;
       try {
@@ -205,8 +206,8 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       if (takeNetworkRequestUrls) takeNetworkRequestUrls();
 
       logChildProcessError(bufferedConsole, e);
-      if (!(e instanceof ChildProcessError) && logger.getLog()) {
-        bufferedConsole.log('Error from lighthouseRunner:');
+      if (isTimeout) {
+        bufferedConsole.log('Timed out. log from lighthouseRunner:');
         bufferedConsole.log(logger.getLog());
       }
       continue; // Retry, if possible.
