@@ -55,10 +55,15 @@ function getDefinitionsToRun(allTestDefns, requestedIds, excludedTests) {
     console.log('Running ALL smoketests. Equivalent to:');
     console.log(usage);
   } else {
+    const exactTestIds = new Set(allTestDefns.map(t => t.id));
     smokes = allTestDefns.filter(test => {
-      // Include all tests that *include* requested id.
-      // e.g. a requested 'perf' will match 'perf-preload', 'perf-trace-elements', etc
-      return requestedIds.some(requestedId => test.id.includes(requestedId));
+      // Prefer exact ID match if one exists (e.g. 'ard' matches only 'ard', not 'ard-invalid').
+      // Otherwise include all tests that *include* requested id
+      // (e.g. 'perf' matches 'perf-preload', 'perf-trace-elements', etc.).
+      return requestedIds.some(requestedId => {
+        if (exactTestIds.has(requestedId)) return test.id === requestedId;
+        return test.id.includes(requestedId);
+      });
     });
     console.log(`Running ONLY smoketests for: ${smokes.map(t => t.id).join(' ')}\n`);
   }
@@ -77,42 +82,6 @@ function getDefinitionsToRun(allTestDefns, requestedIds, excludedTests) {
   }
 
   return smokes;
-}
-
-/**
- * Prune the `networkRequests` from the test expectations when `takeNetworkRequestUrls`
- * is not defined. Custom servers may not have this method available in-process.
- * Also asserts that any expectation with `networkRequests` is run serially. For core
- * tests, we don't currently have a good way to map requests to test definitions if
- * the tests are run in parallel.
- * @param {Array<Smokehouse.TestDfn>} testDefns
- * @param {Function|undefined} takeNetworkRequestUrls
- * @return {Array<Smokehouse.TestDfn>}
- */
-function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
-  const pruneNetworkRequests = !takeNetworkRequestUrls;
-
-  const clonedDefns = structuredClone(testDefns);
-  for (const {id, expectations, runSerially} of clonedDefns) {
-    if (!runSerially && expectations.networkRequests) {
-      throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
-    }
-
-    if (pruneNetworkRequests && expectations.networkRequests) {
-      // eslint-disable-next-line max-len
-      const msg = `'networkRequests' cannot be asserted in test '${id}'. They should only be asserted on tests from an in-process server`;
-      if (process.env.CI) {
-        // If we're in CI, we require any networkRequests expectations to be asserted.
-        throw new Error(msg);
-      }
-
-      console.warn(log.redify('Warning:'),
-          `${msg}. Pruning expectation: ${JSON.stringify(expectations.networkRequests)}`);
-      expectations.networkRequests = undefined;
-    }
-  }
-
-  return clonedDefns;
 }
 
 /**
@@ -216,10 +185,11 @@ async function begin() {
     if (testDefnPath === coreTestDefnsPath) {
       const {createServers} = await import('../../fixtures/static-server.js');
       servers = await createServers();
-      takeNetworkRequestUrls = servers[0].takeRequestUrls.bind(servers[0]);
+      if (servers.length) {
+        takeNetworkRequestUrls = servers[0].takeRequestUrls.bind(servers[0]);
+      }
     }
 
-    const prunedTestDefns = pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls);
     const options = {
       jobs: argv.jobs,
       retries: argv.retries,
@@ -232,9 +202,9 @@ async function begin() {
       setup,
     };
 
-    smokehouseResult = (await runSmokehouse(prunedTestDefns, options));
+    smokehouseResult = (await runSmokehouse(testDefns, options));
   } finally {
-    servers?.forEach(s => s.close());
+    if (servers) await Promise.all(servers.map(s => s.close()));
   }
 
   let smokehouseOutputDir;
@@ -244,7 +214,7 @@ async function begin() {
     smokehouseOutputDir = `${LH_ROOT}/.tmp/smokehouse-failures`;
     testResultsToOutput = smokehouseResult.testResults.filter(r => r.failed);
   } else if (!process.env.CI) {
-    // Otherwise, only write to disk in debug mode.
+    // Otherwise, write all results to disk when running locally.
     smokehouseOutputDir = `${LH_ROOT}/.tmp/smokehouse-output`;
     testResultsToOutput = smokehouseResult.testResults;
   }

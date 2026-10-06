@@ -42,6 +42,42 @@ const DEFAULT_CONCURRENT_RUNS = 5;
 const DEFAULT_RETRIES = 0;
 
 /**
+ * Prune the `networkRequests` from the test expectations when `takeNetworkRequestUrls`
+ * is not defined. Custom servers may not have this method available in-process.
+ * Also asserts that any expectation with `networkRequests` is run serially. For core
+ * tests, we don't currently have a good way to map requests to test definitions if
+ * the tests are run in parallel.
+ * @param {Array<Smokehouse.TestDfn>} testDefns
+ * @param {Function|undefined} takeNetworkRequestUrls
+ * @return {Array<Smokehouse.TestDfn>}
+ */
+function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
+  const pruneNetworkRequests = !takeNetworkRequestUrls;
+
+  const clonedDefns = structuredClone(testDefns);
+  for (const {id, expectations, runSerially} of clonedDefns) {
+    if (!runSerially && expectations.networkRequests) {
+      throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
+    }
+
+    if (pruneNetworkRequests && expectations.networkRequests) {
+      // eslint-disable-next-line max-len
+      const msg = `'networkRequests' cannot be asserted in test '${id}'. They should only be asserted on tests from an in-process server`;
+      if (process.env.CI) {
+        // If we're in CI, we require any networkRequests expectations to be asserted.
+        throw new Error(msg);
+      }
+
+      console.warn(log.redify('Warning:'),
+          `${msg}. Pruning expectation: ${JSON.stringify(expectations.networkRequests)}`);
+      expectations.networkRequests = undefined;
+    }
+  }
+
+  return clonedDefns;
+}
+
+/**
  * Runs the selected smoke tests. Returns whether all assertions pass.
  * @param {Array<Smokehouse.TestDfn>} smokeTestDefns
  * @param {Partial<Smokehouse.SmokehouseOptions>} smokehouseOptions
@@ -58,6 +94,8 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   } = smokehouseOptions;
   assertPositiveInteger('jobs', jobs);
   assertNonNegativeInteger('retries', retries);
+
+  const prunedTestDefns = pruneExpectedNetworkRequests(smokeTestDefns, takeNetworkRequestUrls);
 
   try {
     await setup?.();
@@ -77,7 +115,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
     lighthouseRunner,
     takeNetworkRequestUrls,
   };
-  const smokePromises = smokeTestDefns.map(testDefn => {
+  const smokePromises = prunedTestDefns.map(testDefn => {
     // If defn is set to `runSerially`, we'll run it in succession with other tests, not parallel.
     const concurrency = testDefn.runSerially ? 1 : jobs;
     return concurrentMapper.runInPool(() => runSmokeTest(testDefn, testOptions), {concurrency});
@@ -342,6 +380,7 @@ function getShardedDefinitions(testDefns, shardArg) {
 export {
   runSmokehouse,
   getShardedDefinitions,
+  pruneExpectedNetworkRequests,
   DEFAULT_RETRIES,
   DEFAULT_CONCURRENT_RUNS,
 };

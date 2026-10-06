@@ -57,7 +57,7 @@ const expectations = {
 
 /** @type {Smokehouse.TestDfn} */
 export default {
-  id: 'ardInvalid',
+  id: 'ard-invalid',
   config,
   expectations,
 };
