@@ -143,6 +143,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
     status: number | null;
     content: string | null;
     headers: Record<string, string> | null;
+    /** The loaded manifest URL, or if none loaded, the first failed advertised URL (or `/.well-known/ard.json`). */
     catalogUrl: string;
     /** The discovery mechanism `catalogUrl` came from. `legacy*` sources are ARD's predecessor (`ai-catalog`) names. */
     discoverySource: Artifacts.ArdDiscoverySource;

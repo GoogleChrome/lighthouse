@@ -126,6 +126,16 @@ describe('ARD Gatherer Static Helpers', () => {
       });
     });
 
+    it('matches rel values case-insensitively in Link headers', async () => {
+      const context = contextWithLinkHeader(
+        '<https://example.com/header-ard.json>; rel="ARD", </legacy.json>; rel="AI-Catalog"');
+      const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
+      expect(result).toEqual({
+        ard: 'https://example.com/header-ard.json',
+        legacy: 'https://example.com/legacy.json',
+      });
+    });
+
     it('returns nulls when Link header has neither relation', async () => {
       const context = contextWithLinkHeader('<https://example.com/styles.css>; rel="stylesheet"');
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
@@ -380,6 +390,27 @@ describe('AgentResourceDiscovery Gatherer', () => {
     expect(artifact.failedSources).toEqual([
       {source: 'htmlLink', url: 'https://example.com/empty.json', status: 200},
     ]);
+  });
+
+  it('does not fall back to ai-catalog.json on a soft-404 200 HTML response', async () => {
+    const {context, fetched} = getContext({
+      responses: {
+        [wellKnown]: {
+          status: 200,
+          content: '<!doctype html><title>Not Found</title>',
+          headers: {'content-type': 'text/html'},
+        },
+        [legacyWellKnown]: manifest,
+      },
+    });
+
+    const artifact = await new AgentResourceDiscovery().getArtifact(context);
+
+    expect(artifact.catalogUrl).toEqual(wellKnown);
+    expect(artifact.discoverySource).toEqual('wellKnown');
+    expect(artifact.status).toEqual(200);
+    expect(artifact.content).toEqual('<!doctype html><title>Not Found</title>');
+    expect(fetched).toEqual([wellKnown]);
   });
 
   it('reports the first broken advertised location when nothing loads', async () => {

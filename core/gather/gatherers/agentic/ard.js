@@ -31,6 +31,8 @@ const HTTP_OK = 200;
 
 /** @typedef {{ard: string|null, legacy: string|null}} ArdLinks */
 
+/** @typedef {LH.Artifacts['AgentResourceDiscovery']['discoverySignals']} DiscoverySignals */
+
 /**
  * @typedef FetchResult
  * @property {number|null} status
@@ -48,6 +50,47 @@ const HTTP_OK = 200;
  * @property {string|null} url
  * @property {boolean} advertised
  */
+
+/** @type {ReadonlyArray<LH.Artifacts.ArdDiscoverySource>} */
+const SOURCE_PRIORITY = [
+  'robotsTxtAgentmap',
+  'htmlLink',
+  'httpHeaderLink',
+  'wellKnown',
+  'legacyHtmlLink',
+  'legacyHttpHeaderLink',
+  'legacyWellKnown',
+];
+
+/** @type {Set<LH.Artifacts.ArdDiscoverySource>} */
+const PROBED_SOURCES = new Set(['wellKnown', 'legacyWellKnown']);
+
+/**
+ * @param {DiscoverySignals} discoverySignals
+ * @return {ManifestCandidate[]}
+ */
+function getManifestCandidates(discoverySignals) {
+  return SOURCE_PRIORITY.map(source => ({
+    source,
+    url: discoverySignals[source],
+    advertised: !PROBED_SOURCES.has(source),
+  }));
+}
+
+/**
+ * Resolves `href` against `baseUrl`, returning null for empty or unparseable values.
+ * @param {string|null|undefined} href
+ * @param {string} baseUrl
+ * @return {string|null}
+ */
+function resolveUrl(href, baseUrl) {
+  if (!href) return null;
+  try {
+    return new URL(href, baseUrl).href;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Runs in the page. Returns the `href` of the first `<link>` for each relation, or null.
@@ -84,22 +127,7 @@ class AgentResourceDiscovery extends BaseGatherer {
     if (!robotsTxt?.content) return null;
     const match = robotsTxt.content.match(/^\s*Agentmap:\s*(\S+)/im);
     if (!match) return null;
-    return AgentResourceDiscovery.resolveUrl(match[1], finalDisplayedUrl);
-  }
-
-  /**
-   * Resolves `href` against `baseUrl`, returning null for empty or unparseable values.
-   * @param {string|null|undefined} href
-   * @param {string} baseUrl
-   * @return {string|null}
-   */
-  static resolveUrl(href, baseUrl) {
-    if (!href) return null;
-    try {
-      return new URL(href, baseUrl).href;
-    } catch {
-      return null;
-    }
+    return resolveUrl(match[1], finalDisplayedUrl);
   }
 
   /**
@@ -115,8 +143,8 @@ class AgentResourceDiscovery extends BaseGatherer {
         useIsolation: true,
       });
       return {
-        ard: AgentResourceDiscovery.resolveUrl(links?.ard, finalDisplayedUrl),
-        legacy: AgentResourceDiscovery.resolveUrl(links?.legacy, finalDisplayedUrl),
+        ard: resolveUrl(links?.ard, finalDisplayedUrl),
+        legacy: resolveUrl(links?.legacy, finalDisplayedUrl),
       };
     } catch (err) {
       log.verbose('AgentResourceDiscovery', `Could not read link tags: ${err.message}`);
@@ -141,7 +169,7 @@ class AgentResourceDiscovery extends BaseGatherer {
       const parsed = LinkHeader.parse(linkHeader);
       /** @param {string} rel */
       const getUri = rel =>
-        AgentResourceDiscovery.resolveUrl(parsed.get('rel', rel)[0]?.uri, finalDisplayedUrl);
+        resolveUrl(parsed.refs.find(ref => ref.rel?.toLowerCase() === rel)?.uri, finalDisplayedUrl);
       return {ard: getUri(REL_ARD), legacy: getUri(REL_LEGACY)};
     } catch (err) {
       log.verbose('AgentResourceDiscovery', `Could not read Link header: ${err.message}`);
@@ -161,8 +189,7 @@ class AgentResourceDiscovery extends BaseGatherer {
       const {status, content, headers} = await context.driver.fetcher.fetchResource(url);
       return {status, content, headers: headers || null};
     } catch (err) {
-      // Expected for probed well-known paths on sites without a manifest, so not an error.
-      log.warn('AgentResourceDiscovery', `Failed to fetch ${url}: ${err.message}`);
+      log.error('AgentResourceDiscovery', err);
       return {status: null, content: null, headers: null, errorMessage: err.message};
     }
   }
@@ -226,20 +253,19 @@ class AgentResourceDiscovery extends BaseGatherer {
       AgentResourceDiscovery.getHtmlLinksFromDom(context, finalDisplayedUrl),
       AgentResourceDiscovery.getHttpHeaderLinks(context, finalDisplayedUrl),
     ]);
-    const wellKnown = new URL(WELL_KNOWN_PATH, finalDisplayedUrl).href;
-    const legacyWellKnown = new URL(LEGACY_WELL_KNOWN_PATH, finalDisplayedUrl).href;
 
-    /** @type {ManifestCandidate[]} */
-    const candidates = [
-      {source: 'robotsTxtAgentmap', url: robotsTxtAgentmap, advertised: true},
-      {source: 'htmlLink', url: htmlLinks.ard, advertised: true},
-      {source: 'httpHeaderLink', url: httpHeaderLinks.ard, advertised: true},
-      {source: 'wellKnown', url: wellKnown, advertised: false},
-      {source: 'legacyHtmlLink', url: htmlLinks.legacy, advertised: true},
-      {source: 'legacyHttpHeaderLink', url: httpHeaderLinks.legacy, advertised: true},
-      {source: 'legacyWellKnown', url: legacyWellKnown, advertised: false},
-    ];
+    /** @type {DiscoverySignals} */
+    const discoverySignals = {
+      robotsTxtAgentmap,
+      htmlLink: htmlLinks.ard,
+      httpHeaderLink: httpHeaderLinks.ard,
+      legacyHtmlLink: htmlLinks.legacy,
+      legacyHttpHeaderLink: httpHeaderLinks.legacy,
+      wellKnown: new URL(WELL_KNOWN_PATH, finalDisplayedUrl).href,
+      legacyWellKnown: new URL(LEGACY_WELL_KNOWN_PATH, finalDisplayedUrl).href,
+    };
 
+    const candidates = getManifestCandidates(discoverySignals);
     const {discoverySource, catalogUrl, fetchResult, failedSources} =
       await AgentResourceDiscovery.resolveManifest(context, candidates);
 
@@ -247,15 +273,7 @@ class AgentResourceDiscovery extends BaseGatherer {
       ...fetchResult,
       catalogUrl,
       discoverySource,
-      discoverySignals: {
-        robotsTxtAgentmap,
-        htmlLink: htmlLinks.ard,
-        httpHeaderLink: httpHeaderLinks.ard,
-        legacyHtmlLink: htmlLinks.legacy,
-        legacyHttpHeaderLink: httpHeaderLinks.legacy,
-        wellKnown,
-        legacyWellKnown,
-      },
+      discoverySignals,
       failedSources,
     };
   }
