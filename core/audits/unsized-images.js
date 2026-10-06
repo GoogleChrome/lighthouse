@@ -78,6 +78,12 @@ class UnsizedImages extends Audit {
    * @return {boolean}
    */
   static isSizedImage(image) {
+    const attrWidth = image.attributeWidth;
+    const attrHeight = image.attributeHeight;
+    const htmlWidthIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrWidth);
+    const htmlHeightIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrHeight);
+    if (htmlWidthIsExplicit && htmlHeightIsExplicit) return true;
+
     // Perhaps we hit reachedGatheringBudget before collecting this image's cssWidth/Height
     // in fetchSourceRules. In this case, we don't have enough information to determine if it's sized.
     // We don't want to show the user a false positive, so we'll call it sized to give it as pass.
@@ -85,14 +91,10 @@ class UnsizedImages extends Audit {
     // Handwavey TODO: explore ways to avoid this.
     if (image.cssEffectiveRules === undefined) return true;
 
-    const attrWidth = image.attributeWidth;
-    const attrHeight = image.attributeHeight;
     const cssWidth = image.cssEffectiveRules.width;
     const cssHeight = image.cssEffectiveRules.height;
     const cssAspectRatio = image.cssEffectiveRules.aspectRatio;
-    const htmlWidthIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrWidth);
     const cssWidthIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssWidth);
-    const htmlHeightIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrHeight);
     const cssHeightIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssHeight);
     const explicitAspectRatio = UnsizedImages.isCssPropExplicitlySet(cssAspectRatio);
     const explicitWidth = htmlWidthIsExplicit || cssWidthIsExplicit;
