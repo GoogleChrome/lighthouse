@@ -115,9 +115,13 @@ describe('Page Functions', () => {
 
     it('should handle dom nodes that cannot be cloned', () => {
       const element = document.createElement('div');
-      element.cloneNode = () => {
-        throw new Error('oops!');
-      };
+      Object.defineProperty(element, 'ownerDocument', {
+        value: {
+          createElement: () => {
+            throw new Error('oops!');
+          },
+        },
+      });
       assert.equal(pageFunctions.getOuterHTMLSnippet(element), '<div>');
     });
     it('ignores when attribute not found', () => {
