@@ -236,8 +236,9 @@ class TraceEngineResult {
     const layoutShiftEvents = new Set(
       CumulativeLayoutShift.getLayoutShiftEvents(processedTrace).map(e => e.event));
 
-    // Avoid modifying the input array.
-    const traceEvents = [...data.trace.traceEvents];
+    // Avoid modifying the input array, copying only if an event is modified.
+    let traceEvents = data.trace.traceEvents;
+    let copied = false;
     for (let i = 0; i < traceEvents.length; i++) {
       let event = traceEvents[i];
       if (event.name !== 'LayoutShift') continue;
@@ -245,6 +246,10 @@ class TraceEngineResult {
 
       const isConsidered = layoutShiftEvents.has(event);
       if (event.args.data.had_recent_input && isConsidered) {
+        if (!copied) {
+          traceEvents = [...traceEvents];
+          copied = true;
+        }
         event = JSON.parse(JSON.stringify(event));
         // @ts-expect-error impossible for data to be missing.
         event.args.data.had_recent_input = false;

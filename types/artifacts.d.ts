@@ -902,6 +902,8 @@ export interface TraceEvent {
       protocol?: string;
       finishTime?: number;
       headers?: Array<{ name: string, value: string }>;
+      scriptId?: number | string;
+      sourceText?: string;
     };
     frame?: string;
     name?: string;

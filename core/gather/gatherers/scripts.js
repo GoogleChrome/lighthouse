@@ -5,6 +5,7 @@
  */
 
 import BaseGatherer from '../base-gatherer.js';
+import Trace from './trace.js';
 
 /**
  * @template T, U
@@ -50,17 +51,15 @@ function isLighthouseRuntimeEvaluateScript(script) {
 class Scripts extends BaseGatherer {
   static symbol = Symbol('Scripts');
 
-  /** @type {LH.Gatherer.GathererMeta} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
   meta = {
     symbol: Scripts.symbol,
     supportedModes: ['timespan', 'navigation'],
+    dependencies: {Trace: Trace.symbol},
   };
 
   /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
   _scriptParsedEvents = [];
-
-  /** @type {Array<string | undefined>} */
-  _scriptContents = [];
 
   constructor() {
     super();
@@ -90,15 +89,41 @@ class Scripts extends BaseGatherer {
    */
   async stopInstrumentation(context) {
     const session = context.driver.defaultSession;
+    session.off('Debugger.scriptParsed', this.onScriptParsed);
+  }
+
+  /**
+   * @param {LH.Gatherer.Context<'Trace'>} context
+   * @return {Promise<LH.Artifacts['Scripts']>}
+   */
+  async getArtifact(context) {
+    const session = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
 
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
+    /** @type {Map<string, string>} */
+    const traceSourceByScriptId = new Map();
+    for (const event of context.dependencies.Trace.traceEvents) {
+      if (event.cat !== 'disabled-by-default-devtools.v8-source-rundown-sources') continue;
+      const data = event.args?.data;
+      if (!data || data.scriptId === undefined || typeof data.sourceText !== 'string') continue;
+      const scriptId = String(data.scriptId);
+      if (event.name === 'ScriptCatchup') {
+        traceSourceByScriptId.set(scriptId, data.sourceText);
+      } else if (event.name === 'LargeScriptCatchup') {
+        traceSourceByScriptId.set(
+          scriptId,
+          (traceSourceByScriptId.get(scriptId) ?? '') + data.sourceText
+        );
+      }
+    }
 
     // If run on a mobile device, be sensitive to memory limitations and only
     // request one at a time.
-    this._scriptContents = await runInSeriesOrParallel(
+    const scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
       ({scriptId}) => {
+        const traceSource = traceSourceByScriptId.get(scriptId);
+        if (traceSource !== undefined) return Promise.resolve(traceSource);
         return session.sendCommand('Debugger.getScriptSource', {scriptId})
           .then((resp) => resp.scriptSource)
           .catch(() => undefined);
@@ -106,9 +131,7 @@ class Scripts extends BaseGatherer {
       formFactor === 'mobile' /* runInSeries */
     );
     await session.sendCommand('Debugger.disable');
-  }
 
-  async getArtifact() {
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event, i) => {
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.
@@ -123,7 +146,7 @@ class Scripts extends BaseGatherer {
         // embedderName is optional on the protocol because backends like Node may not set it.
         // For our purposes, it is always set. But just in case it isn't... fallback to the url.
         url: event.embedderName || event.url,
-        content: this._scriptContents[i],
+        content: scriptContents[i],
       };
     });
 
