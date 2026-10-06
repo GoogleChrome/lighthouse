@@ -67,6 +67,8 @@ class JsUsage extends BaseGatherer {
       usageByScriptId[scriptUsage.scriptId] = scriptUsage;
     }
 
+    this._scriptUsages = [];
+
     return usageByScriptId;
   }
 }
