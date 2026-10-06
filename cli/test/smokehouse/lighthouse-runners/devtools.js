@@ -25,11 +25,11 @@ async function setup() {
   process.env.DEVTOOLS_PATH = devtoolsDir;
   execFileSync('bash',
     ['core/test/devtools-tests/download-devtools.sh'],
-    {stdio: 'inherit'}
+    {stdio: 'inherit', cwd: LH_ROOT}
   );
   execFileSync('bash',
     ['core/test/devtools-tests/roll-devtools.sh'],
-    {stdio: 'inherit'}
+    {stdio: 'inherit', cwd: LH_ROOT}
   );
 }
 

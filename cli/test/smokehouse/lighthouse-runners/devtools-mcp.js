@@ -37,7 +37,7 @@ if (!isMainThread && parentPort) {
       parentPort?.postMessage({type: 'result', value});
     } catch (err) {
       console.error(err);
-      parentPort?.postMessage({type: 'error', value: err.toString()});
+      parentPort?.postMessage({type: 'error', value: err.stack || err.toString()});
     }
   })();
 }
@@ -70,11 +70,12 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   const port = launchedChrome.port;
 
   // Run Lighthouse.
+  let browser;
   try {
     const logLevel = testRunnerOptions?.isDebug ? 'verbose' : 'info';
 
     // Puppeteer is not included in the bundle, we must create the page here.
-    const browser = await puppeteer.connect({browserURL: `http://127.0.0.1:${port}`});
+    browser = await puppeteer.connect({browserURL: `http://127.0.0.1:${port}`});
     const page = await browser.newPage();
 
     // navigation(page, requestor, options)
@@ -88,7 +89,8 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
     };
   } finally {
     // Clean up and return results.
-    launchedChrome.kill();
+    await browser?.disconnect();
+    await launchedChrome.kill();
   }
 }
 

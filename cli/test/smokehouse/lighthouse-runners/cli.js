@@ -88,7 +88,7 @@ async function internalRun(url, tmpPath, config, logger, options) {
   cp.stderr.on('data', data => logger.log(`[STDERR] ${data.toString().trim()}`));
   /** @type {Promise<number|null>} */
   const cpPromise = new Promise((resolve, reject) => {
-    cp.addListener('exit', resolve);
+    cp.addListener('close', resolve);
     cp.addListener('error', reject);
   });
   const exitCode = await cpPromise;
@@ -109,7 +109,7 @@ async function internalRun(url, tmpPath, config, logger, options) {
   // Output has been established as existing, so can log for debug.
   if (isDebug) {
     logger.log(`LHR output available at: ${outputPath}`);
-    logger.log(`Artifacts avaiable in: ${artifactsDirectory}`);
+    logger.log(`Artifacts available in: ${artifactsDirectory}`);
   }
 
   // There should either be both an error exitCode and a lhr.runtimeError or neither.
