@@ -7,6 +7,7 @@
 import log from 'lighthouse-logger';
 
 import * as i18n from '../lib/i18n/i18n.js';
+import * as Lantern from '../lib/lantern/lantern.js';
 import * as TraceEngine from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {CumulativeLayoutShift} from './metrics/cumulative-layout-shift.js';
@@ -66,8 +67,20 @@ class TraceEngineResult {
     });
     if (!processor.data) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
-    this.localizeInsights(processor.insights);
-    return {data: processor.data, insights: processor.insights};
+    const data = processor.data;
+    const insights = processor.insights;
+    this.localizeInsights(insights);
+
+    // Release intermediate handler state retained in module-level TraceHandlers singletons
+    // and static Lantern simulation node timings after trace processing completes.
+    for (const handler of Object.values(TraceEngine.TraceHandlers)) {
+      handler.reset();
+    }
+    if (!process.env.LANTERN_DEBUG) {
+      Lantern.Simulation.Simulator.allNodeTimings.clear();
+    }
+
+    return {data, insights};
   }
 
   /**

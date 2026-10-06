@@ -96,6 +96,8 @@ class InspectorIssues extends BaseGatherer {
       }
     }
 
+    this._issues = [];
+
     return artifact;
   }
 }
