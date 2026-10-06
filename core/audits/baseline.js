@@ -103,9 +103,7 @@ class Baseline extends Audit {
     }
     if (featureId in featureData.high) {
       const highData = /** @type {Record<string, string>} */ (featureData.high);
-      const date = new Date(highData[featureId]);
-      date.setUTCMonth(date.getUTCMonth() - 30);
-      return date.toISOString().slice(0, 10);
+      return highData[featureId];
     }
     return null;
   }
@@ -212,7 +210,9 @@ class Baseline extends Audit {
         return rankA - rankB;
       }
 
-      return featureB.lowDate.localeCompare(featureA.lowDate);
+      const dateA = featureA.lowDate.replace(/^≤/, '');
+      const dateB = featureB.lowDate.replace(/^≤/, '');
+      return dateB.localeCompare(dateA);
     });
 
     const hasLimited = baselineStatus.some(item => item.displayStatus.status === 'limited');
@@ -224,7 +224,7 @@ class Baseline extends Audit {
       const featureName = newestFeature.featureId.text;
       const lowDate = newestFeature.lowDate;
       if (lowDate) {
-        const year = lowDate.substring(0, 4);
+        const year = lowDate.replace(/^≤/, '').substring(0, 4);
         debugData = {
           type: 'debugdata',
           newestFeatureId: featureName,
