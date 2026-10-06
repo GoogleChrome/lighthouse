@@ -20,7 +20,6 @@ describe('Baseline Audit', () => {
       high: {
         'forced-colors': '2022-09-12',
         'aborting': '2019-03-25',
-        'opacity-svg': '≤2020-03-24',
       },
       low: {
         'abortsignal-any': '2024-03-19',
@@ -262,36 +261,6 @@ describe('Baseline Audit', () => {
     });
   });
 
-  it('should set correct debugData when newest feature has a ≤ date prefix', async () => {
-    const traceEvents = [
-      {args: {feature: 'opacity-svg'}, cat: 'blink.webdx_feature_usage'}, // high (≤2020-03-24)
-    ];
-    const result = await Baseline.audit({Trace: {traceEvents}});
-    expect(result.displayValue).toBeUndefined();
-    expect(result.details.debugData).toEqual({
-      type: 'debugdata',
-      newestFeatureId: 'opacity-svg',
-      newestFeatureYear: '2020',
-      newestFeatureLowDate: '≤2020-03-24',
-    });
-  });
-
-  it('should correctly sort high features when one has a ≤ date prefix', async () => {
-    const traceEvents = [
-      {
-        args: {feature: 'opacity-svg'}, // high (≤2020-03-24)
-        cat: 'blink.webdx_feature_usage',
-      },
-      {
-        args: {feature: 'forced-colors'}, // high (2022-09-12)
-        cat: 'blink.webdx_feature_usage',
-      },
-    ];
-    const result = await Baseline.audit({Trace: {traceEvents}});
-    expect(result.details.items[0].featureId.text).toEqual('forced-colors');
-    expect(result.details.items[1].featureId.text).toEqual('opacity-svg');
-  });
-
   describe('getFeatureStatus', () => {
     const fakeData = {
       high: {
@@ -344,24 +313,18 @@ describe('Baseline Audit', () => {
     });
   });
 
-  describe('getLowDate', () => {
+  describe('getLowDate & web-features-data.json format', () => {
     // In build/build-baseline-data.js, `feature.status.baseline_low_date` is written into both
     // `out.high[id]` and `out.low[id]`. Therefore, dates stored in `featureData.high` are ALREADY
     // the feature's `baseline_low_date`.
     // Previously, `getLowDate` subtracted 30 months from `featureData.high` dates, which shifted
     // dates back 2.5 years (e.g. '2022-09-12' -> '2020-03-12').
     // Furthermore, features with approximate dates in web-features start with a '≤' prefix
-    // (such as 'opacity-svg': '≤2020-03-24' or 'output': '≤2018-10-02'). Passing '≤YYYY-MM-DD'
-    // into `new Date(...)` results in an Invalid Date, which caused `date.toISOString()` to throw
-    // `RangeError: Invalid time value` and crash the audit.
+    // (such as 'opacity-svg': '≤2020-03-24' or 'output': '≤2018-10-02'), which we now strip at
+    // build time in `build/build-baseline-data.js` so all stored dates are valid `YYYY-MM-DD`.
     it('should return baseline_low_date directly for high features ' +
       'without subtracting 30 months', () => {
       expect(Baseline.getLowDate('forced-colors', Baseline.featureData)).toEqual('2022-09-12');
-    });
-
-    it('should return baseline_low_date for high features with ≤ date prefix ' +
-      'without throwing RangeError', () => {
-      expect(Baseline.getLowDate('opacity-svg', Baseline.featureData)).toEqual('≤2020-03-24');
     });
 
     it('should return baseline_low_date for low features', () => {
@@ -371,6 +334,16 @@ describe('Baseline Audit', () => {
     it('should return null for features not in high or low', () => {
       expect(Baseline.getLowDate('accelerometer', Baseline.featureData)).toBeNull();
       expect(Baseline.getLowDate('unknown-feature', Baseline.featureData)).toBeNull();
+    });
+
+    it('should ensure all dates in generated web-features-data.json are clean YYYY-MM-DD ' +
+      'without ≤ prefixes', () => {
+      for (const dateStr of [
+        ...Object.values(originalData.high),
+        ...Object.values(originalData.low),
+      ]) {
+        expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
     });
   });
 });
