@@ -102,6 +102,8 @@ class Scripts extends BaseGatherer {
 
     /** @type {Map<string, string>} */
     const traceSourceByScriptId = new Map();
+    /** @type {Map<string, string[]>} */
+    const largeScriptChunksByScriptId = new Map();
     for (const event of context.dependencies.Trace.traceEvents) {
       if (event.cat !== 'disabled-by-default-devtools.v8-source-rundown-sources') continue;
       const data = event.args?.data;
@@ -110,11 +112,16 @@ class Scripts extends BaseGatherer {
       if (event.name === 'ScriptCatchup') {
         traceSourceByScriptId.set(scriptId, data.sourceText);
       } else if (event.name === 'LargeScriptCatchup') {
-        traceSourceByScriptId.set(
-          scriptId,
-          (traceSourceByScriptId.get(scriptId) ?? '') + data.sourceText
-        );
+        let chunks = largeScriptChunksByScriptId.get(scriptId);
+        if (!chunks) {
+          chunks = [];
+          largeScriptChunksByScriptId.set(scriptId, chunks);
+        }
+        chunks.push(data.sourceText);
       }
+    }
+    for (const [scriptId, chunks] of largeScriptChunksByScriptId) {
+      traceSourceByScriptId.set(scriptId, chunks.join(''));
     }
 
     // If run on a mobile device, be sensitive to memory limitations and only
