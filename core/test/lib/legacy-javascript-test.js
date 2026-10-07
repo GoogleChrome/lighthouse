@@ -53,7 +53,7 @@ describe('detectLegacyJavaScript', () => {
     ]);
     expect(results).toHaveLength(1);
     expect(results[0].matches[0].name).toEqual('String.prototype.repeat');
-    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`27910`);
+    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`28042`);
   });
 
   it('fails code with multiple legacy polyfills', () => {
@@ -184,7 +184,7 @@ describe('detectLegacyJavaScript', () => {
       {name: 'Object.entries'},
       {name: 'focus-visible'},
     ]);
-    expect(results[0].estimatedByteSavings).toBe(36369);
+    expect(results[0].estimatedByteSavings).toBe(36474);
   });
 
   it('correctly tracks line and column numbers with CRLF line endings', () => {
