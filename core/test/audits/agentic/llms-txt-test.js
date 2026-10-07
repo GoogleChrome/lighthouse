@@ -25,8 +25,12 @@ describe('Agentic: llms.txt audit', () => {
     });
   });
 
-  it('fails when request for /llms.txt returns a HTTP500+ error', () => {
+  it('fails when request for /llms.txt returns a HTTP500+ or 429 error', () => {
     const testData = [
+      {
+        status: 429,
+        content: null,
+      },
       {
         status: 500,
         content: null,
@@ -48,6 +52,9 @@ describe('Agentic: llms.txt audit', () => {
 
       const auditResult = LlmsTxtAudit.audit(artifacts);
       assert.equal(auditResult.score, 0);
+      expect(auditResult.displayValue).toBeDisplayString(
+        `Failed with HTTP status ${LlmsTxt.status}`
+      );
     });
   });
 
