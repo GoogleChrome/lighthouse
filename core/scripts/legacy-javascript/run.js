@@ -44,6 +44,7 @@ const polyfills = getCoreJsPolyfillData();
 function runCommand(command, args) {
   return execFileAsync(command, args, {
     cwd: scriptDir,
+    // https://github.com/nodejs/node/issues/51555#issuecomment-1974877052
     env: {...process.env, DISABLE_V8_COMPILE_CACHE: '1'},
   });
 }
