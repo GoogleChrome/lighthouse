@@ -201,15 +201,44 @@ describe('LegacyJavaScript signals', () => {
           readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
         const failingVariants = [];
         for (const expectedVariant of expectedMissingSignals) {
-          const variant = signalSummary.variants.find(v => v.dir === expectedVariant);
-          if (variant.signals.length) {
-            failingVariants.push(variant);
+          for (const variant of signalSummary.variants.filter(v => v.dir === expectedVariant)) {
+            if (variant.signals.length) {
+              failingVariants.push(variant);
+            }
           }
         }
 
         if (failingVariants.length) {
           throw new Error([
             'Expected the following variants to have no signals:',
+            '',
+            ...failingVariants.map(v => `${v.name} ${v.bundle} (got: ${v.signals})`),
+          ].join('\n'));
+        }
+      });
+    }
+  });
+
+  describe('expect non-baseline preset-env variants to detect polyfill and plugin signals', () => {
+    for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
+      it(summaryFilename, () => {
+        const signalSummary = readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
+        const variants = signalSummary.variants
+          .filter(v => v.dir === 'core-js-3-preset-env/baseline-false-bugfixes-false');
+        expect(variants.length).toBeGreaterThan(0);
+
+        const failingVariants = [];
+        for (const variant of variants) {
+          const hasPolyfill = variant.signals.some(s => !s.startsWith('@'));
+          const hasTransform = variant.signals.some(s => s.startsWith('@'));
+          if (!hasPolyfill || !hasTransform) {
+            failingVariants.push(variant);
+          }
+        }
+
+        if (failingVariants.length) {
+          throw new Error([
+            'Expected the following variants to detect both polyfills and transforms:',
             '',
             ...failingVariants.map(v => `${v.name} ${v.bundle} (got: ${v.signals})`),
           ].join('\n'));

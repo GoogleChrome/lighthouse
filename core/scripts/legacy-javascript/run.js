@@ -42,7 +42,10 @@ const polyfills = getCoreJsPolyfillData();
  * @param {string[]} args
  */
 function runCommand(command, args) {
-  return execFileAsync(command, args, {cwd: scriptDir});
+  return execFileAsync(command, args, {
+    cwd: scriptDir,
+    env: {...process.env, DISABLE_V8_COMPILE_CACHE: '1'},
+  });
 }
 
 /**
@@ -87,7 +90,8 @@ async function processVariant(options) {
   const {group, name, code, babelrc} = options;
   const dir = `${VARIANT_DIR}/${group}/${name.replace(/[^a-zA-Z0-9]+/g, '-')}`;
 
-  if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
+  if (!fs.existsSync(`${dir}/main.bundle.rollup.min.js`) &&
+      (STAGE === 'build' || STAGE === 'all')) {
     fs.mkdirSync(dir, {recursive: true});
     fs.writeFileSync(`${dir}/variant.json`, JSON.stringify({group, name}, null, 2));
     fs.writeFileSync(`${dir}/package.json`, JSON.stringify({type: 'commonjs'}));
@@ -96,7 +100,7 @@ async function processVariant(options) {
     // Not used in this script, but useful for running Lighthouse manually.
     // Just need to start a web server first.
     fs.writeFileSync(`${dir}/index.html`,
-      `<title>${name}</title><script src=main.bundle.min.js></script><p>${name}</p>`);
+      `<title>${name}</title><script src=main.bundle.browserify.min.js></script><p>${name}</p>`);
 
     // Apply code transforms and inject require statements for polyfills.
     // Note: No babelrc will make babel a glorified `cp`.
@@ -150,6 +154,10 @@ async function processVariant(options) {
     ]);
 
     // rollup
+    const rollupResolveCoreJsPlugin = [
+      '{resolveId(id){if(id.startsWith("core-js/"))',
+      `return "${scriptDir}/node_modules/"+id+(id.endsWith(".js")?"":".js")}}`,
+    ].join('');
     await runCommand('yarn', [
       'rollup',
       `${dir}/main.transpiled.js`,
@@ -157,6 +165,7 @@ async function processVariant(options) {
       `${dir}/main.bundle.rollup.js`,
       '--format',
       'iife',
+      '--plugin', rollupResolveCoreJsPlugin,
       '--plugin', '@rollup/plugin-commonjs',
       '--sourcemap',
     ]);
@@ -167,6 +176,7 @@ async function processVariant(options) {
       `${dir}/main.bundle.rollup.min.js`,
       '--format',
       'iife',
+      '--plugin', rollupResolveCoreJsPlugin,
       '--plugin', '@rollup/plugin-commonjs',
       '--plugin', '@rollup/plugin-terser',
       '--sourcemap',
@@ -292,8 +302,14 @@ async function main() {
 
   for (const coreJsVersion of ['3.40.0']) {
     const major = coreJsVersion.split('.')[0];
-    await removeCoreJs();
-    await installCoreJs(coreJsVersion);
+    // eslint-disable-next-line max-len
+    const allPolyfillBundle = `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-${major}/main.bundle.rollup.min.js`;
+    const needsCoreJsInstall =
+      (STAGE === 'build' || STAGE === 'all') && !fs.existsSync(allPolyfillBundle);
+    if (needsCoreJsInstall) {
+      await removeCoreJs();
+      await installCoreJs(coreJsVersion);
+    }
 
     const moduleOptions = [
       {baseline: false, bugfixes: false},
@@ -348,9 +364,11 @@ async function main() {
     });
 
     await waitForVariants();
-  }
 
-  await removeCoreJs();
+    if (needsCoreJsInstall) {
+      await removeCoreJs();
+    }
+  }
 
   let summary;
 
