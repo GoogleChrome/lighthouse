@@ -55,7 +55,7 @@ const expectations = {
             },
             {
               element: 'http://localhost:10200/agentic/ai-catalog-invalid.json',
-              issue: /Manifest was only found through a predecessor name/,
+              issue: /Manifest was only found through a legacy location/,
               severity: 'Low',
             },
           ],

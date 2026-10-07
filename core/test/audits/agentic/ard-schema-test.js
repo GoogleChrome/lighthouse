@@ -237,7 +237,7 @@ describe('ARD Schema Audit', () => {
       expect(result.details.items[0].element).toEqual(catalogUrl);
       expect(result.details.items[0].severity).toBeDisplayString('Low');
       expect(result.details.items[0].issue).toBeDisplayString(
-        /Manifest was only found through a predecessor name/
+        /Manifest was only found through a legacy location/
       );
     });
   }

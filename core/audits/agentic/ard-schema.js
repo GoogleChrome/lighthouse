@@ -31,11 +31,11 @@ const UIStrings = {
     '[Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).',
   /** Explanatory message stating that the Agentic Resource Discovery (ARD) manifest could not be loaded for schema validation. "ARD" should not be translated. */
   explanation: 'ARD manifest could not be loaded for schema validation.',
-  /** Table item describing that the Agentic Resource Discovery (ARD) manifest was only found using older, predecessor discovery names that AI agents are not required to check. "ARD", "/.well-known/ai-catalog.json", "rel="ai-catalog"", "/.well-known/ard.json" and "rel="ard"" should not be translated. */
-  legacyDiscovery: 'Manifest was only found through a predecessor name ' +
+  /** Table item describing that the Agentic Resource Discovery (ARD) manifest was only found at a legacy location that ARD consumers are not required to check. "ARD", "/.well-known/ai-catalog.json", "rel="ai-catalog"", "/.well-known/ard.json" and "rel="ard"" should not be translated. */
+  legacyDiscovery: 'Manifest was only found through a legacy location ' +
     '(`/.well-known/ai-catalog.json` or `rel="ai-catalog"`). ARD consumers are not ' +
-    'required to check these, so your resources may not be discovered. Serve the manifest ' +
-    'at `/.well-known/ard.json` or link it with `rel="ard"`.',
+    'required to check these, so ARD consumers may not discover your resources. Serve the ' +
+    'manifest at `/.well-known/ard.json` or link it with `rel="ard"`.',
   /**
    * @description Table item describing that a location the site advertises for its Agentic Resource Discovery (ARD) manifest (for example, a link on the page) returned an unsuccessful HTTP status code. "ARD" should not be translated.
    * @example {404} statusCode

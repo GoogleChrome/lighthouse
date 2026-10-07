@@ -17,7 +17,7 @@ While the validation rules and test suite maintain 1:1 parity with the reference
 - **Non-object Input:** Upstream assumes the manifest root and each entry are JSON objects. The port treats anything else as empty, so it reports errors instead of throwing.
 - **Lighthouse Logger:** Replaced raw `console.log` with `lighthouse-logger`.
 
-Publisher resolution (upstream's `resolve_publisher`, spec §5.1) is implemented by the gatherer in `core/gather/gatherers/agentic/ard.js`, and the resulting predecessor-path warning by the `ard-schema` audit. `infos` are not surfaced in the audit.
+Publisher resolution (upstream's `resolve_publisher`, spec §5.1) is implemented by the gatherer in `core/gather/gatherers/agentic/ard.js`, and the resulting legacy-location warning by the `ard-schema` audit. `infos` are not surfaced in the audit.
 
 ## Updating Conformance Script
 
