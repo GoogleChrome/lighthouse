@@ -49,26 +49,6 @@ function runCommand(command, args) {
   });
 }
 
-/**
- * @param {string} version
- */
-async function installCoreJs(version) {
-  await runCommand('yarn', [
-    'add',
-    '-D',
-    `core-js@${version}`,
-  ]);
-}
-
-async function removeCoreJs() {
-  try {
-    await runCommand('yarn', [
-      'remove',
-      'core-js',
-    ]);
-  } catch (e) { }
-}
-
 /** @type {Promise<void>[]} */
 const allVariantPromises = [];
 
@@ -299,77 +279,59 @@ async function main() {
     });
   }
 
-  await waitForVariants();
-
-  for (const coreJsVersion of ['3.40.0']) {
-    const major = coreJsVersion.split('.')[0];
-    // eslint-disable-next-line max-len
-    const allPolyfillBundle = `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-${major}/main.bundle.rollup.min.js`;
-    const needsCoreJsInstall =
-      (STAGE === 'build' || STAGE === 'all') && !fs.existsSync(allPolyfillBundle);
-    if (needsCoreJsInstall) {
-      await removeCoreJs();
-      await installCoreJs(coreJsVersion);
-    }
-
-    const moduleOptions = [
-      {baseline: false, bugfixes: false},
-      {baseline: true, bugfixes: false},
-      {baseline: true, bugfixes: true},
-    ];
-    for (const {baseline, bugfixes} of moduleOptions) {
-      createVariant({
-        group: `core-js-${major}-preset-env`,
-        name: `baseline_${baseline}_bugfixes_${bugfixes}`,
-        code: `require('core-js');\n${mainCode}`,
-        babelrc: {
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: baseline ? [
-                  'chrome >0 and last 2.5 years',
-                  'edge >0 and last 2.5 years',
-                  'safari >0 and last 2.5 years',
-                  'firefox >0 and last 2.5 years',
-                  'and_chr >0 and last 2.5 years',
-                  'and_ff >0 and last 2.5 years',
-                  'ios >0 and last 2.5 years',
-                ] : undefined,
-                useBuiltIns: 'entry',
-                corejs: major,
-                bugfixes,
-                debug: true,
-              },
-            ],
-          ],
-        },
-      });
-    }
-
-    for (const polyfill of polyfills) {
-      createVariant({
-        group: `core-js-${major}-only-polyfill`,
-        name: polyfill.name,
-        code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
-      });
-    }
-
-    const allPolyfillCode = polyfills.map(polyfill => {
-      return makeRequireCodeForPolyfill(polyfill.coreJs3Module);
-    }).join('\n');
+  const moduleOptions = [
+    {baseline: false, bugfixes: false},
+    {baseline: true, bugfixes: false},
+    {baseline: true, bugfixes: true},
+  ];
+  for (const {baseline, bugfixes} of moduleOptions) {
     createVariant({
-      group: 'all-legacy-polyfills',
-      name: `all-legacy-polyfills-core-js-${major}`,
-      code: allPolyfillCode,
+      group: 'core-js-3-preset-env',
+      name: `baseline_${baseline}_bugfixes_${bugfixes}`,
+      code: `require('core-js');\n${mainCode}`,
+      babelrc: {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: baseline ? [
+                'chrome >0 and last 2.5 years',
+                'edge >0 and last 2.5 years',
+                'safari >0 and last 2.5 years',
+                'firefox >0 and last 2.5 years',
+                'and_chr >0 and last 2.5 years',
+                'and_ff >0 and last 2.5 years',
+                'ios >0 and last 2.5 years',
+              ] : undefined,
+              useBuiltIns: 'entry',
+              corejs: '3',
+              bugfixes,
+              debug: true,
+            },
+          ],
+        ],
+      },
     });
-
-    await waitForVariants();
-
-    if (needsCoreJsInstall) {
-      await removeCoreJs();
-    }
   }
+
+  for (const polyfill of polyfills) {
+    createVariant({
+      group: 'core-js-3-only-polyfill',
+      name: polyfill.name,
+      code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
+    });
+  }
+
+  const allPolyfillCode = polyfills.map(polyfill => {
+    return makeRequireCodeForPolyfill(polyfill.coreJs3Module);
+  }).join('\n');
+  createVariant({
+    group: 'all-legacy-polyfills',
+    name: 'all-legacy-polyfills-core-js-3',
+    code: allPolyfillCode,
+  });
+
+  await waitForVariants();
 
   let summary;
 
