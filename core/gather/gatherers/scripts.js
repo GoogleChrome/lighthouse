@@ -90,6 +90,7 @@ class Scripts extends BaseGatherer {
   async stopInstrumentation(context) {
     const session = context.driver.defaultSession;
     session.off('Debugger.scriptParsed', this.onScriptParsed);
+    await session.sendCommand('Debugger.disable');
   }
 
   /**
@@ -124,6 +125,13 @@ class Scripts extends BaseGatherer {
       traceSourceByScriptId.set(scriptId, chunks.join(''));
     }
 
+    const needsFallback = this._scriptParsedEvents.some(
+      ({scriptId}) => !traceSourceByScriptId.has(scriptId)
+    );
+    if (needsFallback) {
+      await session.sendCommand('Debugger.enable');
+    }
+
     // If run on a mobile device, be sensitive to memory limitations and only
     // request one at a time.
     const scriptContents = await runInSeriesOrParallel(
@@ -137,7 +145,9 @@ class Scripts extends BaseGatherer {
       },
       formFactor === 'mobile' /* runInSeries */
     );
-    await session.sendCommand('Debugger.disable');
+    if (needsFallback) {
+      await session.sendCommand('Debugger.disable');
+    }
 
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event, i) => {
