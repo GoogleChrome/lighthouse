@@ -95,7 +95,10 @@ class LlmsTxt extends Audit {
     }
 
     if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanation),
+      };
     }
 
     const hasH1 = /^\s*#\s+.+/m.test(content);
