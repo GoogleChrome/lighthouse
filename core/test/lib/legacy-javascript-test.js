@@ -186,6 +186,47 @@ describe('detectLegacyJavaScript', () => {
     ]);
     expect(results[0].estimatedByteSavings).toBe(36369);
   });
+
+  it('correctly tracks line and column numbers with CRLF line endings', () => {
+    const script = {
+      code: [
+        '',
+        '  Object.assign = function() {};',
+        '  String.prototype.repeat = function() {};',
+        '    Array.prototype.forEach = function() {};',
+      ].join('\r\n'),
+    };
+    const results = getResults([script]);
+
+    expect(results).toHaveLength(1);
+    expect(results[0].matches).toEqual([
+      {name: 'Array.prototype.forEach', line: 3, column: 4},
+      {name: 'Object.assign', line: 1, column: 2},
+      {name: 'String.prototype.repeat', line: 2, column: 2},
+    ]);
+  });
+
+  it('correctly tracks line and column numbers after multi-line pattern matches', () => {
+    const script = {
+      code: [
+        'e({target:"Array",',
+        '  proto:!0',
+        '},{fill:1});  Object.assign = function() {};',
+        'String.prototype.repeat =',
+        '  function() {};',
+        '  Array.prototype.forEach = function() {};',
+      ].join('\n'),
+    };
+    const results = getResults([script]);
+
+    expect(results).toHaveLength(1);
+    expect(results[0].matches).toEqual([
+      {name: 'Array.prototype.fill', line: 0, column: 2},
+      {name: 'Array.prototype.forEach', line: 5, column: 2},
+      {name: 'Object.assign', line: 2, column: 14},
+      {name: 'String.prototype.repeat', line: 3, column: 0},
+    ]);
+  });
 });
 
 describe('LegacyJavaScript signals', () => {

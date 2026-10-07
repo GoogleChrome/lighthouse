@@ -45,7 +45,7 @@ class CodePatternMatcher {
     if (!this.re) {
       const patternsExpression =
         this.patterns.map(pattern => `(${pattern.expression})`).join('|');
-      this.re = new RegExp(`(^\r\n|\r|\n)|${patternsExpression}`, 'g');
+      this.re = new RegExp(`(\r\n|\r|\n)|${patternsExpression}`, 'g');
     }
 
     // Reset RegExp state.
@@ -69,9 +69,27 @@ class CodePatternMatcher {
       const [isNewline, ...patternExpressionMatches] = captureGroups;
       if (isNewline) {
         line++;
-        lineBeginsAtIndex = result.index + 1;
+        lineBeginsAtIndex = result.index + isNewline.length;
         continue;
       }
+      const matchLine = line;
+      const matchColumn = result.index - lineBeginsAtIndex;
+
+      // A matched pattern may itself span across one or more newlines (e.g. via `\s`, `[^;]`,
+      // or `[^=]`), which `this.re.exec` consumes without hitting the `isNewline` branch above.
+      const matchText = result[0];
+      for (let i = 0; i < matchText.length; i++) {
+        const ch = matchText.charCodeAt(i);
+        if (ch === 13 /* \r */) {
+          if (matchText.charCodeAt(i + 1) === 10 /* \n */) i++;
+          line++;
+          lineBeginsAtIndex = result.index + i + 1;
+        } else if (ch === 10 /* \n */) {
+          line++;
+          lineBeginsAtIndex = result.index + i + 1;
+        }
+      }
+
       const pattern = this.patterns[patternExpressionMatches.findIndex(Boolean)];
 
       if (seen.has(pattern)) {
@@ -81,8 +99,8 @@ class CodePatternMatcher {
 
       matches.push({
         name: pattern.name,
-        line,
-        column: result.index - lineBeginsAtIndex,
+        line: matchLine,
+        column: matchColumn,
       });
     }
 
