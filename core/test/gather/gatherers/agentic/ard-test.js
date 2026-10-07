@@ -136,6 +136,16 @@ describe('ARD Gatherer Static Helpers', () => {
       });
     });
 
+    it('reads both links when Chrome joins two Link headers with a newline', async () => {
+      const context = contextWithLinkHeader(
+        '</legacy.json>; rel=ai-catalog\n</header-ard.json>; rel="ard"');
+      const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
+      expect(result).toEqual({
+        ard: 'https://example.com/header-ard.json',
+        legacy: 'https://example.com/legacy.json',
+      });
+    });
+
     it('returns nulls when Link header has neither relation', async () => {
       const context = contextWithLinkHeader('<https://example.com/styles.css>; rel="stylesheet"');
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
@@ -165,8 +175,8 @@ describe('AgentResourceDiscovery Gatherer', () => {
    * @param {string|null} [options.robotsTxtContent]
    * @param {{ard?: string|null, legacy?: string|null}} [options.domLinks]
    * @param {string|null} [options.linkHeader]
-   * @param {Record<string, {status: number|null, content: string|null, headers?: Record<string, string>|null}>} [options.responses]
-   *   Responses by URL. Unlisted URLs return a 404.
+   * @param {Record<string, {status: number|null, content: string|null, headers?: Record<string, string>|null}|Error>} [options.responses]
+   *   Responses by URL. Unlisted URLs return a 404; an Error is thrown instead of a response.
    */
   function getContext({robotsTxtContent = null, domLinks = {}, linkHeader = null, responses = {}}) {
     /** @type {string[]} */
@@ -193,8 +203,9 @@ describe('AgentResourceDiscovery Gatherer', () => {
               });
             }
             fetched.push(targetUrl);
-            return Promise.resolve(
-              responses[targetUrl] || {status: 404, content: null, headers: null});
+            const response = responses[targetUrl];
+            if (response instanceof Error) return Promise.reject(response);
+            return Promise.resolve(response || {status: 404, content: null, headers: null});
           },
         },
       },
@@ -390,6 +401,26 @@ describe('AgentResourceDiscovery Gatherer', () => {
     expect(artifact.failedSources).toEqual([
       {source: 'htmlLink', url: 'https://example.com/empty.json', status: 200},
     ]);
+  });
+
+  it('records the error message when an advertised location cannot be fetched', async () => {
+    const {context} = getContext({
+      domLinks: {ard: 'https://example.com/unreachable.json'},
+      responses: {
+        'https://example.com/unreachable.json': new Error('Timed out fetching resource'),
+        [wellKnown]: manifest,
+      },
+    });
+
+    const artifact = await new AgentResourceDiscovery().getArtifact(context);
+
+    expect(artifact.discoverySource).toEqual('wellKnown');
+    expect(artifact.failedSources).toEqual([{
+      source: 'htmlLink',
+      url: 'https://example.com/unreachable.json',
+      status: null,
+      errorMessage: 'Timed out fetching resource',
+    }]);
   });
 
   it('does not fall back to ai-catalog.json on a soft-404 200 HTML response', async () => {

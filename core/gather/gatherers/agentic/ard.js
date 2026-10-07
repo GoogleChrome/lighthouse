@@ -166,7 +166,7 @@ class AgentResourceDiscovery extends BaseGatherer {
       const linkHeader = mainResourceResponse.headers?.link;
       if (!linkHeader) return NO_LINKS;
 
-      const parsed = LinkHeader.parse(linkHeader);
+      const parsed = LinkHeader.parse(linkHeader.replace(/\n/g, ','));
       /** @param {string} rel */
       const getUri = rel =>
         resolveUrl(parsed.refs.find(ref => ref.rel?.toLowerCase() === rel)?.uri, finalDisplayedUrl);
@@ -213,7 +213,12 @@ class AgentResourceDiscovery extends BaseGatherer {
     const attempts = [];
     const failedSources = () => attempts
       .filter(attempt => attempt.advertised)
-      .map(({source, url, fetchResult}) => ({source, url, status: fetchResult.status}));
+      .map(({source, url, fetchResult}) => ({
+        source,
+        url,
+        status: fetchResult.status,
+        errorMessage: fetchResult.errorMessage,
+      }));
 
     for (const {source, url, advertised} of candidates) {
       if (!url || attempts.some(attempt => attempt.url === url)) continue;

@@ -163,7 +163,13 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
       legacyWellKnown: string;
     };
     /** Advertised locations (not the probed well-known paths) that were tried and failed to load, in discovery order. */
-    failedSources: Array<{source: Artifacts.ArdDiscoverySource, url: string, status: number | null}>;
+    failedSources: Array<{
+      source: Artifacts.ArdDiscoverySource;
+      url: string;
+      status: number | null;
+      /** Set when the fetch itself failed (e.g. a timeout) rather than returning an HTTP error. */
+      errorMessage?: string;
+    }>;
     errorMessage?: string;
   };
   /** Source maps of scripts executed in the page. */
