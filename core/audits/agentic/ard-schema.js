@@ -31,7 +31,7 @@ const UIStrings = {
   description: 'A valid Agentic Resource Discovery (ARD) manifest, served at ' +
     '`/.well-known/ard.json` or linked with `rel="ard"`, lets AI agents and registries ' +
     'discover and verify your resources. ' +
-    '[Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).',
+    '[Learn more about the ARD audit](https://g.co/chrome/lighthouse-ard).',
   /** Explanatory message stating that the Agentic Resource Discovery (ARD) manifest could not be loaded for schema validation. "ARD" should not be translated. */
   explanation: 'ARD manifest could not be loaded for schema validation.',
   /** Table item describing that the Agentic Resource Discovery (ARD) manifest was only found at a legacy location that ARD consumers are not required to check. "ARD", "/.well-known/ai-catalog.json", "rel="ai-catalog"", "/.well-known/ard.json" and "rel="ard"" should not be translated. */
