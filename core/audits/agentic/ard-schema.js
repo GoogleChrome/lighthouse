@@ -19,6 +19,9 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {ConformanceTester} from '../../../third-party/ard/ard.js';
 
+const HTTP_CLIENT_ERROR_CODE_LOW = 400;
+const HTTP_SERVER_ERROR_CODE_LOW = 500;
+
 const UIStrings = {
   /** Title of a Lighthouse audit that evaluates whether the site's Agentic Resource Discovery (ARD) manifest conforms to the ARD specification. Shown when valid. "ARD" should not be translated. */
   title: 'ARD manifest is valid',
@@ -99,9 +102,13 @@ class ArdSchema extends Audit {
       signals.legacyHtmlLink ||
       signals.legacyHttpHeaderLink
     );
-    const hasCatalog = hasExplicitSignal || ard.status === 200;
+    const isClientError = Boolean(
+      ard.status &&
+      ard.status >= HTTP_CLIENT_ERROR_CODE_LOW &&
+      ard.status < HTTP_SERVER_ERROR_CODE_LOW
+    );
 
-    if (!hasCatalog) {
+    if (!hasExplicitSignal && isClientError) {
       return {
         score: 1,
         notApplicable: true,
@@ -118,7 +125,7 @@ class ArdSchema extends Audit {
       {key: 'severity', valueType: 'text', label: str_(UIStrings.columnSeverity)},
     ];
 
-    if (ard.status !== 200 || !ard.content) {
+    if (!ard.status || ard.status >= HTTP_CLIENT_ERROR_CODE_LOW || !ard.content) {
       const failedItems = ard.failedSources.map(source =>
         ArdSchema.makeFailedSourceItem(source, itemSeverityError));
       return {

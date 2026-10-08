@@ -85,24 +85,33 @@ describe('ARD Schema Audit', () => {
   });
 
   it('is applicable when /.well-known/ard.json is found with no other signal', () => {
-    const artifacts = createArtifacts(200, {entries: [validEntry]}, {
-      catalogUrl: WELL_KNOWN,
-      discoverySource: 'wellKnown',
-      discoverySignals: emptySignals(),
-    });
+    for (const status of [200, 201]) {
+      const artifacts = createArtifacts(status, {entries: [validEntry]}, {
+        catalogUrl: WELL_KNOWN,
+        discoverySource: 'wellKnown',
+        discoverySignals: emptySignals(),
+      });
 
-    const result = ArdSchema.audit(artifacts);
-    expect(result.notApplicable).toBeUndefined();
-    expect(result.score).toEqual(1);
+      const result = ArdSchema.audit(artifacts);
+      expect(result.notApplicable).toBeUndefined();
+      expect(result.score).toEqual(1);
+    }
   });
 
   it('fails with score 0 when manifest content could not be loaded', () => {
-    const artifacts = createArtifacts(500, null);
-    const result = ArdSchema.audit(artifacts);
-    expect(result.score).toEqual(0);
-    expect(result.explanation).toBeDisplayString(
-      'ARD manifest could not be loaded for schema validation.'
-    );
+    for (const [status, content] of /** @type {const} */ ([[500, null], [null, null], [200, '']])) {
+      const artifacts = createArtifacts(status ?? 0, content, {
+        status,
+        catalogUrl: WELL_KNOWN,
+        discoverySource: 'wellKnown',
+        discoverySignals: emptySignals(),
+      });
+      const result = ArdSchema.audit(artifacts);
+      expect(result.score).toEqual(0);
+      expect(result.explanation).toBeDisplayString(
+        'ARD manifest could not be loaded for schema validation.'
+      );
+    }
   });
 
   it('fails with score 0 (not notApplicable) when a legacy link is broken', () => {
