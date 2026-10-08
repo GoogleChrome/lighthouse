@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as ImageDeliveryInsightModule from '@paulirish/trace_engine/models/trace/insights/ImageDelivery.js';
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ImageDelivery.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const ImageDeliveryInsightModule = TraceEngine.Insights.Models.ImageDelivery;
+const {UIStrings} = ImageDeliveryInsightModule;
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';

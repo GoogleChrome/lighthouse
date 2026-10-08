@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {calculateDocFirstByteTs} from '@paulirish/trace_engine/models/trace/insights/Common.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const {calculateDocFirstByteTs} = TraceEngine.Insights.Common;
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {NavigationMetric} from './navigation-metric.js';

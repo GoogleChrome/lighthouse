@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ThirdParties.js';
-import {summarizeByURL} from '@paulirish/trace_engine/models/trace/extras/ThirdParties.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const {UIStrings} = TraceEngine.Insights.Models.ThirdParties;
+const {summarizeByURL} = TraceEngine.Extras.ThirdParties;
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';

@@ -14,11 +14,10 @@
 import fs from 'fs';
 
 import {LH_ROOT} from '../../shared/root.js';
+import * as TraceEngine from '@paulirish/trace_engine';
 
 function getAllInsightNames() {
-  const matches = fs.readFileSync('node_modules/@paulirish/trace_engine/models/trace/insights/Models.js', 'utf-8')
-    .matchAll(/as ([a-zA-Z]+)/g);
-  return [...matches].map(m => m[1]).sort();
+  return Object.keys(TraceEngine.Insights.Models).sort();
 }
 
 /**
@@ -51,12 +50,13 @@ function createAuditCode(insightName, auditId) {
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/${insightName}.js';
+import * as TraceEngine from '@paulirish/trace_engine';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
+const {UIStrings} = TraceEngine.Insights.Models.${insightName};
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/${insightName}.js', UIStrings);
 

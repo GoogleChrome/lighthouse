@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NO_NAVIGATION} from '@paulirish/trace_engine/models/trace/types/TraceEvents.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const {NO_NAVIGATION} = TraceEngine.Types.Events;
 
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';

@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ForcedReflow.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const {UIStrings} = TraceEngine.Insights.Models.ForcedReflow;
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';

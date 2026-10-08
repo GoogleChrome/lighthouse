@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings, TOO_MANY_PRECONNECTS_THRESHOLD} from '@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+const {UIStrings, TOO_MANY_PRECONNECTS_THRESHOLD} = TraceEngine.Insights.Models.NetworkDependencyTree;
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
