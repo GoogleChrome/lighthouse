@@ -11,19 +11,18 @@ cd $LH_ROOT
 
 set -ex
 
-# Temporarily commented out due to build breakage
-#    @paulirish/trace_engine \
-#    chrome-devtools-frontend \
-#    devtools-protocol \
-#    puppeteer \
-#    puppeteer-core \
 yarn upgrade --latest \
+    @paulirish/trace_engine \
     axe-core \
+    chrome-devtools-frontend \
     chrome-launcher \
     csp_evaluator \
+    devtools-protocol \
     js-library-detector \
     lighthouse-logger \
     lighthouse-stack-packs \
+    puppeteer \
+    puppeteer-core \
     speedline-core \
     third-party-web \
     tldts-icann \
@@ -39,7 +38,7 @@ node -e "
     pkg.resolutions['puppeteer-core/**/devtools-protocol'] = ver;
     fs.writeFileSync('$LH_ROOT/package.json', JSON.stringify(pkg, null, 2) + '\n');
 
-    const webFeaturesVer = pkg.dependencies['web-features'].replace(/[\^~]/, '');
+    const webFeaturesVer = (pkg.dependencies['web-features'] || pkg.devDependencies['web-features']).replace(/[\^~]/, '');
     const timeJson = JSON.parse(cp.execSync('npm info web-features time --json').toString());
     const dateStr = timeJson[webFeaturesVer];
     if (dateStr) {

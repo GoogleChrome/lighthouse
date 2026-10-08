@@ -473,7 +473,7 @@ const expectations = {
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
           lcpLoadDelay: '>5000',
-          lcpLoadDuration: '>5000',
+          lcpLoadDuration: '>0',
         }}},
       },
       'third-party-cookies': {

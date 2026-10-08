@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -82,3 +82,27 @@ jobs:
       - name: Publish to npm
         run: |
           npm publish --provenance --access public --registry https://registry.npmjs.org/
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          node -e "
+            const fs = require('fs');
+            const changelog = fs.readFileSync('changelog.md', 'utf8');
+            const version = require('./package.json').version;
+            const startStr = '<a name=\"' + version + '\"></a>';
+            const startIdx = changelog.indexOf(startStr);
+            if (startIdx === -1) {
+              console.error('Could not find version ' + version + ' in changelog.md');
+              process.exit(1);
+            }
+            // Skip the <a name=...> part to start the release notes cleanly from the # version (date) header
+            const headerStartIdx = changelog.indexOf('# ' + version, startIdx);
+            const contentStartIdx = headerStartIdx !== -1 ? headerStartIdx : startIdx;
+
+            const nextIdx = changelog.indexOf('<a name=\"', startIdx + 1);
+            const releaseNotes = nextIdx === -1 ? changelog.substring(contentStartIdx) : changelog.substring(contentStartIdx, nextIdx);
+            fs.writeFileSync('latest-release-notes.md', releaseNotes.trim());
+          "
+          gh release create "$REF_NAME" --title "$REF_NAME" --notes-file latest-release-notes.md

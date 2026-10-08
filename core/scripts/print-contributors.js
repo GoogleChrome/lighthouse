@@ -50,7 +50,7 @@ async function main() {
     const response = await fetch(`https://api.github.com/repos/GoogleChrome/lighthouse/commits/${author.hash}`);
     const json = await response.json();
     try {
-      console.log(`${json.commit.author.name} @${json.author.login}`);
+      console.log(`- ${json.commit.author.name} @${json.author.login}`);
     } catch {
       console.log(`https://api.github.com/repos/GoogleChrome/lighthouse/commits/${author.hash}`, 'unexpected json', json);
     }

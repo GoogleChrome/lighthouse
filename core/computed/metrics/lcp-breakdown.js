@@ -42,15 +42,15 @@ class LCPBreakdown {
       const throttleRatio = metricLcp / observedLcp;
 
       const unclampedLoadStart = (lcpRecord.networkRequestTime - timeOrigin) * throttleRatio;
-      const loadDelay = Math.max(ttfb, Math.min(unclampedLoadStart, metricLcp));
+      const loadStart = Math.max(ttfb, Math.min(unclampedLoadStart, metricLcp));
 
       const unclampedLoadEnd = (lcpRecord.networkEndTime - timeOrigin) * throttleRatio;
-      const loadDuration = Math.max(loadDelay, Math.min(unclampedLoadEnd, metricLcp));
+      const loadEnd = Math.max(loadStart, Math.min(unclampedLoadEnd, metricLcp));
 
       return {
         ttfb,
-        loadDelay,
-        loadDuration,
+        loadDelay: loadStart - ttfb,
+        loadDuration: loadEnd - loadStart,
       };
     }
 

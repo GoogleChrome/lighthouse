@@ -33,8 +33,11 @@ gclient sync --delete_unversioned_trees --reset
 if [[ "$CI" ]]; then
   gn gen "out/$BUILD_FOLDER" --args='is_debug=false'
 else
-  gn gen "out/$BUILD_FOLDER" --args='is_debug=true devtools_skip_typecheck=true'
+  gn gen "out/$BUILD_FOLDER" --args='is_debug=true'
 fi
+
+# Patch RecordingPlayer.ts to fix CdpBrowser vs Browser type error from puppeteer update in DevTools.
+sed -i.bak 's/super(browser, page, {timeout});/super(browser as any, page as any, {timeout});/' front_end/panels/recorder/models/RecordingPlayer.ts
 
 # Build devtools. By default, this creates `out/LighthouseIntegration/gen/front_end`.
 autoninja -C "out/$BUILD_FOLDER"

@@ -45,6 +45,7 @@ describe('Lightrider Bundle builds', () => {
         Event,
         EventTarget,
         CustomEvent,
+        ReadableStream,
         module: cjsModule,
         exports: cjsModule.exports,
       };
@@ -81,6 +82,7 @@ describe('Lightrider Bundle builds', () => {
         Event,
         EventTarget,
         CustomEvent,
+        ReadableStream,
       };
       browserSandbox.globalThis = browserSandbox;
       browserSandbox.global = browserSandbox;
