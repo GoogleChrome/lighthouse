@@ -98,7 +98,7 @@ describe('Performance: page execution timings audit', () => {
     assert.equal(output.score, 0);
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
       // TODO(15841): difference is b/c TE is filtering out failed requests. Fix upstream.
-      expect(output.metricSavings.TBT).toBeCloseTo(1714.5, 0.1);
+      expect(output.metricSavings.TBT).toBeCloseTo(1972.5, 0.1);
     } else {
       expect(output.metricSavings.TBT).toBeCloseTo(1710.5, 0.1);
     }

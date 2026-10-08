@@ -266,7 +266,7 @@ describe('TBTImpactTasks', () => {
       expect(tasksWithNoChildren).toEqual(tasksWithAllSelfImpact);
 
       const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
-      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999545`);
+      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.999999999976`);
 
       // Total self blocking time is just the total self impact without factoring in the TBT
       // bounds, so it should always be greater than or equal to the total TBT self impact.

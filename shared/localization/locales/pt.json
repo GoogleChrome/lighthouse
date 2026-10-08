@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Suporte para dados: os URLs em SVGUseElement foram descontinuados e serão removidos no futuro."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "Um protocolo de credenciais digitais desconhecido foi solicitado em navigator.credentials.get() ou create(). Em uma versão futura, protocolos não reconhecidos serão bloqueados."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "O método document.createEvent('KeyboardEvents') foi descontinuado e será removido. Em vez disso, use new KeyboardEvent()."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Este é um exemplo de como mostrar o código necessário para uma descontinuação informada pelo processo do navegador."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "A API Fenced Frame foi descontinuada e será removida."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "A API Protected Audience foi descontinuada e será removida em uma versão futura."
@@ -2264,6 +2270,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "O uso de BluetoothRemoteGATTCharacteristic.writeValue() foi descontinuado. Use writeValueWithResponse() ou writeValueWithoutResponse()."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.incomingHighWaterMark foi renomeado para incomingMaxBufferedDatagrams. O incomingHighWaterMark será removido em uma versão futura do Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.outgoingHighWaterMark foi renomeado para outgoingMaxBufferedDatagrams. O outgoingHighWaterMark será removido em uma versão futura do Chrome."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Não há suporte da resposta JSON para UTF-16 no XMLHttpRequest"
   },
@@ -2331,7 +2343,7 @@
     "message": "Uma declaração de codificação de caracteres é obrigatória. Ela pode ser feita com uma metatag charset nos primeiros 1.024 bytes do HTML ou no cabeçalho de resposta HTTP do tipo de conteúdo. [Saiba mais sobre como declarar a codificação de caracteres](https://developer.chrome.com/docs/insights/charset/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
-    "message": "Não declara o charset no cabeçalho HTTP."
+    "message": "Não declara o charset no cabeçalho HTTP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
     "message": "Declara o charset usando uma metatag após os primeiros 1.024 bytes."
@@ -2340,7 +2352,7 @@
     "message": "Não declara o charset usando uma metatag"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
-    "message": "Não foi possível determinar a declaração meta charset pelos rastros."
+    "message": "Não foi possível determinar a declaração meta charset pelos rastros"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
     "message": "Declara o charset no cabeçalho HTTP"
@@ -2427,7 +2439,10 @@
     "message": "Origem"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Remover [módulos JavaScript grandes e duplicados](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) de pacotes para reduzir bytes desnecessários consumidos por atividades da rede."
+    "message": "Remover [módulos JavaScript grandes e duplicados](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) de pacotes para reduzir bytes desnecessários consumidos por atividades da rede"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "Nenhum JavaScript duplicado encontrado"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "JavaScript duplicado"
@@ -2437,6 +2452,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Fonte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "Nenhuma fonte com font-display abaixo do ideal foi encontrada"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Exibição de fontes"
@@ -2466,7 +2484,7 @@
     "message": "[sem atribuição]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "Comece a investigar [como melhorar a INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) analisando a subparte mais longa."
+    "message": "Comece a investigar [como melhorar a INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) analisando a subparte mais longa"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "Duração"
@@ -2490,7 +2508,7 @@
     "message": "Detalhamento da INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "Reduzir o tempo de download das imagens pode melhorar o tempo de carregamento percebido da página e a LCP. [Saiba mais sobre como otimizar o tamanho da imagem](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+    "message": "Reduzir o tempo de download das imagens pode melhorar o tempo de carregamento percebido da página e a LCP. [Saiba mais sobre como otimizar o tamanho da imagem](https://developer.chrome.com/docs/performance/insights/image-delivery)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (Estimativa: {PH2})"
@@ -2508,16 +2526,16 @@
     "message": "Melhorar a entrega de imagens"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Aumentar o fator de compactação da imagem pode aprimorar o tamanho de download dela."
+    "message": "Aumentar o fator de compactação da imagem pode aprimorar o tamanho de download dela"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Usar um formato de imagem moderno (WebP, AVIF) ou aumentar a compactação da imagem pode aprimorar o tamanho do download da imagem."
+    "message": "Usar um formato de imagem moderno (WebP, AVIF) ou aumentar a compactação da imagem pode aprimorar o tamanho do download da imagem"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "Este arquivo de imagem é maior do que precisa ser ({PH1}) para as dimensões exibidas ({PH2}). Use imagens responsivas para reduzir o tamanho do download da imagem."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Usar formatos de vídeo em vez de GIFs pode aprimorar o tamanho de download de conteúdo animado."
+    "message": "Usar formatos de vídeo em vez de GIFs pode melhorar o tamanho de download de conteúdo animado"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "Cada [subparte tem estratégias de melhoria específicas](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). O ideal é que a maior parte do tempo de LCP seja gasto no carregamento dos recursos, não em atrasos."
@@ -2532,7 +2550,7 @@
     "message": "P75 de campo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
-    "message": "Nenhum LCP detectado"
+    "message": "Nenhuma LCP detectada"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
     "message": "Atraso no carregamento de recursos"
@@ -2562,13 +2580,13 @@
     "message": "A propriedade fetchpriority=high precisa ser aplicada à solicitação de pré-carregamento da imagem."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "Os recursos do LCP não devem usar loading=lazy."
+    "message": "Os recursos de LCP não devem usar loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "A imagem da LCP carregou {PH1} depois do ponto de partida mais antigo."
+    "message": "A imagem da LCP carregou {PH1} depois do ponto de partida mais antigo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
-    "message": "Nenhum LCP detectado"
+    "message": "Nenhuma LCP detectada"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
     "message": "Nenhum recurso de LCP foi detectado porque o LCP não é uma imagem"
@@ -2586,7 +2604,10 @@
     "message": "Bytes desperdiçados"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfills e transformações permitem que navegadores mais antigos usem novos recursos do JavaScript. No entanto, muitos não são necessários para navegadores mais recentes. Considere mudar seu processo de criação do JavaScript para não transpilar os recursos do [Baseline](https://web.dev/articles/baseline-and-polyfills), a menos que você precise da compatibilidade com navegadores mais antigos. [Entenda por que a maioria dos sites pode implantar código ES6+ sem transpilação](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "Polyfills e transformações permitem que navegadores mais antigos usem novos recursos do JavaScript. No entanto, muitos não são necessários para navegadores mais recentes. Considere mudar seu processo de build do JavaScript para não transpilar os recursos do [Baseline](https://web.dev/articles/baseline-and-polyfills), a menos que você precise da compatibilidade com navegadores mais antigos. [Entenda por que a maioria dos sites pode implantar código ES6+ sem transpilação](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "Nenhum JavaScript legado encontrado"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript legado"
@@ -2595,7 +2616,7 @@
     "message": "HTTP/2 e HTTP/3 oferecem muitos benefícios em relação ao HTTP/1.1, como multiplexação. [Saiba mais sobre o uso de HTTP moderno](https://developer.chrome.com/docs/performance/insights/modern-http)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Nenhuma solicitação usou HTTP/1.1 ou o uso atual de HTTP/1.1 não apresenta uma oportunidade de otimização significativa. As solicitações HTTP/1.1 só são sinalizadas se seis ou mais recursos estáticos tiverem a mesma origem e não forem disponibilizados por um ambiente de desenvolvimento local ou uma fonte de terceiros."
+    "message": "Nenhuma solicitação usou HTTP/1.1 ou o uso atual de HTTP/1.1 não apresenta uma oportunidade de otimização significativa. As solicitações HTTP/1.1 só serão sinalizadas se seis ou mais recursos estáticos tiverem a mesma origem e não forem disponibilizados por um ambiente de desenvolvimento local ou uma fonte de terceiros."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocolo"
@@ -2625,10 +2646,10 @@
     "message": "Pré-conexão não usada. Confira se o atributo crossorigin está sendo usado corretamente."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Evite encadear solicitações críticas](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) reduzindo o tamanho das cadeias, o tamanho do download de recursos ou adiando o download de recursos desnecessários para melhorar o carregamento da página."
+    "message": "[Evite encadear solicitações críticas](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) reduzindo o tamanho das cadeias e o tamanho da transferência de recursos ou adiando a transferência de recursos desnecessários para melhorar o carregamento de página"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Adicione dicas de [pré-conexão](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) às suas origens mais importantes, mas tente não usar mais que 4."
+    "message": "Adicione dicas de [pré-conexão](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) às suas origens mais importantes, mas tente não usar mais que 4"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Candidatos à pré-conexão"
@@ -2643,7 +2664,7 @@
     "message": "Nenhuma outra origem é uma boa candidata para a pré-conexão"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "nenhuma origem foi pré-conectada"
+    "message": "Nenhuma origem foi pré-conectada"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "As dicas de [pré-conexão](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ajudam o navegador a estabelecer uma conexão mais cedo durante o carregamento da página, poupando tempo quando a primeira solicitação para essa origem é feita. A página fez a pré-conexão com as seguintes origens:"
@@ -2661,7 +2682,7 @@
     "message": "Pré-conexão não usada. Use preconnect apenas para origens que a página provavelmente vai solicitar."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "Evite encadear solicitações críticas reduzindo o tamanho das cadeias, diminuindo o tamanho do download de recursos ou adiando o download de recursos desnecessários para melhorar o carregamento da página."
+    "message": "Evite encadear solicitações críticas reduzindo o tamanho das cadeias, diminuindo o tamanho da transferência de recursos ou adiando a transferência de recursos desnecessários para melhorar o carregamento de página"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "As solicitações estão bloqueando a renderização inicial da página, o que pode atrasar a LCP. Essas solicitações de rede podem ser [deferidas ou colocadas inline](https://developer.chrome.com/docs/performance/insights/render-blocking) para que fiquem fora do caminho crítico."
@@ -2679,7 +2700,7 @@
     "message": "Solicitações que bloquearam a renderização"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "Se os custos de \"Recalcular estilo\" permanecerem altos, a otimização do seletor poderá reduzir esse valor. [Otimize os seletores](https://developer.chrome.com/docs/performance/insights/slow-css-selector) com muito tempo decorrido e porcentagem alta de caminhos lentos. Seletores mais simples, menos seletores, um DOM menor e um DOM com menos níveis reduzem os custos correspondentes."
+    "message": "Se os custos de \"recalcular estilo\" permanecerem altos, a otimização do seletor poderá reduzir esse valor. [Otimize os seletores](https://developer.chrome.com/docs/performance/insights/slow-css-selector) com muito tempo decorrido e porcentagem alta de caminhos lentos. Seletores mais simples, menos seletores, um DOM menor e um DOM com menos níveis reduzem os custos correspondentes."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "Tempo decorrido"
@@ -2727,7 +2748,7 @@
     "message": "Terceiros"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "As interações por toque podem [atrasar em até 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) se a janela de visualização não for otimizada para dispositivos móveis."
+    "message": "As interações por toque podem [atrasar em até 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) se a janela de visualização não for otimizada para dispositivos móveis"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "Atraso de toque em dispositivo móvel"
@@ -2736,367 +2757,367 @@
     "message": "Otimizar janela de visualização para dispositivos móveis"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "Apenas páginas carregadas por uma solicitação GET são qualificadas para o cache de avanço e retorno."
+    "message": "Apenas páginas carregadas por uma solicitação GET são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "Apenas páginas com um código de status de 2XX podem ser adicionadas ao cache."
+    "message": "Apenas páginas com um código de status de 2XX podem ser adicionadas ao cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "O Chrome detectou uma tentativa de executar o JavaScript enquanto a página estava no cache."
+    "message": "O Chrome detectou uma tentativa de executar o JavaScript enquanto a página estava no cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "No momento, as páginas que solicitaram um AppBanner não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram um AppBanner não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "O cache de avanço e retorno foi desativado por sinalizações. Acesse chrome://flags/#back-forward-cache para ativar localmente no dispositivo."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "O cache de avanço e retorno foi desativado pela linha de comando."
+    "message": "O cache de avanço e retorno foi desativado pela linha de comando"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "O cache de avanço e retorno foi desativado devido à memória insuficiente."
+    "message": "O cache de avanço e retorno foi desativado devido à memória insuficiente"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "O delegado não oferece suporte ao cache de avanço e retorno."
+    "message": "O delegado não oferece suporte ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "O cache de avanço e retorno foi desativado pelo pré-renderizador."
+    "message": "O cache de avanço e retorno foi desativado pelo pré-renderizador"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "Não é possível adicionar a página ao cache porque ela tem uma instância BroadcastChannel com listeners registrados."
+    "message": "Não é possível adicionar a página ao cache porque ela tem uma instância BroadcastChannel com listeners registrados"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Não é possível adicionar páginas com um cabeçalho cache-control:no-store ao cache de avanço e retorno."
+    "message": "Não é possível adicionar páginas com um cabeçalho cache-control:no-store ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "O cache foi apagado intencionalmente."
+    "message": "O cache foi apagado intencionalmente"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "A página foi removida do cache para permitir que outra fosse adicionada."
+    "message": "A página foi removida do cache para permitir que outra fosse adicionada"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "No momento, as páginas que contêm plug-ins não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que contêm plug-ins não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Indefinido"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "As páginas que usam a API FileChooser não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API FileChooser não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "As páginas que usam a API File System Access não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API File System Access não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "No momento, as páginas que usam o Media Device Dispatcher não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam o Media Device Dispatcher não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Um player de mídia estava ativo quando o usuário saiu da página."
+    "message": "Um player de mídia estava ativo quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "As páginas que usam a API MediaSession e definiram um estado de reprodução não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API MediaSession e definiram um estado de reprodução não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "As páginas que usam a API MediaSession e definiram gerenciadores de ação não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API MediaSession e definiram gerenciadores de ação não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "O cache de avanço e retorno foi desativado devido ao leitor de tela."
+    "message": "O cache de avanço e retorno foi desativado devido ao leitor de tela"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "As páginas que usam a classe SecurityHandler não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a classe SecurityHandler não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "As páginas que usam a API Serial não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API Serial não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "As páginas que usam a API WebAuthetication não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API WebAuthetication não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "As páginas que usam a API WebBluetooth não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API WebBluetooth não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "As páginas que usam a API WebUSB não são qualificadas para o cache de avanço e retorno."
+    "message": "As páginas que usam a API WebUSB não são qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "O cache de avanço e retorno foi desativado porque os cookies também foram desativados em uma página que usa Cache-Control: no-store."
+    "message": "O cache de avanço e retorno foi desativado porque os cookies também foram desativados em uma página que usa Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "No momento, as páginas que usam um worker ou worklet dedicados não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam um worker ou worklet dedicados não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "O documento não concluiu o carregamento antes de o usuário sair dele."
+    "message": "O documento não concluiu o carregamento antes de o usuário sair dele"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "O banner de apps estava presente quando o usuário saiu da página."
+    "message": "O banner de apps estava presente quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "O Gerenciador de senhas do Chrome estava presente quando o usuário saiu da página."
+    "message": "O Gerenciador de Senhas do Chrome estava presente quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "A destilação do DOM estava em andamento quando o usuário saiu da página."
+    "message": "A destilação do DOM estava em andamento quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "O leitor do destilador do DOM estava presente quando o usuário saiu da página."
+    "message": "O leitor do destilador do DOM estava presente quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "O cache de avanço e retorno foi desativado porque as extensões usam uma API de mensagens."
+    "message": "O cache de avanço e retorno foi desativado porque as extensões usam uma API de mensagens"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Extensões com conexão de longa duração precisam encerrar a conexão antes de serem adicionadas ao cache de avanço e retorno."
+    "message": "Extensões com conexão de longa duração precisam encerrar a conexão antes de serem adicionadas ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Extensões com conexão de longa duração tentaram enviar mensagens a frames no cache de avanço e retorno."
+    "message": "Extensões com conexão de longa duração tentaram enviar mensagens a frames no cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "O cache de avanço e retorno foi desativado devido a extensões."
+    "message": "O cache de avanço e retorno foi desativado devido a extensões"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Uma caixa de diálogo modal (por exemplo, uma de senha HTTP ou reenvio de formulário) foi mostrada quando o usuário saiu da página."
+    "message": "Uma caixa de diálogo modal (por exemplo, uma de senha HTTP ou reenvio de formulário) foi mostrada quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "A página off-line foi mostrada quando o usuário saiu da página."
+    "message": "A página off-line foi mostrada quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "A barra de intervenção de falta de memória estava presente quando o usuário saiu da página."
+    "message": "A barra de intervenção de memória insuficiente estava presente quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "Havia solicitações de permissão quando o usuário saiu da página."
+    "message": "Havia solicitações de permissão quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "O bloqueador de pop-ups estava presente quando o usuário saiu da página."
+    "message": "O bloqueador de pop-ups estava presente quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Os detalhes do Navegação segura foram mostrados quando o usuário saiu da página."
+    "message": "Os detalhes do recurso Navegação Segura foram mostrados quando o usuário saiu da página"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "O Navegação segura considerou esta como página abusiva e bloqueou pop-ups."
+    "message": "O recurso Navegação Segura considerou esta página como abusiva e bloqueou pop-ups"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Um service worker foi ativado enquanto a página estava no cache de avanço e retorno."
+    "message": "Um service worker foi ativado enquanto a página estava no cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "O cache de avanço e retorno foi desativado devido a um erro no documento."
+    "message": "O cache de avanço e retorno foi desativado devido a um erro no documento"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Páginas usando FencedFrames não podem ser armazenadas em bfcache."
+    "message": "Páginas usando FencedFrames não podem ser armazenadas em bfcache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "A página foi removida do cache para permitir que outra fosse adicionada."
+    "message": "A página foi removida do cache para permitir que outra fosse adicionada"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "No momento, as páginas que concederam acesso ao streaming de mídia não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que concederam acesso ao streaming de mídia não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "No momento, as páginas com alguns tipos de conteúdo incorporado (por exemplo, PDFs) não estão qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com alguns tipos de conteúdo incorporado (por exemplo, PDFs) não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "No momento, as páginas que usam a classe IdleManager não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a classe IdleManager não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "No momento, as páginas com uma conexão IndexedDB aberta não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com uma conexão IndexedDB aberta não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "O cache de avanço e retorno foi desativado devido a um evento IndexedDB."
+    "message": "O cache de avanço e retorno foi desativado devido a um evento IndexedDB"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "APIs não qualificadas foram usadas."
+    "message": "APIs não qualificadas foram usadas"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "No momento, as páginas que tiveram uma injeção de JavaScript por extensões não estão qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que tiveram uma injeção de JavaScript por extensões não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "No momento, as páginas que tiveram uma injeção de StyleSheet por extensões não estão qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que tiveram uma injeção de StyleSheet por extensões não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "Erro interno."
+    "message": "Erro interno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "O cache de avanço e retorno foi desativado porque algumas solicitações de rede JavaScript receberam recursos com o cabeçalho Cache-Control: no-store."
+    "message": "O cache de avanço e retorno foi desativado porque algumas solicitações de rede JavaScript receberam recursos com o cabeçalho Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "O cache de avanço e retorno foi desativado devido a uma solicitação de sinal de atividade."
+    "message": "O cache de avanço e retorno foi desativado devido a uma solicitação de sinal de atividade"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "No momento, as páginas que usam o bloqueio de teclado não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam o bloqueio de teclado não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "A página não concluiu o carregamento antes de o usuário sair dela."
+    "message": "A página não concluiu o carregamento antes de o usuário sair dela"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Não é possível adicionar as páginas que têm recursos principais com cache-control:no-cache ao cache de avanço e retorno."
+    "message": "Não é possível adicionar as páginas que têm recursos principais com cache-control:no-cache ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Não é possível adicionar as páginas que têm recursos principais com cache-control:no-store ao cache de avanço e retorno."
+    "message": "Não é possível adicionar as páginas que têm recursos principais com cache-control:no-store ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "A navegação foi cancelada antes que a página pudesse ser restaurada usando o cache de avanço e retorno."
+    "message": "A navegação foi cancelada antes que a página pudesse ser restaurada usando o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "A página foi removida do cache porque uma conexão de rede ativa recebeu dados demais. O Chrome limita a quantidade de dados que uma página pode receber em cache."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "No momento, as páginas com fetch() ou XHR em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com fetch() ou XHR em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "A página foi removida do cache de avanço e retorno porque uma solicitação de rede ativa envolveu um redirecionamento."
+    "message": "A página foi removida do cache de avanço e retorno porque uma solicitação de rede ativa envolveu um redirecionamento"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "A página foi removida do cache porque uma conexão de rede ficou aberta por tempo demais. O Chrome limita a quantidade de tempo pelo qual uma página pode receber dados em cache."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Não é possível adicionar páginas que não têm um cabeçalho de resposta válido ao cache de avanço e retorno."
+    "message": "Não é possível adicionar páginas que não têm um cabeçalho de resposta válido ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "A navegação aconteceu em um frame diferente do principal."
+    "message": "A navegação aconteceu em um frame diferente do principal"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "No momento, as páginas com transações de banco de dados indexado em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com transações de banco de dados indexado em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "No momento, as páginas com uma solicitação de rede em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com uma solicitação de rede em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "No momento, as páginas com uma solicitação de busca de rede em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com uma solicitação de rede em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "No momento, as páginas com uma solicitação de rede em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com uma solicitação de rede em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "No momento, as páginas com uma solicitação XHR de rede em andamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas com uma solicitação XHR de rede em andamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "No momento, as páginas que usam o PaymentManager não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam o PaymentManager não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "No momento, as páginas que usam o picture-in-picture não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam o picture-in-picture não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "No momento, as páginas que usam a interface de impressão não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a interface de impressão não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "A página foi aberta usando \"window.open()\" e é referenciada por outra guia, ou a página abriu uma janela."
+    "message": "A página foi aberta usando \"window.open()\" e é referenciada por outra guia, ou a página abriu uma janela"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "O processo do renderizador da página no cache de avanço e retorno falhou."
+    "message": "O processo do renderizador da página no cache de avanço e retorno falhou"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "O processo do renderizador da página no cache de avanço e retorno foi encerrado."
+    "message": "O processo do renderizador da página no cache de avanço e retorno foi encerrado"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "No momento, as páginas que solicitaram permissões de captura de áudio não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram permissões de captura de áudio não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "No momento, as páginas que solicitaram permissões de sensor não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram permissões de sensor não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "No momento, as páginas que solicitaram a sincronização em segundo plano ou permissões de busca não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram a sincronização em segundo plano ou permissões de busca não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "No momento, as páginas que solicitaram permissões de MIDI não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram permissões de MIDI não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "No momento, as páginas que solicitaram permissões de notificação não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram permissões de notificação não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "No momento, as páginas que solicitaram acesso ao armazenamento não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram acesso ao armazenamento não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "No momento, as páginas que solicitaram permissões de captura de vídeo não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que solicitaram permissões de captura de vídeo não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Apenas páginas com um esquema de URL HTTP/HTTPS podem ser adicionadas ao cache."
+    "message": "Apenas páginas com um esquema de URL HTTP/HTTPS podem ser adicionadas ao cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "A página foi reivindicada por um service worker enquanto estava no cache de avanço e retorno."
+    "message": "A página foi reivindicada por um service worker enquanto estava no cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Um service worker tentou enviar um MessageEvent à página no cache de avanço e retorno."
+    "message": "Um service worker tentou enviar um MessageEvent à página no cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "A inscrição do ServiceWorker foi cancelada enquanto a página estava no cache de avanço e retorno."
+    "message": "A inscrição do ServiceWorker foi cancelada enquanto a página estava no cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "A página foi removida do cache de avanço e retorno devido à ativação de um service worker."
+    "message": "A página foi removida do cache de avanço e retorno devido à ativação de um service worker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "O Chrome foi reiniciado e apagou as entradas do cache de avanço e retorno."
+    "message": "O Chrome foi reiniciado e apagou as entradas do cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "No momento, as páginas que usam a interface SharedWorker não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a interface SharedWorker não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "A página foi removida do cache porque recebeu uma mensagem de um SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "No momento, as páginas que usam a classe SpeechRecognizer não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a classe SpeechRecognizer não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "No momento, as páginas que usam a SpeechSynthesis não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a SpeechSynthesis não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "Um iframe na página iniciou uma navegação que não foi concluída."
+    "message": "Um iframe na página iniciou uma navegação que não foi concluída"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Não é possível adicionar as páginas que têm recursos secundários com cache-control:no-cache ao cache de avanço e retorno."
+    "message": "As páginas que têm recursos secundários com cache-control:no-cache não podem ser adicionadas ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Não é possível adicionar as páginas que têm recursos secundários com cache-control:no-store ao cache de avanço e retorno."
+    "message": "Não é possível adicionar as páginas que têm recursos secundários com cache-control:no-store ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "A página excedeu o tempo máximo no cache de avanço e retorno e expirou."
+    "message": "A página excedeu o tempo máximo no cache de avanço e retorno e expirou"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "A página expirou ao ser adicionada ao cache de avanço e retorno, provavelmente devido aos gerenciadores pagehide abertos há muito tempo."
+    "message": "A página expirou ao ser adicionada ao cache de avanço e retorno, provavelmente devido aos gerenciadores pagehide abertos há muito tempo"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "A página tem um gerenciador de descarregamento no frame principal."
+    "message": "A página tem um gerenciador de descarregamento no frame principal"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "A página tem um gerenciador de descarregamento em um frame secundário."
+    "message": "A página tem um gerenciador de descarregamento em um frame secundário"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "O navegador mudou o cabeçalho de substituição do user agent."
+    "message": "O navegador mudou o cabeçalho de substituição do user agent"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "No momento, as páginas que concederam acesso à gravação de vídeo ou áudio não estão qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que concederam acesso à gravação de vídeo ou áudio não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "No momento, as páginas que usam WebDatabase não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam WebDatabase não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "No momento, as páginas que usam WebHID não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam WebHID não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "No momento, as páginas que usam WebLocks não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam WebLocks não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "No momento, as páginas que usam WebNfc não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam WebNfc não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "No momento, as páginas que usam a classe WebOTPService não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam a classe WebOTPService não estão qualificadas para o bfcache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "Não é possível adicionar páginas com WebRTC ao cache de avanço e retorno."
+    "message": "Não é possível adicionar páginas com WebRTC ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "O cache de avanço e retorno foi desativado porque o WebRTC foi usado."
+    "message": "O cache de avanço e retorno foi desativado porque o WebRTC foi usado"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "No momento, as páginas que usam WebShare não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam WebShare não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "Não é possível adicionar páginas com WebSocket ao cache de avanço e retorno."
+    "message": "Não é possível adicionar páginas com WebSocket ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "O cache de avanço e retorno foi desativado porque o WebSocket foi usado."
+    "message": "O cache de avanço e retorno foi desativado porque o WebSocket foi usado"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "Não é possível adicionar páginas com WebTransport ao cache de avanço e retorno."
+    "message": "Não é possível adicionar páginas com WebTransport ao cache de avanço e retorno"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "O cache de avanço e retorno foi desativado porque o WebTransport foi usado."
+    "message": "O cache de avanço e retorno foi desativado porque o WebTransport foi usado"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "No momento, as páginas que usam o WebXR não são qualificadas para o cache de avanço e retorno."
+    "message": "No momento, as páginas que usam o WebXR não estão qualificadas para o cache de avanço e retorno"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para conteúdo animado, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para reduzir o uso da CPU quando o conteúdo estiver fora da tela."

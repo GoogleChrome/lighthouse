@@ -61,17 +61,29 @@ Object {
       context
     );
 
-    expect({
-      timing: Math.round(result.timing),
-      optimistic: Math.round(result.optimisticEstimate.timeInMs),
-      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
-    }).toMatchInlineSnapshot(`
-      Object {
-        "optimistic": 397,
-        "pessimistic": 805,
-        "timing": 805,
-      }
-    `);
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      expect({
+        timing: Math.round(result.timing),
+        optimistic: Math.round(result.optimisticEstimate.timeInMs),
+        pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      }).toEqual({
+        optimistic: 397,
+        pessimistic: 551,
+        timing: 551,
+      });
+    } else {
+      expect({
+        timing: Math.round(result.timing),
+        optimistic: Math.round(result.optimisticEstimate.timeInMs),
+        pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      }).toMatchInlineSnapshot(`
+        Object {
+          "optimistic": 397,
+          "pessimistic": 805,
+          "timing": 805,
+        }
+      `);
+    }
   });
 
   it('should compute an observed value (desktop)', async () => {
