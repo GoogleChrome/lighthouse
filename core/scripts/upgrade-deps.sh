@@ -38,7 +38,7 @@ node -e "
     pkg.resolutions['puppeteer-core/**/devtools-protocol'] = ver;
     fs.writeFileSync('$LH_ROOT/package.json', JSON.stringify(pkg, null, 2) + '\n');
 
-    const webFeaturesVer = pkg.dependencies['web-features'].replace(/[\^~]/, '');
+    const webFeaturesVer = (pkg.dependencies['web-features'] || pkg.devDependencies['web-features']).replace(/[\^~]/, '');
     const timeJson = JSON.parse(cp.execSync('npm info web-features time --json').toString());
     const dateStr = timeJson[webFeaturesVer];
     if (dateStr) {
