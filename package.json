@@ -38,6 +38,7 @@
     "clean": "rm -r dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json shared/localization/locales/*.ctc.json || true",
     "clean-types": "git clean -xfq '*.d.ts' '*.d.cts' -e 'node_modules/' -e 'dist/' -e '.tmp/' -e '**/types/'",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
+    "zizmor": "uvx zizmor@1.25.2 --gh-token=\"$(gh auth token)\" .github/workflows",
     "smoke": "node -r source-map-support/register cli/test/smokehouse/frontends/smokehouse-bin.js",
     "debug": "node --inspect-brk ./cli/index.js",
     "start": "yarn build-report --standalone && node ./cli/index.js",
