@@ -327,6 +327,9 @@
   /** The .lh-container is the scroll parent in DevTools so we exclude the topbar from the sticky header buffer. */
   --sticky-header-buffer: var(--sticky-header-height);
 }
+.lh-devtools .lh-details {
+  max-width: 100%;
+}
 @media print {
   .lh-devtools .lh-container {
     overflow: unset;
@@ -424,6 +427,7 @@
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
   margin-left: var(--audit-description-padding-left);
+  max-width: calc(100% - var(--audit-description-padding-left));
 }
 
 .lh-audit__stackpack {
@@ -1871,6 +1875,46 @@
   /* no black outline if we're not confident the entire table can be displayed within bounds */
   .lh-expandable-details[open] {
     animation: none;
+  }
+}
+
+/**
+* Prevent audit details tables from overflowing in narrow reports and DevTools (#14950).
+* Fallback for browsers that do not support `@container query`.
+*/
+@media screen and (max-width: 535px) {
+  .lh-details {
+    margin-left: 0;
+  }
+  .lh-table {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .lh-table-column--url {
+    min-width: 160px;
+  }
+  .lh-row--group td:first-child {
+    min-width: 0;
+  }
+}
+
+@container lh-container (max-width: 535px) {
+  .lh-details {
+    margin-left: 0;
+  }
+  .lh-table {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .lh-table-column--url {
+    min-width: 160px;
+  }
+  .lh-row--group td:first-child {
+    min-width: 0;
   }
 }
 
