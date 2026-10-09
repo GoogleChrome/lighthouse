@@ -63,4 +63,15 @@ describe('Speedline gatherer', () => {
         }
       });
   }, 10000);
+
+  it('does not retain decoded RGBA buffers on frame closures', async () => {
+    const context = {computedCache: new Map()};
+    const speedline = await Speedline.request(threeFrameTrace, context);
+    const frame = speedline.frames[0];
+    const parsed1 = frame.getParsedImage();
+    const parsed2 = frame.getParsedImage();
+    assert.notStrictEqual(parsed1, parsed2);
+    assert.deepStrictEqual(parsed1, parsed2);
+  });
 });
+
