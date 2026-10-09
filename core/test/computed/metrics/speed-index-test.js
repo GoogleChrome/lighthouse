@@ -62,6 +62,10 @@ Object {
     );
 
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // The pre-M145 devtoolsLog lacks `renderBlockingBehavior`, causing CDP mode to fall back
+      // to priority heuristics and treat a high-priority font request as render-blocking
+      // (FCP = 805ms). The trace includes `renderBlocking: 'non_blocking'` on that font request,
+      // yielding a lower simulated FCP (551ms) and Speed Index.
       expect({
         timing: Math.round(result.timing),
         optimistic: Math.round(result.optimisticEstimate.timeInMs),

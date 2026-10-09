@@ -261,16 +261,23 @@ describe('TBTImpactTasks', () => {
       expect(tasks.every(t => t.selfTbtImpact >= 0)).toBeTruthy();
 
       const tasksImpactingTbt = tasks.filter(t => t.tbtImpact);
-      expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
+      const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
+      if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+        // The pre-M145 cnn devtoolsLog lacks `renderBlockingBehavior`, whereas the trace marks
+        // 5 high-priority font/async-script requests as `renderBlocking: 'non_blocking'`. This
+        // lowers simulated FCP from ~8.8s (pessimistic) to ~5.5s, including more tasks in [FCP, TTI].
+        expect(tasksImpactingTbt.length).toEqual(8540);
+        expect(totalSelfImpact).toBeCloseTo(3195.07, 2);
+      } else {
+        expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
+        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.999999999976`);
+      }
 
       // Only tasks with no children should have a `selfTbtImpact` that equals `tbtImpact` if
       // `tbtImpact` is nonzero.
       const tasksWithNoChildren = tasksImpactingTbt.filter(t => !t.children.length);
       const tasksWithAllSelfImpact = tasksImpactingTbt.filter(t => t.selfTbtImpact === t.tbtImpact);
       expect(tasksWithNoChildren).toEqual(tasksWithAllSelfImpact);
-
-      const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
-      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.999999999976`);
 
       // Total self blocking time is just the total self impact without factoring in the TBT
       // bounds, so it should always be greater than or equal to the total TBT self impact.
