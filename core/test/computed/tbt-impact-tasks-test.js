@@ -11,6 +11,7 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {createTestTrace, rootFrame} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {MainThreadTasks} from '../../computed/main-thread-tasks.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 const trace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
 const devtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
@@ -32,25 +33,28 @@ describe('TBTImpactTasks', () => {
     let metricComputationData;
 
     beforeEach(() => {
+      /** @type {Partial<LH.Artifacts.NetworkRequest>} */
+      const mainDocumentRequest = {
+        requestId: '1',
+        priority: 'High',
+        networkRequestTime: 0,
+        networkEndTime: 500,
+        transferSize: 400,
+        url: mainDocumentUrl,
+        frameId: rootFrame,
+      };
       metricComputationData = {
         trace: createTestTrace({
           largestContentfulPaint: 15,
           traceEnd: 10_000,
           frameUrl: mainDocumentUrl,
+          networkRecords: [Object.assign(new NetworkRequest(), mainDocumentRequest)],
           topLevelTasks: [
             // Add long task to defer TTI
             {ts: 1000, duration: 1000},
           ],
         }),
-        devtoolsLog: networkRecordsToDevtoolsLog([{
-          requestId: '1',
-          priority: 'High',
-          networkRequestTime: 0,
-          networkEndTime: 500,
-          transferSize: 400,
-          url: mainDocumentUrl,
-          frameId: rootFrame,
-        }]),
+        devtoolsLog: networkRecordsToDevtoolsLog([mainDocumentRequest]),
         URL: {
           requestedUrl: mainDocumentUrl,
           mainDocumentUrl,
@@ -257,16 +261,23 @@ describe('TBTImpactTasks', () => {
       expect(tasks.every(t => t.selfTbtImpact >= 0)).toBeTruthy();
 
       const tasksImpactingTbt = tasks.filter(t => t.tbtImpact);
-      expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
+      const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
+      if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+        // The pre-M145 cnn devtoolsLog lacks `renderBlockingBehavior`, whereas the trace marks
+        // 5 high-priority font/async-script requests as `renderBlocking: 'non_blocking'`. This
+        // lowers simulated FCP from ~8.8s (pessimistic) to ~5.5s, including more tasks in [FCP, TTI].
+        expect(tasksImpactingTbt.length).toEqual(8540);
+        expect(totalSelfImpact).toBeCloseTo(3195.07, 2);
+      } else {
+        expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
+        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.999999999976`);
+      }
 
       // Only tasks with no children should have a `selfTbtImpact` that equals `tbtImpact` if
       // `tbtImpact` is nonzero.
       const tasksWithNoChildren = tasksImpactingTbt.filter(t => !t.children.length);
       const tasksWithAllSelfImpact = tasksImpactingTbt.filter(t => t.selfTbtImpact === t.tbtImpact);
       expect(tasksWithNoChildren).toEqual(tasksWithAllSelfImpact);
-
-      const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
-      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999545`);
 
       // Total self blocking time is just the total self impact without factoring in the TBT
       // bounds, so it should always be greater than or equal to the total TBT self impact.

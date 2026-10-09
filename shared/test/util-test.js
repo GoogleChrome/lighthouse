@@ -44,6 +44,28 @@ describe('util helpers', () => {
     });
   });
 
+  describe('isPluginCategory', () => {
+    it('returns true for valid plugin category names', () => {
+      assert.equal(Util.isPluginCategory('lighthouse-plugin-seo'), true);
+      assert.equal(Util.isPluginCategory('@scope/lighthouse-plugin-seo'), true);
+      assert.equal(Util.isPluginCategory('@123/lighthouse-plugin-123'), true);
+    });
+
+    it('returns false for non-plugin category names', () => {
+      assert.equal(Util.isPluginCategory('performance'), false);
+      assert.equal(Util.isPluginCategory('seo'), false);
+      assert.equal(Util.isPluginCategory('@scope/my-package'), false);
+    });
+
+    it('returns false for invalid npm package names', () => {
+      assert.equal(Util.isPluginCategory('lighthouse-plugin- seo'), false);
+      assert.equal(Util.isPluginCategory('lighthouse-Plugin-seo'), false);
+      assert.equal(Util.isPluginCategory('@scope/lighthouse-plugin-*'), false);
+      assert.equal(Util.isPluginCategory('lighthouse-plugin-!@#'), false);
+      assert.equal(Util.isPluginCategory(' lighthouse-plugin-seo'), false);
+    });
+  });
+
   describe('#splitMarkdownCodeSpans', () => {
     it('handles strings with no backticks in them', () => {
       expect(Util.splitMarkdownCodeSpans('regular text')).toEqual([

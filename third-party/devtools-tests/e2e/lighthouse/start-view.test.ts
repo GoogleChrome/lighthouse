@@ -35,7 +35,7 @@ describe('The Lighthouse start view', () => {
     const disabled = await isGenerateReportButtonDisabled(devToolsPage);
     const helpText = await getHelpText(devToolsPage);
     assert.isTrue(disabled, 'The Generate Report button should be disabled');
-    assert.strictEqual(helpText, 'At least one category must be selected.');
+    assert.strictEqual(helpText, 'At least one category must be selected');
   });
 
   it('enables the start button if only one category is selected', async ({devToolsPage, inspectedPage}) => {

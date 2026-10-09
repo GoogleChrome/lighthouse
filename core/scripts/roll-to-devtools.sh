@@ -35,13 +35,13 @@ fi
 fe_lh_dir="$dt_dir/front_end/third_party/lighthouse"
 mkdir -p "$fe_lh_dir"
 
-lh_bg_js="dist/lighthouse-dt-bundle.js"
+lh_bg_js="dist/devtools/lighthouse-dt-bundle.js"
 
 yarn build-report
 yarn build-devtools
 
 # copy lighthouse-dt-bundle
-cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
+rsync -rlpvhc "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check lighthouse-dt-bundle copied."
 
 # generate bundle.d.ts
@@ -57,28 +57,28 @@ sed -i.bak 's/export type ReportUIFeatures = any;//' dist/report/bundle.esm.d.ts
 
 # copy report code $fe_lh_dir
 fe_lh_report_dir="$fe_lh_dir/report/"
-cp dist/report/bundle.esm.js "$fe_lh_report_dir/bundle.js"
-cp dist/report/bundle.esm.d.ts "$fe_lh_report_dir/bundle.d.ts"
+rsync -rlpvhc dist/report/bundle.esm.js "$fe_lh_report_dir/bundle.js"
+rsync -rlpvhc dist/report/bundle.esm.d.ts "$fe_lh_report_dir/bundle.d.ts"
 echo -e "$check Report code copied."
 
 # copy report generator + cached resources into $fe_lh_dir
 fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"
-rsync -avh dist/dt-report-resources/ "$fe_lh_report_assets_dir" --delete
+rsync -rlpvhc dist/dt-report-resources/ "$fe_lh_report_assets_dir" --delete
 echo -e "$check Report resources copied."
 
 # copy locale JSON files (but not the .ctc.json ones)
 lh_locales_dir="shared/localization/locales/"
 fe_locales_dir="$fe_lh_dir/locales"
-rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
+rsync -rlpvhc "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
 
 # copy e2e tests
 lh_e2e_dir="third-party/devtools-tests/e2e/lighthouse/"
 fe_e2e_dir="$dt_dir/test/e2e/lighthouse"
-rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
+rsync -rlpvhc "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 lh_e2e_res_dir="third-party/devtools-tests/e2e/resources/lighthouse/"
 fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
-rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
+rsync -rlpvhc "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 
 PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
 REVISION=$(git rev-parse HEAD)

@@ -209,7 +209,7 @@ class RobotsTxt extends Audit {
     } = artifacts.RobotsTxt;
 
     // Do specific error messages first.
-    if (status && status >= HTTP_SERVER_ERROR_CODE_LOW) {
+    if (status && (status >= HTTP_SERVER_ERROR_CODE_LOW || status === 429)) {
       return {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),

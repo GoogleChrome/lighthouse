@@ -51,11 +51,6 @@ describe('Metrics: TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
-    // TODO(15841): investigate difference.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const settings = /** @type {LH.Config.Settings} */ (
       {throttlingMethod: 'simulate'}
     );
@@ -63,13 +58,26 @@ describe('Metrics: TTI', () => {
     // eslint-disable-next-line max-len
     const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
-    expect({
+    const summary = {
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
       optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
       pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
-    }).toMatchSnapshot();
+    };
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // Trace Engine's NetworkRequestsHandler skips 2 `data:image/svg+xml` requests present in
+      // the devtoolsLog, reducing `pessimisticNodeTimings` from 31 to 29 with no effect on timing.
+      expect(summary).toEqual({
+        optimistic: 1107,
+        optimisticNodeTimings: 14,
+        pessimistic: 1134,
+        pessimisticNodeTimings: 29,
+        timing: 1122,
+      });
+    } else {
+      expect(summary).toMatchSnapshot();
+    }
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

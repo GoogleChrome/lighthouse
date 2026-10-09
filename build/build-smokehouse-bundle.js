@@ -11,7 +11,7 @@ import {LH_ROOT} from '../shared/root.js';
 import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const distDir = `${LH_ROOT}/dist`;
-const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
+const bundleOutFile = `${distDir}/smokehouse/smokehouse-bundle.js`;
 const smokehouseLibFilename = './cli/test/smokehouse/frontends/lib.js';
 const smokehouseCliFilename = `${LH_ROOT}/cli/test/smokehouse/lighthouse-runners/cli.js`;
 

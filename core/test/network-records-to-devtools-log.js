@@ -218,6 +218,14 @@ function getNormalizedRequestTiming(networkRecord) {
   };
 }
 
+const LANTERN_TO_CDP_RENDER_BLOCKING = {
+  'non_blocking': 'NonBlocking',
+  'blocking': 'Blocking',
+  'in_body_parser_blocking': 'InBodyParserBlocking',
+  'potentially_blocking': 'PotentiallyBlocking',
+  'dynamically_injected_non_blocking': 'NonBlockingDynamic',
+};
+
 /**
  * @param {Partial<NetworkRequest>} networkRecord
  * @param {number} index
@@ -248,6 +256,8 @@ function getRequestWillBeSentEvent(networkRecord, index, normalizedTiming) {
       type: networkRecord.resourceType || 'Document',
       frameId: networkRecord.frameId,
       redirectResponse: networkRecord.redirectResponse,
+      renderBlockingBehavior: networkRecord.renderBlocking &&
+        LANTERN_TO_CDP_RENDER_BLOCKING[networkRecord.renderBlocking],
     },
     targetType: 'sessionTargetType' in networkRecord ? networkRecord.sessionTargetType : 'page',
     sessionId: networkRecord.sessionId,

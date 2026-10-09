@@ -38,7 +38,7 @@ describe('BFCache audit', () => {
     expect(items).toHaveLength(3);
 
     expect(items[0].reason).toBeDisplayString(
-      'Pages that requested an AppBanner are not currently eligible for back/forward cache.');
+      'Pages that requested an AppBanner aren’t currently eligible for back/forward cache');
     expect(items[0].failureType).toBeDisplayString('Actionable');
     expect(items[0].subItems?.items).toEqual([
       {frameUrl: 'https://example.com'},
@@ -46,7 +46,7 @@ describe('BFCache audit', () => {
     ]);
 
     expect(items[1].reason).toBeDisplayString(
-      'Pages with cache-control:no-store header cannot enter back/forward cache.');
+      'Pages with cache-control:no-store header can’t enter back/forward cache');
     expect(items[1].failureType).toBeDisplayString('Pending browser support');
     expect(items[1].subItems?.items).toEqual([
       {frameUrl: 'https://frame.com'},

@@ -339,7 +339,7 @@ class ReportUtils {
    * @param {string} categoryId
    */
   static isPluginCategory(categoryId) {
-    return categoryId.startsWith('lighthouse-plugin-');
+    return Util.isPluginCategory(categoryId);
   }
 
   /**

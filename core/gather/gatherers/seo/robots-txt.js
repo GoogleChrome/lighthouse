@@ -9,8 +9,11 @@ import log from 'lighthouse-logger';
 import BaseGatherer from '../../base-gatherer.js';
 
 class RobotsTxt extends BaseGatherer {
+  static symbol = Symbol('RobotsTxt');
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
+    symbol: RobotsTxt.symbol,
     supportedModes: ['snapshot', 'navigation'],
   };
 

@@ -123,6 +123,7 @@ class ProtocolSession extends CrdpEventEmitter {
       }));
     });
 
+    // @ts-ignore-error CdpSession.send expects a method key of ProtocolMapping.Commands, but we use LH.CrdpCommands
     const resultPromise = this._cdpSession.send(method, ...params, {
       // Add 50ms to the Puppeteer timeout to ensure the Lighthouse timeout finishes first.
       timeout: timeoutMs + PPTR_BUFFER,

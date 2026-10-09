@@ -133,12 +133,15 @@ describe('lightrider-entry', () => {
       runStub.mockRestore();
     });
 
-    let originalRun;
+    let originalGather;
+    let originalAudit;
     beforeEach(() => {
-      originalRun = Runner.run;
+      originalGather = Runner.gather;
+      originalAudit = Runner.audit;
     });
     afterEach(() => {
-      Runner.run = originalRun;
+      Runner.gather = originalGather;
+      Runner.audit = originalAudit;
     });
 
     it('exposes artifacts when logAssets is true', async () => {
@@ -162,6 +165,32 @@ describe('lightrider-entry', () => {
           message: 'some error',
         },
       });
+    });
+
+    it('closes the page before auditing', async () => {
+      const events = [];
+      const mockPage = createMockPage();
+      mockPage.close = jestMock.fn(async () => events.push('page.close'));
+      runLighthouseInLR.getPageFromConnection = async (connection) => {
+        await connection.connect();
+        return mockPage;
+      };
+
+      Runner.gather = jestMock.fn(async () => {
+        events.push('Runner.gather');
+        return {};
+      });
+      Runner.audit = jestMock.fn(async () => {
+        events.push('Runner.audit');
+        return {lhr: {}, artifacts: {}};
+      });
+
+      await runLighthouseInLR(mockConnection, 'https://example.com', {}, {});
+      assert.deepStrictEqual(events, [
+        'Runner.gather',
+        'page.close',
+        'Runner.audit',
+      ]);
     });
   });
 });

@@ -26,7 +26,9 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(_traceEvents, settings, SourceMaps, HostDPR) {
-    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
+    const config = TraceEngine.Types.Configuration.defaults();
+    config.enableSoftNavigation = false;
+    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers, config);
     const traceEvents =
       /** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (_traceEvents);
 
@@ -76,7 +78,7 @@ class TraceEngineResult {
    *
    * @template {any[]} Args
    * @template {import('../lib/trace-engine.js').DevToolsIcuMessage} Ret
-   * @param {ReturnType<i18n.createIcuMessageFn>} str_
+   * @param {ReturnType<typeof i18n.createIcuMessageFn>} str_
    * @param {(...args: Args) => Ret} fn
    * @return {(...args: Args) => LH.IcuMessage}
    */
@@ -88,7 +90,7 @@ class TraceEngineResult {
    * Converts the input parameters given to `i18nString` usages in DevTools to a
    * LH.IcuMessage.
    *
-   * @param {ReturnType<i18n.createIcuMessageFn>} str_
+   * @param {ReturnType<typeof i18n.createIcuMessageFn>} str_
    * @param {import('../lib/trace-engine.js').DevToolsIcuMessage} traceEngineI18nObject
    * @return {LH.IcuMessage}
    */
@@ -121,7 +123,7 @@ class TraceEngineResult {
   /**
    * Recursively finds all DevToolsIcuMessage objects and replaces them with LH.IcuMessage.
    *
-   * @param {ReturnType<i18n.createIcuMessageFn>} str_
+   * @param {ReturnType<typeof i18n.createIcuMessageFn>} str_
    * @param {object} object
    */
   static localizeObject(str_, object) {
@@ -133,7 +135,7 @@ class TraceEngineResult {
      * @param {Set<object>} seen
      */
     function recursiveReplaceLocalizableStrings(obj, cb, seen) {
-      if (seen.has(seen)) {
+      if (seen.has(obj)) {
         return;
       }
 

@@ -97,8 +97,11 @@ describe('Performance: page execution timings audit', () => {
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0);
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      // TODO(15841): difference is b/c TE is filtering out failed requests. Fix upstream.
-      expect(output.metricSavings.TBT).toBeCloseTo(1714.5, 0.1);
+      // The pre-M145 cnn devtoolsLog lacks `renderBlockingBehavior`, whereas the trace marks
+      // 5 high-priority font/async-script requests as `renderBlocking: 'non_blocking'`. This
+      // lowers simulated FCP from ~7.9s to ~5.5s, widening the [FCP, TTI] window and increasing
+      // TBT savings (plus a 4ms shift from missing OOPIF/preflight/uncommitted-iframe requests).
+      expect(output.metricSavings.TBT).toBeCloseTo(1972.5, 0.1);
     } else {
       expect(output.metricSavings.TBT).toBeCloseTo(1710.5, 0.1);
     }

@@ -148,8 +148,14 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     outfile: distPath,
     write: false,
     format: 'iife',
+    globalName: isLightrider(entryPath) ? 'lighthouseBundle' : undefined,
+    footer: isLightrider(entryPath) ? {
+      js: 'if (typeof module !== \'undefined\' && module.exports) ' +
+        'module.exports = lighthouseBundle;',
+    } : undefined,
     charset: 'utf8',
     bundle: true,
+    metafile: true,
     minify: opts.minify,
     treeShaking: true,
     sourcemap: 'linked',
