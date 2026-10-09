@@ -254,6 +254,18 @@ await flow.navigate('https://example.com');
 - Always audit page navigations with navigation mode, avoid auditing hard page navigations with timespan mode.
 - Use snapshot recordings when a substantial portion of the page content has changed.
 - Always wait for transitions and interactions to finish before ending a timespan. The puppeteer APIs `page.waitForSelector`/`page.waitForFunction`/`page.waitForResponse`/`page.waitForTimeout` are your friends here.
+- Use `flow.dispose()` to cancel navigations and gracefully cleanup wait conditions. This allows you to handle failed navigations programmatically.
+
+  ```javascript
+  try {
+    await flow.startNavigation();
+    await page.goto('https://invalid-url.dev/');
+    await flow.endNavigation();
+  } catch (error) {
+    flow.dispose();
+    console.error("Navigation failed:", error);
+  }
+  ```
 
 ## Related Reading
 

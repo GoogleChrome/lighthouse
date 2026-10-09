@@ -88,6 +88,10 @@ describe('CLI run', function() {
       const groupNames = Object.keys(passedResults.lhr.categoryGroups || {});
       assert.ok(groupNames.includes('lighthouse-plugin-simple-new-group'));
     });
+
+    it('includes plugin version in credits', () => {
+      assert.equal(passedResults.lhr.environment.credits?.['lighthouse-plugin-simple'], '1.0.0');
+    });
   });
 }).timeout(60_000);
 

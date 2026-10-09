@@ -13,7 +13,7 @@ import {TargetManager} from '../../../gather/driver/target-manager.js';
 const tscErr = new Error('Typecheck constraint failed');
 
 describe('NetworkMonitor', () => {
-  /** @type {ReturnType<createMockCdpSession>} */
+  /** @type {ReturnType<typeof createMockCdpSession>} */
   let rootCdpSessionMock;
   /**
    * Dispatch events on the root CDPSession.

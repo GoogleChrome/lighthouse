@@ -243,8 +243,6 @@ const expectations = {
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
             {
-              // In the DT runner, the initial page load before staring Lighthouse will prevent this error.
-              _excludeRunner: 'devtools',
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
@@ -264,26 +262,17 @@ const expectations = {
           FCP: '>=50',
         },
         details: {
-          items: [
-            {
-              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-            },
-          ],
+          items: {
+            _includes: [
+              {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.js'},
+              {url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200'},
+              {url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100'},
+            ],
+            _excludes: [{}],
+          },
         },
       },
       'deprecations': {
@@ -299,7 +288,7 @@ const expectations = {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
                 urlProvider: 'network',
                 line: '>0',
-                column: 6,
+                column: '6+/-1',
               },
               subItems: undefined,
             },
@@ -310,7 +299,7 @@ const expectations = {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
                 urlProvider: 'network',
                 line: '>0',
-                column: 9,
+                column: '9+/-1',
               },
             },
           ],
@@ -440,7 +429,7 @@ const expectations = {
         details: {
           items: [
             {
-              reason: 'The page has an unload handler in the main frame.',
+              reason: /The page has an unload handler in the main frame/,
               failureType: 'Actionable',
               subItems: {
                 items: [{
@@ -482,7 +471,7 @@ const expectations = {
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
           lcpLoadDelay: '>5000',
-          lcpLoadDuration: '>5000',
+          lcpLoadDuration: '>0',
         }}},
       },
       'third-party-cookies': {

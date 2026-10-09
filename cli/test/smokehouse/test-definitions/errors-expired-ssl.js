@@ -35,12 +35,12 @@ const expectations = {
     runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
     runWarnings: [
       /expired.badssl.*redirected to chrome-error:/,
-      'The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID',
+      /The URL you have provided does not have a valid security certificate. net::ERR_CERT_(DATE|AUTHORITY)_INVALID/,
     ],
     audits: {
       'first-contentful-paint': {
         scoreDisplayMode: 'error',
-        errorMessage: 'The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID',
+        errorMessage: /The URL you have provided does not have a valid security certificate. net::ERR_CERT_(DATE|AUTHORITY)_INVALID/,
       },
     },
   },

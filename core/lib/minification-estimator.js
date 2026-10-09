@@ -7,7 +7,6 @@
 // https://www.ecma-international.org/ecma-262/9.0/index.html#sec-punctuators
 // eslint-disable-next-line max-len
 const PUNCTUATOR_REGEX = /(return|case|else|{|\(|\[|\.\.\.|;|,|<|>|<=|>=|==|!=|===|!==|\+|-|\*|%|\*\*|\+\+|--|<<|>>|>>>|&|\||\^|!|~|&&|\|\||\?|:|=|\+=|-=|\*=|%=|\*\*=|<<=|>>=|>>>=|&=|\|=|\^=|=>|\/|\/=|\})$/;
-const WHITESPACE_REGEX = /( |\n|\t)+$/;
 
 /**
  * Look backwards from `startPosition` in `content` for an ECMAScript punctuator.
@@ -19,11 +18,13 @@ const WHITESPACE_REGEX = /( |\n|\t)+$/;
  */
 function hasPunctuatorBefore(content, startPosition) {
   for (let i = startPosition; i > 0; i--) {
+    const char = content[i - 1];
+    // Skip over any ending whitespace
+    if (char === ' ' || char === '\n' || char === '\t') continue;
+
     // Try to grab at least 6 characters so we can check for `return`
     const sliceStart = Math.max(0, i - 6);
     const precedingCharacters = content.slice(sliceStart, i);
-    // Skip over any ending whitespace
-    if (WHITESPACE_REGEX.test(precedingCharacters)) continue;
     // Check if it's a punctuator
     return PUNCTUATOR_REGEX.test(precedingCharacters);
   }
@@ -56,8 +57,7 @@ function computeTokenLength(content, features) {
   const templateLiteralDepth = [];
 
   for (let i = 0; i < content.length; i++) {
-    const twoChars = content.substr(i, 2);
-    const char = twoChars.charAt(0);
+    const char = content[i];
 
     const isWhitespace = char === ' ' || char === '\n' || char === '\t';
     const isAStringOpenChar = char === `'` || char === '"' || char === '`';
@@ -71,7 +71,7 @@ function computeTokenLength(content, features) {
       // License comments count
       if (isInLicenseComment) totalTokenLength++;
 
-      if (twoChars === '*/') {
+      if (char === '*' && content[i + 1] === '/') {
         // License comments count, account for the '/' character we're skipping over
         if (isInLicenseComment) totalTokenLength++;
         // End the comment when we hit the closing sequence
@@ -83,7 +83,7 @@ function computeTokenLength(content, features) {
       // String characters count
       totalTokenLength++;
 
-      if (stringOpenChar === '`' && twoChars === '${') {
+      if (stringOpenChar === '`' && char === '$' && content[i + 1] === '{') {
         // Start new template literal
         templateLiteralDepth.push('templateBrace');
         isInString = false;
@@ -119,16 +119,16 @@ function computeTokenLength(content, features) {
       }
     } else {
       // We're not in any particular token mode, look for the start of different
-      if (twoChars === '/*') {
+      if (char === '/' && content[i + 1] === '*') {
         // Start the multi-line comment
         isInMultilineComment = true;
         // Check if it's a license comment so we know whether to count it
-        isInLicenseComment = content.charAt(i + 2) === '!';
+        isInLicenseComment = content[i + 2] === '!';
         // += 2 because we are processing 2 characters, not just 1
         if (isInLicenseComment) totalTokenLength += 2;
         // Skip over the '*' character since we've already processed it
         i++;
-      } else if (twoChars === '//' && features.singlelineComments) {
+      } else if (char === '/' && content[i + 1] === '/' && features.singlelineComments) {
         // Start the single-line comment
         isInSinglelineComment = true;
         isInMultilineComment = false;

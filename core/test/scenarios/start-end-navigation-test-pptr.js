@@ -53,4 +53,26 @@ describe('Start/End navigation', function() {
       throw new Error(`Unexpected audit error: ${JSON.stringify(erroredAudits[0], null, 2)}`);
     }
   });
+
+  it('should cleanly abort an active navigation when dispose is called', async () => {
+    const pageUrl = `${state.serverBaseUrl}/links-to-index.html`;
+    await state.page.goto(pageUrl, {waitUntil: ['networkidle0']});
+
+    const flow = await api.startFlow(state.page);
+
+    await flow.startNavigation();
+    // Leave the internal gatherer hanging, waiting indefinitely for a page load.
+    // Disposing the flow should immediately abort those internal wait conditions.
+    flow.dispose();
+
+    // Attempting to end the navigation after disposal should resolve cleanly without hanging
+    // because the internal aborted promise was caught and swallowed by the gatherer.
+    // If dispose() fails to abort the gatherer, this will hang until Lighthouse's 45s timeout.
+    // We wrap it in a 10s timeout to ensure the test fails fast if aborting is broken.
+    const endNavPromise = flow.endNavigation();
+    const timeoutPromise =
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Test timed out')), 10000));
+
+    await expect(Promise.race([endNavPromise, timeoutPromise])).resolves.toBeUndefined();
+  });
 });

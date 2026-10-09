@@ -160,6 +160,8 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
   const bufferedConsole = new LocalConsole();
   bufferedConsole.log(`\n${purpleify(id)}: testing '${requestedUrl}'…`);
   for (let i = 0; i <= retries; i++) {
+    result = undefined;
+    report = undefined;
     if (i !== 0) {
       bufferedConsole.log(`  Retrying run (${i} out of ${retries} retries)…`);
     }
@@ -167,42 +169,54 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     const logger = new LocalConsole();
 
     // Run Lighthouse.
+    let isTimeout = false;
     try {
       // Each individual runner has internal timeouts, but we've had bugs where
       // that didn't cover some edge case. So to be safe give a (long) timeout here.
+      let timeoutId;
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() =>
-          reject(new Error('Timed out waiting for provided lighthouseRunner')), 1000 * 120);
+        timeoutId = setTimeout(() => {
+          isTimeout = true;
+          reject(new Error('Timed out waiting for provided lighthouseRunner'));
+        }, 1000 * 120);
       });
-      const timedResult = await Promise.race([
-        lighthouseRunner(requestedUrl, config, logger, mergedTestRunnerOptions),
-        timeoutPromise,
-      ]);
+      let timedResult;
+      try {
+        timedResult = await Promise.race([
+          lighthouseRunner(requestedUrl, config, logger, mergedTestRunnerOptions),
+          timeoutPromise,
+        ]);
+      } finally {
+        clearTimeout(timeoutId);
+      }
+
+      if (!timedResult.lhr?.audits || !timedResult.artifacts) {
+        // Something went really wrong and the runner didn't catch it.
+        throw new Error('lighthouse runner returned a bad result. got lhr:\n' +
+          JSON.stringify(timedResult.lhr, null, 2));
+      }
+
       result = {
         ...timedResult,
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
         log: logger.getLog(),
       };
-
-      if (!result.lhr?.audits || !result.artifacts) {
-        // Something went really wrong and the runner didn't catch it.
-        throw new Error('lighthouse runner returned a bad result. got lhr:\n' +
-          JSON.stringify(result.lhr, null, 2));
-      }
     } catch (e) {
       // Clear the network requests so that when we retry, we don't see duplicates.
       if (takeNetworkRequestUrls) takeNetworkRequestUrls();
 
       logChildProcessError(bufferedConsole, e);
-      bufferedConsole.log('Timed out. log from lighthouseRunner:');
-      bufferedConsole.log(logger.getLog());
+      if (isTimeout) {
+        bufferedConsole.log('Timed out. log from lighthouseRunner:');
+        bufferedConsole.log(logger.getLog());
+      }
       continue; // Retry, if possible.
     }
 
     // Assert result.
     report = getAssertionReport(result, expectations, {
       runner: lighthouseRunner.runnerName,
-      ...testRunnerOptions,
+      ...mergedTestRunnerOptions,
     });
 
     runs.push({

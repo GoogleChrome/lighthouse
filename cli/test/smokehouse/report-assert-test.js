@@ -73,6 +73,31 @@ describe('findDiffersences', () => {
       expected: {duration: '<100'},
       diffs: [{path: '.duration', actual: 100, expected: '<100'}],
     },
+    'range (negative 1)': {
+      actual: {duration: -3},
+      expected: {duration: '>-5'},
+      diffs: null,
+    },
+    'range (negative 2)': {
+      actual: {duration: -9},
+      expected: {duration: '-10 +/- 2'},
+      diffs: null,
+    },
+    'range (invalid numerical expectation without prefix)': {
+      actual: {duration: 3},
+      expected: {duration: '+/- 5'},
+      diffs: [{path: '.duration', actual: 3, expected: '+/- 5'}],
+    },
+    'range (invalid numerical expectation with prefix)': {
+      actual: {duration: 15},
+      expected: {duration: '10 < 20'},
+      diffs: [{path: '.duration', actual: 15, expected: '10 < 20'}],
+    },
+    'range (numeric actual vs array expected)': {
+      actual: {duration: 10},
+      expected: {duration: ['>0']},
+      diffs: [{path: '.duration', actual: 10, expected: ['>0']}],
+    },
 
     'array (1)': {
       actual: {prices: [0, 1, 2, 3, 4, 5]},
@@ -111,6 +136,11 @@ describe('findDiffersences', () => {
       actual: {prices: [0, 1, 2, {nested: 3}, 4, 5]},
       expected: {prices: {'3': {nested: '>3'}}},
       diffs: [{path: '.prices[3].nested', actual: 3, expected: '>3'}],
+    },
+    'array (8)': {
+      actual: {prices: {0: 1, length: 1}},
+      expected: {prices: [1]},
+      diffs: [{path: '.prices.length', actual: {0: 1, length: 1}, expected: [1]}],
     },
 
     '_includes (1)': {
@@ -294,5 +324,40 @@ describe('getAssertionReport', () => {
     });
     expect(report).toMatchObject({passed: 3, failed: 1});
     expect(clean(report.log)).toMatchSnapshot();
+  });
+
+  it('asserts expected.lhr.userAgent', () => {
+    const passingReport = getAssertionReport({lhr, artifacts}, {
+      lhr: {
+        audits: {},
+        requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalDisplayedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        userAgent: /Chrome\//,
+      },
+    });
+    expect(passingReport).toMatchObject({passed: 4, failed: 0, log: ''});
+
+    const failingReport = getAssertionReport({lhr, artifacts}, {
+      lhr: {
+        audits: {},
+        requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalDisplayedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        userAgent: 'NotTheUserAgent',
+      },
+    });
+    expect(failingReport).toMatchObject({passed: 3, failed: 1});
+  });
+
+  it('lazily evaluates hostUserAgent only when chromium version check is used', () => {
+    const customLhr = structuredClone(lhr);
+    customLhr.environment.hostUserAgent = 'InvalidUserAgentWithoutChromeVersion';
+    const report = getAssertionReport({lhr: customLhr, artifacts}, {
+      lhr: {
+        audits: {},
+        requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalDisplayedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+      },
+    });
+    expect(report).toMatchObject({passed: 3, failed: 0, log: ''});
   });
 });

@@ -304,7 +304,10 @@ Array [
       expect(lhr.audits).toHaveProperty('total-byte-weight');
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
-      expect(details.items).toMatchObject([{url}]);
+      // Chrome 157+ clears failed favicon downloads when resetting storage before navigation,
+      // so /favicon.ico is re-requested even if an earlier test already 404'd on it.
+      const items = details.items.filter(item => item.url !== `${serverBaseUrl}/favicon.ico`);
+      expect(items).toMatchObject([{url}]);
 
       // Check that performance metrics were computed.
       expect(lhr.audits).toHaveProperty('first-contentful-paint');

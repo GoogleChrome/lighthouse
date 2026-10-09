@@ -1,5 +1,5 @@
 ---
-name: Agentic Web: Proposal & Feedback
+name: "Agentic Web: Proposal & Feedback"
 about: Propose a new quality signal or provide feedback on an existing experimental audit.
 title: "[Agentic Web] "
 labels: ["agentic-web"]

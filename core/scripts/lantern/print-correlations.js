@@ -239,8 +239,8 @@ evaluateAndPrintAccuracy('largestContentfulPaint', 'roughEstimateOfLCP');
 
 // TODO: enable when new traces are collected (also, do calls to findAndPrintWorst10Sites)
 // evaluateAndPrintAccuracy('timeToFirstByte', 'roughEstimateOfTTFB');
-// evaluateAndPrintAccuracy('largestContentfulPaintLoadStart', 'roughEstimateOfLCPLoadStart');
-// evaluateAndPrintAccuracy('largestContentfulPaintLoadEnd', 'roughEstimateOfLCPLoadEnd');
+// evaluateAndPrintAccuracy('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay');
+// evaluateAndPrintAccuracy('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration');
 
 const estimates = allEvaluations.filter(entry => entry.lanternMetric.includes('roughEstimate'));
 const baselineEstimates = baselineEvaluations.filter(entry =>

@@ -73,6 +73,16 @@ function makeLCPTraceEvent(nodeId) {
 }
 
 describe('Trace Elements gatherer - Animated Elements', () => {
+  it('handles circular insight model references without infinite recursion', async () => {
+    const model = {};
+    model.self = model;
+    const result = await TraceElementsGatherer.getTraceEngineElements(
+      {insights: new Map([['nav', {model}]]), data: {}},
+      undefined
+    );
+    expect(result).toEqual([]);
+  });
+
   it('gets animated node ids with non-composited animations', async () => {
     const traceEvents = [
       makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),

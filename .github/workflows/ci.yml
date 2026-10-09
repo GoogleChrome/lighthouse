@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+permissions:
+  contents: read
+
 env:
   PUPPETEER_SKIP_DOWNLOAD: 1
 
@@ -21,16 +24,17 @@ jobs:
     #   https://github.com/actions/runner/issues/438
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         fetch-depth: 100
+        persist-credentials: false
     - run: bash core/scripts/github-actions-commit-range.sh
       env:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
 
@@ -57,10 +61,14 @@ jobs:
     - run: yarn diff:flow-sample-json
     - run: yarn lint
 
+    - name: Check changelog for unreplaced Chrome version
+      run: |
+        if grep -q "Chrome XXX" changelog.md; then
+          echo "Error: 'Chrome XXX' found in changelog.md. Please replace it with the actual Chrome version."
+          exit 1
+        fi
+
     - run: yarn test-legacy-javascript
-      env:
-        # https://github.com/nodejs/node/issues/51555#issuecomment-1974877052
-        DISABLE_V8_COMPILE_CACHE: 1
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
     - run: yarn generate-insight-audits
@@ -82,7 +90,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: dist
         path: dist/

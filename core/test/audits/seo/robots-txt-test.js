@@ -22,8 +22,12 @@ describe('SEO: robots.txt audit', () => {
     assert.ok(auditResult.explanation);
   });
 
-  it('fails when request for /robots.txt returns a HTTP500+ error', () => {
+  it('fails when request for /robots.txt returns a HTTP500+ or 429 error', () => {
     const testData = [
+      {
+        status: 429,
+        content: null,
+      },
       {
         status: 500,
         content: null,
@@ -45,6 +49,9 @@ describe('SEO: robots.txt audit', () => {
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
       assert.equal(auditResult.score, 0);
+      expect(auditResult.displayValue).toBeDisplayString(
+        `Request for robots.txt returned HTTP status: ${RobotsTxt.status}`
+      );
     });
   });
 
