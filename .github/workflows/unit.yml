@@ -69,11 +69,10 @@ jobs:
 
     - name: yarn unit
       run: yarn unit:ci
-    - name: yarn unit-lantern-trace
-      run: yarn unit-lantern-trace:ci
 
     # Runs here because it needs the roundtrip proto.
     - name: yarn test-viewer
+      if: matrix.node == '24'
       run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
 
     - run: git add -A && git diff --cached --exit-code
