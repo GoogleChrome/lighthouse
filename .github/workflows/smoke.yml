@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 env:
   PUPPETEER_SKIP_DOWNLOAD: 1
 
@@ -64,7 +68,7 @@ jobs:
 
     # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
     - name: Run smoke tests (lantern + trace)
-      if: matrix.smoke-test-shard == 1 && matrix.chrome-channel == 'ToT'
+      if: matrix.smoke-test-shard == 3 && matrix.chrome-channel == 'ToT'
       run: |
         yarn smoke --debug -j=2 --retries=2 lantern
       env:

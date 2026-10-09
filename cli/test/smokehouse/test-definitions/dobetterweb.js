@@ -522,5 +522,4 @@ export default {
   id: 'dbw',
   expectations,
   config,
-  runSerially: true, // Need access to network request assertions.
 };
