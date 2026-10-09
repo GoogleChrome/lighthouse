@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "تم بشكل نهائي إيقاف استخدام عناوين URL التي تبدأ بمخطّط \"data:‎\" في واجهة SVGUseElement، وستتم إزالة هذه الميزة في المستقبل."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "تم طلب بروتوكول Digital Credentials غير معروف في navigator.credentials.get()‎ أو create()‎. سيتم حظر البروتوكولات غير المعروفة في إصدار مستقبلي."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "تم إيقاف واجهة document.createEvent('KeyboardEvents') نهائيًا وستتم إزالتها. يمكن استخدام new KeyboardEvent() كبديل."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "هذا مثال على عرض الرمز البرمجي المطلوب لعملية متصفّح تم الإبلاغ عن إيقافها نهائيًا."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "تم إيقاف واجهة Fenced Frame API نهائيًا ومن المقرر إزالتها."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "تم إيقاف واجهة Protected Audience API نهائيًا وستتم إزالتها في إصدار مستقبلي."
@@ -2263,6 +2269,12 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "تم إيقاف \"BluetoothRemoteGATTCharacteristic.writeValue()\" نهائيًا. يُرجى استخدام \"writeValueWithResponse()\" أو \"writeValueWithoutResponse()\" بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "تمت إعادة تسمية WebTransportDatagramDuplexStream.incomingHighWaterMark إلى incomingMaxBufferedDatagrams، وستتم إزالة incomingHighWaterMark في إصدار مستقبلي من Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "تمت إعادة تسمية WebTransportDatagramDuplexStream.outgoingHighWaterMark إلى outgoingMaxBufferedDatagrams، وستتم إزالة outgoingHighWaterMark في إصدار مستقبلي من Chrome."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "لا يتوفّر الترميز UTF-16 من خلال استجابة json في واجهة برمجة التطبيقات XMLHttpRequest."
@@ -2427,7 +2439,10 @@
     "message": "المصدر"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "يمكنك إزالة [وحدات JavaScript الكبيرة المكرّرة](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) من الحِزم لتقليل وحدات البايت غير الضرورية التي يستهلكها نشاط الشبكة."
+    "message": "يمكنك إزالة [وحدات JavaScript الكبيرة المكرّرة](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) من الحِزم لتقليل وحدات البايت غير الضرورية التي يستهلكها نشاط الشبكة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "لم يتم العثور على ملفات JavaScript مكرّرة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "مصادر JavaScript المكرّرة"
@@ -2438,6 +2453,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "الخط"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "لم يتم العثور على أي خطوط ذات قيمة font-display غير مثالية"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "عرض الخط"
   },
@@ -2445,7 +2463,7 @@
     "message": "الوقت الضائع"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
-    "message": "(مجهولة)"
+    "message": "(مجهولة الهوية)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "تتم إعادة ترتيب المحتوى عندما تطلب JavaScript سمات هندسية (مثل offsetWidth) بعد أن يتم تغيير الأنماط بسبب تعديل في حالة DOM. وقد يؤدي ذلك إلى ضعف الأداء. يمكنك التعرّف على مزيد من المعلومات حول [إعادة ترتيب المحتوى](https://developer.chrome.com/docs/performance/insights/forced-reflow) والحلول المتاحة."
@@ -2466,7 +2484,7 @@
     "message": "[نص غير منسوب لأي جهة]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "يمكنك بدء التحقيق في [طرق تحسين مدى استجابة الصفحة لتفاعلات المستخدم (INP)](https://developer.chrome.com/docs/performance/insights/inp-breakdown) من خلال الاطّلاع على المهام الفرعية الأطول."
+    "message": "يمكنك بدء التحقيق في [طرق تحسين مدى استجابة الصفحة لتفاعلات المستخدم (INP)](https://developer.chrome.com/docs/performance/insights/inp-breakdown) من خلال الاطّلاع على المهام الفرعية الأطول"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "المدة"
@@ -2490,7 +2508,7 @@
     "message": "تفاصيل مدى استجابة الصفحة لتفاعلات المستخدم (INP)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "يمكن أن يؤدي تقليل وقت تنزيل الصور إلى تحسين مدّة التحميل المُدرَكة للصفحة، بالإضافة إلى تحسين سرعة عرض أكبر محتوى مرئي. [مزيد من المعلومات حول تحسين حجم الصورة](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+    "message": "يمكن أن يؤدي تقليل وقت تنزيل الصور إلى تحسين مدّة التحميل المتوقعة للصفحة، بالإضافة إلى تحسين سرعة عرض أكبر محتوى مرئي. [مزيد من المعلومات حول تحسين حجم الصورة](https://developer.chrome.com/docs/performance/insights/image-delivery)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (الحجم المقدَّر: {PH2})"
@@ -2508,16 +2526,16 @@
     "message": "تحسين عرض الصور"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "يمكن أن يؤدي زيادة عامل ضغط الصورة إلى تحسين حجم تنزيلها."
+    "message": "يمكن أن تؤدي زيادة عامل ضغط الصورة إلى تحسين حجم تنزيلها"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "يمكن تحسين حجم تنزيل هذه الصورة باستخدام تنسيق صور حديث (مثل WebP أو AVIF) أو زيادة ضغط الصورة."
+    "message": "يمكن تحسين حجم تنزيل هذه الصورة باستخدام تنسيق صور حديث (مثل WebP أو AVIF) أو زيادة ضغط الصورة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "حجم ملف الصورة هذا أكبر من الحجم المطلوب ({PH1}) لأبعادها المعروضة ({PH2}). يُرجى استخدام الصور المتجاوبة مع مختلف الأجهزة لتقليل حجم تنزيل الصورة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "إنّ استخدام تنسيقات الفيديو بدلاً من ملفات GIF يمكن أن يؤدي إلى تحسين حجم تنزيل المحتوى المتحرك."
+    "message": "إنّ استخدام تنسيقات الفيديو بدلاً من ملفات GIF يمكن أن يؤدي إلى تحسين حجم تنزيل المحتوى المتحرك"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "لكل [جزء فرعي استراتيجيات تحسين محدَّدة](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). ومن الأفضل أن يتم قضاء معظم زمن عرض أكبر محتوى مرئي (LCP) في تحميل الموارد، وليس في التأخير."
@@ -2565,13 +2583,13 @@
     "message": "يجب عدم استخدام السمة loading=lazy في موارد LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "تم تحميل الصورة الخاصة بمقياس \"سرعة عرض أكبر محتوى مرئي\" (LCP) بعد {PH1} من نقطة البداية الأقدم."
+    "message": "تم تحميل الصورة الخاصة بمقياس \"سرعة عرض أكبر محتوى مرئي\" (LCP) بعد {PH1} من نقطة البداية الأقدم"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
     "message": "لم يتم رصد أي مقياس لسرعة عرض أكبر محتوى مرئي (LCP)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
-    "message": "لم يتم العثور على أي مصدر لسرعة عرض أكبر محتوى مرئي على الصفحة لأنّه ليس صورة"
+    "message": "لم يتم رصد أي مصدر لسرعة عرض أكبر محتوى مرئي على الصفحة لأنّ LCP ليس صورة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
     "message": "الطلب قابل للاكتشاف في المستند الأوّلي"
@@ -2588,6 +2606,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
     "message": "تساعد الرموز البرمجية polyfill وtransform المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية تصميم رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/articles/baseline-and-polyfills)، إلّا إذا كان من الضروري التوافق مع المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "لم يتم العثور على أي ملفات JavaScript قديمة"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "ميزات JavaScript القديمة"
   },
@@ -2595,7 +2616,7 @@
     "message": "يوفِّر البروتوكولان HTTP/2 وHTTP/3 العديد من المزايا أكثر من بروتوكول HTTP/1.1، مثل الإرسال المتعدّد. [مزيد من المعلومات حول استخدام HTTP الحديث](https://developer.chrome.com/docs/performance/insights/modern-http)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "لم يتم استخدام HTTP/1.1 في أي طلب، أو أنّ استخدامه الحالي لا يمثل فرصة كبيرة للتحسين. يتم وضع علامة على طلبات HTTP/1.1 فقط إذا كانت ستة أو أكثر من مواد العرض الثابتة تأتي من المصدر نفسه، ولم يتم عرضها من بيئة تطوير محلية أو مصدر تابع لجهة خارجية."
+    "message": "لم يتم استخدام HTTP/1.1 في أي طلب، أو أنّ استخدامه الحالي لا يمثل فرصة كبيرة للتحسين. يتم وضع علامة على طلبات HTTP/1.1 فقط إذا كانت ست أو أكثر من مواد العرض الثابتة تأتي من المصدر نفسه، ولم يتم عرضها من بيئة تطوير محلية أو مصدر تابع لجهة خارجية."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "البروتوكول"
@@ -2610,7 +2631,7 @@
     "message": "المصدر"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
-    "message": "طلب"
+    "message": "الطلب"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
     "message": "المصدر"
@@ -2625,10 +2646,10 @@
     "message": "تمت إضافة اتصال مُسبَق لمصادر غير مستخدَمة. يُرجى التحقّق من استخدام السمة crossorigin بشكل صحيح."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "يُمكن [تجنُّب تقييد الطلبات المهمة](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
+    "message": "يُمكن [تجنُّب تقييد الطلبات المُهمّة](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "يمكنك إضافة إشارات [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) إلى أهم مصادرك، ولكن يُرجى محاولة استخدام 4 إشارات كحدّ أقصى."
+    "message": "يمكنك إضافة إشارات [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) إلى أهم مصادرك، ولكن يُرجى محاولة استخدام 4 إشارات كحدّ أقصى"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "المصادر المُرشَّحة للاتصال المُسبَق"
@@ -2661,10 +2682,10 @@
     "message": "تمت إضافة اتصال مُسبَق لمصادر غير مستخدَمة. يجب استخدام preconnect فقط للمصادر التي من المرجح أن تطلبها الصفحة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "يُمكن تجنُّب تقييد الطلبات المهمة عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
+    "message": "يُمكن تجنُّب تقييد الطلبات المُهمّة عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "تؤدي الطلبات إلى حظر العرض الأوّلي للصفحة، ما قد يُبطئ سرعة عرض أكبر محتوى مرئي (LCP). ويمكن [تأجيل هذه الطلبات](https://developer.chrome.com/docs/performance/insights/render-blocking) أو تضمينها لإخراجها من المسار الحرج."
+    "message": "تؤدي الطلبات إلى حظر العرض الأوّلي للصفحة، ما قد يُبطئ سرعة عرض أكبر محتوى مرئي (LCP). ويمكن [تأجيل طلبات الشبكة هذه أو تضمينها](https://developer.chrome.com/docs/performance/insights/render-blocking) لإخراجها من المسار الحرج."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "المدة"
@@ -2679,13 +2700,13 @@
     "message": "طلبات حظر العرض"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "إذا ظلت تكاليف ميزة \"إعادة احتساب النمط\" مرتفعة، يمكن أن يؤدي تحسين أداة الاختيار إلى خفضها. يمكنك [تحسين أدوات الاختيار](https://developer.chrome.com/docs/performance/insights/slow-css-selector) من خلال زيادة الوقت المنقضي وزيادة النسبة المئوية للمسار البطيء. وسيؤدي استخدام أدوات الاختيار الأبسط وعدد أدوات الاختيار الأقل ونموذج DOM الأصغر ونموذج DOM الأقل تعقيدًا إلى تقليل تكاليف المطابقة."
+    "message": "إذا كانت ميزة \"إعادة احتساب النمط\" تستهلك الكثير من الموارد والوقت، يمكن أن يؤدي تحسين أداة الاختيار إلى خفض أدائها. يمكنك [تحسين أدوات الاختيار](https://developer.chrome.com/docs/performance/insights/slow-css-selector) من خلال زيادة الوقت المنقضي وزيادة النسبة المئوية للمسار البطيء. وسيؤدي استخدام أدوات اختيار أبسط وتقليل عددها ونموذج DOM أصغر وأقل تعقيدًا إلى خفض استهلاك الموارد المطابِقة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "الوقت المنقضي"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
-    "message": "لم يتم العثور على أي بيانات لأدوات اختيار لغة CSS. يجب تفعيل إحصاءات أداة اختيار لغة CSS في إعدادات لوحة الأداء."
+    "message": "لم يتم العثور على أي بيانات لأدوات اختيار لغة CSS. يجب تفعيل إحصاءات أداة اختيار لغة CSS في إعدادات لوحة \"الأداء\"."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
     "message": "عدد محاولات المطابقة"
@@ -2694,7 +2715,7 @@
     "message": "عدد العناصر المطابِقة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
-    "message": "تكاليف أداة اختيار لغة CSS"
+    "message": "الموارد التي تستهلكها أداة اختيار لغة CSS"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
     "message": "أكثر أداة اختيار استغرقت وقتًا في المطابقة"
@@ -2718,7 +2739,7 @@
     "message": "حجم عملية النقل"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "يمكن أن يؤثر الرمز البرمجي التابع لجهة خارجية بشكل كبير في أداء التحميل. [يمكنك تقليل تحميل الرموز البرمجية التابعة لجهات خارجية وتأجيله](https://developer.chrome.com/docs/performance/insights/third-parties)، ومنح الأولوية لمحتوى صفحتك."
+    "message": "يمكن أن يؤثر الرمز البرمجي الخارجي بشكل كبير في أداء تحميل الصفحة. [يمكنك تقليل تحميل الرموز البرمجية الخارجية وتأجيله](https://developer.chrome.com/docs/performance/insights/third-parties)، ومنح الأولوية لمحتوى صفحتك."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "لم يتم العثور على أي محتوى خارجي"
@@ -2727,7 +2748,7 @@
     "message": "الجهات الخارجية"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "قد يتم [تأخير الاستجابة لتفاعلات النقر بمقدار 300 ملي ثانية كحد أقصى](https://developer.chrome.com/docs/performance/insights/viewport) إذا لم يتم تحسين إطار العرض للأجهزة الجوّالة."
+    "message": "قد يتم [تأخير الاستجابة لتفاعلات النقر بمقدار 300 ملي ثانية كحد أقصى](https://developer.chrome.com/docs/performance/insights/viewport) إذا لم يتم تحسين إطار العرض للأجهزة الجوّالة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "مدة تأخير الاستجابة للنقر على الأجهزة الجوّالة"
@@ -2736,367 +2757,367 @@
     "message": "تحسين إطار العرض للأجهزة الجوّالة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "الصفحات فقط التي تم تحميلها من خلال طلب استرداد بيانات باستخدام GET يمكن حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات المحمّلة فقط من خلال طلب استرداد بيانات باستخدام GET"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي تتضمّن رمز الحالة 2XX."
+    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي تتضمّن رمز الحالة 2XX"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "اكتشف Chrome محاولة لتنفيذ JavaScript أثناء التخزين المؤقت."
+    "message": "اكتشَف Chrome محاولةً لتنفيذ JavaScript أثناء التخزين المؤقت"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "الصفحات التي طلبت AppBanner يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت AppBanner"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في chrome://flags. ويمكنك الانتقال إلى الرابط chrome://flags/#back-forward-cache لتفعيلها على هذا الجهاز."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "أوقفَ سطر الأوامر ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "أوقفَ سطر الأوامر ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب عدم توفّر مساحة كافية في الذاكرة."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب عدم توفّر مساحة تخزين كافية"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "لا تتوفّر ميزة \"التخزين المؤقت للصفحات\" من خلال التفويض."
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير متاحة من خلال التفويض"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في العارض المسبق."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في العارض المسبق"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "لا يمكن تخزين الصفحة مؤقتًا لأنها تحتوي على مثال BroadcastChannel يتضمّن أدوات مسجَّلة لمعالجة الحدث."
+    "message": "لا يمكن تخزين الصفحة مؤقتًا لأنها تحتوي على مثيل BroadcastChannel يتضمّن متتبِّعات مسجَّلة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "الصفحات التي تحتوي على عنوان cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي تحتوي على عنوان cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "سيتم محو ذاكرة التخزين المؤقت عن قصد."
+    "message": "تم محو ذاكرة التخزين المؤقت عن قصد"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بالتخزين المؤقت لصفحة أخرى."
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بتخزين صفحة أخرى مؤقتًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "الصفحات التي تحتوي على مكوّنات إضافية يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تحتوي على مكوّنات إضافية"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "غير محدّد"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "الصفحات التي تستخدِم FileChooser API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم FileChooser API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "الصفحات التي تستخدِم File System Access API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم File System Access API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "الصفحات التي تستخدِم أداة Media Device Dispatcher يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم \"أداة إرسال جهاز الوسائط\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "كان مشغّل الوسائط قيد التشغيل عند مغادرته."
+    "message": "كان أحد مشغّلات الوسائط قيد التشغيل أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "الصفحات التي تستخدِم MediaSession API وتضبط حالة للتشغيل يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم MediaSession API وتضبط حالة للتشغيل"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "الصفحات التي تستخدِم MediaSession API وتضبط معالِجات الإجراءات يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم MediaSession API وتضبط معالِجات الإجراءات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام قارئ الشاشة."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام قارئ الشاشة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "الصفحات التي تستخدِم SecurityHandler يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم SecurityHandler"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "الصفحات التي تستخدِم Serial API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم Serial API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "الصفحات التي تستخدِم WebAuthentication API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebAuthentication API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "الصفحات التي تستخدِم WebBluetooth API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebBluetooth API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "الصفحات التي تستخدِم WebUSB API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebUSB API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب إيقاف ملفات تعريف الارتباط على صفحة تستخدم السمة Cache-Control: no-store."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب إيقاف ملفات تعريف الارتباط على صفحة تستخدم السمة Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "الصفحات التي تستخدِم مشغّل خدمات مخصَّصًا أو وظيفة صغيرة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم منفِّذًا مخصَّصًا أو وظيفة مصغَّرة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "تمت مغادرة المستند قبل أن ينتهي من التحميل."
+    "message": "تمّت مغادرة المستند قبل أن ينتهي من التحميل"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "كان بانر التطبيق قيد الاستخدام أثناء مغادرة الصفحة."
+    "message": "كان بانر التطبيق قيد الاستخدام أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "كان مدير كلمات المرور في Chrome قيد الاستخدام أثناء مغادرة الصفحة."
+    "message": "كان \"مدير كلمات المرور\" في Chrome قيد الاستخدام أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "كانت عملية تصفية \"نموذج العناصر في المستند\" قيد التقدُّم أثناء مغادرة الصفحة."
+    "message": "كانت عملية استخلاص \"نموذج العناصر في المستند\" (DOM) يتم تنفيذها أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "كان عارض DOM Distiller Viewer قيد الاستخدام أثناء مغادرة الصفحة."
+    "message": "كان عارض ميزة DOM Distiller قيد الاستخدام أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ الإضافات تستخدم واجهة برمجة تطبيقات خدمة المراسلة."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ الإضافات تستخدم واجهة برمجة تطبيقات خدمة المراسلة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "الإضافات ذات الاتصال الطويل الأمد يجب أن تُغلِق الاتصال قبل تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "إنّ الإضافات ذات الاتصال الطويل الأمد يجب أن تُغلِق الاتصال قبل تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "حاولت الإضافات ذات الاتصال الطويل الأمد إرسال رسائل إلى الإطارات المدرَجة في ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "حاولت الإضافات ذات الاتصال الطويل الأمد إرسال رسائل إلى الإطارات المدرَجة في ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام الإضافات."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام الإضافات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "تم عرض مربع حوار نمطي، مثل مربع حوار إعادة إرسال النموذج أو مربع حوار مصادقة HTTP باستخدام كلمة مرور، في الصفحة أثناء مغادرتها."
+    "message": "تم عرض مربّع حوار نمطي في الصفحة أثناء مغادرتها، مثل مربّع حوار إعادة إرسال النموذج أو مربّع حوار مصادقة HTTP باستخدام كلمة مرور"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "تم عرض الصفحة المتوفّرة بلا اتصال بالإنترنت أثناء المغادرة."
+    "message": "تم عرض الصفحة المتوفّرة بلا اتصال بالإنترنت عند مغادرة الصفحة الحالية"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "كان شريط Out-Of-Memory Intervention قيد الاستخدام أثناء مغادرة الصفحة."
+    "message": "كان \"شريط التدخل بسبب نفاد الذاكرة\" قيد الاستخدام أثناء مغادرة الصفحة الحالية"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "كانت طلبات الأذونات قيد التقدُّم أثناء مغادرة الصفحة."
+    "message": "كانت هناك طلبات أذونات أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "كان حاجب النوافذ المنبثقة قيد الاستخدام أثناء مغادرة الصفحة."
+    "message": "كان حاجب النوافذ المنبثقة قيد الاستخدام أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "تم عرض تفاصيل \"التصفُّح الآمن\" أثناء مغادرة الصفحة."
+    "message": "تم عرض تفاصيل \"التصفّح الآمن\" أثناء مغادرة الصفحة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "رصدت ميزة \"التصفُّح الآمن\" أنّ هذه الصفحة تتضمن محتوى مسيئًا وحظرت نافذة منبثقة."
+    "message": "رصدت ميزة \"التصفُّح الآمن\" أنّ هذه الصفحة تتضمّن محتوى مسيئًا وحظرت نافذة منبثقة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "تم تفعيل مشغّل خدمات أثناء إدراج الصفحة في \"التخزين المؤقت للصفحات\"."
+    "message": "كان أحد مشغّلي الخدمات مفعّلاً أثناء إجراء تخزين مؤقت للصفحة باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب خطأ في المستند."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب خطأ في المستند"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "لا يمكن تخزين الصفحات التي تستخدم الإطار FencedFrames من خلال ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي تستخدم الإطار FencedFrames من خلال ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بالتخزين المؤقت لصفحة أخرى."
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بتخزين صفحة أخرى مؤقتًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "الصفحات التي سمحت بالوصول إلى محتوى بث الوسائط يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي سمحت بالوصول إلى محتوى الوسائط"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "الصفحات التي تحتوي على أنواع معيّنة من المحتوى المضمّن (مثل ملفات PDF) غير مؤهَّلة حاليًا لاستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "الصفحات التي تحتوي على أنواع معيّنة من المحتوى المضمّن (مثل ملفات PDF) غير مؤهَّلة حاليًا لاستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "الصفحات التي تستخدِم IdleManager يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم IdleManager"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "الصفحات التي تحتوي على اتصال مفتوح لقاعدة بيانات مفهرسة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تحتوي على اتصال IndexedDB مفتوح"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب حدث في IndexedDB."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب حدث في IndexedDB"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "تم استخدام واجهات غير مؤهَّلة لبرمجة التطبيقات."
+    "message": "تم استخدام واجهات غير مؤهَّلة لبرمجة التطبيقات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال JavaScript فيها من خلال الإضافات."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال JavaScript فيها من خلال الإضافات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال StyleSheet فيها من خلال الإضافات."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال StyleSheet فيها من خلال الإضافات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "حدث خطأ داخلي."
+    "message": "خطأ داخلي"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ بعض طلبات شبكة JavaScript تلقّت موردًا يحمل العنوان Cache-Control: no-store."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ بعض طلبات شبكة JavaScript تلقّت موردًا يحمل العنوان Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب طلب رسالة التحقّق من الاتصال."
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب طلب التحقّق من الاتصال"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "الصفحات التي تستخدِم قفل لوحة المفاتيح يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم قفل لوحة المفاتيح"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "تمت مغادرة الصفحة قبل أن تنتهي من التحميل."
+    "message": "تمت مغادرة الصفحة قبل أن يكتمل تحميلها"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "الصفحات التي يحتوي موردها الرئيسي على cache-control:no-cache يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الرئيسي على cache-control:no-cache باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "الصفحات التي يحتوي موردها الرئيسي على cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الرئيسي على cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "تم إلغاء التنقّل قبل أن تتم استعادة الصفحة من خلال ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "تم إلغاء التنقّل قبل أن تتم استعادة الصفحة من خلال ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال النشط بالشبكة تلقّى الكثير من البيانات، علمًا بأنّ Chrome يقيّد مقدار البيانات التي قد تتلقّاها الصفحة أثناء تخزينها مؤقتًا."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "الصفحات التي تستخدِم XHR أو fetch()‎ قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم XHR أو fetch()‎ يتم تنفيذهما حاليًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "تم إخراج الصفحة من ذاكرة \"التخزين المؤقت للصفحات\" لأنّ أحد طلبات الشبكة النشطة تضمَّن إعادة توجيه."
+    "message": "تم استبعاد هذه الصفحة من ميزة \"التخزين المؤقت للصفحات\" لأنّ أحد طلبات الشبكة النشطة تضمَّن إعادة توجيه"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال بالشبكة كان مفتوحًا لفترة طويلة جدًا، علمًا بأنّ Chrome يقيّد مقدار الوقت الذي قد تتلقّى خلاله الصفحة البيانات أثناء تخزينها مؤقتًا."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "الصفحات التي لا تحتوي على عنوان استجابة صالح يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي لا تحتوي على عنوان استجابة صالح باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "حدث التنقُّل في إطار غير الإطار الرئيسي."
+    "message": "حدث التنقّل في إطار غير الإطار الرئيسي"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "الصفحات التي تتضمّن عمليات جارية لقاعدة البيانات المُفهرَسة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تتضمّن عمليات جارية لقاعدة البيانات المُفهرَسة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "الصفحات التي تستخدِم طلب شبكة قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة يتم تنفيذه حاليًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "الصفحات التي تستخدِم طلب شبكة fetch قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب استرجاع لبيانات شبكة يتم تنفيذه حاليًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "الصفحات التي تستخدِم طلب شبكة قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة يتم تنفيذه حاليًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "الصفحات التي تستخدِم طلب شبكة XHR قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة XHR يتم تنفيذه حاليًا"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "الصفحات التي تستخدِم PaymentManager يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم PaymentManager"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "الصفحات التي تستخدِم ميزة \"نافذة ضمن النافذة\" يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم ميزة \"نافذة ضمن النافذة\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "الصفحات التي تعرض \"واجهة مستخدم الطباعة\" يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تعرض \"واجهة المستخدم الخاصة بالطباعة\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "تم فتح الصفحة باستخدام \"window.open()\" وعلامة تبويب أخرى بها مرجع إليها، أو أنّ الصفحة فتحت نافذة."
+    "message": "تم فتح الصفحة باستخدام window.open() وعلامة تبويب أخرى بها مرجع إليها، أو فتَحت الصفحة نافذة"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "تعطّلت عملية العرض للصفحة خلال \"التخزين المؤقت للصفحات\"."
+    "message": "تعطّلت عملية العرض للصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "تم إنهاء عملية العرض للصفحة خلال \"التخزين المؤقت للصفحات\"."
+    "message": "تم إنهاء عملية العرض للصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "الصفحات التي طلبت أذونات تسجيل الصوت يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات تسجيل الصوت"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "الصفحات التي طلبت أذونات جهاز الاستشعار يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات أدوات الاستشعار"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "الصفحات التي طلبت أذونات الاسترجاع أو المزامنة في الخلفية يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت إذن الاسترجاع أو إذن المزامنة في الخلفية"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "الصفحات التي طلبت أذونات الوصول إلى أجهزة MIDI يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات الوصول إلى أجهزة MIDI"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "الصفحات التي طلبت أذونات الإشعارات يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات إرسال الإشعارات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "الصفحات التي طلبت الوصول إلى مساحة التخزين يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت الوصول إلى مساحة التخزين"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "الصفحات التي طلبت أذونات تسجيل الفيديو يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات تسجيل الفيديو"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي يكون مخطَّط URL فيها هو HTTP/HTTPS."
+    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي يكون مخطَّط URL فيها هو HTTP/HTTPS"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "استدعى مشغّل الخدمات الصفحة أثناء محاولة حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "استدعى أحد مشغّلي الخدمات الصفحة أثناء تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "حاول مشغّل خدمات إرسال MessageEvent إلى الصفحة في ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "حاول أحد مشغّلي الخدمات إرسال MessageEvent إلى الصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "تم إلغاء تسجيل ServiceWorkers أثناء إدراج الصفحة في \"التخزين المؤقت للصفحات\"."
+    "message": "تم إلغاء تسجيل ServiceWorkers أثناء تخزين صفحة باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "تم إخراج الصفحة من \"التخزين المؤقت للصفحات\" بسبب تنشيط مشغّل الخدمات."
+    "message": "تم استبعاد هذه الصفحة من ميزة \"التخزين المؤقت للصفحات\" بسبب تفعيل مشغّل خدمات"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "تمت إعادة تشغيل Chrome الذي محا إدخالات ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "تمت إعادة تشغيل Chrome ومحو إدخالات ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "الصفحات التي تستخدِم SharedWorker يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "تم حذف الصفحة من ذاكرة التخزين المؤقت لأنّها تلقّت رسالة من SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "الصفحات التي تستخدِم SpeechRecognizer يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SpeechRecognizer"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "الصفحات التي تستخدِم SpeechSynthesis يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SpeechSynthesis"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "بدأ إطار iframe على الصفحة عملية تنقُّل لم تكتمل."
+    "message": "بدأ إطار iframe على الصفحة عملية تنقُّل لم تكتمل"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "الصفحات التي يحتوي موردها الفرعي على cache-control:no-cache يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الفرعي على cache-control:no-cache باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "الصفحات التي يحتوي موردها الفرعي على cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الفرعي على cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "تجاوزت الصفحة الحدّ الأقصى للوقت أثناء حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\" وانتهت صلاحيتها."
+    "message": "تجاوزت الصفحة الحدّ الأقصى لوقت التخزين في ميزة \"التخزين المؤقت للصفحات\" وانتهت صلاحيتها"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "انتهت مهلة إدراج الصفحة في \"التخزين المؤقت للصفحات\" (قد يرجع ذلك إلى معالِجات إخفاء الصفحات التي تستغرق مدة زمنية طويلة)."
+    "message": "انتهت مهلة تخزين الصفحة باستخدام ميزة \"التخزين المؤقت للصفحات\" (من المرجَّح أنّ سبب ذلك هو معالِجات إخفاء الصفحات التي تستغرق مدة زمنية طويلة)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "تحتوي الصفحة على معالج لإلغاء التحميل في الإطار الرئيسي."
+    "message": "تحتوي الصفحة على معالج لإلغاء التحميل في الإطار الرئيسي"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "تحتوي الصفحة على معالِج لإلغاء التحميل في إطار فرعي."
+    "message": "تحتوي الصفحة على معالِج لإلغاء التحميل في إطار فرعي"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "غيَّر المتصفّح عنوان تجاوز وكيل المستخدم."
+    "message": "غيَّر المتصفّح عنوان تجاوز وكيل المستخدم"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "الصفحات التي سمحت بتسجيل فيديو أو صوت يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي سمحَت بتسجيل فيديو أو صوت"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "الصفحات التي تستخدِم WebDatabase يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebDatabase"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "الصفحات التي تستخدِم WebHID يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebHID"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "الصفحات التي تستخدِم WebLocks يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebLocks"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "الصفحات التي تستخدِم WebNfc يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebNfc"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "الصفحات التي تستخدِم خدمة WebOTPService يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebOTPService"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "الصفحات التي تحتوي على WebRTC يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي تستخدم بروتوكول WebRTC من خلال ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebRTC."
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "الصفحات التي تستخدِم WebShare يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebShare"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "الصفحات التي تحتوي على WebSocket يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي تحتوي على WebSocket باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعّلة بسبب استخدام WebSocket."
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعّلة بسبب استخدام WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "الصفحات التي تحتوي على WebTransport يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن تخزين الصفحات التي تحتوي على WebTransport باستخدام ميزة \"التخزين المؤقت للصفحات\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebTransport."
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "الصفحات التي تستخدِم WebXR يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebXR"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "‏‮For‬‏ ‏‮animated‬‏ ‏‮content‬‏, ‏‮use‬‏ [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) ‏‮to‬‏ ‏‮minimize‬‏ ‏‮CPU‬‏ ‏‮usage‬‏ ‏‮when‬‏ ‏‮the‬‏ ‏‮content‬‏ ‏‮is‬‏ ‏‮offscreen‬‏."

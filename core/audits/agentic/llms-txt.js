@@ -82,7 +82,7 @@ class LlmsTxt extends Audit {
       };
     }
 
-    if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
+    if (status >= HTTP_SERVER_ERROR_CODE_LOW || status === 429) {
       return {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
@@ -95,7 +95,10 @@ class LlmsTxt extends Audit {
     }
 
     if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanation),
+      };
     }
 
     const hasH1 = /^\s*#\s+.+/m.test(content);

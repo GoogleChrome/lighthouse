@@ -27,7 +27,7 @@ const DIRECTIVE_SAFELIST = new Set([
   DIRECTIVE_ALLOW, DIRECTIVE_SITEMAP, // universally supported
   'crawl-delay', // yahoo, bing, yandex
   'clean-param', 'host', // yandex
-  'request-rate', 'visit-time', 'noindex', 'content-signal', // not officially supported, but used in the wild
+  'request-rate', 'visit-time', 'noindex', 'content-signal', 'license', // not officially supported, but used in the wild
 ]);
 const SITEMAP_VALID_PROTOCOLS = new Set(['https:', 'http:', 'ftp:']);
 
@@ -209,7 +209,7 @@ class RobotsTxt extends Audit {
     } = artifacts.RobotsTxt;
 
     // Do specific error messages first.
-    if (status && status >= HTTP_SERVER_ERROR_CODE_LOW) {
+    if (status && (status >= HTTP_SERVER_ERROR_CODE_LOW || status === 429)) {
       return {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
@@ -228,16 +228,11 @@ class RobotsTxt extends Audit {
       };
     }
 
-    if (!status) {
+    if (!status || content === null) {
       return {
         score: 0,
         explanation: str_(UIStrings.explanation),
       };
-    }
-
-    // If status is good, content must be not null.
-    if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
     }
 
     const validationErrors = validateRobots(content);

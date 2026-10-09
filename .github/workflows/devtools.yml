@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+permissions:
+  contents: read
+
 env:
   DEPOT_TOOLS_PATH: ${{ github.workspace }}/depot-tools
   DEVTOOLS_PATH: ${{ github.workspace }}/devtools-frontend
@@ -21,12 +24,13 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
 
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         path: lighthouse
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
 
@@ -39,13 +43,14 @@ jobs:
     # code will invalidate the cache sooner.
     - name: Cache depot tools and devtools
       id: devtools-cache
-      uses: actions/cache@v3
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.DEVTOOLS_PATH }}
           ${{ github.workspace }}/.gclient
           ${{ github.workspace }}/.gclient_entries
+          ${{ github.workspace }}/.cipd
         # This hash key changes:
         # 1) every monday (so invalidates once a week)
         # 2) every commit to CDT touching files important to Lighthouse web tests
@@ -58,6 +63,12 @@ jobs:
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
+    - name: Cache node_modules
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ${{ github.workspace }}/lighthouse/node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('lighthouse/yarn.lock') }}
+
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
@@ -69,15 +80,19 @@ jobs:
     - name: Roll Lighthouse + build DevTools
       run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
-    - name: Cache build artifacts
+    - name: Cache build artifacts for e2e
       id: devtools-build-artifacts
-      uses: actions/cache@v3
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
-        path: |
-          ${{ env.DEVTOOLS_PATH }}
-          ${{ github.workspace }}/.gclient
-          ${{ github.workspace }}/.gclient_entries
+        path: ${{ env.DEVTOOLS_PATH }}
         key: devtools-build-artifacts-${{ github.run_id }}
+
+    - name: Cache front_end build for smoke
+      id: devtools-frontend-gen
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ${{ env.DEVTOOLS_PATH }}/out/LighthouseIntegration/gen/front_end
+        key: devtools-frontend-gen-${{ github.run_id }}
 
   e2e:
     needs: [build]
@@ -87,23 +102,10 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         path: lighthouse
-
-    - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.19'
-
-    - run: yarn --frozen-lockfile --network-timeout 1000000
-      working-directory: ${{ github.workspace }}/lighthouse
-
-    - name: Set $PATH
-      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
-    # For vpython.
-    - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
+        persist-credentials: false
 
     # Since Ubuntu 23, dev builds of Chromium need this.
     # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
@@ -111,13 +113,11 @@ jobs:
 
     - name: Load build artifacts
       id: devtools-build-artifacts
-      uses: actions/cache@v3
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
-        path: |
-          ${{ env.DEVTOOLS_PATH }}
-          ${{ github.workspace }}/.gclient
-          ${{ github.workspace }}/.gclient_entries
+        path: ${{ env.DEVTOOLS_PATH }}
         key: devtools-build-artifacts-${{ github.run_id }}
+        fail-on-cache-miss: true
 
     - name: Run e2e tests
       run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
@@ -137,24 +137,29 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         path: lighthouse
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
 
     - name: Load build artifacts
-      id: devtools-build-artifacts
-      uses: actions/cache@v3
+      id: devtools-frontend-gen
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
-        path: |
-          ${{ env.DEVTOOLS_PATH }}
-          ${{ github.workspace }}/.gclient
-          ${{ github.workspace }}/.gclient_entries
-        key: devtools-build-artifacts-${{ github.run_id }}
+        path: ${{ env.DEVTOOLS_PATH }}/out/LighthouseIntegration/gen/front_end
+        key: devtools-frontend-gen-${{ github.run_id }}
+        fail-on-cache-miss: true
+
+    - name: Restore node_modules
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ${{ github.workspace }}/lighthouse/node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('lighthouse/yarn.lock') }}
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
@@ -174,12 +179,14 @@ jobs:
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --debug
+      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${STRATEGY_JOB_TOTAL} --jobs=3 --retries=2 --debug
       working-directory: ${{ github.workspace }}/lighthouse
+      env:
+        STRATEGY_JOB_TOTAL: ${{ strategy.job-total }}
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Smokehouse (devtools smoke)
         path: ${{ github.workspace }}/lighthouse/.tmp/smokehouse-failures/

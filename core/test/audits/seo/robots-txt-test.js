@@ -10,20 +10,38 @@ import RobotsTxtAudit from '../../../audits/seo/robots-txt.js';
 
 describe('SEO: robots.txt audit', () => {
   it('fails and reports error when no robots.txt was provided', () => {
-    const artifacts = {
-      RobotsTxt: {
+    const testData = [
+      {
         status: null,
         content: null,
       },
-    };
+      {
+        status: 300,
+        content: null,
+      },
+      {
+        status: 304,
+        content: null,
+      },
+    ];
 
-    const auditResult = RobotsTxtAudit.audit(artifacts);
-    assert.equal(auditResult.score, 0);
-    assert.ok(auditResult.explanation);
+    testData.forEach(RobotsTxt => {
+      const artifacts = {
+        RobotsTxt,
+      };
+
+      const auditResult = RobotsTxtAudit.audit(artifacts);
+      assert.equal(auditResult.score, 0);
+      expect(auditResult.explanation).toBeDisplayString('Fetch of robots.txt failed');
+    });
   });
 
-  it('fails when request for /robots.txt returns a HTTP500+ error', () => {
+  it('fails when request for /robots.txt returns a HTTP500+ or 429 error', () => {
     const testData = [
+      {
+        status: 429,
+        content: null,
+      },
       {
         status: 500,
         content: null,
@@ -45,6 +63,9 @@ describe('SEO: robots.txt audit', () => {
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
       assert.equal(auditResult.score, 0);
+      expect(auditResult.displayValue).toBeDisplayString(
+        `Request for robots.txt returned HTTP status: ${RobotsTxt.status}`
+      );
     });
   });
 
@@ -211,6 +232,7 @@ User-agent: BadBot
 Disallow: / # go away!
 
 Sitemap: https://example.com/sitemap.xml
+License: https://example.com/license.xml
 
 User-agent: Yandex
 Host: https://brainly.com

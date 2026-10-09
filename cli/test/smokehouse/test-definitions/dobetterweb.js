@@ -243,8 +243,6 @@ const expectations = {
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
             {
-              // In the DT runner, the initial page load before staring Lighthouse will prevent this error.
-              _excludeRunner: 'devtools',
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
