@@ -26,7 +26,9 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(_traceEvents, settings, SourceMaps, HostDPR) {
-    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
+    const config = TraceEngine.Types.Configuration.defaults();
+    config.enableSoftNavigation = false;
+    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers, config);
     const traceEvents =
       /** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (_traceEvents);
 

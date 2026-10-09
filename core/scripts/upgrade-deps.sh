@@ -38,7 +38,7 @@ node -e "
     pkg.resolutions['puppeteer-core/**/devtools-protocol'] = ver;
     fs.writeFileSync('$LH_ROOT/package.json', JSON.stringify(pkg, null, 2) + '\n');
 
-    const webFeaturesVer = pkg.dependencies['web-features'].replace(/[\^~]/, '');
+    const webFeaturesVer = (pkg.dependencies['web-features'] || pkg.devDependencies['web-features']).replace(/[\^~]/, '');
     const timeJson = JSON.parse(cp.execSync('npm info web-features time --json').toString());
     const dateStr = timeJson[webFeaturesVer];
     if (dateStr) {
@@ -64,7 +64,10 @@ node -e "
 
 # Do some stuff that may update checked-in files.
 yarn generate-insight-audits
-yarn update:ard-spec
+# Only check the ARD port. Acknowledging upstream changes requires porting them first
+# (see third-party/ard/README.md), so a deps upgrade must never bump the pinned SHA itself.
+ARD_OUT_OF_SYNC=0
+yarn check:ard-spec || ARD_OUT_OF_SYNC=1
 yarn build-ard-schema
 yarn build-all
 yarn update:sample-json
@@ -72,6 +75,12 @@ yarn type-check
 yarn lint --fix
 
 set +x
+
+if [ "$ARD_OUT_OF_SYNC" = "1" ]; then
+  echo "----------"
+  echo "WARNING: the ARD port is out of sync with upstream ards-project/ard-spec (see output above)."
+  echo "This is NOT fixed by this deps upgrade. Follow third-party/ard/README.md (Updating Conformance Script)."
+fi
 
 echo "----------"
 echo """

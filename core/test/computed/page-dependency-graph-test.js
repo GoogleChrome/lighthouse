@@ -24,7 +24,7 @@ describe('PageDependencyGraph computed artifact', () => {
         SourceMaps: [],
         HostDPR: 1,
         settings: {},
-        fromTrace: false,
+        fromTrace: process.env.INTERNAL_LANTERN_USE_TRACE !== undefined,
       }, context);
       assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
       const dependents = output.getDependents();

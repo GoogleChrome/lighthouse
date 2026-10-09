@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Adatok támogatása: az SVGUseElement elemben lévő URL-ek elavultak, és a jövőben el fogjuk távolítani őket."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "Ismeretlen digitális hitelesítési protokoll lett kérelmezve a navigator.credentials.get() vagy a create() függvényben. A jövőbeli kiadásban a rendszer le fogja tiltani a nem felismerhető protokollokat."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "A document.createEvent('KeyboardEvents') elavult, és el fogjuk távolítani. Inkább ezt használja: new KeyboardEvent()."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Ez egy példa a böngészőfolyamat által jelentett megszüntetéshez szükséges kód megjelenítésére."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "A Fenced Frame API elavult, és el lesz távolítva"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "A Protected Audience API elavult, és egy későbbi kiadásban el lesz távolítva."
@@ -2263,6 +2269,12 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "A(z) BluetoothRemoteGATTCharacteristic.writeValue() metódust megszüntettük. Használja helyette a következők valamelyikét: writeValueWithResponse() vagy writeValueWithoutResponse()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "A WebTransportDatagramDuplexStream.incomingHighWaterMark át lett nevezve a következőre: incomingMaxBufferedDatagrams. Az incomingHighWaterMark a Chrome egyik későbbi verziójában el lesz távolítva."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "A WebTransportDatagramDuplexStream.outgoingHighWaterMark át lett nevezve a következőre: outgoingMaxBufferedDatagrams. Az outgoingHighWaterMark a Chrome egyik későbbi verziójában el lesz távolítva."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Az XMLHttpRequest esetében az UTF-16 kódolást nem támogatja a válasz-JSON."
@@ -2427,7 +2439,10 @@
     "message": "Forrás"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Távolítsa el a csomagjaiból a nagy méretű, [ismétlődően előforduló JavaScript-modulokat](https://developer.chrome.com/docs/performance/insights/duplicated-javascript), hogy kevesebb hálózati tevékenységet okozzanak."
+    "message": "Távolítsa el a csomagjaiból a nagy méretű, [ismétlődően előforduló JavaScript-modulokat](https://developer.chrome.com/docs/performance/insights/duplicated-javascript), hogy kevesebb hálózati tevékenységet okozzanak"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "Nem található ismétlődő JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "Ismétlődő JavaScript"
@@ -2437,6 +2452,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Betűtípus"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "Nem található olyan betűtípus, amelynél a font-display tulajdonság nem optimális"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Betűtípus megjelenítése"
@@ -2490,7 +2508,7 @@
     "message": "INP-lebontás"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "A képek letöltési idejének csökkentésével javíthatja az oldal és az LCP észlelt betöltési idejét. [További információ a képméret optimalizálásáról](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+    "message": "A képek letöltési idejének csökkentésével javíthatja az oldal és az LCP észlelt betöltési idejét. [További információ a képméret optimalizálásáról](https://developer.chrome.com/docs/performance/insights/image-delivery)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (becsült – {PH2})"
@@ -2508,7 +2526,7 @@
     "message": "Képtovábbítás javítása"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "A kép tömörítési tényezőjének növelésével javíthatja a kép letöltési méretét."
+    "message": "A kép tömörítési tényezőjének növelésével javíthatja a kép letöltési méretét"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
     "message": "Modern képformátum (WebP, AVIF) használatával vagy képek tömörítésének növelésével javítható a kép letöltési mérete."
@@ -2565,7 +2583,7 @@
     "message": "Az LCP-erőforrások nem használhatják a loading=lazy attribútumot"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "Az LCP-kép a legkorábbi kezdőpont után {PH1} elteltével töltődött be."
+    "message": "Az LCP-kép a legkorábbi kezdőpont után {PH1} elteltével töltődött be"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
     "message": "Nem észlelhető LCP"
@@ -2586,7 +2604,10 @@
     "message": "Elvesztegetett bájtok"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "A polyfillek és az átalakítások lehetővé teszik, hogy a régi böngészők is használhassák az újabb JavaScript-funkciókat. A modern böngészők esetében azonban sok polyfill és átalakítás szükségtelen. Fontolja meg a JavaScript-buildkészítési folyamat módosítását, hogy az ne alakítsa át a [Baseline](https://web.dev/articles/baseline-and-polyfills) funkciókat, kivéve, ha tudja, hogy támogatnia kell a régi böngészőket. [További információ arról, hogy a legtöbb webhely miért tud átalakítás nélkül ES6+ kódot telepíteni](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "A polyfillek és az átalakítások lehetővé teszik, hogy a régi böngészők is használhassák az újabb JavaScript-funkciókat. A modern böngészők esetében azonban sok polyfill és átalakítás szükségtelen. Fontolja meg a JavaScript-buildkészítési folyamat módosítását, hogy az ne alakítsa át a [Baseline](https://web.dev/articles/baseline-and-polyfills) funkciókat, kivéve, ha tudja, hogy támogatnia kell a régi böngészőket. [További információ arról, hogy a legtöbb webhely miért tud átalakítás nélkül ES6+ kódot telepíteni](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "Nem található régi JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Régi JavaScript"
@@ -2625,10 +2646,10 @@
     "message": "Nem használt előzetes kapcsolat. Ellenőrizze, hogy megfelelően használja-e a crossorigin attribútumot."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Kerülje a kritikus kérések láncba fűzését](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés."
+    "message": "[Kerülje a kritikus kérések láncba fűzését](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Adjon meg [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) tippeket a legfontosabb eredethelyekhez, de próbáljon meg négynél többet használni."
+    "message": "Adjon meg [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) tippeket a legfontosabb eredetekhez, de próbáljon meg négynél kevesebbet használni"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Előzetes kapcsolódás jelöltjei"
@@ -2643,7 +2664,7 @@
     "message": "Nincsenek további eredethelyek, amelyek jó jelöltek lennének az előzetes kapcsolódásra"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "nincsenek előre kapcsolódott eredethelyek"
+    "message": "Nincsenek előre kapcsolódott eredethelyek"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "Az [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) tippek segítenek a böngészőnek abban, hogy az oldal betöltésének korábbi szakaszában létesítsen kapcsolatot, így időt takaríthat meg, amikor elküldi az első kérést az adott eredethelynek. A következők azok az eredethelyek, amelyekkel az oldal előre kapcsolódott."
@@ -2661,7 +2682,7 @@
     "message": "Nem használt előzetes kapcsolat. Csak az oldal által valószínűleg kérelmezett forrásokhoz használja a preconnect lehetőséget."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "Kerülje a kritikus kérések láncba fűzését a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés."
+    "message": "Kerülje a kritikus kérések láncba fűzését a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Kérelmek blokkolják az oldal kezdeti megjelenítését, ami késleltetheti az LCP-t. [Elhalasztás vagy a beágyazás](https://developer.chrome.com/docs/performance/insights/render-blocking) segítségével ezeket a hálózati kérelmeket el lehet távolítani a kritikus útvonalról."
@@ -2685,7 +2706,7 @@
     "message": "Eltelt idő"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
-    "message": "Nem található CSS-választóhoz tartozó adat. A CSS-választó statisztikáit engedélyezni kell a teljesítménypanel beállításaiban."
+    "message": "Nem található CSS-választóhoz tartozó adat. A CSS-választó statisztikáit engedélyezni kell a Teljesítmény panel beállításaiban."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
     "message": "Egyeztetési kísérletek"
@@ -2736,43 +2757,43 @@
     "message": "A megjelenítési terület mobilra való optimalizálása"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "Kizárólag a GET metódussal betöltött oldalak alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Kizárólag a GET-kéréssel betöltött oldalak alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "Kizárólag a 2XX állapotkódú oldalak gyorsítótárazhatók."
+    "message": "Kizárólag a 2XX állapotkódú oldalak gyorsítótárazhatók"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
     "message": "A Chrome JavaScript végrehajtására tett kísérletet észlelt, amíg az oldal a gyorsítótárban volt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "Az AppBannert kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Az AppBannert kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "Az előre-vissza gyorsítótárazást jelzők tiltják le. Keresse fel a chrome://flags/#back-forward-cache oldalt, ahol helyileg tudja erre az eszközre vonatkozóan engedélyezni."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva a parancssorban."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva a parancssorban"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "A rendszer letiltotta az előre-vissza gyorsítótárazást, mert nem áll rendelkezésre elegendő memória."
+    "message": "A rendszer letiltotta az előre-vissza gyorsítótárazást, mert nem áll rendelkezésre elegendő memória"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Az előre-vissza gyorsítótárazás meghatalmazó által nem támogatott."
+    "message": "Az előre-vissza gyorsítótárazás meghatalmazó által nem támogatott"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Az előzetes megjelenítő számára le van tiltva az előre-vissza gyorsítótárazás."
+    "message": "Az előzetes megjelenítő számára le van tiltva az előre-vissza gyorsítótárazás"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "Az oldal gyorsítótárazása nem lehetséges, mert regisztrált figyelőkkel rendelkező BroadcastChannel-példánya van."
+    "message": "Az oldal gyorsítótárazása nem lehetséges, mert regisztrált figyelőkkel rendelkező BroadcastChannel-példánya van"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Azok az oldalak, amelyek fejléce tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek fejléce tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "A gyorsítótár kiürítése szándékosan történt."
+    "message": "A gyorsítótár kiürítése szándékosan történt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "Az oldalt a rendszer kizárta a gyorsítótárból, hogy lehetővé tegye egy másik oldal gyorsítótárazását."
+    "message": "A rendszer kizárta az oldalt a gyorsítótárból, hogy lehetővé tegye egy másik oldal gyorsítótárazását"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
     "message": "A beépülő modult tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
@@ -2781,19 +2802,19 @@
     "message": "Nincs megadva"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "A FileChooser API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A FileChooser API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "A File System Access API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A File System Access API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
     "message": "A Media Device Dispatchert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Az oldal elhagyása közben médialejátszó játszott le tartalmat."
+    "message": "Az oldal elhagyása közben médialejátszó játszott le tartalmat"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "A MediaSession API-t használó és lejátszási állapotot beállító oldalak nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A MediaSession API-t használó és lejátszási állapotot beállító oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
     "message": "A MediaSession API-t használó és műveletkezelőket beállító oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
@@ -2802,22 +2823,22 @@
     "message": "Az előre-vissza gyorsítótárazás le van tiltva a képernyőolvasó miatt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "A SecurityHandler kezelőt használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A SecurityHandlert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "A Serial API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A Serial API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "A WebAuthentication API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebAuthentication API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "A WebBluetooth API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebBluetooth API-t használó oldalak nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "A WebUSB API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebUSB API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva, mert a cookie-k le vannak tiltva egy Cache-Control: no-store paramétert használó oldalon."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva, mert a cookie-k le vannak tiltva egy Cache-Control: no-store paramétert használó oldalon"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
     "message": "A dedikált feldolgozót vagy workletet használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
@@ -2835,28 +2856,28 @@
     "message": "A DOM Distiller működésben volt az oldal elhagyásakor."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "A DOM Distiller Viewer jelen volt az oldal elhagyásakor."
+    "message": "A DOM Distiller Viewer jelen volt az oldal elhagyásakor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva üzenetkezelési API-t használó bővítmények miatt."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva üzenetkezelési API-t használó bővítmények miatt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "A hosszú élettartamú kapcsolattal rendelkező bővítményeknek be kell zárniuk a kapcsolatot az előre-vissza gyorsítótárazás megkezdése előtt."
+    "message": "A hosszú élettartamú kapcsolattal rendelkező bővítményeknek be kell zárniuk a kapcsolatot az előre-vissza gyorsítótárazás megkezdése előtt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Hosszú élettartamú kapcsolattal rendelkező bővítményeknek próbáltak üzeneteket küldeni az előre-vissza gyorsítótárban található keretekhez."
+    "message": "Hosszú élettartamú kapcsolattal rendelkező bővítményeknek próbáltak üzeneteket küldeni az előre-vissza gyorsítótárazásban található keretekhez."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva a bővítmények miatt."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva bővítmények miatt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Modális párbeszédpanel (pl. űrlap újraküldésével vagy http-jelszóval kapcsolatos párbeszédpanel) volt látható az oldalhoz az oldal elhagyásakor."
+    "message": "Modális párbeszédpanel (pl. űrlap újraküldésével vagy http-jelszóval kapcsolatos párbeszédpanel) volt látható az oldalnál az oldal elhagyásakor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "Az offline oldal volt látható az oldal elhagyásakor."
+    "message": "Az offline oldal volt látható az oldal elhagyásakor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "Az elfogyó memória miatti beavatkozás sávja jelen volt az oldal elhagyásakor."
+    "message": "A megtelt memória miatti beavatkozás sávja jelen volt az oldal elhagyásakor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
     "message": "Engedélykérések jelentek meg az oldal elhagyásakor."
@@ -2865,13 +2886,13 @@
     "message": "Jelen volt előugró ablakokat blokkoló szoftver az oldal elhagyásakor."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "A Biztonságos Böngészés részletei láthatók voltak az oldal elhagyásakor."
+    "message": "A Biztonságos Böngészés részletei láthatók voltak az oldal elhagyásakor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "A Biztonságos Böngészés visszaélésszerűnek ítélte ezt az oldalt, és letiltotta az előugró ablakokat."
+    "message": "A Biztonságos Böngészés visszaélésszerűnek ítélte ezt az oldalt, és letiltotta az előugró ablakokat"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Egy service worker fájl aktiválódott, amíg az oldal az előre-vissza gyorsítótárban volt."
+    "message": "Egy service worker fájl aktiválódott, amíg az oldal az előre-vissza gyorsítótárban volt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
     "message": "Az előre-vissza gyorsítótárazás le van tiltva dokumentumhiba miatt."
@@ -2880,52 +2901,52 @@
     "message": "A FencedFrame elemeket használó oldalak nem tárolhatók előre-vissza gyorsítótárazásban."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "Az oldalt a rendszer kizárta a gyorsítótárból, hogy lehetővé tegye egy másik oldal gyorsítótárazását."
+    "message": "A rendszer kizárta az oldalt a gyorsítótárból, hogy lehetővé tegye egy másik oldal gyorsítótárazását."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "A médiastreamhez hozzáférést biztosító oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A médiastreamhez hozzáférést biztosító oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
     "message": "A bizonyos típusú beágyazott tartalmakat (például PDF-eket) tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Az IdleManager jelenleg nem alkalmas az előre-vissza gyorsítótárazásra."
+    "message": "Az IdleManagert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "A nyílt IndexedDB-kapcsolattal rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A nyílt IndexedDB-kapcsolattal rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
     "message": "Az előre-vissza gyorsítótárazás le van tiltva IndexedDB-esemény miatt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "Nem megfelelő API-k használata."
+    "message": "Nem megfelelő API-kat használt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Azok az oldalak, amelyekbe JavaScript van bővítménnyel beszúrva, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Azok az oldalak, amelyekbe JavaScript van bővítménnyel beszúrva, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
     "message": "Azok az oldalak, amelyekbe StyleSheet van bővítménnyel beszúrva, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "Belső hiba."
+    "message": "Belső hiba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva, mert egyes JavaScript-hálózati kérelmek Cache-Control: no-store fejléccel rendelkező erőforrást eredményeztek."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva, mert egyes JavaScript hálózati kérelmek Cache-Control: no-store fejléccel rendelkező erőforrást kaptak"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "Az előre-vissza gyorsítótárazás keepalive kérelem miatt le van tiltva."
+    "message": "Az előre-vissza gyorsítótárazás keepalive kérelem miatt le van tiltva"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "A Billenntyűzár funkciót használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A billentyűzárolási funkciót használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
     "message": "Nem fejeződött be az oldal betöltése az oldal elhagyása előtt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Azok az oldalak, amelyek fő erőforrása tartalmazza a cache-control:no-cache paramétert, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek fő erőforrása tartalmazza a cache-control:no-cache paramétert, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Azok az oldalak, amelyek fő erőforrása tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek fő erőforrása tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "A navigációt visszavonták, mielőtt az oldal visszaállítható lett volna az előre-vissza gyorsítótárazásból."
@@ -2934,37 +2955,37 @@
     "message": "Az oldalt a rendszer kizárta a gyorsítótárból, mivel egy aktív hálózati kapcsolat túl sok adatot fogadott. A Chrome korlátozza az egyes oldalak által gyorsítótárazásuk közben fogadható adatok mennyiségét."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "A menet közbeni fetch() lekéréssel vagy XHR-rel rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A menet közbeni fetch() lekéréssel vagy XHR-rel rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "Az oldalt a rendszer kizárta az előre-vissza gyorsítótárból, mert egy aktív hálózati kérés átirányítást tartalmazott."
+    "message": "Az oldalt a rendszer kizárta az előre-vissza gyorsítótárazásból, mert egy aktív hálózati kérés átirányítást tartalmazott"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "Az oldalt a rendszer kizárta a gyorsítótárból, mert túl sokáig volt nyitva egy hálózati kapcsolat. A Chrome korlátozza azt az időt, ameddig az egyes oldalak gyorsítótárazásuk közben adatokat fogadhat."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Azok az oldalak, amelyek nem rendelkeznek érvényes válasszal, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek nem rendelkeznek érvényes válasszal, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "Navigáció történt a fő kerettől eltérő keretben."
+    "message": "Navigáció történt a fő kerettől eltérő keretben"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
     "message": "A folyamatban lévő indexelt DB-tranzakciókat tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "A menet közbeni hálózati kéréssel rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A menet közbeni hálózati kéréssel rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "A menet közbeni lekérési hálózati kérést tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A menet közbeni lekérési hálózati kérést tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
     "message": "A menet közbeni hálózati kéréssel rendelkező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "A menet közbeni XHR-hálózati kérést tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A menet közbeni XHR-hálózati kérést tartalmazó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "A PaymentManagert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A PaymentManagert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
     "message": "A Kép a képben funkciót használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
@@ -2973,79 +2994,79 @@
     "message": "A Nyomtatás felhasználói felületet megjelenítő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "Az oldal megnyitása a „window.open()” metódussal történt, és egy másik lap rá mutató hivatkozást tartalmaz, vagy az oldal ablakot nyitott meg."
+    "message": "Az oldal megnyitása a(z) „window.open()” metódussal történt, és egy másik lap rá mutató hivatkozást tartalmaz, vagy az oldal ablakot nyitott meg"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
     "message": "Összeomlott az előre-vissza gyorsítótárban lévő oldal megjelenítési folyamata."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "Az előre-vissza gyorsítótárban lévő oldallal kapcsolatos megjelenítési folyamatot leállította a rendszer."
+    "message": "Az előre-vissza gyorsítótárban lévő oldal megjelenítési folyamatát leállította a rendszer"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "A hangrögzítésre engedélyt kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A hangrögzítésre engedélyt kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Azok az oldalak, amelyek érzékelőkhoz való hozzáférési jogosultságot kértek, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Azok az oldalak, amelyek érzékelőkhoz való hozzáférési jogosultságot kértek, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "A háttérszinkronizálást kérő vagy lekérési jogosultságot kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A háttérbeli szinkronizálást vagy lekérési jogosultságot kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
     "message": "Azok az oldalak, amelyek MIDI-eszközökhöz való hozzáférési jogosultságot kértek, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Az értesítési engedélyt kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Az értesítési engedélyt kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "A tárhelyhozzáférést kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A tárhelyhozzáférést kérő oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "A videórögzítési engedélyt kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A videórögzítési engedélyt kérelmező oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Csak azok az oldalak gyorsítótárazhatók, amelyek URL-sémája HTTP vagy HTTPS."
+    "message": "Csak azok az oldalak gyorsítótárazhatók, amelyek URL-sémája HTTP vagy HTTPS"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "Az oldalt service worker igényelte, amíg az előre-vissza gyorsítótárazása folyamatban volt."
+    "message": "Az oldalt egy service worker igényelte, amíg az előre-vissza gyorsítótárazása folyamatban volt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Service worker fájl kísérelte meg elküldeni az előre-vissza gyorsítótárban lévő oldal számára a következőt: MessageEvent."
+    "message": "Service worker fájl kísérelte meg elküldeni az előre-vissza gyorsítótárban lévő oldal számára a következőt: MessageEvent"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "A rendszer törölte a ServiceWorker regisztrációját, amíg az oldal az előre-vissza gyorsítótárban volt."
+    "message": "A rendszer törölte a ServiceWorker regisztrációját, amíg az oldal az előre-vissza gyorsítótárban volt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
     "message": "Az oldalt egy service worker fájl aktiválása miatt zárta ki a rendszer az előre-vissza gyorsítótárazásból."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "A Chrome újraindult, és kiürítette az előre-vissza gyorsítótárazott bejegyzéseket."
+    "message": "A Chrome újraindult, és kiürítette az előre-vissza gyorsítótárazott bejegyzéseket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "A SharedWorkert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A SharedWorkert használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "Az oldalt a rendszer kizárta a gyorsítótárból, mert üzenetet kapott egy SharedWorkertől"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "A SpeechRecognizer API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A SpeechRecognizer API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "A SpeechSynthesist használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A SpeechSynthesist használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
     "message": "Az oldalon lévő iframe navigációt indított, amely nem fejeződött be."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Azok az oldalak, amelyek alerőforrása tartalmazza a cache-control:no-cache paramétert, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek alerőforrása tartalmazza a cache-control:no-cache paramétert, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Azok az oldalak, amelyek alerőforrása tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba."
+    "message": "Azok az oldalak, amelyek alerőforrása tartalmazza a cache-control:no-store paramétert, nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "Az oldal túllépte a előre-vissza gyorsítótárban eltölthető időt, és lejárt."
+    "message": "Az oldal túllépte az előre-vissza gyorsítótárban eltölthető időt, és lejárt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "Az oldal időtúllépést okozott az előre-vissza gyorsítótárazásakor (valószínűleg a sokáig futó pagehide kezelők miatt)."
+    "message": "Az oldal időtúllépést okozott az előre-vissza gyorsítótárazásakor (valószínűleg a sokáig futó pagehide kezelők miatt)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
     "message": "Az oldal fő keretében kiürítéskezelő található."
@@ -3057,31 +3078,31 @@
     "message": "A böngésző megváltoztatta a felhasználói ügynök felülbírálási fejlécét."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Azok az oldalak, amelyek hozzáférést adtak a videó vagy a hang rögzítéséhez, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "Azok az oldalak, amelyek hozzáférést adtak videó vagy hang rögzítéséhez, jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "A WebDatabase-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebDatabase-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
     "message": "A WebHID-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "A WebLocksot használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebLocksot használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
     "message": "A WebNfc-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "A WebOTPService API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebOTPService API-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "A WebRTC-vel készített oldalak nem kerülhetnek az előre-vissza gyorsítótárba."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "Az előre-vissza gyorsítótárazás le van tiltva a WebRTC használata miatt."
+    "message": "Az előre-vissza gyorsítótárazás le van tiltva a WebRTC használata miatt"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "A WebShare-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebShare-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "A WebSocket használatával készített oldalak nem kerülhetnek az előre-vissza gyorsítótárba."
@@ -3090,13 +3111,13 @@
     "message": "Az előre-vissza gyorsítótárazás le van tiltva a WebSocket használata miatt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "A WebTransport API-t tartalmazó oldalak nem kerülhetnek előre-vissza gyorsítótárba."
+    "message": "A WebTransport API-t tartalmazó oldalak nem kerülhetnek az előre-vissza gyorsítótárba"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
     "message": "Az előre-vissza gyorsítótárazás le van tiltva a WebTransport használata miatt."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "A WebXR-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra."
+    "message": "A WebXR-t használó oldalak jelenleg nem alkalmasak az előre-vissza gyorsítótárazásra"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animált tartalmak esetében csökkentheti a processzorhasználatot az [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) segítségével, amikor a tartalom nem látható a képernyőn."

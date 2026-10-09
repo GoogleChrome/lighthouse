@@ -4888,8 +4888,8 @@
     },
     "ard-schema": {
       "id": "ard-schema",
-      "title": "`ai-catalog.json` schema is invalid",
-      "description": "Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
+      "title": "ARD manifest is invalid",
+      "description": "A valid Agentic Resource Discovery (ARD) manifest, served at `/.well-known/ard.json` or linked with `rel=\"ard\"`, lets AI agents and registries discover and verify your resources. [Learn more about the ARD specification](https://agenticresourcediscovery.org/spec/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -4914,7 +4914,12 @@
         "items": [
           {
             "element": "Root",
-            "issue": "JSON Schema Validation Failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'entries.0.identifier'",
+            "issue": "ArdManifest validation failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'entries.0.identifier'",
+            "severity": "Error"
+          },
+          {
+            "element": "Invalid Service",
+            "issue": "ArdEntry validation failed: must match pattern \"^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$\" at path 'identifier'",
             "severity": "Error"
           },
           {
@@ -4924,12 +4929,12 @@
           },
           {
             "element": "Invalid Service",
-            "issue": "Media type 'application/json' is not one of standard discovery types: application/ai-catalog+json,application/agent-card+json,application/a2a-agent-card+json,application/mcp-server-card+json,application/agent-skills+zip,application/agent-skills+gzip,text/markdown; profile=\"urn:air:agent-skills\",application/ai-registry,application/ai-registry+json.",
+            "issue": "No 'representativeQueries'. The semantic index is built from this term, so the entry will not be found by search — it is a valid catalog entry but not a discoverable ARD entry.",
             "severity": "Low"
           },
           {
-            "element": "Invalid Service",
-            "issue": "Missing 'representativeQueries'. 2 to 5 queries are recommended for vector index embedding.",
+            "element": "http://localhost:10200/.well-known/ai-catalog.json",
+            "issue": "Manifest was only found through a legacy location (`/.well-known/ai-catalog.json` or `rel=\"ai-catalog\"`). ARD consumers are not required to check these, so ARD consumers may not discover your resources. Serve the manifest at `/.well-known/ard.json` or link it with `rel=\"ard\"`.",
             "severity": "Low"
           }
         ]
@@ -4962,7 +4967,7 @@
         ],
         "items": [
           {
-            "reason": "The page has an unload handler in the main frame.",
+            "reason": "The page has an unload handler in the main frame",
             "failureType": "Actionable",
             "subItems": {
               "type": "subitems",
@@ -5369,7 +5374,7 @@
     "duplicated-javascript-insight": {
       "id": "duplicated-javascript-insight",
       "title": "Duplicated JavaScript",
-      "description": "Remove large, [duplicate JavaScript modules](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) from bundles to reduce unnecessary bytes consumed by network activity.",
+      "description": "Remove large, [duplicate JavaScript modules](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) from bundles to reduce unnecessary bytes consumed by network activity",
       "score": 1,
       "scoreDisplayMode": "metricSavings",
       "metricSavings": {
@@ -5469,7 +5474,7 @@
     "image-delivery-insight": {
       "id": "image-delivery-insight",
       "title": "Improve image delivery",
-      "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery)",
+      "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery).",
       "score": 0,
       "scoreDisplayMode": "metricSavings",
       "displayValue": "Est savings of 955 KiB",
@@ -5534,7 +5539,7 @@
               "type": "subitems",
               "items": [
                 {
-                  "reason": "Using video formats instead of GIFs can improve the download size of animated content.",
+                  "reason": "Using video formats instead of GIFs can improve the download size of animated content",
                   "wastedBytes": 682028
                 }
               ]
@@ -5641,7 +5646,7 @@
     "inp-breakdown-insight": {
       "id": "inp-breakdown-insight",
       "title": "INP breakdown",
-      "description": "Start investigating [how to improve INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) by looking at the longest subpart.",
+      "description": "Start investigating [how to improve INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) by looking at the longest subpart",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "guidanceLevel": 3
@@ -5739,7 +5744,7 @@
                 "value": false
               },
               "eagerlyLoaded": {
-                "label": "LCP resources should not use loading=lazy",
+                "label": "LCP resources shouldn’t use loading=lazy",
                 "value": true
               }
             }
@@ -5767,10 +5772,10 @@
     "legacy-javascript-insight": {
       "id": "legacy-javascript-insight",
       "title": "Legacy JavaScript",
-      "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://developer.chrome.com/docs/performance/insights/legacy-javascript)",
+      "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren’t necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://developer.chrome.com/docs/performance/insights/legacy-javascript).",
       "score": 0,
       "scoreDisplayMode": "metricSavings",
-      "displayValue": "Est savings of 40 KiB",
+      "displayValue": "Est savings of 39 KiB",
       "metricSavings": {
         "FCP": 0,
         "LCP": 300
@@ -5804,7 +5809,7 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "wastedBytes": 40984,
+            "wastedBytes": 40334,
             "subItems": {
               "type": "subitems",
               "items": [
@@ -5844,7 +5849,7 @@
         ],
         "debugData": {
           "type": "debugdata",
-          "wastedBytes": 40984
+          "wastedBytes": 40334
         }
       },
       "guidanceLevel": 2
@@ -5880,7 +5885,7 @@
     "network-dependency-tree-insight": {
       "id": "network-dependency-tree-insight",
       "title": "Network dependency tree",
-      "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
+      "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load",
       "score": 0,
       "scoreDisplayMode": "numeric",
       "metricSavings": {
@@ -5987,13 +5992,13 @@
             "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
             "value": {
               "type": "text",
-              "value": "no origins were preconnected"
+              "value": "No origins were preconnected"
             }
           },
           {
             "type": "list-section",
             "title": "Preconnect candidates",
-            "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+            "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4",
             "value": {
               "type": "text",
               "value": "No additional origins are good candidates for preconnecting"
@@ -6006,11 +6011,12 @@
     "render-blocking-insight": {
       "id": "render-blocking-insight",
       "title": "Render-blocking requests",
-      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
-      "score": 0.5,
+      "description": "Requests are blocking the page’s initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
+      "score": 0,
       "scoreDisplayMode": "metricSavings",
+      "displayValue": "Est savings of 860 ms",
       "metricSavings": {
-        "FCP": 0,
+        "FCP": 850,
         "LCP": 0
       },
       "details": {
@@ -6070,7 +6076,7 @@
     "third-parties-insight": {
       "id": "third-parties-insight",
       "title": "3rd parties",
-      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developer.chrome.com/docs/performance/insights/third-parties) to prioritize your page's content.",
+      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developer.chrome.com/docs/performance/insights/third-parties) to prioritize your page’s content.",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "details": {
@@ -6111,7 +6117,7 @@
     "viewport-insight": {
       "id": "viewport-insight",
       "title": "Optimize viewport for mobile",
-      "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimized for mobile.",
+      "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport isn’t optimized for mobile",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "metricSavings": {
@@ -8645,12 +8651,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:TraceEngineResult:parse:Samples:finalize",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:parse:AuctionWorklets:finalize",
         "duration": 100,
         "entryType": "measure"
       },
@@ -11256,7 +11256,7 @@
         },
         {
           "values": {
-            "wastedBytes": 40984
+            "wastedBytes": 40334
           },
           "path": "audits[legacy-javascript-insight].displayValue"
         }
@@ -11493,11 +11493,15 @@
       ],
       "core/audits/agentic/ard-schema.js | itemSeverityError": [
         "audits[ard-schema].details.items[0].severity",
-        "audits[ard-schema].details.items[1].severity"
+        "audits[ard-schema].details.items[1].severity",
+        "audits[ard-schema].details.items[2].severity"
       ],
       "core/lib/i18n/i18n.js | itemSeverityLow": [
-        "audits[ard-schema].details.items[2].severity",
-        "audits[ard-schema].details.items[3].severity"
+        "audits[ard-schema].details.items[3].severity",
+        "audits[ard-schema].details.items[4].severity"
+      ],
+      "core/audits/agentic/ard-schema.js | legacyDiscovery": [
+        "audits[ard-schema].details.items[4].issue"
       ],
       "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
@@ -11738,6 +11742,14 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": [
         "audits[render-blocking-insight].description"
+      ],
+      "core/lib/i18n/i18n.js | displayValueMsSavings": [
+        {
+          "values": {
+            "wastedMs": 863
+          },
+          "path": "audits[render-blocking-insight].displayValue"
+        }
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": [
         "audits[third-parties-insight].title"

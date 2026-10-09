@@ -76,7 +76,7 @@ Object {
     "type": "subitems",
   },
   "url": "https://www.googletagmanager.com/a.js",
-  "wastedBytes": 27910,
+  "wastedBytes": 28042,
 }
 `);
   });

@@ -30,7 +30,12 @@ const expectations = {
           items: [
             {
               element: 'Root',
-              issue: /JSON Schema Validation Failed/,
+              issue: /ArdManifest validation failed: .* at path 'entries.0.identifier'/,
+              severity: 'Error',
+            },
+            {
+              element: 'Invalid Service',
+              issue: /ArdEntry validation failed: .* at path 'identifier'/,
               severity: 'Error',
             },
             {
@@ -40,12 +45,17 @@ const expectations = {
             },
             {
               element: 'Invalid Service',
-              issue: /Media type 'application\/json' is not one of standard discovery types/,
+              issue: /No 'representativeQueries'/,
               severity: 'Low',
             },
             {
-              element: 'Invalid Service',
-              issue: /Missing ['`]representativeQueries['`]/,
+              element: 'http://localhost:10200/agentic/missing-ard.json',
+              issue: /Advertised ARD manifest location could not be loaded \(HTTP status 404\)/,
+              severity: 'Low',
+            },
+            {
+              element: 'http://localhost:10200/agentic/ai-catalog-invalid.json',
+              issue: /Manifest was only found through a legacy location/,
               severity: 'Low',
             },
           ],

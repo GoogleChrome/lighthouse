@@ -11,6 +11,8 @@ import {CdpBrowser} from 'puppeteer-core/lib/puppeteer/cdp/Browser.js';
 import {Connection as PptrConnection} from 'puppeteer-core/lib/puppeteer/cdp/Connection.js';
 
 import lighthouse, * as api from '../../core/index.js';
+import {navigationGather} from '../../core/gather/navigation-runner.js';
+import {Runner} from '../../core/runner.js';
 import {LighthouseError} from '../../core/lib/lh-error.js';
 import {processForProto} from '../../core/lib/proto-preprocessor.js';
 import * as assetSaver from '../../core/lib/asset-saver.js';
@@ -118,7 +120,18 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
 
   try {
     const page = await runLighthouseInLR.getPageFromConnection(connection);
-    const runnerResult = await lighthouse(url, flags, config, page);
+    let gatherResult;
+    try {
+      gatherResult = await navigationGather(page, url, {config, flags});
+    } finally {
+      // Close it before we begin auditing to decrease peak memory usage in Lightrider.
+      try {
+        await page.close();
+      } catch (err) {
+        log.warn('lightrider-entry', err.message);
+      }
+    }
+    const runnerResult = await Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
 
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 

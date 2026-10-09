@@ -19,6 +19,10 @@ describe('version check', () => {
     expect(compareVersions([100, 0, 0, 0], [100])).toBe(0);
     expect(compareVersions([100, 0, 0, 1], [100])).toBe(1);
     expect(compareVersions([99, 0, 0, 0], [100])).toBe(-1);
+
+    expect(compareVersions([100], [100, 0, 0, 0])).toBe(0);
+    expect(compareVersions([100], [100, 0, 0, 1])).toBe(-1);
+    expect(compareVersions([101], [100, 0, 0, 1])).toBe(1);
   });
 
   it('chromiumVersionCheck', async () => {
@@ -27,6 +31,7 @@ describe('version check', () => {
     expect(chromiumVersionCheck({version: '100', max: '100'})).toBe(true);
     expect(chromiumVersionCheck({version: '100', min: '101'})).toBe(false);
     expect(chromiumVersionCheck({version: '100', max: '99'})).toBe(false);
+    expect(chromiumVersionCheck({version: '100', min: '100.0.1.0'})).toBe(false);
 
     expect(chromiumVersionCheck({version: '100.0.2331.3'})).toBe(true);
     expect(chromiumVersionCheck({version: '100.0.2331.3', min: '100.0.2331.3'})).toBe(true);

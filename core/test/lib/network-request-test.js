@@ -427,4 +427,40 @@ describe('NetworkRequest', () => {
       })).toBe(true);
     });
   });
+
+  describe('renderBlocking', () => {
+    it('maps renderBlockingBehavior from Network.requestWillBeSent', () => {
+      const devtoolsLog = networkRecordsToDevtoolsLog([
+        {url: 'https://example.com/'},
+        {url: 'https://example.com/blocking.css', renderBlocking: 'blocking'},
+        {url: 'https://example.com/non-blocking.js', renderBlocking: 'non_blocking'},
+        {url: 'https://example.com/in-body.js', renderBlocking: 'in_body_parser_blocking'},
+        {url: 'https://example.com/preload.css', renderBlocking: 'potentially_blocking'},
+        {
+          url: 'https://example.com/dynamic.js',
+          renderBlocking: 'dynamically_injected_non_blocking',
+        },
+      ]);
+
+      const records = NetworkRecorder.recordsFromLogs(devtoolsLog);
+      expect(records.map(r => r.renderBlocking)).toStrictEqual([
+        undefined,
+        'blocking',
+        'non_blocking',
+        'in_body_parser_blocking',
+        'potentially_blocking',
+        'dynamically_injected_non_blocking',
+      ]);
+
+      const lanternRequests = records.map(r => NetworkRequest.asLanternNetworkRequest(r));
+      expect(lanternRequests.map(r => r.renderBlocking)).toStrictEqual([
+        undefined,
+        'blocking',
+        'non_blocking',
+        'in_body_parser_blocking',
+        'potentially_blocking',
+        'dynamically_injected_non_blocking',
+      ]);
+    });
+  });
 });

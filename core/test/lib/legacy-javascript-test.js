@@ -53,7 +53,7 @@ describe('detectLegacyJavaScript', () => {
     ]);
     expect(results).toHaveLength(1);
     expect(results[0].matches[0].name).toEqual('String.prototype.repeat');
-    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`27910`);
+    expect(results[0].estimatedByteSavings).toMatchInlineSnapshot(`28042`);
   });
 
   it('fails code with multiple legacy polyfills', () => {
@@ -184,7 +184,48 @@ describe('detectLegacyJavaScript', () => {
       {name: 'Object.entries'},
       {name: 'focus-visible'},
     ]);
-    expect(results[0].estimatedByteSavings).toBe(36369);
+    expect(results[0].estimatedByteSavings).toBe(36474);
+  });
+
+  it('correctly tracks line and column numbers with CRLF line endings', () => {
+    const script = {
+      code: [
+        '',
+        '  Object.assign = function() {};',
+        '  String.prototype.repeat = function() {};',
+        '    Array.prototype.forEach = function() {};',
+      ].join('\r\n'),
+    };
+    const results = getResults([script]);
+
+    expect(results).toHaveLength(1);
+    expect(results[0].matches).toEqual([
+      {name: 'Array.prototype.forEach', line: 3, column: 4},
+      {name: 'Object.assign', line: 1, column: 2},
+      {name: 'String.prototype.repeat', line: 2, column: 2},
+    ]);
+  });
+
+  it('correctly tracks line and column numbers after multi-line pattern matches', () => {
+    const script = {
+      code: [
+        'e({target:"Array",',
+        '  proto:!0',
+        '},{fill:1});  Object.assign = function() {};',
+        'String.prototype.repeat =',
+        '  function() {};',
+        '  Array.prototype.forEach = function() {};',
+      ].join('\n'),
+    };
+    const results = getResults([script]);
+
+    expect(results).toHaveLength(1);
+    expect(results[0].matches).toEqual([
+      {name: 'Array.prototype.fill', line: 0, column: 2},
+      {name: 'Array.prototype.forEach', line: 5, column: 2},
+      {name: 'Object.assign', line: 2, column: 14},
+      {name: 'String.prototype.repeat', line: 3, column: 0},
+    ]);
   });
 });
 
@@ -201,15 +242,44 @@ describe('LegacyJavaScript signals', () => {
           readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
         const failingVariants = [];
         for (const expectedVariant of expectedMissingSignals) {
-          const variant = signalSummary.variants.find(v => v.dir === expectedVariant);
-          if (variant.signals.length) {
-            failingVariants.push(variant);
+          for (const variant of signalSummary.variants.filter(v => v.dir === expectedVariant)) {
+            if (variant.signals.length) {
+              failingVariants.push(variant);
+            }
           }
         }
 
         if (failingVariants.length) {
           throw new Error([
             'Expected the following variants to have no signals:',
+            '',
+            ...failingVariants.map(v => `${v.name} ${v.bundle} (got: ${v.signals})`),
+          ].join('\n'));
+        }
+      });
+    }
+  });
+
+  describe('expect non-baseline preset-env variants to detect polyfill and plugin signals', () => {
+    for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
+      it(summaryFilename, () => {
+        const signalSummary = readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
+        const variants = signalSummary.variants
+          .filter(v => v.dir === 'core-js-3-preset-env/baseline-false-bugfixes-false');
+        expect(variants.length).toBeGreaterThan(0);
+
+        const failingVariants = [];
+        for (const variant of variants) {
+          const hasPolyfill = variant.signals.some(s => !s.startsWith('@'));
+          const hasTransform = variant.signals.some(s => s.startsWith('@'));
+          if (!hasPolyfill || !hasTransform) {
+            failingVariants.push(variant);
+          }
+        }
+
+        if (failingVariants.length) {
+          throw new Error([
+            'Expected the following variants to detect both polyfills and transforms:',
             '',
             ...failingVariants.map(v => `${v.name} ${v.bundle} (got: ${v.signals})`),
           ].join('\n'));
