@@ -143,6 +143,19 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
+/**
+ * @param {string} text
+ * @return {boolean}
+ */
+function isFullUrl(text) {
+  try {
+    const url = new URL(text);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 class LinkText extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -177,8 +190,13 @@ class LinkText extends Audit {
           return false;
         }
 
-        const searchTerm = link.text.trim().toLowerCase();
-        if (searchTerm) {
+        const trimmedText = link.text.trim();
+        if (trimmedText) {
+          if (isFullUrl(trimmedText)) {
+            return true;
+          }
+
+          const searchTerm = trimmedText.toLowerCase();
           // Use language if detected, otherwise look at everything.
           if (link.textLang) {
             const lang = link.textLang.split('-')[0];
