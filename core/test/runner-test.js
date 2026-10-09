@@ -833,6 +833,32 @@ describe('Runner', () => {
     });
   });
 
+  it('includes runtimeWarnings from artifacts in output', async () => {
+    const sampleWarnings = [
+      {code: 'TEST_WARNING_A', message: 'Test warning message A'},
+      {code: 'TEST_WARNING_B', message: 'Test warning message B'},
+    ];
+    mockGatherImpl.mockImplementationOnce(async (url, opts) => {
+      const baseArtifacts =
+        await getBaseArtifacts(opts.resolvedConfig, driverMock, {gatherMode: 'navigation'});
+      baseArtifacts.URL = {
+        requestedUrl: url,
+        mainDocumentUrl: url,
+        finalDisplayedUrl: url,
+      };
+      baseArtifacts.LighthouseRuntimeWarnings = sampleWarnings;
+      return finalizeArtifacts(baseArtifacts, {});
+    });
+
+    const {resolvedConfig} = await initializeConfig('navigation', {
+      audits: [],
+    });
+
+    const results = await runGatherAndAudit(createGatherFn('https://example.com'),
+        {resolvedConfig, driverMock, computedCache: new Map()});
+    assert.deepStrictEqual(results.lhr.runtimeWarnings, sampleWarnings);
+  });
+
   it('includes any LighthouseRunWarnings from audits in LHR', async () => {
     const warningString = 'Really important audit warning!';
 
