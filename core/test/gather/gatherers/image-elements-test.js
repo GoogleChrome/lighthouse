@@ -282,6 +282,27 @@ describe('ImageElements', () => {
       expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(2);
     });
 
+    it('skips source rules when width and height attributes are explicitly set', async () => {
+      const elements = [
+        mockElement({
+          isInShadowDOM: false,
+          isCss: false,
+          attributeWidth: '200',
+          attributeHeight: '100',
+        }),
+        mockElement({
+          isInShadowDOM: false,
+          isCss: false,
+          attributeWidth: '200',
+          attributeHeight: '',
+        }),
+      ];
+
+      await gatherer.collectExtraDetails(driver, elements);
+
+      expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(1);
+    });
+
     it('fetch size information for image with picture', async () => {
       const elements = [
         mockElement({src: 'https://example.com/a.png', isPicture: false, isCss: true, srcset: 'src'}),
@@ -326,5 +347,20 @@ describe('ImageElements', () => {
         },
       }),
     ]);
+  });
+
+  it('skips DOM and CSS domain enable when no images need source rules', async () => {
+    const gatherer = new ImageElements();
+    const mockContext = createMockContext();
+    const sizedElement = mockElement({attributeWidth: '200', attributeHeight: '200'});
+    mockContext.driver._executionContext.evaluate.mockReturnValue([sizedElement]);
+
+    const artifact = await gatherer.getArtifact({
+      ...mockContext.asContext(),
+      dependencies: {DevtoolsLog: devtoolsLog},
+    });
+
+    expect(mockContext.driver.defaultSession.sendCommand).not.toHaveBeenCalled();
+    expect(artifact).toEqual([sizedElement]);
   });
 });
