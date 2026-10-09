@@ -70,24 +70,10 @@ jobs:
 
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
-    - run: yarn dogfood-lhci
     - run: yarn generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code
-
-    # buildtracker needs history and a common merge commit.
-    - name: Fixup git history (for buildtracker)
-      run: bash $GITHUB_WORKSPACE/.github/scripts/git-get-shared-history.sh
-      env:
-        # https://buildtracker.dev/docs/guides/github-actions#configuration
-        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
-    - name: Store in buildtracker
-      # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
-      run: yarn bt-cli upload-build || true
-      env:
-        # https://buildtracker.dev/docs/guides/github-actions#configuration
-        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
