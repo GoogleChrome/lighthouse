@@ -17,7 +17,7 @@ fi
 
 printf "Determined the following files have been touched:\n\n$CHANGED_FILES\n\n"
 
-if ! echo $CHANGED_FILES | grep -E 'dependency-graph|metrics|lantern|predictive-perf|network-recorder|network-request' > /dev/null; then
+if ! echo $CHANGED_FILES | grep -E 'dependency-graph|metrics|lantern|predictive-perf|network-recorder|network-request|trace-engine|package\.json' > /dev/null; then
   echo "No lantern files affected, skipping lantern checks."
   exit 0
 fi
