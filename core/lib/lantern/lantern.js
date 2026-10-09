@@ -4,5 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export * from '@paulirish/trace_engine/models/trace/lantern/lantern.js';
-export {LanternComputationData as TraceEngineComputationData} from '@paulirish/trace_engine';
+import * as TraceEngine from '@paulirish/trace_engine';
+
+export const {Core, Graph, Metrics, Simulation, Types} = TraceEngine.Lantern;
+export const TraceEngineComputationData = TraceEngine.LanternComputationData;
+export default TraceEngine.Lantern;
