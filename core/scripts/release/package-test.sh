@@ -24,7 +24,9 @@ npm explore lighthouse -- npm run fast -- http://example.com --chrome-flags=--he
 
 # Packaged smokehouse/lighthouse using root's static-server and test fixtures.
 # This is because we don't have access to any of the dev dependencies.
-CI="" yarn smokehouse --tests-path="$LH_ROOT/cli/test/smokehouse/core-tests.js" --retries=2 $*
+# Run a representative subset by default instead of the full suite (already covered in smoke.yml).
+SMOKE_ARGS=${*:-a11y dbw legacy-javascript oopif lantern-fetch metrics-tricky-tti seo-passing}
+CI="" yarn smokehouse --tests-path="$LH_ROOT/cli/test/smokehouse/core-tests.js" --retries=2 $SMOKE_ARGS
 
 cd "$LH_ROOT"
 rm -rf /tmp/lighthouse-local-test
