@@ -45,6 +45,8 @@ jobs:
       with:
         node-version: '22.19'
         cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     # Since Ubuntu 23, dev builds of Chromium need this.
     # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
@@ -102,6 +104,8 @@ jobs:
       with:
         node-version: '22.19'
         cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - name: Define ToT chrome path
       run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\.tmp\chrome-tot\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -153,6 +157,8 @@ jobs:
       with:
         node-version: '22.19'
         cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -204,6 +210,8 @@ jobs:
       with:
         node-version: '22.19'
         cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report

@@ -38,6 +38,8 @@ jobs:
       with:
         node-version: '22.19'
         cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn type-check
