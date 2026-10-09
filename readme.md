@@ -371,6 +371,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[LightKeeper](https://www.lightkeeper.cloud)** - Lighthouse testing service with free HAR Matrix view and multi-region testing (3 free regions, 25+ paid), supporting authenticated pages and cross-region performance comparison
 
+* **[WebSpeed](https://webspeed.pro)** - Runs Lighthouse (through PageSpeed Insights) on a page and on a copy accelerated by its reverse proxy, and reports both scores and metrics side by side. The before/after check is free.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
