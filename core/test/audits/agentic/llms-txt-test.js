@@ -118,21 +118,18 @@ describe('Agentic: llms.txt audit', () => {
     });
   });
 
-  it('fails when request for /llms.txt is a redirect (3xx)', () => {
-    // 3xx responses have no body, so content is null. The audit throws because
-    // it has no redirect branch — this documents that known behaviour.
+  it('fails when request for /llms.txt returns a non-error status with null content', () => {
     const testData = [
-      {status: 301, content: null},
-      {status: 302, content: null},
+      {status: 300, content: null},
+      {status: 304, content: null},
     ];
 
     testData.forEach(LlmsTxt => {
       const artifacts = {LlmsTxt};
 
-      assert.throws(
-        () => LlmsTxtAudit.audit(artifacts),
-        /Status \d+ was valid, but content was null/
-      );
+      const auditResult = LlmsTxtAudit.audit(artifacts);
+      assert.equal(auditResult.score, 0);
+      expect(auditResult.explanation).toBeDisplayString('Fetch of llms.txt failed');
     });
   });
 

@@ -228,16 +228,11 @@ class RobotsTxt extends Audit {
       };
     }
 
-    if (!status) {
+    if (!status || content === null) {
       return {
         score: 0,
         explanation: str_(UIStrings.explanation),
       };
-    }
-
-    // If status is good, content must be not null.
-    if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
     }
 
     const validationErrors = validateRobots(content);

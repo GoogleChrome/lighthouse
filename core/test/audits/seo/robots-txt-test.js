@@ -10,16 +10,30 @@ import RobotsTxtAudit from '../../../audits/seo/robots-txt.js';
 
 describe('SEO: robots.txt audit', () => {
   it('fails and reports error when no robots.txt was provided', () => {
-    const artifacts = {
-      RobotsTxt: {
+    const testData = [
+      {
         status: null,
         content: null,
       },
-    };
+      {
+        status: 300,
+        content: null,
+      },
+      {
+        status: 304,
+        content: null,
+      },
+    ];
 
-    const auditResult = RobotsTxtAudit.audit(artifacts);
-    assert.equal(auditResult.score, 0);
-    assert.ok(auditResult.explanation);
+    testData.forEach(RobotsTxt => {
+      const artifacts = {
+        RobotsTxt,
+      };
+
+      const auditResult = RobotsTxtAudit.audit(artifacts);
+      assert.equal(auditResult.score, 0);
+      expect(auditResult.explanation).toBeDisplayString('Fetch of robots.txt failed');
+    });
   });
 
   it('fails when request for /robots.txt returns a HTTP500+ or 429 error', () => {
