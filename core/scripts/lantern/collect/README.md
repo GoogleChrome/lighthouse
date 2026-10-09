@@ -41,7 +41,7 @@ DEBUG=1 WPT_KEY=... node --max-old-space-size=4096 collect.js
 
 Output will be in `dist/collect-lantern-traces`, and zipped at `dist/collect-lantern-traces.zip`.
 
-Update the zip on at http://go/lhsth  and any references in `download-traces.sh`.
+Update the zip on http://go/lhsth, upload the golden zip to the `lantern-test-data` GitHub release (`gh release upload lantern-test-data golden-lantern-traces-$VERSION.zip`), and update `VERSION` in `download-traces.sh`.
 
 
 ## Run in GCP
