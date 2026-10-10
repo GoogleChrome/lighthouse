@@ -30,8 +30,22 @@ class PageDependencyGraph {
       const parsedTrace = traceEngineResult.data;
       const requests =
         Lantern.TraceEngineComputationData.createNetworkRequests(trace, parsedTrace);
+      let url = URL;
+      if (
+        url?.requestedUrl &&
+        !Lantern.Core.NetworkAnalyzer.findResourceForUrl(requests, url.requestedUrl) &&
+        requests.length
+      ) {
+        const originUrl = new globalThis.URL(url.requestedUrl).origin + '/';
+        const rootRequest =
+          Lantern.Core.NetworkAnalyzer.findResourceForUrl(requests, originUrl) || requests[0];
+        url = {
+          ...url,
+          requestedUrl: rootRequest.url,
+        };
+      }
       const graph =
-        Lantern.TraceEngineComputationData.createGraph(requests, trace, parsedTrace, URL);
+        Lantern.TraceEngineComputationData.createGraph(requests, trace, parsedTrace, url);
       // @ts-expect-error for now, ignore that this is a SyntheticNetworkEvent instead of LH's NetworkEvent.
       return graph;
     }
