@@ -59,7 +59,7 @@ class LCPImageRecord {
     }).filter(record => {
       // Don't select if also loaded by some other means (xhr, etc). `resourceType`
       // isn't set on redirect _sources_, so have to check after following redirects.
-      return record.resourceType === 'Image';
+      return record.resourceType === 'Image' || record.resourceType === 'Media';
     });
 
     // If there are still multiple candidates, at this point it appears the page

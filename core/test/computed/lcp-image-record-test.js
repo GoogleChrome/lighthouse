@@ -84,6 +84,16 @@ describe('LCPImageRecord', () => {
     expect(result.requestId).toEqual('4');
   });
 
+  it('returns the LCP network record when resourceType is Media (e.g. video LCP)', async () => {
+    const networkRecords = mockNetworkRecords();
+    networkRecords[3].resourceType = 'Media';
+    const data = mockData(networkRecords);
+
+    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+
+    expect(result.requestId).toEqual('4');
+  });
+
   it('returns undefined if the LCP was not an image', async () => {
     const networkRecords = mockNetworkRecords();
     const data = mockData(networkRecords);
