@@ -9,7 +9,7 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {LargestContentfulPaint} from './largest-contentful-paint.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {TimeToFirstByte} from './time-to-first-byte.js';
-import {LCPImageRecord} from '../lcp-image-record.js';
+import {LCPNetworkRecord} from '../lcp-network-record.js';
 import {NavigationInsights} from '../navigation-insights.js';
 
 /**
@@ -32,7 +32,7 @@ class LCPBreakdown {
 
       const {timing: ttfb} = await TimeToFirstByte.request(data, context);
 
-      const lcpRecord = await LCPImageRecord.request(data, context);
+      const lcpRecord = await LCPNetworkRecord.request(data, context);
       if (!lcpRecord) {
         return {ttfb};
       }

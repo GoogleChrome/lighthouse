@@ -10,7 +10,7 @@ import {NetworkRecords} from '../../computed/network-records.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
 import {LanternLargestContentfulPaint as LanternLCP} from '../../computed/metrics/lantern-largest-contentful-paint.js';
 import {LanternFirstContentfulPaint as LanternFCP} from '../../computed/metrics/lantern-first-contentful-paint.js';
-import {LCPImageRecord} from '../../computed/lcp-image-record.js';
+import {LCPNetworkRecord} from '../../computed/lcp-network-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
@@ -190,7 +190,7 @@ class ByteEfficiencyAudit extends Audit {
 
       // The LCP graph can underestimate the LCP savings if there is potential savings on the LCP record itself.
       let lcpRecordSavings = 0;
-      const lcpRecord = await LCPImageRecord.request(metricComputationInput, context);
+      const lcpRecord = await LCPNetworkRecord.request(metricComputationInput, context);
       if (lcpRecord) {
         const lcpResult = results.find(result => result.url === lcpRecord.url);
         if (lcpResult) {
