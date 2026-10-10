@@ -163,14 +163,34 @@ class TBTImpactTasks {
     for (const [node, timing] of tbtNodeTimings) {
       if (node.type !== 'cpu') continue;
 
+      let durationToUse = timing.duration;
+      // @ts-expect-error - childEvents is not typed
+      const isYieldBounded = node.childEvents?.some(e => {
+        return e.name === 'ScheduleYieldContinuation' ||
+               e.name === 'RunYieldContinuation' ||
+               e.name === 'SchedulePostTaskCallback' ||
+               e.name === 'RunPostTaskCallback';
+      });
+
+      if (isYieldBounded) {
+        durationToUse = node.duration / 1000;
+      }
+
       const event = {
         start: timing.startTime,
         end: timing.endTime,
         duration: timing.duration,
       };
 
-      const tbtImpact = calculateTbtImpactForEvent(event, startTimeMs, endTimeMs);
-      const blockingTime = calculateTbtImpactForEvent(event, -Infinity, Infinity);
+      let tbtImpact = 0;
+      let blockingTime = 0;
+      if (durationToUse >= 50) {
+        tbtImpact = calculateTbtImpactForEvent(event, startTimeMs, endTimeMs);
+        blockingTime = calculateTbtImpactForEvent(event, -Infinity, Infinity);
+      } else {
+        // Prevent children from calculating a non-zero impact.
+        event.duration = 0;
+      }
 
       const task = traceEventToTask.get(node.event);
       if (!task) continue;
