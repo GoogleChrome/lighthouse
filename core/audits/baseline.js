@@ -55,8 +55,10 @@ class Baseline extends Audit {
    * - `high`: `baseline === 'high'` (Widely Available — 30 months past `baseline_low_date`; note that
    *   `featureData.high[id]` still stores the feature's `baseline_low_date`).
    *
+   * Widely Available rows always show `baseline_low_date`, including rows promoted at runtime.
    * If a feature in `featureData.low` has reached `baseline_low_date + 30 months <= currentDate` at runtime,
-   * we dynamically promote it from `low` (Newly Available) to `high` (Widely Available).
+   * we dynamically promote it from `low` (Newly Available) to `high` (Widely Available); promotion
+   * only changes the tier.
    *
    * @param {string} featureId
    * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
@@ -76,11 +78,10 @@ class Baseline extends Audit {
       const lowData = /** @type {Record<string, string>} */ (featureData.low);
       const widelyAvailableDate = new Date(lowData[featureId]);
       widelyAvailableDate.setUTCMonth(widelyAvailableDate.getUTCMonth() + 30);
-      const widelyAvailableDateStr = widelyAvailableDate.toISOString().slice(0, 10);
 
       if (widelyAvailableDate <= currentDate) {
         return {
-          displayStatus: `Widely Available (${widelyAvailableDateStr})`,
+          displayStatus: `Widely Available (${lowData[featureId]})`,
           baselineTier: 'high',
         };
       } else {
