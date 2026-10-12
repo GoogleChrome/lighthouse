@@ -17,6 +17,8 @@ export interface Flags extends SharedFlagsSettings {
   port?: number;
   /** The hostname to use for the debugging protocol, if manually connecting. */
   hostname?: string;
+  /** Use the page already open in the connected browser, if it is the only one, instead of opening a new page. */
+  reusePage?: boolean;
   /** The level of logging to enable. */
   logLevel?: 'silent'|'error'|'warn'|'info'|'verbose';
   /** The path to the config JSON. */
