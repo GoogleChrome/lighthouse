@@ -15,7 +15,7 @@ import readline from 'readline';
 import {promisify} from 'util';
 import stream from 'stream';
 
-import archiver from 'archiver';
+import {ZipArchive} from 'archiver';
 
 import {LH_ROOT} from '../../../../shared/root.js';
 
@@ -76,7 +76,7 @@ class ProgressLogger {
  * @param {string} archiveDir
  */
 function archive(archiveDir) {
-  const archive = archiver('zip', {
+  const archive = new ZipArchive({
     zlib: {level: 9},
   });
 

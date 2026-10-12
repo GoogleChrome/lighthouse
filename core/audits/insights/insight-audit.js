@@ -29,7 +29,7 @@ async function getInsightSet(artifacts, context) {
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const insights = navigationId ?
     [...traceEngineResult.insights.values()]
-      .find(insightSet => insightSet.navigation?.args.data?.navigationId) :
+      .find(insightSet => insightSet.navigation?.args.data?.navigationId === navigationId) :
     traceEngineResult.insights.get(NO_NAVIGATION);
 
   return {insights, data: traceEngineResult.data};
@@ -225,5 +225,6 @@ function makeNodeItemForNodeId(traceElements, nodeId) {
 
 export {
   adaptInsightToAuditProduct,
+  getInsightSet,
   makeNodeItemForNodeId,
 };

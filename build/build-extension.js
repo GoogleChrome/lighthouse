@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 
-import archiver from 'archiver';
+import {ZipArchive} from 'archiver';
 import cpy from 'cpy';
 import esbuild from 'esbuild';
 
@@ -70,7 +70,7 @@ async function packageExtension() {
   await fs.promises.mkdir(packagePath, {recursive: true});
 
   return new Promise((resolve, reject) => {
-    const archive = archiver('zip', {
+    const archive = new ZipArchive({
       zlib: {level: 9},
     });
 

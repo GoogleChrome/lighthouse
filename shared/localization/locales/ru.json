@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "URL из SVGUseElement больше не поддерживаются и в дальнейшем будут удалены."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "В методах navigator.credentials.get() или create() был запрошен неизвестный протокол Digital Credentials. В будущих версиях нераспознанные протоколы будут блокироваться."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "Метод document.createEvent('KeyboardEvents') больше не поддерживается и будет удален. Вместо него используйте new KeyboardEvent()."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Пример кода, необходимого для функции прекращения поддержки, о которой сообщил процесс браузера."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "Поддержка Fenced Frame API прекращена. Планируется его удаление."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "Protected Audience API больше не поддерживается и будет удален."
@@ -2260,6 +2266,12 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "BluetoothRemoteGATTCharacteristic.writeValue() больше не поддерживается. Используйте writeValueWithResponse() или writeValueWithoutResponse()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "Свойство WebTransportDatagramDuplexStream.incomingHighWaterMark переименовано в incomingMaxBufferedDatagrams. Свойство incomingHighWaterMark будет удалено в будущей версии Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "Свойство WebTransportDatagramDuplexStream.outgoingHighWaterMark переименовано в outgoingMaxBufferedDatagrams. Свойство outgoingHighWaterMark будет удалено в будущей версии Chrome."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "В объекте JSON ответа XMLHttpRequest не поддерживает UTF-16."
@@ -2426,6 +2438,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
     "message": "Чтобы сократить расход трафика, удалите из пакетов большие [повторяющиеся модули JavaScript](https://developer.chrome.com/docs/performance/insights/duplicated-javascript)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "Дублирующийся код JavaScript не найден."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "Дублирующийся код JavaScript"
   },
@@ -2435,6 +2450,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Шрифт"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "Шрифты с неоптимальным значением font-display не найдены."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Используемые шрифты"
   },
@@ -2442,7 +2460,7 @@
     "message": "Потери времени"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
-    "message": "(анонимная)"
+    "message": "(анонимно)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "Принудительная компоновка происходит, когда JavaScript запрашивает геометрические свойства (например, offsetWidth) после того, как стили становятся недействительными из-за изменения состояния DOM. Это может привести к снижению производительности. Подробнее [о принудительной компоновке](https://developer.chrome.com/docs/performance/insights/forced-reflow) и возможных способах ее устранения…"
@@ -2487,7 +2505,7 @@
     "message": "Обзор INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "Если изображения будут быстрее скачиваться, то время загрузки страницы и значение LCP могут стать меньше. Узнайте, [как оптимизировать размер изображений](https://developer.chrome.com/docs/performance/insights/image-delivery)."
+    "message": "Если изображения будут скачиваться быстрее, время загрузки страницы может сократиться, а показатель LCP — улучшиться. Узнайте, [как оптимизировать размер изображений](https://developer.chrome.com/docs/performance/insights/image-delivery)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (около {PH2})."
@@ -2505,10 +2523,10 @@
     "message": "Улучшите загрузку изображений"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Если увеличить коэффициент сжатия изображения, размер файла будет меньше."
+    "message": "Если увеличить коэффициент сжатия изображения, размер файла уменьшится."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Если использовать современный графический формат (WebP или AVIF) или увеличить коэффициент сжатия изображения, размер файла будет меньше."
+    "message": "Если использовать современный графический формат (WebP, AVIF) или увеличить коэффициент сжатия изображения, размер файла может стать меньше."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "Размер изображения ({PH1}) превышает размер контейнера ({PH2}). Используйте адаптивный стиль, чтобы размер графического файла был меньше."
@@ -2585,6 +2603,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
     "message": "Полифилы и преобразования позволяют работать с новыми возможностями JavaScript в более старых браузерах. Однако для современных браузеров большинство из них не требуется. Если поддержка более старых браузеров не требуется, возможно стоит изменить процесс сборки JavaScript, чтобы не транспилировать функции [Baseline](https://web.dev/articles/baseline-and-polyfills). Узнайте, [почему большинство сайтов могут использовать код ES6+ без транспилирования](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "Устаревший код JavaScript не найден."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Устаревший код JavaScript"
   },
@@ -2592,7 +2613,7 @@
     "message": "HTTP/2 и HTTP/3 имеют много преимуществ перед HTTP/1.1, например мультиплексирование. Подробнее [о современных версиях HTTP](https://developer.chrome.com/docs/performance/insights/modern-http)…"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Нет запросов с использованием HTTP/1.1, или текущее использование HTTP/1.1 не представляет значительной возможности для оптимизации. Запросы HTTP/1.1 помечаются, только если с одного источника загружаются шесть или более статических ресурсов, и они не обслуживаются из локальной среды разработки или стороннего источника."
+    "message": "Нет запросов с использованием HTTP/1.1, или текущее использование HTTP/1.1 не представляет значительной возможности для оптимизации. Запросы HTTP/1.1 помечаются, только если с одного источника загружаются шесть или более статических ассетов, и они не обслуживаются из локальной среды разработки или стороннего источника."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Протокол"
@@ -2622,10 +2643,10 @@
     "message": "Неиспользуемое предварительное подключение. Убедитесь, что атрибут crossorigin настроен правильно."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Старайтесь избегать цепочек критических запросов.](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов."
+    "message": "Чтобы ускорить загрузку страницы, [старайтесь избегать цепочек критических запросов](https://developer.chrome.com/docs/performance/insights/network-dependency-tree). Для этого сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Добавьте к самым значимым источникам подсказки для [предварительного подключения](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/), но не более четырех."
+    "message": "Добавьте подсказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) к наиболее значимым источникам. Старайтесь использовать не более четырех подсказок."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Варианты предварительного подключения"
@@ -2640,7 +2661,7 @@
     "message": "Отсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "нет предварительно подключенных источников"
+    "message": "Нет предварительно подключенных источников"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "Подсказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница."
@@ -2661,7 +2682,7 @@
     "message": "Избегайте цепочек критических запросов. Чтобы ускорить загрузку страниц, рекомендуется сократить количество запросов, уменьшить размер скачиваемых ресурсов или отложить скачивание ненужных ресурсов."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Запросы блокируют обработку при первоначальной загрузке страницы. Это может привести к увеличению значения LCP. [Отсрочка или встраивание](https://developer.chrome.com/docs/performance/insights/render-blocking) могут избавить от негативного воздействия этих сетевых запросов."
+    "message": "Запросы блокируют начальную отрисовку страницы, что может задержать LCP. [Отсрочка или встраивание](https://developer.chrome.com/docs/performance/insights/render-blocking) могут избавить от негативного воздействия этих сетевых запросов."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Продолжительность"
@@ -2733,7 +2754,7 @@
     "message": "Оптимизация области просмотра для мобильных устройств"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "В возвратный кеш можно добавить только страницы, загруженные с помощью GET-запроса."
+    "message": "В возвратный кеш можно добавить только страницы, загруженные с помощью метода GET."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
     "message": "Можно кешировать только страницы с кодом статуса 2XX."
@@ -2751,13 +2772,13 @@
     "message": "Возвратный кеш отключен с помощью командной строки."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Возвратный кеш отключен, так как недостаточно памяти."
+    "message": "Возвратный кеш отключен из-за недостаточного объема памяти."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Возвратный кеш не поддерживается представителем."
+    "message": "Возвратный кеш не поддерживается делегатом."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Возвратный кеш отключен для системы предварительного отображения."
+    "message": "Возвратный кеш отключен для системы предварительной отрисовки."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
     "message": "Страницу нельзя кешировать, так как у нее есть экземпляр BroadcastChannel с зарегистрированными прослушивателями."
@@ -2766,7 +2787,7 @@
     "message": "Страницы с заголовком cache-control:no-store нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "Кэш был намеренно очищен."
+    "message": "Кеш был намеренно очищен."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
     "message": "Страница удалена из кеша, чтобы освободить место для другой страницы."
@@ -2781,13 +2802,13 @@
     "message": "Страницы, которые используют FileChooser API, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "Страницы, которые используют File System Access API, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют File System Access API, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Страницы, которые используют диспетчер медиаустройств, нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых используется диспетчер медиаустройств, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Медиапроигрыватель воспроизводил контент во время перехода на другую страницу."
+    "message": "При переходе на другую страницу медиапроигрыватель воспроизводил контент."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
     "message": "Страницы, которые используют MediaSession API и установили состояние воспроизведения, нельзя добавить в возвратный кеш."
@@ -2817,7 +2838,7 @@
     "message": "Возвратный кеш отключен, так как на странице, использующей Cache-Control: no-store, отключены файлы cookie."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "Страницы, которые используют Dedicated Worker или Worklet, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют выделенных воркеров или ворклеты, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
     "message": "Переход со страницы выполнен до завершения загрузки документа."
@@ -2826,7 +2847,7 @@
     "message": "При переходе на другую страницу был показан баннер приложения."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "При переходе на другую страницу работал Менеджер паролей Chrome."
+    "message": "При переходе на другую страницу был активен Менеджер паролей Chrome."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
     "message": "При переходе на другую страницу выполнялся процесс DOM Distiller."
@@ -2841,7 +2862,7 @@
     "message": "Расширения должны закрывать долговременные подключения перед записью возвратного кеша."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Расширения с долговременными подключениями попытались отправлять сообщения в фреймы в возвратном кеше."
+    "message": "Расширения с долговременными подключениями попытались отправлять сообщения во фреймы в возвратном кеше."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
     "message": "Возвратный кеш отключен из-за работы расширений."
@@ -2856,7 +2877,7 @@
     "message": "При переходе на другую страницу была показана строка с сообщением о нехватке памяти."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "При переходе на другую страницу обнаружены запросы разрешений."
+    "message": "При переходе на другую страницу запрашивались разрешения."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "При переходе на другую страницу работал блокировщик всплывающих окон."
@@ -2874,7 +2895,7 @@
     "message": "Возвратный кеш отключен из-за ошибки документа."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Страницы, на которых используется элемент FencedFrames, нельзя сохранить в возвратный кеш."
+    "message": "Страницы, на которых используется элемент FencedFrames, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
     "message": "Страница удалена из кеша, чтобы освободить место для другой страницы."
@@ -2883,10 +2904,10 @@
     "message": "Страницы, которые предоставили доступ к трансляции мультимедиа, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Страницы с определенными типами встроенного контента (например, PDF-файлами) пока не поддерживают возвратный кеш."
+    "message": "Страницы с определенными типами встроенного контента (например, PDF-файлами) в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Страницы, которые используют IdleManager, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют IdleManager, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
     "message": "Страницы с открытым подключением IndexedDB в настоящее время нельзя добавить в возвратный кеш."
@@ -2895,13 +2916,13 @@
     "message": "Возвратный кеш отключен из-за события IndexedDB."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "Использовались недопустимые API."
+    "message": "Использованы недопустимые API."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Страницы, в которые с помощью расширений внедрен JavaScript, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, в которые с помощью расширений внедряется код JavaScript, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "Страницы, в которые с помощью расширений внедрена StyleSheet, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, в которые с помощью расширений внедряется StyleSheet, сейчас нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
     "message": "Внутренняя ошибка."
@@ -2913,7 +2934,7 @@
     "message": "Возвратный кеш отключен из-за запроса keepalive."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "Страницы, которые используют блокировку клавиатуры, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют блокировку клавиатуры, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
     "message": "Переход со страницы выполнен до завершения ее загрузки."
@@ -2925,13 +2946,13 @@
     "message": "Страницы, в основном ресурсе которых есть заголовок cache-control:no-store, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "Страницу не удалось восстановить из возвратного кеша до отмены перехода."
+    "message": "Переход был отменен до того, как страницу удалось восстановить из возвратного кеша."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "Страница удалена из кеша, так как через активное сетевое подключение было получено слишком много данных. Chrome ограничивает объем данных, передаваемых на кешируемую страницу."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Страницы, которые используют событие inflight fetch() или интерфейс XHR, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы с незавершенным запросом fetch() или XHR в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
     "message": "Страница удалена из возвратного кеша, так как активный сетевой запрос был выполнен с переадресацией."
@@ -2943,40 +2964,40 @@
     "message": "Страницы без действительного заголовка ответа нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "Переход выполнен в фрейме, отличном от основного."
+    "message": "Переход выполнен во фрейме, отличном от основного."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
     "message": "Страницу, на которой выполняются транзакции индексированной базы данных, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Страницы с активным сетевым запросом в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы с незавершенными сетевыми запросами сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "Страницы с активным сетевым запросом на извлечение в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы с незавершенным сетевым запросом на извлечение в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
     "message": "Страницы с активным сетевым запросом в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Страницы с активным сетевым запросом XHR в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы с незавершенным сетевым запросом XHR в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
     "message": "Страницы, которые используют PaymentManager, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Страницы, которые используют картинку в картинке, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют режим \"картинка в картинке\", в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "Страницы, где показан интерфейс печати, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых показан интерфейс печати, сейчас нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "Страница открыта с помощью window.open(), и на нее ссылается другая вкладка, или страница открыта в другом окне."
+    "message": "Страница открыта с помощью метода window.open(), и на нее ссылается другая вкладка, или страница открыта в другом окне."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "Процесс отрисовки страницы завершился ошибкой в возвратном кеше."
+    "message": "При отрисовке страницы, находящейся в возвратном кеше, произошла ошибка."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "Процесс отрисовки для страницы в возвратном кеше остановлен."
+    "message": "Отрисовка страницы, находящейся в возвратном кеше, прервана."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
     "message": "Страницы, которые запросили разрешения на запись аудио, в настоящее время нельзя добавить в возвратный кеш."
@@ -2991,28 +3012,28 @@
     "message": "Страницы, запросившие разрешения на доступ к MIDI-устройствам, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Страницы, запросившие разрешения на доступ к уведомлениям, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, запросившие разрешения на уведомления, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
     "message": "Страницы, запросившие доступ к хранилищу, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "Страницы, которые запросили разрешения на запись видео, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые запросили разрешения на запись видео, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Можно кешировать только страницы со схемой URL HTTP или HTTPS."
+    "message": "Можно кешировать только страницы, схема URL которых соответствует HTTP или HTTPS."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
     "message": "Страница была запрошена скриптом Service Worker, когда находилась в возвратном кеше."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Скрипт Service Worker пытался отправить свойство MessageEvent на страницу в возвратном кеше."
+    "message": "Объект Service Worker пытался отправить свойство MessageEvent на страницу в возвратном кеше."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
     "message": "Регистрация Service Worker была отменена, когда страница находилась в возвратном кеше."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "Страница удалена из возвратного кеша из-за активации Service Worker."
+    "message": "Страница была удалена из возвратного кеша из-за активации скрипта service worker."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
     "message": "Браузер Chrome перезапущен. Все записи возвратного кеша удалены."
@@ -3036,7 +3057,7 @@
     "message": "Страницы, в подресурсе которых есть заголовок cache-control:no-cache, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Страницы, в подресурсе которых есть заголовок cache-control:no-store, нельзя добавить в возвратный кеш."
+    "message": "Страницы, в подресурсе которых есть заголовок cache-control:no-store, нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
     "message": "Время нахождения страницы в возвратном кеше истекло, так как превысило максимально допустимое."
@@ -3054,25 +3075,25 @@
     "message": "Браузер изменил заголовок переопределения агента пользователя."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Страницы, которые предоставили право на запись видео или аудио, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых разрешена запись видео или аудио, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "Страницы, которые используют WebDatabase, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют WebDatabase, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "Страницы, которые используют WebHID, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых используется WebHID, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "Страницы, которые используют WebLocks, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют WebLocks, сейчас нельзя добавлять в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "Страницы, которые используют WebNFC, в настоящее время нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют WebNFC, сейчас нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
     "message": "Страницы, которые используют WebOTPService, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "Страницы, которые используют WebRTC, нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых используется WebRTC, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "Возвратный кеш отключен, потому что используется WebRTC."
@@ -3081,7 +3102,7 @@
     "message": "Страницы, которые используют WebShare, в настоящее время нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "Страницы, которые используют интерфейс WebSocket, нельзя добавить в возвратный кеш."
+    "message": "Страницы, на которых используется WebSocket, нельзя добавить в возвратный кеш."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
     "message": "Возвратный кеш отключен, потому что используется WebSocket."

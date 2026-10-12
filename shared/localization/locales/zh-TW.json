@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "SVGUseElement 不再支援「data: 網址」，並將於日後移除。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "在 navigator.credentials.get() 或 create() 中要求了不明的數位憑證通訊協定。日後版本將封鎖無法辨識的通訊協定。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "document.createEvent('KeyboardEvents') 已淘汰，日後將移除。請改用 new KeyboardEvent()。"
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "這個範例顯示瀏覽器程序回報的淘汰項目所需程式碼。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "Fenced Frames API 已淘汰，並已排定移除。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "Protected Audience API 已淘汰，後續版本將會移除。"
@@ -2264,6 +2270,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "BluetoothRemoteGATTCharacteristic.writeValue() 已淘汰，請改用 writeValueWithResponse() 或 writeValueWithoutResponse()。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.incomingHighWaterMark 已重新命名為 incomingMaxBufferedDatagrams。incomingHighWaterMark 將在未來的 Chrome 版本中移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.outgoingHighWaterMark 已重新命名為 outgoingMaxBufferedDatagrams。outgoingHighWaterMark 將在未來的 Chrome 版本中移除。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest 中的 JSON 回應不支援 UTF-16"
   },
@@ -2340,7 +2352,7 @@
     "message": "未使用中繼標記宣告字元集"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
-    "message": "無法從追蹤資料判斷 meta charset 宣告"
+    "message": "無法從追蹤記錄判斷 meta charset 宣告"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
     "message": "在 HTTP 標頭中宣告字元集"
@@ -2427,7 +2439,10 @@
     "message": "來源"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "從套件中移除大型的[重複 JavaScript 模組](https://developer.chrome.com/docs/performance/insights/duplicated-javascript)，減少網路活動消耗的非必要頻寬。"
+    "message": "從套件中移除大型的[重複 JavaScript 模組](https://developer.chrome.com/docs/performance/insights/duplicated-javascript)，減少網路活動消耗的非必要頻寬"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "未發現重複的 JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "重複的 JavaScript"
@@ -2437,6 +2452,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "字型"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "未發現 font-display 設定不佳的字型"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "字型顯示"
@@ -2466,7 +2484,7 @@
     "message": "[找不到出處]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "查看最長的子部分，開始調查 [INP 的改善方式](https://developer.chrome.com/docs/performance/insights/inp-breakdown)。"
+    "message": "Start investigating [how to improve INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) by looking at the longest subpart"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "時間長度"
@@ -2490,7 +2508,7 @@
     "message": "INP 細目"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "縮短圖片下載時間，可縮減使用者感知的網頁載入時間，並提升 LCP 指標的表現。[進一步瞭解如何最佳化圖片大小](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+    "message": "縮短圖片下載時間，可縮減使用者感知的網頁載入時間，並提升 LCP 指標的表現。[進一步瞭解如何最佳化圖片大小](https://developer.chrome.com/docs/performance/insights/image-delivery)。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (預估大小為 {PH2})"
@@ -2508,16 +2526,16 @@
     "message": "提升圖片傳送效能"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "提高圖片壓縮係數可縮減這張圖片的下載大小。"
+    "message": "提高圖片壓縮係數可縮減這張圖片的下載大小"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "使用新式圖片格式 (WebP、AVIF) 或提高圖片壓縮係數，可縮減這張圖片的下載大小。"
+    "message": "使用新式圖片格式 (WebP、AVIF) 或提高圖片壓縮係數，可縮減這張圖片的下載大小"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "這個圖片檔的原始尺寸 ({PH1}) 大於規定的顯示尺寸 ({PH2})。請使用回應式圖片，以縮減圖片下載大小。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "建議使用影片格式 (而非 GIF)，可縮減動畫內容的下載大小。"
+    "message": "Using video formats instead of GIFs can improve the download size of animated content"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "每個[子部分都有特定改善策略](https://developer.chrome.com/docs/performance/insights/lcp-breakdown)。理想狀態下，大部分的 LCP 時間應該用於載入資源，而非延遲。"
@@ -2565,7 +2583,7 @@
     "message": "LCP 資源不應使用 loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "LCP 圖片載入時間比最早開始的時間點晚 {PH1}。"
+    "message": "LCP 圖片載入時間比最早開始的時間點晚 {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
     "message": "未偵測到 LCP"
@@ -2586,7 +2604,10 @@
     "message": "浪費的位元組數"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfill 和轉換作業可讓舊版瀏覽器使用新版 JavaScript 的功能，但對新式瀏覽器來說，很多都是不需要的功能。除非你認為必須支援舊版瀏覽器，否則建議修改 JavaScript 建構程序，不要轉譯[基準](https://web.dev/articles/baseline-and-polyfills)功能。[瞭解為何大多數網站不需要轉譯，就能部署 ES6+ 程式碼](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "Polyfill 和轉換作業可讓舊版瀏覽器使用新版 JavaScript 功能，但對新式瀏覽器來說，很多都是非必要的功能。除非你認為必須支援舊版瀏覽器，否則建議修改 JavaScript 建構程序，不要轉譯[基準](https://web.dev/articles/baseline-and-polyfills)功能。[瞭解為何大多數網站不需要轉譯，就能部署 ES6+ 程式碼](https://developer.chrome.com/docs/performance/insights/legacy-javascript)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "未發現舊版 JavaScript"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "舊版 JavaScript"
@@ -2595,7 +2616,7 @@
     "message": "HTTP/2 和 HTTP/3 擁有許多 HTTP/1.1 沒有的優點，例如多工處理。[進一步瞭解如何使用新式 HTTP](https://developer.chrome.com/docs/performance/insights/modern-http)。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "沒有任何要求使用 HTTP/1.1，或是目前使用 HTTP/1.1 的情況沒有顯著的最佳化空間。只有當六項以上的靜態素材資源來自相同來源，且並非從本機開發環境或第三方來源提供時，系統才會標記 HTTP/1.1 要求。"
+    "message": "沒有任何要求使用 HTTP/1.1，或是目前使用 HTTP/1.1 的情況沒有顯著的最佳化空間。只有當六項以上的靜態素材來自相同來源，且並非由本機開發環境或第三方來源提供時，系統才會標記 HTTP/1.1 要求。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "通訊協定"
@@ -2625,10 +2646,10 @@
     "message": "這是未使用的預先連結。請檢查 crossorigin 屬性的設定是否正確。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "如要[避免鏈結關鍵要求](https://developer.chrome.com/docs/performance/insights/network-dependency-tree)，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度。"
+    "message": "如要[避免鏈結關鍵要求](https://developer.chrome.com/docs/performance/insights/network-dependency-tree)，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "請新增最重要來源的 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但盡量不要超過 4 個。"
+    "message": "請新增最重要來源的 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但盡量不要超過 4 個"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "預先連結候選來源"
@@ -2661,10 +2682,10 @@
     "message": "這是未使用的預先連結。建議將 preconnect 僅用於網頁可能會要求的來源。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "如要避免鏈結關鍵要求，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度。"
+    "message": "Avoid chaining critical requests by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "要求會阻礙網頁的初始轉譯作業，進而導致 LCP 延遲。你可以透過[延後或內嵌](https://developer.chrome.com/docs/performance/insights/render-blocking)的方式，將這些網路要求移出關鍵路徑。"
+    "message": "要求阻礙網頁初始算繪，可能導致 LCP 延遲。你可以用[延後或內嵌](https://developer.chrome.com/docs/performance/insights/render-blocking)的方式，將這些網路要求移出關鍵路徑。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "時間長度"
@@ -2679,13 +2700,13 @@
     "message": "會阻斷算繪的要求"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "如果「重新計算樣式」的成本仍然偏高，可以使用選取器最佳化功能降低成本。針對經過時間偏長及慢速路徑百分比偏高的[選取器進行最佳化](https://developer.chrome.com/docs/performance/insights/slow-css-selector)。選取器越簡單、數量越少，DOM 的規模越小、結構越單純，越能降低比對成本。"
+    "message": "如果重新計算樣式的成本仍然偏高，可以使用選取器最佳化功能降低成本。針對經過時間偏長及慢速路徑百分比偏高的[選取器進行最佳化](https://developer.chrome.com/docs/performance/insights/slow-css-selector)。選取器越簡單、數量越少，DOM 的規模越小、結構越單純，越能降低比對成本。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "經過時間"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
-    "message": "找不到任何 CSS 選取器資料。請在效能面板設定中啟用 CSS 選取器統計資料。"
+    "message": "找不到任何 CSS 選取器資料。請前往「效能」面板設定啟用 CSS 選取器統計資料。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
     "message": "嘗試比對元素數"
@@ -2727,7 +2748,7 @@
     "message": "第三方"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "如果可視區域未針對行動裝置進行最佳化調整，輕觸互動可能會[延遲最多 300 毫秒](https://developer.chrome.com/docs/performance/insights/viewport)。"
+    "message": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport isn’t optimized for mobile"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "行動裝置輕觸延遲"
@@ -2736,367 +2757,367 @@
     "message": "針對行動裝置最佳化可視區域"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "只有透過 GET 要求載入的網頁才適用往返快取。"
+    "message": "Only pages loaded via a GET request are eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "只能快取狀態碼為 2XX 的網頁。"
+    "message": "Only pages with a status code of 2XX can be cached"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "Chrome 偵測到嘗試在快取中執行 JavaScript 的作業。"
+    "message": "Chrome 偵測到試圖在快取中執行 JavaScript 的作業"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "已要求 AppBanner 的網頁目前不適用往返快取。"
+    "message": "已要求 AppBanner 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "由於旗標設定的關係，往返快取功能已停用。如要在這部裝置上啟用該功能，請前往 chrome://flags/#back-forward-cache。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "由於指令列設定的關係，往返快取功能已停用。"
+    "message": "有人透過指令列停用了往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "由於記憶體不足，往返快取功能已停用。"
+    "message": "記憶體不足，因此往返快取已停用"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "委派目標不支援往返快取。"
+    "message": "委派目標不支援往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "為了執行預先轉譯器，往返快取功能已停用。"
+    "message": "Back/forward cache is disabled for prerenderer"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "網頁有包含已註冊事件監聽器的 BroadcastChannel 例項，因此系統無法快取網頁。"
+    "message": "這個網頁有內含已註冊事件監聽器的 BroadcastChannel 例項，因此無法快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "含有 cache-control:no-store 標頭的網頁無法儲存至往返快取。"
+    "message": "含有 cache-control:no-store 標頭的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "有人刻意清除快取。"
+    "message": "The cache was intentionally cleared"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "為了讓系統能夠快取其他網頁，這個網頁已從快取中移除。"
+    "message": "The page was evicted from the cache to allow another page to be cached"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "含有外掛程式的網頁目前不適用往返快取。"
+    "message": "Pages containing plugins are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "未定義"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "使用 FileChooser API 的網頁不適用往返快取。"
+    "message": "Pages that use FileChooser API are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "使用 File System Access API 的網頁不適用往返快取。"
+    "message": "Pages that use File System Access API are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "使用媒體裝置調度工具的網頁不適用往返快取。"
+    "message": "Pages that use Media Device Dispatcher are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "使用者離開網頁時，媒體播放器正在播放內容。"
+    "message": "使用者離開網頁時，媒體播放器正在播放內容"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "使用 MediaSession API 並設定播放狀態的網頁不適用往返快取。"
+    "message": "使用 MediaSession API 並設定播放狀態的網頁不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "使用 MediaSession API 並設定動作處理常式的網頁不適用往返快取。"
+    "message": "Pages that use MediaSession API and set action handlers are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "由於螢幕閱讀器的關係，往返快取功能已停用。"
+    "message": "Back/forward cache is disabled due to screen reader"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "使用 SecurityHandler 的網頁不適用往返快取。"
+    "message": "Pages that use SecurityHandler are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "使用 Serial API 的網頁不適用往返快取。"
+    "message": "Pages that use Serial API are not eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "使用 WebAuthetication API 的網頁不適用往返快取。"
+    "message": "使用 WebAuthetication API 的網頁不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "使用 WebBluetooth API 的網頁不適用往返快取。"
+    "message": "使用 WebBluetooth API 的網頁不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "使用 WebUSB API 的網頁不適用往返快取。"
+    "message": "使用 WebUSB API 的網頁不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "使用 Cache-Control: no-store 的頁面停用 Cookie，因此系統停用往返快取。"
+    "message": "使用 Cache-Control: no-store 的頁面停用了 Cookie，因此系統已停用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "使用專屬 Worker 或 Worklet 的網頁目前不適用往返快取。"
+    "message": "Pages that use a dedicated worker or worklet are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "文件未在使用者離開前完成載入。"
+    "message": "文件未在使用者離開前完成載入"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "使用者離開網頁時，系統會顯示應用程式橫幅。"
+    "message": "App Banner was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "使用者離開網頁時，系統會顯示 Chrome 密碼管理員。"
+    "message": "使用者離開網頁時，系統顯示了 Chrome 密碼管理工具"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "使用者離開網頁時，DOM distillation 正在處理中。"
+    "message": "DOM distillation was in progress upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "使用者離開網頁時，系統會顯示 DOM Distiller Viewer。"
+    "message": "DOM Distiller Viewer was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "由於擴充功能使用訊息 API，往返快取功能已停用。"
+    "message": "由於擴充功能使用訊息 API，因此往返快取已停用"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "在儲存至往返快取功能之前，可持續連線的擴充功能應中斷連線。"
+    "message": "在儲存到往返快取之前，可持續連線的擴充功能必須中斷連線"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "可持續連線的擴充功能嘗試在往返快取中傳送訊息給畫面。"
+    "message": "可持續連線的擴充功能試圖在往返快取中傳送訊息給頁框"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "由於擴充功能的關係，往返快取功能已停用。"
+    "message": "Back/forward cache is disabled due to extensions"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "使用者離開網頁時，系統會在該頁面顯示強制回應對話方塊，例如重新提交表單或 HTTP 密碼對話方塊。"
+    "message": "Modal dialog such as form resubmission or http password dialog was shown for the page upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "使用者離開網頁時，系統會顯示離線頁面。"
+    "message": "使用者離開網頁時，系統顯示了離線頁面"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "使用者離開網頁時，系統會顯示 Out-Of-Memory Intervention。"
+    "message": "Out-Of-Memory Intervention bar was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "使用者離開網頁時，系統會要求權限。"
+    "message": "There were permission requests upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "使用者離開網頁時，系統會顯示彈出式視窗攔截器。"
+    "message": "Popup blocker was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "使用者離開網頁時，系統會顯示安全瀏覽詳細資料。"
+    "message": "使用者離開網頁時，系統顯示了安全瀏覽詳細資料"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "安全瀏覽功能認定這個網頁有濫用疑慮，因此封鎖彈出式視窗。"
+    "message": "安全瀏覽功能認定這個網頁有濫用疑慮，因此封鎖彈出式視窗"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Service Worker 已在網頁儲存於往返快取時啟用。"
+    "message": "Service Worker 已在網頁儲存於往返快取時啟用"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "由於文件發生錯誤，往返快取功能已停用。"
+    "message": "Back/forward cache is disabled due to a document error"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "使用 FencedFrames 的網頁無法儲存在往返快取中。"
+    "message": "Pages using FencedFrames cannot be stored in bfcache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "為了讓系統能夠快取其他網頁，這個網頁已從快取中移除。"
+    "message": "The page was evicted from the cache to allow another page to be cached"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "已授予媒體串流播放權限的網頁目前不適用往返快取。"
+    "message": "已授予媒體串流播放存取權的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "如果網頁含有特定類型嵌入內容 (例如 PDF)，目前不適用往返快取。"
+    "message": "Pages that have certain kinds of embedded content (e.g. PDFs) are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "使用 IdleManager 的網頁目前不適用往返快取。"
+    "message": "使用 IdleManager 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "含有開放式 IndexedDB 連線的網頁目前不適用往返快取。"
+    "message": "含有開放式 IndexedDB 連線的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "系統已因 IndexedDB 事件停用往返快取功能。"
+    "message": "Back/forward cache is disabled due to an IndexedDB event"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "使用了不支援的 API。"
+    "message": "Ineligible APIs were used"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "由擴充功能插入 JavaScript 的網頁目前不適用往返快取。"
+    "message": "擴充功能插入 JavaScript 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "由擴充功能插入 StyleSheet 的網頁目前不適用往返快取。"
+    "message": "由擴充功能插入 StyleSheet 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "內部錯誤。"
+    "message": "Internal error"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "部分 JavaScript 網路要求收到含有「Cache-Control: no-store」標頭的資源，因此往返快取已停用。"
+    "message": "Back/forward cache is disabled because some JavaScript network request received resource with Cache-Control: no-store header"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "由於保持運作要求，往返快取功能已停用。"
+    "message": "由於系統收到保持運作要求，因此往返快取已停用"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "使用鍵盤鎖定功能的網頁目前不適用往返快取。"
+    "message": "使用鍵盤鎖定功能的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "網頁未在使用者離開前完成載入。"
+    "message": "The page did not finish loading before navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "主要資源含有 cache-control:no-cache 的網頁無法儲存至往返快取。"
+    "message": "主要資源含有 cache-control:no-cache 的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "主要資源含有 cache-control:no-store 的網頁無法儲存至往返快取。"
+    "message": "主要資源含有 cache-control:no-store 的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "瀏覽作業已在網頁從往返快取中還原前取消。"
+    "message": "導覽作業已在網頁從往返快取中還原前取消"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "由於某個作用中的網路連線收到太多資料，因此該網頁已從快取中移除。Chrome 會限制網頁處於快取狀態時可接收的資料量。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "含有 in-flight fetch() 或 XHR 的網頁目前不適用往返快取。"
+    "message": "Pages that have inflight fetch() or XHR are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "由於某個作用中的網路要求涉及重新導向，因此網頁已從往返快取中移除。"
+    "message": "某個作用中的網路要求涉及重新導向，因此網頁已從往返快取中移除"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "網路連線處於開放狀態太久，因此網頁已從快取中移除。Chrome 會限制網頁可在快取時接收資料的時間長度。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "不含有效回應標頭的網頁無法儲存至往返快取。"
+    "message": "不含有效回應標頭的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "瀏覽作業是在主頁框以外的頁框中執行。"
+    "message": "Navigation happened in a frame other than the main frame"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "網頁含有針對已建立索引的資料庫所執行的進行中交易，目前不適用往返快取。"
+    "message": "Page with ongoing indexed DB transactions are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "含有 in-flight 網路要求的網頁目前不適用往返快取。"
+    "message": "含有 in-flight 網路要求的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "含有 in-flight fetch 網路要求的網頁目前不適用往返快取。"
+    "message": "含有 in-flight 擷取網路要求的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "含有 in-flight 網路要求的網頁目前不適用往返快取。"
+    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "含有 in-flight XHR 網路要求的網頁目前不適用往返快取。"
+    "message": "Pages with an in-flight XHR network request are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "使用 PaymentManager 的網頁目前不適用往返快取。"
+    "message": "使用 PaymentManager 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "使用子母畫面的網頁目前不適用往返快取。"
+    "message": "Pages that use Picture-in-Picture are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "顯示列印使用者介面的網頁目前不適用往返快取。"
+    "message": "顯示列印使用者介面的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "網頁已透過「window.open()」開啟且其他分頁含有該網頁的參照內容，或者網頁開啟了視窗。"
+    "message": "The page was opened using 'window.open()' and another tab has a reference to it, or the page opened a window"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "往返快取中網頁的轉譯器程序異常終止。"
+    "message": "The renderer process for the page in back/forward cache crashed"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "往返快取中網頁的轉譯器程序已中斷。"
+    "message": "往返快取中網頁的轉譯器程序已終止"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "已要求音訊擷取權限的網頁目前不適用往返快取。"
+    "message": "Pages that have requested audio capture permissions are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "已要求感應器權限的網頁目前不適用往返快取。"
+    "message": "已要求感應器權限的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "已要求背景同步或擷取權限的網頁目前不適用往返快取。"
+    "message": "Pages that have requested background sync or fetch permissions are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "已要求 MIDI 權限的網頁目前不適用往返快取。"
+    "message": "Pages that have requested MIDI permissions are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "已要求通知權限的網頁目前不適用往返快取。"
+    "message": "要求通知權限的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "已要求儲存空間存取權的網頁目前不適用往返快取。"
+    "message": "已要求儲存空間存取權的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "已要求影片擷取權限的網頁目前不適用往返快取。"
+    "message": "要求影片擷取權限的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "只能快取網址配置為 HTTP/HTTPS 的網頁。"
+    "message": "只能快取網址配置為 HTTP/HTTPS 的網頁"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "網頁已在儲存於往返快取時由 Service Worker 聲明擁有權。"
+    "message": "The page was claimed by a service worker while it is in back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Service Worker 已嘗試向往返快取中的網頁傳送 MessageEvent。"
+    "message": "Service Worker 已嘗試向往返快取中的網頁傳送 MessageEvent"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "Service Worker 已在網頁儲存於往返快取時取消註冊。"
+    "message": "ServiceWorker 已在網頁儲存於往返快取時取消註冊"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "系統啟用了 Service Worker，因此網頁已從往返快取中移除。"
+    "message": "系統啟用了 Service Worker，因此網頁已從往返快取中移除"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "Chrome 已重新啟動，並清除往返快取項目。"
+    "message": "Chrome restarted and cleared the back/forward cache entries"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "使用 SharedWorker 的網頁目前不適用往返快取。"
+    "message": "使用 SharedWorker 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "網頁收到來自 SharedWorker 的訊息，因此已從快取中移除"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "使用 SpeechRecognizer 的網頁目前不適用往返快取。"
+    "message": "Pages that use SpeechRecognizer are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "使用 SpeechSynthesis 的網頁目前不適用往返快取。"
+    "message": "使用 SpeechSynthesis 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "網頁上 iframe 啟動的瀏覽作業並未完成。"
+    "message": "An iframe on the page started a navigation that did not complete"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "子資源含有 cache-control:no-cache 的網頁無法儲存至往返快取。"
+    "message": "子資源含有 cache-control:no-cache 的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "子資源含有 cache-control:no-store 的網頁無法儲存至往返快取。"
+    "message": "子資源含有 cache-control:no-store 的網頁無法儲存到往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "網頁超出存放在往返快取中的時間上限，因此已失效。"
+    "message": "網頁超出存放在往返快取中的時間上限，因此已失效"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "將網頁儲存至往返快取的作業逾時 (可能原因為頁面隱藏事件處理常式的執行時間太長)。"
+    "message": "The page timed out entering back/forward cache (likely due to long-running pagehide handlers)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "網頁在主頁框中含有卸載處理常式。"
+    "message": "The page has an unload handler in the main frame"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "網頁在子頁框中含有卸載處理常式。"
+    "message": "網頁在子頁框中含有卸載處理常式"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "瀏覽器已變更使用者代理程式覆寫標頭。"
+    "message": "瀏覽器已變更使用者代理程式覆寫標頭"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "已授予影片或音訊錄製權限的網頁目前不適用往返快取。"
+    "message": "Pages that have granted access to record video or audio are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "使用 WebDatabase 的網頁目前不適用往返快取。"
+    "message": "使用 WebDatabase 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "使用 WebHID 的網頁目前不適用往返快取。"
+    "message": "Pages that use WebHID are not currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "使用 WebLocks 的網頁目前不適用往返快取。"
+    "message": "使用 WebLocks 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "使用 WebNfc 的網頁目前不適用往返快取。"
+    "message": "使用 WebNfc 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "使用 WebOTPService 的網頁目前不適用往返快取。"
+    "message": "使用 WebOTPService 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "使用 WebRTC 的網頁無法儲存至往返快取。"
+    "message": "Pages with WebRTC cannot enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "已使用 WebRTC，因此停用往返快取功能。"
+    "message": "目前使用 WebRTC，因此系統停用了往返快取功能"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "使用 WebShare 的網頁目前不適用往返快取。"
+    "message": "使用 WebShare 的網頁目前不適用往返快取"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "使用 WebSocket 的網頁無法儲存至往返快取。"
+    "message": "Pages with WebSocket cannot enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "已使用 WebSocket，因此停用往返快取功能。"
+    "message": "Back/forward cache is disabled because WebSocket has been used"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "使用 WebTransport 的網頁無法儲存至往返快取。"
+    "message": "Pages with WebTransport cannot enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "已使用 WebTransport，因此停用往返快取功能。"
+    "message": "Back/forward cache is disabled because WebTransport has been used"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "使用 WebXR 的網頁目前不適用往返快取。"
+    "message": "Pages that use WebXR are not currently eligible for back/forward cache"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "你可以對動畫內容使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)，這樣一來，畫面外的內容即會盡量節省 CPU 用量。"

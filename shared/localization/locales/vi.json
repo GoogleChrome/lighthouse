@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Hỗ trợ về dữ liệu: Các URL trong SVGUseElement không được dùng nữa và sẽ bị loại bỏ trong tương lai."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "Một giao thức Thông tin xác thực kỹ thuật số không xác định đã được yêu cầu trong navigator.credentials.get() hoặc create(). Ở bản phát hành trong tương lai, các giao thức không nhận dạng được sẽ bị chặn."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "document.createEvent(\"KeyboardEvents\") không được dùng nữa và sẽ bị xoá. Thay vào đó, hãy sử dụng new KeyboardEvent()."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "Đây là ví dụ minh hoạ phần mã cần dùng khi trình duyệt báo rằng tiến trình này đã ngừng hoạt động."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "Fenced Frame API không còn được dùng nữa và dự kiến sẽ bị loại bỏ"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "Protected Audience API không được dùng nữa nên sẽ bị xoá trong bản phát hành sau này."
@@ -2264,6 +2270,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "BluetoothRemoteGATTCharacteristic.writeValue() không được dùng nữa. Thay vào đó, hãy sử dụng writeValueWithResponse() hoặc writeValueWithoutResponse()."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.incomingHighWaterMark (đã được đổi tên thành incomingMaxBufferedDatagrams. incomingHighWaterMark) sẽ bị xoá trong phiên bản sau này của Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.outgoingHighWaterMark (đã được đổi tên thành outgoingMaxBufferedDatagrams. outgoingHighWaterMark) sẽ bị xoá trong phiên bản sau này của Chrome."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "JSON phản hồi không hỗ trợ UTF-16 trong XMLHttpRequest"
   },
@@ -2331,16 +2343,16 @@
     "message": "Cần khai báo hệ thống mã hoá ký tự. Bạn có thể thực hiện việc này bằng thẻ bộ ký tự meta trong 1024 byte đầu tiên của HTML hoặc trong tiêu đề phản hồi HTTP Content-Type. [Tìm hiểu thêm về cách khai báo hệ thống mã hoá ký tự](https://developer.chrome.com/docs/insights/charset/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
-    "message": "Không khai báo bộ ký tự trong tiêu đề HTTP"
+    "message": "Không khai báo charset trong tiêu đề HTTP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
     "message": "Khai báo bộ ký tự bằng thẻ meta sau 1024 byte đầu tiên"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
-    "message": "Không khai báo bộ ký tự bằng thẻ meta"
+    "message": "Không khai báo charset bằng thẻ meta"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
-    "message": "Không xác định được khai báo bộ ký tự meta dựa vào dấu vết"
+    "message": "Không xác định được việc khai báo meta charset từ dữ liệu trace."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
     "message": "Khai báo bộ ký tự trong tiêu đề HTTP"
@@ -2427,7 +2439,10 @@
     "message": "Nguồn"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Xoá [các mô-đun JavaScript trùng lặp](https://developer.chrome.com/docs/performance/insights/duplicated-javascript), lớn khỏi gói để giảm số byte không cần thiết mà hoạt động mạng sử dụng."
+    "message": "Xoá [các mô-đun JavaScript trùng lặp](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) có kích thước lớn khỏi gói để giảm số byte không cần thiết sử dụng cho hoạt động mạng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "Không tìm thấy JavaScript trùng lặp"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "JavaScript trùng lặp"
@@ -2437,6 +2452,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Phông chữ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "Không tìm thấy phông chữ nào có thuộc tính hiển thị phông chữ chưa tối ưu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Hiển thị phông chữ"
@@ -2466,7 +2484,7 @@
     "message": "[chưa được phân bổ]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "Bắt đầu tìm hiểu [cách cải thiện INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) bằng cách xem phần phụ dài nhất."
+    "message": "Bắt đầu tìm hiểu [cách cải thiện INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) thông qua việc xem xét phần phụ dài nhất"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "Thời lượng"
@@ -2490,7 +2508,7 @@
     "message": "Bảng chi tiết về INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
-    "message": "Việc giảm thời gian tải hình ảnh xuống có thể cải thiện thời gian tải trang và LCP được cảm nhận. [Tìm hiểu thêm về cách tối ưu hoá kích thước hình ảnh](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+    "message": "Việc giảm thời gian tải hình ảnh xuống có thể cải thiện cảm nhận về thời gian tải trang và LCP. [Tìm hiểu thêm về cách tối ưu hoá kích thước hình ảnh](https://developer.chrome.com/docs/performance/insights/image-delivery)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
     "message": "{PH1} (Ước tính là {PH2})"
@@ -2508,16 +2526,16 @@
     "message": "Cải thiện việc phân phối hình ảnh"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Việc tăng hệ số nén của hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này."
+    "message": "Việc tăng hệ số nén của hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Việc sử dụng định dạng hình ảnh hiện đại (WebP, AVIF) hoặc tăng độ nén của hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này."
+    "message": "Việc sử dụng định dạng hình ảnh hiện đại (WebP, AVIF) hoặc tăng cường độ nén hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "Tệp hình ảnh này lớn hơn mức cần thiết ({PH1}) so với kích thước hiển thị ({PH2}). Hãy sử dụng hình ảnh thích ứng để giảm kích thước tải xuống của hình ảnh."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Việc sử dụng định dạng video thay vì GIF có thể cải thiện kích thước tải xuống của nội dung động."
+    "message": "Việc sử dụng định dạng video thay vì GIF có thể cải thiện kích thước tải xuống của nội dung động"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "Mỗi [phần phụ có một chiến lược cải thiện cụ thể](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). Tốt nhất là thời gian hiển thị LCP (Nội dung lớn nhất hiển thị) nên được dùng để tải các tài nguyên thay vì bị chậm trễ."
@@ -2532,7 +2550,7 @@
     "message": "Trường p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
-    "message": "Không phát hiện ra LCP"
+    "message": "Không phát hiện thấy LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
     "message": "Độ trễ khi tải tài nguyên"
@@ -2565,13 +2583,13 @@
     "message": "Tài nguyên LCP không nên sử dụng loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "Hình ảnh LCP được tải sau {PH1} kể từ thời điểm bắt đầu sớm nhất."
+    "message": "Hình ảnh LCP được tải sau {PH1} kể từ thời điểm bắt đầu sớm nhất"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
-    "message": "Không phát hiện ra LCP"
+    "message": "Không phát hiện thấy LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
-    "message": "Không phát hiện ra tài nguyên LCP vì LCP không phải là hình ảnh"
+    "message": "Không phát hiện thấy tài nguyên LCP vì LCP không phải là hình ảnh"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
     "message": "Có thể tìm thấy yêu cầu trong tài liệu ban đầu"
@@ -2586,7 +2604,10 @@
     "message": "Số byte bị lãng phí"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép các trình duyệt cũ sử dụng những tính năng mới của JavaScript. Tuy nhiên, có nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/articles/baseline-and-polyfills), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "Polyfill và các phép chuyển đổi cho phép các trình duyệt cũ sử dụng những tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình tạo bản dựng JavaScript để không chuyển đổi cú pháp các tính năng [Đường cơ sở](https://web.dev/articles/baseline-and-polyfills), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi cú pháp](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "Không tìm thấy JavaScript cũ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript cũ"
@@ -2595,7 +2616,7 @@
     "message": "HTTP/2 và HTTP/3 mang lại nhiều lợi ích hơn HTTP/1.1, chẳng hạn như ghép kênh. [Tìm hiểu thêm về cách sử dụng HTTP hiện đại](https://developer.chrome.com/docs/performance/insights/modern-http)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Không có yêu cầu nào sử dụng HTTP/1.1 hoặc việc sử dụng HTTP/1.1 hiện tại không mang lại cơ hội tối ưu hoá đáng kể. Yêu cầu HTTP/1.1 chỉ được gắn cờ nếu có từ 6 tài sản tĩnh cùng nguồn gốc trở lên và không được phân phát từ môi trường phát triển cục bộ hoặc nguồn của bên thứ ba."
+    "message": "Không có yêu cầu nào sử dụng HTTP/1.1 hoặc việc sử dụng HTTP/1.1 hiện tại không mang lại cơ hội tối ưu hoá đáng kể. Các yêu cầu HTTP/1.1 chỉ bị gắn cờ nếu có từ 6 tài sản tĩnh cùng nguồn gốc trở lên và không được phân phát từ môi trường phát triển cục bộ hoặc nguồn của bên thứ ba."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Giao thức"
@@ -2607,7 +2628,7 @@
     "message": "HTTP hiện đại"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
-    "message": "Điểm gốc"
+    "message": "Nguồn gốc"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
     "message": "Yêu cầu"
@@ -2625,10 +2646,10 @@
     "message": "Kết nối trước chưa sử dụng. Hãy kiểm tra để đảm bảo thuộc tính crossorigin được sử dụng đúng cách."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[Tránh tạo chuỗi các yêu cầu quan trọng](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
+    "message": "[Tránh tạo chuỗi các yêu cầu quan trọng](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) bằng cách giảm độ dài chuỗi, giảm kích thước tải xuống của tài nguyên hoặc trì hoãn việc tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Thêm gợi ý [kết nối trước](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) cho các nguồn gốc quan trọng nhất, nhưng hãy cố gắng sử dụng không quá 4 gợi ý."
+    "message": "Thêm gợi ý [kết nối trước](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) cho các nguồn gốc quan trọng nhất, nhưng hãy cố gắng sử dụng không quá 4 gợi ý"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Đề xuất kết nối trước"
@@ -2643,7 +2664,7 @@
     "message": "Không có điểm gốc nào khác phù hợp để kết nối trước"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "không có điểm gốc nào được kết nối trước"
+    "message": "Không có nguồn gốc nào được kết nối trước"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "Gợi ý [kết nối trước](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) giúp trình duyệt thiết lập kết nối sớm hơn trong quá trình tải trang, nhờ đó tiết kiệm thời gian khi gửi yêu cầu đầu tiên đối với điểm gốc đó. Sau đây là những điểm gốc mà trang đã kết nối trước."
@@ -2661,7 +2682,7 @@
     "message": "Kết nối trước chưa sử dụng. Chỉ sử dụng preconnect cho những điểm gốc mà trang có khả năng yêu cầu."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "Tránh tạo chuỗi các yêu cầu quan trọng bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
+    "message": "Tránh tạo chuỗi các yêu cầu quan trọng bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Các yêu cầu đang chặn quá trình kết xuất ban đầu của trang, điều này có thể làm trễ LCP. [Việc hoãn hoặc dùng cùng dòng](https://developer.chrome.com/docs/performance/insights/render-blocking) có thể di chuyển các yêu cầu mạng này ra khỏi đường dẫn quan trọng."
@@ -2679,22 +2700,22 @@
     "message": "Yêu cầu chặn hiển thị"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "Nếu thấy chi phí của Tính toán lại kiểu vẫn cao, bạn có thể tối ưu hoá bộ chọn để giảm chi phí. [Tối ưu hoá bộ chọn](https://developer.chrome.com/docs/performance/insights/slow-css-selector) có tỷ lệ phần trăm đường dẫn chậm và thời gian trôi qua đều cao. Bộ chọn đơn giản hơn, số lượng bộ chọn ít hơn, DOM nhỏ hơn và DOM nông hơn sẽ giúp giảm chi phí khớp."
+    "message": "Nếu chi phí tính toán lại kiểu vẫn ở mức cao, việc tối ưu hoá bộ chọn có thể giúp giảm bớt các chi phí này. [Tối ưu hoá bộ chọn](https://developer.chrome.com/docs/performance/insights/slow-css-selector) có tỷ lệ phần trăm đường dẫn chậm và thời gian trôi qua đều cao. Bộ chọn đơn giản hơn, số lượng bộ chọn ít hơn, DOM nhỏ hơn và DOM nông hơn sẽ giúp giảm chi phí khớp."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "Thời gian đã trôi qua"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
-    "message": "Không tìm thấy dữ liệu về bộ chọn CSS. Bạn cần bật số liệu thống kê về bộ chọn CSS trong phần cài đặt bảng điều khiển hiệu suất."
+    "message": "Không tìm thấy dữ liệu về bộ chọn CSS. Bạn cần bật số liệu thống kê về bộ chọn CSS trong phần cài đặt bảng điều khiển Hiệu suất."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
-    "message": "Số lần khớp"
+    "message": "Số lần thử khớp"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
     "message": "Số lượng trùng khớp"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
-    "message": "Hiệu suất của Bộ chọn CSS"
+    "message": "Chi phí của bộ chọn CSS"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
     "message": "Thời gian đã trôi qua của bộ chọn hàng đầu"
@@ -2727,7 +2748,7 @@
     "message": "bên thứ ba"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Hoạt động tương tác nhấn có thể [bị chậm tới 300 mili giây](https://developer.chrome.com/docs/performance/insights/viewport) nếu khung nhìn chưa được tối ưu hoá cho thiết bị di động."
+    "message": "Các thao tác nhấn có thể [bị chậm tới 300 mili giây](https://developer.chrome.com/docs/performance/insights/viewport) nếu khung nhìn chưa được tối ưu hoá cho thiết bị di động"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "Độ trễ khi nhấn trên thiết bị di động"
@@ -2736,367 +2757,367 @@
     "message": "Tối ưu hoá khung nhìn cho thiết bị di động"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "Chỉ những trang được tải qua yêu cầu GET mới đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Chỉ những trang được tải qua yêu cầu GET mới đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "Chỉ những trang có mã trạng thái là 2XX mới có thể lưu vào bộ nhớ đệm."
+    "message": "Chỉ những trang có mã trạng thái là 2XX mới được lưu vào bộ nhớ đệm"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "Chrome đã phát hiện thấy một lần thử thực thi JavaScript khi đang ở bộ nhớ đệm."
+    "message": "Chrome đã phát hiện thấy một lần thử thực thi JavaScript khi đang ở bộ nhớ đệm"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "Những trang đã yêu cầu AppBanner hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu AppBanner hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do cờ. Hãy truy cập chrome://flags/#back-forward-cache để bật tính năng đó trên thiết bị này."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do dòng lệnh."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do dòng lệnh"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do thiếu bộ nhớ."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do thiếu bộ nhớ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Trang được uỷ quyền không hỗ trợ bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Đối tượng được uỷ quyền không hỗ trợ bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt đối với trình kết xuất trước."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt đối với trình kết xuất trước"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "Không thể lưu trang này vào bộ nhớ đệm vì trang có một thực thể BroadcastChannel chứa các trình nghe đã đăng ký."
+    "message": "Không thể lưu trang này vào bộ nhớ đệm vì trang có một thực thể BroadcastChannel chứa các trình nghe đã đăng ký"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Những trang có tiêu đề cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có tiêu đề cache-control:no-store không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "Bộ nhớ đệm này đã bị xoá một cách có chủ đích."
+    "message": "Bộ nhớ đệm này đã bị xoá một cách có chủ đích"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "Những trang có chứa trình bổ trợ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có chứa trình bổ trợ hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Không xác định"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "Những trang sử dụng API FileChooser không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang sử dụng API FileChooser không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "Những trang sử dụng API Truy cập hệ thống tệp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng API File System Access không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Những trang sử dụng Trình điều phối thiết bị truyền thông không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng Trình điều phối thiết bị truyền thông không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Một trình phát đa phương tiện đang phát khi rời khỏi."
+    "message": "Một trình phát nội dung nghe nhìn đang phát khi rời trang hiện tại"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "Những trang sử dụng API MediaSession và đặt một trạng thái phát không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng MediaSession API và đặt một trạng thái phát không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "Những trang sử dụng API MediaSession và đặt các trình xử lý hành động hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng MediaSession API và đặt các trình xử lý hành động không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do trình đọc màn hình."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do trình đọc màn hình"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "Những trang sử dụng SecurityHandler không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng SecurityHandler không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "Những trang sử dụng API nối tiếp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang sử dụng API nối tiếp không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "Những trang sử dụng API WebAuthetication không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebAuthetication API không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "Những trang sử dụng API WebBluetooth không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebBluetooth API không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "Những trang sử dụng API WebUSB không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebUSB API không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các cookie bị tắt trên một trang sử dụng Cache-Control: no-store."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các cookie bị tắt trên một trang sử dụng Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "Những trang sử dụng một trình xử lý hoặc worklet riêng hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang sử dụng một worker hoặc worklet riêng hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "Tài liệu này chưa tải xong trước khi rời khỏi."
+    "message": "Tài liệu này chưa tải xong trước khi rời đi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "App Banner đang xuất hiện trong khi rời đi."
+    "message": "Biểu ngữ ứng dụng xuất hiện khi chuyển đi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Trình quản lý mật khẩu của Chrome đang xuất hiện trong khi rời đi."
+    "message": "Trình quản lý mật khẩu của Chrome xuất hiện trong khi rời đi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Quy trình lọc DOM đang diễn ra trong khi rời đi."
+    "message": "Quá trình lọc DOM đang diễn ra khi rời khỏi trang hiện tại"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer đang xuất hiện trong khi rời đi."
+    "message": "DOM Distiller Viewer xuất hiện khi chuyển hướng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích sử dụng API nhắn tin."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích sử dụng API nhắn tin"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Các tiện ích có kết nối liên tục phải ngắt kết nối trước khi chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các tiện ích có kết nối liên tục phải ngắt kết nối trước khi lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Các tiện ích có kết nối liên tục đã cố gắng gửi thông báo đến các khung trong bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các tiện ích có kết nối liên tục đã cố gắng gửi thông báo đến các khung trong bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Hộp thoại phương thức (chẳng hạn như gửi lại biểu mẫu) hoặc hộp thoại mật khẩu http đang xuất hiện trên trang trong khi rời đi."
+    "message": "Hộp thoại phương thức (chẳng hạn như gửi lại biểu mẫu) hoặc hộp thoại mật khẩu http xuất hiện trên trang khi chuyển hướng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "Trang ngoại tuyến đang xuất hiện trong khi rời đi."
+    "message": "Trang ngoại tuyến xuất hiện khi rời khỏi trang hiện tại"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "Thanh Out-Of-Memory Intervention đang xuất hiện trong khi rời đi."
+    "message": "Thanh Out-Of-Memory Intervention xuất hiện khi chuyển hướng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "Có yêu cầu cấp quyền trong khi rời đi."
+    "message": "Có yêu cầu cấp quyền khi rời khỏi trang hiện tại"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "Trình chặn cửa sổ bật lên đang xuất hiện trong khi rời đi."
+    "message": "Trình chặn cửa sổ bật lên xuất hiện khi chuyển đi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Thông tin chi tiết về công cụ Duyệt web an toàn đang xuất hiện trong khi rời đi."
+    "message": "Chi tiết Duyệt web an toàn xuất hiện khi rời khỏi trang hiện tại"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Công cụ Duyệt web an toàn coi trang này là một cửa sổ bật lên sai mục đích và bị chặn."
+    "message": "Tính năng Duyệt web an toàn coi trang này là trang có hành vi sử dụng sai mục đích và đã chặn cửa sổ bật lên"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Một trình chạy dịch vụ đã được kích hoạt khi trang này đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Một trình chạy dịch vụ đã được kích hoạt khi trang này đang ở bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "Đã tắt bộ nhớ đệm cho thao tác tiến/lùi do lỗi tài liệu"
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do lỗi tài liệu"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Không lưu trữ được trang dùng FencedFrames vào bfcache."
+    "message": "Không thể lưu trữ các trang sử dụng FencedFrames vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "Những trang đã cấp quyền truy cập luồng đa phương tiện hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã cấp quyền truy cập luồng nội dung nghe nhìn hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Những trang có một số loại nội dung được nhúng nhất định (ví dụ: PDF) hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có một số loại nội dung nhúng nhất định (ví dụ: PDF) hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Những trang sử dụng IdleManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng IdleManager hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "Những trang có kết nối IndexedDB mở hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang có kết nối IndexedDB mở hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do sự kiện IndexedDB."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do một sự kiện IndexedDB"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "Các API được sử dụng không đủ điều kiện."
+    "message": "Các API được sử dụng không đủ điều kiện"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Những trang có JavaScript được chèn vào bằng tiện ích hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có JavaScript do tiện ích chèn vào hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "Những trang có StyleSheet được chèn vào bằng tiện ích hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có StyleSheet được chèn vào bằng tiện ích hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "Lỗi nội bộ."
+    "message": "Lỗi nội bộ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do một số yêu cầu mạng JavaScript nhận được tài nguyên có tiêu đề Cache-Control: no-store."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do một số yêu cầu mạng JavaScript nhận được tài nguyên có tiêu đề Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do có yêu cầu duy trì hoạt động."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do có yêu cầu duy trì hoạt động"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "Những trang sử dụng tính năng Khóa bàn phím hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng tính năng Khoá bàn phím hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "Trang này chưa tải xong trước khi rời khỏi."
+    "message": "Trang chưa tải xong trước khi chuyển đi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Những trang có tài nguyên chính chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có tài nguyên chính chứa cache-control:no-cache không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Những trang có tài nguyên chính chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có tài nguyên chính chứa cache-control:no-store không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "Hoạt động điều hướng đã bị huỷ trước khi có thể khôi phục trang từ bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Thao tác di chuyển đã bị huỷ trước khi có thể khôi phục trang từ bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng đang hoạt động đã nhận quá nhiều dữ liệu. Chrome giới hạn lượng dữ liệu mà một trang có thể nhận trong khi được lưu vào bộ nhớ đệm."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Những trang có tính năng tìm nạp() hoặc XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có quá trình fetch() hoặc XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi vì một yêu cầu mạng đang hoạt động đã dẫn đến lệnh chuyển hướng."
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi vì một yêu cầu mạng đang hoạt động đã dẫn đến lệnh chuyển hướng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng ở trạng thái mở quá lâu. Chrome giới hạn khoảng thời gian mà một trang có thể nhận dữ liệu trong khi được lưu vào bộ nhớ đệm."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Những trang không có tiêu đề phản hồi hợp lệ không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang không có tiêu đề phản hồi hợp lệ không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "Hoạt động điều hướng đã diễn ra trong một khung không phải khung chính."
+    "message": "Hoạt động điều hướng diễn ra trong một khung không phải khung chính"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "Trang có các giao dịch đang diễn ra trên cơ sở dữ liệu đã lập chỉ mục hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Trang có các giao dịch đang diễn ra trên cơ sở dữ liệu đã lập chỉ mục hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Những trang có một yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có yêu cầu mạng đang được thực thi hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "Những trang có một yêu cầu mạng tìm nạp đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có yêu cầu mạng tìm nạp đang được thực thi hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "Những trang có một yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có yêu cầu mạng đang được thực thi hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Những trang có một yêu cầu mạng XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang có yêu cầu mạng XHR đang tiến hành hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "Những trang sử dụng PaymentManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng PaymentManager hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Những trang sử dụng tính năng Hình trong hình hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng tính năng Hình trong hình hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "Những trang hiển thị Giao diện người dùng cho thao tác in hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang hiển thị Giao diện người dùng cho thao tác in hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "Trang này đã được mở bằng \"window.open()\" và có một thẻ khác tham chiếu đến thành phần đó, hoặc trang này đã mở một cửa sổ."
+    "message": "Trang đã được mở bằng \"window.open()\" và có một thẻ khác tham chiếu đến trang này hoặc trang này đã mở một cửa sổ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã gặp sự cố."
+    "message": "Quá trình kết xuất của trang trong bộ nhớ đệm cho thao tác tiến/lùi đã gặp sự cố"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt."
+    "message": "Quá trình kết xuất của trang trong bộ nhớ đệm cho thao tác tiến/lùi đã bị dừng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "Những trang đã yêu cầu quyền ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Những trang đã yêu cầu quyền truy cập cảm biến hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền truy cập cảm biến hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "Những trang đã yêu cầu quyền tìm nạp hoặc đồng bộ hoá dưới nền hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền tìm nạp hoặc đồng bộ hoá dưới nền hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "Những trang đã yêu cầu quyền MIDI hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền MIDI hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Những trang đã yêu cầu quyền thông báo hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền gửi thông báo hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "Những trang đã yêu cầu quyền truy cập bộ nhớ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền truy cập bộ nhớ hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "Những trang đã yêu cầu quyền quay video hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang đã yêu cầu quyền quay video hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Chỉ những trang có lược đồ URL là HTTP/HTTPS mới có thể lưu vào bộ nhớ đệm."
+    "message": "Chỉ những trang có lược đồ URL là HTTP/HTTPS mới có thể được lưu vào bộ nhớ đệm"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "Trang này đã được một trình chạy dịch vụ xác nhận khi đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Trang này đã được một trình chạy dịch vụ xác nhận khi đang ở bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Một trình chạy dịch vụ đã cố gửi một MessageEvent cho trang trong bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Một trình chạy dịch vụ đã tìm cách gửi một MessageEvent cho trang trong bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker đã bị huỷ đăng ký khi một trang đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "ServiceWorker đã bị huỷ đăng ký khi một trang đang ở bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi do việc kích hoạt một trình chạy dịch vụ."
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi do việc kích hoạt một trình chạy dịch vụ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "Chrome đã khởi động lại và xoá các mục trong bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Chrome đã khởi động lại và xoá các mục trong bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "Những trang sử dụng SharedWorker hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng SharedWorker hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "Trang này đã bị xoá khỏi bộ nhớ đệm vì nhận được thông báo từ một SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "Những trang sử dụng SpeechRecognizer hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang sử dụng SpeechRecognizer hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "Những trang sử dụng SpeechSynthesis hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng SpeechSynthesis hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "Một iframe trên trang này đã bắt đầu một hoạt động điều hướng chưa hoàn tất."
+    "message": "Một iframe trên trang này đã bắt đầu quá trình điều hướng chưa hoàn thành"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Những trang có tài nguyên phụ chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có tài nguyên phụ chứa cache-control:no-cache không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Những trang có tài nguyên phụ chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có tài nguyên phụ chứa cache-control:no-store không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "Trang này đã vượt quá thời gian tối đa trong bộ nhớ đệm cho thao tác tiến/lùi và đã hết hạn."
+    "message": "Trang này đã vượt quá thời gian tối đa trong bộ nhớ đệm cho thao tác tiến/lùi và đã hết hạn"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "Trang này đã hết thời gian chờ chuyển sang bộ nhớ đệm cho thao tác tiến/lùi (khả năng là do các trình xử lý ẩn trang chạy trong thời gian dài)."
+    "message": "Trang đã hết thời gian chờ lưu vào bộ nhớ đệm cho thao tác tiến/lùi (có thể do các trình xử lý ẩn trang chạy quá lâu)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Trang này có một trình xử lý huỷ tải trong khung chính."
+    "message": "Trang này có một trình xử lý huỷ tải trong khung chính"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Trang này có một trình xử lý huỷ tải trong khung phụ."
+    "message": "Trang này có một trình xử lý huỷ tải trong khung phụ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "Trình duyệt đã thay đổi tiêu đề ghi đè tác nhân người dùng."
+    "message": "Trình duyệt đã thay đổi tiêu đề ghi đè tác nhân người dùng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Những trang đã cấp quyền quay video hoặc ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang đã cấp quyền quay video hoặc ghi âm hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "Những trang sử dụng WebDatabase hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebDatabase hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "Những trang sử dụng WebHID hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang sử dụng WebHID hiện không đủ điều kiện lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "Những trang sử dụng WebLocks hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebLocks hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "Những trang sử dụng WebNfc hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebNfc hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "Những trang sử dụng WebOTPService hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebOTPService hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "Những trang có WebRTC không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có WebRTC không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebRTC đã được dùng."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebRTC đã được dùng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "Những trang sử dụng WebShare hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebShare hiện không đủ điều kiện được lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "Những trang có WebSocket không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang có WebSocket không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebSocket đã được dùng."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebSocket đã được dùng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "Những trang có WebTransport không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Các trang có WebTransport không thể lưu vào bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebTransport đã được dùng."
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebTransport đã được dùng"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "Những trang sử dụng WebXR hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebXR hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Đối với nội dung động, hãy sử dụng [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) để giảm thiểu mức sử dụng CPU khi nội dung nằm ngoài màn hình."

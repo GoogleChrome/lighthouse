@@ -110,14 +110,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
-    // TODO(15841): investigate difference.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      expect(result.loadDelay).toBeCloseTo(2183.6, 0.1);
-      expect(result.loadDuration).toBeCloseTo(383.7, 0.1);
-    } else {
-      expect(result.loadDelay).toBeCloseTo(2313.1, 0.1);
-      expect(result.loadDuration).toBeCloseTo(398.2, 0.1);
-    }
+    expect(result.loadDelay).toBeCloseTo(2183.6, 0.1);
+    expect(result.loadDuration).toBeCloseTo(383.7, 0.1);
   });
 
   it('returns breakdown for a real trace with text LCP', async () => {

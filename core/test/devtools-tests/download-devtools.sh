@@ -19,6 +19,11 @@ then
   git status
   git --no-pager log -1
 
+  if [[ -n "${GHA_DEVTOOLS_CACHE_HIT:-}" ]]; then
+    echo "Cache hit, skipping devtools update."
+    exit 0
+  fi
+
   # Update to keep current.
   git reset --hard
   git clean -fd

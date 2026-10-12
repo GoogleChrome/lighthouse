@@ -11,20 +11,37 @@ import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 import {fnAny} from './test-utils.js';
 
 const snapshotModule = {snapshotGather: fnAny()};
-await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
 const navigationModule = {navigationGather: fnAny()};
-await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
 const timespanModule = {startTimespanGather: fnAny()};
-await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
 
-const mockRunner = await mockRunnerModule();
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const {getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js');
+/** @type {Awaited<ReturnType<typeof mockRunnerModule>>} */
+let mockRunner;
+/** @type {typeof import('../user-flow.js')['getStepName']} */
+let getStepName;
+/** @type {typeof import('../user-flow.js')['getFlowName']} */
+let getFlowName;
+/** @type {typeof import('../user-flow.js')['UserFlow']} */
+let UserFlow;
+/** @type {typeof import('../user-flow.js')['auditGatherSteps']} */
+let auditGatherSteps;
 
 describe('UserFlow', () => {
   let mockPage = createMockPage();
+
+  before(async () => {
+    await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
+    await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
+    await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
+    mockRunner = await mockRunnerModule();
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ({getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js'));
+  });
+
+  after(() => {
+    td.reset();
+  });
 
   beforeEach(() => {
     mockPage = createMockPage();
