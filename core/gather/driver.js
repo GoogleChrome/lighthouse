@@ -88,7 +88,7 @@ class Driver {
     await this._networkMonitor.enable();
     this.defaultSession = this._targetManager.rootSession();
     this._executionContext = new ExecutionContext(this.defaultSession);
-    this._fetcher = new Fetcher(this.defaultSession);
+    this._fetcher = new Fetcher(this.defaultSession, cdpSession.connection?.());
     log.timeEnd(status);
   }
 
