@@ -318,10 +318,11 @@ describe('Runner', () => {
       ],
     });
 
+    assert.ok(typeof resolvedConfig.artifacts[0] === 'object');
     return runGatherAndAudit(createGatherFn(url),
         {resolvedConfig, driverMock, computedCache: new Map()}).then(_ => {
       expect(mockGatherImpl).toHaveBeenCalled();
-      assert.ok(typeof resolvedConfig.artifacts[0] === 'object');
+      assert.strictEqual(resolvedConfig.artifacts, null);
     });
   });
 
