@@ -65,7 +65,6 @@ global.expect = expect;
 const performance = global.performance;
 // @ts-expect-error
 global.performance = undefined;
-// @ts-expect-error: no types
 await import('marky');
 global.performance = performance;
 
