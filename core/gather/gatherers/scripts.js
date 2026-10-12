@@ -124,6 +124,7 @@ class Scripts extends BaseGatherer {
     for (const event of context.dependencies.Trace.traceEvents) {
       const data = event.args?.data;
       if (!data || data.scriptId === undefined) continue;
+
       const scriptId = String(data.scriptId);
       const isolate = String(data.isolate ?? '');
       const key = `${isolate}.${scriptId}`;
