@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Veri desteği: SVGUseElement öğesindeki URL'lerin desteği sonlandırılmıştır ve gelecekte kaldırılacaktır."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "navigator.credentials.get() veya create() içinde bilinmeyen bir dijital kimlik bilgileri protokolü talep edildi. İlerideki bir sürümde, tanınmayan protokoller engellenecek."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "document.createEvent('KeyboardEvents') desteği sonlandırıldı ve işlev kaldırılacak. Bunun yerine new KeyboardEvent() kullanın."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "This is an example for showing the code required for a browser process reported deprecation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "Fenced Frames API'nin desteği sonlandırıldı ve kaldırılması planlanıyor."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "Protected Audience API'nin desteği sonlandırıldı ve gelecekteki bir sürümde kaldırılacak."
@@ -2264,6 +2270,12 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "BluetoothRemoteGATTCharacteristic.writeValue() desteği sonlandırıldı. Bunun yerine writeValueWithResponse() veya writeValueWithoutResponse() kullanın."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.incomingHighWaterMark, incomingMaxBufferedDatagrams olarak yeniden adlandırıldı. incomingHighWaterMark, yeni Chrome sürümlerinden birinde kaldırılacaktır."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "WebTransportDatagramDuplexStream.outgoingHighWaterMark, outgoingMaxBufferedDatagrams olarak yeniden adlandırıldı. outgoingHighWaterMark, yeni Chrome sürümlerinden birinde kaldırılacaktır."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest içindeki yanıt JSON dosyası UTF-16'yı desteklemiyor."
   },
@@ -2337,10 +2349,10 @@
     "message": "İlk 1.024 bayttan sonra meta etiket kullanılarak karakter kümesi tanımlanıyor"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
-    "message": "Meta etiket kullanılarak karakter kümesi tanımlanmıyor"
+    "message": "Meta etiket kullanılarak karakter kümesi tanımlanmaz"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
-    "message": "İzden meta karakter kümesi bildirimi belirlenemedi"
+    "message": "İzden meta karakter kümesi tanımı belirlenemedi"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | passingHttpHeader": {
     "message": "Karakter kümesi, HTTP başlığında tanımlanıyor"
@@ -2427,7 +2439,10 @@
     "message": "Kaynak"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için paketlerden büyük, [yinelenen JavaScript modüllerini](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) kaldırın."
+    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için paketlerden büyük, [yinelenen JavaScript modüllerini](https://developer.chrome.com/docs/performance/insights/duplicated-javascript) kaldırın"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "Yinelenen JavaScript dosyası bulunamadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "Yinelenen JavaScript"
@@ -2437,6 +2452,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "Yazı tipi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "İdeal olmayan yazı tipi görüntüleme ayarına sahip yazı tipi bulunamadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Yazı tipi görüntüleme"
@@ -2466,7 +2484,7 @@
     "message": "[ilişkilendirilmemiş]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "En uzun alt bölüme bakarak [INP'yi nasıl iyileştireceğinizi](https://developer.chrome.com/docs/performance/insights/inp-breakdown) incelemeye başlayın."
+    "message": "En uzun alt bölüme bakarak [INP'yi nasıl iyileştireceğinizi](https://developer.chrome.com/docs/performance/insights/inp-breakdown) incelemeye başlayın"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "Süre"
@@ -2508,16 +2526,16 @@
     "message": "Resim yayınlamayı kolaylaştırın"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Resim sıkıştırma faktörünü artırarak bu resmin indirme boyutunu küçültebilirsiniz."
+    "message": "Resim sıkıştırma faktörünü artırarak bu resmin indirme boyutunu küçültebilirsiniz"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Modern bir resim biçimi (WebP, AVIF) kullanmak veya resim sıkıştırmasını artırmak bu resmin indirme boyutunu küçültebilir."
+    "message": "Modern bir resim biçimi (WebP, AVIF) kullanmak veya resim sıkıştırmasını artırmak bu resmin indirme boyutunu küçültebilir"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "Bu resim dosyası, görüntülenen boyutlarına ({PH2}) göre olması gerekenden ({PH1}) daha büyük. Resim indirme boyutunu küçültmek için duyarlı resimler kullanın."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "GIF yerine video biçimleri kullanmak, animasyonlu içeriğin indirme boyutunu küçültebilir."
+    "message": "GIF yerine video biçimleri kullanmak, animasyonlu içeriğin indirme boyutunu küçültebilir"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "Her [alt bölüm için belirli iyileştirme stratejileri vardır](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). İdeal olarak LCP süresinin çoğu gecikmeler için değil, kaynakları yüklemek için harcanmalıdır."
@@ -2565,13 +2583,13 @@
     "message": "LCP kaynaklarında loading=lazy kullanılmamalıdır"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "LCP resmi, en erken başlangıç noktasından {PH1} sonra yüklendi."
+    "message": "LCP resmi, en erken başlangıç noktasından {PH1} sonra yüklendi"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
     "message": "LCP algılanmadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
-    "message": "LCP bir resim olmadığı için LCP kaynağı algılanmadı"
+    "message": "LCP görsel olmadığı için LCP kaynağı algılanmadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
     "message": "İstek, ilk dokümanda bulunabilir"
@@ -2586,7 +2604,10 @@
     "message": "Boşa harcanan bayt miktarı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfill'ler ve dönüşümler, daha eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Daha eski tarayıcıları desteklemeniz gerekmediğinden eminseniz JavaScript derleme işleminizi [Baseline](https://web.dev/articles/baseline-and-polyfills) özelliklerini çevirecek şekilde değiştirmeyi düşünün. [Çoğu sitenin neden ES6+ kodunu çevirmeden dağıtabildiğini öğrenin](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "Polyfill'ler ve dönüşümler, daha eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Daha eski tarayıcıları desteklemeniz gerekmediğinden eminseniz JavaScript derleme işleminizi [Baseline](https://web.dev/articles/baseline-and-polyfills) özelliklerini çevirecek şekilde değiştirmeyi düşünün. [Çoğu sitenin neden ES6+ kodunu çevirmeden dağıtabildiğini öğrenin](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "Eski JavaScript dosyası bulunamadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Eski JavaScript"
@@ -2625,10 +2646,10 @@
     "message": "Kullanılmayan ön bağlantı. crossorigin özelliğinin doğru şekilde kullanıldığını kontrol edin."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek [kritik istek zinciri oluşturmaktan kaçının](https://developer.chrome.com/docs/performance/insights/network-dependency-tree)."
+    "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek [kritik istek zinciri oluşturmaktan kaçının](https://developer.chrome.com/docs/performance/insights/network-dependency-tree)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "En önemli kaynaklarınıza [önceden bağlanma](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ipuçları ekleyin ancak 4'ten az ipucu kullanmaya çalışın."
+    "message": "En önemli kaynaklarınıza [önceden bağlanma](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ipuçları ekleyin ancak 4'ten az ipucu kullanmaya çalışın"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Önceden bağlanma adayları"
@@ -2643,7 +2664,7 @@
     "message": "Ön bağlantı için uygun ek kaynak bulunmamaktadır"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "hiçbir kaynak önceden bağlanmadı"
+    "message": "Hiçbir kaynak önceden bağlanmadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "[Önceden bağlanma](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ipuçları, sayfa yüklenirken tarayıcının gerekli bağlantıları önceden kurmasına yardımcı olarak ilgili kaynağa yapılacak ilk istekte zaman kazandırır. Sayfanın önceden bağlantı kurduğu kaynaklar aşağıda verilmiştir."
@@ -2661,7 +2682,7 @@
     "message": "Kullanılmayan ön bağlantı. Yalnızca sayfanın isteyebileceği kaynaklar için preconnect öğesini kullanın."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek kritik istek zinciri oluşturmaktan kaçının."
+    "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek kritik istek zinciri oluşturmaktan kaçının"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "İstekler sayfanın ilk oluşturma işlemini engelliyor. Bu durum, LCP'yi geciktirebilir. [Erteleme veya satır içine yerleştirme](https://developer.chrome.com/docs/performance/insights/render-blocking), bu ağ isteklerini kritik yoldan uzaklaştırabilir."
@@ -2718,7 +2739,7 @@
     "message": "Aktarım boyutu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Sayfanızdaki içeriklere öncelik vermek için [üçüncü taraf kodlarının yüklenmesini azaltın ve geciktirin](https://developer.chrome.com/docs/performance/insights/third-parties)."
+    "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Sayfanızdaki içeriklere öncelik vermek için [Üçüncü taraf kodlarının yüklenmesini azaltın ve geciktirin](https://developer.chrome.com/docs/performance/insights/third-parties)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Üçüncü taraf içeriği bulunamadı"
@@ -2727,7 +2748,7 @@
     "message": "3. taraflar"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Görüntü alanı, mobil cihazlar için optimize edilmezse dokunma etkileşimleri [300 ms.ye kadar gecikebilir](https://developer.chrome.com/docs/performance/insights/viewport)."
+    "message": "Görüntü alanı, mobil cihazlar için optimize edilmezse dokunma etkileşimleri [300 ms'ye kadar gecikebilir](https://developer.chrome.com/docs/performance/insights/viewport)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "Mobil dokunma gecikmesi"
@@ -2736,367 +2757,367 @@
     "message": "Görüntü alanını mobil cihazlar için optimize edin"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "Yalnızca GET isteği aracılığıyla yüklenen sayfalar geri-ileri önbelleğe alınmaya uygundur."
+    "message": "Yalnızca GET isteği aracılığıyla yüklenen sayfalar geri-ileri önbelleğe alınmaya uygundur"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "Yalnızca 2XX durum koduna sahip sayfalar önbelleğe alınabilir."
+    "message": "Yalnızca 2XX durum koduna sahip sayfalar önbelleğe alınabilir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "Chrome, önbellekteyken JavaScript'i yürütme girişimi tespit etti."
+    "message": "Chrome, önbellekteyken JavaScript'i yürütme girişimi tespit etti"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "AppBanner isteğinde bulunan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "AppBanner isteğinde bulunan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "Geri-ileri önbellek, flag'lerle devre dışı bırakılmış. Özelliği yerel olarak bu cihazda etkinleştirmek için chrome://flags/#back-forward-cache adresine gidin."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Geri-ileri önbellek, komut satırıyla devre dışı bırakılmış."
+    "message": "Geri-ileri önbellek, komut satırıyla devre dışı bırakılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Geri-ileri önbellek, yetersiz bellek nedeniyle devre dışı bırakılmış."
+    "message": "Geri-ileri önbellek, yetersiz bellek nedeniyle devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Geri-ileri önbellek, yetki verilmiş kullanıcı tarafından desteklenmiyor."
+    "message": "Geri-ileri önbellek, yetki verilmiş kullanıcı tarafından desteklenmiyor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Geri-ileri önbellek, önceden oluşturucu için devre dışı bırakılmış."
+    "message": "Geri-ileri önbellek, önceden oluşturucu için devre dışı bırakılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "Sayfa, kayıtlı dinleyicileri olan bir BroadcastChannel örneği içerdiğinden önbelleğe alınamıyor."
+    "message": "Sayfa, kayıtlı dinleyicileri olan bir BroadcastChannel örneği içerdiğinden önbelleğe alınamıyor"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "cache-control:no-store başlığı içeren sayfalar geri-ileri önbelleğe giremez."
+    "message": "cache-control:no-store başlığı içeren sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "Önbellek kasıtlı olarak temizlenmiş."
+    "message": "Önbellek kasıtlı olarak temizlenmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "Sayfa, başka bir sayfanın önbelleğe alınabilmesi için önbellekten çıkarılmış."
+    "message": "Sayfa, başka bir sayfanın önbelleğe alınabilmesi için önbellekten çıkarıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "Eklenti içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Eklenti içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Tanımsız"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "FileChooser API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "FileChooser API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "File System Access API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "File System Access API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Media Device Dispatcher kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Media Device Dispatcher kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Sayfadan çıkılırken medya içeriği oynatılıyormuş."
+    "message": "Sayfadan çıkılırken medya içeriği oynatılıyormuş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "MediaSession API kullanan ve oynatma durumu tanımlamış olan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "MediaSession API kullanan ve oynatma durumu tanımlamış olan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "MediaSession API kullanan ve işlem işleyicileri tanımlamış olan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "MediaSession API kullanan ve işlem işleyicileri tanımlamış olan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "Geri-ileri önbellek, ekran okuyucu nedeniyle devre dışı bırakılmış."
+    "message": "Geri-ileri önbellek, ekran okuyucu nedeniyle devre dışı bırakılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "SecurityHandler kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "SecurityHandler kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "Serial API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Serial API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthetication API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebAuthetication API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "WebBluetooth API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebBluetooth API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "WebUSB API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebUSB API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "Cache-Control: no-store kullanan bir sayfada çerezler devre dışı bırakıldığı için geri-ileri önbellek devre dışı bırakıldı."
+    "message": "Cache-Control: no-store kullanan bir sayfada çerezler devre dışı bırakıldığı için geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "Özel bir çalışan veya iş akışı kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Özel bir çalışan veya iş akışı kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "Yüklenmesi tamamlanmadan dokümandan çıkılmış."
+    "message": "Yüklenmesi tamamlanmadan belgeden çıkılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "Sayfadan çıktıktan sonra uygulama banner'ı görüntülendi."
+    "message": "Sayfadan çıktıktan sonra uygulama banner'ı görüntülendi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Sayfadan çıktıktan sonra Chrome Şifre Yöneticisi görüntülendi."
+    "message": "Sayfadan çıktıktan sonra Chrome Şifre Yöneticisi görüntülendi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Sayfadan çıktıktan sonra DOM ayrıştırma süreci devam etti."
+    "message": "Sayfadan çıktıktan sonra DOM ayrıştırma süreci devam etti"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "Sayfadan çıktıktan sonra DOM Ayrıştırıcı Görünümü görüntülendi."
+    "message": "Sayfadan çıktıktan sonra DOM Ayrıştırıcı Görünümü görüntülendi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "Messaging API'yi kullanan uzantılar nedeniyle geri-ileri önbellek devre dışı bırakıldı."
+    "message": "Messaging API'yi kullanan uzantılar nedeniyle geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Uzun süreli bağlantısı olan uzantılar geri-ileri önbelleğe girmeden önce bağlantıyı kapatmalıdır."
+    "message": "Uzun süreli bağlantısı olan uzantılar geri-ileri önbelleğe girmeden önce bağlantıyı kapatmalıdır"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Uzun süreli bağlantısı olan uzantılar geri-ileri önbellekteki çerçevelere mesaj göndermeyi denedi."
+    "message": "Uzun süreli bağlantısı olan uzantılar geri-ileri önbellekteki çerçevelere mesaj göndermeyi denedi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "Geri-ileri önbellek uzantılar nedeniyle devre dışı bırakıldı."
+    "message": "Geri-ileri önbellek uzantılar nedeniyle devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Sayfadan çıktıktan sonra yeniden form gönderme veya http şifre iletişimi gibi bir modal iletişim gösterildi."
+    "message": "Sayfadan çıktıktan sonra yeniden form gönderme veya http şifre iletişimi gibi bir modal iletişim gösterildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "Sayfadan çıktıktan sonra çevrimdışı sayfa gösterildi."
+    "message": "Sayfadan çıktıktan sonra çevrimdışı sayfa gösterildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "Sayfadan çıktıktan sonra Yetersiz Bellek Müdahalesi çubuğu görüntülendi."
+    "message": "Sayfadan çıktıktan sonra Yetersiz Bellek Müdahalesi çubuğu görüntülendi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "Sayfadan çıktıktan sonra izin istekleri alındı."
+    "message": "Sayfadan çıktıktan sonra izin istekleri alındı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "Sayfadan çıktıktan sonra pop-up engelleyici görüntülendi."
+    "message": "Sayfadan çıktıktan sonra pop-up engelleyici görüntülendi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Sayfadan çıktıktan sonra Güvenli Tarama ayrıntıları gösterildi."
+    "message": "Sayfadan çıktıktan sonra Güvenli Tarama ayrıntıları gösterildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Güvenli Tarama bu sayfayı kötüye kullanım amaçlı olarak değerlendirdi ve pop-up'ı engelledi."
+    "message": "Güvenli Tarama bu sayfayı kötüye kullanım amaçlı olarak değerlendirdi ve pop-up'ı engelledi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Sayfa geri-ileri önbellekteyken bir hizmet çalışanı etkinleştirilmiş."
+    "message": "Sayfa geri-ileri önbellekteyken bir hizmet çalışanı etkinleştirildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "Doküman hatası nedeniyle geri-ileri önbellek devre dışı bırakıldı."
+    "message": "Belge hatası nedeniyle geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "FencedFrames kullanan sayfalar bfcache'te saklanamaz."
+    "message": "FencedFrames kullanan sayfalar geri-ileri önbellekte saklanamaz"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "Sayfa, başka bir sayfanın önbelleğe alınabilmesi için önbellekten çıkarılmış."
+    "message": "Sayfa, başka bir sayfanın önbelleğe alınabilmesi için önbellekten çıkarıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "Medya yayınına erişim izni veren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Medya yayınına erişim izni veren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Belirli yerleştirilmiş içerik türleri (ör. PDF'ler) barındıran sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Belirli yerleştirilmiş içerik türleri (ör. PDF'ler) barındıran sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "IdleManager kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "IdleManager kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "Açık bir IndexedDB bağlantısına sahip olan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Açık bir IndexedDB bağlantısına sahip olan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "Geri-ileri önbellek, IndexedDB etkinliği nedeniyle devre dışı bırakılmış."
+    "message": "Geri-ileri önbellek, IndexedDB etkinliği nedeniyle devre dışı bırakılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "Uygun olmayan API'ler kullanılmış."
+    "message": "Uygun olmayan API'ler kullanıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Uzantılar aracılığıyla JavaScript yerleştirilen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Uzantılar aracılığıyla JavaScript yerleştirilen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "Uzantılar aracılığıyla StyleSheet yerleştirilen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Uzantılar aracılığıyla StyleSheet yerleştirilen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "Dahili hata."
+    "message": "Dahili hata"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "Bazı JavaScript ağ istekleri Cache-Control: no-store başlığına sahip kaynak aldığı için geri-ileri önbellek devre dışı bırakıldı."
+    "message": "Bazı JavaScript ağ istekleri Cache-Control: no-store başlığına sahip kaynak aldığı için geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "Geri-ileri önbellek, keepalive isteği nedeniyle devre dışı bırakıldı."
+    "message": "Geri-ileri önbellek, keepalive isteği nedeniyle devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "Klavye kilidi kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Klavye kilidi kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "Yüklenmesi tamamlanmadan sayfadan çıkılmış."
+    "message": "Yüklenmesi tamamlanmadan sayfadan çıkılmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Ana kaynağında cache-control:no-cache bulunan sayfalar geri-ileri önbelleğe giremez."
+    "message": "Ana kaynağında cache-control:no-cache bulunan sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Ana kaynağında cache-control:no-store bulunan sayfalar geri-ileri önbelleğe giremez."
+    "message": "Ana kaynağında cache-control:no-store bulunan sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "Sayfa geri-ileri önbellekten geri yüklenemeden önce gezinme iptal edilmiş."
+    "message": "Sayfa geri-ileri önbellekten geri yüklenemeden önce gezinme iptal edildi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "Etkin bir ağ bağlantısı çok fazla veri aldığından sayfa önbellekten çıkarılmış. Chrome, önbellekteki bir sayfanın alabileceği veri miktarını sınırlar."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "İletim aşamasında fetch() veya XHR içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "İletim aşamasında fetch() veya XHR içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "Sayfa, yönlendirmeyle ilgili etkin bir ağ isteği nedeniyle geri-ileri önbellekten çıkarılmış."
+    "message": "Sayfa, yönlendirmeyle ilgili etkin bir ağ isteği nedeniyle geri-ileri önbellekten çıkarıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "Sayfa, çok uzun süre açık kalan bir ağ bağlantısı nedeniyle önbellekten çıkarılmış. Chrome, önbellekteki bir sayfanın veri alabileceği süreyi sınırlar."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Geçerli yanıt başlığı içermeyen sayfalar geri-ileri önbelleğe giremez."
+    "message": "Geçerli yanıt başlığı içermeyen sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "Gezinme, ana çerçeve dışında bir çerçevede gerçekleşmiş."
+    "message": "Gezinme, ana çerçeve dışında bir çerçevede gerçekleşmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "Devam etmekte olan dizine eklenmiş DB işlemleri içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Devam etmekte olan dizine eklenmiş DB işlemleri içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "İletim aşamasında bir ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "İletim aşamasında bir ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "İletim aşamasında bir getirme ağı isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "İletim aşamasında bir getirme ağı isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "İletim aşamasında bir ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "İletim aşamasında bir ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "İletim aşamasında bir XHR ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "İletim aşamasında bir XHR ağ isteği içeren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "PaymentManager kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "PaymentManager kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Pencere içinde pencere özelliğini kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Pencere içinde pencere özelliğini kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "Yazdırma kullanıcı arayüzü görüntüleyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Yazdırma kullanıcı arayüzü görüntüleyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "Sayfa, \"window.open()\" kullanılarak açılmış ve başka bir sekmede buna atıfta bulunuluyor ya da sayfa bir pencere açmış."
+    "message": "Sayfa, \"window.open()\" kullanılarak açılmış ve başka bir sekmede buna atıfta bulunuluyor ya da sayfa bir pencere açmış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "Geri-ileri önbellekteki sayfa için oluşturucu süreci kilitlenmiş."
+    "message": "Geri-ileri önbellekteki sayfa için oluşturucu süreci kilitlenmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "Geri-ileri önbellekteki sayfa için oluşturucu süreci sonlandırılmış."
+    "message": "Geri-ileri önbellekteki sayfa için oluşturucu süreci sonlandırıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "Ses kaydetme izni isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Ses kaydetme izni isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Sensör izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Sensör izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "Arka plan senkronizasyonu veya getirme izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Arka plan senkronizasyonu veya getirme izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "MIDI izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "MIDI izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Bildirim izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Bildirim izinleri isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "Depolama alanına erişim isteğinde bulunan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Depolama alanına erişim isteğinde bulunan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "Video kaydetme izni isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Video kaydetme izni isteyen sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Yalnızca URL şeması HTTP/HTTPS olan sayfalar önbelleğe alınabilir."
+    "message": "Yalnızca URL şeması HTTP / HTTPS olan sayfalar önbelleğe alınabilir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "Bir hizmet çalışanı, geri-ileri önbellekteyken sayfa üzerinde hak talebinde bulunmuş."
+    "message": "Bir hizmet çalışanı, geri-ileri önbellekteyken sayfa üzerinde hak talebinde bulundu"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "Bir hizmet çalışanı, geri-ileri önbellekteki sayfaya MessageEvent gönderme girişiminde bulunmuş."
+    "message": "Bir hizmet çalışanı, geri-ileri önbellekteki sayfaya MessageEvent gönderme girişiminde bulunmuş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "Bir sayfa geri-ileri önbellekteyken ServiceWorker kaydı iptal edilmiş."
+    "message": "Bir sayfa geri-ileri önbellekteyken ServiceWorker kaydı iptal edilmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "Sayfa, bir hizmet çalışanının etkinleştirilmesi nedeniyle geri-ileri önbellekten çıkarılmış."
+    "message": "Sayfa, bir hizmet çalışanının etkinleştirilmesi nedeniyle geri-ileri önbellekten çıkarıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "Chrome yeniden başlatılmış ve geri-ileri önbellek girişlerini temizlemiş."
+    "message": "Chrome yeniden başlatılmış ve geri-ileri önbellek girişlerini temizlemiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "SharedWorker kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "SharedWorker kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "Sayfa, SharedWorker'dan mesaj aldığı için önbellekten çıkarıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "SpeechRecognizer kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "SpeechRecognizer kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "SpeechSynthesis kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "SpeechSynthesis kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "Sayfadaki bir iframe'in başlattığı gezinme işlemi tamamlanmamış."
+    "message": "Sayfadaki bir iframe'in başlattığı gezinme işlemi tamamlanmamış"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Alt kaynağında cache-control:no-cache bulunan sayfalar geri-ileri önbelleğe giremez."
+    "message": "Alt kaynağında cache-control:no-cache bulunan sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Alt kaynağında cache-control:no-store bulunan sayfalar geri-ileri önbelleğe giremez."
+    "message": "Alt kaynağında cache-control:no-store bulunan sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "Sayfa, geri-ileri önbellekte azami süreyi aşmış ve geçerliliğini kaybetmiş."
+    "message": "Sayfa, geri-ileri önbellekte azami süreyi aşmış ve geçerliliğini kaybetmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "Sayfa, muhtemelen uzun süre çalışan sayfa gizleme işleyicileri nedeniyle, geri-ileri önbelleğe girerken zaman aşımına uğramış."
+    "message": "Sayfa, muhtemelen uzun süre çalışan sayfa gizleme işleyicileri nedeniyle, geri-ileri önbelleğe girerken zaman aşımına uğradı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Sayfanın ana çerçevesinde kaldırma işleyicisi var."
+    "message": "Sayfanın ana çerçevesinde kaldırma işleyicisi var"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Sayfanın alt çerçevelerinden birinde kaldırma işleyicisi var."
+    "message": "Sayfanın alt çerçevelerinden birinde kaldırma işleyicisi var"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "Tarayıcı, kullanıcı aracısını geçersiz kılma başlığını değiştirmiş."
+    "message": "Tarayıcı, kullanıcı aracısını geçersiz kılma başlığını değiştirmiş"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Video veya ses kaydı erişimine izin veren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "Video veya ses kaydı erişimine izin veren sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "WebDatabase kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebDatabase kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "WebHID kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebHID kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "WebLocks kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebLocks kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "WebNfc kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebNfc kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "WebOTPService kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebOTPService kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "WebRTC içeren sayfalar geri-ileri önbelleğe giremez."
+    "message": "WebRTC içeren sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "WebRTC kullanıldığı için geri-ileri önbellek devre dışı bırakıldı."
+    "message": "WebRTC kullanıldığı için geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "WebShare kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebShare kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "WebSocket içeren sayfalar geri-ileri önbelleğe giremez."
+    "message": "WebSocket içeren sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "WebSocket kullanıldığı için geri-ileri önbellek devre dışı bırakıldı."
+    "message": "WebSocket kullanıldığı için geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "WebTransport içeren sayfalar geri-ileri önbelleğe giremez."
+    "message": "WebTransport içeren sayfalar geri-ileri önbelleğe giremez"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "WebTransport kullanıldığı için geri-ileri önbellek devre dışı bırakıldı."
+    "message": "WebTransport kullanıldığı için geri-ileri önbellek devre dışı bırakıldı"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "WebXR kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebXR kullanan sayfalar şu an için geri-ileri önbelleğe alınmaya uygun değildir"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animasyonlu içerik için içerik ekran dışındayken CPU kullanımını en aza indirmek amacıyla [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) kullanın."

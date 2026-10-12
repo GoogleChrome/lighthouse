@@ -66,11 +66,6 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with lcp) correctly', async () => {
-    // TODO(15841): investigate failures. "interactive" is different.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
     const artifacts = {
       URL,
@@ -86,6 +81,12 @@ describe('Performance: metrics', () => {
       computedCache: new Map(),
     };
     const result = await MetricsAudit.audit(artifacts, context);
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // The devtoolsLog includes 2 high-priority CORS `Preflight` requests that are not emitted
+      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 3149ms to 2920ms.
+      expect(result.details.items[0].interactive).toBe(2920);
+      result.details.items[0].interactive = 3149;
+    }
     expect(result.details.items[0]).toMatchSnapshot();
   });
 
@@ -109,11 +110,6 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with image lcp) correctly', async () => {
-    // TODO(15841): investigate failures. "interactive" is different.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const URL = getURLArtifactFromDevtoolsLog(lcpImageDevtoolsLog);
     const artifacts = {
       URL,
@@ -129,6 +125,12 @@ describe('Performance: metrics', () => {
       computedCache: new Map(),
     };
     const result = await MetricsAudit.audit(artifacts, context);
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // The devtoolsLog includes 2 high-priority CORS `Preflight` requests that are not emitted
+      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 3149ms to 2920ms.
+      expect(result.details.items[0].interactive).toBe(2920);
+      result.details.items[0].interactive = 3149;
+    }
     expect(result.details.items[0]).toMatchSnapshot();
   });
 

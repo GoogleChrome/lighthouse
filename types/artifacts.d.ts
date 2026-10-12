@@ -124,9 +124,9 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   InspectorIssues: Artifacts.InspectorIssues;
   /** The status and tools registered via WebMCP. */
   WebMCP: {isSupported: boolean, tools: Artifacts.WebMCPTool[]};
-  /** 
-   * The WebMCP schema validation issues. 
-   * TODO: fold this into the WebMCP artifact. 
+  /**
+   * The WebMCP schema validation issues.
+   * TODO: fold this into the WebMCP artifact.
    */
   WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */
@@ -138,18 +138,38 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   RobotsTxt: { status: number | null, content: string | null, errorMessage?: string };
   /** Information on fetching and the content of the /llm.txt file. */
   LlmsTxt: { status: number | null, content: string | null, errorMessage?: string };
-  /** Information on fetching and the content of the /ai-catalog.json manifest file. */
+  /** Information on discovering, fetching, and the content of the Agentic Resource Discovery (ARD) manifest. */
   AgentResourceDiscovery: {
     status: number | null;
     content: string | null;
     headers: Record<string, string> | null;
-    catalogUrl: string | null;
+    /** The loaded manifest URL, or if none loaded, the first failed advertised URL (or `/.well-known/ard.json`). */
+    catalogUrl: string;
+    /** The discovery mechanism `catalogUrl` came from. `legacy*` sources are ARD's predecessor (`ai-catalog`) names. */
+    discoverySource: Artifacts.ArdDiscoverySource;
     discoverySignals: {
       robotsTxtAgentmap: string | null;
+      /** `<link rel="ard">` */
       htmlLink: string | null;
+      /** `Link: <...>; rel="ard"` */
       httpHeaderLink: string | null;
+      /** `<link rel="ai-catalog">` */
+      legacyHtmlLink: string | null;
+      /** `Link: <...>; rel="ai-catalog"` */
+      legacyHttpHeaderLink: string | null;
+      /** `/.well-known/ard.json` */
       wellKnown: string;
+      /** `/.well-known/ai-catalog.json` */
+      legacyWellKnown: string;
     };
+    /** Advertised locations (not the probed well-known paths) that were tried and failed to load, in discovery order. */
+    failedSources: Array<{
+      source: Artifacts.ArdDiscoverySource;
+      url: string;
+      status: number | null;
+      /** Set when the fetch itself failed (e.g. a timeout) rather than returning an HTTP error. */
+      errorMessage?: string;
+    }>;
     errorMessage?: string;
   };
   /** Source maps of scripts executed in the page. */
@@ -165,6 +185,10 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
 }
 
 declare namespace Artifacts {
+  /** Agentic Resource Discovery (ARD) manifest locations. `legacy*` sources are ARD's predecessor (`ai-catalog`) names. */
+  type ArdDiscoverySource = 'robotsTxtAgentmap' | 'htmlLink' | 'httpHeaderLink' | 'wellKnown' |
+    'legacyHtmlLink' | 'legacyHttpHeaderLink' | 'legacyWellKnown';
+
   interface WebMcpSchemaIssue {
     errorType: string;
     violatingNodeId?: number;

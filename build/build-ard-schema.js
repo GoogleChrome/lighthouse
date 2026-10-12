@@ -13,8 +13,14 @@ import addFormats from 'ajv-formats';
 
 import {LH_ROOT} from '../shared/root.js';
 
-const schemaPath = path.join(LH_ROOT, 'third-party/ard/spec/schemas/ai-catalog.schema.json');
+const schemaPath = path.join(LH_ROOT, 'third-party/ard/spec/schemas/ard-entry.schema.json');
 const outputPath = path.join(LH_ROOT, 'third-party/ard/schema-validator.js');
+
+/**
+ * The definitions validated by the upstream conformance test (`as_def(...)` in
+ * `conformance/bin/conformance-test`). Each is exported as a named validator.
+ */
+const EXPORTED_DEFS = ['ArdManifest', 'ArdEntry'];
 
 /**
  * Format standalone code with proper 2-space indentation and formatted schema objects.
@@ -79,10 +85,14 @@ function formatCode(src) {
 
 function build() {
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+  if (!schema.$id) throw new Error(`Expected ${schemaPath} to declare an $id`);
 
   const ajv = new Ajv2020({
     allErrors: true,
     allowUnionTypes: true,
+    // The upstream schema is authoritative and uses `required` in `allOf`/`oneOf` branches
+    // without restating `type: object`, which is valid but trips Ajv's strictTypes warning.
+    strictTypes: false,
     code: {
       source: true,
       esm: true,
@@ -90,19 +100,26 @@ function build() {
     },
   });
   addFormats(ajv, ['uri', 'date-time']);
+  ajv.addSchema(schema);
 
-  const validate = ajv.compile(schema);
-  let moduleCode = standaloneCode(ajv, validate);
+  /** @type {Record<string, string>} */
+  const refs = {};
+  for (const def of EXPORTED_DEFS) {
+    const ref = `${schema.$id}#/$defs/${def}`;
+    if (!ajv.getSchema(ref)) throw new Error(`Could not compile ${ref}`);
+    refs[def] = ref;
+  }
+  let moduleCode = standaloneCode(ajv, refs);
 
   // Use ESM import for ajv-formats instead of CommonJS require in standalone code.
-  moduleCode = moduleCode.replace(
-    /const formats0 = require\("ajv-formats\/dist\/formats"\)\.fullFormats\.uri;/g,
-    'const formats0 = fullFormats.uri;'
-  );
-  moduleCode = moduleCode.replace(
-    /const formats10 = require\("ajv-formats\/dist\/formats"\)\.fullFormats\["date-time"\];/g,
-    'const formats10 = fullFormats["date-time"];'
-  );
+  // Ajv numbers these variables per schema, so match any `formatsN`.
+  const formatsRequireRe = new RegExp(
+    'const (formats\\d+) = require\\("ajv-formats/dist/formats"\\)\\.fullFormats' +
+    '(\\.[\\w$]+|\\["[^"]+"\\]);', 'g');
+  moduleCode = moduleCode.replace(formatsRequireRe, 'const $1 = fullFormats$2;');
+  if (moduleCode.includes('require(')) {
+    throw new Error('Standalone validator still contains a CommonJS require() call.');
+  }
 
   const formattedModuleCode = formatCode(moduleCode);
 

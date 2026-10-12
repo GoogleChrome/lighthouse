@@ -36,19 +36,25 @@ for (const entry of computedResults.sites) {
   let maxDiff = 0;
   /** @type {DiffForSite[]} */
   const diffsForSite = [];
-  Object.keys(actualLantern).forEach(metricName => {
-    if (!(metricName in expectedLantern)) throw new Error(`missing metric ${metricName}`);
-
-    const actual = Math.round(actualLantern[metricName]);
-    const expected = Math.round(expectedLantern[metricName]);
-    const diff = actual - expected;
-    if (Math.abs(diff) > 0) {
-      maxDiff = Math.max(maxDiff, Math.abs(diff));
+  const metricNames = new Set([
+    ...Object.keys(actualLantern),
+    ...Object.keys(expectedLantern).filter(key => key !== 'url'),
+  ]);
+  metricNames.forEach(metricName => {
+    const actual = metricName in actualLantern ?
+      Math.round(actualLantern[metricName]) :
+      undefined;
+    const expected = metricName in expectedLantern ?
+      Math.round(expectedLantern[metricName]) :
+      undefined;
+    const diff = (actual ?? 0) - (expected ?? 0);
+    if (actual !== expected) {
+      maxDiff = Math.max(maxDiff, Math.abs(diff), 1);
       diffsForSite.push({metricName, actual, expected, diff});
     }
   });
 
-  if (maxDiff > 0) diffs.push({url: entry.url, maxDiff, diffsForSite});
+  if (diffsForSite.length > 0) diffs.push({url: entry.url, maxDiff, diffsForSite});
 }
 
 if (diffs.length) {
@@ -74,4 +80,4 @@ if (diffs.length) {
   console.log('✅  PASS    No changes between expected and computed!');
 }
 
-/** @typedef {{metricName: string, actual: number, expected: number, diff: number}} DiffForSite */
+/** @typedef {{metricName: string, actual: number|undefined, expected: number|undefined, diff: number}} DiffForSite */
