@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jpeg from 'jpeg-js';
-
 import {Audit} from './audit.js';
 import {LighthouseError} from '../lib/lh-error.js';
 import {Speedline} from '../computed/speedline.js';
@@ -29,42 +27,6 @@ class ScreenshotThumbnails extends Audit {
   }
 
   /**
-   * Scales down an image to THUMBNAIL_WIDTH using nearest neighbor for speed, maintains aspect
-   * ratio of the original thumbnail.
-   *
-   * @param {ReturnType<SpeedlineFrame['getParsedImage']>} imageData
-   * @param {number} scaledWidth
-   * @return {{width: number, height: number, data: Uint8Array}}
-   */
-  static scaleImageToThumbnail(imageData, scaledWidth) {
-    const scaleFactor = imageData.width / scaledWidth;
-    const scaledHeight = Math.floor(imageData.height / scaleFactor);
-
-    const outPixels = new Uint8Array(scaledWidth * scaledHeight * 4);
-
-    for (let i = 0; i < scaledWidth; i++) {
-      for (let j = 0; j < scaledHeight; j++) {
-        const origX = Math.floor(i * scaleFactor);
-        const origY = Math.floor(j * scaleFactor);
-
-        const origPos = (origY * imageData.width + origX) * 4;
-        const outPos = (j * scaledWidth + i) * 4;
-
-        outPixels[outPos] = imageData.data[origPos];
-        outPixels[outPos + 1] = imageData.data[origPos + 1];
-        outPixels[outPos + 2] = imageData.data[origPos + 2];
-        outPixels[outPos + 3] = imageData.data[origPos + 3];
-      }
-    }
-
-    return {
-      width: scaledWidth,
-      height: scaledHeight,
-      data: outPixels,
-    };
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -79,7 +41,6 @@ class ScreenshotThumbnails extends Audit {
     // Make the minimum time range 3s so sites that load super quickly don't get a single screenshot
     const minimumTimelineDuration = context.options.minimumTimelineDuration || 3000;
     const numberOfThumbnails = context.options.numberOfThumbnails || NUMBER_OF_THUMBNAILS;
-    const thumbnailWidth = context.options.thumbnailWidth || null;
 
     const thumbnails = [];
     const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());
@@ -112,12 +73,6 @@ class ScreenshotThumbnails extends Audit {
       const cachedThumbnail = cachedThumbnails.get(frameForTimestamp);
       if (cachedThumbnail) {
         base64Data = cachedThumbnail;
-      } else if (thumbnailWidth !== null) {
-        const imageData = frameForTimestamp.getParsedImage();
-        const thumbnailImageData =
-          ScreenshotThumbnails.scaleImageToThumbnail(imageData, thumbnailWidth);
-        base64Data = jpeg.encode(thumbnailImageData, 90).data.toString('base64');
-        cachedThumbnails.set(frameForTimestamp, base64Data);
       } else {
         base64Data = frameForTimestamp.getImage().toString('base64');
         cachedThumbnails.set(frameForTimestamp, base64Data);
