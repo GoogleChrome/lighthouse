@@ -18,6 +18,7 @@ const sampleResultsStr =
 
 describe('lighthouseRenderer bundle', () => {
   let document;
+  const origConsoleWarn = global.console.warn;
   before(() => {
     global.console.warn = jestMock.fn();
 
@@ -42,7 +43,10 @@ describe('lighthouseRenderer bundle', () => {
   });
 
   after(() => {
+    global.console.warn = origConsoleWarn;
     global.window = global.self = undefined;
+    global.requestAnimationFrame = undefined;
+    global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
     global.CustomEvent = undefined;
   });

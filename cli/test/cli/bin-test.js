@@ -17,58 +17,61 @@ const mockAskPermission = fnAny();
 const mockSentryInit = fnAny();
 const mockLoggerSetLevel = fnAny();
 
-/** @type {typeof import('../../bin.js')} */
-let bin;
-before(async () => {
-  await td.replaceEsm('../../run.js', {
-    runLighthouse: mockRunLighthouse,
-  });
-  await td.replaceEsm('../../cli-flags.js', {
-    getFlags: mockGetFlags,
-  });
-  await td.replaceEsm('../../sentry-prompt.js', {
-    askPermission: mockAskPermission,
-  });
-  await td.replaceEsm('../../../core/lib/sentry.js', {
-    Sentry: {
-      init: mockSentryInit,
-    },
-  });
-  await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
-  bin = await import('../../bin.js');
-});
-
-/** @type {LH.CliFlags} */
-let cliFlags;
-
-beforeEach(async () => {
-  mockAskPermission.mockReset();
-  mockGetFlags.mockReset();
-  mockLoggerSetLevel.mockReset();
-  mockRunLighthouse.mockReset();
-  mockSentryInit.mockReset();
-  mockRunLighthouse.mockResolvedValue({});
-  cliFlags = {
-    _: ['http://example.com'],
-    output: ['html'],
-    chromeIgnoreDefaultFlags: false,
-    chromeFlags: '',
-    outputPath: '',
-    saveAssets: false,
-    view: false,
-    verbose: false,
-    quiet: false,
-    port: 0,
-    hostname: '',
-    // Command modes
-    listAllAudits: false,
-    listLocales: false,
-    listTraceCategories: false,
-  };
-  mockGetFlags.mockImplementation(() => cliFlags);
-});
-
 describe('CLI bin', function() {
+  /** @type {typeof import('../../bin.js')} */
+  let bin;
+  before(async () => {
+    await td.replaceEsm('../../run.js', {
+      runLighthouse: mockRunLighthouse,
+    });
+    await td.replaceEsm('../../cli-flags.js', {
+      getFlags: mockGetFlags,
+    });
+    await td.replaceEsm('../../sentry-prompt.js', {
+      askPermission: mockAskPermission,
+    });
+    await td.replaceEsm('../../../core/lib/sentry.js', {
+      Sentry: {
+        init: mockSentryInit,
+      },
+    });
+    await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
+    bin = await import('../../bin.js');
+  });
+
+  after(() => {
+    td.reset();
+  });
+
+  /** @type {LH.CliFlags} */
+  let cliFlags;
+
+  beforeEach(async () => {
+    mockAskPermission.mockReset();
+    mockGetFlags.mockReset();
+    mockLoggerSetLevel.mockReset();
+    mockRunLighthouse.mockReset();
+    mockSentryInit.mockReset();
+    mockRunLighthouse.mockResolvedValue({});
+    cliFlags = {
+      _: ['http://example.com'],
+      output: ['html'],
+      chromeIgnoreDefaultFlags: false,
+      chromeFlags: '',
+      outputPath: '',
+      saveAssets: false,
+      view: false,
+      verbose: false,
+      quiet: false,
+      port: 0,
+      hostname: '',
+      // Command modes
+      listAllAudits: false,
+      listLocales: false,
+      listTraceCategories: false,
+    };
+    mockGetFlags.mockImplementation(() => cliFlags);
+  });
   /**
    * @return {any}
    */

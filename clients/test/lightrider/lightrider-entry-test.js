@@ -15,6 +15,7 @@ import {createMockPage} from '../../../core/test/gather/mock-driver.js';
 
 describe('lightrider-entry', () => {
   let mockConnection;
+  const originalGetPageFromConnection = runLighthouseInLR.getPageFromConnection;
 
   beforeEach(() => {
     mockConnection = {
@@ -28,6 +29,11 @@ describe('lightrider-entry', () => {
       await connection.connect();
       return createMockPage();
     };
+  });
+
+  afterEach(() => {
+    runLighthouseInLR.getPageFromConnection = originalGetPageFromConnection;
+    delete global.isLightrider;
   });
 
   describe('#runLighthouseInLR', () => {
