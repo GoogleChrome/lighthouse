@@ -44,6 +44,7 @@ describe('Sentry', () => {
   afterEach(() => {
     // Reset the methods on the Sentry object, see note above.
     Object.assign(Sentry, originalSentry);
+    td.reset();
   });
 
   describe('.init', () => {

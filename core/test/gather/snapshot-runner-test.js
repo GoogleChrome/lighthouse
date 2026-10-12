@@ -14,18 +14,12 @@ import {
   mockRunnerModule,
 } from './mock-driver.js';
 
-const mockRunner = await mockRunnerModule();
-
-// Establish the mocks before we import the file under test.
+/** @type {Awaited<ReturnType<typeof mockRunnerModule>>} */
+let mockRunner;
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-
-await td.replaceEsm('../../gather/driver.js',
-  mockDriverModule(() => mockDriver.asDriver()));
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const {snapshotGather} = await import('../../gather/snapshot-runner.js');
+/** @type {typeof import('../../gather/snapshot-runner.js')['snapshotGather']} */
+let snapshotGather;
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
@@ -38,6 +32,20 @@ describe('Snapshot Runner', () => {
   let gathererB;
   /** @type {LH.Config} */
   let config;
+
+  before(async () => {
+    mockRunner = await mockRunnerModule();
+    await td.replaceEsm('../../gather/driver.js',
+      mockDriverModule(() => mockDriver.asDriver()));
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ({snapshotGather} = await import('../../gather/snapshot-runner.js'));
+  });
+
+  after(() => {
+    td.reset();
+  });
 
   beforeEach(() => {
     mockPage = createMockPage();
