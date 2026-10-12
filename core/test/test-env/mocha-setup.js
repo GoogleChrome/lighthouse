@@ -21,6 +21,7 @@ import fs from 'fs';
 
 import path from 'path';
 import {expect} from 'expect';
+import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 import jestSnapshot from 'jest-snapshot';
 
@@ -29,6 +30,27 @@ import './expect-setup.js';
 import {timers} from './fake-timers.js';
 
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
+
+/**
+ * `jest-mock` does not export `restoreAllMocks` from its default `ModuleMocker` instance,
+ * so we capture the singleton instance here to call `restoreAllMocks()` in `afterEach`.
+ */
+const jestMocker = (() => {
+  /** @type {jestMock.ModuleMocker} */
+  let instance;
+  // @ts-expect-error
+  const orig = jestMock.ModuleMocker.prototype._defaultMockConfig;
+  // @ts-expect-error
+  jestMock.ModuleMocker.prototype._defaultMockConfig = function() {
+    instance = this;
+    return orig.call(this);
+  };
+  jestMock.fn();
+  // @ts-expect-error
+  jestMock.ModuleMocker.prototype._defaultMockConfig = orig;
+  // @ts-expect-error
+  return instance;
+})();
 
 // Use consistent TZ across testing environments.
 // Timezone is used to construct date strings.
@@ -161,6 +183,8 @@ const rootHooks = {
   },
   /** @this {Mocha.Context} */
   afterEach() {
+    jestMocker.restoreAllMocks();
+
     if (!this.currentTest) throw new Error('unexpected value');
 
     const {file, title, state} = this.currentTest;
