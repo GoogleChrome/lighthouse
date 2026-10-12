@@ -902,7 +902,7 @@ export interface TraceEvent {
       protocol?: string;
       finishTime?: number;
       headers?: Array<{ name: string, value: string }>;
-      scriptId?: number | string;
+      scriptId?: number;
       sourceText?: string;
       isolate?: number | string;
       executionContextId?: number;
