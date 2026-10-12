@@ -10,6 +10,7 @@
 
 
 import {Audit} from './audit.js';
+import ImageElements from '../gather/gatherers/image-elements.js';
 import * as i18n from './../lib/i18n/i18n.js';
 import UrlUtils from '../lib/url-utils.js';
 
@@ -41,28 +42,6 @@ class UnsizedImages extends Audit {
   }
 
   /**
-   * An img size attribute prevents layout shifts if it is a non-negative integer (incl zero!).
-   * @url https://html.spec.whatwg.org/multipage/embedded-content-other.html#dimension-attributes
-   * @param {string | null} attrValue
-   * @return {boolean}
-   */
-  static doesHtmlAttrProvideExplicitSize(attrValue) {
-    if (!attrValue) return false;
-
-    // First, superweird edge case of using the positive-sign. The spec _sorta_ says it's valid...
-    // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers
-    //   > Otherwise, if the character is … (+): Advance position to the next character.
-    //   > (The "+" is ignored, but it is not conforming.)
-    // lol.  Irrelevant though b/c Chrome (at least) doesn't ignore. It rejects this as a non-conforming value.
-    if (attrValue.startsWith('+')) return false;
-
-    // parseInt isn't exactly the same as the html's spec for parsing integers, but it's close enough
-    // https://tc39.es/ecma262/#sec-parseint-string-radix
-    const int = parseInt(attrValue, 10);
-    return int >= 0;
-  }
-
-  /**
    * An img css size property prevents layout shifts if it is defined, not empty, and not equal to 'auto'.
    * @param {string | null} property
    * @return {boolean}
@@ -78,6 +57,12 @@ class UnsizedImages extends Audit {
    * @return {boolean}
    */
   static isSizedImage(image) {
+    const attrWidth = image.attributeWidth;
+    const attrHeight = image.attributeHeight;
+    const htmlWidthIsExplicit = ImageElements.doesHtmlAttrProvideExplicitSize(attrWidth);
+    const htmlHeightIsExplicit = ImageElements.doesHtmlAttrProvideExplicitSize(attrHeight);
+    if (htmlWidthIsExplicit && htmlHeightIsExplicit) return true;
+
     // Perhaps we hit reachedGatheringBudget before collecting this image's cssWidth/Height
     // in fetchSourceRules. In this case, we don't have enough information to determine if it's sized.
     // We don't want to show the user a false positive, so we'll call it sized to give it as pass.
@@ -85,14 +70,10 @@ class UnsizedImages extends Audit {
     // Handwavey TODO: explore ways to avoid this.
     if (image.cssEffectiveRules === undefined) return true;
 
-    const attrWidth = image.attributeWidth;
-    const attrHeight = image.attributeHeight;
     const cssWidth = image.cssEffectiveRules.width;
     const cssHeight = image.cssEffectiveRules.height;
     const cssAspectRatio = image.cssEffectiveRules.aspectRatio;
-    const htmlWidthIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrWidth);
     const cssWidthIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssWidth);
-    const htmlHeightIsExplicit = UnsizedImages.doesHtmlAttrProvideExplicitSize(attrHeight);
     const cssHeightIsExplicit = UnsizedImages.isCssPropExplicitlySet(cssHeight);
     const explicitAspectRatio = UnsizedImages.isCssPropExplicitlySet(cssAspectRatio);
     const explicitWidth = htmlWidthIsExplicit || cssWidthIsExplicit;
