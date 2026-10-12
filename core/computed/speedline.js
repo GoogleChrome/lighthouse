@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jpeg from 'jpeg-js';
 import speedline from 'speedline-core';
 
 import {makeComputedArtifact} from './computed-artifact.js';
@@ -44,37 +43,25 @@ class Speedline {
         throw new LighthouseError(LighthouseError.errors.SPEEDINDEX_OF_ZERO);
       }
 
-      // Evict the ~1 MB per-frame decoded RGBA buffers cached inside speedline-core's
-      // frame closures while preserving the public frame interface.
-      speedline.frames = speedline.frames.map(frame => {
+      // Evict the ~1 MB per-frame decoded RGBA buffers and histograms cached inside
+      // speedline-core's frame closures, keeping only the getters Lighthouse uses.
+      // TODO(https://github.com/paulirish/speedline/issues/122): Upstream to speedline-core
+      // so `frame()` in `lib/frame.js` does not cache `_parsedImage` on frame closures.
+      const frames = speedline.frames.map(frame => {
         const imgBuff = frame.getImage();
         const timeStamp = frame.getTimeStamp();
-        const histogram = frame.isProgressInterpolated() ? null : frame.getHistogram();
-        let progress = frame.getProgress();
-        let isProgressInterpolated = frame.isProgressInterpolated();
-        let perceptualProgress = frame.getPerceptualProgress();
-        let isPerceptualProgressInterpolated = frame.isPerceptualProgressInterpolated();
+        const isProgressInterpolated = frame.isProgressInterpolated();
         return {
-          getHistogram: () => histogram ?? [],
-          getTimeStamp: () => timeStamp,
           getImage: () => imgBuff,
-          getParsedImage: () => jpeg.decode(imgBuff),
-          getProgress: () => progress,
+          getTimeStamp: () => timeStamp,
           isProgressInterpolated: () => isProgressInterpolated,
-          getPerceptualProgress: () => perceptualProgress,
-          isPerceptualProgressInterpolated: () => isPerceptualProgressInterpolated,
-          setProgress(val, isInterpolated) {
-            progress = val;
-            isProgressInterpolated = Boolean(isInterpolated);
-          },
-          setPerceptualProgress(val, isInterpolated) {
-            perceptualProgress = val;
-            isPerceptualProgressInterpolated = Boolean(isInterpolated);
-          },
         };
       });
 
-      return speedline;
+      return {
+        ...speedline,
+        frames,
+      };
     });
   }
 }

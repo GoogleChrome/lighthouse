@@ -543,7 +543,12 @@ declare namespace Artifacts {
 
   type LanternMetric = Lantern.Metrics.MetricResult<Artifacts.NetworkRequest>;
 
-  type Speedline = speedline.Output<'speedIndex'>;
+  type Speedline = Omit<speedline.Output<'speedIndex'>, 'frames'> & {
+    frames: Array<Pick<
+      speedline.Output<'speedIndex'>['frames'][number],
+      'getImage' | 'getTimeStamp' | 'isProgressInterpolated'
+    >>;
+  };
 
   interface TraceTimes {
     timeOrigin: number;
