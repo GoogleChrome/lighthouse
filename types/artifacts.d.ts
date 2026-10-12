@@ -904,6 +904,11 @@ export interface TraceEvent {
       headers?: Array<{ name: string, value: string }>;
       scriptId?: number | string;
       sourceText?: string;
+      isolate?: number | string;
+      executionContextId?: number;
+      sourceUrl?: string;
+      splitIndex?: number;
+      splitCount?: number;
     };
     frame?: string;
     name?: string;
