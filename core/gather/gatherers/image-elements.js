@@ -13,7 +13,6 @@ import log from 'lighthouse-logger';
 
 import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import UnsizedImages from '../../audits/unsized-images.js';
 
 /* global getElementsInDocument, getNodeDetails */
 
@@ -246,8 +245,8 @@ function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules},
 function needsSourceRules(element) {
   if (element.isInShadowDOM || element.isCss) return false;
   if (
-    UnsizedImages.doesHtmlAttrProvideExplicitSize(element.attributeWidth) &&
-    UnsizedImages.doesHtmlAttrProvideExplicitSize(element.attributeHeight)
+    ImageElements.doesHtmlAttrProvideExplicitSize(element.attributeWidth) &&
+    ImageElements.doesHtmlAttrProvideExplicitSize(element.attributeHeight)
   ) {
     return false;
   }
@@ -270,6 +269,28 @@ class ImageElements extends BaseGatherer {
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
   };
+
+  /**
+   * An img size attribute prevents layout shifts if it is a non-negative integer (incl zero!).
+   * @url https://html.spec.whatwg.org/multipage/embedded-content-other.html#dimension-attributes
+   * @param {string | null} attrValue
+   * @return {boolean}
+   */
+  static doesHtmlAttrProvideExplicitSize(attrValue) {
+    if (!attrValue) return false;
+
+    // First, superweird edge case of using the positive-sign. The spec _sorta_ says it's valid...
+    // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers
+    //   > Otherwise, if the character is … (+): Advance position to the next character.
+    //   > (The "+" is ignored, but it is not conforming.)
+    // lol.  Irrelevant though b/c Chrome (at least) doesn't ignore. It rejects this as a non-conforming value.
+    if (attrValue.startsWith('+')) return false;
+
+    // parseInt isn't exactly the same as the html's spec for parsing integers, but it's close enough
+    // https://tc39.es/ecma262/#sec-parseint-string-radix
+    const int = parseInt(attrValue, 10);
+    return int >= 0;
+  }
 
   constructor() {
     super();
