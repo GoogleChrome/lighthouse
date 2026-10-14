@@ -31,6 +31,32 @@ function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = fals
   document.head.append(style);
 }
 
+// Same as generateInlineStyleWithSize, but with CSS nesting.
+// See https://github.com/GoogleChrome/lighthouse/issues/14718
+function generateNestedInlineStyleWithSize(sizeInBytes, firstContent = '', used = false) {
+  const data = [];
+  while (sizeInBytes > 0) {
+    const index = Math.round(100000 * Math.random());
+    const className = `${used ? '' : 'un'}used-nested-selector${index}`;
+    const prefix = used ? '' : '/* Here is a unused nested rule */\n';
+    const rule = `${prefix}.${className} { color: blue; & .nested-child { background: white; } }`;
+    data.push(rule);
+    if (used) {
+      const div = document.createElement('div');
+      div.classList.add(className);
+      const child = document.createElement('div');
+      child.classList.add('nested-child');
+      div.append(child);
+      document.body.append(div);
+    }
+    sizeInBytes -= rule.length * 0.2; // 1 byte per character, GZip estimate is 20% for Stylesheets
+  }
+
+  const style = document.createElement('style');
+  style.append(firstContent + data.join('\n'));
+  document.head.append(style);
+}
+
 function longTask(length = 75) {
   const start = Date.now();
   while (Date.now() < start + length) ;
@@ -270,6 +296,10 @@ generateInlineStyleWithSize(12000, '.mostly-used { background: none; }\n', true)
 generateInlineStyleWithSize(12000, '.kinda-unused { background: none; }\n');
 // FAIL: unused and lots of savings
 generateInlineStyleWithSize(30000, '.definitely-unused { background: none; }\n');
+// PASS: used nested rules (CSS nesting)
+generateNestedInlineStyleWithSize(12000, '.nested-mostly-used { color: blue; & .nested-child { background: white; } }\n', true);
+// FAIL: unused nested rules (CSS nesting) with lots of savings
+generateNestedInlineStyleWithSize(12000, '.nested-definitely-unused { color: blue; & .nested-child { background: white; } }\n');
 </script>
 
 <script>
