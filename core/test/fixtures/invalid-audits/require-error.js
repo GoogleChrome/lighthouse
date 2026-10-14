@@ -5,7 +5,6 @@
  */
 
 // NOTE: this require path does not resolve correctly.
-// eslint-disable-next-line local-rules/require-file-extension
 import LighthouseAudit from '../terrible/path/come/on/audit.js';
 
 class RequireErrorAudit extends LighthouseAudit {

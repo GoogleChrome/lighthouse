@@ -313,6 +313,17 @@ function collapseToStringLiteral(node, filepath) {
       throw new AstError(`unsupported identifier '${node.name}'`, node);
     }
 
+    case 'MemberExpression': {
+      if (node.object.type === 'MetaProperty' && node.property.type === 'Identifier') {
+        if (node.property.name === 'dirname') {
+          return path.dirname(filepath);
+        } else if (node.property.name === 'filename') {
+          return filepath;
+        }
+      }
+      throw new AstError(`unsupported member expression`, node);
+    }
+
     case 'CallExpression': {
       return evaluateCallExpression(node, filepath);
     }

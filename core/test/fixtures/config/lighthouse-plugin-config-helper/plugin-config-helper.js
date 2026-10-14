@@ -5,7 +5,7 @@
  */
 
 /** @type {LH.Config.Plugin} */
-module.exports = {
+export default {
   groups: {
     'new-group': {
       title: 'New Group',

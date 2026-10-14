@@ -1,7 +1,6 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
-import localRules from 'eslint-plugin-local-rules';
 import _import from 'eslint-plugin-import';
 import {fixupPluginRules} from '@eslint/compat';
 import globals from 'globals';
@@ -20,7 +19,6 @@ const compat = new FlatCompat({
 // See https://eslint.org/docs/latest/use/configure/configuration-files
 export default [{
   files: [
-    '**/*.cjs',
     '**/*.js',
     '**/*.mjs',
     '**/*.ts',
@@ -31,7 +29,6 @@ export default [{
   ignores: [
     '.cz-config.js',
     '**/.tmp',
-    '**/*.d.cts', // ignore d.ts files until we can properly lint them
     '**/*.d.ts',
     '**/dist',
     '**/fixtures/**',
@@ -45,7 +42,6 @@ export default [{
   ],
 }, ...compat.extends('eslint:recommended', 'google'), {
   plugins: {
-    'local-rules': localRules,
     'import': fixupPluginRules(_import),
   },
 
@@ -152,7 +148,6 @@ export default [{
       },
     }],
 
-    'local-rules/require-file-extension': 2,
     'require-jsdoc': 0,
     'valid-jsdoc': 0,
     'arrow-parens': 0,

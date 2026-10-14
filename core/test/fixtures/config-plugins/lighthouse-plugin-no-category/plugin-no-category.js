@@ -5,7 +5,7 @@
  */
 
 /** @type {LH.Config.Plugin} */
-module.exports = {
+export default {
   audits: [
     {path: 'redirects'},
     {path: 'user-timings'},

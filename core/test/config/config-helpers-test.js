@@ -23,10 +23,9 @@ import {
 import {Runner} from '../../runner.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {getModuleDirectory} from '../../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /** @type {typeof import('../../gather/gatherers/image-elements.js').default} */
 let ImageElementsGatherer;
@@ -363,12 +362,9 @@ describe('.resolveGathererToDefn', () => {
       await resolveGathererToDefn('../fixtures/valid-custom-gatherer', [], moduleDir);
     const result2 =
       await resolveGathererToDefn('../fixtures/valid-custom-gatherer.js', [], moduleDir);
-    const result3 =
-      await resolveGathererToDefn('../fixtures/valid-custom-gatherer.cjs', [], moduleDir);
 
     expect(result1).toMatchObject({path: '../fixtures/valid-custom-gatherer'});
     expect(result2).toMatchObject({path: '../fixtures/valid-custom-gatherer.js'});
-    expect(result3).toMatchObject({path: '../fixtures/valid-custom-gatherer.cjs'});
   });
 
   it('should expand gatherer impl short-hand', async () => {
@@ -450,12 +446,10 @@ describe('.resolveAuditsToDefns', () => {
     const result = await resolveAuditsToDefns([
       '../fixtures/valid-custom-audit',
       '../fixtures/valid-custom-audit.js',
-      '../fixtures/valid-custom-audit.cjs',
     ], moduleDir);
     expect(result).toMatchObject([
       {path: '../fixtures/valid-custom-audit', options: {}},
       {path: '../fixtures/valid-custom-audit.js', options: {}},
-      {path: '../fixtures/valid-custom-audit.cjs', options: {}},
     ]);
   });
 

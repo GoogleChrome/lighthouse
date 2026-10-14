@@ -5,7 +5,7 @@
  */
 
 /** @type {LH.Config.Plugin} */
-module.exports = {
+const pluginSimple = {
   groups: {
     'new-group': {
       title: 'New Group',
@@ -22,3 +22,5 @@ module.exports = {
     ],
   },
 };
+
+export default pluginSimple;
