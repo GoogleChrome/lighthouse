@@ -37,27 +37,29 @@ describe('ArbitraryEqualityMap', () => {
     assert.equal(map.get('foo'), 4);
   });
 
-  it('is not hella slow', () => {
-    const map = new ArbitraryEqualityMap();
-    map.setEqualityFn(ArbitraryEqualityMap.deepEquals);
-    for (let i = 0; i < 100; i++) {
-      map.set({i}, i);
-    }
+ it('is not hella slow', function() {
+  this.timeout(1000);
+  const map = new ArbitraryEqualityMap();
+  map.setEqualityFn(ArbitraryEqualityMap.deepEquals);
+  for (let i = 0; i < 100; i++) {
+    map.set({i}, i);
+  }
 
-    for (let j = 0; j < 1000; j++) {
-      const i = j % 100;
-      assert.equal(map.get({i}), i);
-    }
-  }, 1000);
+  for (let j = 0; j < 1000; j++) {
+    const i = j % 100;
+    assert.equal(map.get({i}), i);
+  }
+});
 
-  it('is fast for expected usage', () => {
-    const map = new ArbitraryEqualityMap();
-    map.setEqualityFn(ArbitraryEqualityMap.deepEquals);
-    map.set([trace, {x: 0}], 'foo');
-    map.set([trace, {x: 1}], 'bar');
+ it('is fast for expected usage', function() {
+  this.timeout(1000);
+  const map = new ArbitraryEqualityMap();
+  map.setEqualityFn(ArbitraryEqualityMap.deepEquals);
+  map.set([trace, {x: 0}], 'foo');
+  map.set([trace, {x: 1}], 'bar');
 
-    for (let i = 0; i < 10000; i++) {
-      assert.equal(map.get([trace, {x: i % 2}]), i % 2 ? 'bar' : 'foo');
-    }
-  }, 1000);
+  for (let i = 0; i < 10000; i++) {
+    assert.equal(map.get([trace, {x: i % 2}]), i % 2 ? 'bar' : 'foo');
+  }
+});
 });
