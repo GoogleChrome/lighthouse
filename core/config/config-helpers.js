@@ -7,8 +7,6 @@ import path from 'path';
 import {createRequire} from 'module';
 import url from 'url';
 
-import {isEqual} from 'lodash-es';
-
 import * as LH from '../../types/lh.js';
 import * as constants from './constants.js';
 import ConfigPlugin from './config-plugin.js';
@@ -16,6 +14,7 @@ import {Runner} from '../runner.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as validation from './validation.js';
 import {getModuleDirectory} from '../../shared/esm-utils.js';
+import {isEqual} from '../lib/arbitrary-equality-map.js';
 
 const require = createRequire(import.meta.url);
 
