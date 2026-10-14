@@ -19,7 +19,6 @@ import {LH_ROOT} from '../shared/root.js';
  * @property {Record<string, string>} rawCodeToReplace Complicated expressions are hard detect with the TS lib, so instead use this to work with the raw code.
  * @property {string[]} classesToRemove
  * @property {string[]} methodsToRemove
- * @property {string[]} variablesToRemove
  */
 
 const outDir = `${LH_ROOT}/core/lib/cdt/generated`;
@@ -75,14 +74,6 @@ const modifications = [
       'augmentWithScopes',
       'parseBloombergScopes',
     ],
-    variablesToRemove: [
-      'Common',
-      'Platform',
-      'SourceMapFunctionRanges_js_1',
-      'SourceMapScopes_js_1',
-      'SourceMapScopesInfo_js_1',
-      'TextUtils',
-    ],
   },
   {
     input: 'node_modules/chrome-devtools-frontend/front_end/core/common/ParsedURL.ts',
@@ -132,9 +123,6 @@ const modifications = [
       'urlWithoutHash',
       'urlWithoutScheme',
     ],
-    variablesToRemove: [
-      'Platform',
-    ],
   },
 ];
 
@@ -154,7 +142,7 @@ function assertPresence(code, codeFragments) {
  * @param {Modification} modification
  */
 function doModification(modification) {
-  const {rawCodeToReplace, classesToRemove, methodsToRemove, variablesToRemove} = modification;
+  const {rawCodeToReplace, classesToRemove, methodsToRemove} = modification;
 
   const code = fs.readFileSync(modification.input, 'utf-8');
   assertPresence(code, Object.keys(rawCodeToReplace));
@@ -173,11 +161,10 @@ function doModification(modification) {
     ts.ScriptTarget.ES2022, true, ts.ScriptKind.JS);
   const simplePrinter = ts.createPrinter({newLine: ts.NewLineKind.LineFeed});
 
-  // Second pass - use tsc to remove all references to certain variables.
+  // Second pass - use tsc to remove all references to certain classes/methods.
   assertPresence(codeTranspiledToEsm, [
     ...classesToRemove,
     ...methodsToRemove,
-    ...variablesToRemove,
   ]);
 
   const printer = ts.createPrinter({newLine: ts.NewLineKind.LineFeed}, {

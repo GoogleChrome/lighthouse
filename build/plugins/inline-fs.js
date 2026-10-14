@@ -67,7 +67,7 @@ async function inlineFs(code, filepath, trackedFiles) {
 
     let parsed;
     try {
-      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
+      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest', sourceType: 'module'});
     } catch (err) {
       // `err.loc` added by acorn.
       warnings.push(createWarning(err, filepath, err.loc));

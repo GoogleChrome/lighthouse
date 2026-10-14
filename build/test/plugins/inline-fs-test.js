@@ -230,6 +230,30 @@ describeSkipOnWindows('inline-fs', () => {
       });
     });
 
+    it('substitutes `import.meta.dirname`', async () => {
+      fs.writeFileSync(tmpPath, 'import.meta.dirname text content');
+
+      const dirnamePath = `import.meta.dirname + '/../.tmp/inline-fs/test.txt'`;
+      const content = `const myTextContent = fs.readFileSync(${dirnamePath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "import.meta.dirname text content";`,
+        warnings: [],
+      });
+    });
+
+    it('substitutes `import.meta.filename`', async () => {
+      fs.writeFileSync(tmpPath, 'import.meta.filename text content');
+
+      const constructedPath = `path.dirname(import.meta.filename) + '/../.tmp/inline-fs/test.txt'`;
+      const content = `const myTextContent = fs.readFileSync(${constructedPath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "import.meta.filename text content";`,
+        warnings: [],
+      });
+    });
+
     it('warns and skips on unsupported path methods', async () => {
       // eslint-disable-next-line max-len
       const content = `const myTextContent = fs.readFileSync(path.isAbsolute('${tmpPath}'), 'utf8');`;
