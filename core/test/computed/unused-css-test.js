@@ -108,6 +108,30 @@ describe('UnusedCSS computed artifact', () => {
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 5}]}).wastedPercent, 0);
     });
 
+    it('does not report negative waste when used ranges overlap or repeat', () => {
+      // Overlapping ranges (e.g. a nested rule inside its parent's range) or a
+      // rule reported as used more than once can sum to more than the sheet size.
+      const overlapping = map({usedRules: [
+        {startOffset: 0, endOffset: 5},
+        {startOffset: 2, endOffset: 4},
+      ]});
+      assert.equal(overlapping.wastedBytes, 0);
+      assert.equal(overlapping.wastedPercent, 0);
+
+      const duplicated = map({usedRules: [
+        {startOffset: 0, endOffset: 5},
+        {startOffset: 0, endOffset: 5},
+      ]});
+      assert.equal(duplicated.wastedBytes, 0);
+      assert.equal(duplicated.wastedPercent, 0);
+    });
+
+    it('does not report NaN for an empty stylesheet', () => {
+      const result = map({content: '', usedRules: []});
+      assert.equal(result.wastedBytes, 0);
+      assert.equal(result.wastedPercent, 0);
+    });
+
     it('correctly computes url', () => {
       const expectedPreview = 'dummy';
       assert.strictEqual(map({header: {sourceURL: '', isInline: false}}).url, expectedPreview);
