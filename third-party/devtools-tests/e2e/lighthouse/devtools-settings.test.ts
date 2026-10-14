@@ -7,6 +7,7 @@ import * as path from 'node:path';
 import type * as Common from '../../../front_end/core/common/common.js';
 import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
+import {describe, it} from '../conductor/mocha-interface.js';
 import {getZoom, openDeviceToolbar, selectDevice, selectZoomLevel} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,

@@ -5,6 +5,7 @@
 import {assert} from 'chai';
 
 import {expectError} from '../../conductor/events.js';
+import {describe, it} from '../conductor/mocha-interface.js';
 import {
   clickStartButton,
   getAuditsBreakdown,
