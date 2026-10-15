@@ -371,6 +371,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[LightKeeper](https://www.lightkeeper.cloud)** - Lighthouse testing service with free HAR Matrix view and multi-region testing (3 free regions, 25+ paid), supporting authenticated pages and cross-region performance comparison
 
+* **[notiduck](https://notiduck.com)** - Site health monitoring for engineers who know that "up" doesn't mean "usable." Built on self-hosted bare-metal, the notiduck "Watchduck" runs 42 automated Lighthouse audits per week to detect performance decay and OOM spirals before they become outages. Includes tracking for the new Agentic Browsing category. See it in action on the [live dashboard demo](https://notiduck.com/live). NotiDuck is a pure pay-as-you-go product with no monthly subscriptions.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
