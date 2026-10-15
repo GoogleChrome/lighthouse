@@ -121,16 +121,20 @@ describe('SEO: Document has valid hreflang code', () => {
         {rel: 'alternate', hreflang: 'fr', hrefRaw: 'example.com', source: 'head', node},
         {rel: 'alternate', hreflang: '@@', hrefRaw: 'https://example.com', source: 'head', node},
         {rel: 'alternate', hreflang: 'fr', hrefRaw: 'https://example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: 'fr', hrefRaw: '/fr/', source: 'headers', node},
       ],
     };
 
     const {details: {items}} = HreflangAudit.audit(artifacts);
 
-    assert.equal(items.length, 3);
+    assert.equal(items.length, 4);
     assert.equal(items[0].subItems.items.length, 2);
     assert.equal(items[1].subItems.items.length, 1);
 
     expect(items[0].subItems.items[0].reason).toBeDisplayString('Unexpected language code');
-    expect(items[0].subItems.items[1].reason).toBeDisplayString('Relative href value');
+    expect(items[0].subItems.items[1].reason)
+      .toBeDisplayString('href should not be a relative URL');
+    expect(items[3].subItems.items[0].reason)
+      .toBeDisplayString('href should not be a relative URL');
   });
 });
