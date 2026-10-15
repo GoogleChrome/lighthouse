@@ -20,7 +20,6 @@ import {isObjectOfUnknownValues} from '../shared/type-verifiers.js';
  */
 function getYargsParser(manualArgv) {
   const y = manualArgv ?
-    // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
     yargs(manualArgv) :
     yargs(yargsHelpers.hideBin(process.argv));
 

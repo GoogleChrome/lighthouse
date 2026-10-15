@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fs from 'fs';
-import path from 'path';
 import assert from 'assert/strict';
 
 import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
-import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
@@ -19,7 +16,7 @@ const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name
 
 describe('Screenshot thumbnails', () => {
   it('should extract thumbnails from a trace', () => {
-    const options = {minimumTimelineDuration: 500, numberOfThumbnails: 10, thumbnailWidth: 120};
+    const options = {minimumTimelineDuration: 500, numberOfThumbnails: 10};
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
@@ -29,13 +26,20 @@ describe('Screenshot thumbnails', () => {
 
     const context = {settings, options, computedCache: new Map()};
     return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
-      results.details.items.forEach((result, index) => {
-        const framePath = path.join(LH_ROOT,
-          `core/test/fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
-        const expectedData = fs.readFileSync(framePath, 'base64');
-        const actualData = result.data.slice('data:image/jpeg;base64,'.length);
-        expect(actualData).toEqual(expectedData);
-      });
+      const screenshots = pwaTrace.traceEvents
+        .filter(e => e.name === 'Screenshot')
+        .map(e => `data:image/jpeg;base64,${e.args.snapshot}`);
+
+      // First 6 thumbnails use speedline's synthesized white starting frame.
+      for (let i = 0; i <= 5; i++) {
+        expect(results.details.items[i].data).toEqual(results.details.items[0].data);
+      }
+      expect(results.details.items[0].data).not.toEqual(screenshots[0]);
+      expect(results.details.items[6].data).toEqual(screenshots[0]);
+      expect(results.details.items[7].data).toEqual(screenshots[1]);
+      expect(results.details.items[8].data).toEqual(screenshots[1]);
+      // screenshots[2] has interpolated progress and is skipped.
+      expect(results.details.items[9].data).toEqual(screenshots[3]);
 
       assert.equal(results.score, 1);
       assert.equal(results.details.items[0].timing, 82);

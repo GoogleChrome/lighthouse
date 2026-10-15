@@ -16,18 +16,14 @@ import {
 } from './mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../test-utils.js';
 
-const mockSubmodules = await mockDriverSubmodules();
-const mockRunner = await mockRunnerModule();
-
-// Establish the mocks before we import the file under test.
+/** @type {Awaited<ReturnType<typeof mockDriverSubmodules>>} */
+let mockSubmodules;
+/** @type {Awaited<ReturnType<typeof mockRunnerModule>>} */
+let mockRunner;
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-await td.replaceEsm('../../gather/driver.js',
-  mockDriverModule(() => mockDriver.asDriver()));
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const {startTimespanGather} = await import('../../gather/timespan-runner.js');
+/** @type {typeof import('../../gather/timespan-runner.js')['startTimespanGather']} */
+let startTimespanGather;
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
@@ -41,8 +37,21 @@ describe('Timespan Runner', () => {
   /** @type {LH.Config} */
   let config;
 
-  before(() => timers.useFakeTimers());
-  after(() => timers.dispose());
+  before(async () => {
+    timers.useFakeTimers();
+    mockSubmodules = await mockDriverSubmodules();
+    mockRunner = await mockRunnerModule();
+    await td.replaceEsm('../../gather/driver.js',
+      mockDriverModule(() => mockDriver.asDriver()));
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ({startTimespanGather} = await import('../../gather/timespan-runner.js'));
+  });
+  after(() => {
+    timers.dispose();
+    td.reset();
+  });
 
   beforeEach(() => {
     mockSubmodules.reset();

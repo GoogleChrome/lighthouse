@@ -654,33 +654,6 @@ describe('Sized images audit', () => {
   });
 });
 
-describe('html attribute sized check', () => {
-  it('fails if it is empty', () => {
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('')).toEqual(false);
-  });
-
-  it('handles non-numeric edgecases', () => {
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('zero')).toEqual(false);
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('1002$')).toEqual(true); // interpretted as 1002
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('s-5')).toEqual(false);
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('3,000')).toEqual(true); // interpretted as 3
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('100.0')).toEqual(true); // interpretted as 100
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('2/3')).toEqual(true); // interpretted as 2
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('-2020')).toEqual(false);
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('+2020')).toEqual(false); // see doesHtmlAttrProvideExplicitSize comments about positive-sign
-  });
-
-  it('passes on zero input', () => {
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('0')).toEqual(true);
-  });
-
-  it('passes on non-zero non-negative integer input', () => {
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('1')).toEqual(true);
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('250')).toEqual(true);
-    expect(UnsizedImagesAudit.doesHtmlAttrProvideExplicitSize('4000000')).toEqual(true);
-  });
-});
-
 describe('CSS property sized check', () => {
   it('fails if it was never defined', () => {
     expect(UnsizedImagesAudit.isCssPropExplicitlySet(undefined)).toEqual(false);

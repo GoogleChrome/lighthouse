@@ -20,13 +20,10 @@ class Speedline {
     // speedline() may throw without a promise, so we resolve immediately
     // to get in a promise chain.
     return ProcessedTrace.request(trace, context).then(processedTrace => {
-      // Use a shallow copy of traceEvents so speedline can sort as it pleases.
-      // See https://github.com/GoogleChrome/lighthouse/issues/2333
-      const traceEvents = trace.traceEvents.slice();
       // Force use of timeOrigin as reference point for speedline
       // See https://github.com/GoogleChrome/lighthouse/issues/2095
       const timeOrigin = processedTrace.timestamps.timeOrigin;
-      return speedline(traceEvents, {
+      return speedline(trace.traceEvents, {
         timeOrigin,
         fastMode: true,
         include: 'speedIndex',
@@ -46,7 +43,25 @@ class Speedline {
         throw new LighthouseError(LighthouseError.errors.SPEEDINDEX_OF_ZERO);
       }
 
-      return speedline;
+      // Evict the ~1 MB per-frame decoded RGBA buffers and histograms cached inside
+      // speedline-core's frame closures, keeping only the getters Lighthouse uses.
+      // TODO(https://github.com/paulirish/speedline/issues/122): Upstream to speedline-core
+      // so `frame()` in `lib/frame.js` does not cache `_parsedImage` on frame closures.
+      const frames = speedline.frames.map(frame => {
+        const imgBuff = frame.getImage();
+        const timeStamp = frame.getTimeStamp();
+        const isProgressInterpolated = frame.isProgressInterpolated();
+        return {
+          getImage: () => imgBuff,
+          getTimeStamp: () => timeStamp,
+          isProgressInterpolated: () => isProgressInterpolated,
+        };
+      });
+
+      return {
+        ...speedline,
+        frames,
+      };
     });
   }
 }

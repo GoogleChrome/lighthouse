@@ -6,6 +6,7 @@ import {assert} from 'chai';
 import type * as puppeteer from 'puppeteer-core';
 
 import {expectError} from '../../conductor/events.js';
+import {describe, it, setup} from '../conductor/mocha-interface.js';
 import {
   clickStartButton,
   getAuditsBreakdown,
