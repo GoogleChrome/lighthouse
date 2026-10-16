@@ -362,6 +362,10 @@ describe('NavigationRunner', () => {
         baseArtifacts,
       });
       expect(baseArtifacts.PageLoadError).toBe(noFcp);
+      expect(baseArtifacts.LighthouseRunWarnings).toEqual([noFcp.friendlyMessage]);
+      expect(baseArtifacts.LighthouseRuntimeWarnings).toEqual([
+        {code: 'NO_FCP', message: noFcp.friendlyMessage},
+      ]);
       expect(artifacts).toEqual({});
     });
 

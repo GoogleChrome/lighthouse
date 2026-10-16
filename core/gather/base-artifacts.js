@@ -28,6 +28,7 @@ async function getBaseArtifacts(resolvedConfig, driver, context) {
     fetchTime: new Date().toJSON(),
     Timing: [],
     LighthouseRunWarnings: [],
+    LighthouseRuntimeWarnings: [],
     settings: resolvedConfig.settings,
     // Environment artifacts that can always be computed.
     BenchmarkIndex,
