@@ -82,6 +82,8 @@ class Stylesheets extends BaseGatherer {
 
     // Ensure we finish fetching all stylesheet contents before disabling the CSS domain
     const sheets = await Promise.all(this._sheetPromises.values());
+    this._sheetPromises.clear();
+    this._session = undefined;
 
     await session.sendCommand('CSS.disable');
     await session.sendCommand('DOM.disable');
