@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import fs from 'fs';
+import path from 'path';
 
-const readFileSync = require('fs').readFileSync;
-const resolve = require('path').resolve;
-const mainTemplate = readFileSync(resolve(__dirname, 'templates/template.hbs')).toString();
-const headerPartial = readFileSync(resolve(__dirname, 'templates/header.hbs')).toString();
-const commitPartial = readFileSync(resolve(__dirname, 'templates/commit.hbs')).toString();
+const moduleDir = import.meta.dirname;
+const mainTemplate = fs.readFileSync(path.resolve(moduleDir, 'templates/template.hbs')).toString();
+const headerPartial = fs.readFileSync(path.resolve(moduleDir, 'templates/header.hbs')).toString();
+const commitPartial = fs.readFileSync(path.resolve(moduleDir, 'templates/commit.hbs')).toString();
 
 /** @typedef {{type: string, header: string, hash?: string, message?: string, PR?: string}} Commit */
 
@@ -109,7 +110,7 @@ const writerOpts = {
   commitsSort: ['type', 'scope'],
 };
 
-module.exports = {
+export {
   writerOpts,
   parserOpts,
 };

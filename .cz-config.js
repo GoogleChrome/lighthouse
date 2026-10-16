@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-module.exports = {
+export default {
   allowBreakingChanges: ['core'],
   allowCustomScopes: true,
   scopes: [],
