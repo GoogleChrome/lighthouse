@@ -5,12 +5,12 @@
  */
 
 /**
- * @fileoverview A collection of eslint rules written specifically for
- * Lighthouse. These are included by the eslint-plugin-local-rules plugin.
+ * @fileoverview An ESLint plugin containing rules written specifically for Lighthouse.
  */
 
 const path = require('path');
 
+/** @typedef {import('eslint').ESLint.Plugin} Plugin */
 /** @typedef {import('eslint').Rule.RuleModule} RuleModule */
 
 /**
@@ -62,7 +62,7 @@ const requireFileExtension = {
         if (!requiredPath.startsWith('.')) return;
 
         // Check that `requiredPath` is resolvable from the source file.
-        const contextDirname = path.dirname(context.getFilename());
+        const contextDirname = path.dirname(context.filename ?? context.getFilename());
         const resolvedRequiredPath = requireResolveOrNull(requiredPath, contextDirname);
         if (!resolvedRequiredPath) {
           return context.report({
@@ -100,6 +100,14 @@ const requireFileExtension = {
   },
 };
 
-module.exports = {
-  'require-file-extension': requireFileExtension,
+/** @type {Plugin} */
+const localRulesPlugin = {
+  meta: {
+    name: 'eslint-plugin-local-rules',
+  },
+  rules: {
+    'require-file-extension': requireFileExtension,
+  },
 };
+
+module.exports = localRulesPlugin;
