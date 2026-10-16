@@ -5,9 +5,9 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 
 import {ZipArchive} from 'archiver';
-import cpy from 'cpy';
 import esbuild from 'esbuild';
 
 import * as plugins from './esbuild-plugins.js';
@@ -50,15 +50,17 @@ async function buildEntryPoint() {
 }
 
 function copyAssets() {
-  cpy([
+  const patterns = [
     '*.html',
     'styles/**/*.css',
     'images/**/*',
     'manifest.json',
-  ], distDir, {
-    cwd: sourceDir,
-    parents: true,
-  });
+  ];
+  for (const relPath of fs.globSync(patterns, {cwd: sourceDir})) {
+    const srcPath = path.join(sourceDir, relPath);
+    if (!fs.statSync(srcPath).isFile()) continue;
+    fs.cpSync(srcPath, path.join(distDir, relPath));
+  }
 }
 
 /**

@@ -7,7 +7,6 @@
 import fs from 'fs';
 import path from 'path';
 
-import glob from 'glob';
 import MessageParser from '@formatjs/icu-messageformat-parser';
 
 import {collectAllCustomElementsFromICU, escapeIcuMessage} from '../../../shared/localization/format.js';
@@ -122,16 +121,16 @@ function pruneObsoleteLhlMessages() {
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
-  const ignore = [
-    '**/.ctc.json',
+  const exclude = [
+    '**/*.ctc.json',
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
-  const localePaths = glob.sync(globPattern, {
-    ignore,
+  const globPattern = 'shared/localization/locales/**/*.json';
+  const localePaths = fs.globSync(globPattern, {
+    exclude,
     cwd: LH_ROOT,
-  });
+  }).sort();
 
   /** @type {Set<string>} */
   const alreadyLoggedPrunes = new Set();

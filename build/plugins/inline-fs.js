@@ -6,11 +6,11 @@
 
 import assert from 'assert/strict';
 import fs from 'fs';
+import {createRequire} from 'module';
 import path from 'path';
 
 import * as acorn from 'acorn';
 import MagicString from 'magic-string';
-import resolve from 'resolve';
 import * as terser from 'terser';
 
 import {LH_ROOT} from '../../shared/root.js';
@@ -371,7 +371,7 @@ function evaluateCallExpression(node, filepath) {
       throw new AstError('only single-argument `require.resolve` is supported', node);
     }
     const argument = collapseToStringLiteral(node.arguments[0], filepath);
-    return resolve.sync(argument, {basedir: path.dirname(filepath)});
+    return createRequire(filepath).resolve(argument);
   }
 
   if (node.callee.object.name !== 'path') throw new AstError(unsupportedMsg, node);

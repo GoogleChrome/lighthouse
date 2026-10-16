@@ -6,11 +6,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import {createRequire} from 'module';
+import {createRequire, builtinModules} from 'module';
 
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
-import builtin from 'builtin-modules';
 
 import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
@@ -177,7 +176,7 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
  * @return {esbuild.Plugin}
  */
 function ignoreBuiltins(opts = {}) {
-  let builtinList = [...builtin];
+  let builtinList = builtinModules.filter(m => !m.startsWith('_'));
   if (opts.exclude) {
     builtinList = builtinList.filter(b => !opts?.exclude?.includes(b));
   }
