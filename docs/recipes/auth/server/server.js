@@ -11,14 +11,13 @@
 
 import http from 'http';
 import path from 'path';
-import url from 'url';
 
 import createError from 'http-errors';
 import express from 'express';
 import morgan from 'morgan';
 import session from 'express-session';
 
-const moduleDir = path.dirname(url.fileURLToPath(import.meta.url));
+const moduleDir = import.meta.dirname;
 const PUBLIC_DIR = path.join(moduleDir, 'public');
 
 const app = express();

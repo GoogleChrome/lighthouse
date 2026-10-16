@@ -67,7 +67,7 @@ async function inlineFs(code, filepath, trackedFiles) {
 
     let parsed;
     try {
-      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
+      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest', sourceType: 'module'});
     } catch (err) {
       // `err.loc` added by acorn.
       warnings.push(createWarning(err, filepath, err.loc));
@@ -311,6 +311,17 @@ function collapseToStringLiteral(node, filepath) {
         return LH_ROOT;
       }
       throw new AstError(`unsupported identifier '${node.name}'`, node);
+    }
+
+    case 'MemberExpression': {
+      if (node.object.type === 'MetaProperty' && node.property.type === 'Identifier') {
+        if (node.property.name === 'dirname') {
+          return path.dirname(filepath);
+        } else if (node.property.name === 'filename') {
+          return filepath;
+        }
+      }
+      throw new AstError(`unsupported member expression`, node);
     }
 
     case 'CallExpression': {
