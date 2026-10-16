@@ -153,7 +153,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       js: 'if (typeof module !== \'undefined\' && module.exports) ' +
         'module.exports = lighthouseBundle;',
     } : undefined,
-    charset: 'utf8',
+    // Escape non-ASCII characters so Blink/V8 keeps the bundle in a 1-byte string buffer.
+    charset: 'ascii',
     bundle: true,
     metafile: true,
     minify: opts.minify,
