@@ -220,6 +220,15 @@ describe('UrlUtils', () => {
       assert.equal(result, expected);
     });
 
+    it('Stays under the max length when the text after the last dot is long', () => {
+      // The stretch after the last `.` here is not an extension, it's most of the path.
+      // Keeping it whole used to make the "elided" name longer than the original.
+      const url = 'https://example.com/api.v2/this-is-a-very-long-endpoint-name-that-goes-on-and-on-forever';
+      const result = UrlUtils.getURLDisplayName(url);
+      assert.equal(result, '/api.v2/this-is-a-very-long-endpoint-name-that-goes-on-and-on-f…');
+      assert.ok(result.length <= 64, `got ${result.length} characters`);
+    });
+
     it('Elides path parts properly', () => {
       assert.equal(UrlUtils.getURLDisplayName('http://example.com/file.css'), '/file.css');
       assert.equal(UrlUtils.getURLDisplayName('http://t.co//file.css'), '//file.css');
