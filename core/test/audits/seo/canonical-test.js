@@ -258,4 +258,60 @@ describe('SEO: Document has valid canonical link', () => {
       assert.equal(auditResult.score, 1);
     });
   });
+
+  it('fails when canonical URL uses HTTP while current URL uses HTTPS', () => {
+    const mainDocumentUrl = 'https://example.com/articles/cats-and-you';
+    const mainResource = {url: mainDocumentUrl};
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = {
+      DevtoolsLog: devtoolsLog,
+      URL: {mainDocumentUrl},
+      LinkElements: [
+        link({rel: 'canonical', source: 'head', href: 'http://example.com/articles/cats-and-you'}),
+      ],
+    };
+
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
+      assert.equal(auditResult.score, 0);
+      expect(auditResult.explanation)
+        .toBeDisplayString('Canonical URL uses HTTP (http://example.com/articles/cats-and-you) instead of HTTPS');
+    });
+  });
+
+  it('succeeds when both canonical and current URL use HTTPS', () => {
+    const mainDocumentUrl = 'https://example.com/articles/cats-and-you';
+    const mainResource = {url: mainDocumentUrl};
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = {
+      DevtoolsLog: devtoolsLog,
+      URL: {mainDocumentUrl},
+      LinkElements: [
+        link({rel: 'canonical', source: 'head', href: 'https://example.com/articles/cats-and-you'}),
+      ],
+    };
+
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
+      assert.equal(auditResult.score, 1);
+    });
+  });
+
+  it('succeeds when both canonical and current URL use HTTP', () => {
+    const mainDocumentUrl = 'http://example.com/articles/cats-and-you';
+    const mainResource = {url: mainDocumentUrl};
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = {
+      DevtoolsLog: devtoolsLog,
+      URL: {mainDocumentUrl},
+      LinkElements: [
+        link({rel: 'canonical', source: 'head', href: 'http://example.com/articles/cats-and-you'}),
+      ],
+    };
+
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
+      assert.equal(auditResult.score, 1);
+    });
+  });
 });
