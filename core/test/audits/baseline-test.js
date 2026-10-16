@@ -294,9 +294,48 @@ describe('Baseline Audit', () => {
     it('should return high status for low features if over 30 months', () => {
       const status = Baseline.getFeatureStatus('low-feature', fakeData, dateOct);
       expect(status).toEqual({
-        displayStatus: 'Widely Available (2026-09-01)',
+        displayStatus: 'Widely Available (2024-03-01)',
         baselineTier: 'high',
       });
+    });
+
+    it('should show baseline_low_date for both high and promoted low features', async () => {
+      timers.setSystemTime(dateOct.getTime());
+      const traceEvents = [
+        {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'},
+        {args: {feature: 'abortsignal-any'}, cat: 'blink.webdx_feature_usage'},
+      ];
+
+      const result = await Baseline.audit({Trace: {traceEvents}});
+
+      expect(result.details.items).toEqual([
+        {
+          featureId: {
+            type: 'link',
+            text: 'abortsignal-any',
+            url: 'https://webstatus.dev/features/abortsignal-any',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2024-03-19)',
+          },
+          source: undefined,
+        },
+        {
+          featureId: {
+            type: 'link',
+            text: 'forced-colors',
+            url: 'https://webstatus.dev/features/forced-colors',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2022-09-12)',
+          },
+          source: undefined,
+        },
+      ]);
     });
 
     it('should return limited status for limited features', () => {

@@ -23,8 +23,9 @@ const data = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
  * - Widely Available (`baseline: 'high'`): 30 months after `baseline_low_date` (`baseline_high_date`).
  *
  * Why both `high` and `low` buckets below store `baseline_low_date`:
- * - The audit displays `baseline_low_date` for `high` features too, and uses `baseline_low_date`
- *   to sort features and determine the page's newest Baseline target year.
+ * - Widely Available rows always show `baseline_low_date`, including rows promoted at runtime
+ *   (promotion only changes the tier), and the audit uses `baseline_low_date` to sort features
+ *   and determine the page's newest Baseline target year.
  * - Some older features in `web-features` prefix `baseline_low_date` with `≤` (e.g. `≤2020-03-24`
  *   for `opacity-svg` and `≤2018-10-02` for `output`) when exact historical release dates aren't
  *   known. We strip `≤` here at build time so downstream code always gets valid ISO `YYYY-MM-DD`.
