@@ -3,8 +3,6 @@ import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 
-import localRulesPlugin from './eslint-local-rules.cjs';
-
 /**
  * Rules inlined from `eslint-config-google` v0.14.0 (excluding `valid-jsdoc`
  * and `require-jsdoc`, which were removed in ESLint v9).
@@ -138,7 +136,6 @@ export default [{
   rules: googleRules,
 }, {
   plugins: {
-    'local-rules': localRulesPlugin,
     'import': _import,
   },
 
@@ -245,7 +242,6 @@ export default [{
       },
     }],
 
-    'local-rules/require-file-extension': 2,
     'arrow-parens': 0,
   },
 }, {
