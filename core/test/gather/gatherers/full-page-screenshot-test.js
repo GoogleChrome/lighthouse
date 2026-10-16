@@ -180,7 +180,7 @@ describe('FullPageScreenshot gatherer', () => {
         mobile: true,
         deviceScaleFactor: 1,
         height: 1500,
-        width: 0,
+        width: 500,
       })
     );
 
@@ -191,7 +191,7 @@ describe('FullPageScreenshot gatherer', () => {
         mobile: true,
         deviceScaleFactor: 2,
         height: 500,
-        width: 0,
+        width: 500,
       })
     );
   });
@@ -218,7 +218,7 @@ describe('FullPageScreenshot gatherer', () => {
       {
         mobile: true,
         deviceScaleFactor: 1,
-        width: 0,
+        width: 412,
         height: 16383,
       }
     );
