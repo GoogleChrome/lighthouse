@@ -292,16 +292,6 @@ const expectations = {
               },
               subItems: undefined,
             },
-            {
-              value: /Unload event listeners are deprecated and will be removed/,
-              source: {
-                type: 'source-location',
-                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-                urlProvider: 'network',
-                line: '>0',
-                column: '9+/-1',
-              },
-            },
           ],
         },
       },
@@ -429,7 +419,7 @@ const expectations = {
         details: {
           items: [
             {
-              reason: /The page has an unload handler in the main frame/,
+              reason: /Pages with WebRTC (cannot|can’t) enter back\/forward cache/,
               failureType: 'Actionable',
               subItems: {
                 items: [{
