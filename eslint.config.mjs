@@ -3,7 +3,6 @@ import {fileURLToPath} from 'node:url';
 
 import localRules from 'eslint-plugin-local-rules';
 import _import from 'eslint-plugin-import';
-import {fixupPluginRules} from '@eslint/compat';
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
@@ -46,7 +45,7 @@ export default [{
 }, ...compat.extends('eslint:recommended', 'google'), {
   plugins: {
     'local-rules': localRules,
-    'import': fixupPluginRules(_import),
+    'import': _import,
   },
 
   languageOptions: {
