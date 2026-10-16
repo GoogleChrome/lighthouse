@@ -15,7 +15,6 @@ import path from 'path';
 import Mocha from 'mocha';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
-import glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
@@ -32,8 +31,8 @@ function escapeRegex(text) {
 
 function getFailedTests() {
   const allFailedTests = [];
-  for (const file of glob.sync('*.json', {cwd: failedTestsDir, absolute: true})) {
-    allFailedTests.push(...JSON.parse(fs.readFileSync(file, 'utf-8')));
+  for (const file of fs.globSync('*.json', {cwd: failedTestsDir}).sort()) {
+    allFailedTests.push(...JSON.parse(fs.readFileSync(path.join(failedTestsDir, file), 'utf-8')));
   }
   return allFailedTests;
 }
@@ -119,8 +118,11 @@ const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg
 function getTestFiles() {
   // Collect all the possible test files, based off the provided testMatch glob pattern
   // or the default patterns defined above.
-  const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
-  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT, ignore: '**/node_modules/**'});
+  const testsGlob = argv.testMatch || defaultTestMatches;
+  const allTestFiles = fs.globSync(testsGlob, {
+    cwd: LH_ROOT,
+    exclude: ['**/node_modules/**'],
+  }).sort();
 
   // If provided, filter the test files using a basic string includes on the absolute path of
   // each test file.

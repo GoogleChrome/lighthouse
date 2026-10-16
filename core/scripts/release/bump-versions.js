@@ -6,8 +6,6 @@
 
 import fs from 'fs';
 
-import glob from 'glob';
-
 import {readJson} from '../../test/test-utils.js';
 
 const NEW_VERSION = process.argv[2];
@@ -17,7 +15,7 @@ if (!/^\d+\.\d+\.\d+(-dev\.\d{8})?$/.test(NEW_VERSION)) {
 
 const OLD_VERSION = readJson('package.json').version;
 
-const ignore = [
+const exclude = [
   '**/node_modules/**',
   'changelog.md',
   'docs/recipes/auth/package.json',
@@ -25,7 +23,7 @@ const ignore = [
   'docs/recipes/integration-test/package.json',
 ];
 
-for (const file of glob.sync('**/{package.json,*.md,*-expected.txt,navigation.test.ts}', {ignore})) { // eslint-disable-line max-len
+for (const file of fs.globSync('**/{package.json,*.md,*-expected.txt,navigation.test.ts}', {exclude}).sort()) { // eslint-disable-line max-len
   let text;
   if (file === 'package.json') {
     const pkg = readJson(file);

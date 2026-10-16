@@ -9,9 +9,7 @@ import os from 'os';
 import path from 'path';
 
 import esbuild from 'esbuild';
-import cpy from 'cpy';
 import ghPages from 'gh-pages';
-import glob from 'glob';
 import * as terser from 'terser';
 
 import {LH_ROOT} from '../shared/root.js';
@@ -59,8 +57,8 @@ const license = `/*
  * @return {string[]}
  */
 function loadFiles(pattern) {
-  const filePaths = glob.sync(pattern, {nodir: true});
-  return filePaths.map(path => fs.readFileSync(path, {encoding: 'utf8'}));
+  const filePaths = fs.globSync(pattern).sort().filter(p => fs.statSync(p).isFile());
+  return filePaths.map(p => fs.readFileSync(p, {encoding: 'utf8'}));
 }
 
 /**
@@ -97,12 +95,14 @@ class GhPagesApp {
     const css = await this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
 
-    for (const {path, destDir, rename} of this.opts.assets) {
+    for (const {path: assetPattern, destDir, rename} of this.opts.assets) {
       const dir = destDir ? `${this.distDir}/${destDir}` : this.distDir;
-      await cpy(path, dir, {
-        cwd: this.opts.appDir,
-        rename,
-      });
+      for (const relPath of fs.globSync(assetPattern, {cwd: this.opts.appDir})) {
+        const srcPath = path.resolve(this.opts.appDir, relPath);
+        if (!fs.statSync(srcPath).isFile()) continue;
+        const destName = rename || path.basename(relPath);
+        fs.cpSync(srcPath, path.join(dir, destName));
+      }
     }
   }
 
