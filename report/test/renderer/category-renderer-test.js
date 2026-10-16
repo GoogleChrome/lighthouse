@@ -163,7 +163,7 @@ describe('CategoryRenderer', () => {
     const value = categoryDOM.querySelector('.lh-gauge__percentage');
     const title = categoryEl.querySelector('.lh-gauge__label');
 
-    assert.deepEqual(categoryEl, categoryEl.firstElementChild, 'first child is a score');
+    assert.equal(categoryEl, categoryDOM.firstElementChild, 'first child is a score');
     const scoreInDom = Number(value.textContent);
     assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'category score is rounded');
     assert.equal(title.textContent, category.title, 'title is set');
@@ -290,7 +290,7 @@ describe('CategoryRenderer', () => {
       const title = score.querySelector('.lh-gauge__label');
       const description = score.querySelector('.lh-category-header__description');
 
-      assert.deepEqual(score, score.firstElementChild, 'first child is a score');
+      assert.equal(score, categoryDOM.firstElementChild, 'first child is a score');
       const scoreInDom = Number(value.textContent);
       assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'score is rounded out of 100');
       assert.equal(title.textContent, category.title, 'title is set');
@@ -311,7 +311,7 @@ describe('CategoryRenderer', () => {
       const title = score.querySelector('.lh-fraction__label');
       const description = score.querySelector('.lh-category-header__description');
 
-      assert.deepEqual(score, score.firstElementChild, 'first child is a score');
+      assert.equal(score, categoryDOM.firstElementChild, 'first child is a score');
       assert.equal(title.textContent, category.title, 'title is set');
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     });
