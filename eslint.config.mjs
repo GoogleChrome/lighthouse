@@ -1,7 +1,3 @@
-import path from 'node:path';
-import {fileURLToPath} from 'node:url';
-
-import localRules from 'eslint-plugin-local-rules';
 import _import from 'eslint-plugin-import';
 import {fixupPluginRules} from '@eslint/compat';
 import globals from 'globals';
@@ -9,10 +5,8 @@ import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import {FlatCompat} from '@eslint/eslintrc';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
@@ -45,7 +39,6 @@ export default [{
   ],
 }, ...compat.extends('eslint:recommended', 'google'), {
   plugins: {
-    'local-rules': localRules,
     'import': fixupPluginRules(_import),
   },
 
@@ -152,7 +145,6 @@ export default [{
       },
     }],
 
-    'local-rules/require-file-extension': 2,
     'require-jsdoc': 0,
     'valid-jsdoc': 0,
     'arrow-parens': 0,
