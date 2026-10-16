@@ -136,36 +136,41 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   // TODO: consider adding a `estimatedSavingsText` to InsightModel, which can capture
   // the exact i18n string used by RPP; and include the same est. timing savings.
   let displayValue;
+  let wastedMs;
+
+  switch (insight.insightKey) {
+    case 'DocumentLatency':
+    case 'FontDisplay':
+    case 'RenderBlocking': {
+      wastedMs = metricSavings?.FCP ?? 0;
+      break;
+    }
+
+    case 'LCPDiscovery':
+    case 'ModernHTTP': {
+      wastedMs = metricSavings?.LCP ?? 0;
+      break;
+    }
+
+    case 'Viewport': {
+      wastedMs = metricSavings?.INP ?? 0;
+      break;
+    }
+  }
 
   if (insight.wastedBytes) {
     displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: insight.wastedBytes});
-  } else {
-    let wastedMs;
+  } else if (wastedMs) {
+    displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
+  }
 
-    switch (insight.insightKey) {
-      case 'DocumentLatency':
-      case 'DuplicatedJavaScript':
-      case 'FontDisplay':
-      case 'LegacyJavaScript':
-      case 'RenderBlocking': {
-        wastedMs = metricSavings?.FCP;
-        break;
-      }
-
-      case 'LCPDiscovery':
-      case 'ModernHTTP': {
-        wastedMs = metricSavings?.LCP;
-        break;
-      }
-
-      case 'Viewport': {
-        wastedMs = metricSavings?.INP;
-        break;
-      }
-    }
-
-    if (wastedMs) {
-      displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
+  if (numericValue === undefined) {
+    if (wastedMs !== undefined) {
+      numericValue = wastedMs;
+      numericUnit = 'millisecond';
+    } else if (insight.wastedBytes !== undefined) {
+      numericValue = insight.wastedBytes;
+      numericUnit = 'byte';
     }
   }
 
