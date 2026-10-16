@@ -12,7 +12,6 @@ import path from 'path';
 import {pathToFileURL} from 'url';
 import {isDeepStrictEqual as isEqual} from 'util';
 
-import glob from 'glob';
 import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
@@ -561,10 +560,10 @@ async function collectAllStringsInDir(dir) {
   const strings = {};
 
   const globPattern = path.join(path.relative(LH_ROOT, dir), '/**/*.js');
-  const files = glob.sync(globPattern, {
+  const files = fs.globSync(globPattern, {
     cwd: LH_ROOT,
-    ignore: ignoredPathComponents,
-  });
+    exclude: ignoredPathComponents,
+  }).sort();
 
   for (const relativeToRootPath of files) {
     const absolutePath = path.join(LH_ROOT, relativeToRootPath);
@@ -798,7 +797,7 @@ function sortObject(obj) {
 function injectTraceEngineStrings() {
   const traceEngineStringsDir = `${LH_ROOT}/node_modules/@paulirish/trace_engine/locales`;
   const lhStringsDir = `${LH_ROOT}/shared/localization/locales`;
-  for (const file of glob.sync(`${lhStringsDir}/*.json`)) {
+  for (const file of fs.globSync(`${lhStringsDir}/*.json`).sort()) {
     let name = path.basename(file);
     if (name.endsWith('.ctc.json')) {
       continue;

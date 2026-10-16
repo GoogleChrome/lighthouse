@@ -16,7 +16,6 @@ import {parse as parseURL} from 'url';
 import {URLSearchParams} from 'url';
 
 import mime from 'mime-types';
-import glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 
@@ -193,7 +192,7 @@ class Server {
 
     // Create an index page that lists the available test pages.
     if (filePath === '/') {
-      const fixturePaths = glob.sync('**/*.html', {cwd: this.baseDir});
+      const fixturePaths = fs.globSync('**/*.html', {cwd: this.baseDir}).sort();
       const html = `
         <html>
         <h1>Smoke test fixtures</h1>
