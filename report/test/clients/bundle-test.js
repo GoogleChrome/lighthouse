@@ -26,6 +26,7 @@ describe('lighthouseRenderer bundle', () => {
     document = window.document;
 
     global.window = global.self = window;
+    global.document = window.document;
     global.requestAnimationFrame = fn => fn();
     global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
@@ -45,6 +46,7 @@ describe('lighthouseRenderer bundle', () => {
   after(() => {
     global.console.warn = origConsoleWarn;
     global.window = global.self = undefined;
+    global.document = undefined;
     global.requestAnimationFrame = undefined;
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
