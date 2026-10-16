@@ -10,11 +10,10 @@ import * as i18n from '../../../core/lib/i18n/i18n.js';
 import * as constants from '../../../core/config/constants.js';
 import * as format from '../../localization/format.js';
 import {locales} from '../../localization/locales.js';
-import {getModuleDirectory, getModulePath} from '../../esm-utils.js';
 import {LH_ROOT} from '../../root.js';
 
-const moduleDir = getModuleDirectory(import.meta);
-const modulePath = getModulePath(import.meta);
+const moduleDir = import.meta.dirname;
+const modulePath = import.meta.filename;
 
 describe('format', () => {
   describe('DEFAULT_LOCALE', () => {

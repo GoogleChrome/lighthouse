@@ -11,7 +11,6 @@ import * as assetSaver from '../../lib/asset-saver.js';
 import {MetricTraceEvents} from '../../lib/traces/metric-trace-events.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {getModuleDirectory} from '../../../shared/esm-utils.js';
 import {readJson} from '../test-utils.js';
 
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
@@ -20,7 +19,7 @@ const dbwResults = readJson('../results/sample_v2.json', import.meta);
 const fullTraceObj = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 // deepStrictEqual can hang on a full trace, we assert trace same-ness like so
 function assertTraceEventsEqual(traceEventsA, traceEventsB) {

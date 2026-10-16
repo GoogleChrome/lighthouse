@@ -27,7 +27,7 @@ const partialLoaders = {
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',
     async onLoad(code) {
-      return {code: code.replace(/getModuleDirectory\(import.meta\)/g, '""')};
+      return {code: code.replace(/import\.meta\.dirname/g, '""')};
     },
   },
   /**

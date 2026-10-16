@@ -23,10 +23,9 @@ import {
 import {Runner} from '../../runner.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {getModuleDirectory} from '../../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /** @type {typeof import('../../gather/gatherers/image-elements.js').default} */
 let ImageElementsGatherer;
