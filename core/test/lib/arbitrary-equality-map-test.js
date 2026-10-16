@@ -60,4 +60,30 @@ describe('ArbitraryEqualityMap', () => {
       assert.equal(map.get([trace, {x: i % 2}]), i % 2 ? 'bar' : 'foo');
     }
   }, 1000);
+
+  it('deepEquals compares various types accurately', () => {
+    const {deepEquals} = ArbitraryEqualityMap;
+    assert.equal(deepEquals(1, 1), true);
+    assert.equal(deepEquals(NaN, NaN), true);
+    assert.equal(deepEquals(1, '1'), false);
+    assert.equal(deepEquals(null, undefined), false);
+    assert.equal(deepEquals({a: 1, b: [2, 3]}, {b: [2, 3], a: 1}), true);
+    assert.equal(deepEquals({a: 1}, {a: 1, b: undefined}), false);
+    assert.equal(deepEquals(new Date(1000), new Date(1000)), true);
+    assert.equal(deepEquals(new Date(1000), new Date(2000)), false);
+    assert.equal(deepEquals(/abc/gi, /abc/gi), true);
+    assert.equal(deepEquals(/abc/g, /abc/i), false);
+    assert.equal(deepEquals(new Uint8Array([1, 2]), new Uint8Array([1, 2])), true);
+    assert.equal(deepEquals(new Uint8Array([1, 2]), new Uint8Array([1, 3])), false);
+    assert.equal(deepEquals(new Set([1, 2]), new Set([1, 2])), true);
+    assert.equal(deepEquals(new Set([1, 2]), new Set([1, 3])), false);
+    assert.equal(deepEquals(new Map([['a', {x: 1}]]), new Map([['a', {x: 1}]])), true);
+    assert.equal(deepEquals(new Map([['a', {x: 1}]]), new Map([['a', {x: 2}]])), false);
+
+    const cyclicA = {name: 'a'};
+    cyclicA.self = cyclicA;
+    const cyclicB = {name: 'a'};
+    cyclicB.self = cyclicB;
+    assert.equal(deepEquals(cyclicA, cyclicB), true);
+  });
 });

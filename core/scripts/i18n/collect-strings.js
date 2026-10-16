@@ -10,12 +10,12 @@
 import fs from 'fs';
 import path from 'path';
 import {pathToFileURL} from 'url';
+import {isDeepStrictEqual as isEqual} from 'util';
 
 import glob from 'glob';
 import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
-import {isEqual} from 'lodash-es';
 
 import {Util} from '../../../shared/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';

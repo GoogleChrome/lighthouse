@@ -9,7 +9,6 @@ import path from 'path';
 
 
 import log from 'lighthouse-logger';
-import {isEqual} from 'lodash-es';
 
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
@@ -24,6 +23,7 @@ import {getModuleDirectory} from '../shared/esm-utils.js';
 import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
 import {Util} from '../shared/util.js';
+import {isEqual} from './lib/arbitrary-equality-map.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 
