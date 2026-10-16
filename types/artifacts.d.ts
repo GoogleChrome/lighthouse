@@ -931,6 +931,13 @@ export interface TraceEvent {
       protocol?: string;
       finishTime?: number;
       headers?: Array<{ name: string, value: string }>;
+      scriptId?: number;
+      sourceText?: string;
+      isolate?: number | string;
+      executionContextId?: number;
+      sourceUrl?: string;
+      splitIndex?: number;
+      splitCount?: number;
     };
     frame?: string;
     name?: string;
