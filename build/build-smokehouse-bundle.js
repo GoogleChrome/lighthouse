@@ -25,15 +25,6 @@ async function main() {
       plugins.replaceModules({
         [smokehouseCliFilename]:
           'export function runLighthouse() { throw new Error("not supported"); }',
-        'module': `
-          export const createRequire = () => {
-            return {
-              resolve() {
-                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
-              },
-            };
-          };
-        `,
         // Our node modules polyfill plugin does not support assert/strict.
         'assert/strict': `
           import assert from 'assert';
