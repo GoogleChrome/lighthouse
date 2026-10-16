@@ -8,8 +8,7 @@
 import fs from 'fs';
 import assert from 'assert/strict';
 import path from 'path';
-
-import chalk from 'chalk';
+import {styleText} from 'util';
 
 import constants from './constants.js';
 import {readJson} from '../../test/test-utils.js';
@@ -61,12 +60,14 @@ if (diffs.length) {
   console.log(`❌  FAIL    ${diffs.length} change(s) between expected and computed!\n`);
 
   diffs.sort((a, b) => b.maxDiff - a.maxDiff).forEach(site => {
-    console.log(chalk.magenta(site.url));
+    console.log(styleText('magenta', site.url));
     site.diffsForSite.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).forEach(entry => {
       const metric = `    - ${entry.metricName.padEnd(25)}`;
-      const diff = entry.diff > 0 ? chalk.yellow(`+${entry.diff}`) : chalk.cyan(`${entry.diff}`);
-      const actual = `${entry.actual} ${chalk.gray('(HEAD)')}`;
-      const expected = `${entry.expected} ${chalk.gray('(baseline)')}`;
+      const diff = entry.diff > 0
+        ? styleText('yellow', `+${entry.diff}`)
+        : styleText('cyan', `${entry.diff}`);
+      const actual = `${entry.actual} ${styleText('gray', '(HEAD)')}`;
+      const expected = `${entry.expected} ${styleText('gray', '(baseline)')}`;
       console.log(`${metric}${diff}\t${actual}\tvs.\t${expected}`);
     });
   });
