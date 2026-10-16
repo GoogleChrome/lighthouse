@@ -401,7 +401,7 @@ const matcher = new CodePatternMatcher([
 
 /**
  * @param {string} content
- * @param {import('../cdt/generated/SourceMap.js')|null} map
+ * @param {import('../cdt/generated/SourceMap.js').default|null} map
  * @return {Result}
  */
 function detectLegacyJavaScript(content, map) {
