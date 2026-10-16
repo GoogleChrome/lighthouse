@@ -13,8 +13,7 @@
  */
 
 import path from 'path';
-
-import colors from 'colors';
+import {styleText} from 'util';
 
 import LegacyJavaScriptInsight from '../../audits/insights/legacy-javascript-insight.js';
 import * as format from '../../../shared/localization/format.js';
@@ -60,9 +59,9 @@ async function main() {
     totalWastedBytes += item.wastedBytes ?? 0;
   }
 
-  console.log(colors.bold(`${items.length} signals found!`));
+  console.log(styleText('bold', `${items.length} signals found!`));
   if (totalWastedBytes) {
-    console.log(colors.bold(`Wasted bytes: ${formatBytes(totalWastedBytes)}`));
+    console.log(styleText('bold', `Wasted bytes: ${formatBytes(totalWastedBytes)}`));
   }
 
   for (const item of items) {
@@ -99,10 +98,10 @@ async function main() {
       const line = lines[location.line || 0] || '';
       const locationString = `at ${location.line}:${location.column}`;
       console.log('');
-      console.log(`${signal} ${colors.dim(locationString)}`);
+      console.log(`${signal} ${styleText('dim', locationString)}`);
       const contentToShow = line.slice(location.column - 10, location.column + 80);
       const unimportant = contentToShow.split(signal.toString());
-      console.log(unimportant.map(s => colors.dim(s)).join(signal.toString()));
+      console.log(unimportant.map(s => styleText('dim', s)).join(signal.toString()));
     }
 
     console.log('---------------------------------\n\n');
