@@ -150,6 +150,7 @@ expect.extend({
 });
 
 const testPlugins = [
+  'lighthouse-plugin-cjs',
   'lighthouse-plugin-no-category',
   'lighthouse-plugin-no-groups',
   'lighthouse-plugin-simple',

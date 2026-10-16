@@ -368,7 +368,14 @@ describe('.resolveGathererToDefn', () => {
 
     expect(result1).toMatchObject({path: '../fixtures/valid-custom-gatherer'});
     expect(result2).toMatchObject({path: '../fixtures/valid-custom-gatherer.js'});
-    expect(result3).toMatchObject({path: '../fixtures/valid-custom-gatherer.cjs'});
+    expect(result3).toMatchObject({
+      path: '../fixtures/valid-custom-gatherer.cjs',
+      implementation: expect.any(Function),
+      instance: expect.objectContaining({
+        meta: {supportedModes: ['navigation']},
+      }),
+    });
+    expect(result3.instance).toBeInstanceOf(result3.implementation);
   });
 
   it('should expand gatherer impl short-hand', async () => {
@@ -455,7 +462,13 @@ describe('.resolveAuditsToDefns', () => {
     expect(result).toMatchObject([
       {path: '../fixtures/valid-custom-audit', options: {}},
       {path: '../fixtures/valid-custom-audit.js', options: {}},
-      {path: '../fixtures/valid-custom-audit.cjs', options: {}},
+      {
+        path: '../fixtures/valid-custom-audit.cjs',
+        options: {},
+        implementation: expect.objectContaining({
+          meta: expect.objectContaining({id: 'valid-audit'}),
+        }),
+      },
     ]);
   });
 

@@ -86,8 +86,7 @@ describe('CLI bin', function() {
 
   describe('config', () => {
     it('should load the config from the path (common js)', async () => {
-      // TODO(esmodules): change this test when config file is esm.
-      const configPath = `${LH_ROOT}/core/config/lr-desktop-config.js`;
+      const configPath = `${LH_ROOT}/cli/test/fixtures/cjs-config.cjs`;
       cliFlags = {...cliFlags, configPath: configPath};
       const actualConfig = (await import(pathToFileURL(configPath).href)).default;
       await bin.begin();

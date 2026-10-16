@@ -20,6 +20,7 @@ cd /tmp/lighthouse-local-test
 
 npm init -y
 npm install "$LH_ROOT/lighthouse-$VERSION.tgz"
+node -e "const lh = require('lighthouse/core/index.cjs'); if (typeof lh !== 'function' || typeof lh.navigation !== 'function') throw new Error('index.cjs export invalid');"
 npm explore lighthouse -- npm run fast -- http://example.com --chrome-flags=--headless=new
 
 # Packaged smokehouse/lighthouse using root's static-server and test fixtures.
