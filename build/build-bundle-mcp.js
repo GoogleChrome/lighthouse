@@ -206,7 +206,6 @@ async function buildBundle(entryPath, distPath) {
     'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
-    'ws',
     'puppeteer-core',
   ];
   for (const modulePath of modulesToIgnore) shimsObj[modulePath] = 'export default {}';
