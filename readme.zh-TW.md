@@ -207,7 +207,7 @@ lighthouse -GA=./gmailartifacts https://gmail.com
 ## 使用 Node 模組
 您也可以透過程式設計方式，使用 Node 模組來操作 Lighthouse。
 
-如需入門協助，請閱讀[以程式設計方式使用 Lighthouse](./docs/readme.md#using-programmatically)。\
+如需入門協助，請閱讀[以程式設計方式使用 Lighthouse](./docs/readme.zh-TW.md#以程式設計方式使用)。\
 如需瞭解更多可用的設定選項，請閱讀 [Lighthouse 設定](./docs/configuration.md)。
 
 ## 檢視報表
@@ -237,11 +237,11 @@ HTML 報表：
 **文件**
 
 - [處理變異性](./docs/variability.md)
-- [以程式設計方式使用 Lighthouse](./docs/readme.md#using-programmatically)
+- [以程式設計方式使用 Lighthouse](./docs/readme.zh-TW.md#以程式設計方式使用)
 - [測試需要登入的網站](./docs/authenticated-pages.md)
 - [開發外掛程式](./docs/plugins.md)
 - [新增審查項目](./docs/new-audits.md)
-- [在行動裝置上測試](./docs/readme.md#testing-on-a-mobile-device)
+- [在行動裝置上測試](./docs/readme.zh-TW.md#在行動裝置上測試)
 - [Lighthouse 架構](./docs/architecture.md)
 
 **實作範例**

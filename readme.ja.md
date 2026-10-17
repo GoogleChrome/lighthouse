@@ -207,7 +207,7 @@ CLI を初めて実行すると、Lighthouse が実行時例外を匿名で報�
 ## Node モジュールを使う
 Node モジュールを使えば、プログラムから Lighthouse を利用することもできます。
 
-入門のヒントは[プログラムから Lighthouse を使う](./docs/readme.md#using-programmatically)をご覧ください。\
+入門のヒントは[プログラムから Lighthouse を使う](./docs/readme.ja.md#プログラムから-lighthouse-を使う)をご覧ください。\
 利用できる設定オプションの詳細は [Lighthouse の設定](./docs/configuration.md)をご覧ください。
 
 ## レポートを見る
@@ -237,11 +237,11 @@ HTML レポート:
 **ドキュメント**
 
 - [ばらつきへの対処](./docs/variability.md)
-- [プログラムから Lighthouse を使う](./docs/readme.md#using-programmatically)
+- [プログラムから Lighthouse を使う](./docs/readme.ja.md#プログラムから-lighthouse-を使う)
 - [認証付きサイトのテスト](./docs/authenticated-pages.md)
 - [プラグインの開発](./docs/plugins.md)
 - [新しい監査を作る](./docs/new-audits.md)
-- [モバイルデバイスでのテスト](./docs/readme.md#testing-on-a-mobile-device)
+- [モバイルデバイスでのテスト](./docs/readme.ja.md#モバイルデバイスでのテスト)
 - [Lighthouse のアーキテクチャ](./docs/architecture.md)
 
 **レシピ**

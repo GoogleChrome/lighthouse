@@ -65,6 +65,23 @@ $ sh export-tc-dump-to-github.sh
 
 See [Appendix A: How runtime string replacement works](#appendix)
 
+#### The hosted web apps (Report Viewer & Treemap)
+
+The websites served from `googlechrome.github.io/lighthouse/` localize their own
+UI (landing pages, language menu, log messages) through this same pipeline:
+
+* `viewer/app/src/ui-strings.js` holds the website shell strings and is collected
+  into the locale files like every other `UIStrings` module.
+* `treemap/app/src/util.js` holds the treemap's in-app strings.
+* `build/build-locale-strings.js` bakes the localized messages into the `strings`
+  global used by `viewer/app/src/website-locale.js`, which renders the pages in
+  the display locale and runs the language menu (English is the default, and the
+  choice is remembered across both apps).
+
+When adding or changing a string there, run `yarn i18n:collect-strings` and add
+the translations to `shared/localization/locales/*.json`, just like for report
+strings.
+
 
 
 # Writing UIStrings with LHL

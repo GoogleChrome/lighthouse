@@ -1,3 +1,5 @@
+**English** | [繁體中文](readme.zh-TW.md) | [日本語](readme.ja.md)
+
 This directory contains useful documentation, examples (keep reading),
 and [recipes](./recipes/) to get you started. For an overview of Lighthouse's
 internals, see [Lighthouse Architecture](architecture.md).
