@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {set} from 'lodash-es';
-import {get} from 'lodash-es';
-
 import * as format from './format.js';
 
 /**
@@ -70,9 +67,17 @@ function swapLocale(lhr, requestedLocale) {
         values = instance.values;
       }
 
+      const keys = path.replace(/\[([^\]]+)\]/g, '.$1').replace(/^\./, '').split('.');
+      /** @type {any} */
+      let parent = lhr;
+      for (let i = 0; i < keys.length - 1; i++) {
+        parent = parent?.[keys[i]];
+      }
+      const lastKey = keys[keys.length - 1];
+
       // If the path isn't valid or the value isn't a string, there's no point in trying to replace it.
       /** @type {unknown} */
-      const originalString = get(lhr, path);
+      const originalString = parent?.[lastKey];
       if (typeof originalString !== 'string') {
         continue;
       }
@@ -96,7 +101,7 @@ function swapLocale(lhr, requestedLocale) {
       }
 
       // Write string back into the LHR.
-      set(lhr, path, relocalizedString);
+      parent[lastKey] = relocalizedString;
     }
   }
 

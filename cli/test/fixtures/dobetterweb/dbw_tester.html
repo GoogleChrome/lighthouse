@@ -396,10 +396,9 @@ function isOnHttps() {
   document.body.append(img); // PASS
 }
 
-function noUnloadListenersTest() {
-  window.addEventListener('unload', () => {
-    console.log('unload on unload');
-  });
+function bfCacheFailureTest() {
+  window.__pc = new RTCPeerConnection();
+  window.__pc.addIceCandidate({candidate: 'invalid', sdpMid: '0'}).catch(() => {});
 }
 
 function thirdPartyCookieTest() {
@@ -435,7 +434,7 @@ if (location.search === '') {
   deprecationsTest();
   inputsCanBePastedIntoTest();
   isOnHttps();
-  noUnloadListenersTest();
+  bfCacheFailureTest();
   thirdPartyCookieTest();
 } else {
   if (params.has('documentWrite')) {

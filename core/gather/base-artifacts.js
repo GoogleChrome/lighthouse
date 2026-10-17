@@ -5,12 +5,12 @@
  */
 
 import log from 'lighthouse-logger';
-import {isEqual} from 'lodash-es';
 
 import {
   getBrowserVersion, getBenchmarkIndex, getEnvironmentWarnings,
   getDevicePixelRatio,
 } from './driver/environment.js';
+import {isEqual} from '../lib/arbitrary-equality-map.js';
 
 /**
  * @param {LH.Config.ResolvedConfig} resolvedConfig

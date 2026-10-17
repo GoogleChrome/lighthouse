@@ -119,7 +119,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
-    'ws',
   ];
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
@@ -153,7 +152,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       js: 'if (typeof module !== \'undefined\' && module.exports) ' +
         'module.exports = lighthouseBundle;',
     } : undefined,
-    charset: 'utf8',
+    // Escape non-ASCII characters so Blink/V8 keeps the bundle in a 1-byte string buffer.
+    charset: 'ascii',
     bundle: true,
     metafile: true,
     minify: opts.minify,
