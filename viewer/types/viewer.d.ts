@@ -7,6 +7,7 @@
 import {ReportGenerator as _ReportGenerator} from '../../report/generator/report-generator.js';
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
+import * as Settings from '../../types/lhr/settings';
 import 'gtag.js';
 
 // Import for needed DOM type augmentation.
@@ -21,6 +22,8 @@ declare global {
   var ReportGenerator: typeof _ReportGenerator;
   var logger: _Logger;
   var idbKeyval: typeof import('idb-keyval');
+  // `strings` is generated in build/build-locale-strings.js
+  var strings: Record<Settings.Locale, Record<string, string>>;
 
   interface Window {
     viewer: _LighthouseReportViewer;

@@ -10,6 +10,7 @@ import fs from 'fs';
 import jsdom from 'jsdom';
 
 import {TreemapUtil} from '../app/src/util.js';
+import {UIStrings as WebsiteUIStrings} from '../../viewer/app/src/ui-strings.js';
 import {LH_ROOT} from '../../shared/root.js';
 
 describe('TreemapUtil', () => {
@@ -77,9 +78,16 @@ describe('TreemapUtil', () => {
     it('should have only valid data-i18n values in treemap html', () => {
       const TREEMAP_INDEX = fs.readFileSync(LH_ROOT + '/treemap/app/index.html', 'utf8');
       const dom = new jsdom.JSDOM(TREEMAP_INDEX);
+      // The treemap page is localized by both the treemap UIStrings and the
+      // shared website UIStrings (see build/build-locale-strings.js).
+      const uiStrings = {...TreemapUtil.UIStrings, ...WebsiteUIStrings};
       for (const node of dom.window.document.querySelectorAll('[data-i18n]')) {
         const val = node.getAttribute('data-i18n');
-        assert.ok(val in TreemapUtil.UIStrings, `Invalid data-i18n value of: "${val}" not found.`);
+        assert.ok(val in uiStrings, `Invalid data-i18n value of: "${val}" not found.`);
+      }
+      for (const node of dom.window.document.querySelectorAll('[data-i18n-placeholder]')) {
+        const val = node.getAttribute('data-i18n-placeholder');
+        assert.ok(val in uiStrings, `Invalid data-i18n-placeholder value of: "${val}" not found.`);
       }
     });
   });

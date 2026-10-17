@@ -10,7 +10,7 @@ SPDX-License-Identifier: Apache-2.0
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <title>Lighthouse Treemap</title>
+  <title data-i18n="treemapTitle">Lighthouse Treemap</title>
   <link rel="icon" href='data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="%23F63"/><path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="%23FFA385"/><path fill="%23FF3" d="M20.5 10h7v7h-7z"/></svg>'>
   <meta name="theme-color" content="#304ffe">
   <link rel="stylesheet" href="styles/bundled.css">
@@ -26,12 +26,17 @@ SPDX-License-Identifier: Apache-2.0
         <img src="images/lighthouse-logo.svg" class="treemap-placeholder-logo" alt="Lighthouse logo">
       </div>
       <div>
-        <h1 class="treemap-placeholder__heading">Lighthouse Treemap</h1>
-        <div class="treemap-placeholder__help">To view a treemap: Paste the Lighthouse result json or a Gist URL.<br>
-          You can also drag 'n drop the file or click here to select it.<br><br>
+        <h1 class="treemap-placeholder__heading" data-i18n="treemapTitle">Lighthouse Treemap</h1>
+        <div class="website-locale-switcher">
+          <label class="website-locale-switcher__label" for="website-locale" data-i18n="localeSwitcherLabel">Language</label>
+          <select id="website-locale" class="js-website-locale"></select>
+        </div>
+        <div class="treemap-placeholder__help">
+          <p data-i18n="treemapHelpPaste">To view a treemap: paste the Lighthouse result JSON or a Gist URL.</p>
+          <p data-i18n="treemapHelpDragDrop">You can also drag 'n drop the file or click here to select it.</p>
         </div>
         <input type="url" class="treemap-placeholder__url js-gist-url"
-               placeholder="Enter or paste Gist URL">
+               placeholder="Enter or paste Gist URL" data-i18n-placeholder="gistUrlPlaceholder">
       </div>
     </div>
   </div>
@@ -50,7 +55,7 @@ SPDX-License-Identifier: Apache-2.0
           <path fill="#FF3" d="M20.5 10h7v7h-7z"/>
         </svg>
 
-        <span class="lh-header--title lh-text-bold">Lighthouse Treemap</span>
+        <span class="lh-header--title lh-text-bold" data-i18n="treemapTitle">Lighthouse Treemap</span>
       </div>
 
       <div class="lh-header__url">

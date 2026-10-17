@@ -3,7 +3,6 @@ import Treemap_ from '../../types/lhr/treemap';
 import * as Settings from '../../types/lhr/settings';
 import 'google.analytics';
 import LHResult from '../../types/lhr/lhr';
-import {TreemapUtil} from '../app/src/util';
 import FlowResult_ from '../../types/lhr/flow-result';
 
 // Import for needed DOM type augmentation.
@@ -44,8 +43,8 @@ declare global {
   };
   var logger: _Logger;
   var idbKeyval: typeof import('idb-keyval');
-  // `strings` is generated in build/build-treemap.js
-  var strings: Record<Settings.Locale, typeof TreemapUtil['UIStrings']>;
+  // `strings` is generated in build/build-locale-strings.js
+  var strings: Record<Settings.Locale, Record<string, string>>;
 
   interface Window {
     logger: _Logger;

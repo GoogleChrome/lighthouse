@@ -11,6 +11,7 @@
 import {TreemapUtil} from './util.js';
 import {DragAndDrop} from '../../../viewer/app/src/drag-and-drop.js';
 import {GithubApi} from '../../../viewer/app/src/github-api.js';
+import {initWebsiteI18n} from '../../../viewer/app/src/website-locale.js';
 import {I18nFormatter} from '../../../report/renderer/i18n-formatter.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
@@ -29,6 +30,10 @@ if (!logEl) {
 const logger = new Logger(logEl);
 // `getGistFileContentAsJson` expects logger to be defined globally.
 window.logger = logger;
+
+// Localize the website shell (placeholder page & language menu). English is
+// the default; `strings` is generated in build/build-treemap.js.
+initWebsiteI18n(strings);
 
 /** @type {TreemapViewer} */
 let treemapViewer;

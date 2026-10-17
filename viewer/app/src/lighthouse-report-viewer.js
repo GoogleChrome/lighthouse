@@ -10,6 +10,7 @@ import {DragAndDrop} from './drag-and-drop.js';
 import {GithubApi} from './github-api.js';
 import {PSIApi} from './psi-api';
 import {ViewerUIFeatures} from './viewer-ui-features.js';
+import {getWebsiteString} from './website-locale.js';
 import {DOM} from '../../../report/renderer/dom.js';
 import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
@@ -171,10 +172,10 @@ export class LighthouseReportViewer {
       // reports will start to throw this warning when the viewer rev's its
       // minor LH version.
       // See https://github.com/GoogleChrome/lighthouse/issues/1108
-      logger.warn('Results may not display properly.\n' +
-                  'Report was created with an earlier version of ' +
-                  `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
-                  `version is ${window.LH_CURRENT_VERSION}.`);
+      logger.warn(getWebsiteString('olderReportWarning', {
+        reportVersion: reportJson.lighthouseVersion,
+        currentVersion: window.LH_CURRENT_VERSION,
+      }));
     }
   }
 
@@ -325,7 +326,7 @@ export class LighthouseReportViewer {
     try {
       json = JSON.parse(str);
     } catch (e) {
-      logger.error('Could not parse JSON file.');
+      logger.error(getWebsiteString('couldNotParseJson'));
       return;
     }
 
@@ -344,7 +345,7 @@ export class LighthouseReportViewer {
    * @private
    */
   _loadInLegacyViewerVersion(reportJson) {
-    const warnMsg = `Version mismatch between viewer and JSON. Opening compatible viewer...`;
+    const warnMsg = getWebsiteString('versionMismatchOpening');
     logger.log(warnMsg, false);
 
     // Place report in IDB, then navigate current tab to the legacy viewer
@@ -427,7 +428,7 @@ export class LighthouseReportViewer {
     try {
       this._loadFromGistURL(inputElement.value);
     } catch (err) {
-      logger.error('Invalid URL');
+      logger.error(getWebsiteString('invalidUrl'));
     }
   }
 
@@ -442,7 +443,7 @@ export class LighthouseReportViewer {
       const url = new URL(urlStr);
 
       if (url.origin !== 'https://gist.github.com') {
-        logger.error('URL was not a gist');
+        logger.error(getWebsiteString('notAGist'));
         return;
       }
 
@@ -452,7 +453,7 @@ export class LighthouseReportViewer {
         this._loadFromDeepLink();
       }
     } catch (err) {
-      logger.error('Invalid URL');
+      logger.error(getWebsiteString('invalidUrl'));
     }
   }
 
@@ -484,7 +485,7 @@ export class LighthouseReportViewer {
    * @param {PSIParams} params
    */
   _fetchFromPSI(params) {
-    logger.log('Waiting for Lighthouse results ...');
+    logger.log(getWebsiteString('waitingForResults'));
     return this._psi.fetchPSI(params).then(response => {
       logger.hide();
 
@@ -494,7 +495,7 @@ export class LighthouseReportViewer {
           console.error(response.error);
           logger.error(response.error.message);
         } else {
-          logger.error('PSI did not return a Lighthouse Result');
+          logger.error(getWebsiteString('psiNoResult'));
         }
         return;
       }

@@ -6,6 +6,8 @@
 
 /* global logger */
 
+import {getWebsiteString} from './website-locale.js';
+
 /**
  * Manages drag and drop file input for the page.
  */
@@ -37,7 +39,7 @@ export class DragAndDrop {
       reader.onload = function(e) {
         const result = /** @type {?string} */ (e.target?.result);
         if (!result) {
-          reject(new Error('Could not read file'));
+          reject(new Error(getWebsiteString('couldNotReadFile')));
           return;
         }
         resolve(result);

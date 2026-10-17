@@ -39,6 +39,7 @@ const foldersWithStrings = [
   `${LH_ROOT}/report/renderer`,
   `${LH_ROOT}/treemap`,
   `${LH_ROOT}/flow-report`,
+  `${LH_ROOT}/viewer`,
   path.dirname(resolveModulePath('lighthouse-stack-packs')) + '/packs',
 ];
 
@@ -55,6 +56,10 @@ const ignoredPathComponents = [
   '**/*-renderer.js',
   '**/util-commonjs.js',
   'treemap/app/src/main.js',
+  // Browser entry points that cannot be imported by node (top-level browser
+  // APIs and extensionless/TypeScript imports).
+  'viewer/app/src/main.js',
+  'viewer/app/src/lighthouse-report-viewer.js',
 ];
 
 /**

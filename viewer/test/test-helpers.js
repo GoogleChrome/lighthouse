@@ -14,7 +14,8 @@ import {LH_ROOT} from '../../shared/root.js';
 const PAGE = fs.readFileSync(path.join(LH_ROOT, 'viewer/app/index.html'), 'utf8');
 
 function setupJsDomGlobals() {
-  const {window} = new jsdom.JSDOM(PAGE);
+  // A real URL so that `window.localStorage` is usable in tests.
+  const {window} = new jsdom.JSDOM(PAGE, {url: 'https://example.com/'});
   global.document = window.document;
   global.window = window;
   global.logger = console;

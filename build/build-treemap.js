@@ -8,9 +8,9 @@ import {createRequire} from 'module';
 
 import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../shared/root.js';
-import {getIcuMessageIdParts} from '../shared/localization/format.js';
-import {locales} from '../shared/localization/locales.js';
-import {UIStrings} from '../treemap/app/src/util.js';
+import {buildStringsGlobal} from './build-locale-strings.js';
+import {UIStrings as TreemapUIStrings} from '../treemap/app/src/util.js';
+import {UIStrings as WebsiteUIStrings} from '../viewer/app/src/ui-strings.js';
 
 const require = createRequire(import.meta.url);
 
@@ -20,23 +20,10 @@ const require = createRequire(import.meta.url);
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const strings = /** @type {Record<LH.Locale, string>} */ ({});
-
-  for (const [locale, lhlMessages] of Object.entries(locales)) {
-    const localizedStrings = Object.fromEntries(
-      Object.entries(lhlMessages).map(([icuMessageId, v]) => {
-        const {filename, key} = getIcuMessageIdParts(icuMessageId);
-        if (!filename.endsWith('util.js') || !(key in UIStrings)) {
-          return [];
-        }
-
-        return [key, v.message];
-      })
-    );
-    strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
-  }
-
-  return 'const strings =' + JSON.stringify(strings, null, 2) + ';';
+  return buildStringsGlobal([
+    {uiStrings: TreemapUIStrings, filename: 'treemap/app/src/util.js'},
+    {uiStrings: WebsiteUIStrings, filename: 'viewer/app/src/ui-strings.js'},
+  ]);
 }
 
 /**

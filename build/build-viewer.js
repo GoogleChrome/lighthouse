@@ -11,6 +11,8 @@ import esbuild from 'esbuild';
 import * as plugins from './esbuild-plugins.js';
 import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../shared/root.js';
+import {buildStringsGlobal} from './build-locale-strings.js';
+import {UIStrings} from '../viewer/app/src/ui-strings.js';
 
 const require = createRequire(import.meta.url);
 
@@ -52,6 +54,7 @@ async function main() {
       {path: '../../flow-report/assets/styles.css'},
     ],
     javascripts: [
+      buildStringsGlobal([{uiStrings: UIStrings, filename: 'viewer/app/src/ui-strings.js'}]),
       // TODO: import report generator async
       // https://github.com/GoogleChrome/lighthouse/pull/13429
       reportGeneratorJs,

@@ -6,8 +6,15 @@
 
 import {Logger} from '../../../report/renderer/logger.js';
 import {LighthouseReportViewer} from './lighthouse-report-viewer.js';
+import {initWebsiteI18n} from './website-locale.js';
+
+/* globals strings */
 
 function main() {
+  // Localize the website shell (placeholder page & language menu). English is
+  // the default; `strings` is generated in build/build-viewer.js.
+  initWebsiteI18n(strings);
+
   const logEl = document.querySelector('div#lh-log');
   if (!logEl) {
     throw new Error('logger element not found');
