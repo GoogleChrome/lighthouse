@@ -14,5 +14,7 @@ export function renderFlowReport(
   options?: LH.FlowReportOptions
 ) {
   root.classList.add('flow-vars', 'lh-vars', 'lh-root');
+  // Mark the report subtree with its own language (see report-renderer.js).
+  root.lang = flowResult.steps[0].lhr.configSettings.locale;
   render(h(App, {flowResult, options}), root);
 }

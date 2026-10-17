@@ -59,6 +59,10 @@ export class ReportRenderer {
     const report = ReportUtils.prepareReportResult(lhr);
 
     this._dom.rootEl.textContent = ''; // Remove previous report.
+    // The report subtree is marked with its own language so assistive tech and
+    // font selection pick the right rules, even when a host page around it is
+    // in a different language (e.g. the Viewer shell vs the report).
+    this._dom.rootEl.lang = report.configSettings.locale;
     this._dom.rootEl.append(this._renderReport(report));
 
     if (this._opts.occupyEntireViewport) {
