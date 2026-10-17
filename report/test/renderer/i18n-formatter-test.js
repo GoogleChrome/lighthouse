@@ -207,10 +207,10 @@ describe('i18n formatter', () => {
   it('should not crash on unknown locales', () => {
     const i18n = new I18nFormatter('unknown-mystery-locale');
     const timestamp = i18n.formatDateTime('2017-04-28T23:07:51.189Z');
-    // Intl falls back to the machine's own locale for unknown locales, so the
-    // exact format is environment-dependent. A date for 2017-04-28 (±1 day for
-    // timezone differences) is what must come out.
-    assert.ok(timestamp.includes('2017'));
-    assert.ok(/\b(27|28|29)\b/.test(timestamp));
+    // Compare with the runtime's default locale, including its calendar and digits.
+    const defaultLocale = /** @type {LH.Locale} */ (
+      new Intl.DateTimeFormat().resolvedOptions().locale);
+    const defaultI18n = new I18nFormatter(defaultLocale);
+    assert.equal(timestamp, defaultI18n.formatDateTime('2017-04-28T23:07:51.189Z'));
   });
 });

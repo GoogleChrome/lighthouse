@@ -127,6 +127,8 @@ describe('Lighthouse Viewer', () => {
 
     it('should load with no errors', async () => {
       await ensureNoErrors();
+      assert.equal(await viewerPage.$eval('main > .lh-root', el => el.lang),
+        JSON.parse(fs.readFileSync(sampleFlowResult, 'utf8')).steps[0].lhr.configSettings.locale);
     });
 
     it('renders the summary page', async () => {
@@ -217,6 +219,8 @@ describe('Lighthouse Viewer', () => {
               return el.value;
             }),
             sampleString: document.querySelector('.lh-report-icon--copy').textContent,
+            reportLang: document.querySelector('main > .lh-root').lang,
+            websiteLang: document.documentElement.lang,
           };
         });
       }
@@ -225,6 +229,8 @@ describe('Lighthouse Viewer', () => {
       expect(resultBeforeSwap.selectedValue).toBe('en-US');
       expect(resultBeforeSwap.options).toEqual(getCanonicalLocales());
       expect(resultBeforeSwap.sampleString).toBe('Copy JSON');
+      expect(resultBeforeSwap.reportLang).toBe('en-US');
+      expect(resultBeforeSwap.websiteLang).toBe('en-US');
 
       await viewerPage.select('.lh-locale-selector', 'es');
       await viewerPage.waitForFunction(() => {
@@ -234,6 +240,8 @@ describe('Lighthouse Viewer', () => {
       const resultAfterSwap = await queryLocaleState();
       expect(resultAfterSwap.selectedValue).toBe('es');
       expect(resultAfterSwap.sampleString).toBe('Copiar JSON');
+      expect(resultAfterSwap.reportLang).toBe('es');
+      expect(resultAfterSwap.websiteLang).toBe('en-US');
     });
 
     it('should support saving as html', async () => {

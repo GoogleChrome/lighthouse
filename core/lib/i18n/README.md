@@ -78,6 +78,11 @@ UI (landing pages, language menu, log messages) through this same pipeline:
   the display locale and runs the language menu (English is the default, and the
   choice is remembered across both apps).
 
+The website language and the imported report's locale are independent. The
+website owns the document language and shell labels; the report's root element
+has its own `lang` attribute. Treemap applies the report locale only to its own
+strings, preserving the visitor's chosen language for the surrounding website.
+
 When adding or changing a string there, run `yarn i18n:collect-strings` and add
 the translations to `shared/localization/locales/*.json`, just like for report
 strings.

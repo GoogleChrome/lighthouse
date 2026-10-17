@@ -107,13 +107,15 @@ function applyWebsiteStrings(locale) {
 
   for (const element of document.querySelectorAll('[data-i18n]')) {
     const key = element.getAttribute('data-i18n');
-    if (key === null || !(key in activeStrings)) continue;
+    if (key === null || !Object.prototype.hasOwnProperty.call(UIStrings, key)) continue;
+    // A shell label may live inside a report in a different language.
+    element.setAttribute('lang', locale);
     renderMessage(element, activeStrings[key]);
   }
 
   for (const element of document.querySelectorAll('[data-i18n-placeholder]')) {
     const key = element.getAttribute('data-i18n-placeholder');
-    if (key === null || !(key in activeStrings)) continue;
+    if (key === null || !Object.prototype.hasOwnProperty.call(UIStrings, key)) continue;
     element.setAttribute('placeholder', activeStrings[key]);
   }
 }

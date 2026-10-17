@@ -11,6 +11,8 @@ import {getChromePath} from 'chrome-launcher';
 
 import {Server} from '../../cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../shared/root.js';
+import {locales} from '../../shared/localization/locales.js';
+import {TextEncoding} from '../../report/renderer/text-encoding.js';
 
 const debugOptions = JSON.parse(
   fs.readFileSync(LH_ROOT + '/treemap/app/debug.json', 'utf-8')
@@ -92,6 +94,57 @@ describe('Lighthouse Treemap', () => {
   afterEach(async () => {
     await ensureNoErrors();
     await page.close();
+  });
+
+  describe('website locale', () => {
+    it('keeps language controls separate from click-to-upload', async () => {
+      await page.goto(treemapUrl);
+      await page.waitForSelector('.js-website-locale option');
+      await page.$eval('#hidden-file-input', input => {
+        input.dataset.clicks = '0';
+        input.addEventListener('click', event => {
+          event.preventDefault();
+          input.dataset.clicks = String(Number(input.dataset.clicks) + 1);
+        });
+      });
+
+      await page.click('.website-locale-switcher__label');
+      await page.keyboard.press('Escape');
+      await page.click('.js-website-locale');
+      await page.keyboard.press('Escape');
+      await page.select('.js-website-locale', 'ja');
+      expect(await page.$eval('#hidden-file-input', input => input.dataset.clicks)).toBe('0');
+      expect(await page.evaluate(() => document.documentElement.lang)).toBe('ja');
+
+      await page.click('[data-i18n="treemapHelpDragDrop"]');
+      expect(await page.$eval('#hidden-file-input', input => input.dataset.clicks)).toBe('1');
+    });
+
+    for (const reportLocale of ['de', 'zh-TW', 'xx-XX']) {
+      it(`preserves the website language when loading a ${reportLocale} report`, async () => {
+        await page.goto(treemapUrl);
+        await page.waitForSelector('.js-website-locale option');
+        await page.select('.js-website-locale', 'ja');
+        const options = JSON.parse(JSON.stringify(debugOptions));
+        options.lhr.configSettings.locale = reportLocale;
+        const encoded = await TextEncoding.toBase64(JSON.stringify(options), {gzip: false});
+        await page.goto('about:blank');
+        await page.goto(`${treemapUrl}#${encoded}`);
+        await page.waitForSelector('main:not(.hidden) .webtreemap-caption');
+
+        const title = locales.ja['viewer/app/src/ui-strings.js | treemapTitle'].message;
+        expect(await page.title()).toBe(title);
+        expect(await page.$eval('.lh-header--title', el => el.textContent)).toBe(title);
+        expect(await page.evaluate(() => document.documentElement.lang)).toBe('ja');
+        expect(await page.$eval('main', el => el.lang)).toBe(reportLocale);
+        expect(await page.$eval('.lh-header--title', el => el.lang)).toBe('ja');
+        const reportStrings = locales[reportLocale] || locales['en-US'];
+        expect(await page.$eval('.lh-button--toggle-table', el => el.textContent)).toBe(
+          reportStrings['treemap/app/src/util.js | toggleTableButtonLabel'].message);
+        expect(await page.$eval('.lh-button--toggle-table', el =>
+          el.closest('[lang]').lang)).toBe(reportLocale);
+      });
+    }
   });
 
   describe('Recieves options', () => {
