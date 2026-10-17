@@ -635,6 +635,15 @@
   "core/audits/agentic/ard-schema.js | itemSeverityError": {
     "message": "錯誤"
   },
+  "core/audits/agentic/ard-schema.js | legacyDiscovery": {
+    "message": "資訊清單只在舊版位置 (`/.well-known/ai-catalog.json` 或 `rel=\"ai-catalog\"`) 找到。ARD 使用端不須檢查這些位置，因此可能無法檢索到您的資源。請在 `/.well-known/ard.json` 提供資訊清單，或使用 `rel=\"ard\"` 連結。"
+  },
+  "core/audits/agentic/ard-schema.js | sourceFetchFailed": {
+    "message": "已宣告的 ARD 資訊清單位置無法載入。"
+  },
+  "core/audits/agentic/ard-schema.js | sourceUnavailable": {
+    "message": "已宣告的 ARD 資訊清單位置無法載入（HTTP 狀態碼：{statusCode}）。"
+  },
   "core/audits/agentic/ard-schema.js | title": {
     "message": "`ai-catalog.json` 結構定義有效"
   },
@@ -1411,6 +1420,9 @@
   },
   "core/audits/webmcp-registered-tools.js | titleImperativeTools": {
     "message": "命令式工具"
+  },
+  "core/audits/webmcp-registered-tools.js | warningMaxRecommendedTools": {
+    "message": "不建議註冊超過 {maxTools} 個工具。這麼做會消耗模型上下文的 token、增加延遲，也會提高工具混淆的風險。"
   },
   "core/audits/webmcp-schema-validity.js | columnElement": {
     "message": "元素"
