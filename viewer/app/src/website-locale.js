@@ -46,7 +46,9 @@ let dom = null;
 function getWebsiteLocale() {
   try {
     const savedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-    if (savedLocale && savedLocale in SUPPORTED_LOCALES) return savedLocale;
+    if (savedLocale && Object.prototype.hasOwnProperty.call(SUPPORTED_LOCALES, savedLocale)) {
+      return savedLocale;
+    }
   } catch (err) {
     // localStorage can be unavailable (e.g. blocked by the user). Fall through.
   }
@@ -58,7 +60,7 @@ function getWebsiteLocale() {
  * @param {string} locale
  */
 function setWebsiteLocale(locale) {
-  if (!(locale in SUPPORTED_LOCALES)) return;
+  if (!Object.prototype.hasOwnProperty.call(SUPPORTED_LOCALES, locale)) return;
   try {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
   } catch (err) {
@@ -76,7 +78,7 @@ function getWebsiteString(key, values = {}) {
   const defaultStrings = /** @type {Record<string, string>} */ (UIStrings);
   const message = activeStrings[key] ?? defaultStrings[key] ?? '';
   return message.replace(/\{(\w+)\}/g, (match, name) =>
-    name in values ? String(values[name]) : match);
+    Object.prototype.hasOwnProperty.call(values, name) ? String(values[name]) : match);
 }
 
 /**

@@ -94,6 +94,24 @@ describe('WebsiteI18n', () => {
       window.localStorage.setItem('lighthouse-website-locale', 'de');
       assert.equal(getWebsiteLocale(), 'en-US');
     });
+
+    for (const locale of ['constructor', 'toString', '__proto__']) {
+      it(`ignores the inherited name ${locale} in saved preferences`, () => {
+        window.localStorage.setItem('lighthouse-website-locale', locale);
+        initWebsiteI18n(allStrings);
+        assert.equal(getWebsiteLocale(), 'en-US');
+        assert.equal(document.documentElement.lang, 'en-US');
+        const select = document.querySelector('select.js-website-locale');
+        assert.ok(select);
+        assert.equal(select.value, 'en-US');
+      });
+
+      it(`does not save the inherited name ${locale} as a locale`, () => {
+        setWebsiteLocale('ja');
+        setWebsiteLocale(locale);
+        assert.equal(getWebsiteLocale(), 'ja');
+      });
+    }
   });
 
   describe('rendering', () => {
@@ -160,6 +178,15 @@ describe('WebsiteI18n', () => {
       initWebsiteI18n(allStrings);
       assert.equal(getWebsiteString('couldNotReadFile'),
         locales['ja']['viewer/app/src/ui-strings.js | couldNotReadFile'].message);
+    });
+
+    it('leaves placeholders unchanged when values are only inherited', () => {
+      initWebsiteI18n(allStrings);
+      const values = Object.create({reportVersion: '12.6.0'});
+      values.currentVersion = '13.0.0';
+      const message = getWebsiteString('olderReportWarning', values);
+      assert.ok(message.includes('{reportVersion}'));
+      assert.ok(message.includes('13.0.0'));
     });
   });
 });
