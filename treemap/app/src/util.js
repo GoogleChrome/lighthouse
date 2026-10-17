@@ -29,6 +29,13 @@ const UIStrings = {
   allLabel: 'All',
   /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
   duplicateModulesLabel: 'Duplicate modules',
+  /** Label for a value that is not available (e.g. no bytes could be saved by a view mode). */
+  notAvailableLabel: 'N/A',
+  /**
+   * @description Tooltip shown with the share of a file's bytes that are never used.
+   * @example {37%} percent
+   */
+  unusedBytesTooltip: '{percent} bytes unused',
 };
 
 class TreemapUtil {

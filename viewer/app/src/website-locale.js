@@ -13,6 +13,7 @@
  */
 
 import {DOM} from '../../../report/renderer/dom.js';
+import {Logger} from '../../../report/renderer/logger.js';
 import {UIStrings} from './ui-strings.js';
 
 /** @typedef {Record<string, Record<string, string>>} LocaleStrings */
@@ -102,6 +103,7 @@ function renderMessage(element, message) {
 function applyWebsiteStrings(locale) {
   activeStrings = {...UIStrings, ...(localeStrings[locale] || {})};
   document.documentElement.lang = locale;
+  Logger.warningPrefix = getWebsiteString('warningPrefix');
 
   for (const element of document.querySelectorAll('[data-i18n]')) {
     const key = element.getAttribute('data-i18n');

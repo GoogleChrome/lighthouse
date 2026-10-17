@@ -9,6 +9,11 @@
  */
 export class Logger {
   /**
+   * Prefix shown in front of messages logged with `warn()`. The hosted web apps
+   * localize it (see viewer/app/src/website-locale.js); English by default.
+   */
+  static warningPrefix = 'Warning: ';
+  /**
    * @param {HTMLElement} element - expected to have id #lh-log
    */
   constructor(element) {
@@ -84,7 +89,7 @@ export class Logger {
    * @param {string} msg
    */
   warn(msg) {
-    this.log('Warning: ' + msg);
+    this.log(Logger.warningPrefix + msg);
   }
 
   /**

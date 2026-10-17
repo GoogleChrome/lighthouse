@@ -9,6 +9,7 @@
 
 import {ReportUIFeatures} from '../../../report/renderer/report-ui-features.js';
 import {SwapLocaleFeature} from '../../../report/renderer/swap-locale-feature.js';
+import {getWebsiteString} from './website-locale.js';
 
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and
@@ -59,7 +60,7 @@ export class ViewerUIFeatures extends ReportUIFeatures {
  */
   async saveAsGist() {
     if (!this._saveGistCallback) {
-      throw new Error('Cannot save this report as a gist');
+      throw new Error(getWebsiteString('cannotSaveAsGist'));
     }
     // Await the callback which returns the gist ID string or undefined
     const gistId = await this._saveGistCallback(this.json);

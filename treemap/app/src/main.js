@@ -394,7 +394,8 @@ class TreemapViewer {
         id: 'duplicate-modules',
         label: TreemapUtil.strings.duplicateModulesLabel,
         subLabel: enabled ?
-          TreemapUtil.i18n.formatBytesWithBestUnit(potentialByteSavings) : 'N/A',
+          TreemapUtil.i18n.formatBytesWithBestUnit(potentialByteSavings) :
+          TreemapUtil.strings.notAvailableLabel,
         highlights,
         enabled,
       };
@@ -584,7 +585,8 @@ class TreemapViewer {
       if (!row.unusedBytes) return '';
 
       const percent = row.unusedBytes / row.size;
-      return `${TreemapUtil.i18n.formatPercent(percent)} bytes unused`;
+      return TreemapUtil.strings.unusedBytesTooltip
+        .replace('{percent}', TreemapUtil.i18n.formatPercent(percent));
     };
 
     let cachedMaxSize = 0;

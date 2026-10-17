@@ -57,7 +57,7 @@ export class GithubApi {
         });
       }
       const body = {
-        description: 'Lighthouse json report',
+        description: getWebsiteString('gistDescription'),
         public: false,
         files: {
           [`${filename}${GithubApi.LH_JSON_EXT}`]: {
@@ -80,7 +80,7 @@ export class GithubApi {
         logger.log(getWebsiteString('savedToGithub'));
         return json.id;
       } else {
-        throw new Error('Error: ' + JSON.stringify(json));
+        throw new Error(getWebsiteString('saveFailed', {error: JSON.stringify(json)}));
       }
     } finally {
       this._saving = false;
@@ -128,7 +128,7 @@ export class GithubApi {
             } else if (resp.status === 401 && accessToken) {
               this._auth.signOut();
             }
-            throw new Error(`${resp.status} fetching gist`);
+            throw new Error(getWebsiteString('gistFetchFailed', {status: resp.status}));
           }
 
           const etag = resp.headers.get('ETag');
