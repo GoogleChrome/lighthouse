@@ -16,7 +16,6 @@ import fs from 'fs';
 import util from 'util';
 import childProcess from 'child_process';
 
-import glob from 'glob';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 
@@ -228,7 +227,7 @@ function aggregateResults(name) {
   /** @type {Map<string, number[]>} */
   const durationsMap = new Map();
 
-  for (const lhrPath of glob.sync(`${outputDir}/**/lhr-*.json`)) {
+  for (const lhrPath of fs.globSync(`${outputDir}/**/lhr-*.json`).sort()) {
     const lhrJson = fs.readFileSync(lhrPath, 'utf-8');
     /** @type {LH.Result} */
     const lhr = lhrJson && JSON.parse(lhrJson);

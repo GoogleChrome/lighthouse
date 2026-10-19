@@ -9,8 +9,6 @@ import util from 'util';
 import path from 'path';
 import {execFile} from 'child_process';
 
-import glob from 'glob';
-
 import {makeHash} from './hash.js';
 import SDK from '../../lib/cdt/SDK.js';
 import {LH_ROOT} from '../../../shared/root.js';
@@ -209,7 +207,7 @@ async function processVariant(options) {
 function makeSummary(legacyJavascriptFilename) {
   let totalSignals = 0;
   const variants = [];
-  for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
+  for (const dir of fs.globSync('*/*', {cwd: VARIANT_DIR}).sort()) {
     const {group, name} = readJson(`${VARIANT_DIR}/${dir}/variant.json`);
     /** @type {SummaryFile} */
     const summary = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
@@ -233,11 +231,12 @@ function makeSummary(legacyJavascriptFilename) {
 function createSummarySizes() {
   const lines = [];
 
-  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`)) {
+  for (const variantGroupFolder of fs.globSync(`${VARIANT_DIR}/*`).sort()) {
     lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
 
     const variants = [];
-    for (const bundle of glob.sync(`${variantGroupFolder}/**/main.bundle.browserify.min.js`)) {
+    const bundlePattern = `${variantGroupFolder}/**/main.bundle.browserify.min.js`;
+    for (const bundle of fs.globSync(bundlePattern).sort()) {
       const size = fs.readFileSync(bundle).length;
       variants.push({name: path.relative(variantGroupFolder, bundle), size});
     }
