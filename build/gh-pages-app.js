@@ -214,7 +214,11 @@ class GhPagesApp {
     if (process.env.DEBUG) return contents.join('\n');
 
     const options = {
-      output: {preamble: license}, // Insert license at top.
+      format: {
+        preamble: license, // Insert license at top.
+        // Escape non-ASCII characters so Blink/V8 keeps the bundle in a 1-byte string buffer.
+        ascii_only: true,
+      },
     };
     const uglified = await terser.minify(contents, options);
     if (!uglified.code) {
