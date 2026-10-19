@@ -268,6 +268,9 @@ class Scripts extends BaseGatherer {
       };
     });
 
+    this._scriptParsedEvents = [];
+    this._scriptContents = [];
+
     return scripts;
   }
 }

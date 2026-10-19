@@ -229,6 +229,7 @@ class Runner {
       log.time(runnerStatus, 'verbose');
 
       const artifacts = await gatherFn({resolvedConfig: options.resolvedConfig});
+      options.resolvedConfig.artifacts = null;
       log.timeEnd(runnerStatus);
 
       // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.
