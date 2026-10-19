@@ -13,7 +13,6 @@ import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as validation from './validation.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
 import {isEqual} from '../lib/arbitrary-equality-map.js';
 
 const require = createRequire(import.meta.url);
@@ -292,7 +291,7 @@ function requireAudit(auditPath, coreAuditList, configDir) {
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
       if (isBundledEnvironment()) {
         // Use a relative path so bundler can easily expose it.
-        requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
+        requirePath = path.relative(import.meta.dirname, absolutePath);
       } else {
         requirePath = absolutePath;
       }
@@ -512,7 +511,7 @@ function resolveModulePath(moduleIdentifier, configDir, category) {
   const errorString = 'Unable to locate ' + (category ? `${category}: ` : '') +
     `\`${moduleIdentifier}\`.
      Tried to resolve the module from these locations:
-       ${getModuleDirectory(import.meta)}
+       ${import.meta.dirname}
        ${cwdPath}`;
 
   if (!configDir) {

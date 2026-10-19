@@ -28,11 +28,10 @@ import {
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } from './config-helpers.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
 import * as format from '../../shared/localization/format.js';
 
 const defaultConfigPath = path.join(
-  getModuleDirectory(import.meta),
+  import.meta.dirname,
   '../../config/default-config.js'
 );
 

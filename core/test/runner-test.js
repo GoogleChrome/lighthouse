@@ -13,9 +13,8 @@ import * as td from 'testdouble';
 
 import {makeMocksForGatherRunner} from './test-utils.js';
 import {createMockDriver} from './gather/mock-driver.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 describe('Runner', () => {
   /** @type {jestMock.Mock} */

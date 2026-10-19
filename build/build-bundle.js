@@ -207,7 +207,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           'global.isLightrider': 'globalThis.isLightrider',
           'global.isDevtools': 'globalThis.isDevtools',
           // By default esbuild converts `import.meta` to an empty object.
-          // We need at least the url property for i18n things.
+          // We need the url and filename properties for i18n things.
+          /** @param {string} id */
+          'import.meta.url': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          /** @param {string} id */
+          'import.meta.filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),

@@ -309,6 +309,10 @@ async function buildBundle(entryPath, distPath) {
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
           /** @param {string} id */
+          'import.meta.url': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          /** @param {string} id */
+          'import.meta.filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
