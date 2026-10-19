@@ -198,11 +198,10 @@ describe('Config', () => {
     expect(resolvedConfig.audits).toMatchObject([
       {
         path: `${LH_ROOT}/core/test/fixtures/valid-custom-audit.cjs`,
-        implementation: expect.objectContaining({
-          meta: expect.objectContaining({id: 'valid-audit'}),
-        }),
+        implementation: expect.any(Function),
       },
     ]);
+    expect(resolvedConfig.audits?.[0].implementation.meta).toMatchObject({id: 'valid-audit'});
   });
 
   it('is idempotent when using the resolved config as the config input', async () => {

@@ -21,15 +21,13 @@ import fs from 'fs';
 
 import path from 'path';
 import {expect} from 'expect';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
-import jestSnapshot from 'jest-snapshot';
+import {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} from 'jest-snapshot';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import './expect-setup.js';
 import {timers} from './fake-timers.js';
-
-const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
 
 /**
  * `jest-mock` does not export `restoreAllMocks` from its default `ModuleMocker` instance,

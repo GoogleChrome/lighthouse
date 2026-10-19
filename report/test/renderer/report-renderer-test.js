@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {createQuietConsole} from './jsdom-setup.js';
 import {ReportUtils} from '../../renderer/report-utils.js';

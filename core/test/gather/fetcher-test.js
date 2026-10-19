@@ -61,7 +61,7 @@ describe('._readIOStream', () => {
       .mockReturnValue(Promise.resolve({data: 'No stop', eof: false, base64Encoded: false}));
 
     const dataPromise = fetcher._readIOStream('1', {timeout: 50});
-    await expect(dataPromise).rejects.toThrowError(/Waiting for the end of the IO stream/);
+    await expect(dataPromise).rejects.toThrow(/Waiting for the end of the IO stream/);
   });
 });
 
@@ -126,7 +126,7 @@ describe('._fetchResourceOverProtocol', () => {
       }, 100);
 
     const dataPromise = fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 50});
-    await expect(dataPromise).rejects.toThrowError(/Timed out fetching resource/);
+    await expect(dataPromise).rejects.toThrow(/Timed out fetching resource/);
   });
 
   it('uses remaining time on _readIOStream', async () => {

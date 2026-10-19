@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import * as api from '../../index.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';

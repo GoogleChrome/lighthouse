@@ -7,7 +7,7 @@
 import path from 'path';
 import {createRequire} from 'module';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {
   deepClone,
@@ -464,11 +464,10 @@ describe('.resolveAuditsToDefns', () => {
       {
         path: '../fixtures/valid-custom-audit.cjs',
         options: {},
-        implementation: expect.objectContaining({
-          meta: expect.objectContaining({id: 'valid-audit'}),
-        }),
+        implementation: expect.any(Function),
       },
     ]);
+    expect(result?.[2].implementation.meta).toMatchObject({id: 'valid-audit'});
   });
 
   it('should handle multiple audit definition styles', async () => {

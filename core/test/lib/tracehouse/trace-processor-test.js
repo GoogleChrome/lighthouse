@@ -931,7 +931,7 @@ Object {
 
     it('throws on traces missing a navigationStart', () => {
       expect(() => TraceProcessor.processTrace(noNavStartTrace))
-        .toThrowError('navigationStart');
+        .toThrow('navigationStart');
     });
 
     it('throws on traces missing a ResourceSendRequest', () => {
@@ -942,7 +942,7 @@ Object {
       expect(() => TraceProcessor.processTrace(traceWithoutResourceSend, {
         timeOriginDeterminationMethod: 'firstResourceSendRequest',
       }))
-        .toThrowError('ResourceSendRequest');
+        .toThrow('ResourceSendRequest');
     });
 
     it('does not throw on traces missing an FCP', () => {

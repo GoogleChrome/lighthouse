@@ -8,7 +8,7 @@ import fs from 'fs';
 import assert from 'assert/strict';
 import path from 'path';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {makeMocksForGatherRunner} from './test-utils.js';

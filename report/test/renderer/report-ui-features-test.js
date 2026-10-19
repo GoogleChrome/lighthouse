@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {createQuietConsole} from './jsdom-setup.js';
 import {reportAssets} from '../../generator/report-assets.js';
@@ -413,7 +413,7 @@ describe('ReportUIFeatures', () => {
           expect(yesCheckbox).toBeTruthy();
 
           expect(() => dom.find(`#uses-rel-preconnect .${checkboxClassName}`, container))
-            .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
+            .toThrow('query #uses-rel-preconnect .lh-3p-filter-input not found');
         });
 
         it('filter is hidden when just third party resources', () => {
@@ -517,7 +517,7 @@ describe('ReportUIFeatures', () => {
           expect(yesCheckbox).toBeTruthy();
 
           expect(() => dom.find(`#uses-rel-preconnect .${checkboxClassName}`, container))
-            .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
+            .toThrow('query #uses-rel-preconnect .lh-3p-filter-input not found');
         });
 
         it('treats non-classifiable url values as first-party', () => {
@@ -645,7 +645,7 @@ describe('ReportUIFeatures', () => {
           expect(yesCheckbox).toBeTruthy();
 
           expect(() => dom.find(`#uses-rel-preconnect .${checkboxClassName}`, container))
-            .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
+            .toThrow('query #uses-rel-preconnect .lh-3p-filter-input not found');
         });
 
         it('filter is hidden when just third party resources', () => {
@@ -680,9 +680,9 @@ describe('ReportUIFeatures', () => {
       });
       expect(getSaveEl().classList.contains('lh-hidden')).toBeFalsy();
 
-      expect(getHtmlMock).not.toBeCalled();
+      expect(getHtmlMock).not.toHaveBeenCalled();
       getSaveEl().click();
-      expect(getHtmlMock).toBeCalled();
+      expect(getHtmlMock).toHaveBeenCalled();
     });
   });
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 const mockMainResource = jestMock.fn();

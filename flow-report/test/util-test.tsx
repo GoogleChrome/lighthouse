@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import {render} from '@testing-library/preact';
 import {renderHook} from '@testing-library/preact-hooks/src/index';
 import {FunctionComponent} from 'preact';

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import MetricsAudit from '../../audits/metrics.js';
 import {Interactive} from '../../computed/metrics/interactive.js';
