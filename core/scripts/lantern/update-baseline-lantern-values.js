@@ -9,8 +9,6 @@ import fs from 'fs';
 import path from 'path';
 import {execFileSync} from 'child_process';
 
-import prettyJSONStringify from 'pretty-json-stringify';
-
 import constants from './constants.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
@@ -37,12 +35,7 @@ for (const entry of computedResults.sites) {
   sites.push({url: entry.url, ...lanternValues});
 }
 
-fs.writeFileSync(OUTPUT_PATH, prettyJSONStringify({sites}, {
-  tab: '  ',
-  spaceBeforeColon: '',
-  spaceInsideObject: '',
-  shouldExpand: (_, level) => level < 2,
-}) + '\n');
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify({sites}, null, 2) + '\n');
 
 fs.writeFileSync(OUTPUT_ACCURACY_PATH, JSON.stringify(
   constants.evaluateAllMetrics(computedResults, {sites}),

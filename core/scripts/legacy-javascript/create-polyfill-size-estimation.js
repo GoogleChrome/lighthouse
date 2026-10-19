@@ -24,8 +24,6 @@
 
 import fs from 'fs';
 
-import prettyJSONStringify from 'pretty-json-stringify';
-
 import {makeHash} from './hash.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import {LH_ROOT} from '../../../shared/root.js';
@@ -118,12 +116,7 @@ async function main() {
     maxSize,
   };
 
-  const json = prettyJSONStringify(polyfillDependencyGraphData, {
-    tab: '  ',
-    spaceBeforeColon: '',
-    spaceInsideObject: '',
-    shouldExpand: value => !Array.isArray(value),
-  });
+  const json = JSON.stringify(polyfillDependencyGraphData, null, 2);
   fs.writeFileSync(OUTPUT_PATH, json);
 }
 
