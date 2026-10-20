@@ -11,3 +11,7 @@
 
 // Import to augment querySelector/querySelectorAll with stricter type checking.
 import '../../types/internal/query-selector';
+
+declare global {
+  var pako: typeof import('pako');
+}

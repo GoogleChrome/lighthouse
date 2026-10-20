@@ -55,7 +55,7 @@ async function main() {
       // TODO: import report generator async
       // https://github.com/GoogleChrome/lighthouse/pull/13429
       reportGeneratorJs,
-      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: require.resolve('pako/browser/inflate')},
       {path: 'src/main.js', esbuild: true, esbuildPlugins: [
         plugins.replaceModules({
           [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
