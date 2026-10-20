@@ -122,7 +122,7 @@ describe('finalizeArtifacts', () => {
     expect(run).not.toThrow();
 
     baseArtifacts.URL = {finalDisplayedUrl: ''};
-    expect(run).toThrowError(/finalDisplayedUrl/);
+    expect(run).toThrow(/finalDisplayedUrl/);
   });
 
   it('should not throw if URL was not set for an error reason', () => {

@@ -7,7 +7,7 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {createQuietConsole} from '../renderer/jsdom-setup.js';
 import * as lighthouseRenderer from '../../clients/bundle.js';

@@ -8,7 +8,7 @@
  * @fileoverview Mock driver for testing.
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {

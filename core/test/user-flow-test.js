@@ -236,7 +236,7 @@ describe('UserFlow', () => {
       navigationModule.navigationGather.mockRejectedValue(new Error('Setup Error'));
       const flow = new UserFlow(mockPage.asPage());
       const startPromise = flow.startNavigation();
-      await expect(startPromise).rejects.toThrowError('Setup Error');
+      await expect(startPromise).rejects.toThrow('Setup Error');
     });
   });
 
@@ -244,12 +244,12 @@ describe('UserFlow', () => {
     it('should throw if a timespan is active', async () => {
       const flow = new UserFlow(mockPage.asPage());
       await flow.startTimespan();
-      await expect(flow.startNavigation()).rejects.toThrowError('Timespan already in progress');
+      await expect(flow.startNavigation()).rejects.toThrow('Timespan already in progress');
     });
 
     it('should throw if a navigation is not active', async () => {
       const flow = new UserFlow(mockPage.asPage());
-      await expect(flow.endNavigation()).rejects.toThrowError('No navigation in progress');
+      await expect(flow.endNavigation()).rejects.toThrow('No navigation in progress');
     });
 
     it('should throw errors from the teardown phase', async () => {
@@ -263,7 +263,7 @@ describe('UserFlow', () => {
       await flow.startNavigation();
 
       const teardownPromise = flow.endNavigation();
-      await expect(teardownPromise).rejects.toThrowError('Teardown Error');
+      await expect(teardownPromise).rejects.toThrow('Teardown Error');
     });
   });
 
@@ -466,10 +466,6 @@ describe('UserFlow', () => {
 
       const flowResult = await auditGatherSteps(gatherSteps, {config: flowConfig});
 
-      // @ts-expect-error toMatchObject is giving a loud annoying error...
-      // Not sure why.
-      //     Index signature for type 'string' is missing
-      //     in type '(Artifacts | { config: { settings: { skipAudits: string[]; }; }; })[]'
       expect(mockRunner.audit.mock.calls).toMatchObject([
         [
           gatherSteps[0].artifacts,

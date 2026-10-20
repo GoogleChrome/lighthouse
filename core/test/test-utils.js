@@ -9,7 +9,7 @@ import path from 'path';
 import {gunzipSync} from 'zlib';
 
 import * as td from 'testdouble';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../shared/root.js';
 import * as mockCommands from './gather/mock-commands.js';

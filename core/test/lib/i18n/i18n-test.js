@@ -7,7 +7,7 @@
 import path from 'path';
 
 import log from 'lighthouse-logger';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import * as i18n from '../../../lib/i18n/i18n.js';
 
@@ -51,8 +51,8 @@ describe('i18n', () => {
 
       expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
 
-      expect(logListener).toBeCalledTimes(1);
-      expect(logListener).toBeCalledWith(['i18n',
+      expect(logListener).toHaveBeenCalledTimes(1);
+      expect(logListener).toHaveBeenCalledWith(['i18n',
         `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
 
       log.events.off('warning', logListener);

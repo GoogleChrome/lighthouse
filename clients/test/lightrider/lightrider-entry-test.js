@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
 import {Runner} from '../../../core/runner.js';

@@ -201,7 +201,7 @@ describe('NavigationRunner', () => {
       mockDriver._executionContext.evaluate.mockReset();
       mockDriver._executionContext.evaluate.mockRejectedValue(new Error('Not available'));
       const setupPromise = runner._setup({driver, resolvedConfig, requestor: requestedUrl});
-      await expect(setupPromise).rejects.toThrowError(/Not available/);
+      await expect(setupPromise).rejects.toThrow(/Not available/);
       expect(mocks.prepareMock.prepareTargetForNavigationMode).not.toHaveBeenCalled();
     });
   });
@@ -482,7 +482,7 @@ describe('NavigationRunner', () => {
 
     it('should throw regular errors', async () => {
       mocks.navigationMock.gotoURL.mockRejectedValue(new Error('Other fatal error'));
-      await expect(run()).rejects.toThrowError('Other fatal error');
+      await expect(run()).rejects.toThrow('Other fatal error');
     });
   });
 

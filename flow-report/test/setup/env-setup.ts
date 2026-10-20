@@ -7,7 +7,7 @@
 import fs from 'fs';
 import {MessageChannel} from 'worker_threads';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import {JSDOM, VirtualConsole} from 'jsdom';
 import * as preact from 'preact';
 
