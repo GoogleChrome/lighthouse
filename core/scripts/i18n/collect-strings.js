@@ -14,7 +14,7 @@ import {isDeepStrictEqual as isEqual} from 'util';
 
 import {expect} from 'expect';
 import tsc from 'typescript';
-import MessageParser from '@formatjs/icu-messageformat-parser';
+import * as MessageParser from '@formatjs/icu-messageformat-parser';
 
 import {Util} from '../../../shared/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
