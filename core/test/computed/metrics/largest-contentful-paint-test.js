@@ -26,9 +26,9 @@ describe('Metrics: LCP', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 1445,
-  "pessimistic": 1445,
-  "timing": 1445,
+  "optimistic": 1059,
+  "pessimistic": 1059,
+  "timing": 1059,
 }
 `);
   });

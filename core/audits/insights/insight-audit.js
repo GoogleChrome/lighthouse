@@ -6,6 +6,7 @@
 
 import {NO_NAVIGATION} from '@paulirish/trace_engine/models/trace/types/TraceEvents.js';
 
+import {Helpers} from '../../lib/trace-engine.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import {Audit} from '../audit.js';
@@ -28,8 +29,8 @@ async function getInsightSet(artifacts, context) {
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const insights = navigationId ?
-    [...traceEngineResult.insights.values()]
-      .find(insightSet => insightSet.navigation?.args.data?.navigationId === navigationId) :
+    [...traceEngineResult.insights.values()].find(insightSet =>
+      Helpers.Trace.navigationIDForEvent(insightSet.navigation) === navigationId) :
     traceEngineResult.insights.get(NO_NAVIGATION);
 
   return {insights, data: traceEngineResult.data};

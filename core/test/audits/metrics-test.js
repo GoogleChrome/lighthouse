@@ -83,9 +83,9 @@ describe('Performance: metrics', () => {
     const result = await MetricsAudit.audit(artifacts, context);
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
       // The devtoolsLog includes 2 high-priority CORS `Preflight` requests that are not emitted
-      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 3149ms to 2920ms.
-      expect(result.details.items[0].interactive).toBe(2920);
-      result.details.items[0].interactive = 3149;
+      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 2865ms to 2588ms.
+      expect(result.details.items[0].interactive).toBe(2588);
+      result.details.items[0].interactive = 2865;
     }
     expect(result.details.items[0]).toMatchSnapshot();
   });
@@ -127,9 +127,9 @@ describe('Performance: metrics', () => {
     const result = await MetricsAudit.audit(artifacts, context);
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
       // The devtoolsLog includes 2 high-priority CORS `Preflight` requests that are not emitted
-      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 3149ms to 2920ms.
-      expect(result.details.items[0].interactive).toBe(2920);
-      result.details.items[0].interactive = 3149;
+      // as `ResourceSendRequest` trace events, which lowers simulated TTI from 2865ms to 2588ms.
+      expect(result.details.items[0].interactive).toBe(2588);
+      result.details.items[0].interactive = 2865;
     }
     expect(result.details.items[0]).toMatchSnapshot();
   });
