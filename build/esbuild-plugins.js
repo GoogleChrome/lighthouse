@@ -70,6 +70,19 @@ function bulkLoader(partialLoaders) {
         const warnings = [];
         // TODO: source maps? lol.
         let code = await fs.promises.readFile(args.path, 'utf-8');
+        // Some packages (e.g. `intl-messageformat` v12+ and `@formatjs/*`) publish compiled `.js`
+        // and `.js.map` files at the package root whose `sources` contain relative paths that
+        // resolve outside the package directory (like `../index.ts` and
+        // `../../../node_modules/.aspect_rules_js/...`). When esbuild chains those sourcemaps, the
+        // MCP bundle sourcemap ends up with bogus `node_modules/@formatjs/index.ts` and
+        // `node_modules/.aspect_rules_js/...` entries that break third-party notice verification.
+        // Only strip `sourceMappingURL` for files at a package root (where `package.json` is in the
+        // same directory) so subdirectory sourcemaps (like `tldts-icann/dist/cjs/index.js.map`,
+        // needed to attribute bundled `tldts-core`) are preserved.
+        if (args.path.includes('node_modules') &&
+            fs.existsSync(path.join(path.dirname(args.path), 'package.json'))) {
+          code = code.replace(/\/\/# sourceMappingURL=.*/g, '');
+        }
 
         for (const partialLoader of partialLoaders) {
           const partialResult = await partialLoader.onLoad(code, args);
