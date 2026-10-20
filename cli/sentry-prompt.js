@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import readline from 'node:readline/promises';
+import {stdin as input, stdout as output} from 'node:process';
+
 import Configstore from 'configstore';
-import Confirm from 'enquirer';
 import log from 'lighthouse-logger';
 
 const MAXIMUM_WAIT_TIME = 20 * 1000;
@@ -18,40 +20,47 @@ const MESSAGE = `${log.reset}We're constantly trying to improve Lighthouse and i
 /* eslint-enable max-len */
 
 /**
+ * Ask a native Y/N confirm prompt.
  * @return {Promise<boolean>}
  */
-function prompt() {
+async function prompt() {
   if (!process.stdout.isTTY || process.env.CI) {
     // Default non-interactive sessions to false
-    return Promise.resolve(false);
+    return false;
   }
 
-  /** @type {NodeJS.Timeout|undefined} */
-  let timeout;
+  // Set up the promise-ready readline interface
+  const rl = readline.createInterface({input, output});
+  const controller = new AbortController();
 
-  const prompt = new Confirm.Confirm({
-    name: 'isErrorReportingEnabled',
-    initial: false,
-    message: MESSAGE,
-    actions: {ctrl: {}},
-  });
+  const timeout = setTimeout(() => {
+    // 1. Cancel the pending native rl.question input stream
+    controller.abort();
 
-  const timeoutPromise = new Promise((resolve) => {
-    timeout = setTimeout(() => {
-      prompt.close().then(() => {
-        log.warn('CLI', 'No response to error logging preference, errors will not be reported.');
-        resolve(false);
-      });
-    }, MAXIMUM_WAIT_TIME);
-  });
+    // 2. Clear terminal line to keep things clean and warn the user
+    output.write('\n');
+    log.warn('CLI', 'No response to error logging preference, errors will not be reported.');
+  }, MAXIMUM_WAIT_TIME);
 
-  return Promise.race([
-    prompt.run().then(result => {
-      clearTimeout(timeout);
-      return result;
-    }),
-    timeoutPromise,
-  ]);
+  try {
+    // Display the prompt with standard native Y/n suffix matching Enquirer's initial: false
+    const answer = await rl.question(`${MESSAGE} (y/N) `, {
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    // Normalize the user's string answer to a boolean
+    const normalized = answer.trim().toLowerCase();
+    return normalized === 'y' || normalized === 'yes';
+  } catch (error) {
+    // Triggers if the AbortController was triggered by the timeout or Ctrl+C
+    clearTimeout(timeout);
+    return false;
+  } finally {
+    // Crucial to close the interface to release stdin control back to the terminal
+    rl.close();
+  }
 }
 
 /**
