@@ -116,6 +116,11 @@ export class LighthouseReportViewer {
 
     if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
 
+    const meta = dom.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.append(meta);
+
     this._toggleLoadingBlur(true);
     let loadPromise = Promise.resolve();
     if (psiurl) {
@@ -484,6 +489,11 @@ export class LighthouseReportViewer {
    * @param {PSIParams} params
    */
   _fetchFromPSI(params) {
+    if (/bot|crawl|spider|slurp/i.test(navigator.userAgent)) {
+      logger.error('Automated crawlers are not permitted to trigger PSI runs');
+      return Promise.resolve();
+    }
+
     logger.log('Waiting for Lighthouse results ...');
     return this._psi.fetchPSI(params).then(response => {
       logger.hide();

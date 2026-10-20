@@ -440,6 +440,10 @@ describe('Lighthouse Viewer', () => {
 
       // Should not clear the query string.
       expect(await viewerPage.url()).toEqual(url);
+
+      // Should add a noindex robots meta tag for deep-linked reports.
+      const robotsMeta = await viewerPage.$eval('meta[name="robots"]', el => el.content);
+      expect(robotsMeta).toBe('noindex, nofollow');
     });
 
     it('should call out to PSI with specified categories', async () => {
@@ -491,6 +495,35 @@ describe('Lighthouse Viewer', () => {
       expect(errors).toHaveLength(2);
       expect(errors[0]).toContain('500 (Internal Server Error)');
       expect(errors[1]).toContain('badPsiResponse error');
+    });
+
+    it('should not call out to PSI for crawler user agents', async () => {
+      psiResponse = goodPsiResponse;
+      const originalUA = await browser.userAgent();
+      await viewerPage.setUserAgent(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 ' +
+        '(KHTML, like Gecko) Version/13.1.1 Safari/605.1.15 ' +
+        '(Applebot/0.1; +http://www.apple.com/go/applebot)'
+      );
+
+      try {
+        const url = `${viewerUrl}?psiurl=https://www.example.com`;
+        await viewerPage.goto(url);
+
+        const errorEl = await viewerPage.waitForSelector('#lh-log.lh-show');
+        const errorMessage = await viewerPage.evaluate(errorEl => errorEl.textContent, errorEl);
+        expect(errorMessage).toBe('Automated crawlers are not permitted to trigger PSI runs');
+        expect(interceptedRequest).toBeUndefined();
+
+        const robotsMeta = await viewerPage.$eval('meta[name="robots"]', el => el.content);
+        expect(robotsMeta).toBe('noindex, nofollow');
+
+        const errors = await claimErrors();
+        expect(errors).toHaveLength(1);
+        expect(errors[0]).toContain('Automated crawlers are not permitted to trigger PSI runs');
+      } finally {
+        await viewerPage.setUserAgent(originalUA);
+      }
     });
   });
 });
