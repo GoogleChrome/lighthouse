@@ -4,15 +4,87 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fs from 'fs';
-import path from 'path';
+/** @typedef {{type: string, scope?: string, header: string, hash?: string, message?: string, PR?: string}} Commit */
+/**
+ * @typedef TemplateContext
+ * @property {string=} version
+ * @property {string=} date
+ * @property {boolean=} linkCompare
+ * @property {boolean=} linkReferences
+ * @property {string=} host
+ * @property {string=} owner
+ * @property {string=} repository
+ * @property {string=} previousTag
+ * @property {string=} currentTag
+ * @property {string=} commit
+ * @property {Array<{title?: string, commits: Commit[]}>=} commitGroups
+ */
 
-const moduleDir = import.meta.dirname;
-const mainTemplate = fs.readFileSync(path.resolve(moduleDir, 'templates/template.hbs')).toString();
-const headerPartial = fs.readFileSync(path.resolve(moduleDir, 'templates/header.hbs')).toString();
-const commitPartial = fs.readFileSync(path.resolve(moduleDir, 'templates/commit.hbs')).toString();
+/**
+ * @param {TemplateContext} context
+ */
+function getRepoUrl(context) {
+  const host = context.host ? `${context.host}/` : '';
+  const owner = context.owner ? `${context.owner}/` : '';
+  return `${host}${owner}${context.repository || ''}`;
+}
 
-/** @typedef {{type: string, header: string, hash?: string, message?: string, PR?: string}} Commit */
+/**
+ * @param {TemplateContext} context
+ */
+function headerPartial(context) {
+  const repoUrl = getRepoUrl(context);
+  const compareLine = context.linkCompare
+    ? `[Full Changelog](${repoUrl}/compare/${context.previousTag}...${context.currentTag})`
+    : '';
+  return [
+    `<a name="${context.version}"></a>`,
+    `# ${context.version} (${context.date})`,
+    compareLine,
+    '',
+    '',
+    '~~ TODO: https://chromiumdash.appspot.com/schedule ~~',
+    'We expect this release to ship in the DevTools of [Chrome XXX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.',
+  ].join('\n');
+}
+
+/**
+ * @param {TemplateContext} context
+ * @param {Commit} commit
+ */
+function commitPartial(context, commit) {
+  const scopePrefix = commit.scope ? `${commit.scope}: ` : '';
+  const subject = commit.message || commit.header;
+  let ref = commit.hash || '';
+  if (context.linkReferences) {
+    const repoUrl = getRepoUrl(context);
+    if (commit.PR) {
+      ref = ` ([#${commit.PR}](${repoUrl}/pull/${commit.PR}))`;
+    } else {
+      ref = ` ([${commit.hash}](${repoUrl}/${context.commit}/${commit.hash}))`;
+    }
+  }
+  return `* ${scopePrefix}${subject}${ref}`;
+}
+
+/**
+ * @param {TemplateContext} context
+ */
+function template(context) {
+  const groups = (context.commitGroups || []).map(group => {
+    const heading = group.title ? `## ${group.title}\n\n` : '';
+    const commits = group.commits.map(commit => commitPartial(context, commit)).join('\n');
+    return `${heading}${commits}`;
+  }).join('\n\n');
+  return [
+    headerPartial(context),
+    '',
+    '## Notable Changes',
+    '~~ TODO: Move notable changes here ~~',
+    '',
+    groups,
+  ].join('\n');
+}
 
 const pullRequestRegex = /\(#(\d+)\)$/;
 const parserOpts = {
@@ -44,11 +116,12 @@ const titlePrecedence = [
 ];
 
 const writerOpts = {
-  mainTemplate,
+  template,
   headerPartial,
   commitPartial,
-  /** @param {Commit} commit */
-  transform: commit => {
+  /** @param {Commit} rawCommit */
+  transform: rawCommit => {
+    const commit = {...rawCommit};
     if (typeof commit.hash === 'string') {
       commit.hash = commit.hash.substring(0, 7);
     }
@@ -108,6 +181,11 @@ const writerOpts = {
     return aIndex - bIndex;
   },
   commitsSort: ['type', 'scope'],
+};
+
+export default {
+  writer: writerOpts,
+  parser: parserOpts,
 };
 
 export {
