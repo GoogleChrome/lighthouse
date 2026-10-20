@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
-
 import path from 'path';
 import url from 'url';
 
-import lookupClosestLocale from 'lookup-closest-locale';
 import log from 'lighthouse-logger';
 
 import {getAvailableLocales} from '../../../shared/localization/format.js';
@@ -144,12 +141,22 @@ function lookupLocale(locales, possibleLocales) {
   // Filter by what's available in this runtime.
   const availableLocales = Intl.NumberFormat.supportedLocalesOf(canonicalLocales);
 
-  // Get available locales and transform into object to match `lookupClosestLocale`'s API.
-  const localesWithMessages = possibleLocales || getAvailableLocales();
-  const localesWithmessagesObj = /** @type {Record<LH.Locale, LhlMessages>} */ (
-    Object.fromEntries(localesWithMessages.map(l => [l, {}])));
+  const localesWithMessages = new Set(possibleLocales || getAvailableLocales());
 
-  const closestLocale = lookupClosestLocale(availableLocales, localesWithmessagesObj);
+  /** @type {LH.Locale|undefined} */
+  let closestLocale;
+  for (const locale of availableLocales) {
+    const parts = locale.split('-');
+    while (parts.length) {
+      const candidate = /** @type {LH.Locale} */ (parts.join('-'));
+      if (localesWithMessages.has(candidate)) {
+        closestLocale = candidate;
+        break;
+      }
+      parts.pop();
+    }
+    if (closestLocale) break;
+  }
 
   if (!closestLocale) {
     // Log extra info if we're pretty sure this version of Node was built with `--with-intl=small-icu`.

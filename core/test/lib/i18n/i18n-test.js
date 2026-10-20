@@ -60,6 +60,7 @@ describe('i18n', () => {
 
     it('falls back to root tag prefix if specific locale not available', () => {
       expect(i18n.lookupLocale('es-JKJK')).toEqual('es');
+      expect(i18n.lookupLocale('de-CH-1996')).toEqual('de');
     });
 
     it('falls back to en-US if no match is available', () => {
