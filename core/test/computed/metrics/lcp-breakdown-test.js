@@ -140,8 +140,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadDelay).toBeCloseTo(1779.6, 0.1);
-    expect(result.loadDuration).toBeCloseTo(3224.4, 0.1);
+    expect(result.loadDelay).toBeCloseTo(1831.6, 0.1);
+    expect(result.loadDuration).toBeCloseTo(3289.4, 0.1);
   });
 
   it('returns observed for image LCP', async () => {

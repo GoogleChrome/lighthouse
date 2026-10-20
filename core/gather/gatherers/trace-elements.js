@@ -21,6 +21,7 @@ import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
+import {Helpers} from '../../lib/trace-engine.js';
 import SourceMaps from './source-maps.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
@@ -80,7 +81,7 @@ class TraceElements extends BaseGatherer {
     }
 
     if (navigationId) {
-      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+      if (Helpers.Trace.navigationIDForEvent(insightSet.navigation) !== navigationId) {
         return [];
       }
     } else {

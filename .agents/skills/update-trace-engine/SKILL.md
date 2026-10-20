@@ -94,12 +94,18 @@ Run the Lighthouse validation checks:
    ```
    Update test expectations and snapshots (`yarn mocha --update <test-file>`) where upstream changes intentionally affect metrics, insights, or Lantern trace simulations.
 
-4. **Sample JSON, locale strings, and flow fixtures**:
+4. **Sample JSON, locale strings, flow fixtures, and Lantern baselines**:
    ```sh
    yarn update:sample-json
    bash core/scripts/assert-baseline-flow-result-unchanged.sh
+   yarn test-lantern
    ```
    - If `assert-baseline-flow-result-unchanged.sh` fails due to expected changes, update flow fixtures with `yarn update:flow-fixtures`.
+   - If `yarn test-lantern` reports expected metric changes on the Lantern dataset (or if `models/trace/lantern` changed upstream), update the Lantern baseline files (`core/test/fixtures/lantern-baseline-computed-values.json` and `core/test/fixtures/lantern-baseline-accuracy.json`):
+     ```sh
+     FORCE=1 ./core/scripts/lantern/update-baseline-lantern-values.js
+     ./core/scripts/lantern/assert-baseline-lantern-values-unchanged.js
+     ```
    - Review `git diff core/test/results/sample_v2.json` and `git diff shared/localization/locales/en-US.json` to make sure every change is accounted for by an upstream commit.
 
 5. **Linter**:

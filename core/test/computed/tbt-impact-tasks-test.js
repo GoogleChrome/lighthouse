@@ -270,7 +270,7 @@ describe('TBTImpactTasks', () => {
         expect(totalSelfImpact).toBeCloseTo(3195.07, 2);
       } else {
         expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
-        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.999999999976`);
+        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999673`);
       }
 
       // Only tasks with no children should have a `selfTbtImpact` that equals `tbtImpact` if

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {Helpers} from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {TraceEngineResult} from './trace-engine-result.js';
@@ -26,8 +27,8 @@ class NavigationInsights {
     const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
     if (!navigationId) throw new Error('No navigationId found');
 
-    const navInsights = [...traceEngineResult.insights.values()]
-        .find(insightSet => insightSet.navigation?.args.data?.navigationId === navigationId);
+    const navInsights = [...traceEngineResult.insights.values()].find(insightSet =>
+      Helpers.Trace.navigationIDForEvent(insightSet.navigation) === navigationId);
     if (!navInsights) throw new Error('No navigations insights found');
 
     return navInsights;
