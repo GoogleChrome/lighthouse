@@ -32,6 +32,8 @@ const sentryDelegate = {
   captureBreadcrumb: noop,
   /** @type {() => any} */
   getContext: noop,
+  /** @type {(name: string, context: {[key: string]: any} | null) => void} */
+  setContext: noop,
   /** @type {(error: Error, options: {level?: string, tags?: {[key: string]: any}, extra?: {[key: string]: any}}) => Promise<void>} */
   captureException: async () => { },
   _shouldSample() {
@@ -88,6 +90,7 @@ async function init(opts) {
     sentryDelegate.captureMessage = (...args) => Sentry.captureMessage(...args);
     sentryDelegate.captureBreadcrumb = (...args) => Sentry.addBreadcrumb(...args);
     sentryDelegate.getContext = () => extras;
+    sentryDelegate.setContext = (...args) => Sentry.setContext(...args);
 
     // Keep a record of exceptions per audit/gatherer so we can just report once
     const sentryExceptionCache = new Map();

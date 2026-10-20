@@ -18,6 +18,7 @@ describe('Sentry', () => {
   beforeEach(async () => {
     await td.replaceEsm('@sentry/node', (sentryNodeMock = {
       init: jestMock.fn().mockReturnValue({install: jestMock.fn()}),
+      setContext: jestMock.fn(),
       setExtras: jestMock.fn(),
       setTags: jestMock.fn(),
       captureException: jestMock.fn(),
@@ -87,6 +88,12 @@ describe('Sentry', () => {
         channel: 'test',
         formFactor: 'mobile',
         throttlingMethod: 'devtools',
+      });
+
+      Sentry.setContext('browser', {name: 'Chrome', version: '147.0.7727.116'});
+      expect(sentryNodeMock.setContext).toHaveBeenCalledWith('browser', {
+        name: 'Chrome',
+        version: '147.0.7727.116',
       });
     });
   });
