@@ -146,6 +146,56 @@ Object {
     });
   });
 
+  it('deduplicates non-inline scripts that share the same network record', async () => {
+    const context = {computedCache: new Map()};
+    const mainUrl = 'https://example.com';
+    const scriptUrl = 'https://example.com/script.js';
+    const content = 'console.log("hello");';
+    const networkRecords = [
+      generateRecord(mainUrl, 100, 'Document'),
+      generateRecord(scriptUrl, content.length, 'Script'),
+    ];
+
+    const artifacts = {
+      URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
+      JsUsage: {},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      SourceMaps: [],
+      Scripts: [
+        {scriptId: '1', url: scriptUrl, content},
+        {scriptId: '2', url: scriptUrl, content},
+        {
+          scriptId: '3',
+          url: mainUrl,
+          content: 'inline1()',
+          startLine: 1,
+          startColumn: 0,
+          executionContextAuxData: {frameId: 'MAIN_FRAME'},
+        },
+        {
+          scriptId: '4',
+          url: mainUrl,
+          content: 'inline2()',
+          startLine: 2,
+          startColumn: 0,
+          executionContextAuxData: {frameId: 'MAIN_FRAME'},
+        },
+      ].map(createScript),
+    };
+
+    const results = await ScriptTreemapData.audit(artifacts, context);
+    if (!results.details || results.details.type !== 'treemap-data') {
+      throw new Error('should not happen.');
+    }
+
+    expect(results.details.nodes).toHaveLength(2);
+    expect(results.details.nodes[0]).toMatchObject({
+      name: scriptUrl,
+      resourceBytes: content.length,
+    });
+    expect(results.details.nodes[1].children).toHaveLength(2);
+  });
+
   describe('.makeScriptNode', () => {
     const src = 'main.js';
 
