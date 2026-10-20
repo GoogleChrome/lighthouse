@@ -402,7 +402,7 @@ describe('ReportUIFeatures', () => {
           expect(dom.findAll('tbody .lh-row--even', auditEl).length).toEqual(0);
           expect(getRowIdentifiers()).toEqual(initialExpected);
 
-          const filter3pCount = dom.find('#unused-javascript .lh-3p-filter-count', auditEl);
+          const filter3pCount = dom.find('.lh-3p-filter-count', auditEl);
           expect(filter3pCount.textContent).toEqual('2');
         });
 
