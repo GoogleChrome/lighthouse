@@ -2099,6 +2099,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "התמיכה בהקצאת כתובות URL מסוג data:‎ ב-SVGUseElement הוצאה משימוש ותוסר בעתיד."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DigitalCredentialsUnknownProtocol": {
+    "message": "ב-navigator.credentials.get()‎ או ב-create()‎ התקבלה בקשה לפרוטוקול לא ידוע של פרטי כניסה דיגיטליים. באחת הגרסאות העתידיות, פרוטוקולים שלא יזוהו ייחסמו."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DocumentCreateEventKeyboardEvents": {
     "message": "ה-method‏document.createEvent('KeyboardEvents') הוצאה משימוש ותוסר. במקומה, צריך להשתמש ב-method‏ new KeyboardEvent()."
   },
@@ -2107,6 +2110,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ExampleBrowserProcessDeprecation": {
     "message": "זו דוגמה להצגת הקוד שנדרש כדי לדווח על הוצאה משימוש בתהליך הדפדפן."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
+    "message": "‫Fenced Frame API הוצא משימוש ויוסר בהמשך."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
     "message": "‫Protected Audience API הוצא משימוש ויוסר בגרסה עתידית."
@@ -2214,7 +2220,7 @@
     "message": "ה-API‏ HTMLVideoElement.webkitSupportsFullscreen הוצא משימוש. במקומו צריך להשתמש ב-Document.fullscreenEnabled."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PreventSvgFilterPaint": {
-    "message": "אי אפשר להחיל פילטרים של SVG על רכיבי iframe ממקורות צולבים, על רכיבי iframe מוגבלים (למשל, בארגז חול) או על פלאגינים."
+    "message": "אי אפשר להחיל פילטרים של SVG על רכיבי iframe ממקור חיצוני, על רכיבי iframe מוגבלים (למשל, בארגז חול) או על פלאגינים."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "המגבלה DtlsSrtpKeyAgreement הוסרה. ציינת ערך false למגבלה הזו, והוא מפורש כניסיון להשתמש בשיטה SDES key negotiation שהוסרה. הפונקציונליות הזו הוסרה. במקומה יש להשתמש בשירות שתומך ב-DTLS key negotiation."
@@ -2240,12 +2246,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
     "message": "תידרש חסימה לגישה מדומיינים אחרים עבור SharedArrayBuffer. פרטים נוספים זמינים בכתובת https://developer.chrome.com/blog/enabling-shared-array-buffer/‎."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedStorage": {
-    "message": "ממשק Shared Storage API הוצא משימוש ויוסר בגרסה עתידית."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | StorageAccessAPI_requestStorageAccessFor_Method": {
-    "message": "הממשק document.requestStorageAccessFor הוצא משימוש ויוסר. פרטים נוספים זמינים בכתובת https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/‎."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
     "message": "האפשרות של speechSynthesis.speak() ללא הפעלת משתמש הוצאה משימוש ותוסר."
   },
@@ -2260,6 +2260,12 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "האפשרות BluetoothRemoteGATTCharacteristic.writeValue() הוצאה משימוש. במקומה צריך להשתמש ב-writeValueWithResponse() או ב-writeValueWithoutResponse()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamIncomingHighWaterMark": {
+    "message": "השם של WebTransportDatagramDuplexStream.incomingHighWaterMark שונה ל-incomingMaxBufferedDatagrams, והמאפיין incomingHighWaterMark יוסר באחת מהגרסאות הבאות של Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebTransportDatagramDuplexStreamOutgoingHighWaterMark": {
+    "message": "השם של WebTransportDatagramDuplexStream.outgoingHighWaterMark שונה ל-outgoingMaxBufferedDatagrams, והמאפיין outgoingHighWaterMark יוסר באחת מהגרסאות הבאות של Chrome."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "אין תמיכה ב-UTF-16 ב-JSON של התגובה ב-XMLHttpRequest"
@@ -2328,13 +2334,13 @@
     "message": "נדרשת הצהרה לגבי קידוד תווים. ניתן להגדיר אותה באמצעות מטא תג charset שממוקם ב-1,024 הבייטים הראשונים של ה-HTML או ברכיב ה-Content-Type בכותרת התגובה של ה-HTTP. [מידע נוסף על ההצהרה לגבי קידוד תווים](https://developer.chrome.com/docs/insights/charset/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedHttpHeader": {
-    "message": "הקוד לא כולל הצהרה לגבי charset בכותרת ה-HTTP"
+    "message": "תגובת השרת לא כוללת הצהרה לגבי charset בכותרת ה-HTTP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetLate": {
     "message": "הקוד כולל הצהרה על charset באמצעות מטא תג אחרי 1024 הבייטים הראשונים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetMissing": {
-    "message": "הקוד לא כולל הצהרה על charset באמצעות מטא תג"
+    "message": "הקוד לא כולל הצהרה על charset באמצעות במטא תג"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CharacterSet.js | failedMetaCharsetUnknown": {
     "message": "לא ניתן לקבוע מתוך נתוני המעקב אם יש הצהרה לגבי מטא charset"
@@ -2424,7 +2430,10 @@
     "message": "מקור"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
-    "message": "אם קיימים [מודולים כפולים גדולים בחבילות JavaScript](https://developer.chrome.com/docs/performance/insights/duplicated-javascript), צריך להסיר אותם מהחבילות האלה כדי לצמצם צריכה של בייטים מיותרים על ידי הפעילות ברשת."
+    "message": "אם קיימים [מודולים כפולים גדולים בחבילות JavaScript](https://developer.chrome.com/docs/performance/insights/duplicated-javascript), צריך להסיר אותם מהחבילות האלה כדי שהפעילות ברשת תצרוך פחות בייטים מיותרים"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | noDuplicatedJavaScript": {
+    "message": "לא נמצא קוד JavaScript כפול"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
     "message": "‫JavaScript כפול"
@@ -2435,6 +2444,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
     "message": "גופן"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | noFonts": {
+    "message": "לא נמצאו גופנים עם מאפיין font-display לא אופטימלי"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "תצוגת גופן"
   },
@@ -2442,7 +2454,7 @@
     "message": "בזבוז זמן"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
-    "message": "(אנונימית)"
+    "message": "(אנונימי)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "הזרמה חוזרת מאולצת מתרחשת כשקוד JavaScript מבצע שאילתות לגבי מאפיינים גיאומטריים (כמו offsetWidth) אחרי שמצב ה-DOM השתנה והסגנונות הפסיקו להיות תקפים. התוצאה יכולה להיות ביצועים נמוכים. [כאן אפשר לקרוא מידע נוסף](https://developer.chrome.com/docs/performance/insights/forced-reflow) על הזרמות חוזרות מאולצות ועל דרכים להתמודד איתן."
@@ -2463,7 +2475,7 @@
     "message": "[ללא שיוך]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
-    "message": "כדאי להתחיל לבדוק [איך לשפר את מדד INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) על ידי עיון בחלק המשני הארוך ביותר."
+    "message": "כדאי לבדוק [איך לשפר את מדד INP](https://developer.chrome.com/docs/performance/insights/inp-breakdown) על ידי עיון בחלק המשני הארוך ביותר"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
     "message": "משך"
@@ -2505,16 +2517,16 @@
     "message": "שיפור של שליחת התמונות"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "דחיסה יעילה יותר של התמונה יכולה להקטין את קובץ ההורדה שלה."
+    "message": "כדי להקטין את נפח ההורדה של התמונה, כדאי לדחוס אותה יותר"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "שימוש בפורמט תמונה מודרני (WebP, ‏AVIF) או דחיסה יעילה יותר של התמונה יכולים להקטין את קובץ ההורדה שלה."
+    "message": "כדי להקטין את נפח ההורדה של התמונה, כדאי להשתמש בפורמט תמונה מודרני (WebP, ‏AVIF) או בדחיסה יעילה יותר"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
     "message": "קובץ התמונה הזה גדול יותר מהנדרש ({PH1}) למידות המוצגות שלו ({PH2}). כדאי להשתמש בתמונות רספונסיביות כדי להקטין את קובץ ההורדה של התמונה."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "שימוש בפורמטים של וידאו במקום ב-GIF יכול להקטין את קובץ ההורדה של תוכן אנימציה."
+    "message": "שימוש בפורמטים של וידאו במקום ב-GIF יכול להקטין את קובץ ההורדה של תוכן אנימציה"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
     "message": "‫[לכל חלק משני יש אסטרטגיות שיפור ספציפיות](https://developer.chrome.com/docs/performance/insights/lcp-breakdown). באופן אידיאלי, רוב זמן ה-LCP צריך להיות מוקדש לטעינה של המשאבים, ולא לעיכובים."
@@ -2559,10 +2571,10 @@
     "message": "צריך להשתמש בערך fetchpriority=high בבקשת הטעינה מראש של התמונה"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
-    "message": "במשאבי LCP אסור להשתמש במאפיין loading=lazy"
+    "message": "במשאבי LCP אין להשתמש במאפיין loading=lazy"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
-    "message": "תמונת ה-LCP נטענה {PH1} אחרי נקודת ההתחלה המוקדמת ביותר."
+    "message": "תמונת ה-LCP נטענה {PH1} אחרי נקודת ההתחלה המוקדמת ביותר"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
     "message": "לא זוהה LCP"
@@ -2583,7 +2595,10 @@
     "message": "בייטים מבוזבזים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים ישנים יותר להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כדאי לשקול לשנות את תהליך ה-build של JavaScript כדי לא לבצע טרנספילציה של [תכונות בסיסיות](https://web.dev/articles/baseline-and-polyfills), אלא אם ידוע לך שנדרשת תמיכה בדפדפנים ישנים יותר. [למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://developer.chrome.com/docs/performance/insights/legacy-javascript)"
+    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים ישנים יותר להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. אם לא נדרשת תמיכה בדפדפנים ישנים, אפשר להימנע מטרנספילציה של תכונות [Baseline](https://web.dev/articles/baseline-and-polyfills) בתהליך ה-build של JavaScript. [מידע על הסיבה למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://developer.chrome.com/docs/performance/insights/legacy-javascript)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | noLegacyJavaScript": {
+    "message": "לא נמצא קוד JavaScript מדור קודם"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "‫JavaScript מדור קודם"
@@ -2592,7 +2607,7 @@
     "message": "ל-HTTP/2 ו-HTTP/3 יש הרבה יתרונות לעומת HTTP/1.1, כמו multiplexing. [מידע נוסף על השימוש ב-HTTP מודרני](https://developer.chrome.com/docs/performance/insights/modern-http)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "לא נמצאו בקשות שנעשה בהן שימוש ב-HTTP/1.1, או שהשימוש הנוכחי ב-HTTP/1.1 לא מייצג הזדמנות משמעותית לאופטימיזציה. בקשות HTTP/1.1 מסומנות רק אם שישה נכסים סטטיים או יותר מגיעים מאותו מקור. סביבות פיתוח מקומיות או מקורות צד שלישי לא ממלאים בקשות כאלה."
+    "message": "לא נמצאו בקשות שנעשה בהן שימוש ב-HTTP/1.1, או שהשימוש הנוכחי ב-HTTP/1.1 לא מייצג הזדמנות משמעותית לאופטימיזציה. בקשות HTTP/1.1 מסומנות רק אם שישה נכסים סטטיים או יותר מגיעים מאותו מקור, והם אינם מסופקים מסביבת פיתוח מקומית או ממקור צד שלישי."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "פרוטוקול"
@@ -2622,10 +2637,10 @@
     "message": "קישור מקדים שלא נוצל. צריך לוודא שהשימוש במאפיין crossorigin נעשה בצורה נכונה."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
-    "message": "[כדאי להימנע משרשראות של בקשות קריטיות](https://developer.chrome.com/docs/performance/insights/network-dependency-tree). מומלץ לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים כדי לשפר את מהירות טעינת הדף."
+    "message": "כדי לייעל את הטעינה, [כדאי להימנע משרשור של בקשות קריטיות](https://developer.chrome.com/docs/performance/insights/network-dependency-tree). מומלץ לקצר את השרשראות, להקטין את נפח ההורדה של המשאבים או לדחות את ההורדה של משאבים לא נחוצים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "אפשר להוסיף רמזים [לקישורים מקדימים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) למקורות החשובים ביותר, אבל כדאי להשתמש ב-4 רמזים לכל היותר."
+    "message": "אפשר להוסיף רמזים [לקישורים מקדימים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) למקורות החשובים ביותר, אבל כדאי להשתמש ב-4 רמזים לכל היותר"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "מקורות מתאימים לקישור מקדים"
@@ -2640,7 +2655,7 @@
     "message": "אין מקורות נוספים שמתאימים לקישור מקדים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
-    "message": "לא היו מקורות עם קישורים מקדימים"
+    "message": "לא בוצע חיבור מוקדם לאף מקור"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
     "message": "הרמזים [לקישורים מקדימים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) עוזרים לדפדפן ליצור חיבור מהיר יותר במהלך טעינת הדף, ומאפשרים לשלוח מוקדם יותר את הבקשה הראשונה למקור הזה. אלה המקורות שהדף מתחבר אליהם מראש."
@@ -2658,10 +2673,10 @@
     "message": "קישור מקדים שלא נוצל. צריך להשתמש ב-preconnect רק למקורות שהדף עשוי לבקש."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
-    "message": "כדי לטעון דפים מהר יותר, כדאי להימנע משרשראות של בקשות קריטיות. מומלץ לקצר את השרשראות, להקטין את נפח ההורדה של המשאבים או לדחות את ההורדה של משאבים לא נחוצים."
+    "message": "כדי לטעון דפים מהר יותר, כדאי להימנע משרשראות של בקשות קריטיות. מומלץ לקצר את השרשראות, להקטין את נפח ההורדה של המשאבים או לדחות את ההורדה של משאבים לא נחוצים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "יש בקשות שחוסמות את העיבוד הראשוני של הדף, מה שעלול לגרום לעיכוב של ה-LCP. [דחייה או שילוב בקוד](https://developer.chrome.com/docs/performance/insights/render-blocking) יכולים להוציא את בקשות הרשת האלה מהנתיב הקריטי."
+    "message": "יש בקשות שחוסמות את הרינדור הראשוני של הדף, מה שעלול לעכב את ה-LCP. [דחייה או שילוב בקוד](https://developer.chrome.com/docs/performance/insights/render-blocking) יכולים להוציא מהנתיב הקריטי את הבקשות האלה לאחזור מהרשת."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "משך"
@@ -2676,19 +2691,19 @@
     "message": "בקשות חוסמות עיבוד"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
-    "message": "אם העלויות של 'חישוב מחדש של הסגנון' עדיין גבוהות, אפשר להפחית אותן באמצעות אופטימיזציה של הסלקטור. כדאי לבצע [אופטימיזציה לסלקטורים](https://developer.chrome.com/docs/performance/insights/slow-css-selector) עם זמן חולף ואחוז של נתיב איטי (slow-path) גבוהים. שימוש בסלקטורים פשוטים יותר, בפחות סלקטורים, ב-DOM קטן יותר וב-DOM נמוך יותר יפחית את עלויות ההתאמה."
+    "message": "אם עלויות \"חישוב מחדש של הסגנון\" עדיין גבוהות, אפשר להפחית אותן באמצעות אופטימיזציה של הסלקטור. כדי לעשות זאת, אפשר לבצע [אופטימיזציה לסלקטורים](https://developer.chrome.com/docs/performance/insights/slow-css-selector) עם משך זמן עיבוד ארוך ואחוז גבוה של נתיב איטי (slow-path). וגם להשתמש בסלקטורים פשוטים יותר ובכמות נמוכה יותר, וב-DOM קטן ושטוח יותר."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
     "message": "הזמן שחלף"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
-    "message": "לא נמצאו נתונים של סלקטור ב-CSS. צריך להפעיל את הנתונים הסטטיסטיים של הסלקטור ב-CSS בהגדרות של חלונית הביצועים."
+    "message": "לא נמצאו נתונים של סלקטור ב-CSS. הנתונים הסטטיסטיים של הסלקטור ב-CSS צריכים להיות מופעלים בהגדרות של חלונית הביצועים."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
     "message": "ניסיונות התאמה"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
-    "message": "ספירת התאמות"
+    "message": "מספר התאמות"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "עלויות של סלקטור ב-CSS"
@@ -2715,7 +2730,7 @@
     "message": "גודל ההעברה"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "קוד של צד שלישי עשוי להשפיע בצורה משמעותית על ביצועי הטעינה. כדי לתעדף את תוכן הדף שלך, צריך [לצמצם ולדחות טעינת קוד של צד שלישי](https://developer.chrome.com/docs/performance/insights/third-parties)."
+    "message": "קוד של צד שלישי עלול לפגוע משמעותית בביצועי הטעינה. כדי לתעדף את תוכן הדף, [אפשר לצמצם ולדחות טעינת קוד של צד שלישי](https://developer.chrome.com/docs/performance/insights/third-parties)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "לא נמצאו צדדים שלישיים"
@@ -2724,7 +2739,7 @@
     "message": "צדדים שלישיים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "יכול להיות שאינטראקציות של לחיצה [יעוכבו בעד 300 אלפיות השנייה](https://developer.chrome.com/docs/performance/insights/viewport) אם אזור התצוגה לא עבר אופטימיזציה לנייד."
+    "message": "יכול להיות שאינטראקציות של לחיצה [יתעכבו בעד 300 אלפיות השנייה](https://developer.chrome.com/docs/performance/insights/viewport) אם אזור התצוגה לא עבר אופטימיזציה לנייד"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
     "message": "עיכוב בלחיצה על הנייד"
@@ -2733,367 +2748,367 @@
     "message": "אופטימיזציה של אזור התצוגה לנייד"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
-    "message": "רק דפים שהטעינה שלהם נעשית באמצעות בקשת GET מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "רק דפים שנטענים באמצעות בקשת GET מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
-    "message": "אפשר לשמור במטמון רק דפים עם קוד סטטוס של 2XX."
+    "message": "אפשר לשמור במטמון רק דפים עם קוד סטטוס בתבנית של 2XX"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
-    "message": "מערכת Chrome זיהתה ניסיון להפעיל JavaScript בזמן שהדף היה במטמון."
+    "message": "מערכת Chrome זיהתה ניסיון להפעיל JavaScript בזמן שהדף היה במטמון"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "בשלב זה, דפים שנשלחה מהם בקשה ל-AppBanner לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שביקשו AppBanner לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת על ידי תכונות ניסיוניות. צריך לעבור לכתובת chrome://flags/#back-forward-cache כדי להפעיל אותו באופן מקומי במכשיר הזה."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "הפיצ'ר מטמון לדף הקודם/הבא הושבת על ידי שורת הפקודה."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" (bfcache) הושבתה על ידי שורת הפקודה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת כי אין מספיק זיכרון."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" (bfcache) הושבתה כי אין מספיק זיכרון"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' לא נתמך על ידי בעל גישה."
+    "message": "האובייקט המטפל לא תומך בתכונה \"מטמון לדף הקודם/הבא\""
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
-    "message": "הפיצ'ר מטמון לדף הקודם/הבא הושבת בשביל כלי עיבוד מקדים."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בשביל רינדור מראש"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "אי אפשר לשמור את הדף במטמון כי יש בו מופע של BroadcastChannel עם אירועי listener רשומים."
+    "message": "לא ניתן לשמור את הדף במטמון כי קיים בו מופע של BroadcastChannel עם רכיבי listener רשומים."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שיש להם כותרת cache-control:no-store."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים עם כותרת cache-control:no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
-    "message": "המטמון נוקה באופן מכוון."
+    "message": "המטמון נוקה באופן מכוון"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "הדף הוצא מהמטמון כדי לאפשר שמירה במטמון של דף אחר."
+    "message": "הדף הוצא מהמטמון כדי לאפשר שמירה של דף אחר במטמון"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "בשלב זה, דפים שמכילים יישומי פלאגין לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שמכילים יישומי פלאגין לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "לא מוגדרת"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "דפים שנעשה בהם שימוש ב-FileChooser API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-FileChooser API לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "דפים שנעשה בהם שימוש ב-File System Access API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-File System Access API לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "דפים שנעשה בהם שימוש ב-Dispatcher של מכשירים לאחסון מדיה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שהשתמשו בהם ב-Media Device Dispatcher לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
-    "message": "Media Player היה פעיל ביציאה מהדף."
+    "message": "במהלך היציאה מהדף, נגן מדיה היה פעיל בו"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש בממשק MediaSession API ושהוגדר בהם מצב הפעלה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש בממשק MediaSession API ושמוגדר בהם מצב הפעלה לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "דפים שנעשה בהם שימוש ב-MediaSession API, אשר מגדירים מופעי handler של פעולות, לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שהשתמשו בהם ב-MediaSession API ושמוגדרים בהם רכיבי handler של פעולות, לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת בגלל פעילות קורא המסך."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל קורא מסך"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "דפים שנעשה בהם שימוש ב-SecurityHandler לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-SecurityHandler לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "דפים שמשתמשים ב-Serial API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שמשתמשים ב-Serial API לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "דפים שנעשה בהם שימוש ב-WebAuthetication API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-WebAuthetication API לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "דפים שנעשה בהם שימוש ב-WebBluetooth API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-WebBluetooth API לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "דפים שמשתמשים ב-WebUSB API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שמשתמשים ב-WebUSB API לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה כי קובצי cookie הושבתו בדף עם שימוש ב-Cache-Control: no-store."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" (bfcache) הושבתה כי קובצי Cookie הושבתו בדף שמשתמש ב-Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-worker או ב-worklet ייעודיים לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שהשתמשו בהם ב-worker או במודול worklet ייעודיים לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "טעינת המסמך לא הסתיימה לפני היציאה."
+    "message": "טעינת המסמך לא הסתיימה לפני היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "הבאנר של האפליקציה פעל במהלך היציאה."
+    "message": "הבאנר של האפליקציה פעל במהלך היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "מנהל הסיסמאות של Chrome היה פעיל במהלך היציאה."
+    "message": "מנהל הסיסמאות של Chrome היה פעיל במהלך היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "התבצע זיקוק DOM במהלך היציאה."
+    "message": "התבצע זיקוק DOM במהלך היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "הכלי להצגת זיקוק ה-DOM פעל במהלך היציאה."
+    "message": "הכלי DOM Distiller Viewer פעל במהלך היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת עקב תוספים שמשתמשים ב-API לשליחת הודעות."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל תוספים שמשתמשים ב-API לשליחת הודעות"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "תוספים עם חיבור לאורך זמן אמורים להיסגר לפני הכניסה למטמון לדף הקודם/הבא."
+    "message": "תוספים עם חיבור לאורך זמן אמורים לסגור את החיבור לפני ההוספה למטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "תוספים עם חיבור לאורך זמן ניסו לשלוח הודעה למסגרות במטמון לדף הקודם/הבא."
+    "message": "תוספים עם חיבור ארוך טווח ניסו לשלוח הודעות למסגרות במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת בגלל תוספים."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל תוספים"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "חלון עזר של תיבת דו-שיח, למשל שליחה מחדש של טופס או תיבת דו-שיח עם סיסמת http, הוצג בדף במהלך היציאה."
+    "message": "חלון עזר של תיבת דו-שיח, למשל תיבת דו-שיח עם סיסמת http או שליחה מחדש של טופס, הוצג בדף במהלך היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
-    "message": "הדף ללא החיבור לאינטרנט הוצג במהלך היציאה."
+    "message": "דף האופליין הוצג במהלך היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "סרגל ההתערבות לגבי חוסר בזיכרון פנוי פעל במהלך היציאה."
+    "message": "סרגל ההתערבות \"אין זיכרון פנוי (OOM)\" פעל במהלך היציאה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "נשלחו בקשות להרשאות במהלך היציאה."
+    "message": "נשלחו בקשות להרשאות במהלך היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
-    "message": "תוכנת החסימה לחלונות קופצים פעלה במהלך היציאה."
+    "message": "תוכנת חסימה לחלונות קופצים פעלה במהלך היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "פרטי הגלישה הבטוחה הוצגו במהלך היציאה."
+    "message": "פרטי הגלישה הבטוחה הוצגו במהלך היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "במסגרת השימוש ב'גלישה בטוחה' נקבע כי הדף הזה פוגעני והחלון הקופץ נחסם."
+    "message": "התכונה \"גלישה בטוחה\" קבעה שהדף הזה פוגעני וחסמה את החלון הקופץ"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "קובץ שירות (service worker) הופעל בזמן שהדף היה במטמון לדף הקודם/הבא."
+    "message": "קובץ שירות (service worker) הופעל בזמן שהדף היה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
-    "message": "המטמון לדף הקודם/הבא מושבת בגלל שגיאה במסמך."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל שגיאה במסמך"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "לא ניתן לשמור ב-bfcache דפים שנעשה בהם שימוש ב-FencedFrames."
+    "message": "אי אפשר לשמור ב-bfcache דפים שהשתמשו בהם ב-FencedFrames"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "הדף הוצא מהמטמון כדי לאפשר שמירה במטמון של דף אחר."
+    "message": "הדף הוצא מהמטמון כדי לאפשר שמירה של דף אחר במטמון"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "בשלב זה, דפים שנתנו אישור גישה לסטרימינג של מדיה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנתנו הרשאת גישה לסטרימינג של מדיה לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "בשלב הזה, דפים שיש בהם סוגים מסוימים של תוכן מוטמע (למשל קובצי PDF) לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שיש בהם סוגים מסוימים של תוכן מוטמע (למשל קובצי PDF) לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-IdleManager לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-IdleManager לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "בשלב זה, דפים שיש בהם חיבור IndexedDB פתוח לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שיש בהם חיבור IndexedDB פתוח לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה עקב אירוע מסוג IndexedDB."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל אירוע IndexedDB"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
-    "message": "נעשה שימוש בממשקי API לא מתאימים."
+    "message": "נעשה שימוש בממשקי API לא מתאימים"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "בשלב זה, דפים שמחדירים אליהם JavaScript באמצעות תוספים לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שתוספים מחדירים אליהם JavaScript לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "בשלב זה, דפים שמחדירים אליהם StyleSheet באמצעות תוספים לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שתוספים מחדירים אליהם StyleSheet לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "שגיאה פנימית."
+    "message": "שגיאה פנימית"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה כי בבקשות מסוימות של רשת JavaScript התקבל משאב עם הכותרת Cache-Control: no-store."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה כי בקשה מסוימת לאחזור מהרשת של JavaScript קיבלה משאב עם הכותרת Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
-    "message": "הפיצ'ר 'מטמון לדף הקודם/הבא' הושבת עקב בקשה מסוג הודעת keep-alive."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה בגלל בקשה מסוג הודעת keep-alive"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש בנעילת מקלדת לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנעשה בהם שימוש בנעילת מקלדת לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "טעינת הדף לא הסתיימה לפני היציאה מהפעולה."
+    "message": "טעינת הדף לא הסתיימה לפני היציאה מהדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שבמשאב העיקרי שלהם מופיע cache-control:no-cache."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שבמשאב העיקרי שלהם מופיע cache-control:no-cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שבמשאב העיקרי שלהם מופיע cache-control:no-store."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא (bfcache) דפים שבמשאב העיקרי שלהם מופיע cache-control:no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
-    "message": "הניווט בוטל לפני שנעשה לדף שחזור מהמטמון לדף הקודם/הבא."
+    "message": "הניווט בוטל לפני שהדף שוחזר מהמטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
     "message": "הדף הוצא מהמטמון כי חיבור פעיל לרשת קיבל יותר מדי נתונים. יש הגבלה של Chrome על כמות הנתונים שדף מסוים יכול לקבל כשהוא שמור במטמון."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "בשלב זה, דפים שמכילים XHR או פונקציית fetch()‎ פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שמכילים XHR או פונקציית fetch()‎ פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
-    "message": "הדף הוצא מהמטמון לדף הקודם/הבא כי בקשה פעילה לרשת כללה הפניה אוטומטית."
+    "message": "הדף הוצא מהמטמון לדף הקודם/הבא (bfcache) כי בקשה לאחזור מהרשת שהייתה פעילה כללה הפניה אוטומטית."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
     "message": "הדף הוצא מהמטמון כי החיבור לרשת היה פתוח יותר מדי זמן. יש הגבלה של Chrome בנוגע למשך הזמן שדף יכול לקבל נתונים כשהוא שמור במטמון."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שאין להם כותרת תגובה תקינה."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שאין להם כותרת תגובה תקינה"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
-    "message": "הניווט התרחש במסגרת שאינה המסגרת הראשית."
+    "message": "הניווט התרחש במסגרת שאינה המסגרת הראשית"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "בשלב זה, דפים עם טרנזקציות פעילות של IndexedDB לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים עם טרנזקציות פעילות של IndexedDB לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "בשלב זה, דפים עם בקשת רשת פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים עם בקשה לאחזור מהרשת פעילה לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "בשלב זה, דפים עם בקשת רשת פעילה לאחזור לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים עם בקשה פעילה לאחזור מהרשת לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "בשלב זה, דפים עם בקשת רשת פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים עם בקשה לאחזור מהרשת פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "בשלב זה, דפים עם בקשת רשת XHR פעילה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים עם בקשת XHR פעילה לאחזור מהרשת לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-PaymentManager לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-PaymentManager לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "בשלב זה, דפים שבהם נעשה שימוש ב'תמונה בתוך תמונה' לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שהשתמשו בהם ב\"תמונה בתוך תמונה\" לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "בשלב זה, דפים שמוצגים בהם רכיבי ממשק משתמש של הדפסה לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שמוצג בהם ממשק משתמש של הדפסה לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
-    "message": "הדף נפתח תוך שימוש ב-'window.open()' ולכרטיסייה נוספת יש הפניה לזה, או שנפתח חלון על ידי הדף."
+    "message": "הדף נפתח בעזרת \"window.open()\" ובכרטיסייה נוספת יש הפניה לזה, או שנפתח חלון על ידי הדף"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
-    "message": "תהליך הרינדור קרס לדף הזה שבמטמון לדף הקודם/הבא."
+    "message": "תהליך הרינדור קרס לדף שנמצא במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
-    "message": "תהליך הרינדור הופסק לדף הזה במטמון לדף הקודם/הבא."
+    "message": "תהליך הרינדור של הדף שנמצא במטמון לדף הקודם/הבא (bfcache) הופסק"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה להרשאות להקלטת אודיו לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנשלחה מהם בקשה להרשאות להקלטת אודיו לא כשירים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה להרשאות חיישן לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שביקשו הרשאות חיישן לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה לסנכרון ברקע או להרשאות אחזור לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנשלחה מהם בקשה לסנכרון ברקע או להרשאות אחזור לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה להרשאות MIDI לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנשלחה מהם בקשה להרשאות MIDI לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה להרשאות לגבי התראות לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנשלחה מהם בקשה להרשאות לשליחת התראות לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשת גישה לאחסון לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שביקשו לגשת לאחסון לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "בשלב זה, דפים שהתקבלה מהם בקשה להרשאות לצילום סרטון לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנשלחה מהם בקשה להרשאות לצילום סרטונים לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
-    "message": "אפשר לשמור במטמון רק דפים שהסכמה של כתובת ה-URL שלהם היא HTTP / HTTPS."
+    "message": "אפשר לשמור במטמון רק דפים שסכמת ה-URL שלהם היא HTTP או HTTPS"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
-    "message": "על הדף נתבעה בעלות על ידי קובץ שירות (service worker) בזמן שהוא נמצא במטמון לדף הקודם/הבא."
+    "message": "קובץ שירות (service worker) תבע בעלות על הדף בזמן שהדף היה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
-    "message": "נעשה ניסיון של קובץ שירות (service worker) לשלוח MessageEvent לדף שנמצא במטמון לדף הקודם/הבא."
+    "message": "קובץ שירות (service worker) ניסה לשלוח MessageEvent לדף שנמצא במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
-    "message": "בוטל הרישום של ServiceWorker כשדף היה במטמון לדף הקודם/הבא."
+    "message": "בוטל הרישום של ServiceWorker בזמן שדף היה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
-    "message": "הדף הוצא מהמטמון לדף הקודם/הבא עקב הפעלה של קובץ שירות (service worker)."
+    "message": "הדף הוצא מהמטמון לדף הקודם/הבא כי קובץ שירות (service worker) הופעל"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
-    "message": "Chrome הופעל מחדש וניקה את הרשומות של המטמון לדף הקודם/הבא."
+    "message": "‫Chrome הופעל מחדש, והוא וניקה את הרשומות במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SharedWorker לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SharedWorker לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "הדף הוצא מהמטמון כי הוא קיבל הודעה מ-SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SpeechRecognizer לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SpeechRecognizer לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SpeechSynthesis לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-SpeechSynthesis לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "החל ניווט מצד iframe בדף שלא הסתיים."
+    "message": "החל ניווט בדף שלא הסתיים מצד iframe"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שבמשאב המשנה שלהם מופיע cache-control:no-cache."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים שבמשאב המשנה שלהם מופיע cache-control:no-cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "לא ניתן להעביר למטמון לדף הקודם/הבא דפים שבמשאב המשנה שלהם מופיע cache-control:no-store."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא (bfcache) דפים שבמשאב המשנה שלהם מופיע cache-control:no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
-    "message": "הדף חרג ממגבלת הזמן המקסימלית בפיצ'ר מטמון לדף הקודם/הבא והתוקף שלו פג."
+    "message": "הדף חרג ממגבלת הזמן המקסימלית במטמון לדף הקודם/הבא (bfcache) והתוקף שלו פג"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
-    "message": "פג הזמן הקצוב של הדף להוספה למטמון לדף הקודם/הבא (ככל הנראה עקב מופעי handler לפעולות ממושכות של הסתרת דפים)."
+    "message": "הזמן הקצוב להוספה של הדף למטמון לדף הקודם/הבא נגמר (ככל הנראה עקב רכיבי handler לפעולות ממושכות של הסתרת דפים)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
-    "message": "לדף יש handler של הסרת הנתונים שנטענו במסגרת הראשית."
+    "message": "לדף יש handler של הסרת נתונים שנטענו במסגרת הראשית"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
-    "message": "לדף יש handler של הסרת הנתונים שנטענו במסגרת המשנית."
+    "message": "לדף יש handler של הסרת נתונים שנטענו במסגרת משנית"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
-    "message": "הכותרת של השינוי מברירת המחדל של סוכן המשתמש שונתה על ידי הדפדפן."
+    "message": "הדפדפן שינה את כותרת סוכן המשתמש שמחליפה את ברירת המחדל"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "בשלב זה, דפים שנתנו הרשאת גישה לצילום סרטונים או להקלטת אודיו לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנתנו הרשאת גישה לצילום סרטונים או להקלטת אודיו לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebDatabase לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנעשה בהם שימוש ב-WebDatabase לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebHID לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שהשתמשו בהם ב-WebHID לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebLocks לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב הזה, דפים שנעשה בהם שימוש ב-WebLocks לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebNfc לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebNfc לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebOTPService לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebOTPService לא מתאימים לשמירה במטמון לדף הקודם/הבא (bfcache)"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "אי אפשר לשמור דפים עם WebRTC במטמון לדף הקודם/הבא."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים עם WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה כי נעשה שימוש ב-WebRTC."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" (bfcache) הושבתה כי נעשה שימוש ב-WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebShare לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebShare לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "דפים עם WebSocket לא יכולים לעבור למטמון לדף הקודם/הבא."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים עם WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה כי נעשה שימוש ב-WebSocket."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה כי נעשה שימוש ב-WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "אי אפשר להוסיף דפים עם WebTransport למטמון לדף הקודם/הבא."
+    "message": "אי אפשר להוסיף למטמון לדף הקודם/הבא דפים עם WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
-    "message": "התכונה 'מטמון לדף הקודם/הבא' הושבתה כי נעשה שימוש ב-WebTransport."
+    "message": "התכונה \"מטמון לדף הקודם/הבא\" הושבתה כי נעשה שימוש ב-WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebXR לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "בשלב זה, דפים שנעשה בהם שימוש ב-WebXR לא מתאימים לשמירה במטמון לדף הקודם/הבא"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "להצגת תוכן באנימציה, כשהתוכן לא מוצג במסך כדאי להשתמש ב-[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) כדי לצמצם את השימוש ביחידת העיבוד המרכזית (CPU)."
