@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import idbKeyval from 'idb-keyval';
+import * as idbKeyval from 'idb-keyval';
 
 import {DragAndDrop} from './drag-and-drop.js';
 import {GithubApi} from './github-api.js';
