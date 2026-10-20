@@ -7,7 +7,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import MessageParser from '@formatjs/icu-messageformat-parser';
+import * as MessageParser from '@formatjs/icu-messageformat-parser';
 
 import {collectAllCustomElementsFromICU, escapeIcuMessage} from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../shared/root.js';
