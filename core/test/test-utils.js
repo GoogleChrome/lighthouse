@@ -193,7 +193,8 @@ async function makeMocksForGatherRunner() {
   await td.replaceEsm('../gather/driver/environment.js', {
     getBenchmarkIndex: () => Promise.resolve(150),
     getDevicePixelRatio: () => Promise.resolve(2),
-    getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
+    getBrowserVersion: async () =>
+      ({userAgent: 'Chrome', product: 'Chrome/80.0.0.0', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
   await td.replaceEsm('../lib/emulation.js', {
