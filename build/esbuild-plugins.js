@@ -70,6 +70,10 @@ function bulkLoader(partialLoaders) {
         const warnings = [];
         // TODO: source maps? lol.
         let code = await fs.promises.readFile(args.path, 'utf-8');
+        if (args.path.includes('node_modules') &&
+            fs.existsSync(path.join(path.dirname(args.path), 'package.json'))) {
+          code = code.replace(/\/\/# sourceMappingURL=.*/g, '');
+        }
 
         for (const partialLoader of partialLoaders) {
           const partialResult = await partialLoader.onLoad(code, args);
