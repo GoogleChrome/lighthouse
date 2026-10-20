@@ -48,6 +48,8 @@ class TargetManager extends ProtocolEventEmitter {
      * @type {Map<string, TargetWithSession>}
      */
     this._targetIdToTargets = new Map();
+    /** @type {Set<(targetWithSession: TargetWithSession) => Promise<void>|void>} */
+    this._targetAttachedListeners = new Set();
     /** @type {Map<string, LH.Crdp.Runtime.ExecutionContextDescription>} */
     this._executionContextIdToDescriptions = new Map();
 
@@ -120,6 +122,25 @@ class TargetManager extends ProtocolEventEmitter {
   }
 
   /**
+   * Registers a listener that is invoked for all currently attached targets and any targets
+   * attached in the future, before the target is resumed.
+   * @param {(targetWithSession: TargetWithSession) => Promise<void>|void} listener
+   */
+  async onTargetAttached(listener) {
+    this._targetAttachedListeners.add(listener);
+    for (const targetWithSession of this._targetIdToTargets.values()) {
+      await listener(targetWithSession);
+    }
+  }
+
+  /**
+   * @param {(targetWithSession: TargetWithSession) => Promise<void>|void} listener
+   */
+  offTargetAttached(listener) {
+    this._targetAttachedListeners.delete(listener);
+  }
+
+  /**
    * @param {LH.Puppeteer.CDPSession} cdpSession
    */
   async _onSessionAttached(cdpSession) {
@@ -166,6 +187,10 @@ class TargetManager extends ProtocolEventEmitter {
         flatten: true,
         waitForDebuggerOnStart: true,
       });
+
+      for (const listener of this._targetAttachedListeners) {
+        await listener(targetWithSession);
+      }
     } catch (err) {
       // Sometimes targets can be closed before we even have a chance to listen to their network activity.
       if (/Target closed/.test(err.message)) return;
@@ -276,6 +301,7 @@ class TargetManager extends ProtocolEventEmitter {
 
     this._enabled = false;
     this._targetIdToTargets = new Map();
+    this._targetAttachedListeners = new Set();
     this._executionContextIdToDescriptions = new Map();
     this._mainFrameId = '';
   }

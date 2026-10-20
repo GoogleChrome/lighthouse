@@ -19,26 +19,53 @@ class JsUsage extends BaseGatherer {
     super();
     /** @type {LH.Crdp.Profiler.ScriptCoverage[]} */
     this._scriptUsages = [];
+    /** @type {Array<{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}>} */
+    this._sessions = [];
+    /** @type {((targetWithSession: {target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}) => Promise<void>)|undefined} */
+    this._onTargetAttached = undefined;
   }
 
   /**
    * @param {LH.Gatherer.Context} context
    */
   async startInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    await session.sendCommand('Profiler.enable');
-    await session.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
+    this._sessions = [];
+    this._onTargetAttached = async (targetWithSession) => {
+      if (targetWithSession.target.type !== 'page' && targetWithSession.target.type !== 'iframe') {
+        return;
+      }
+      this._sessions.push(targetWithSession);
+      const session = targetWithSession.session;
+      await session.sendCommand('Profiler.enable');
+      await session.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
+    };
+    await context.driver.targetManager.onTargetAttached(this._onTargetAttached);
   }
 
   /**
    * @param {LH.Gatherer.Context} context
    */
   async stopInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    const coverageResponse = await session.sendCommand('Profiler.takePreciseCoverage');
-    this._scriptUsages = coverageResponse.result;
-    await session.sendCommand('Profiler.stopPreciseCoverage');
-    await session.sendCommand('Profiler.disable');
+    if (this._onTargetAttached) {
+      context.driver.targetManager.offTargetAttached(this._onTargetAttached);
+      this._onTargetAttached = undefined;
+    }
+    for (const {target, session} of this._sessions) {
+      try {
+        const coverageResponse = await session.sendCommand('Profiler.takePreciseCoverage');
+        await session.sendCommand('Profiler.stopPreciseCoverage');
+        await session.sendCommand('Profiler.disable');
+        for (const entry of coverageResponse.result) {
+          if (target.type === 'iframe') {
+            entry.scriptId = `${target.targetId}:${entry.scriptId}`;
+          }
+          this._scriptUsages.push(entry);
+        }
+      } catch (err) {
+        if (target.type === 'page') throw err;
+      }
+    }
+    this._sessions = [];
   }
 
   /**

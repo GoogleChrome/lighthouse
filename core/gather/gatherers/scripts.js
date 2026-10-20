@@ -48,6 +48,8 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
 function collectTraceScripts(traceEvents) {
   /** @type {Map<string, TraceScript>} */
   const byIsolateAndScriptId = new Map();
+  /** @type {Map<string, string>} */
+  const frameByIsolate = new Map();
 
   /**
    * @param {NonNullable<LH.TraceEvent['args']['data']>} data
@@ -71,6 +73,9 @@ function collectTraceScripts(traceEvents) {
     if (event.cat === 'disabled-by-default-devtools.target-rundown') {
       if (typeof data.frame === 'string') {
         getOrCreateRecord(data).frame = data.frame;
+        if (data.isolate !== undefined) {
+          frameByIsolate.set(String(data.isolate), data.frame);
+        }
       }
     } else if (event.cat === 'disabled-by-default-devtools.v8-source-rundown' &&
         event.name === 'ScriptCatchup') {
@@ -94,7 +99,11 @@ function collectTraceScripts(traceEvents) {
 
   /** @type {Map<string, TraceScript[]>} */
   const byScriptId = new Map();
-  for (const record of byIsolateAndScriptId.values()) {
+  for (const [key, record] of byIsolateAndScriptId.entries()) {
+    if (!record.frame) {
+      const isolate = key.split('.')[0];
+      if (isolate) record.frame = frameByIsolate.get(isolate);
+    }
     if (record.chunks) record.sourceText = record.chunks.join('');
     if (record.sourceText === undefined) continue;
 
@@ -186,6 +195,12 @@ class Scripts extends BaseGatherer {
 
   /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
   _scriptParsedEvents = [];
+  /** @type {Array<{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}|undefined>} */
+  _scriptTargets = [];
+  /** @type {Array<{targetWithSession: {target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}, onScriptParsed: (event: LH.Crdp.Debugger.ScriptParsedEvent) => void}>} */
+  _sessions = [];
+  /** @type {((targetWithSession: {target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}) => Promise<void>)|undefined} */
+  _onTargetAttached = undefined;
 
   constructor() {
     super();
@@ -194,10 +209,12 @@ class Scripts extends BaseGatherer {
 
   /**
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} params
+   * @param {{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.ProtocolSession}} [targetWithSession]
    */
-  onScriptParsed(params) {
+  onScriptParsed(params, targetWithSession) {
     if (!isLighthouseRuntimeEvaluateScript(params)) {
       this._scriptParsedEvents.push(params);
+      this._scriptTargets.push(targetWithSession);
     }
   }
 
@@ -205,17 +222,35 @@ class Scripts extends BaseGatherer {
    * @param {LH.Gatherer.Context} context
    */
   async startInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.on('Debugger.scriptParsed', this.onScriptParsed);
-    await session.sendCommand('Debugger.enable');
+    this._sessions = [];
+    this._onTargetAttached = async (targetWithSession) => {
+      if (targetWithSession.target.type !== 'page' && targetWithSession.target.type !== 'iframe') {
+        return;
+      }
+      const session = targetWithSession.session;
+      /** @param {LH.Crdp.Debugger.ScriptParsedEvent} event */
+      const onScriptParsed = (event) => this.onScriptParsed(event, targetWithSession);
+      this._sessions.push({targetWithSession, onScriptParsed});
+      session.on('Debugger.scriptParsed', onScriptParsed);
+      await session.sendCommand('Debugger.enable');
+      if (targetWithSession.target.type === 'iframe') {
+        await session.sendCommandAndIgnore('Debugger.setSkipAllPauses', {skip: true});
+      }
+    };
+    await context.driver.targetManager.onTargetAttached(this._onTargetAttached);
   }
 
   /**
    * @param {LH.Gatherer.Context} context
    */
   async stopInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
+    if (this._onTargetAttached) {
+      context.driver.targetManager.offTargetAttached(this._onTargetAttached);
+      this._onTargetAttached = undefined;
+    }
+    for (const {targetWithSession, onScriptParsed} of this._sessions) {
+      targetWithSession.session.off('Debugger.scriptParsed', onScriptParsed);
+    }
   }
 
   /**
@@ -223,17 +258,21 @@ class Scripts extends BaseGatherer {
    * @return {Promise<LH.Artifacts['Scripts']>}
    */
   async getArtifact(context) {
-    const session = context.driver.defaultSession;
+    const defaultSession = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
     const traceScriptsByScriptId = collectTraceScripts(context.dependencies.Trace.traceEvents);
     const traceSources = this._scriptParsedEvents.map(
       (script) => findTraceScriptSource(script, traceScriptsByScriptId)
     );
 
-    if (traceSources.some((source) => source === undefined)) {
+    const needsDefaultSessionEnable = this._scriptParsedEvents.some(( _, i) => {
+      const target = this._scriptTargets[i]?.target;
+      return traceSources[i] === undefined && (!target || target.type === 'page');
+    });
+    if (needsDefaultSessionEnable) {
       // `disableAsyncStacks()` in `prepare.js` runs after `stopInstrumentation` and calls
       // `Debugger.disable`, so re-enable `Debugger` if we need to call `Debugger.getScriptSource`.
-      await session.sendCommand('Debugger.enable');
+      await defaultSession.sendCommand('Debugger.enable');
     }
 
     // If run on a mobile device, be sensitive to memory limitations and only
@@ -242,16 +281,27 @@ class Scripts extends BaseGatherer {
       this._scriptParsedEvents,
       (script, i) => {
         if (traceSources[i] !== undefined) return Promise.resolve(traceSources[i]);
-        return session.sendCommand('Debugger.getScriptSource', {scriptId: script.scriptId})
+        const targetSession = this._scriptTargets[i]?.session ?? defaultSession;
+        return targetSession.sendCommand('Debugger.getScriptSource', {scriptId: script.scriptId})
           .then((resp) => resp.scriptSource)
           .catch(() => undefined);
       },
       formFactor === 'mobile' /* runInSeries */
     );
-    await session.sendCommand('Debugger.disable');
+    await defaultSession.sendCommand('Debugger.disable');
+    for (const {targetWithSession} of this._sessions) {
+      if (targetWithSession.target.type === 'iframe') {
+        await targetWithSession.session.sendCommandAndIgnore('Debugger.disable');
+      }
+    }
 
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event, i) => {
+      const target = this._scriptTargets[i]?.target;
+      const scriptId = target?.type === 'iframe' ?
+        `${target.targetId}:${event.scriptId}` :
+        event.scriptId;
+
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.
       // On the protocol, 'embedderName' always refers to the URL of the script (or HTML if inline).
       // Same for 'url' ... except, magic "sourceURL=" comments will override the value.
@@ -261,6 +311,7 @@ class Scripts extends BaseGatherer {
       return {
         name: event.url,
         ...event,
+        scriptId,
         // embedderName is optional on the protocol because backends like Node may not set it.
         // For our purposes, it is always set. But just in case it isn't... fallback to the url.
         url: event.embedderName || event.url,
@@ -269,6 +320,8 @@ class Scripts extends BaseGatherer {
     });
 
     this._scriptParsedEvents = [];
+    this._scriptTargets = [];
+    this._sessions = [];
 
     return scripts;
   }

@@ -5,7 +5,7 @@
  */
 
 import Scripts from '../../../gather/gatherers/scripts.js';
-import {createMockContext} from '../mock-driver.js';
+import {createMockContext, createMockSession} from '../mock-driver.js';
 
 describe('Scripts gatherer', () => {
   it('reuses script source from trace rundown events before calling getScriptSource', async () => {
@@ -306,6 +306,140 @@ describe('Scripts gatherer', () => {
       {scriptId: '1', content: 'console.log("main-1-from-trace");'},
       {scriptId: '2', content: 'console.log("main-2-from-cdp");'},
       {scriptId: '3', content: 'console.log("main-3-from-trace");'},
+    ]);
+  });
+
+  it('collects scripts from iframe targets with targetId-prefixed scriptId', async () => {
+    const gatherer = new Scripts();
+    const mockContext = createMockContext();
+    const pageSession = mockContext.driver.defaultSession;
+    const iframeSession = createMockSession();
+
+    pageSession.sendCommand
+      .mockResponse('Debugger.enable')
+      .mockResponse('Debugger.disable');
+
+    iframeSession.sendCommand
+      .mockResponse('Debugger.enable')
+      .mockResponse('Debugger.getScriptSource', {scriptSource: 'console.log("oopif-from-cdp");'});
+    iframeSession.sendCommandAndIgnore
+      .mockResponse('Debugger.setSkipAllPauses')
+      .mockResponse('Debugger.disable');
+
+    mockContext.driver._targetManager.onTargetAttached.mockImplementation(
+      /** @param {any} listener */
+      async (listener) => {
+        await listener({
+          target: /** @type {any} */ ({type: 'page', targetId: 'MAIN_FRAME'}),
+          session: pageSession,
+        });
+        await listener({
+          target: /** @type {any} */ ({type: 'iframe', targetId: 'OOPIF_FRAME'}),
+          session: iframeSession.asSession(),
+        });
+      }
+    );
+
+    await gatherer.startInstrumentation(mockContext.asContext());
+
+    const pageScriptParsed = pageSession.on.getListeners('Debugger.scriptParsed')[0];
+    const iframeScriptParsed = iframeSession.on.getListeners('Debugger.scriptParsed')[0];
+
+    pageScriptParsed(/** @type {any} */ ({
+      scriptId: '4',
+      executionContextId: 1,
+      executionContextAuxData: {frameId: 'MAIN_FRAME'},
+      url: 'https://example.com/app.js',
+      embedderName: 'https://example.com/app.js',
+    }));
+    iframeScriptParsed(/** @type {any} */ ({
+      scriptId: '4',
+      executionContextId: 1,
+      executionContextAuxData: {frameId: 'OOPIF_FRAME'},
+      url: 'https://oopif.example.com/module.js',
+      embedderName: 'https://oopif.example.com/module.js',
+    }));
+    iframeScriptParsed(/** @type {any} */ ({
+      scriptId: '5',
+      executionContextId: 1,
+      executionContextAuxData: {frameId: 'OOPIF_FRAME'},
+      url: 'https://oopif.example.com/dynamic.js',
+      embedderName: 'https://oopif.example.com/dynamic.js',
+    }));
+
+    await gatherer.stopInstrumentation(mockContext.asContext());
+
+    const trace = {
+      traceEvents: [
+        {
+          cat: 'disabled-by-default-devtools.target-rundown',
+          name: 'ScriptCompiled',
+          args: {data: {isolate: 'iso-main', scriptId: 4, frame: 'MAIN_FRAME'}},
+        },
+        {
+          cat: 'disabled-by-default-devtools.v8-source-rundown-sources',
+          name: 'ScriptCatchup',
+          args: {
+            data: {isolate: 'iso-main', scriptId: 4, sourceText: 'console.log("main-trace");'},
+          },
+        },
+        // OOPIF isolate emits target-rundown on scriptId 3, and ES module scriptId 4
+        // inherits frame by isolate.
+        {
+          cat: 'disabled-by-default-devtools.target-rundown',
+          name: 'ScriptCompiled',
+          args: {data: {isolate: 'iso-oopif', scriptId: 3, frame: 'OOPIF_FRAME'}},
+        },
+        {
+          cat: 'disabled-by-default-devtools.v8-source-rundown',
+          name: 'ScriptCatchup',
+          args: {
+            data: {
+              isolate: 'iso-oopif',
+              scriptId: 4,
+              executionContextId: 1,
+              url: 'https://oopif.example.com/module.js',
+            },
+          },
+        },
+        {
+          cat: 'disabled-by-default-devtools.v8-source-rundown-sources',
+          name: 'ScriptCatchup',
+          args: {
+            data: {
+              isolate: 'iso-oopif',
+              scriptId: 4,
+              sourceText: 'console.log("oopif-trace");',
+            },
+          },
+        },
+      ],
+    };
+
+    const artifact = await gatherer.getArtifact({
+      ...mockContext.asContext(),
+      dependencies: /** @type {any} */ ({Trace: trace}),
+    });
+
+    expect(iframeSession.sendCommand.findAllInvocations('Debugger.getScriptSource')).toEqual([
+      {scriptId: '5'},
+    ]);
+    expect(artifact.map(s => ({scriptId: s.scriptId, url: s.url, content: s.content}))).toEqual([
+      {
+        scriptId: '4',
+        url: 'https://example.com/app.js',
+        content: 'console.log("main-trace");',
+      },
+      {
+        scriptId: 'OOPIF_FRAME:4',
+        url: 'https://oopif.example.com/module.js',
+        content: 'console.log("oopif-trace");',
+      },
+      {
+        scriptId: 'OOPIF_FRAME:5',
+        url: 'https://oopif.example.com/dynamic.js',
+        content: 'console.log("oopif-from-cdp");',
+      },
     ]);
   });
 });

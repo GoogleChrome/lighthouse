@@ -25,6 +25,34 @@ describe('ModuleDuplication computed artifact', () => {
     expect(results).toMatchInlineSnapshot(`Map {}`);
   });
 
+  it('does not treat modules across different frames as duplicates', async () => {
+    const context = {computedCache: new Map()};
+    const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
+    const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
+    const artifacts = {
+      SourceMaps: [
+        {scriptId: '1', scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
+        {scriptId: 'OOPIF:1', scriptUrl: 'https://oopif.example.com/coursehero-bundle-2.js', map: bundleData2.map},
+      ],
+      Scripts: [
+        {
+          scriptId: '1',
+          url: 'https://example.com/coursehero-bundle-1.js',
+          content: bundleData1.content,
+          executionContextAuxData: {frameId: 'MAIN_FRAME'},
+        },
+        {
+          scriptId: 'OOPIF:1',
+          url: 'https://oopif.example.com/coursehero-bundle-2.js',
+          content: bundleData2.content,
+          executionContextAuxData: {frameId: 'OOPIF_FRAME'},
+        },
+      ].map(createScript),
+    };
+    const results = await ModuleDuplication.request(artifacts, context);
+    expect(results.size).toBe(0);
+  });
+
   it('works (complex)', async () => {
     const context = {computedCache: new Map()};
     const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');

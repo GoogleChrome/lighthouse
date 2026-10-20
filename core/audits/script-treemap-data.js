@@ -217,7 +217,9 @@ class ScriptTreemapDataAudit extends Audit {
           }
 
           const key = ModuleDuplication.normalizeSource(sourceWithoutSourceRoot);
-          if (duplicationByPath.has(key)) sourceData.duplicatedNormalizedModuleName = key;
+          if (duplicationByPath.get(key)?.some(d => d.scriptId === script.scriptId)) {
+            sourceData.duplicatedNormalizedModuleName = key;
+          }
 
           sourcesData[source] = sourceData;
         }

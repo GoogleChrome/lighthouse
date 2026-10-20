@@ -148,6 +148,13 @@ function createMockTargetManager(session) {
     disable: fnAny(),
     on: createMockOnFn(),
     off: fnAny(),
+    onTargetAttached: fnAny().mockImplementation(async (listener) => {
+      await listener({
+        target: {type: 'page', targetId: 'page'},
+        session,
+      });
+    }),
+    offTargetAttached: fnAny(),
 
     /** @return {LH.Gatherer.Driver['targetManager']} */
     asTargetManager() {
@@ -167,6 +174,7 @@ function createMockDriver() {
     _page: page,
     _executionContext: context,
     _session: session,
+    _targetManager: targetManager,
     url: jestMock.fn(() => page.url()),
     defaultSession: session,
     connect: fnAny(),

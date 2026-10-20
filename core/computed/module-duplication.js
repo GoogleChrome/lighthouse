@@ -108,11 +108,18 @@ class ModuleDuplication {
       }
     }
 
-    /** @type {Map<string, Array<{scriptId: string, scriptUrl: string, resourceSize: number}>>} */
-    const moduleNameToSourceData = new Map();
+    /** @type {Map<string, Map<string, Array<{scriptId: string, scriptUrl: string, resourceSize: number}>>>} */
+    const moduleNameToSourceDataByFrame = new Map();
     for (const {rawMap, script} of bundles) {
       const sourceDataArray = sourceDatasMap.get(rawMap);
       if (!sourceDataArray) continue;
+
+      const frameId = script.executionContextAuxData?.frameId || '';
+      let moduleNameToSourceData = moduleNameToSourceDataByFrame.get(frameId);
+      if (!moduleNameToSourceData) {
+        moduleNameToSourceData = new Map();
+        moduleNameToSourceDataByFrame.set(frameId, moduleNameToSourceData);
+      }
 
       for (const sourceData of sourceDataArray) {
         let data = moduleNameToSourceData.get(sourceData.source);
@@ -128,7 +135,20 @@ class ModuleDuplication {
       }
     }
 
-    this._normalizeAggregatedData(moduleNameToSourceData);
+    /** @type {Map<string, Array<{scriptId: string, scriptUrl: string, resourceSize: number}>>} */
+    const moduleNameToSourceData = new Map();
+    for (const frameModuleMap of moduleNameToSourceDataByFrame.values()) {
+      this._normalizeAggregatedData(frameModuleMap);
+      for (const [source, sourceData] of frameModuleMap.entries()) {
+        const existing = moduleNameToSourceData.get(source);
+        if (existing) {
+          existing.push(...sourceData);
+        } else {
+          moduleNameToSourceData.set(source, sourceData);
+        }
+      }
+    }
+
     return moduleNameToSourceData;
   }
 }
