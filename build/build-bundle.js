@@ -21,7 +21,6 @@ import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
-import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const require = createRequire(import.meta.url);
 
@@ -99,15 +98,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    // zlib's decompression code is very large and we don't need it.
-    // We export empty functions, instead of an empty module, simply to silence warnings
-    // about no exports.
-    '__zlib-lib/inflate': `
-      export function inflateInit2() {};
-      export function inflate() {};
-      export function inflateEnd() {};
-      export function inflateReset() {};
-    `,
+    ...plugins.nodeModuleShims,
   };
 
   const modulesToIgnore = [
@@ -116,7 +107,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     // This module is imported dynamically in a function we never use, so safe to ignore:
     // https://github.com/puppeteer/puppeteer/blob/35f9c6d1e699ea37e89ef3bbb7940f5599df4724/packages/puppeteer-core/src/api/Page.ts#L2365-L2369
     'puppeteer-core/lib/esm/puppeteer/node/ScreenRecorder.js',
-    'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
   ];
@@ -163,6 +153,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     lineLimit: 1000,
     // Because of page-functions!
     keepNames: true,
+    define: {global: 'globalThis'},
     inject: ['./build/process-global.js'],
     alias: {
       'debug': require.resolve('debug/src/browser.js'),
@@ -170,28 +161,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     },
     /** @type {esbuild.Plugin[]} */
     plugins: [
-      plugins.replaceModules({
-        ...shimsObj,
-        'url': `
-          export const URL = globalThis.URL;
-          export const fileURLToPath = url => url;
-          export default {URL, fileURLToPath};
-        `,
-        'module': `
-          export const createRequire = () => {
-            return {
-              resolve() {
-                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
-              },
-            };
-          };
-        `,
-      }, {
+      plugins.replaceModules(shimsObj, {
         // buildBundle is used in a lot of different contexts. Some share the same modules
         // that need to be replaced, but others don't use those modules at all.
         disableUnusedError: true,
       }),
-      nodeModulesPolyfillPlugin(),
       plugins.bulkLoader([
         // TODO: when we used rollup, various things were tree-shaken out before inlineFs did its
         // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it

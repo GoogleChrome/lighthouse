@@ -13,6 +13,7 @@ import esbuild from 'esbuild';
 
 import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
+import {nodeModuleShims} from './plugins/esbuild-node-polyfills.js';
 
 /**
  * @typedef PartialLoader
@@ -125,6 +126,21 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
       // Capture modules of interest and resolve them to their absolute paths.
       // This handles real-files on disk, and builtin specifiers.
       build.onResolve({filter: /.*/}, (args) => {
+        if (args.path in replaceMap) {
+          return {path: args.path, namespace: 'replace-modules'};
+        }
+
+        if (args.path.startsWith('.')) {
+          const absPath = path.resolve(args.resolveDir, args.path);
+          if (absPath in replaceMap) {
+            return {path: absPath, namespace: 'replace-modules'};
+          }
+          if ((absPath + '.js') in replaceMap) {
+            return {path: absPath + '.js', namespace: 'replace-modules'};
+          }
+          return;
+        }
+
         let resolvedPath;
         try {
           resolvedPath = require.resolve(args.path, {paths: [args.resolveDir]});
@@ -548,4 +564,5 @@ export {
   umd,
   lighthouseShimPlugin,
   postprocess,
+  nodeModuleShims,
 };
