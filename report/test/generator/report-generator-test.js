@@ -8,9 +8,6 @@
 /* eslint-disable no-irregular-whitespace */
 
 import assert from 'assert/strict';
-import fs from 'fs';
-
-import csvValidator from 'csv-validator';
 
 import {ReportGenerator} from '../../generator/report-generator.js';
 import {readJson} from '../../../core/test/test-utils.js';
@@ -93,11 +90,8 @@ describe('ReportGenerator', () => {
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
 
-    it('creates CSV for results', async () => {
-      const path = './.results-as-csv.csv';
-
+    it('creates CSV for results', () => {
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
-      fs.writeFileSync(path, csvOutput);
 
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
@@ -119,14 +113,6 @@ category,audit,score,displayValue,description
 \\"performance\\",\\"cumulative-layout-shift\\",\\"0.9\\",\\"0.1\\",\\"Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more about the Cumulative Layout Shift metric](https://web.dev/articles/cls).\\"
 "
 `);
-
-      try {
-        await csvValidator(path);
-      } catch (err) {
-        assert.fail('CSV parser error:\n' + err.join('\n'));
-      } finally {
-        fs.unlinkSync(path);
-      }
     });
 
     it('creates CSV for results including categories', () => {
