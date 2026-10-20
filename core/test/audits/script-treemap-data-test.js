@@ -146,6 +146,80 @@ Object {
     });
   });
 
+  it('includes OOPIF scripts and does not mark cross-frame modules as duplicates', async () => {
+    const context = {computedCache: new Map()};
+    const {map, content} = loadSourceMapFixture('coursehero-bundle-1');
+    const mainUrl = 'https://example.com';
+    const mainScriptUrl = 'https://example.com/script1.js';
+    const oopifDocUrl = 'https://oopif.example.com/frame.html';
+    const oopifScriptUrl = 'https://oopif.example.com/script1.js';
+    const networkRecords = [
+      generateRecord(mainScriptUrl, content.length, 'Script'),
+      {...generateRecord(oopifDocUrl, 1000, 'Document'), frameId: 'OOPIF_FRAME'},
+      {...generateRecord(oopifScriptUrl, content.length, 'Script'), frameId: 'OOPIF_FRAME'},
+    ];
+
+    const artifacts = {
+      URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
+      JsUsage: {
+        'OOPIF_FRAME:1': {
+          scriptId: 'OOPIF_FRAME:1',
+          url: oopifScriptUrl,
+          functions: [],
+        },
+        'OOPIF_FRAME:2': {
+          scriptId: 'OOPIF_FRAME:2',
+          url: oopifDocUrl,
+          functions: [],
+        },
+      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      SourceMaps: [
+        {scriptId: '1', scriptUrl: mainScriptUrl, map},
+        {scriptId: 'OOPIF_FRAME:1', scriptUrl: oopifScriptUrl, map},
+      ],
+      Scripts: [
+        {
+          scriptId: '1',
+          url: mainScriptUrl,
+          content,
+          executionContextAuxData: {frameId: 'MAIN_FRAME'},
+        },
+        {
+          scriptId: 'OOPIF_FRAME:1',
+          url: oopifScriptUrl,
+          content,
+          executionContextAuxData: {frameId: 'OOPIF_FRAME'},
+        },
+        {
+          scriptId: 'OOPIF_FRAME:2',
+          url: oopifDocUrl,
+          embedderName: oopifDocUrl,
+          content: 'console.log("inline oopif");',
+          length: 28,
+          executionContextAuxData: {frameId: 'OOPIF_FRAME'},
+        },
+      ].map(createScript),
+    };
+
+    const results = await ScriptTreemapData.audit(artifacts, context);
+    if (!results.details || results.details.type !== 'treemap-data') {
+      throw new Error('should not happen.');
+    }
+
+    const nodes = results.details.nodes;
+    expect(nodes.map(n => n.name)).toEqual([
+      mainScriptUrl,
+      oopifScriptUrl,
+      oopifDocUrl,
+    ]);
+
+    // Neither main frame nor OOPIF script should have duplicatedNormalizedModuleName since each frame only loaded one copy.
+    // @ts-ignore
+    const oopifLeaf = nodes[1].children[0].children[0].children[0].children[0].children[0];
+    expect(oopifLeaf.duplicatedNormalizedModuleName).toBeUndefined();
+  });
+
   describe('.makeScriptNode', () => {
     const src = 'main.js';
 

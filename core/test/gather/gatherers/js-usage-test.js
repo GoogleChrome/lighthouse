@@ -5,7 +5,7 @@
  */
 
 import JsUsage from '../../../gather/gatherers/js-usage.js';
-import {createMockContext, createMockDriver} from '../../gather/mock-driver.js';
+import {createMockContext, createMockDriver, createMockSession} from '../../gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 
 describe('JsUsage gatherer', () => {
@@ -129,6 +129,72 @@ Object {
       '1': {
         scriptId: '1',
         url: 'https://www.example.com',
+        functions: [],
+      },
+    });
+  });
+
+  it('collects coverage from iframe targets with targetId-prefixed scriptId', async () => {
+    const context = createMockContext();
+    const pageSession = context.driver._session;
+    const iframeSession = createMockSession();
+    const closedIframeSession = createMockSession();
+
+    pageSession.sendCommand
+      .mockResponse('Profiler.enable', {})
+      .mockResponse('Profiler.startPreciseCoverage', {})
+      .mockResponse('Profiler.takePreciseCoverage', {
+        result: [{scriptId: '1', url: 'https://www.example.com/main.js', functions: []}],
+      })
+      .mockResponse('Profiler.stopPreciseCoverage', {})
+      .mockResponse('Profiler.disable', {});
+
+    iframeSession.sendCommand
+      .mockResponse('Profiler.enable', {})
+      .mockResponse('Profiler.startPreciseCoverage', {})
+      .mockResponse('Profiler.takePreciseCoverage', {
+        result: [{scriptId: '1', url: 'https://oopif.example.com/frame.js', functions: []}],
+      })
+      .mockResponse('Profiler.stopPreciseCoverage', {})
+      .mockResponse('Profiler.disable', {});
+
+    closedIframeSession.sendCommand
+      .mockResponse('Profiler.enable', {})
+      .mockResponse('Profiler.startPreciseCoverage', {})
+      .mockResponse(
+        'Profiler.takePreciseCoverage',
+        () => Promise.reject(new Error('Target closed'))
+      );
+
+    context.driver._targetManager.onTargetAttached.mockImplementation(async (listener) => {
+      await listener({
+        target: /** @type {any} */ ({type: 'page', targetId: 'MAIN_FRAME'}),
+        session: pageSession.asSession(),
+      });
+      await listener({
+        target: /** @type {any} */ ({type: 'iframe', targetId: 'OOPIF_FRAME'}),
+        session: iframeSession.asSession(),
+      });
+      await listener({
+        target: /** @type {any} */ ({type: 'iframe', targetId: 'CLOSED_FRAME'}),
+        session: closedIframeSession.asSession(),
+      });
+    });
+
+    const gatherer = new JsUsage();
+    await gatherer.startInstrumentation(context.asContext());
+    await gatherer.stopInstrumentation(context.asContext());
+    const artifact = await gatherer.getArtifact();
+
+    expect(artifact).toEqual({
+      '1': {
+        scriptId: '1',
+        url: 'https://www.example.com/main.js',
+        functions: [],
+      },
+      'OOPIF_FRAME:1': {
+        scriptId: 'OOPIF_FRAME:1',
+        url: 'https://oopif.example.com/frame.js',
         functions: [],
       },
     });

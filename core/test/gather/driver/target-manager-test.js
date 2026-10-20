@@ -389,5 +389,59 @@ describe('TargetManager', () => {
       rootSession.onMessage({method: 'DOM.documentUpdated'});
       expect(allListener).toHaveBeenCalledTimes(1);
     });
+
+    it('should invoke onTargetAttached for existing and newly attached targets', async () => {
+      const rootSession = createCdpSession('root');
+      const rootTargetInfo = createTargetInfo({type: 'page', targetId: 'root-page'});
+      rootSession.send = createMockSendCommandFn()
+        .mockResponse('Page.enable')
+        .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: ''}}})
+        .mockResponse('Runtime.enable')
+        .mockResponse('Target.getTargetInfo', {targetInfo: rootTargetInfo})
+        .mockResponse('Network.enable')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Runtime.runIfWaitingForDebugger');
+
+      const targetManager = new TargetManager(rootSession);
+      await targetManager.enable();
+
+      /** @type {string[]} */
+      const attachedTargetIds = [];
+      /** @param {{target: LH.Crdp.Target.TargetInfo}} targetWithSession */
+      const listener = async ({target}) => {
+        attachedTargetIds.push(target.targetId);
+      };
+
+      await targetManager.onTargetAttached(listener);
+      expect(attachedTargetIds).toEqual(['root-page']);
+
+      const iframeSession = createCdpSession('iframe');
+      const iframeTargetInfo = createTargetInfo({type: 'iframe', targetId: 'oopif-1'});
+      iframeSession.send = createMockSendCommandFn()
+        .mockResponse('Target.getTargetInfo', {targetInfo: iframeTargetInfo})
+        .mockResponse('Network.enable')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Runtime.runIfWaitingForDebugger');
+
+      rootSession.emit('sessionattached', iframeSession);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(attachedTargetIds).toEqual(['root-page', 'oopif-1']);
+
+      targetManager.offTargetAttached(listener);
+
+      const iframeSession2 = createCdpSession('iframe-2');
+      const iframeTargetInfo2 = createTargetInfo({type: 'iframe', targetId: 'oopif-2'});
+      iframeSession2.send = createMockSendCommandFn()
+        .mockResponse('Target.getTargetInfo', {targetInfo: iframeTargetInfo2})
+        .mockResponse('Network.enable')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Runtime.runIfWaitingForDebugger');
+
+      rootSession.emit('sessionattached', iframeSession2);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(attachedTargetIds).toEqual(['root-page', 'oopif-1']);
+    });
   });
 });

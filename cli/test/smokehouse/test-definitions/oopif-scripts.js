@@ -78,6 +78,19 @@ const expectations = {
           },
         },
       },
+      'script-treemap-data': {
+        details: {
+          nodes: {
+            _includes: [
+              {name: 'http://localhost:10200/simple-script.js', resourceBytes: 20},
+              {name: 'http://localhost:10200/oopif-simple-page.html', resourceBytes: 679},
+              {name: 'http://localhost:10503/simple-script.js', resourceBytes: 20},
+              {name: 'http://localhost:10503/oopif-simple-page.html', resourceBytes: 679},
+            ],
+            _excludes: [{}],
+          },
+        },
+      },
     },
   },
   artifacts: {
@@ -101,9 +114,8 @@ const expectations = {
         isPositionFixed: true,
       },
     ],
-    // Only `:10200/oopif-simple-page.html`'s inclusion of `simple-script.js` shows here,
-    // as well as inline scripts of the iframe.
-    // All other scripts are filtered out because of our "OOPIF" filter.
+    // Both `:10200/oopif-simple-page.html` (in-process iframe) and `:10503/oopif-simple-page.html`
+    // (OOPIF) scripts and inline scripts show here, while worker scripts are filtered out.
     Scripts: {
       _includes: [
         {
@@ -112,6 +124,14 @@ const expectations = {
         },
         {
           url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /new Worker/,
+        },
+        {
+          url: 'http://localhost:10503/simple-script.js',
+          content: /🪁/,
+        },
+        {
+          url: 'http://localhost:10503/oopif-simple-page.html',
           content: /new Worker/,
         },
       ],

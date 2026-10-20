@@ -48,6 +48,8 @@ declare namespace Gatherer {
       mainFrameExecutionContexts(): Array<Crdp.Runtime.ExecutionContextDescription>;
       on(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
       off(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
+      onTargetAttached(listener: (targetWithSession: {target: Crdp.Target.TargetInfo, session: ProtocolSession}) => Promise<void>|void): Promise<void>;
+      offTargetAttached(listener: (targetWithSession: {target: Crdp.Target.TargetInfo, session: ProtocolSession}) => Promise<void>|void): void;
     };
     networkMonitor: NetworkMonitor;
   }

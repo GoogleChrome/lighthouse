@@ -57,7 +57,10 @@ class TraceEngineResult {
       lanternSettings,
       metadata: {hostDPR: HostDPR},
       async resolveSourceMap(params) {
-        const sourceMap = SourceMaps.find(sm => sm.scriptId === params.scriptId);
+        const sourceMap = SourceMaps.find(
+          sm => sm.scriptId === params.scriptId ||
+            sm.scriptId === `${params.frame}:${params.scriptId}`
+        );
         if (!sourceMap || !sourceMap.map) {
           return null;
         }
