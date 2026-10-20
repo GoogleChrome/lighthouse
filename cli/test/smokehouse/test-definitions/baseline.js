@@ -38,6 +38,62 @@ const expectations = {
           items: {
             _includes: [
               {
+                featureId: {text: 'accent-color'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'limited',
+                  displayString: 'Limited Availability',
+                },
+              },
+              {
+                featureId: {text: 'accelerometer'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'limited',
+                  displayString: 'Limited Availability',
+                },
+              },
+              {
+                featureId: {text: 'popover'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'low',
+                  displayString: /^Newly Available/,
+                },
+              },
+              {
+                featureId: {text: 'has'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
+              },
+              {
+                featureId: {text: 'forced-colors'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
+              },
+              {
+                featureId: {text: 'dialog'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
+              },
+              {
+                featureId: {text: 'aborting'},
+                displayStatus: {
+                  type: 'baseline-status',
+                  status: 'high',
+                  displayString: /^Widely Available/,
+                },
+              },
+              {
                 featureId: {text: 'grid'},
                 displayStatus: {
                   type: 'baseline-status',
@@ -54,6 +110,7 @@ const expectations = {
                 },
               },
             ],
+            _excludes: [{}],
           },
         },
       },
