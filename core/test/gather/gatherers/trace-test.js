@@ -31,7 +31,9 @@ describe('TraceGatherer', () => {
       await gatherer.startSensitiveInstrumentation(context.asContext());
       expect(context.driver.defaultSession.sendCommand).toHaveBeenCalledWith(
         'Tracing.start',
-        expect.anything()
+        expect.objectContaining({
+          transferMode: 'ReturnAsStream',
+        })
       );
     });
 
@@ -62,6 +64,34 @@ describe('TraceGatherer', () => {
   });
 
   describe('stopSensitiveInstrumentation', () => {
+    it('should read trace from stream when stream handle is returned', async () => {
+      const session = context.driver.defaultSession;
+      session.sendCommand
+        .mockResponse('Tracing.end')
+        .mockResponse('IO.read', {data: '{"traceEvents":[1,2,', eof: false})
+        .mockResponse('IO.read', {
+          data: Buffer.from('3,4,5,6]}').toString('base64'),
+          base64Encoded: true,
+          eof: true,
+        })
+        .mockResponse('IO.close');
+
+      const stopPromise = makePromiseInspectable(
+        gatherer.stopSensitiveInstrumentation(context.asContext())
+      );
+
+      const completeListener = session.once.findListener('Tracing.tracingComplete');
+      completeListener({dataLossOccurred: false, stream: 'stream-1'});
+      await flushAllTimersAndMicrotasks();
+      expect(stopPromise).toBeDone();
+      expect(session.off).toHaveBeenCalled();
+
+      await stopPromise;
+      expect(session.sendCommand).toHaveBeenCalledWith('IO.read', {handle: 'stream-1'});
+      expect(session.sendCommand).toHaveBeenCalledWith('IO.close', {handle: 'stream-1'});
+      expect(gatherer.getArtifact()).toEqual({traceEvents: [1, 2, 3, 4, 5, 6]});
+    });
+
     it('should collect events on Trace.dataCollected', async () => {
       const session = context.driver.defaultSession;
       session.sendCommand.mockResponse('Tracing.end');

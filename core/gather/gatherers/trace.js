@@ -73,6 +73,31 @@ class Trace extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.ProtocolSession} session
+   * @param {string} handle
+   * @return {Promise<LH.Trace>}
+   */
+  static async _readTraceFromStream(session, handle) {
+    let isEof = false;
+    let result = '';
+    while (!isEof) {
+      const response = await session.sendCommand('IO.read', {handle});
+      if (response.eof) {
+        isEof = true;
+      }
+      result += response.base64Encoded ?
+        Buffer.from(response.data, 'base64').toString('utf-8') :
+        response.data;
+    }
+
+    await session.sendCommand('IO.close', {handle});
+    if (!result) return {traceEvents: []};
+
+    const traceJson = JSON.parse(result);
+    return Array.isArray(traceJson) ? {traceEvents: traceJson} : traceJson;
+  }
+
+  /**
+   * @param {LH.Gatherer.ProtocolSession} session
    * @return {Promise<LH.Trace>}
    */
   static async endTraceAndCollectEvents(session) {
@@ -88,14 +113,21 @@ class Trace extends BaseGatherer {
     };
     session.on('Tracing.dataCollected', dataListener);
 
-    return new Promise((resolve, reject) => {
-      session.once('Tracing.tracingComplete', _ => {
+    /** @type {LH.Crdp.Tracing.TracingCompleteEvent|undefined} */
+    const completeEvent = await new Promise((resolve, reject) => {
+      session.once('Tracing.tracingComplete', event => {
         session.off('Tracing.dataCollected', dataListener);
-        resolve({traceEvents});
+        resolve(event);
       });
 
       session.sendCommand('Tracing.end').catch(reject);
     });
+
+    if (completeEvent?.stream) {
+      return Trace._readTraceFromStream(session, completeEvent.stream);
+    }
+
+    return {traceEvents};
   }
 
   static symbol = Symbol('Trace');
@@ -115,6 +147,7 @@ class Trace extends BaseGatherer {
     await driver.defaultSession.sendCommand('Page.enable');
     await driver.defaultSession.sendCommand('Tracing.start', {
       categories: traceCategories.join(','),
+      transferMode: 'ReturnAsStream',
       options: 'sampling-frequency=10000', // 1000 is default and too slow.
     });
 
