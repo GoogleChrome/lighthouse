@@ -106,6 +106,9 @@ Configuration:
   --only-categories              Only run the specified categories. Available categories: accessibility, best-practices, performance, seo  [array]
   --skip-audits                  Run everything except these audits  [array]
   --disable-full-page-screenshot Disables collection of the full page screenshot, which can be quite large  [boolean]
+  --ignore-status-code           Disables failing on all error status codes, and instead issues a warning.  [boolean]
+  --url-file                     The path to a file containing newline-delimited URLs to audit.  [string]
+  --fail-fast                    Stop auditing remaining URLs immediately if a run fails.  [boolean]
 
 Output:
   --output       Reporter for the results, supports multiple values. choices: "json", "html", "csv"  [array] [default: ["html"]]
@@ -177,6 +180,12 @@ lighthouse --output-path=~/mydir/foo.out --save-assets
 
 lighthouse --output-path=./report.json --output json
 # saves `./report.json`
+
+lighthouse https://example.com https://example.org
+# audits multiple URLs sequentially and saves `./<HOST>_<DATE>.report.html` for each
+
+lighthouse --url-file=./urls.txt --output-path=./reports
+# audits all URLs in `./urls.txt` and saves reports into the existing `./reports` directory
 ```
 
 ##### Lifecycle Examples
