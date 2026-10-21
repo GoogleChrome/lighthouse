@@ -166,9 +166,7 @@ class AnchorElements extends BaseGatherer {
     });
 
 
-    const result = await Promise.all(anchorsWithEventListeners);
-    await session.sendCommand('DOM.disable');
-    return result;
+    return Promise.all(anchorsWithEventListeners);
   }
 }
 

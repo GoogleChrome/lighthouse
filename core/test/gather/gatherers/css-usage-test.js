@@ -19,9 +19,7 @@ describe('CSSUsage gatherer', () => {
           {styleSheetId: '1', used: true},
           {styleSheetId: '2', used: false},
         ],
-      })
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      });
 
     const gatherer = new CSSUsage();
     const artifact = await gatherer.getArtifact(context.asContext());
