@@ -132,9 +132,10 @@ function printErrorAndExit(err) {
 /**
  * @param {LH.RunnerResult} runnerResult
  * @param {LH.CliFlags} flags
- * @return {Promise<void>}
+ * @param {{deferView?: boolean}} [options]
+ * @return {Promise<string|undefined>}
  */
-async function saveResults(runnerResult, flags) {
+async function saveResults(runnerResult, flags, options = {}) {
   const cwd = process.cwd();
 
   if (flags.lanternDataOutputPath) {
@@ -168,6 +169,8 @@ async function saveResults(runnerResult, flags) {
     await assetSaver.saveAssets(artifacts, lhr.audits, resolvedPath);
   }
 
+  /** @type {string|undefined} */
+  let htmlOutputPath;
   for (const outputType of flags.output) {
     const extension = outputType;
     const output = report[flags.output.indexOf(outputType)];
@@ -179,14 +182,19 @@ async function saveResults(runnerResult, flags) {
     await Printer.write(output, outputType, outputPath);
 
     if (outputType === Printer.OutputMode[Printer.OutputMode.html]) {
-      if (flags.view) {
-        open(outputPath, {wait: false});
-      } else {
-        // eslint-disable-next-line max-len
-        log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
+      htmlOutputPath = outputPath;
+      if (!options.deferView) {
+        if (flags.view) {
+          open(outputPath, {wait: false});
+        } else {
+          // eslint-disable-next-line max-len
+          log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
+        }
       }
     }
   }
+
+  return htmlOutputPath;
 }
 
 /**
@@ -221,6 +229,8 @@ async function runLighthouse(urlOrUrls, flags, config) {
 
   /** @type {Array<LH.RunnerResult>} */
   const results = [];
+  /** @type {Array<string>} */
+  const htmlReportPaths = [];
   /** @type {Array<ExitError>} */
   const errors = [];
 
@@ -247,7 +257,8 @@ async function runLighthouse(urlOrUrls, flags, config) {
 
         // If in gatherMode only, there will be no runnerResult.
         if (runnerResult) {
-          await saveResults(runnerResult, flags);
+          const htmlPath = await saveResults(runnerResult, flags, {deferView: isBatch});
+          if (htmlPath) htmlReportPaths.push(htmlPath);
           results.push(runnerResult);
         }
 
@@ -292,6 +303,17 @@ async function runLighthouse(urlOrUrls, flags, config) {
   } finally {
     await launchedChrome?.kill();
     process.removeListener('unhandledRejection', handleTheUnhandled);
+  }
+
+  if (isBatch && htmlReportPaths.length > 0) {
+    if (flags.view) {
+      for (const htmlPath of htmlReportPaths) {
+        open(htmlPath, {wait: false});
+      }
+    } else {
+      // eslint-disable-next-line max-len
+      log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
+    }
   }
 
   if (errors.length > 0) {

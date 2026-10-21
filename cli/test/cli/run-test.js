@@ -152,6 +152,7 @@ describe('batch runLighthouse', () => {
   const mockLaunch = fnAny();
   const mockLighthouse = fnAny();
   const mockPrinterWrite = fnAny();
+  const mockOpen = fnAny();
   /** @type {typeof import('../../run.js')} */
   let mockedRun;
   /** @type { ReturnType<typeof jestMock.spyOn> } */
@@ -166,6 +167,7 @@ describe('batch runLighthouse', () => {
       write: mockPrinterWrite,
       OutputMode: {json: 'json', html: 'html', csv: 'csv'},
     });
+    await td.replaceEsm('open', undefined, mockOpen);
     // @ts-expect-error - query string busts ESM cache so td.replaceEsm takes effect
     mockedRun = await import('../../run.js?batch');
   });
@@ -178,6 +180,7 @@ describe('batch runLighthouse', () => {
     mockLaunch.mockReset();
     mockLighthouse.mockReset();
     mockPrinterWrite.mockReset();
+    mockOpen.mockReset();
     mockPrinterWrite.mockResolvedValue(undefined);
     exitSpy = jestMock.spyOn(process, 'exit')
       .mockImplementation(/** @type {any} */ (() => undefined));
@@ -252,6 +255,39 @@ describe('batch runLighthouse', () => {
     expect(mockLighthouse).toHaveBeenCalledTimes(1);
     expect(mockKill).toHaveBeenCalledTimes(1);
     expect(exitSpy).toHaveBeenCalledWith(1);
+  });
+
+  it('defers opening HTML reports with --view until all batch runs complete', async () => {
+    /** @type {Array<string>} */
+    const callOrder = [];
+    const mockKill = fnAny().mockImplementation(() => callOrder.push('kill'));
+    mockLaunch.mockResolvedValue({port: 9999, kill: mockKill});
+    mockLighthouse.mockImplementation(async (/** @type {string} */ url) => {
+      callOrder.push(`run:${url}`);
+      return {
+        lhr: {
+          finalDisplayedUrl: url,
+          fetchTime: '2026-10-21T20:00:00.000Z',
+          audits: {},
+        },
+        artifacts: {},
+        report: ['<html></html>'],
+      };
+    });
+    mockOpen.mockImplementation(() => callOrder.push('open'));
+
+    const urls = ['https://example.com/1', 'https://example.com/2'];
+    const flags = getFlags(`${urls.join(' ')} --view`);
+    await mockedRun.runLighthouse(urls, flags, undefined);
+
+    expect(mockOpen).toHaveBeenCalledTimes(2);
+    expect(callOrder).toEqual([
+      'run:https://example.com/1',
+      'run:https://example.com/2',
+      'kill',
+      'open',
+      'open',
+    ]);
   });
 });
 
