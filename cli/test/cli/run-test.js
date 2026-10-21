@@ -15,7 +15,7 @@ import * as run from '../../run.js';
 import {parseChromeFlags} from '../../run.js';
 import {getFlags} from '../../cli-flags.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {fnAny} from '../../../core/test/test-utils.js';
+import {fnAny, readJson} from '../../../core/test/test-utils.js';
 
 /** @type {LH.Config} */
 const testConfig = {
@@ -50,7 +50,7 @@ describe('CLI run', function() {
 
       const rawResult = await run.runLighthouse(url, flags, testConfig);
 
-      if (!rawResult) {
+      if (!rawResult || Array.isArray(rawResult)) {
         return assert.fail('no results');
       }
       passedResults = rawResult;
@@ -123,24 +123,21 @@ describe('saveResults', () => {
     const outDir = path.join(LH_ROOT, '.tmp', 'cli-run-dir-test');
     fs.mkdirSync(outDir, {recursive: true});
     try {
-      const mockRunnerResult = /** @type {any} */ ({
-        lhr: {
-          finalDisplayedUrl: 'https://example.com/',
-          fetchTime: '2026-10-21T20:00:00.000Z',
-          audits: {},
-        },
+      /** @type {LH.Result} */
+      const lhr = readJson('../../../core/test/results/sample_v2.json', import.meta);
+      /** @type {LH.RunnerResult} */
+      const mockRunnerResult = {
+        lhr,
+        // @ts-expect-error - empty artifacts for test
         artifacts: {},
         report: ['{"mock": true}'],
-      });
-      const flags = /** @type {any} */ ({
-        output: ['json'],
-        outputPath: outDir,
-      });
+      };
+      const flags = getFlags(`https://example.com/ --output=json --output-path=${outDir}`);
 
       await run.saveResults(mockRunnerResult, flags);
       const files = fs.readdirSync(outDir);
       assert.equal(files.length, 1);
-      assert.ok(files[0].startsWith('example.com_'));
+      assert.ok(files[0].startsWith('localhost_'));
       assert.ok(files[0].endsWith('.report.json'));
     } finally {
       fs.rmSync(outDir, {recursive: true, force: true});
@@ -182,8 +179,8 @@ describe('batch runLighthouse', () => {
     mockPrinterWrite.mockReset();
     mockOpen.mockReset();
     mockPrinterWrite.mockResolvedValue(undefined);
-    exitSpy = jestMock.spyOn(process, 'exit')
-      .mockImplementation(/** @type {any} */ (() => undefined));
+    // @ts-expect-error - process.exit returns never
+    exitSpy = jestMock.spyOn(process, 'exit').mockImplementation(() => undefined);
   });
 
   afterEach(() => {

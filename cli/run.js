@@ -198,11 +198,10 @@ async function saveResults(runnerResult, flags, options = {}) {
 }
 
 /**
- * @template {string|string[]|undefined} [U=string|undefined]
- * @param {U} urlOrUrls
+ * @param {string|string[]|undefined} urlOrUrls
  * @param {LH.CliFlags} flags
  * @param {LH.Config|undefined} config
- * @return {Promise<(U extends string[] ? LH.RunnerResult[] : LH.RunnerResult)|undefined>}
+ * @return {Promise<LH.RunnerResult|LH.RunnerResult[]|undefined>}
  */
 async function runLighthouse(urlOrUrls, flags, config) {
   /** @param {any} reason */
@@ -320,7 +319,7 @@ async function runLighthouse(urlOrUrls, flags, config) {
     return printErrorAndExit(errors[0]);
   }
 
-  return /** @type {any} */ (isBatch ? results : results[0]);
+  return isBatch ? results : results[0];
 }
 
 export {
