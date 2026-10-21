@@ -429,13 +429,6 @@ class ImageElements extends BaseGatherer {
 
     await this.collectExtraDetails(context.driver, elements);
 
-    if (shouldFetchSourceRules) {
-      await Promise.all([
-        session.sendCommand('DOM.disable'),
-        session.sendCommand('CSS.disable'),
-      ]);
-    }
-
     this._naturalSizeCache.clear();
     return elements;
   }
