@@ -493,11 +493,11 @@ describe('.resolveAuditsToDefns', () => {
     await expect(resolveAuditsToDefns([new BaseGatherer()])).rejects.toThrow(/Invalid Audit type/);
   });
 
-  it('throws for unbundled audit in bundled environment', async () => {
+  it('throws for unbundled audit in Lightrider environment', async () => {
     global.isLightrider = true;
     try {
       await expect(resolveAuditsToDefns(['unbundled-audit']))
-        .rejects.toThrow(/Unable to locate module 'unbundled-audit' in bundled Lighthouse/);
+        .rejects.toThrow(/Unable to locate audit: `unbundled-audit`/);
     } finally {
       global.isLightrider = undefined;
     }

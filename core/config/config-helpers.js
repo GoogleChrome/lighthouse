@@ -21,21 +21,6 @@ const require = createRequire(import.meta.url);
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
-function isBundledEnvironment() {
-  // If we're in DevTools or LightRider, we are definitely bundled.
-  // TODO: refactor and delete `global.isDevtools`.
-  if (global.isDevtools || global.isLightrider) return true;
-
-  try {
-    // Not foolproof, but `lighthouse-logger` is a dependency of lighthouse that should always be resolvable.
-    // `require.resolve` will only throw in atypical/bundled environments.
-    require.resolve('lighthouse-logger');
-    return false;
-  } catch (err) {
-    return true;
-  }
-}
-
 /**
  * If any items with identical `path` properties are found in the input array,
  * merge their `options` properties into the first instance and then discard any
@@ -224,7 +209,7 @@ async function requireWrapper(requirePath) {
   let module;
   if (bundledModules.has(requirePath)) {
     module = await bundledModules.get(requirePath);
-  } else if (isBundledEnvironment()) {
+  } else if (bundledModules.size > 0) {
     throw new Error(`Unable to locate module '${requirePath}' in bundled Lighthouse`);
   } else if (requirePath.match(/\.(js|mjs|cjs)$/)) {
     module = await import(requirePath);
@@ -285,18 +270,12 @@ function requireAudit(auditPath, coreAuditList, configDir) {
   const coreAudit = coreAuditList.find(a => a === auditPathJs);
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
-    if (isBundledEnvironment()) {
+    if (bundledModules.has(auditPath)) {
       // This is for plugin bundling.
       requirePath = auditPath;
     } else {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
-      const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
-      if (isBundledEnvironment()) {
-        // Use a relative path so bundler can easily expose it.
-        requirePath = path.relative(import.meta.dirname, absolutePath);
-      } else {
-        requirePath = absolutePath;
-      }
+      requirePath = resolveModulePath(auditPath, configDir, 'audit');
     }
   }
 
@@ -374,7 +353,7 @@ async function mergePlugins(config, configDir, flags) {
     validation.assertValidPluginName(config, pluginName);
 
     // In bundled contexts, `resolveModulePath` will fail, so use the raw pluginName directly.
-    const pluginPath = isBundledEnvironment() ?
+    const pluginPath = bundledModules.has(pluginName) ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
     const rawPluginJson = await requireWrapper(pluginPath);
