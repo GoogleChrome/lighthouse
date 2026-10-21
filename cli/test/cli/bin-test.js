@@ -153,6 +153,14 @@ describe('CLI bin', function() {
 
       expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
     });
+
+    it('should not use stdout when using json with multiple URLs', async () => {
+      cliFlags = {...cliFlags, _: ['http://example.com', 'http://example.org'], output: ['json']};
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[0]).toEqual(['http://example.com', 'http://example.org']);
+      expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
+    });
   });
 
   describe('precomputedLanternData', () => {

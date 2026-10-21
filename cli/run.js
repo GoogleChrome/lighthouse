@@ -6,6 +6,7 @@
 
 /* eslint-disable no-console */
 
+import fs from 'fs';
 import path from 'path';
 import os from 'os';
 
@@ -145,11 +146,22 @@ async function saveResults(runnerResult, flags) {
   if (!shouldSaveResults) return;
   const {lhr, artifacts, report} = runnerResult;
 
+  const isDirectoryOutput = Boolean(
+    flags.outputPath &&
+    fs.existsSync(flags.outputPath) &&
+    fs.lstatSync(flags.outputPath).isDirectory()
+  );
+
   // Use the output path as the prefix for all generated files.
   // If no output path is set, generate a file prefix using the URL and date.
-  const configuredPath = !flags.outputPath || flags.outputPath === 'stdout' ?
-      getLhrFilenamePrefix(lhr) :
-      flags.outputPath.replace(/\.\w{2,4}$/, '');
+  let configuredPath;
+  if (!flags.outputPath || flags.outputPath === 'stdout') {
+    configuredPath = getLhrFilenamePrefix(lhr);
+  } else if (isDirectoryOutput) {
+    configuredPath = path.join(flags.outputPath, getLhrFilenamePrefix(lhr));
+  } else {
+    configuredPath = flags.outputPath.replace(/\.\w{2,4}$/, '');
+  }
   const resolvedPath = path.resolve(cwd, configuredPath);
 
   if (flags.saveAssets) {
@@ -160,8 +172,10 @@ async function saveResults(runnerResult, flags) {
     const extension = outputType;
     const output = report[flags.output.indexOf(outputType)];
     let outputPath = `${resolvedPath}.report.${extension}`;
-    // If there was only a single output and the user specified an outputPath, force usage of it.
-    if (flags.outputPath && flags.output.length === 1) outputPath = flags.outputPath;
+    // If there was only a single output and the user specified a file outputPath, force usage of it.
+    if (flags.outputPath && !isDirectoryOutput && flags.output.length === 1) {
+      outputPath = flags.outputPath;
+    }
     await Printer.write(output, outputType, outputPath);
 
     if (outputType === Printer.OutputMode[Printer.OutputMode.html]) {
@@ -176,12 +190,13 @@ async function saveResults(runnerResult, flags) {
 }
 
 /**
- * @param {string} url
+ * @template {string|string[]|undefined} [U=string|undefined]
+ * @param {U} urlOrUrls
  * @param {LH.CliFlags} flags
  * @param {LH.Config|undefined} config
- * @return {Promise<LH.RunnerResult|undefined>}
+ * @return {Promise<(U extends string[] ? LH.RunnerResult[] : LH.RunnerResult)|undefined>}
  */
-async function runLighthouse(url, flags, config) {
+async function runLighthouse(urlOrUrls, flags, config) {
   /** @param {any} reason */
   function handleTheUnhandled(reason) {
     process.stderr.write(`Unhandled Rejection. Reason: ${reason}\n`);
@@ -193,48 +208,97 @@ async function runLighthouse(url, flags, config) {
   /** @type {ChromeLauncher.LaunchedChrome|undefined} */
   let launchedChrome;
 
+  const isBatch = Array.isArray(urlOrUrls) && urlOrUrls.length > 1;
+  /** @type {Array<string|undefined>} */
+  const urls = Array.isArray(urlOrUrls) ?
+    (urlOrUrls.length ? urlOrUrls : [undefined]) :
+    [urlOrUrls];
+
+  const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
+  const shouldUseLocalChrome = UrlUtils.isLikeLocalhost(flags.hostname);
+  const initialPort = flags.port;
+  flags.channel = 'cli';
+
+  /** @type {Array<LH.RunnerResult>} */
+  const results = [];
+  /** @type {Array<ExitError>} */
+  const errors = [];
+
   try {
-    if (url && flags.auditMode && !flags.gatherMode) {
-      log.warn('CLI', 'URL parameter is ignored if -A flag is used without -G flag');
+    for (const url of urls) {
+      if (url && flags.auditMode && !flags.gatherMode) {
+        log.warn('CLI', 'URL parameter is ignored if -A flag is used without -G flag');
+      }
+
+      try {
+        if (
+          launchedChrome?.process &&
+          (launchedChrome.process.exitCode !== null || launchedChrome.process.killed)
+        ) {
+          launchedChrome = undefined;
+        }
+
+        if (shouldGather && shouldUseLocalChrome && !launchedChrome) {
+          launchedChrome = await getDebuggableChrome({...flags, port: initialPort});
+          flags.port = launchedChrome.port;
+        }
+
+        const runnerResult = await lighthouse(url, flags, config);
+
+        // If in gatherMode only, there will be no runnerResult.
+        if (runnerResult) {
+          await saveResults(runnerResult, flags);
+          results.push(runnerResult);
+        }
+
+        // Runtime errors indicate something was *very* wrong with the page result.
+        // We don't want the user to have to parse the report to figure it out, so we'll still exit
+        // with an error code after we saved the results.
+        if (runnerResult?.lhr.runtimeError) {
+          const {runtimeError} = runnerResult.lhr;
+          /** @type {ExitError} */
+          const exitError = {
+            name: 'LighthouseError',
+            friendlyMessage: runtimeError.message,
+            code: runtimeError.code,
+            message: runtimeError.message,
+          };
+          errors.push(exitError);
+          if (!isBatch || flags.failFast) {
+            break;
+          }
+          const errMsg = exitError.friendlyMessage || exitError.message;
+          log.error('CLI', `Runtime error encountered for ${url}: ${errMsg}`);
+          if (
+            runtimeError.code === 'TARGET_CRASHED' ||
+            runtimeError.code === 'PAGE_HUNG' ||
+            runtimeError.code === 'PROTOCOL_TIMEOUT'
+          ) {
+            await launchedChrome?.kill();
+            launchedChrome = undefined;
+          }
+        }
+      } catch (err) {
+        errors.push(err);
+        await launchedChrome?.kill();
+        launchedChrome = undefined;
+        if (!isBatch || flags.failFast) {
+          break;
+        }
+        const errMsg = err.friendlyMessage || err.message;
+        log.error('CLI', `Runtime error encountered for ${url}: ${errMsg}`);
+      }
     }
-
-    const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
-    const shouldUseLocalChrome = UrlUtils.isLikeLocalhost(flags.hostname);
-    if (shouldGather && shouldUseLocalChrome) {
-      launchedChrome = await getDebuggableChrome(flags);
-      flags.port = launchedChrome.port;
-    }
-
-    flags.channel = 'cli';
-
-    const runnerResult = await lighthouse(url, flags, config);
-
-    // If in gatherMode only, there will be no runnerResult.
-    if (runnerResult) {
-      await saveResults(runnerResult, flags);
-    }
-
-    launchedChrome?.kill();
+  } finally {
+    await launchedChrome?.kill();
     process.removeListener('unhandledRejection', handleTheUnhandled);
-
-    // Runtime errors indicate something was *very* wrong with the page result.
-    // We don't want the user to have to parse the report to figure it out, so we'll still exit
-    // with an error code after we saved the results.
-    if (runnerResult?.lhr.runtimeError) {
-      const {runtimeError} = runnerResult.lhr;
-      return printErrorAndExit({
-        name: 'LighthouseError',
-        friendlyMessage: runtimeError.message,
-        code: runtimeError.code,
-        message: runtimeError.message,
-      });
-    }
-
-    return runnerResult;
-  } catch (err) {
-    launchedChrome?.kill();
-    return printErrorAndExit(err);
   }
+
+  if (errors.length > 0) {
+    return printErrorAndExit(errors[0]);
+  }
+
+  return /** @type {any} */ (isBatch ? results : results[0]);
 }
 
 export {
