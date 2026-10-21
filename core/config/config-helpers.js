@@ -585,6 +585,7 @@ function deepCloneConfigJson(json) {
 }
 
 export {
+  bundledModules,
   deepClone,
   deepCloneConfigJson,
   mergeConfigFragment,

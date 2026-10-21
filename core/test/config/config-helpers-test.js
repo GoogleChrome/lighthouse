@@ -10,6 +10,7 @@ import {createRequire} from 'module';
 import * as jestMock from 'jest-mock';
 
 import {
+  bundledModules,
   deepClone,
   deepCloneConfigJson,
   resolveSettings,
@@ -493,13 +494,14 @@ describe('.resolveAuditsToDefns', () => {
     await expect(resolveAuditsToDefns([new BaseGatherer()])).rejects.toThrow(/Invalid Audit type/);
   });
 
-  it('throws for unbundled audit in Lightrider environment', async () => {
-    global.isLightrider = true;
+  it('throws when audit is missing from bundledModules in bundled environment', async () => {
+    bundledModules.set('some-bundled-module', Promise.resolve({}));
     try {
-      await expect(resolveAuditsToDefns(['unbundled-audit']))
-        .rejects.toThrow(/Unable to locate audit: `unbundled-audit`/);
+      await expect(resolveAuditsToDefns(['user-timings'])).rejects.toThrow(
+        /Unable to locate module '\.\.\/audits\/user-timings' in bundled Lighthouse/
+      );
     } finally {
-      global.isLightrider = undefined;
+      bundledModules.clear();
     }
   });
 
