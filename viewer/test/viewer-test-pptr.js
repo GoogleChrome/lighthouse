@@ -305,6 +305,14 @@ describe('Lighthouse Viewer', () => {
     for (const line of content.split('\n')) {
       expect(line).not.toContain('undefined');
     }
+
+    const auditCounts = await viewerPage.$$eval('.lh-category', categoryEls => {
+      return categoryEls.map(el => ({id: el.id, count: el.querySelectorAll('.lh-audit').length}));
+    });
+    expect(auditCounts.length).toBeGreaterThan(0);
+    for (const {count} of auditCounts) {
+      expect(count).toBeGreaterThan(0);
+    }
   }
 
   describe('Renders old reports', () => {

@@ -221,6 +221,34 @@ describe('PerfCategoryRenderer', () => {
     assert.equal(passedElements.length, passedInsights.length + passedDiagnostics.length);
   });
 
+  it('renders diagnostics when insights group is missing (pre-12.6 reports)', () => {
+    const groupsWithoutInsights = JSON.parse(JSON.stringify(sampleResults.categoryGroups));
+    delete groupsWithoutInsights.insights;
+
+    const categoryDOM = renderer.render(category, groupsWithoutInsights);
+    const insightSection = categoryDOM.querySelector(
+      '.lh-category .lh-audit-group.lh-audit-group--insights');
+    assert.equal(insightSection, null);
+
+    const diagnosticSection = categoryDOM.querySelector(
+      '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
+    const diagnosticAuditIds = category.auditRefs.filter(audit => {
+      return audit.group === 'diagnostics' &&
+        !ReportUtils.showAsPassed(audit.result);
+    }).map(audit => audit.id).sort();
+    assert.ok(diagnosticAuditIds.length > 0);
+    const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')]
+      .map(el => el.id).sort();
+    assert.deepStrictEqual(diagnosticElementIds, diagnosticAuditIds);
+
+    const passedSection = categoryDOM.querySelector('.lh-perf-audits .lh-clump--passed');
+    const passedDiagnostics = category.auditRefs.filter(audit =>
+      audit.group === 'diagnostics' &&
+      ReportUtils.showAsPassed(audit.result));
+    const passedElements = passedSection.querySelectorAll('.lh-audit');
+    assert.equal(passedElements.length, passedDiagnostics.length);
+  });
+
   // Unsupported by perf cat renderer right now.
   it.skip('renders any manual audits', () => {
   });
