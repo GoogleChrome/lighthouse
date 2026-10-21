@@ -224,6 +224,8 @@ async function requireWrapper(requirePath) {
   let module;
   if (bundledModules.has(requirePath)) {
     module = await bundledModules.get(requirePath);
+  } else if (isBundledEnvironment()) {
+    throw new Error(`Unable to locate module '${requirePath}' in bundled Lighthouse`);
   } else if (requirePath.match(/\.(js|mjs|cjs)$/)) {
     module = await import(requirePath);
   } else {
