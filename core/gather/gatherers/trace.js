@@ -72,28 +72,133 @@ class Trace extends BaseGatherer {
   }
 
   /**
+   * Finds the index of the closing `]` of the `traceEvents` array in `str` (at bracket/brace
+   * depth 0, ignoring characters inside string literals), or -1 if `str` does not yet contain it.
+   * @param {string} str
+   * @return {number}
+   */
+  static _findClosingBracketIndex(str) {
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    for (let i = 0; i < str.length; i++) {
+      const ch = str[i];
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (inString) {
+        if (ch === '\\') {
+          escaped = true;
+        } else if (ch === '"') {
+          inString = false;
+        }
+        continue;
+      }
+      if (ch === '"') {
+        inString = true;
+      } else if (ch === '{' || ch === '[') {
+        depth++;
+      } else if (ch === '}') {
+        depth--;
+      } else if (ch === ']') {
+        if (depth === 0) return i;
+        depth--;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Parses a comma-separated sequence of trace event JSON values and appends them to `traceEvents`.
+   * @param {string} slice
+   * @param {Array<LH.TraceEvent>} traceEvents
+   */
+  static _appendEventsFromSlice(slice, traceEvents) {
+    let trimmed = slice.trim();
+    if (trimmed.endsWith(',')) {
+      trimmed = trimmed.slice(0, -1);
+    }
+    if (!trimmed) return;
+
+    const batch = JSON.parse(`[${trimmed}]`);
+    for (let i = 0; i < batch.length; i++) {
+      traceEvents.push(batch[i]);
+    }
+  }
+
+  /**
    * @param {LH.Gatherer.ProtocolSession} session
    * @param {string} handle
    * @return {Promise<LH.Trace>}
    */
   static async _readTraceFromStream(session, handle) {
+    /** @type {Array<LH.TraceEvent>} */
+    const traceEvents = [];
+    const decoder = new TextDecoder();
     let isEof = false;
-    let result = '';
+    let header = '';
+    let remainder = '';
+    let footer = '';
+    let inTraceEvents = false;
+    let doneTraceEvents = false;
+
     while (!isEof) {
       const response = await session.sendCommand('IO.read', {handle});
       if (response.eof) {
         isEof = true;
       }
-      result += response.base64Encoded ?
-        Buffer.from(response.data, 'base64').toString('utf-8') :
+      const chunk = response.base64Encoded ?
+        decoder.decode(Buffer.from(response.data, 'base64'), {stream: !isEof}) :
         response.data;
+
+      if (doneTraceEvents) {
+        footer += chunk;
+        continue;
+      }
+
+      let buf = remainder + chunk;
+      remainder = '';
+
+      if (!inTraceEvents) {
+        const bracketIdx = buf.indexOf('[');
+        if (bracketIdx === -1) {
+          remainder = buf;
+          continue;
+        }
+        header = buf.slice(0, bracketIdx + 1);
+        buf = buf.slice(bracketIdx + 1);
+        inTraceEvents = true;
+      }
+
+      // Perfetto writes each trace event on its own line separated by `,\n`.
+      // Parse all complete newline-separated events in this chunk as a single batch.
+      const lastEventSep = buf.lastIndexOf('},\n');
+      if (lastEventSep !== -1) {
+        Trace._appendEventsFromSlice(buf.slice(0, lastEventSep + 1), traceEvents);
+        buf = buf.slice(lastEventSep + 3);
+      }
+
+      // Check if the remaining tail contains the closing `]` of `traceEvents`.
+      const closeBracketIdx = Trace._findClosingBracketIndex(buf);
+      if (closeBracketIdx !== -1) {
+        Trace._appendEventsFromSlice(buf.slice(0, closeBracketIdx), traceEvents);
+        footer = buf.slice(closeBracketIdx);
+        doneTraceEvents = true;
+      } else {
+        remainder = buf;
+      }
     }
 
     await session.sendCommand('IO.close', {handle});
-    if (!result) return {traceEvents: []};
+    if (!inTraceEvents) return {traceEvents: []};
 
-    const traceJson = JSON.parse(result);
-    return Array.isArray(traceJson) ? {traceEvents: traceJson} : traceJson;
+    const traceJson = JSON.parse(header + footer);
+    if (Array.isArray(traceJson)) {
+      return {traceEvents};
+    }
+    traceJson.traceEvents = traceEvents;
+    return traceJson;
   }
 
   /**
