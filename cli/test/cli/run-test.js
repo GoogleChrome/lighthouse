@@ -137,7 +137,7 @@ describe('saveResults', () => {
       await run.saveResults(mockRunnerResult, flags);
       const files = fs.readdirSync(outDir);
       assert.equal(files.length, 1);
-      assert.ok(files[0].startsWith('localhost_'));
+      assert.ok(files[0].startsWith('localhost-dobetterweb-dbw_tester.html_'));
       assert.ok(files[0].endsWith('.report.json'));
     } finally {
       fs.rmSync(outDir, {recursive: true, force: true});
