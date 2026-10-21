@@ -241,6 +241,76 @@ describe('CLI flags', function() {
         expect(() => getFlags(`${url} --output-path=ok.json`, {noExitOnFailure: true}))
           .not.toThrow();
       });
+
+      it('throws when auditing multiple URLs and outputPath is not a directory', () => {
+        expect(() => getFlags(
+          `${url} https://example.org --output-path=ok.json`,
+          {noExitOnFailure: true}
+        )).toThrow('--output-path must be an existing directory when auditing multiple URLs');
+
+        expect(() => getFlags(
+          `${url} https://example.org --output-path=${LH_ROOT}/cli/test/fixtures`,
+          {noExitOnFailure: true}
+        )).not.toThrow();
+      });
+    });
+
+    describe('multiple URLs and urlFile', () => {
+      it('accepts multiple positional URLs', () => {
+        const flags = getFlags(`${url} https://example.org`, {noExitOnFailure: true});
+        expect(flags._).toEqual([url, 'https://example.org']);
+      });
+
+      it('reads URLs from --url-file and ignores blank lines and comments', () => {
+        const tmpFile = `${LH_ROOT}/.tmp/test-urls.txt`;
+        fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
+        fs.writeFileSync(
+          tmpFile,
+          '# Comment line\nhttps://example.com/1\n\n  https://example.com/2  \n'
+        );
+        try {
+          const flags = getFlags(`--url-file=${tmpFile}`, {noExitOnFailure: true});
+          expect(flags._).toEqual(['https://example.com/1', 'https://example.com/2']);
+        } finally {
+          fs.unlinkSync(tmpFile);
+        }
+      });
+
+      it('combines positional URLs and --url-file URLs', () => {
+        const tmpFile = `${LH_ROOT}/.tmp/test-urls.txt`;
+        fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
+        fs.writeFileSync(tmpFile, 'https://example.com/2\n');
+        try {
+          const flags = getFlags(`${url} --url-file=${tmpFile}`, {noExitOnFailure: true});
+          expect(flags._).toEqual([url, 'https://example.com/2']);
+        } finally {
+          fs.unlinkSync(tmpFile);
+        }
+      });
+
+      it('throws when --url-file does not exist', () => {
+        expect(() => getFlags('--url-file=i/do/not/exist.txt', {noExitOnFailure: true}))
+          .toThrow('--url-file (i/do/not/exist.txt) cannot be read');
+      });
+
+      it('throws when --url-file is empty and no positional URL is provided', () => {
+        const tmpFile = `${LH_ROOT}/.tmp/empty-urls.txt`;
+        fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
+        fs.writeFileSync(tmpFile, '# only comment\n\n');
+        try {
+          expect(() => getFlags(`--url-file=${tmpFile}`, {noExitOnFailure: true}))
+            .toThrow('Please provide a url');
+        } finally {
+          fs.unlinkSync(tmpFile);
+        }
+      });
+
+      it('throws when using gather-mode or audit-mode with multiple URLs', () => {
+        expect(() => getFlags(`${url} https://example.org -G`, {noExitOnFailure: true}))
+          .toThrow('Cannot use -G/--gather-mode or -A/--audit-mode when auditing multiple URLs');
+        expect(() => getFlags(`${url} https://example.org -A`, {noExitOnFailure: true}))
+          .toThrow('Cannot use -G/--gather-mode or -A/--audit-mode when auditing multiple URLs');
+      });
     });
   });
 });

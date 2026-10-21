@@ -57,6 +57,10 @@ export interface CliFlags extends Flags {
   precomputedLanternDataPath?: string;
   /** Path to the file where precomputed lantern data should be written to. */
   lanternDataOutputPath?: string;
+  /** Path to a file containing newline-delimited URLs to audit. */
+  urlFile?: string[];
+  /** Flag to stop auditing remaining URLs immediately if a run fails. */
+  failFast?: boolean;
 
   // The following are given defaults in cli-flags, so are not optional like in Flags or SharedFlagsSettings.
   output: OutputMode[];

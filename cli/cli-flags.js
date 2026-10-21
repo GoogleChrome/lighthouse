@@ -203,12 +203,22 @@ function getYargsParser(manualArgv) {
         type: 'boolean',
         describe: 'Disables failing on all error status codes, and instead issues a warning.',
       },
+      'url-file': {
+        type: 'string',
+        coerce: coerceUrlFile,
+        describe: 'The path to a file containing newline-delimited URLs to audit.',
+      },
+      'fail-fast': {
+        type: 'boolean',
+        describe: 'Stop auditing remaining URLs immediately if a run fails.',
+      },
     })
     .group([
       'save-assets', 'list-all-audits', 'list-locales', 'list-trace-categories', 'additional-trace-categories',
       'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
       'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
       'only-audits', 'only-categories', 'skip-audits', 'disable-full-page-screenshot', 'ignore-status-code',
+      'url-file', 'fail-fast',
     ], 'Configuration:')
 
     // Output
@@ -305,6 +315,24 @@ Example: --output-path=./lighthouse-results.html`,
     .choices('preset', /** @type {const} */ (['perf', 'experimental', 'desktop']))
 
     .check(argv => {
+      if (Array.isArray(argv.urlFile)) {
+        argv._.push(...argv.urlFile);
+      }
+
+      if (argv._.length > 1) {
+        if (argv.gatherMode || argv.auditMode) {
+          throw new Error('Cannot use -G/--gather-mode or -A/--audit-mode when auditing multiple URLs');
+        }
+
+        if (
+          typeof argv.outputPath === 'string' &&
+          argv.outputPath &&
+          (!fs.existsSync(argv.outputPath) || !fs.lstatSync(argv.outputPath).isDirectory())
+        ) {
+          throw new Error('--output-path must be an existing directory when auditing multiple URLs');
+        }
+      }
+
       // Lighthouse doesn't need a URL if...
       //   - We're just listing the available options.
       //   - We're just printing the config.
@@ -416,6 +444,29 @@ function coerceOutputPath(value) {
   }
 
   return value;
+}
+
+/**
+ * Reads newline-delimited URLs from a file, ignoring empty lines and `#` comments.
+ * @param {unknown=} value
+ * @return {Array<string>=}
+ */
+function coerceUrlFile(value) {
+  if (value === undefined) return;
+
+  if (
+    typeof value !== 'string' ||
+    !value ||
+    !fs.existsSync(value) ||
+    fs.lstatSync(value).isDirectory()
+  ) {
+    throw new Error(`--url-file (${value}) cannot be read`);
+  }
+
+  return fs.readFileSync(value, 'utf-8')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(line => line.length > 0 && !line.startsWith('#'));
 }
 
 /**
