@@ -24,4 +24,18 @@ describe('file-namer helper', () => {
     const regex = /testexample\.com_\d{4}-[0-1][[0-9]-[0-1][[0-9]_[0-2][0-9]-[0-5][0-9]-[0-5][0-9]/;
     assert.ok(regex.test(str), `${str} doesn't match pattern: hostname_YYYY-MM-DD_HH-MM-SS`);
   });
+
+  it('includes pathname when non-root', () => {
+    const results = {
+      finalDisplayedUrl: 'https://testexample.com/about/team/',
+      fetchTime: '2017-01-06T02:34:56.217Z',
+    };
+    const str = getLhrFilenamePrefix(results);
+    const regex =
+      /testexample\.com-about-team_\d{4}-[0-1][0-9]-[0-1][0-9]_[0-2][0-9]-[0-5][0-9]-[0-5][0-9]/;
+    assert.ok(
+      regex.test(str),
+      `${str} doesn't match pattern: hostname-pathname_YYYY-MM-DD_HH-MM-SS`
+    );
+  });
 });

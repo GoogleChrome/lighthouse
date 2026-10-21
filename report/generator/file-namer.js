@@ -34,13 +34,14 @@ function getFilenamePrefix(name, fetchTime) {
 }
 
 /**
- * Generate a filenamePrefix of hostname_YYYY-MM-DD_HH-MM-SS.
+ * Generate a filenamePrefix of hostname-pathname_YYYY-MM-DD_HH-MM-SS.
  * @param {{finalDisplayedUrl: string, fetchTime: string}} lhr
  * @return {string}
  */
 function getLhrFilenamePrefix(lhr) {
-  const hostname = new URL(lhr.finalDisplayedUrl).hostname;
-  return getFilenamePrefix(hostname, lhr.fetchTime);
+  const {hostname, pathname} = new URL(lhr.finalDisplayedUrl);
+  const name = hostname + pathname.replace(/\/$/, '');
+  return getFilenamePrefix(name, lhr.fetchTime);
 }
 
 /**
