@@ -58,7 +58,7 @@ export interface CliFlags extends Flags {
   /** Path to the file where precomputed lantern data should be written to. */
   lanternDataOutputPath?: string;
   /** Path to a file containing newline-delimited URLs to audit. */
-  urlFile?: string;
+  urlFile?: string[];
   /** Flag to stop auditing remaining URLs immediately if a run fails. */
   failFast?: boolean;
 

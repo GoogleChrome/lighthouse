@@ -132,10 +132,9 @@ function printErrorAndExit(err) {
 /**
  * @param {LH.RunnerResult} runnerResult
  * @param {LH.CliFlags} flags
- * @param {{deferView?: boolean}} [options]
  * @return {Promise<string|undefined>}
  */
-async function saveResults(runnerResult, flags, options = {}) {
+async function saveResults(runnerResult, flags) {
   const cwd = process.cwd();
 
   if (flags.lanternDataOutputPath) {
@@ -183,14 +182,6 @@ async function saveResults(runnerResult, flags, options = {}) {
 
     if (outputType === Printer.OutputMode[Printer.OutputMode.html]) {
       htmlOutputPath = outputPath;
-      if (!options.deferView) {
-        if (flags.view) {
-          open(outputPath, {wait: false});
-        } else {
-          // eslint-disable-next-line max-len
-          log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
-        }
-      }
     }
   }
 
@@ -215,11 +206,9 @@ async function runLighthouse(urlOrUrls, flags, config) {
   /** @type {ChromeLauncher.LaunchedChrome|undefined} */
   let launchedChrome;
 
-  const isBatch = Array.isArray(urlOrUrls) && urlOrUrls.length > 1;
-  /** @type {Array<string|undefined>} */
-  const urls = Array.isArray(urlOrUrls) ?
-    (urlOrUrls.length ? urlOrUrls : [undefined]) :
-    [urlOrUrls];
+  const urls = [urlOrUrls].flat();
+  if (urls.length === 0) urls.push(undefined);
+  const isBatch = urls.length > 1;
 
   const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
   const shouldUseLocalChrome = UrlUtils.isLikeLocalhost(flags.hostname);
@@ -240,13 +229,6 @@ async function runLighthouse(urlOrUrls, flags, config) {
       }
 
       try {
-        if (
-          launchedChrome?.process &&
-          (launchedChrome.process.exitCode !== null || launchedChrome.process.killed)
-        ) {
-          launchedChrome = undefined;
-        }
-
         if (shouldGather && shouldUseLocalChrome && !launchedChrome) {
           launchedChrome = await getDebuggableChrome({...flags, port: initialPort});
           flags.port = launchedChrome.port;
@@ -256,7 +238,7 @@ async function runLighthouse(urlOrUrls, flags, config) {
 
         // If in gatherMode only, there will be no runnerResult.
         if (runnerResult) {
-          const htmlPath = await saveResults(runnerResult, flags, {deferView: isBatch});
+          const htmlPath = await saveResults(runnerResult, flags);
           if (htmlPath) htmlReportPaths.push(htmlPath);
           results.push(runnerResult);
         }
@@ -266,35 +248,18 @@ async function runLighthouse(urlOrUrls, flags, config) {
         // with an error code after we saved the results.
         if (runnerResult?.lhr.runtimeError) {
           const {runtimeError} = runnerResult.lhr;
-          /** @type {ExitError} */
-          const exitError = {
+          throw Object.assign(new Error(runtimeError.message), {
             name: 'LighthouseError',
             friendlyMessage: runtimeError.message,
             code: runtimeError.code,
-            message: runtimeError.message,
-          };
-          errors.push(exitError);
-          if (!isBatch || flags.failFast) {
-            break;
-          }
-          const errMsg = exitError.friendlyMessage || exitError.message;
-          log.error('CLI', `Runtime error encountered for ${url}: ${errMsg}`);
-          if (
-            runtimeError.code === 'TARGET_CRASHED' ||
-            runtimeError.code === 'PAGE_HUNG' ||
-            runtimeError.code === 'PROTOCOL_TIMEOUT'
-          ) {
-            await launchedChrome?.kill();
-            launchedChrome = undefined;
-          }
+            stack: undefined,
+          });
         }
       } catch (err) {
         errors.push(err);
         await launchedChrome?.kill();
         launchedChrome = undefined;
-        if (!isBatch || flags.failFast) {
-          break;
-        }
+        if (!isBatch || flags.failFast) break;
         const errMsg = err.friendlyMessage || err.message;
         log.error('CLI', `Runtime error encountered for ${url}: ${errMsg}`);
       }
@@ -304,7 +269,7 @@ async function runLighthouse(urlOrUrls, flags, config) {
     process.removeListener('unhandledRejection', handleTheUnhandled);
   }
 
-  if (isBatch && htmlReportPaths.length > 0) {
+  if (htmlReportPaths.length > 0) {
     if (flags.view) {
       for (const htmlPath of htmlReportPaths) {
         open(htmlPath, {wait: false});

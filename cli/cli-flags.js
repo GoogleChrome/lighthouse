@@ -205,6 +205,7 @@ function getYargsParser(manualArgv) {
       },
       'url-file': {
         type: 'string',
+        coerce: coerceUrlFile,
         describe: 'The path to a file containing newline-delimited URLs to audit.',
       },
       'fail-fast': {
@@ -314,21 +315,8 @@ Example: --output-path=./lighthouse-results.html`,
     .choices('preset', /** @type {const} */ (['perf', 'experimental', 'desktop']))
 
     .check(argv => {
-      if (argv.urlFile !== undefined) {
-        if (
-          typeof argv.urlFile !== 'string' ||
-          !argv.urlFile ||
-          !fs.existsSync(argv.urlFile) ||
-          fs.lstatSync(argv.urlFile).isDirectory()
-        ) {
-          throw new Error(`--url-file (${argv.urlFile}) cannot be read`);
-        }
-
-        const fileUrls = fs.readFileSync(argv.urlFile, 'utf-8')
-          .split(/\r?\n/)
-          .map(line => line.trim())
-          .filter(line => line.length > 0 && !line.startsWith('#'));
-        argv._.push(...fileUrls);
+      if (Array.isArray(argv.urlFile)) {
+        argv._.push(...argv.urlFile);
       }
 
       if (argv._.length > 1) {
@@ -456,6 +444,29 @@ function coerceOutputPath(value) {
   }
 
   return value;
+}
+
+/**
+ * Reads newline-delimited URLs from a file, ignoring empty lines and `#` comments.
+ * @param {unknown=} value
+ * @return {Array<string>=}
+ */
+function coerceUrlFile(value) {
+  if (value === undefined) return;
+
+  if (
+    typeof value !== 'string' ||
+    !value ||
+    !fs.existsSync(value) ||
+    fs.lstatSync(value).isDirectory()
+  ) {
+    throw new Error(`--url-file (${value}) cannot be read`);
+  }
+
+  return fs.readFileSync(value, 'utf-8')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(line => line.length > 0 && !line.startsWith('#'));
 }
 
 /**
