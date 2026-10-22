@@ -135,7 +135,10 @@ class Trace extends BaseGatherer {
     /** @type {LH.Crdp.Tracing.TracingCompleteEvent} */
     const completeEvent = await new Promise((resolve, reject) => {
       session.once('Tracing.tracingComplete', resolve);
-      session.sendCommand('Tracing.end').catch(reject);
+      session.sendCommand('Tracing.end').catch(err => {
+        session.off('Tracing.tracingComplete', resolve);
+        reject(err);
+      });
     });
 
     if (!completeEvent.stream) {
