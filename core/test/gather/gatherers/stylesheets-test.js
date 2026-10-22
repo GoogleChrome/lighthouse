@@ -114,14 +114,8 @@ describe('Stylesheets gatherer', () => {
       .mockResponse('DOM.enable')
       // @ts-expect-error - Force events to emit.
       .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
-      .mockResponse('CSS.startRuleUsageTracking')
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.stopRuleUsageTracking', {
-        ruleUsage: [
-          {styleSheetId: '1', used: true},
-        ],
-      });
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'});
 
     const gatherer = new Stylesheets();
     await gatherer.startInstrumentation(context.asContext());
