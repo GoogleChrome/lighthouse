@@ -43,10 +43,6 @@ const defaultConfigPath = path.join(
  * @type {Record<string, number|undefined>}
  */
 const internalArtifactPriorities = {
-  // Must run before other gatherers that enable the CSS domain (CSSUsage, ImageElements),
-  // because `CSS.styleSheetAdded` events are only emitted when the CSS domain transitions
-  // from disabled to enabled.
-  Stylesheets: -1,
   FullPageScreenshot: 1,
   BFCacheFailures: 1,
 };

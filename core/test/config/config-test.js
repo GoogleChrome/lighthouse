@@ -382,8 +382,6 @@ describe('Config', () => {
       const {resolvedConfig} = await initializeConfig('navigation', extensionConfig);
       if (!resolvedConfig.artifacts) throw new Error(`No artifacts created`);
 
-      expect(resolvedConfig.artifacts[0].id).toEqual('Stylesheets'); // Has internal priority of -1
-
       const last5 = resolvedConfig.artifacts.reverse().slice(0, 5).map(a => a.id);
       expect(last5).toEqual([
         'BFCacheFailures', // Has internal priority of 1
