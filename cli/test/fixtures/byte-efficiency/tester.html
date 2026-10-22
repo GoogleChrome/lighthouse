@@ -10,17 +10,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 <script>
-function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = false) {
+function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = false, nested = false) {
   const data = [];
   while (sizeInBytes > 0) {
     const index = Math.round(100000 * Math.random());
-    const className = `${used ? '' : 'un'}used-selector${index}`;
-    const prefix = used ? '' : '/* Here is a unused selector */\n';
-    const rule = `${prefix}.${className} { background: white; }`;
+    const isRuleUsed = used === 'partial' ? sizeInBytes > 12000 : used;
+    const className = `${isRuleUsed ? '' : 'un'}used-selector${index}`;
+    const prefix = isRuleUsed ? '' : '/* Here is a unused selector */\n';
+    const rule = nested ?
+      `${prefix}.${className} { color: red; .child { .grandchild { background: white; } } }` :
+      `${prefix}.${className} { background: white; }`;
     data.push(rule);
-    if (used) {
+    if (isRuleUsed) {
       const div = document.createElement('div');
       div.classList.add(className);
+      if (nested) {
+        const child = document.createElement('div');
+        child.classList.add('child');
+        const grandchild = document.createElement('div');
+        grandchild.classList.add('grandchild');
+        child.append(grandchild);
+        div.append(child);
+      }
       document.body.append(div);
     }
     sizeInBytes -= rule.length * 0.2; // 1 byte per character, GZip estimate is 20% for Stylesheets
@@ -52,9 +63,11 @@ setTimeout(() => {
     left: 0;
   }
 
-  .stylesheet-sizing {
-    width: 160px;
-    height: 110px;
+  .images {
+    .stylesheet-sizing {
+      width: 160px;
+      height: 110px;
+    }
   }
 </style>
 <script src="script.js" type="application/javascript"></script>
@@ -266,8 +279,8 @@ setTimeout(() => {
 generateInlineStyleWithSize(512, '.too-small { background: none; }\n');
 // PASS: used
 generateInlineStyleWithSize(12000, '.mostly-used { background: none; }\n', true);
-// FAIL: unused and a bit of savings
-generateInlineStyleWithSize(12000, '.kinda-unused { background: none; }\n');
+// FAIL: partially used with CSS nesting (6KB used nested rules + 12KB unused nested rules)
+generateInlineStyleWithSize(18000, '.kinda-unused { background: none; }\n', 'partial', true);
 // FAIL: unused and lots of savings
 generateInlineStyleWithSize(30000, '.definitely-unused { background: none; }\n');
 </script>

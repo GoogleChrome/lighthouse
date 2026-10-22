@@ -66,8 +66,21 @@ class UnusedCSS {
     let usedUncompressedBytes = 0;
     const totalUncompressedBytes = stylesheetInfo.content.length;
 
-    for (const usedRule of stylesheetInfo.usedRules) {
-      usedUncompressedBytes += usedRule.endOffset - usedRule.startOffset;
+    // CSS rule usage tracking can return overlapping ranges (e.g. a nested rule inside its
+    // parent rule's range) or duplicate ranges (parent rules are emitted once per used child rule).
+    // Sort and merge overlapping ranges so used bytes are only counted once.
+    const usedRules = stylesheetInfo.usedRules
+      .slice()
+      .sort((a, b) => a.startOffset - b.startOffset);
+
+    let lastEndOffset = -1;
+    for (const usedRule of usedRules) {
+      if (usedRule.endOffset <= lastEndOffset) {
+        continue;
+      }
+      const startOffset = Math.max(usedRule.startOffset, lastEndOffset);
+      usedUncompressedBytes += usedRule.endOffset - startOffset;
+      lastEndOffset = usedRule.endOffset;
     }
 
     const compressedSize = estimateCompressedContentSize(
