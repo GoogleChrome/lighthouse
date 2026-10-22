@@ -96,6 +96,54 @@ describe('NetworkRequest', () => {
       expect(record.protocol).toStrictEqual('h2');
     });
 
+    it('updates protocol, transfer size, and timings on redirects if Lightrider', () => {
+      const devtoolsLog = networkRecordsToDevtoolsLog([
+        {
+          requestId: '1',
+          url: 'https://example.com/initial',
+          protocol: 'http/1.1',
+          responseHeadersTransferSize: 100,
+          rendererStartTime: 0,
+          networkRequestTime: 50,
+          responseHeadersEndTime: 1000,
+          networkEndTime: 2000,
+          responseHeaders: [
+            {name: NetworkRequest.HEADER_PROTOCOL_IS_H2, value: '1'},
+            {name: NetworkRequest.HEADER_FETCHED_SIZE, value: '42'},
+            {name: NetworkRequest.HEADER_TOTAL, value: '10000'},
+            {name: NetworkRequest.HEADER_TCP, value: '5000'},
+            {name: NetworkRequest.HEADER_REQ, value: '2500'},
+            {name: NetworkRequest.HEADER_SSL, value: '1000'},
+            {name: NetworkRequest.HEADER_RES, value: '2500'},
+          ],
+        },
+        {
+          requestId: '1:redirect',
+          url: 'https://example.com/final',
+          protocol: 'http/1.1',
+          rendererStartTime: 2000,
+          networkRequestTime: 2050,
+          responseHeadersEndTime: 3000,
+          networkEndTime: 4000,
+          responseHeaders: [
+            {name: NetworkRequest.HEADER_PROTOCOL_IS_H2, value: '1'},
+          ],
+        },
+      ]);
+      global.isLightrider = true;
+      const records = NetworkRecorder.recordsFromLogs(devtoolsLog);
+
+      expect(records[0].protocol).toStrictEqual('h2');
+      expect(records[0].transferSize).toStrictEqual(42);
+      expect(records[0].lrStatistics).toStrictEqual({
+        endTimeDeltaMs: -8050,
+        TCPMs: 5000,
+        requestMs: 2500,
+        responseMs: 2500,
+      });
+      expect(records[1].protocol).toStrictEqual('h2');
+    });
+
     it('does nothing if no header is set', () => {
       const req = getRequest();
       req.responseHeaders = [];
