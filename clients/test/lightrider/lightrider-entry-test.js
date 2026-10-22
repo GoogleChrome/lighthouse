@@ -90,6 +90,13 @@ describe('lightrider-entry', () => {
       await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const resolvedConfig = runStub.mock.calls[0][1].resolvedConfig;
       assert.equal(resolvedConfig.settings.formFactor, 'desktop');
+      const errorsInConsoleAudit = resolvedConfig.audits.find(a => a.path === 'errors-in-console');
+      assert.deepStrictEqual(errorsInConsoleAudit.options, {
+        ignoredPatterns: [
+          'ERR_BLOCKED_BY_CLIENT.Inspector',
+          /^WebSocket connection to 'wss?:\/\/.*' failed:/,
+        ],
+      });
 
       runStub.mockRestore();
     });
@@ -103,6 +110,13 @@ describe('lightrider-entry', () => {
       await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const resolvedConfig = runStub.mock.calls[0][1].resolvedConfig;
       assert.equal(resolvedConfig.settings.formFactor, 'mobile');
+      const errorsInConsoleAudit = resolvedConfig.audits.find(a => a.path === 'errors-in-console');
+      assert.deepStrictEqual(errorsInConsoleAudit.options, {
+        ignoredPatterns: [
+          'ERR_BLOCKED_BY_CLIENT.Inspector',
+          /^WebSocket connection to 'wss?:\/\/.*' failed:/,
+        ],
+      });
 
       runStub.mockRestore();
     });
