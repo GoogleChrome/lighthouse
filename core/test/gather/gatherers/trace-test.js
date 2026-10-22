@@ -102,13 +102,9 @@ describe('TraceGatherer', () => {
         .mockResponse('IO.read', {data: chunk2, eof: true})
         .mockResponse('IO.close');
 
-      const stopPromise = makePromiseInspectable(
-        gatherer.stopSensitiveInstrumentation(context.asContext())
-      );
-
+      const stopPromise = gatherer.stopSensitiveInstrumentation(context.asContext());
       const completeListener = session.once.findListener('Tracing.tracingComplete');
       completeListener({dataLossOccurred: false, stream: 'stream-2'});
-      await flushAllTimersAndMicrotasks();
       await stopPromise;
 
       expect(gatherer.getArtifact()).toEqual({
