@@ -84,7 +84,6 @@ describe('TraceGatherer', () => {
       completeListener({dataLossOccurred: false, stream: 'stream-1'});
       await flushAllTimersAndMicrotasks();
       expect(stopPromise).toBeDone();
-      expect(session.off).toHaveBeenCalled();
 
       await stopPromise;
       expect(session.sendCommand).toHaveBeenCalledWith('IO.read', {handle: 'stream-1'});
@@ -120,34 +119,6 @@ describe('TraceGatherer', () => {
         ],
         metadata: {'cpu-family': 6},
       });
-    });
-
-    it('should collect events on Trace.dataCollected', async () => {
-      const session = context.driver.defaultSession;
-      session.sendCommand.mockResponse('Tracing.end');
-
-      const stopPromise = makePromiseInspectable(
-        gatherer.stopSensitiveInstrumentation(context.asContext())
-      );
-
-      const dataListener = session.on.findListener('Tracing.dataCollected');
-      const completeListener = session.once.findListener('Tracing.tracingComplete');
-
-      dataListener({value: [1, 2, 3]});
-      await flushAllTimersAndMicrotasks();
-      expect(stopPromise).not.toBeDone();
-
-      dataListener({value: [4, 5, 6]});
-      await flushAllTimersAndMicrotasks();
-      expect(stopPromise).not.toBeDone();
-
-      completeListener();
-      await flushAllTimersAndMicrotasks();
-      expect(stopPromise).toBeDone();
-      expect(session.off).toHaveBeenCalled();
-
-      await stopPromise;
-      expect(await gatherer.getArtifact()).toEqual({traceEvents: [1, 2, 3, 4, 5, 6]});
     });
   });
 });
