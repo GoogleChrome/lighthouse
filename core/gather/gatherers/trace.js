@@ -66,6 +66,20 @@ class Trace extends BaseGatherer {
 
       // Not used by Lighthouse (yet) but included for users that want JS samples when looking at
       // a trace collected by Lighthouse (e.g. "View Trace" workflow in DevTools)
+      // TODO: Re-enable after investigating b/325659693
+      // 'disabled-by-default-v8.cpu_profiler',
+    ];
+  }
+
+  /**
+   * @param {LH.Gatherer.ProtocolSession} session
+   * @param {string} handle
+   * @return {Promise<LH.Trace>}
+   */
+  static async _readTraceFromStream(session, handle) {
+    /** @type {Array<LH.TraceEvent>} */
+    const traceEvents = [];
+    const decoder = new TextDecoder();
     let isEof = false;
     let remainder = '';
 
