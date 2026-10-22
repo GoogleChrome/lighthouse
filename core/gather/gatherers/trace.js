@@ -66,62 +66,37 @@ class Trace extends BaseGatherer {
 
       // Not used by Lighthouse (yet) but included for users that want JS samples when looking at
       // a trace collected by Lighthouse (e.g. "View Trace" workflow in DevTools)
-      // TODO: Re-enable after investigating b/325659693
-      // 'disabled-by-default-v8.cpu_profiler',
-    ];
-  }
-
-  /**
-   * @param {LH.Gatherer.ProtocolSession} session
-   * @param {string} handle
-   * @return {Promise<LH.Trace>}
-   */
-  static async _readTraceFromStream(session, handle) {
-    /** @type {Array<LH.TraceEvent>} */
-    const traceEvents = [];
-    const decoder = new TextDecoder();
     let isEof = false;
     let remainder = '';
-    let inTraceEvents = false;
 
-    while (!isEof) {
-      const response = await session.sendCommand('IO.read', {handle});
-      isEof = Boolean(response.eof);
-      const chunk = response.base64Encoded ?
-        decoder.decode(Buffer.from(response.data, 'base64'), {stream: !isEof}) :
-        response.data;
+    try {
+      while (!isEof) {
+        const response = await session.sendCommand('IO.read', {handle});
+        isEof = Boolean(response.eof);
+        remainder += response.base64Encoded ?
+          decoder.decode(Buffer.from(response.data, 'base64'), {stream: !isEof}) :
+          response.data;
 
-      let buf = remainder + chunk;
-      if (!inTraceEvents) {
-        const bracketIdx = buf.indexOf('[');
-        if (bracketIdx === -1) {
-          remainder = buf;
-          continue;
+        // Perfetto's `ExportJson` serializes each trace event and trailing `metadata`
+        // as compact single-line JSON (with string newlines escaped as `\\n`), emitting
+        // raw `,\n` only between top-level elements of `traceEvents`.
+        // Maintain the invariant that `remainder` always starts with `{"traceEvents":[`.
+        const lastEventSep = remainder.lastIndexOf('},\n');
+        if (lastEventSep !== -1) {
+          const {traceEvents: batch} = JSON.parse(`${remainder.slice(0, lastEventSep + 1)}]}`);
+          for (const event of batch) {
+            traceEvents.push(event);
+          }
+          remainder = `{"traceEvents":[${remainder.slice(lastEventSep + 3)}`;
         }
-        buf = buf.slice(bracketIdx + 1);
-        inTraceEvents = true;
       }
-
-      // Perfetto writes each trace event on its own line separated by `,\n`.
-      // Parse all complete newline-separated events in this chunk as a single batch.
-      const lastEventSep = buf.lastIndexOf('},\n');
-      if (lastEventSep !== -1) {
-        const batch = JSON.parse(`[${buf.slice(0, lastEventSep + 1)}]`);
-        for (let i = 0; i < batch.length; i++) {
-          traceEvents.push(batch[i]);
-        }
-        buf = buf.slice(lastEventSep + 3);
-      }
-
-      remainder = buf;
+    } finally {
+      await session.sendCommand('IO.close', {handle});
     }
 
-    await session.sendCommand('IO.close', {handle});
-    if (!inTraceEvents) return {traceEvents: []};
-
-    const traceJson = JSON.parse(`{"traceEvents":[${remainder}`);
-    for (let i = 0; i < traceJson.traceEvents.length; i++) {
-      traceEvents.push(traceJson.traceEvents[i]);
+    const traceJson = JSON.parse(remainder);
+    for (const event of traceJson.traceEvents) {
+      traceEvents.push(event);
     }
     traceJson.traceEvents = traceEvents;
     return traceJson;
