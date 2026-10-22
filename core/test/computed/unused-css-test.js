@@ -108,6 +108,25 @@ describe('UnusedCSS computed artifact', () => {
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 5}]}).wastedPercent, 0);
     });
 
+    it('merges overlapping and duplicate usedRule ranges', () => {
+      // Nested child rule inside parent rule range, plus duplicated parent rule range.
+      assert.equal(map({
+        usedRules: [
+          {startOffset: 0, endOffset: 3},
+          {startOffset: 1, endOffset: 2},
+          {startOffset: 0, endOffset: 3},
+        ],
+      }).wastedPercent, 40);
+
+      // Partially overlapping ranges: [0, 2] and [1, 3] => 3 used bytes out of 5.
+      assert.equal(map({
+        usedRules: [
+          {startOffset: 1, endOffset: 3},
+          {startOffset: 0, endOffset: 2},
+        ],
+      }).wastedPercent, 40);
+    });
+
     it('correctly computes url', () => {
       const expectedPreview = 'dummy';
       assert.strictEqual(map({header: {sourceURL: '', isInline: false}}).url, expectedPreview);
