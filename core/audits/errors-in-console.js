@@ -50,15 +50,8 @@ class ErrorLogs extends Audit {
 
   /** @return {AuditOptions} */
   static get defaultOptions() {
-    /** @type {Array<RegExp|string>} */
     // Any failed network requests with error messsage aren't actionable
-    const ignoredPatterns = ['ERR_BLOCKED_BY_CLIENT.Inspector'];
-    if (global.isLightrider) {
-      // Lightrider does not support WebSocket connections.
-      // See https://github.com/GoogleChrome/lighthouse/issues/12459
-      ignoredPatterns.push(/^WebSocket connection to 'wss?:\/\/.*' failed:/);
-    }
-    return {ignoredPatterns};
+    return {ignoredPatterns: ['ERR_BLOCKED_BY_CLIENT.Inspector']};
   }
 
   /**

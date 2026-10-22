@@ -280,10 +280,6 @@ describe('ConsoleMessages error logs audit', () => {
   });
 
   describe('defaultOptions', () => {
-    afterEach(() => {
-      global.isLightrider = undefined;
-    });
-
     // See https://github.com/GoogleChrome/lighthouse/issues/10198
     it('filters out blocked_by_client.inspector messages by default', async () => {
       const context = {options: ErrorLogsAudit.defaultOptions, computedCache: new Map()};
@@ -300,37 +296,6 @@ describe('ConsoleMessages error logs audit', () => {
       }, context);
       assert.equal(auditResult.score, 1);
       assert.equal(auditResult.details.items.length, 0);
-    });
-
-    // See https://github.com/GoogleChrome/lighthouse/issues/12459
-    it('filters out WebSocket connection errors in Lightrider', async () => {
-      const artifacts = {
-        ConsoleMessages: [{
-          'source': 'network',
-          'level': 'error',
-          'timestamp': 1506535813608.003,
-          'url': 'https://example.com/app.js',
-          'text': 'WebSocket connection to \'wss://example.com/ws\' failed: ' +
-            'Error in connection establishment: net::ERR_NAME_NOT_RESOLVED',
-        }],
-        SourceMaps: [],
-        Scripts: [],
-      };
-
-      const defaultResult = await ErrorLogsAudit.audit(
-        artifacts,
-        {options: ErrorLogsAudit.defaultOptions, computedCache: new Map()}
-      );
-      assert.equal(defaultResult.score, 0);
-      assert.equal(defaultResult.details.items.length, 1);
-
-      global.isLightrider = true;
-      const lrResult = await ErrorLogsAudit.audit(
-        artifacts,
-        {options: ErrorLogsAudit.defaultOptions, computedCache: new Map()}
-      );
-      assert.equal(lrResult.score, 1);
-      assert.equal(lrResult.details.items.length, 0);
     });
   });
 });

@@ -24,6 +24,19 @@ const config = {
       'bf-cache',
     ],
   },
+  audits: [
+    // Lightrider does not support WebSocket connections.
+    // See https://github.com/GoogleChrome/lighthouse/issues/12459
+    {
+      path: 'errors-in-console',
+      options: {
+        ignoredPatterns: [
+          'ERR_BLOCKED_BY_CLIENT.Inspector',
+          /^WebSocket connection to 'wss?:\/\/.*' failed:/,
+        ],
+      },
+    },
+  ],
 };
 
 export default config;
