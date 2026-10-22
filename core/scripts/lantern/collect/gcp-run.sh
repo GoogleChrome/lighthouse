@@ -16,8 +16,7 @@ fi
 cd ./lighthouse
 
 git fetch origin
-# git checkout -f origin/main
-git checkout -f origin/lantern-traces-2026
+git checkout -f origin/main
 yarn install
 yarn build-report
 
