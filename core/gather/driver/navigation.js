@@ -45,6 +45,14 @@ const SOFT_NAVIGATION_GRACE_PERIOD_MS = 3000;
 
 /** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>, signal?: AbortSignal} & Partial<LH.Config.Settings>} NavigationOptions */
 
+/**
+ * @typedef SoftNavigationWatcher
+ * @prop {Promise<never>} promise
+ * @prop {() => void} requestorSettled
+ * @prop {() => void} cancel
+ * @prop {() => boolean} isSoftNavigationOnly
+ */
+
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
   let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = options;
@@ -84,6 +92,7 @@ function resolveWaitForFullyLoadedOptions(options) {
  * reports the same condition without the grace period so later failures can be attributed.
  *
  * @param {LH.Gatherer.ProtocolSession} session
+ * @return {SoftNavigationWatcher}
  */
 function watchForSoftNavigation(session) {
   let sawSoftNavigation = false;
@@ -169,7 +178,7 @@ async function gotoURL(driver, requestor, options) {
   await session.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
 
   let waitForNavigationTriggered;
-  /** @type {ReturnType<typeof watchForSoftNavigation>|undefined} */
+  /** @type {SoftNavigationWatcher|undefined} */
   let softNavigationWatcher;
   if (typeof requestor === 'string') {
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413
