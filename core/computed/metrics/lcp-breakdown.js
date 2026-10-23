@@ -6,11 +6,24 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {LighthouseError} from '../../lib/lh-error.js';
-import {LargestContentfulPaint} from './largest-contentful-paint.js';
+import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {TimeToFirstByte} from './time-to-first-byte.js';
 import {LCPNetworkRecord} from '../lcp-network-record.js';
 import {NavigationInsights} from '../navigation-insights.js';
+
+/**
+ * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
+ * @param {string} requestId
+ * @return {LH.Gatherer.Simulation.NodeTiming|undefined}
+ */
+function findNetworkNodeTiming(nodeTimings, requestId) {
+  for (const [node, timing] of nodeTimings.entries()) {
+    if (node.type === 'network' && node.request.requestId === requestId) {
+      return timing;
+    }
+  }
+}
 
 /**
  * Note: this omits renderDelay for simulated throttling.
@@ -37,14 +50,38 @@ class LCPBreakdown {
         return {ttfb};
       }
 
-      // Official LCP^tm. Will be lantern result if simulated, otherwise same as observedLcp.
-      const {timing: metricLcp} = await LargestContentfulPaint.request(data, context);
-      const throttleRatio = metricLcp / observedLcp;
+      const lcpResult = await LanternLargestContentfulPaint.request(data, context);
+      const metricLcp = lcpResult.timing;
+      const optimisticTiming = findNetworkNodeTiming(
+        lcpResult.optimisticEstimate.nodeTimings,
+        lcpRecord.requestId
+      );
+      const pessimisticTiming = findNetworkNodeTiming(
+        lcpResult.pessimisticEstimate.nodeTimings,
+        lcpRecord.requestId
+      );
 
-      const unclampedLoadStart = (lcpRecord.networkRequestTime - timeOrigin) * throttleRatio;
+      let unclampedLoadStart;
+      let unclampedLoadEnd;
+      if (optimisticTiming && pessimisticTiming) {
+        const {optimistic, pessimistic} = LanternLargestContentfulPaint.coefficients;
+        unclampedLoadStart =
+          optimistic * optimisticTiming.startTime + pessimistic * pessimisticTiming.startTime;
+        unclampedLoadEnd =
+          optimistic * optimisticTiming.endTime + pessimistic * pessimisticTiming.endTime;
+      } else if (optimisticTiming) {
+        unclampedLoadStart = optimisticTiming.startTime;
+        unclampedLoadEnd = optimisticTiming.endTime;
+      } else if (pessimisticTiming) {
+        unclampedLoadStart = pessimisticTiming.startTime;
+        unclampedLoadEnd = pessimisticTiming.endTime;
+      } else {
+        const throttleRatio = metricLcp / observedLcp;
+        unclampedLoadStart = (lcpRecord.networkRequestTime - timeOrigin) * throttleRatio;
+        unclampedLoadEnd = (lcpRecord.networkEndTime - timeOrigin) * throttleRatio;
+      }
+
       const loadStart = Math.max(ttfb, Math.min(unclampedLoadStart, metricLcp));
-
-      const unclampedLoadEnd = (lcpRecord.networkEndTime - timeOrigin) * throttleRatio;
       const loadEnd = Math.max(loadStart, Math.min(unclampedLoadEnd, metricLcp));
 
       return {
