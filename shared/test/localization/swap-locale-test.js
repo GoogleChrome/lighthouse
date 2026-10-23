@@ -126,4 +126,36 @@ Array [
     miniLhr.i18n.rendererFormattedStrings = expect.any(Object);
     expect(lhr).toEqual(miniLhr);
   });
+
+  it('handles bracketed keys containing dots in icuMessagePaths', () => {
+    const miniLhr = {
+      audits: {
+        'my.custom.audit': {
+          id: 'my.custom.audit',
+          title: '`[accesskey]` values are unique',
+          details: {
+            'sub.key': '`[accesskey]` values are unique',
+          },
+        },
+      },
+      configSettings: {
+        locale: 'en-US',
+      },
+      i18n: {
+        icuMessagePaths: {
+          'core/audits/accessibility/accesskeys.js | title': [
+            'audits[my.custom.audit].title',
+            'audits[my.custom.audit].details[sub.key]',
+          ],
+        },
+      },
+    };
+
+    const {lhr: lhrDe, missingIcuMessageIds} = swapLocale(miniLhr, 'de');
+    expect(missingIcuMessageIds).toEqual([]);
+    expect(lhrDe.audits['my.custom.audit'].title).toEqual('`[accesskey]`-Werte sind eindeutig');
+    expect(lhrDe.audits['my.custom.audit'].details['sub.key']).toEqual(
+      '`[accesskey]`-Werte sind eindeutig'
+    );
+  });
 });

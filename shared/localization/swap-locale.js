@@ -67,7 +67,7 @@ function swapLocale(lhr, requestedLocale) {
         values = instance.values;
       }
 
-      const keys = path.replace(/\[([^\]]+)\]/g, '.$1').replace(/^\./, '').split('.');
+      const keys = Array.from(path.matchAll(/\[([^\]]*)\]|[^.[\]]+/g), m => m[1] ?? m[0]);
       /** @type {any} */
       let parent = lhr;
       for (let i = 0; i < keys.length - 1; i++) {
