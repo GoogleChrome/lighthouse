@@ -28,7 +28,7 @@ function getFilenamePrefix(name, fetchTime) {
   dateParts.unshift(dateParts.pop());
   const dateStr = dateParts.join('-');
 
-  const filenamePrefix = `${name}_${dateStr}_${timeStr}`;
+  const filenamePrefix = `${name.slice(0, 200)}_${dateStr}_${timeStr}`;
   // replace characters that are unfriendly to filenames
   return filenamePrefix.replace(/[/?<>\\:*|"]/g, '-');
 }

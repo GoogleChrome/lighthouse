@@ -50,7 +50,7 @@ NEW_CONTRIBUTORS=$(node core/scripts/print-contributors.js v${OLD_VERSION} HEAD)
 
 set +x
 
-if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -ge 1 ]]; then
+if [[ -n "$NEW_CONTRIBUTORS" ]]; then
   export CONTRIBUTORS_TEXT="
 ## New contributors
 

@@ -112,7 +112,8 @@ Configuration:
 
 Output:
   --output       Reporter for the results, supports multiple values. choices: "json", "html", "csv"  [array] [default: ["html"]]
-  --output-path  The file path to output the results. Use 'stdout' to write to stdout.
+  --output-path  The file or directory path to output the results. Use 'stdout' to write to stdout.
+                   Directories in the path must already exist. If a directory is specified, the file name will be based on the test URL and date.
                    If using JSON output, default is stdout.
                    If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
                    If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.

@@ -38,4 +38,28 @@ describe('file-namer helper', () => {
       `${str} doesn't match pattern: hostname-pathname_YYYY-MM-DD_HH-MM-SS`
     );
   });
+
+  it('truncates long URLs to keep filenames within filesystem limits', () => {
+    const results = {
+      finalDisplayedUrl: `https://testexample.com/${'a'.repeat(300)}`,
+      fetchTime: '2017-01-06T02:34:56.217Z',
+    };
+    const str = getLhrFilenamePrefix(results);
+    assert.equal(str.length, 220);
+    assert.ok(str.startsWith(`testexample.com-${'a'.repeat(184)}_`));
+    assert.ok(str.endsWith('-56'));
+    assert.ok(Buffer.byteLength(`${str}-0.devtoolslog.json`) <= 255);
+  });
+
+  it('truncates long data: URLs to keep filenames within filesystem limits', () => {
+    const results = {
+      finalDisplayedUrl: `data:text/html,<h1>${'a'.repeat(300)}</h1>`,
+      fetchTime: '2017-01-06T02:34:56.217Z',
+    };
+    const str = getLhrFilenamePrefix(results);
+    assert.equal(str.length, 220);
+    assert.ok(str.startsWith(`text-html,-h1-${'a'.repeat(186)}_`));
+    assert.ok(str.endsWith('-56'));
+    assert.ok(Buffer.byteLength(`${str}.report.html`) <= 255);
+  });
 });

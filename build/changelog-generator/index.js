@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {{type: string, scope?: string, header: string, hash?: string, message?: string, PR?: string}} Commit */
+/** @typedef {{type?: string | null, scope?: string | null, header: string | null, hash?: string | null, message?: string | null, PR?: string}} Commit */
 /**
  * @typedef TemplateContext
  * @property {string=} version
@@ -54,7 +54,7 @@ function headerPartial(context) {
  */
 function commitPartial(context, commit) {
   const scopePrefix = commit.scope ? `${commit.scope}: ` : '';
-  const subject = commit.message || commit.header;
+  const subject = commit.message || commit.header || '';
   let ref = commit.hash || '';
   if (context.linkReferences) {
     const repoUrl = getRepoUrl(context);
@@ -141,14 +141,16 @@ const writerOpts = {
       commit.type = 'Misc';
     }
 
-    let pullRequestMatch = commit.header.match(pullRequestRegex);
+    let pullRequestMatch = commit.header ? commit.header.match(pullRequestRegex) : null;
     // if header does not provide a PR we try the message
     if (!pullRequestMatch && commit.message) {
       pullRequestMatch = commit.message.match(pullRequestRegex);
     }
 
     if (pullRequestMatch) {
-      commit.header = commit.header.replace(pullRequestMatch[0], '').trim();
+      if (commit.header) {
+        commit.header = commit.header.replace(pullRequestMatch[0], '').trim();
+      }
       if (commit.message) {
         commit.message = commit.message.replace(pullRequestMatch[0], '').trim();
       }

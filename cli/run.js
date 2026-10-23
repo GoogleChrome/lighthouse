@@ -149,7 +149,7 @@ async function saveResults(runnerResult, flags) {
   const isDirectoryOutput = Boolean(
     flags.outputPath &&
     fs.existsSync(flags.outputPath) &&
-    fs.lstatSync(flags.outputPath).isDirectory()
+    fs.statSync(flags.outputPath).isDirectory()
   );
 
   // Use the output path as the prefix for all generated files.

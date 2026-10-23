@@ -345,6 +345,9 @@ class NetworkRequest {
     this.networkEndTime = data.timestamp * 1000;
 
     this._updateResponseHeadersEndTimeIfNecessary();
+    this._updateProtocolForLightrider();
+    this._updateTransferSizeForLightrider();
+    this._updateTimingsForLightrider();
   }
 
   /**

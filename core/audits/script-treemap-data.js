@@ -178,20 +178,30 @@ class ScriptTreemapDataAudit extends Audit {
     const htmlNodesByFrameId = new Map();
     /** @type {Set<LH.Artifacts.NetworkRequest>} */
     const seenNetworkRecords = new Set();
-    const bundles = await JSBundles.request(artifacts, context);
-    const duplicationByPath = await ModuleDuplication.request(artifacts, context);
+    const deduplicatedScripts = artifacts.Scripts.filter(script => {
+      if (script.scriptLanguage !== 'JavaScript') return false;
 
-    for (const script of artifacts.Scripts) {
-      if (script.scriptLanguage !== 'JavaScript') continue;
+      const networkRecord = isInline(script) ?
+        undefined :
+        getRequestForScript(networkRecords, script);
+      if (networkRecord) {
+        if (seenNetworkRecords.has(networkRecord)) return false;
+        seenNetworkRecords.add(networkRecord);
+      }
 
+      return true;
+    });
+    const deduplicatedArtifacts = deduplicatedScripts.length === artifacts.Scripts.length ?
+      artifacts :
+      {...artifacts, Scripts: deduplicatedScripts};
+    const bundles = await JSBundles.request(deduplicatedArtifacts, context);
+    const duplicationByPath = await ModuleDuplication.request(deduplicatedArtifacts, context);
+
+    for (const script of deduplicatedScripts) {
       const isInlineScript = isInline(script);
       const networkRecord = isInlineScript ?
         undefined :
         getRequestForScript(networkRecords, script);
-      if (networkRecord) {
-        if (seenNetworkRecords.has(networkRecord)) continue;
-        seenNetworkRecords.add(networkRecord);
-      }
 
       const name = script.url;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId) ?? null;

@@ -7,7 +7,7 @@
 /**
  * @param {*} a
  * @param {*} b
- * @param {WeakMap<object, object>=} seen
+ * @param {WeakMap<object, WeakSet<object>>=} seen
  * @return {boolean}
  */
 function deepEquals(a, b, seen) {
@@ -32,13 +32,27 @@ function deepEquals(a, b, seen) {
     }
     return true;
   }
+  if (a instanceof ArrayBuffer && b instanceof ArrayBuffer) {
+    if (a.byteLength !== b.byteLength) return false;
+    const viewA = new Uint8Array(a);
+    const viewB = new Uint8Array(b);
+    for (let i = 0; i < viewA.length; i++) {
+      if (viewA[i] !== viewB[i]) return false;
+    }
+    return true;
+  }
 
-  if (seen) {
-    if (seen.get(a) === b) return true;
-  } else {
+  if (!seen) {
     seen = new WeakMap();
   }
-  seen.set(a, b);
+  let seenB = seen.get(a);
+  if (seenB) {
+    if (seenB.has(b)) return true;
+  } else {
+    seenB = new WeakSet();
+    seen.set(a, seenB);
+  }
+  seenB.add(b);
 
   if (Array.isArray(a)) {
     const arrB = /** @type {unknown[]} */ (b);
@@ -59,10 +73,36 @@ function deepEquals(a, b, seen) {
 
   if (a instanceof Set && b instanceof Set) {
     if (a.size !== b.size) return false;
+    /** @type {unknown[]} */
+    const unmatchedA = [];
     for (const v of a) {
-      if (!b.has(v)) return false;
+      if (!b.has(v)) {
+        if (typeof v !== 'object' || v === null) return false;
+        unmatchedA.push(v);
+      }
+    }
+    if (unmatchedA.length === 0) return true;
+    /** @type {unknown[]} */
+    const unmatchedB = [];
+    for (const v of b) {
+      if (!a.has(v)) {
+        if (typeof v !== 'object' || v === null) return false;
+        unmatchedB.push(v);
+      }
+    }
+    if (unmatchedA.length !== unmatchedB.length) return false;
+    for (const itemA of unmatchedA) {
+      const matchIndex = unmatchedB.findIndex(itemB => deepEquals(itemA, itemB, seen));
+      if (matchIndex === -1) return false;
+      unmatchedB.splice(matchIndex, 1);
     }
     return true;
+  }
+
+  if (a instanceof Error && b instanceof Error) {
+    if (a.name !== b.name || a.message !== b.message || !deepEquals(a.cause, b.cause, seen)) {
+      return false;
+    }
   }
 
   const keysA = Object.keys(a);

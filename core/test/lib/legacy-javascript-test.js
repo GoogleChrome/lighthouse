@@ -187,6 +187,34 @@ describe('detectLegacyJavaScript', () => {
     expect(results[0].estimatedByteSavings).toBe(36474);
   });
 
+  it('detects multiple es-shims polyfills on the same line', () => {
+    const script = {
+      code: [
+        'define(Object,{entries:e},{entries:function(){}})',
+        'Array.prototype.at=function(){}',
+        'define(Object,{values:v},{values:function(){}})',
+        'define(Array.prototype,{findLast:f},{findLast:function(){}})',
+      ].join(';'),
+    };
+    const results = getResults([script]);
+
+    expect(results).toHaveLength(1);
+    expect(results[0].matches).toEqual([
+      {name: 'Array.prototype.at', line: 0, column: 50},
+      {name: 'Array.prototype.findLast', line: 0, column: 136},
+      {name: 'Object.entries', line: 0, column: 6},
+      {name: 'Object.values', line: 0, column: 88},
+    ]);
+  });
+
+  it('does not match es-shims pattern when property names differ', () => {
+    const results = getResults([
+      {code: 'fn(Object, {keys: a}, {values: b})'},
+      {code: 'fn(Object, {is: a}, {isFrozen: b})'},
+    ]);
+    expect(results).toHaveLength(0);
+  });
+
   it('correctly tracks line and column numbers with CRLF line endings', () => {
     const script = {
       code: [

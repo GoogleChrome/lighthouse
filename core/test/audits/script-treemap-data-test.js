@@ -148,9 +148,9 @@ Object {
 
   it('deduplicates non-inline scripts that share the same network record', async () => {
     const context = {computedCache: new Map()};
+    const {map, content} = loadSourceMapAndUsageFixture('squoosh');
     const mainUrl = 'https://example.com';
     const scriptUrl = 'https://example.com/script.js';
-    const content = 'console.log("hello");';
     const networkRecords = [
       generateRecord(mainUrl, 100, 'Document'),
       generateRecord(scriptUrl, content.length, 'Script'),
@@ -160,7 +160,10 @@ Object {
       URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
       JsUsage: {},
       DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
-      SourceMaps: [],
+      SourceMaps: [
+        {scriptId: '1', scriptUrl, map},
+        {scriptId: '2', scriptUrl, map},
+      ],
       Scripts: [
         {scriptId: '1', url: scriptUrl, content},
         {scriptId: '2', url: scriptUrl, content},
@@ -191,9 +194,24 @@ Object {
     expect(results.details.nodes).toHaveLength(2);
     expect(results.details.nodes[0]).toMatchObject({
       name: scriptUrl,
-      resourceBytes: content.length,
+      resourceBytes: 83748,
     });
     expect(results.details.nodes[1].children).toHaveLength(2);
+
+    /**
+     * @param {LH.Treemap.Node} node
+     * @return {string[]}
+     */
+    function collectDuplicatedModules(node) {
+      /** @type {string[]} */
+      const dupes = [];
+      if (node.duplicatedNormalizedModuleName) dupes.push(node.duplicatedNormalizedModuleName);
+      for (const child of node.children || []) {
+        dupes.push(...collectDuplicatedModules(child));
+      }
+      return dupes;
+    }
+    expect(collectDuplicatedModules(results.details.nodes[0])).toEqual([]);
   });
 
   describe('.makeScriptNode', () => {
