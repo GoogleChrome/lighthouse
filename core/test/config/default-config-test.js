@@ -34,4 +34,15 @@ describe('Default Config', () => {
     assert(score < 0.7);
     assert(score >= 0.65);
   });
+
+  it('orders Stylesheets before other CSS-enabling gatherers', () => {
+    const artifactIds = defaultConfig.artifacts.map(a => a.id);
+    const stylesheetsIndex = artifactIds.indexOf('Stylesheets');
+    const cssUsageIndex = artifactIds.indexOf('CSSUsage');
+    const imageElementsIndex = artifactIds.indexOf('ImageElements');
+
+    assert.notStrictEqual(stylesheetsIndex, -1);
+    assert.ok(stylesheetsIndex < cssUsageIndex);
+    assert.ok(stylesheetsIndex < imageElementsIndex);
+  });
 });
