@@ -9,6 +9,7 @@ import log from 'lighthouse-logger';
 import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js';
 import * as constants from '../../config/constants.js';
 import * as i18n from '../../lib/i18n/i18n.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import UrlUtils from '../../lib/url-utils.js';
 
 const UIStrings = {
@@ -38,6 +39,9 @@ const DEFAULT_PAUSE_AFTER_LOAD = 0;
 const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
+// Controls how long to wait after a user-defined requestor settles before concluding that a
+// same-document navigation it triggered will not be followed by a cross-document navigation.
+const SOFT_NAVIGATION_GRACE_PERIOD_MS = 3000;
 
 /** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & Partial<LH.Config.Settings>} NavigationOptions */
 
@@ -69,6 +73,78 @@ function resolveWaitForFullyLoadedOptions(options) {
 }
 
 /**
+ * Watches for a user-defined requestor that only performs a same-document navigation
+ * (History API `pushState`/`replaceState` or a fragment change) instead of loading a new document.
+ * Navigation mode has no load event or FCP to wait for in that case, so without this check
+ * Lighthouse would wait for `maxWaitForFcp`/`maxWaitForLoad` and then fail with a misleading error.
+ *
+ * The returned promise rejects with `SOFT_NAVIGATION_NOT_SUPPORTED` once `requestorSettled()` has
+ * been called, a same-document navigation was observed, and no cross-document main frame
+ * navigation followed within a short grace period. It never resolves. `isSoftNavigationOnly()`
+ * reports the same condition without the grace period so later failures can be attributed.
+ *
+ * @param {LH.Gatherer.ProtocolSession} session
+ */
+function watchForSoftNavigation(session) {
+  let sawSoftNavigation = false;
+  let sawFullNavigation = false;
+  let requestorHasSettled = false;
+  let canceled = false;
+  /** @type {NodeJS.Timeout|undefined} */
+  let graceTimeout;
+  /** @type {(err: Error) => void} */
+  let reject = () => {};
+  /** @type {Promise<never>} */
+  const promise = new Promise((_, r) => {
+    reject = r;
+  });
+
+  const scheduleCheck = () => {
+    if (canceled || graceTimeout) return;
+    if (!requestorHasSettled || !sawSoftNavigation || sawFullNavigation) return;
+    graceTimeout = setTimeout(() => {
+      if (canceled || sawFullNavigation) return;
+      log.warn('Navigation', 'Requestor only performed a same-document navigation');
+      reject(new LighthouseError(LighthouseError.errors.SOFT_NAVIGATION_NOT_SUPPORTED));
+    }, SOFT_NAVIGATION_GRACE_PERIOD_MS);
+  };
+
+  // Same-document navigations in iframes are counted too. That is acceptable because the error is
+  // only raised when no cross-document navigation of the main frame happens either, in which case
+  // the navigation would have failed anyway.
+  const onNavigatedWithinDocument = () => {
+    sawSoftNavigation = true;
+    scheduleCheck();
+  };
+  /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
+  const onFrameNavigated = event => {
+    if (event.frame.parentId) return;
+    sawFullNavigation = true;
+  };
+
+  session.on('Page.navigatedWithinDocument', onNavigatedWithinDocument);
+  session.on('Page.frameNavigated', onFrameNavigated);
+
+  return {
+    promise,
+    requestorSettled() {
+      requestorHasSettled = true;
+      scheduleCheck();
+    },
+    cancel() {
+      if (canceled) return;
+      canceled = true;
+      session.off('Page.navigatedWithinDocument', onNavigatedWithinDocument);
+      session.off('Page.frameNavigated', onFrameNavigated);
+      if (graceTimeout) clearTimeout(graceTimeout);
+    },
+    isSoftNavigationOnly() {
+      return sawSoftNavigation && !sawFullNavigation;
+    },
+  };
+}
+
+/**
  * Navigates to the given URL, assuming that the page is not already on this URL.
  * Resolves on the url of the loaded page, taking into account any redirects.
  * Typical use of this method involves navigating to a neutral page such as `about:blank` in between
@@ -93,12 +169,24 @@ async function gotoURL(driver, requestor, options) {
   await session.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
 
   let waitForNavigationTriggered;
+  /** @type {ReturnType<typeof watchForSoftNavigation>|undefined} */
+  let softNavigationWatcher;
   if (typeof requestor === 'string') {
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413
     session.setNextProtocolTimeout(Infinity);
     waitForNavigationTriggered = session.sendCommand('Page.navigate', {url: requestor});
   } else {
-    waitForNavigationTriggered = requestor();
+    // Attach listeners before invoking the callback so a same-document navigation performed
+    // synchronously inside it is observed.
+    const watcher = watchForSoftNavigation(session);
+    softNavigationWatcher = watcher;
+    try {
+      waitForNavigationTriggered = Promise.resolve(requestor())
+        .finally(() => watcher.requestorSettled());
+    } catch (err) {
+      watcher.cancel();
+      throw err;
+    }
   }
 
   const waitForNavigated = options.waitUntil.includes('navigated');
@@ -120,10 +208,25 @@ async function gotoURL(driver, requestor, options) {
     throw new Error('Cannot wait for FCP without waiting for page load');
   }
 
-  const waitConditions = await Promise.race([
-    session.onCrashPromise(),
-    Promise.all(waitConditionPromises),
-  ]);
+  /** @type {Array<{timedOut: boolean}>} */
+  let waitConditions;
+  try {
+    waitConditions = await Promise.race([
+      session.onCrashPromise(),
+      Promise.all(waitConditionPromises),
+      softNavigationWatcher?.promise ?? new Promise(() => {}),
+    ]);
+  } catch (err) {
+    // Waiting for FCP/load fails when the requestor only changed the URL within the current
+    // document. Report that instead of the misleading `NO_FCP`/`PAGE_HUNG` error.
+    if (softNavigationWatcher?.isSoftNavigationOnly() && err instanceof LighthouseError &&
+        (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG')) {
+      throw new LighthouseError(LighthouseError.errors.SOFT_NAVIGATION_NOT_SUPPORTED);
+    }
+    throw err;
+  } finally {
+    softNavigationWatcher?.cancel();
+  }
   const timedOut = waitConditions.some(condition => condition.timedOut);
   const navigationUrls = await networkMonitor.getNavigationUrls();
 
@@ -137,7 +240,12 @@ async function gotoURL(driver, requestor, options) {
     }
     requestedUrl = requestor;
   }
-  if (!requestedUrl) throw Error('No navigations detected when running user defined requestor.');
+  if (!requestedUrl) {
+    if (softNavigationWatcher?.isSoftNavigationOnly()) {
+      throw new LighthouseError(LighthouseError.errors.SOFT_NAVIGATION_NOT_SUPPORTED);
+    }
+    throw Error('No navigations detected when running user defined requestor.');
+  }
 
   const mainDocumentUrl = navigationUrls.mainDocumentUrl || requestedUrl;
 
