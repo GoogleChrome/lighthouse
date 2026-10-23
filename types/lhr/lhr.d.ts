@@ -40,6 +40,8 @@ interface Result {
   configSettings: ConfigSettings;
   /** List of top-level warnings for this Lighthouse run. */
   runWarnings: string[];
+  /** Structured, machine-readable versions of top-level warnings for this Lighthouse run. Supplements runWarnings, which remains for backward compatibility. */
+  runtimeWarnings?: Array<{ code: string; message: string; }>;
   /** A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. */
   runtimeError?: {
     code: string;
