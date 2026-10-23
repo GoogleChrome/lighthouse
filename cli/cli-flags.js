@@ -328,7 +328,7 @@ Example: --output-path=./lighthouse-results.html`,
         if (
           typeof argv.outputPath === 'string' &&
           argv.outputPath &&
-          (!fs.existsSync(argv.outputPath) || !fs.lstatSync(argv.outputPath).isDirectory())
+          (!fs.existsSync(argv.outputPath) || !fs.statSync(argv.outputPath).isDirectory())
         ) {
           throw new Error('--output-path must be an existing directory when auditing multiple URLs');
         }
@@ -459,7 +459,7 @@ function coerceUrlFile(value) {
     typeof value !== 'string' ||
     !value ||
     !fs.existsSync(value) ||
-    fs.lstatSync(value).isDirectory()
+    fs.statSync(value).isDirectory()
   ) {
     throw new Error(`--url-file (${value}) cannot be read`);
   }

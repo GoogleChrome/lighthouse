@@ -253,6 +253,29 @@ describe('CLI flags', function() {
           {noExitOnFailure: true}
         )).not.toThrow();
       });
+
+      it('follows symlinks for outputPath when auditing multiple URLs', () => {
+        const tmpDir = `${LH_ROOT}/.tmp/cli-flags-symlink-test`;
+        const targetDir = `${tmpDir}/target-dir`;
+        const symlinkDir = `${tmpDir}/symlink-dir`;
+        const brokenSymlink = `${tmpDir}/broken-symlink`;
+        fs.mkdirSync(targetDir, {recursive: true});
+        fs.symlinkSync(targetDir, symlinkDir, 'dir');
+        fs.symlinkSync(`${tmpDir}/nonexistent`, brokenSymlink, 'dir');
+        try {
+          expect(() => getFlags(
+            `${url} https://example.org --output-path=${symlinkDir}`,
+            {noExitOnFailure: true}
+          )).not.toThrow();
+
+          expect(() => getFlags(
+            `${url} https://example.org --output-path=${brokenSymlink}`,
+            {noExitOnFailure: true}
+          )).toThrow('--output-path must be an existing directory when auditing multiple URLs');
+        } finally {
+          fs.rmSync(tmpDir, {recursive: true, force: true});
+        }
+      });
     });
 
     describe('multiple URLs and urlFile', () => {
@@ -288,9 +311,27 @@ describe('CLI flags', function() {
         }
       });
 
-      it('throws when --url-file does not exist', () => {
+      it('throws when --url-file does not exist or is a directory (including symlinked)', () => {
         expect(() => getFlags('--url-file=i/do/not/exist.txt', {noExitOnFailure: true}))
           .toThrow('--url-file (i/do/not/exist.txt) cannot be read');
+
+        const tmpDir = `${LH_ROOT}/.tmp/cli-flags-urlfile-symlink-test`;
+        const targetDir = `${tmpDir}/target-dir`;
+        const symlinkDir = `${tmpDir}/symlink-dir`;
+        const brokenSymlink = `${tmpDir}/broken-symlink`;
+        fs.mkdirSync(targetDir, {recursive: true});
+        fs.symlinkSync(targetDir, symlinkDir, 'dir');
+        fs.symlinkSync(`${tmpDir}/nonexistent`, brokenSymlink, 'file');
+        try {
+          expect(() => getFlags(`--url-file=${targetDir}`, {noExitOnFailure: true}))
+            .toThrow(`--url-file (${targetDir}) cannot be read`);
+          expect(() => getFlags(`--url-file=${symlinkDir}`, {noExitOnFailure: true}))
+            .toThrow(`--url-file (${symlinkDir}) cannot be read`);
+          expect(() => getFlags(`--url-file=${brokenSymlink}`, {noExitOnFailure: true}))
+            .toThrow(`--url-file (${brokenSymlink}) cannot be read`);
+        } finally {
+          fs.rmSync(tmpDir, {recursive: true, force: true});
+        }
       });
 
       it('throws when --url-file is empty and no positional URL is provided', () => {

@@ -143,6 +143,34 @@ describe('saveResults', () => {
       fs.rmSync(outDir, {recursive: true, force: true});
     }
   });
+
+  it('writes reports into outputPath when outputPath is a symlinked directory', async () => {
+    const baseDir = path.join(LH_ROOT, '.tmp', 'cli-run-symlink-dir-test');
+    const targetDir = path.join(baseDir, 'target-dir');
+    const symlinkDir = path.join(baseDir, 'symlink-dir');
+    fs.mkdirSync(targetDir, {recursive: true});
+    fs.symlinkSync(targetDir, symlinkDir, 'dir');
+    try {
+      /** @type {LH.Result} */
+      const lhr = readJson('../../../core/test/results/sample_v2.json', import.meta);
+      /** @type {LH.RunnerResult} */
+      const mockRunnerResult = {
+        lhr,
+        // @ts-expect-error - empty artifacts for test
+        artifacts: {},
+        report: ['{"mock": true}'],
+      };
+      const flags = getFlags(`https://example.com/ --output=json --output-path=${symlinkDir}`);
+
+      await run.saveResults(mockRunnerResult, flags);
+      const files = fs.readdirSync(targetDir);
+      assert.equal(files.length, 1);
+      assert.ok(files[0].startsWith('localhost-dobetterweb-dbw_tester.html_'));
+      assert.ok(files[0].endsWith('.report.json'));
+    } finally {
+      fs.rmSync(baseDir, {recursive: true, force: true});
+    }
+  });
 });
 
 describe('batch runLighthouse', () => {
