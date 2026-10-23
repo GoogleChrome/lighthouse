@@ -286,6 +286,83 @@ describe('batch runLighthouse', () => {
       'open',
     ]);
   });
+
+  it('does not mutate flags.port in place when launching Chrome', async () => {
+    const mockKill = fnAny();
+    mockLaunch.mockResolvedValue({port: 9999, kill: mockKill});
+    /** @type {Array<number|undefined>} */
+    const passedPorts = [];
+    mockLighthouse.mockImplementation(
+      async (/** @type {string} */ url, /** @type {LH.CliFlags} */ lhFlags) => {
+        passedPorts.push(lhFlags.port);
+        return {
+          lhr: {
+            finalDisplayedUrl: url,
+            fetchTime: '2026-10-21T20:00:00.000Z',
+            audits: {},
+          },
+          artifacts: {},
+          report: ['{}'],
+        };
+      }
+    );
+
+    const urls = ['https://example.com/1', 'https://example.com/2'];
+    const flags = getFlags(urls.join(' '));
+    expect(flags.port).toBe(0);
+
+    await mockedRun.runLighthouse(urls, flags, undefined);
+
+    expect(passedPorts).toEqual([9999, 9999]);
+    expect(flags.port).toBe(0);
+  });
+
+  it('writes separate lantern data files when lanternDataOutputPath is a directory', async () => {
+    const outDir = path.join(LH_ROOT, '.tmp', 'cli-run-lantern-dir-test');
+    fs.mkdirSync(outDir, {recursive: true});
+    try {
+      const devtoolsLog = readJson(
+        '../../../core/test/fixtures/traces/progressive-app-m60.devtools.log.json',
+        import.meta
+      );
+      /** @type {LH.Result} */
+      const lhr1 = {
+        ...readJson('../../../core/test/results/sample_v2.json', import.meta),
+        finalDisplayedUrl: 'https://example.com/page-1',
+        fetchTime: '2026-10-21T20:00:00.000Z',
+      };
+      /** @type {LH.Result} */
+      const lhr2 = {
+        ...lhr1,
+        finalDisplayedUrl: 'https://example.com/page-2',
+        fetchTime: '2026-10-21T20:00:01.000Z',
+      };
+      const urls = ['https://example.com/page-1', 'https://example.com/page-2'];
+      const flags = getFlags(
+        `${urls.join(' ')} --output=json --output-path=stdout --lantern-data-output-path=${outDir}`
+      );
+
+      await mockedRun.saveResults(
+        // @ts-expect-error - partial artifacts for test
+        {lhr: lhr1, artifacts: {DevtoolsLog: devtoolsLog}, report: ['{}']},
+        flags
+      );
+      await mockedRun.saveResults(
+        // @ts-expect-error - partial artifacts for test
+        {lhr: lhr2, artifacts: {DevtoolsLog: devtoolsLog}, report: ['{}']},
+        flags
+      );
+
+      const files = fs.readdirSync(outDir).sort();
+      assert.equal(files.length, 2);
+      assert.ok(files[0].startsWith('example.com-page-1_'));
+      assert.ok(files[0].endsWith('.lantern.json'));
+      assert.ok(files[1].startsWith('example.com-page-2_'));
+      assert.ok(files[1].endsWith('.lantern.json'));
+    } finally {
+      fs.rmSync(outDir, {recursive: true, force: true});
+    }
+  });
 });
 
 describe('Parsing --chrome-flags', () => {

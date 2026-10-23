@@ -139,7 +139,14 @@ async function saveResults(runnerResult, flags) {
 
   if (flags.lanternDataOutputPath) {
     const devtoolsLog = runnerResult.artifacts.DevtoolsLog;
-    await assetSaver.saveLanternNetworkData(devtoolsLog, flags.lanternDataOutputPath);
+    let lanternOutputPath = flags.lanternDataOutputPath;
+    if (fs.existsSync(lanternOutputPath) && fs.statSync(lanternOutputPath).isDirectory()) {
+      lanternOutputPath = path.join(
+        lanternOutputPath,
+        `${getLhrFilenamePrefix(runnerResult.lhr)}.lantern.json`
+      );
+    }
+    await assetSaver.saveLanternNetworkData(devtoolsLog, lanternOutputPath);
   }
 
   const shouldSaveResults = flags.auditMode || (flags.gatherMode === flags.auditMode);
@@ -212,7 +219,6 @@ async function runLighthouse(urlOrUrls, flags, config) {
 
   const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
   const shouldUseLocalChrome = UrlUtils.isLikeLocalhost(flags.hostname);
-  const initialPort = flags.port;
   flags.channel = 'cli';
 
   /** @type {Array<LH.RunnerResult>} */
@@ -230,11 +236,11 @@ async function runLighthouse(urlOrUrls, flags, config) {
 
       try {
         if (shouldGather && shouldUseLocalChrome && !launchedChrome) {
-          launchedChrome = await getDebuggableChrome({...flags, port: initialPort});
-          flags.port = launchedChrome.port;
+          launchedChrome = await getDebuggableChrome(flags);
         }
 
-        const runnerResult = await lighthouse(url, flags, config);
+        const runFlags = launchedChrome ? {...flags, port: launchedChrome.port} : flags;
+        const runnerResult = await lighthouse(url, runFlags, config);
 
         // If in gatherMode only, there will be no runnerResult.
         if (runnerResult) {

@@ -311,6 +311,28 @@ describe('CLI flags', function() {
         expect(() => getFlags(`${url} https://example.org -A`, {noExitOnFailure: true}))
           .toThrow('Cannot use -G/--gather-mode or -A/--audit-mode when auditing multiple URLs');
       });
+
+      it('allows --output-path=stdout when auditing multiple URLs', () => {
+        const flags = getFlags(
+          `${url} https://example.org --output=json --output-path=stdout`,
+          {noExitOnFailure: true}
+        );
+        expect(flags.outputPath).toBe('stdout');
+      });
+
+      it('throws when auditing multiple URLs and lanternDataOutputPath is not a directory', () => {
+        expect(() => getFlags(
+          `${url} https://example.org --lantern-data-output-path=lantern.json`,
+          {noExitOnFailure: true}
+        )).toThrow(
+          '--lantern-data-output-path must be an existing directory when auditing multiple URLs'
+        );
+
+        expect(() => getFlags(
+          `${url} https://example.org --lantern-data-output-path=${LH_ROOT}/cli/test/fixtures`,
+          {noExitOnFailure: true}
+        )).not.toThrow();
+      });
     });
   });
 });

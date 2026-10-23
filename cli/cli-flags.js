@@ -330,7 +330,17 @@ Example: --output-path=./lighthouse-results.html`,
           argv.outputPath &&
           (!fs.existsSync(argv.outputPath) || !fs.lstatSync(argv.outputPath).isDirectory())
         ) {
-          throw new Error('--output-path must be an existing directory when auditing multiple URLs');
+          if (argv.outputPath !== 'stdout') {
+            throw new Error('--output-path must be an existing directory when auditing multiple URLs');
+          }
+        }
+
+        if (
+          typeof argv.lanternDataOutputPath === 'string' &&
+          argv.lanternDataOutputPath &&
+          (!fs.existsSync(argv.lanternDataOutputPath) || !fs.statSync(argv.lanternDataOutputPath).isDirectory())
+        ) {
+          throw new Error('--lantern-data-output-path must be an existing directory when auditing multiple URLs');
         }
       }
 
