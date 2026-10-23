@@ -212,7 +212,9 @@ async function runLighthouse() {
   const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
   const panel = LighthousePanel.LighthousePanel.instance();
 
-  /** @type {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>} */
+  // TODO(https://github.com/GoogleChrome/lighthouse/issues/17428): Remove JSON.stringify workaround
+  // once https://chromium-review.googlesource.com/c/v8/v8/+/8640371 rolls into Chrome ToT.
+  /** @type {Promise<string>} */
   const resultPromise = new Promise((resolve, reject) => {
     const methodName = panel.__proto__.buildReportUI ? 'buildReportUI' : '_buildReportUI';
     addSniffer(
@@ -222,7 +224,7 @@ async function runLighthouse() {
        * @param {LH.Result} lhr
        * @param {LH.Artifacts} artifacts
        */
-      (lhr, artifacts) => resolve({lhr, artifacts})
+      (lhr, artifacts) => resolve(JSON.stringify({lhr, artifacts}))
     );
 
     addSniffer(
@@ -361,7 +363,9 @@ async function testUrlFromDevtools(url, options = {}) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
 
-    const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
+    const resultJson = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
+    /** @type {{lhr: LH.Result, artifacts: LH.Artifacts}} */
+    const result = JSON.parse(resultJson);
 
     return {...result, logs};
   } catch (err) {
