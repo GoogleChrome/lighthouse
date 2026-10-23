@@ -31,5 +31,35 @@ describe('PageDependencyGraph computed artifact', () => {
       const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
       assert.ok(nodeWithNestedDependents, 'did not link initiators');
     });
+
+    it('should strip #hash fragments from trace ResourceSendRequest URLs', async () => {
+      const traceWithHash = structuredClone(sampleTrace);
+      const urlArtifact = getURLArtifactFromDevtoolsLog(sampleDevtoolsLog);
+      for (const event of traceWithHash.traceEvents) {
+        if (
+          event.name === 'ResourceSendRequest' &&
+          event.args?.data?.url === urlArtifact.requestedUrl
+        ) {
+          event.args.data.url = `${urlArtifact.requestedUrl}#fragment`;
+        }
+      }
+
+      const context = {computedCache: new Map()};
+      const output = await PageDependencyGraph.request({
+        trace: traceWithHash,
+        devtoolsLog: sampleDevtoolsLog,
+        URL: urlArtifact,
+        SourceMaps: [],
+        HostDPR: 1,
+        settings: {},
+        fromTrace: true,
+      }, context);
+      assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
+      assert.equal(output.type, 'network');
+      assert.equal(output.request.url, urlArtifact.requestedUrl);
+      const dependents = output.getDependents();
+      const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
+      assert.ok(nodeWithNestedDependents, 'did not link initiators');
+    });
   });
 });

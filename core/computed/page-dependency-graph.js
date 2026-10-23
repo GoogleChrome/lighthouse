@@ -11,6 +11,26 @@ import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
 import {TraceEngineResult} from './trace-engine-result.js';
 
+/**
+ * ResourceSendRequest URLs in the trace retain #hash fragments, whereas CDP
+ * Network.requestWillBeSent, Page.frameNavigated, initiator.url, documentURL,
+ * and V8 script events strip #hash fragments, and Lantern's NetworkAnalyzer
+ * requires request.url not to have a fragment.
+ * TODO: Remove once @paulirish/trace_engine includes the fix in LanternComputationData.
+ * @param {string} urlStr
+ * @return {string}
+ */
+function stripUrlHash(urlStr) {
+  if (!urlStr.includes('#')) return urlStr;
+  try {
+    const url = new URL(urlStr);
+    url.hash = '';
+    return url.href;
+  } catch {
+    return urlStr;
+  }
+}
+
 class PageDependencyGraph {
   /**
    * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR'], fromTrace: boolean}} data
@@ -27,7 +47,41 @@ class PageDependencyGraph {
     if (data.fromTrace) {
       const traceEngineResult =
         await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
-      const parsedTrace = traceEngineResult.data;
+      let parsedTrace = traceEngineResult.data;
+      if (parsedTrace.NetworkRequests.byTime.some(
+        r => r.args.data.url.includes('#') ||
+          r.args.data.redirects.some(red => red.url.includes('#'))
+      )) {
+        const byTime = parsedTrace.NetworkRequests.byTime.map(request => {
+          const url = stripUrlHash(request.args.data.url);
+          const redirects = request.args.data.redirects.map(redirect => ({
+            ...redirect,
+            url: stripUrlHash(redirect.url),
+          }));
+          if (url === request.args.data.url &&
+              redirects.every((red, i) => red.url === request.args.data.redirects[i].url)) {
+            return request;
+          }
+          return {
+            ...request,
+            args: {
+              ...request.args,
+              data: {
+                ...request.args.data,
+                url,
+                redirects,
+              },
+            },
+          };
+        });
+        parsedTrace = {
+          ...parsedTrace,
+          NetworkRequests: {
+            ...parsedTrace.NetworkRequests,
+            byTime,
+          },
+        };
+      }
       const requests =
         Lantern.TraceEngineComputationData.createNetworkRequests(trace, parsedTrace);
       const graph =
