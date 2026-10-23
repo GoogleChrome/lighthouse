@@ -205,21 +205,23 @@ describe('ARD Schema Audit', () => {
   it('lists every broken advertised location as an error when nothing loads', () => {
     const robotsUrl = 'https://example.com/robots-ard.json';
     const linkUrl = 'https://example.com/old/ard.json';
+    const emptyUrl = 'https://example.com/empty/ard.json';
     const artifacts = createArtifacts(404, null, {
       catalogUrl: robotsUrl,
       discoverySource: 'robotsTxtAgentmap',
       failedSources: [
         {source: 'robotsTxtAgentmap', url: robotsUrl, status: 404},
         {source: 'htmlLink', url: linkUrl, status: null},
+        {source: 'httpHeaderLink', url: emptyUrl, status: 200},
       ],
-    }, {robotsTxtAgentmap: robotsUrl, htmlLink: linkUrl});
+    }, {robotsTxtAgentmap: robotsUrl, htmlLink: linkUrl, httpHeaderLink: emptyUrl});
 
     const result = ArdSchema.audit(artifacts);
     expect(result.score).toEqual(0);
     expect(result.explanation).toBeDisplayString(
       'ARD manifest could not be loaded for schema validation.'
     );
-    expect(result.details.items).toHaveLength(2);
+    expect(result.details.items).toHaveLength(3);
     expect(result.details.items[0].element).toEqual(robotsUrl);
     expect(result.details.items[0].severity).toBeDisplayString('Error');
     expect(result.details.items[0].issue).toBeDisplayString(
@@ -227,6 +229,10 @@ describe('ARD Schema Audit', () => {
     );
     expect(result.details.items[1].element).toEqual(linkUrl);
     expect(result.details.items[1].issue).toBeDisplayString(
+      'Advertised ARD manifest location could not be loaded.'
+    );
+    expect(result.details.items[2].element).toEqual(emptyUrl);
+    expect(result.details.items[2].issue).toBeDisplayString(
       'Advertised ARD manifest location could not be loaded.'
     );
   });

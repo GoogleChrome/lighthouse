@@ -52,11 +52,26 @@ describe('ARD Gatherer Static Helpers', () => {
       expect(AgentResourceDiscovery.getRobotsTxtAgentmap(robotsTxt, finalUrl))
         .toEqual('https://example.com/ai.json');
     });
+
+    it('ignores empty Agentmap directives and inline comments', () => {
+      expect(AgentResourceDiscovery.getRobotsTxtAgentmap({
+        status: 200,
+        content: 'Agentmap:\nUser-agent: *\nDisallow: /\n',
+      }, finalUrl)).toBeNull();
+      expect(AgentResourceDiscovery.getRobotsTxtAgentmap({
+        status: 200,
+        content: 'Agentmap:   # comment\nUser-agent: *\n',
+      }, finalUrl)).toBeNull();
+      expect(AgentResourceDiscovery.getRobotsTxtAgentmap({
+        status: 200,
+        content: 'Agentmap:\nAgentmap: /ard.json # inline comment\n',
+      }, finalUrl)).toEqual('https://example.com/ard.json');
+    });
   });
 
   describe('getHtmlLinksFromDom', () => {
     /**
-     * @param {() => Promise<any>} evaluate
+     * @param {(fn: any, opts: {args: any[]}) => Promise<any>} evaluate
      * @return {LH.Gatherer.Context}
      */
     function contextWithEvaluate(evaluate) {
@@ -77,10 +92,54 @@ describe('ARD Gatherer Static Helpers', () => {
       });
     });
 
-    it('returns nulls when DOM elements do not exist', async () => {
-      const context = contextWithEvaluate(() => Promise.resolve({ard: null, legacy: null}));
+    it('returns nulls when DOM elements do not exist or have blank hrefs', async () => {
+      const context = contextWithEvaluate(() => Promise.resolve({ard: '   ', legacy: ''}));
       const result = await AgentResourceDiscovery.getHtmlLinksFromDom(context, finalUrl);
       expect(result).toEqual({ard: null, legacy: null});
+    });
+
+    it('skips <link> elements with empty or whitespace href attributes in the DOM', async () => {
+      class MockLinkElement {
+        /**
+         * @param {string} rawHref
+         * @param {string} resolvedHref
+         */
+        constructor(rawHref, resolvedHref) {
+          this._rawHref = rawHref;
+          this.href = resolvedHref;
+        }
+        /** @param {string} name */
+        getAttribute(name) {
+          return name === 'href' ? this._rawHref : null;
+        }
+      }
+      const origDocument = globalThis.document;
+      const origHTMLLinkElement = globalThis.HTMLLinkElement;
+      globalThis.HTMLLinkElement = /** @type {any} */ (MockLinkElement);
+      globalThis.document = /** @type {any} */ ({
+        querySelectorAll: (/** @type {string} */ selector) => {
+          if (selector.includes('"ard"')) {
+            return [
+              new MockLinkElement('', finalUrl),
+              new MockLinkElement('   ', finalUrl),
+              new MockLinkElement('/ard.json', 'https://example.com/ard.json'),
+            ];
+          }
+          return [new MockLinkElement('', finalUrl)];
+        },
+      });
+
+      try {
+        const context = contextWithEvaluate((fn, {args}) => Promise.resolve(fn(...args)));
+        const result = await AgentResourceDiscovery.getHtmlLinksFromDom(context, finalUrl);
+        expect(result).toEqual({
+          ard: 'https://example.com/ard.json',
+          legacy: null,
+        });
+      } finally {
+        globalThis.document = origDocument;
+        globalThis.HTMLLinkElement = origHTMLLinkElement;
+      }
     });
 
     it('returns nulls when evaluate throws', async () => {
@@ -150,6 +209,13 @@ describe('ARD Gatherer Static Helpers', () => {
       const context = contextWithLinkHeader('<https://example.com/styles.css>; rel="stylesheet"');
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
       expect(result).toEqual({ard: null, legacy: null});
+    });
+
+    it('skips Link header entries with empty or whitespace target URIs', async () => {
+      const context = contextWithLinkHeader(
+        '<>; rel="ard", <   >; rel="ard", </header-ard.json>; rel="ard"');
+      const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
+      expect(result).toEqual({ard: 'https://example.com/header-ard.json', legacy: null});
     });
 
     it('returns nulls when fetchResource throws', async () => {
@@ -479,6 +545,21 @@ describe('AgentResourceDiscovery Gatherer', () => {
     const artifact = await new AgentResourceDiscovery().getArtifact(context);
 
     expect(artifact.failedSources).toEqual([{source: 'htmlLink', url: wellKnown, status: 404}]);
+    expect(fetched).toEqual([wellKnown, legacyWellKnown]);
+  });
+
+  it('records a failed legacy link that points to /.well-known/ard.json', async () => {
+    const {context, fetched} = getContext({
+      domLinks: {legacy: wellKnown},
+    });
+
+    const artifact = await new AgentResourceDiscovery().getArtifact(context);
+
+    expect(artifact.discoverySource).toEqual('legacyHtmlLink');
+    expect(artifact.catalogUrl).toEqual(wellKnown);
+    expect(artifact.failedSources).toEqual([
+      {source: 'legacyHtmlLink', url: wellKnown, status: 404},
+    ]);
     expect(fetched).toEqual([wellKnown, legacyWellKnown]);
   });
 

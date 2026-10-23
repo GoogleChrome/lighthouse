@@ -84,9 +84,10 @@ function getManifestCandidates(discoverySignals) {
  * @return {string|null}
  */
 function resolveUrl(href, baseUrl) {
-  if (!href) return null;
+  const trimmed = href?.trim();
+  if (!trimmed) return null;
   try {
-    return new URL(href, baseUrl).href;
+    return new URL(trimmed, baseUrl).href;
   } catch {
     return null;
   }
@@ -101,8 +102,12 @@ function resolveUrl(href, baseUrl) {
 function getArdLinksInDOM(relArd, relLegacy) {
   /** @param {string} rel */
   const getHref = rel => {
-    const link = document.querySelector(`link[rel~="${rel}" i]`);
-    return link instanceof HTMLLinkElement ? link.href : null;
+    for (const link of document.querySelectorAll(`link[rel~="${rel}" i][href]`)) {
+      if (link instanceof HTMLLinkElement && link.getAttribute('href')?.trim()) {
+        return link.href;
+      }
+    }
+    return null;
   };
   return {ard: getHref(relArd), legacy: getHref(relLegacy)};
 }
@@ -125,9 +130,11 @@ class AgentResourceDiscovery extends BaseGatherer {
    */
   static getRobotsTxtAgentmap(robotsTxt, finalDisplayedUrl) {
     if (!robotsTxt?.content) return null;
-    const match = robotsTxt.content.match(/^\s*Agentmap:\s*(\S+)/im);
-    if (!match) return null;
-    return resolveUrl(match[1], finalDisplayedUrl);
+    for (const match of robotsTxt.content.matchAll(/^[ \t]*Agentmap:[ \t]*([^\s#]+)/gim)) {
+      const url = resolveUrl(match[1], finalDisplayedUrl);
+      if (url) return url;
+    }
+    return null;
   }
 
   /**
@@ -168,8 +175,14 @@ class AgentResourceDiscovery extends BaseGatherer {
 
       const parsed = LinkHeader.parse(linkHeader.replace(/\n/g, ','));
       /** @param {string} rel */
-      const getUri = rel =>
-        resolveUrl(parsed.refs.find(ref => ref.rel?.toLowerCase() === rel)?.uri, finalDisplayedUrl);
+      const getUri = rel => {
+        for (const ref of parsed.refs) {
+          if (ref.rel?.toLowerCase() !== rel) continue;
+          const url = resolveUrl(ref.uri, finalDisplayedUrl);
+          if (url) return url;
+        }
+        return null;
+      };
       return {ard: getUri(REL_ARD), legacy: getUri(REL_LEGACY)};
     } catch (err) {
       log.verbose('AgentResourceDiscovery', `Could not read Link header: ${err.message}`);
@@ -221,7 +234,16 @@ class AgentResourceDiscovery extends BaseGatherer {
       }));
 
     for (const {source, url, advertised} of candidates) {
-      if (!url || attempts.some(attempt => attempt.url === url)) continue;
+      if (!url) continue;
+      const existing = attempts.find(attempt => attempt.url === url);
+      if (existing) {
+        if (!existing.advertised && advertised) {
+          existing.source = source;
+          existing.advertised = true;
+          attempts.push(...attempts.splice(attempts.indexOf(existing), 1));
+        }
+        continue;
+      }
 
       const fetchResult = await AgentResourceDiscovery.fetchManifest(context, url);
       if (fetchResult.status === HTTP_OK && fetchResult.content) {

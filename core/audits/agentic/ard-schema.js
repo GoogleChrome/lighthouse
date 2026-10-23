@@ -19,6 +19,7 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {ConformanceTester} from '../../../third-party/ard/ard.js';
 
+const HTTP_OK = 200;
 const HTTP_CLIENT_ERROR_CODE_LOW = 400;
 const HTTP_SERVER_ERROR_CODE_LOW = 500;
 
@@ -81,7 +82,7 @@ class ArdSchema extends Audit {
    * @return {{element: string, issue: LH.IcuMessage, severity: LH.IcuMessage}}
    */
   static makeFailedSourceItem({url, status}, severity) {
-    const issue = status === null ?
+    const issue = status === null || status === HTTP_OK ?
       str_(UIStrings.sourceFetchFailed) :
       str_(UIStrings.sourceUnavailable, {statusCode: status});
     return {element: url, issue, severity};
