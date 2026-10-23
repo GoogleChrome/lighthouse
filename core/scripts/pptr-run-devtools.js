@@ -159,8 +159,6 @@ async function waitForLighthouseReady() {
   const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
   // @ts-expect-error import
   const {TargetManager} = await import('./core/sdk/sdk.js');
-  // @ts-expect-error import
-  const {AdvancedApp} = await import('./panels/emulation/emulation.js');
 
   // Undocking later in the function can cause hiccups when Lighthouse enables device emulation.
   DockController.DockController.instance().setDockSide('undocked');
@@ -187,9 +185,25 @@ async function waitForLighthouseReady() {
   }
 
   // Ensure the emulation model is ready before Lighthouse starts by enabling device emulation.
-  const {deviceModeView} = AdvancedApp.AdvancedApp.instance();
-  if (!deviceModeView.isDeviceModeOn()) {
-    deviceModeView.toggleDeviceMode();
+  let deviceModeModel;
+  try {
+    // @ts-expect-error import
+    const {DeviceModeModel} = await import('./models/emulation/emulation.js');
+    deviceModeModel = DeviceModeModel.DeviceModeModel.instance();
+  } catch {}
+
+  if (deviceModeModel && typeof deviceModeModel.isDeviceModeOn === 'function') {
+    if (!deviceModeModel.isDeviceModeOn()) {
+      deviceModeModel.toggleDeviceMode();
+    }
+  } else {
+    // @ts-expect-error import
+    const {AdvancedApp} = await import('./panels/emulation/emulation.js');
+    const app = AdvancedApp.AdvancedApp.instance();
+    const model = app.deviceModeModel || app.deviceModeView;
+    if (model && typeof model.isDeviceModeOn === 'function' && !model.isDeviceModeOn()) {
+      model.toggleDeviceMode();
+    }
   }
 }
 
@@ -198,7 +212,9 @@ async function runLighthouse() {
   const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
   const panel = LighthousePanel.LighthousePanel.instance();
 
-  /** @type {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>} */
+  // TODO(https://github.com/GoogleChrome/lighthouse/issues/17428): Remove JSON.stringify workaround
+  // once https://chromium-review.googlesource.com/c/v8/v8/+/8640371 rolls into Chrome ToT.
+  /** @type {Promise<string>} */
   const resultPromise = new Promise((resolve, reject) => {
     const methodName = panel.__proto__.buildReportUI ? 'buildReportUI' : '_buildReportUI';
     addSniffer(
@@ -208,7 +224,7 @@ async function runLighthouse() {
        * @param {LH.Result} lhr
        * @param {LH.Artifacts} artifacts
        */
-      (lhr, artifacts) => resolve({lhr, artifacts})
+      (lhr, artifacts) => resolve(JSON.stringify({lhr, artifacts}))
     );
 
     addSniffer(
@@ -347,7 +363,9 @@ async function testUrlFromDevtools(url, options = {}) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
 
-    const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
+    const resultJson = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
+    /** @type {{lhr: LH.Result, artifacts: LH.Artifacts}} */
+    const result = JSON.parse(resultJson);
 
     return {...result, logs};
   } catch (err) {

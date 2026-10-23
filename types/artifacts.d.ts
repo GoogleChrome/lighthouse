@@ -12,7 +12,7 @@ import { parseManifest } from '../core/lib/manifest-parser.js';
 import { LighthouseError } from '../core/lib/lh-error.js';
 import { NetworkRequest as _NetworkRequest } from '../core/lib/network-request.js';
 import speedline from 'speedline-core';
-import * as CDTSourceMap from '../core/lib/cdt/generated/SourceMap.js';
+import CDTSourceMap from '../core/lib/cdt/generated/SourceMap.js';
 import { ArbitraryEqualityMap } from '../core/lib/arbitrary-equality-map.js';
 import type { TaskNode as _TaskNode } from '../core/lib/tracehouse/main-thread-tasks.js';
 import AuditDetails from './lhr/audit-details.js'
@@ -124,9 +124,9 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   InspectorIssues: Artifacts.InspectorIssues;
   /** The status and tools registered via WebMCP. */
   WebMCP: {isSupported: boolean, tools: Artifacts.WebMCPTool[]};
-  /** 
-   * The WebMCP schema validation issues. 
-   * TODO: fold this into the WebMCP artifact. 
+  /**
+   * The WebMCP schema validation issues.
+   * TODO: fold this into the WebMCP artifact.
    */
   WebMcpSchemaIssues: Artifacts.WebMcpSchemaIssue[];
   /** JS coverage information for code used during audit. Keyed by script id. */
@@ -138,6 +138,40 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   RobotsTxt: { status: number | null, content: string | null, errorMessage?: string };
   /** Information on fetching and the content of the /llm.txt file. */
   LlmsTxt: { status: number | null, content: string | null, errorMessage?: string };
+  /** Information on discovering, fetching, and the content of the Agentic Resource Discovery (ARD) manifest. */
+  AgentResourceDiscovery: {
+    status: number | null;
+    content: string | null;
+    headers: Record<string, string> | null;
+    /** The loaded manifest URL, or if none loaded, the first failed advertised URL (or `/.well-known/ard.json`). */
+    catalogUrl: string;
+    /** The discovery mechanism `catalogUrl` came from. `legacy*` sources are ARD's predecessor (`ai-catalog`) names. */
+    discoverySource: Artifacts.ArdDiscoverySource;
+    discoverySignals: {
+      robotsTxtAgentmap: string | null;
+      /** `<link rel="ard">` */
+      htmlLink: string | null;
+      /** `Link: <...>; rel="ard"` */
+      httpHeaderLink: string | null;
+      /** `<link rel="ai-catalog">` */
+      legacyHtmlLink: string | null;
+      /** `Link: <...>; rel="ai-catalog"` */
+      legacyHttpHeaderLink: string | null;
+      /** `/.well-known/ard.json` */
+      wellKnown: string;
+      /** `/.well-known/ai-catalog.json` */
+      legacyWellKnown: string;
+    };
+    /** Advertised locations (not the probed well-known paths) that were tried and failed to load, in discovery order. */
+    failedSources: Array<{
+      source: Artifacts.ArdDiscoverySource;
+      url: string;
+      status: number | null;
+      /** Set when the fetch itself failed (e.g. a timeout) rather than returning an HTTP error. */
+      errorMessage?: string;
+    }>;
+    errorMessage?: string;
+  };
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
@@ -151,6 +185,10 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
 }
 
 declare namespace Artifacts {
+  /** Agentic Resource Discovery (ARD) manifest locations. `legacy*` sources are ARD's predecessor (`ai-catalog`) names. */
+  type ArdDiscoverySource = 'robotsTxtAgentmap' | 'htmlLink' | 'httpHeaderLink' | 'wellKnown' |
+    'legacyHtmlLink' | 'legacyHttpHeaderLink' | 'legacyWellKnown';
+
   interface WebMcpSchemaIssue {
     errorType: string;
     violatingNodeId?: number;
@@ -529,7 +567,12 @@ declare namespace Artifacts {
 
   type LanternMetric = Lantern.Metrics.MetricResult<Artifacts.NetworkRequest>;
 
-  type Speedline = speedline.Output<'speedIndex'>;
+  type Speedline = Omit<speedline.Output<'speedIndex'>, 'frames'> & {
+    frames: Array<Pick<
+      speedline.Output<'speedIndex'>['frames'][number],
+      'getImage' | 'getTimeStamp' | 'isProgressInterpolated'
+    >>;
+  };
 
   interface TraceTimes {
     timeOrigin: number;
@@ -888,6 +931,13 @@ export interface TraceEvent {
       protocol?: string;
       finishTime?: number;
       headers?: Array<{ name: string, value: string }>;
+      scriptId?: number;
+      sourceText?: string;
+      isolate?: number | string;
+      executionContextId?: number;
+      sourceUrl?: string;
+      splitIndex?: number;
+      splitCount?: number;
     };
     frame?: string;
     name?: string;

@@ -11,8 +11,8 @@ const UIStrings = {
   /** Title of a Lighthouse audit that lists forms found in the page for WebMCP coverage. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   title: 'WebMCP form coverage',
   /** Description of a Lighthouse audit that lists forms found in the page and indicates whether they have WebMCP declarative tool annotations. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
-  description: 'Consider adding [WebMCP](http://goo.gle/webmcp-docs) annotations to the forms listed below. This helps AI ' +
-  'agents identify and interact with these forms more reliably.',
+  description: 'Consider adding [WebMCP](https://developer.chrome.com/docs/ai/webmcp) annotations to the forms listed below. ' +
+  'This helps AI agents identify and interact with these forms more reliably.',
   /** [ICU Syntax] Label for the audit identifying the number of forms missing annotations. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   displayValue: `{itemCount, plural,
     =1 {1 form missing annotations}
@@ -35,7 +35,7 @@ class WebMcpFormCoverage extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       requiredArtifacts: ['Inputs', 'WebMCP'],
-      supportedModes: ['navigation', 'snapshot'],
+      supportedModes: ['navigation'],
     };
   }
 
@@ -64,10 +64,12 @@ class WebMcpFormCoverage extends Audit {
       }
     }
 
+    // Every form is annotated, so surface this as a pass rather than hiding it as
+    // "not applicable".
     if (withoutTools.length === 0) {
       return {
-        notApplicable: true,
         score: 1,
+        scoreDisplayMode: Audit.SCORING_MODES.BINARY,
       };
     }
 

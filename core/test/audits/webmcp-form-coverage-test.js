@@ -47,7 +47,7 @@ describe('WebMCP: form-coverage audit', () => {
     });
   });
 
-  it('is not applicable if all forms have WebMCP annotations', () => {
+  it('passes if all forms have WebMCP annotations', () => {
     const artifacts = {
       WebMCP: {isSupported: true, tools: []},
       Inputs: {
@@ -69,7 +69,9 @@ describe('WebMCP: form-coverage audit', () => {
     const result = WebMcpFormCoverage.audit(artifacts);
 
     expect(result.score).toBe(1);
-    expect(result.notApplicable).toBe(true);
+    expect(result.scoreDisplayMode).toBe('binary');
+    expect(result.notApplicable).toBeUndefined();
+    expect(result.details).toBeUndefined();
   });
 
   it('is not applicable if no forms are found', () => {

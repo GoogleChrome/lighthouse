@@ -19,12 +19,18 @@ const UIStrings = {
   description: 'If your llms.txt file does not follow recommendations, ' +
     'large language models may not be able to ' +
     'understand how you want your website to be crawled or used for training. The ' +
-    '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header.',
+    '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header. ' +
+    '[Learn more about the llms.txt audit](https://developer.chrome.com/docs/lighthouse/agentic-browsing/llms-txt).',
   /**
    * @description Label for the audit identifying that the request failed with a specific HTTP status code.
    * @example {500} statusCode
    * */
   displayValueHttpBadCode: 'Failed with HTTP status {statusCode}',
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated.
+   * @example {Timed out fetching resource} error
+   * */
+  explanationWithError: 'Fetch of llms.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated. */
   explanation: 'Fetch of llms.txt failed',
   /** Message indicating that the file is missing a required H1 header. */
@@ -59,7 +65,15 @@ class LlmsTxt extends Audit {
     const {
       status,
       content,
+      errorMessage,
     } = artifacts.LlmsTxt;
+
+    if (errorMessage) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWithError, {error: errorMessage}),
+      };
+    }
 
     if (!status) {
       return {
@@ -68,7 +82,7 @@ class LlmsTxt extends Audit {
       };
     }
 
-    if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
+    if (status >= HTTP_SERVER_ERROR_CODE_LOW || status === 429) {
       return {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
@@ -81,7 +95,10 @@ class LlmsTxt extends Audit {
     }
 
     if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanation),
+      };
     }
 
     const hasH1 = /^\s*#\s+.+/m.test(content);

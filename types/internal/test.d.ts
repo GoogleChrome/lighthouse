@@ -29,6 +29,7 @@ declare module 'expect' {
      */
     // tslint:disable-next-line: no-unnecessary-generics
     toMatchInlineSnapshot<U extends { [P in keyof T]: any }>(propertyMatchers: Partial<U>, snapshot?: string): R;
+    toMatchInlineSnapshot(snapshot?: string): R;
 
     // The following are custom matchers defined in expect-setup.js
 

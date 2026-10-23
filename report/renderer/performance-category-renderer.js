@@ -226,7 +226,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {Element|null}
    */
   renderFilterableSection(category, groups, groupNames, metricAudits) {
-    if (groupNames.some(groupName => !groups[groupName])) return null;
+    groupNames = groupNames.filter(groupName => Boolean(groups[groupName]));
+    if (!groupNames.length) return null;
 
     const element = this.dom.createElement('div');
 

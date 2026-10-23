@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Protocol Error Test</title>
+</head>
+<body>
+  <div id="container">
+    <a href="#" id="my-link">Link</a>
+  </div>
+  <script>
+    const container = document.getElementById('container');
+    const link = document.getElementById('my-link');
+    // Rapidly change the index of the anchor element by inserting and removing a sibling.
+    // This invalidates the devtoolsNodePath (e.g. 2,HTML,1,BODY,1,DIV,1,A vs 0,A)
+    // between the time Lighthouse collects the path and when it resolves it.
+    setInterval(() => {
+      if (container.firstChild === link) {
+        container.insertBefore(document.createElement('div'), link);
+      } else {
+        container.removeChild(container.firstChild);
+      }
+    }, 1);
+  </script>
+</body>
+</html>

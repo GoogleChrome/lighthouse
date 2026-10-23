@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import jsdom from 'jsdom';
 
 import {createQuietConsole} from './jsdom-setup.js';
@@ -258,7 +258,7 @@ describe('DOM', () => {
         const a = dom.createElement('a');
         expect(() => {
           dom.safelySetBlobHref(a, blob);
-        }).toThrowError(/Unsupported blob/);
+        }).toThrow(/Unsupported blob/);
       });
     });
   });

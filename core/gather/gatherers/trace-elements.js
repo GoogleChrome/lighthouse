@@ -21,6 +21,7 @@ import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
+import {Helpers} from '../../lib/trace-engine.js';
 import SourceMaps from './source-maps.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
@@ -30,7 +31,6 @@ const MAX_LAYOUT_SHIFTS = 15;
 /**
  * @param {Element | ShadowRoot | Text} node
  */
-/* c8 ignore start */
 function getNodeDetailsData(node) {
   /** @type {Element | ShadowRoot | Text | null} */
   let elem = node.nodeType === document.ELEMENT_NODE ? node : node.parentElement;
@@ -45,7 +45,6 @@ function getNodeDetailsData(node) {
   }
   return traceElement;
 }
-/* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
@@ -82,7 +81,7 @@ class TraceElements extends BaseGatherer {
     }
 
     if (navigationId) {
-      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+      if (Helpers.Trace.navigationIDForEvent(insightSet.navigation) !== navigationId) {
         return [];
       }
     } else {
@@ -98,7 +97,7 @@ class TraceElements extends BaseGatherer {
      * @param {Set<object>} seen
      */
     function recursiveObjectEnumerate(obj, cb, seen) {
-      if (seen.has(seen)) {
+      if (seen.has(obj)) {
         return;
       }
 

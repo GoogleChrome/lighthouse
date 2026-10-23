@@ -48,8 +48,8 @@ import {LH_ROOT} from '../../../shared/root.js';
  * @property {number} [speedIndex]
  * @property {number} [largestContentfulPaint]
  * @property {number} [timeToFirstByte]
- * @property {number} [largestContentfulPaintLoadStart]
- * @property {number} [largestContentfulPaintLoadEnd]
+ * @property {number} [lcpLoadDelay]
+ * @property {number} [lcpLoadDuration]
  */
 
 /**
@@ -69,8 +69,8 @@ import {LH_ROOT} from '../../../shared/root.js';
  * @property {number} roughEstimateOfTTI
  * @property {number} roughEstimateOfLCP
  * @property {number} roughEstimateOfTTFB
- * @property {number} roughEstimateOfLCPLoadStart
- * @property {number} roughEstimateOfLCPLoadEnd
+ * @property {number} roughEstimateOfLCPLoadDelay
+ * @property {number} roughEstimateOfLCPLoadDuration
  */
 
 /** @type {Array<string>} */
@@ -199,10 +199,9 @@ export default {
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),
-      // TODO: enable when new traces are collected.
-      // roughEstimateOfTTFB: evaluate('timeToFirstByte', 'roughEstimateOfTTFB'),
-      // roughEstimateOfLCPLoadStart: evaluate('largestContentfulPaintLoadStart', 'roughEstimateOfLCPLoadStart'),
-      // roughEstimateOfLCPLoadEnd: evaluate('largestContentfulPaintLoadEnd', 'roughEstimateOfLCPLoadEnd'),
+      roughEstimateOfTTFB: evaluate('timeToFirstByte', 'roughEstimateOfTTFB'),
+      roughEstimateOfLCPLoadDelay: evaluate('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay'),
+      roughEstimateOfLCPLoadDuration: evaluate('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration'),
     };
   },
 };

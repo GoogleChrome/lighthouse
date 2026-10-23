@@ -8,15 +8,35 @@
 /* eslint-disable no-irregular-whitespace */
 
 import assert from 'assert/strict';
-import fs from 'fs';
-
-import csvValidator from 'csv-validator';
 
 import {ReportGenerator} from '../../generator/report-generator.js';
 import {readJson} from '../../../core/test/test-utils.js';
 
 const sampleResults = readJson('core/test/results/sample_v2.json');
 const sampleFlowResult = readJson('core/test/fixtures/user-flows/reports/sample-flow-result.json');
+
+/**
+ * Minimal RFC 4180 parser. Splits CSV text into rows of fields, throwing if it is malformed.
+ * @param {string} csv
+ * @return {string[][]}
+ */
+function parseCsv(csv) {
+  // Matches a field and the delimiter after it (a comma, CRLF or the end of input). A field is
+  // either quoted, with `""` as an escaped quote, or has no quotes, commas or line breaks.
+  const fieldRegex = /(?:"((?:[^"]|"")*)"|([^",\r\n]*))(,|\r\n|$)/y;
+  /** @type {string[][]} */
+  const rows = [[]];
+  while (true) {
+    const index = fieldRegex.lastIndex;
+    const match = fieldRegex.exec(csv);
+    if (!match) throw new Error(`Malformed CSV in row ${rows.length} at index ${index}`);
+
+    const [, quoted, unquoted, delimiter] = match;
+    rows[rows.length - 1].push(quoted === undefined ? unquoted : quoted.replaceAll('""', '"'));
+    if (delimiter === '') return rows;
+    if (delimiter === '\r\n') rows.push([]);
+  }
+}
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {
@@ -93,11 +113,8 @@ describe('ReportGenerator', () => {
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
 
-    it('creates CSV for results', async () => {
-      const path = './.results-as-csv.csv';
-
+    it('creates CSV for results', () => {
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
-      fs.writeFileSync(path, csvOutput);
 
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
@@ -110,7 +127,7 @@ category,score
 \\"accessibility\\",\\"0.75\\"
 \\"best-practices\\",\\"0.31\\"
 \\"seo\\",\\"0.75\\"
-\\"agentic-browsing\\",\\"0.3\\"
+\\"agentic-browsing\\",\\"0.18\\"
 
 category,audit,score,displayValue,description
 \\"performance\\",\\"first-contentful-paint\\",\\"0.02\\",\\"6.8 s\\",\\"First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).\\"
@@ -120,13 +137,27 @@ category,audit,score,displayValue,description
 "
 `);
 
-      try {
-        await csvValidator(path);
-      } catch (err) {
-        assert.fail('CSV parser error:\n' + err.join('\n'));
-      } finally {
-        fs.unlinkSync(path);
-      }
+      // Parse the CSV to check that it's well-formed and that every value round-trips, including
+      // descriptions that contain commas and quotes.
+      const categories = Object.values(sampleResults.categories);
+      expect(parseCsv(csvOutput)).toEqual([
+        ['requestedUrl', 'finalDisplayedUrl', 'fetchTime', 'gatherMode'],
+        [
+          sampleResults.requestedUrl,
+          sampleResults.finalDisplayedUrl,
+          sampleResults.fetchTime,
+          sampleResults.gatherMode,
+        ],
+        [''],
+        ['category', 'score'],
+        ...categories.map(category => [category.id, String(category.score)]),
+        [''],
+        ['category', 'audit', 'score', 'displayValue', 'description'],
+        ...categories.flatMap(category => category.auditRefs.map(({id}) => {
+          const {score, displayValue = '', description} = sampleResults.audits[id];
+          return [category.id, id, String(score), displayValue, description];
+        })),
+      ]);
     });
 
     it('creates CSV for results including categories', () => {

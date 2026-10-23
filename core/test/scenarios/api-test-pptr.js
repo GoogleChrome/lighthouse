@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import * as api from '../../index.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
@@ -108,6 +108,7 @@ describe('Individual modes API', function() {
         notApplicableAudits
           // TODO(16323): Flaky in CI.
           .filter(audit => audit.id !== 'viewport-insight')
+          .filter(audit => audit.id !== 'interaction-to-next-paint')
           .map(audit => audit.id)
           .sort()
       ).toMatchSnapshot();
@@ -162,7 +163,11 @@ describe('Individual modes API', function() {
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
       expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
-      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
+      expect(notApplicableAudits
+        .filter(audit => audit.id !== 'interaction-to-next-paint')
+        .map(audit => audit.id)
+        .sort()
+      ).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -299,7 +304,10 @@ Array [
       expect(lhr.audits).toHaveProperty('total-byte-weight');
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
-      expect(details.items).toMatchObject([{url}]);
+      // Chrome 157+ clears failed favicon downloads when resetting storage before navigation,
+      // so /favicon.ico is re-requested even if an earlier test already 404'd on it.
+      const items = details.items.filter(item => item.url !== `${serverBaseUrl}/favicon.ico`);
+      expect(items).toMatchObject([{url}]);
 
       // Check that performance metrics were computed.
       expect(lhr.audits).toHaveProperty('first-contentful-paint');

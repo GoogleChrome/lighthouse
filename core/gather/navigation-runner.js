@@ -32,6 +32,7 @@ import {NetworkRecords} from '../computed/network-records.js';
  * @property {LH.NavigationRequestor} requestor
  * @property {LH.BaseArtifacts} baseArtifacts
  * @property {Map<string, LH.ArbitraryEqualityMap>} computedCache
+ * @property {AbortSignal} [signal]
  */
 
 /** @typedef {Omit<Parameters<typeof collectPhaseArtifacts>[0], 'phase'>} PhaseState */
@@ -79,12 +80,13 @@ async function _cleanupNavigation({driver}) {
  * @return {Promise<{requestedUrl: string, mainDocumentUrl: string, navigationError: LH.LighthouseError | undefined}>}
  */
 async function _navigate(navigationContext) {
-  const {driver, resolvedConfig, requestor} = navigationContext;
+  const {driver, resolvedConfig, requestor, signal} = navigationContext;
 
   try {
     const {requestedUrl, mainDocumentUrl, warnings} = await gotoURL(driver, requestor, {
       ...resolvedConfig.settings,
       waitUntil: resolvedConfig.settings.pauseAfterFcpMs ? ['fcp', 'load'] : ['load'],
+      signal,
     });
 
     navigationContext.baseArtifacts.LighthouseRunWarnings.push(...warnings);
@@ -251,11 +253,11 @@ async function _cleanup({requestedUrl, driver, resolvedConfig, lhBrowser, lhPage
 /**
  * @param {LH.Puppeteer.Page|undefined} page
  * @param {LH.NavigationRequestor|undefined} requestor
- * @param {{config?: LH.Config, flags?: LH.Flags}} [options]
+ * @param {{config?: LH.Config, flags?: LH.Flags, signal?: AbortSignal }} [options]
  * @return {Promise<LH.Gatherer.GatherResult>}
  */
 async function navigationGather(page, requestor, options = {}) {
-  const {flags = {}, config} = options;
+  const {flags = {}, config, signal} = options;
   log.setLevel(flags.logLevel || 'error');
 
   const {resolvedConfig} = await initializeConfig('navigation', config, flags);
@@ -291,6 +293,7 @@ async function navigationGather(page, requestor, options = {}) {
       resolvedConfig,
       requestor: normalizedRequestor,
       computedCache,
+      signal,
     };
     const {baseArtifacts} = await _setup(context);
 

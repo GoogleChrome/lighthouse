@@ -73,29 +73,68 @@ class Trace extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.ProtocolSession} session
+   * @param {string} handle
+   * @return {Promise<LH.Trace>}
+   */
+  static async _readTraceFromStream(session, handle) {
+    /** @type {Array<LH.TraceEvent>} */
+    const traceEvents = [];
+    const decoder = new TextDecoder();
+    let isEof = false;
+    let remainder = '';
+
+    try {
+      while (!isEof) {
+        const response = await session.sendCommand('IO.read', {handle});
+        isEof = Boolean(response.eof);
+        remainder += response.base64Encoded ?
+          decoder.decode(Buffer.from(response.data, 'base64'), {stream: !isEof}) :
+          response.data;
+
+        // Perfetto's `ExportJson` serializes each trace event and trailing `metadata`
+        // as compact single-line JSON (with string newlines escaped as `\\n`), emitting
+        // raw `,\n` only between top-level elements of `traceEvents`.
+        // Maintain the invariant that `remainder` always starts with `{"traceEvents":[`.
+        const lastEventSep = remainder.lastIndexOf('},\n');
+        if (lastEventSep !== -1) {
+          const {traceEvents: batch} = JSON.parse(`${remainder.slice(0, lastEventSep + 1)}]}`);
+          for (const event of batch) {
+            traceEvents.push(event);
+          }
+          remainder = `{"traceEvents":[${remainder.slice(lastEventSep + 3)}`;
+        }
+      }
+    } finally {
+      await session.sendCommand('IO.close', {handle});
+    }
+
+    const traceJson = JSON.parse(remainder);
+    for (const event of traceJson.traceEvents) {
+      traceEvents.push(event);
+    }
+    traceJson.traceEvents = traceEvents;
+    return traceJson;
+  }
+
+  /**
+   * @param {LH.Gatherer.ProtocolSession} session
    * @return {Promise<LH.Trace>}
    */
   static async endTraceAndCollectEvents(session) {
-    /** @type {Array<LH.TraceEvent>} */
-    const traceEvents = [];
-
-    /**
-     * Listener for when dataCollected events fire for each trace chunk
-     * @param {LH.Crdp.Tracing.DataCollectedEvent} data
-     */
-    const dataListener = function(data) {
-      traceEvents.push(...data.value);
-    };
-    session.on('Tracing.dataCollected', dataListener);
-
-    return new Promise((resolve, reject) => {
-      session.once('Tracing.tracingComplete', _ => {
-        session.off('Tracing.dataCollected', dataListener);
-        resolve({traceEvents});
+    /** @type {LH.Crdp.Tracing.TracingCompleteEvent} */
+    const completeEvent = await new Promise((resolve, reject) => {
+      session.once('Tracing.tracingComplete', resolve);
+      session.sendCommand('Tracing.end').catch(err => {
+        session.off('Tracing.tracingComplete', resolve);
+        reject(err);
       });
-
-      session.sendCommand('Tracing.end').catch(reject);
     });
+
+    if (!completeEvent.stream) {
+      throw new Error('Tracing.tracingComplete did not return a stream handle');
+    }
+
+    return Trace._readTraceFromStream(session, completeEvent.stream);
   }
 
   static symbol = Symbol('Trace');
@@ -115,6 +154,7 @@ class Trace extends BaseGatherer {
     await driver.defaultSession.sendCommand('Page.enable');
     await driver.defaultSession.sendCommand('Tracing.start', {
       categories: traceCategories.join(','),
+      transferMode: 'ReturnAsStream',
       options: 'sampling-frequency=10000', // 1000 is default and too slow.
     });
 

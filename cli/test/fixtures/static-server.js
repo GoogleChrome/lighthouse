@@ -16,7 +16,6 @@ import {parse as parseURL} from 'url';
 import {URLSearchParams} from 'url';
 
 import mime from 'mime-types';
-import glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 
@@ -99,6 +98,9 @@ class Server {
     const filePath = requestUrl.pathname;
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
     let absoluteFilePath = path.join(this.baseDir, filePath);
+    if (this._port === 10503 && filePath === '/llms.txt') {
+      absoluteFilePath = path.join(this.baseDir, 'agentic/llms-invalid.txt');
+    }
     const sendResponse = (statusCode, data) => {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);
@@ -190,7 +192,7 @@ class Server {
 
     // Create an index page that lists the available test pages.
     if (filePath === '/') {
-      const fixturePaths = glob.sync('**/*.html', {cwd: this.baseDir});
+      const fixturePaths = fs.globSync('**/*.html', {cwd: this.baseDir}).sort();
       const html = `
         <html>
         <h1>Smoke test fixtures</h1>
@@ -266,6 +268,7 @@ async function createServers() {
   if (outcomes.some(o => o.status === 'rejected')) {
     if (outcomes.every(o => o.reason.message.includes('already'))) {
       console.warn('😧 Server already up. Continuing…');
+      return [];
     } else {
       console.error(outcomes.map(o => o.reason));
       throw new Error('One or more servers did not start correctly');

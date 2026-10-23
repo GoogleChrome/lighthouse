@@ -17,7 +17,7 @@ import {SwapLocaleFeature} from '../../../report/renderer/swap-locale-feature.js
 export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {{saveGist?: (json: LH.Result) => Promise<string|undefined>, refresh: function(LH.Result): void, getStandaloneReportHTML: function(): string}} callbacks
+   * @param {{saveGist?: (json: LH.Result) => Promise<string|undefined>, refresh: (json: LH.Result) => void, getStandaloneReportHTML: () => string}} callbacks
    */
   constructor(dom, callbacks) {
     super(dom, {

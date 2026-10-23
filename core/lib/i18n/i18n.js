@@ -4,18 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
-
 import path from 'path';
 import url from 'url';
 
-import lookupClosestLocale from 'lookup-closest-locale';
 import log from 'lighthouse-logger';
 
 import {getAvailableLocales} from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
-import {getModulePath} from '../../../shared/esm-utils.js';
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -145,12 +141,22 @@ function lookupLocale(locales, possibleLocales) {
   // Filter by what's available in this runtime.
   const availableLocales = Intl.NumberFormat.supportedLocalesOf(canonicalLocales);
 
-  // Get available locales and transform into object to match `lookupClosestLocale`'s API.
-  const localesWithMessages = possibleLocales || getAvailableLocales();
-  const localesWithmessagesObj = /** @type {Record<LH.Locale, LhlMessages>} */ (
-    Object.fromEntries(localesWithMessages.map(l => [l, {}])));
+  const localesWithMessages = new Set(possibleLocales || getAvailableLocales());
 
-  const closestLocale = lookupClosestLocale(availableLocales, localesWithmessagesObj);
+  /** @type {LH.Locale|undefined} */
+  let closestLocale;
+  for (const locale of availableLocales) {
+    const parts = locale.split('-');
+    while (parts.length) {
+      const candidate = /** @type {LH.Locale} */ (parts.join('-'));
+      if (localesWithMessages.has(candidate)) {
+        closestLocale = candidate;
+        break;
+      }
+      parts.pop();
+    }
+    if (closestLocale) break;
+  }
 
   if (!closestLocale) {
     // Log extra info if we're pretty sure this version of Node was built with `--with-intl=small-icu`.
@@ -198,7 +204,7 @@ function createIcuMessageFn(filename, fileStrings = {}) {
     // one of the common strings found in `i18n.UIStrings`.
     const filenameToLookup = keyname in fileStrings ?
       filename :
-      path.relative(LH_ROOT, getModulePath(import.meta));
+      path.relative(LH_ROOT, import.meta.filename);
     const unixStyleFilename = filenameToLookup.replace(/\\/g, '/');
     const i18nId = `${unixStyleFilename} | ${keyname}`;
 

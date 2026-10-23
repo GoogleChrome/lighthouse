@@ -225,7 +225,7 @@ describe('Byte efficiency base audit', () => {
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],
         items: [
-          {url: 'https://www.paulirish.com/assets/wikipedia-flamechart.jpg', wastedBytes: 30 * 1024},
+          {url: 'https://www.paulirish.com/', wastedBytes: 30 * 1024},
         ],
       },
       simulator,
@@ -263,14 +263,14 @@ describe('Byte efficiency base audit', () => {
     let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
-    expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`1220`);
+    expect(result.numericValue).toBeLessThan(1000);
+    expect(result.numericValue).toMatchInlineSnapshot(`160`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
-    expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`13580`);
+    expect(result.numericValue).not.toBeLessThan(1000);
+    expect(result.numericValue).toMatchInlineSnapshot(`1740`);
   });
 
   it('should compute savings with throughput in timespan mode', async () => {

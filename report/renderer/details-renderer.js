@@ -426,11 +426,13 @@ export class DetailsRenderer {
 
     if (matchedEntity.homepage) {
       const entityLinkEl = this._dom.createElement('a');
-      entityLinkEl.href = matchedEntity.homepage;
-      entityLinkEl.target = '_blank';
-      entityLinkEl.title = Globals.strings.openInANewTabTooltip;
-      entityLinkEl.classList.add('lh-report-icon--external');
-      firstTdEl.append(' ', entityLinkEl);
+      this._dom.safelySetHref(entityLinkEl, matchedEntity.homepage);
+      if (entityLinkEl.href) {
+        entityLinkEl.target = '_blank';
+        entityLinkEl.title = Globals.strings.openInANewTabTooltip;
+        entityLinkEl.classList.add('lh-report-icon--external');
+        firstTdEl.append(' ', entityLinkEl);
+      }
     }
   }
 

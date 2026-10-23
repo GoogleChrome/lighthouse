@@ -32,7 +32,7 @@ const libDetectorSource = fs.readFileSync(
  * @property {string} icon
  * @property {string} url
  * @property {string|null} npm npm module name, if applicable to library.
- * @property {function(Window): JSLibraryDetectorTestResult | Promise<JSLibraryDetectorTestResult>} test Returns false if library is not present, otherwise returns an object that contains the library version (set to null if the version is not detected).
+ * @property {(w: Window) => JSLibraryDetectorTestResult | Promise<JSLibraryDetectorTestResult>} test Returns false if library is not present, otherwise returns an object that contains the library version (set to null if the version is not detected).
  */
 
 /**
@@ -46,7 +46,6 @@ const libDetectorSource = fs.readFileSync(
 /**
  * Obtains a list of detected JS libraries and their versions.
  */
-/* c8 ignore start */
 async function detectLibraries() {
   /** @type {JSLibrary[]} */
   const libraries = [];
@@ -81,7 +80,6 @@ async function detectLibraries() {
 
   return libraries;
 }
-/* c8 ignore stop */
 
 
 /** @implements {LH.Gatherer.GathererInstance} */

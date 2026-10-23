@@ -5,8 +5,34 @@
  */
 
 import Baseline from '../../audits/baseline.js';
+import {timers} from '../test-utils.js';
 
 describe('Baseline Audit', () => {
+  let originalData;
+
+  beforeEach(() => {
+    originalData = Baseline.featureData;
+    timers.useFakeTimers();
+    // Freeze time at June 30, 2026
+    timers.setSystemTime(new Date('2026-06-30T15:00:00Z').getTime());
+
+    Baseline.featureData = {
+      high: {
+        'forced-colors': '2022-09-12',
+        'aborting': '2019-03-25',
+      },
+      low: {
+        'abortsignal-any': '2024-03-19',
+      },
+      limited: ['accelerometer'],
+    };
+  });
+
+  afterEach(() => {
+    timers.dispose();
+    Baseline.featureData = originalData;
+  });
+
   it('should return an empty list when no features are used', async () => {
     const artifacts = {
       Trace: {
@@ -165,6 +191,198 @@ describe('Baseline Audit', () => {
         column: 4,
         original: undefined,
       },
+    });
+  });
+
+  it('should not set debugData when a limited availability feature ' +
+    'is present (newest is newly available)', async () => {
+    const traceEvents = [
+      {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
+      {
+        args: {feature: 'abortsignal-any'}, // low (2024-03-19)
+        cat: 'blink.webdx_feature_usage',
+      },
+      {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
+    ];
+    const result = await Baseline.audit({Trace: {traceEvents}});
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
+  });
+
+  it('should not set debugData when a limited availability feature ' +
+    'is present (newest is widely available)', async () => {
+    const traceEvents = [
+      {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
+      {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
+    ];
+    const result = await Baseline.audit({Trace: {traceEvents}});
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
+  });
+
+  it('should not set debugData when a limited availability feature ' +
+    'is present (only limited)', async () => {
+    const traceEvents = [
+      {args: {feature: 'accelerometer'}, cat: 'blink.webdx_feature_usage'},
+    ];
+    const result = await Baseline.audit({Trace: {traceEvents}});
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toBeUndefined();
+  });
+
+  it('should set correct debugData when no limited availability features ' +
+    'are present (newest is newly available)', async () => {
+    const traceEvents = [
+      {args: {feature: 'abortsignal-any'}, cat: 'blink.webdx_feature_usage'}, // low (2024-03-19)
+      {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
+    ];
+    const result = await Baseline.audit({Trace: {traceEvents}});
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toEqual({
+      type: 'debugdata',
+      newestFeatureId: 'abortsignal-any',
+      newestFeatureYear: '2024',
+      newestFeatureLowDate: '2024-03-19',
+    });
+  });
+
+  it('should set correct debugData when no limited availability features ' +
+    'are present (newest is widely available)', async () => {
+    const traceEvents = [
+      {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'}, // high (2022-09-12)
+    ];
+    const result = await Baseline.audit({Trace: {traceEvents}});
+    expect(result.displayValue).toBeUndefined();
+    expect(result.details.debugData).toEqual({
+      type: 'debugdata',
+      newestFeatureId: 'forced-colors',
+      newestFeatureYear: '2022',
+      newestFeatureLowDate: '2022-09-12',
+    });
+  });
+
+  describe('getFeatureStatus', () => {
+    const fakeData = {
+      high: {
+        'high-feature': '2022-09-12',
+      },
+      low: {
+        'low-feature': '2024-03-01',
+      },
+      limited: ['limited-feature'],
+    };
+
+    const dateJune = new Date('2026-06-30T15:00:00Z');
+    const dateOct = new Date('2026-10-01T15:00:00Z');
+
+    it('should return high status for high features', () => {
+      const status = Baseline.getFeatureStatus('high-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Widely Available (2022-09-12)',
+        baselineTier: 'high',
+      });
+    });
+
+    it('should return low status for low features if under 30 months', () => {
+      const status = Baseline.getFeatureStatus('low-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Newly Available (2024-03-01)',
+        baselineTier: 'low',
+      });
+    });
+
+    it('should return high status for low features if over 30 months', () => {
+      const status = Baseline.getFeatureStatus('low-feature', fakeData, dateOct);
+      expect(status).toEqual({
+        displayStatus: 'Widely Available (2024-03-01)',
+        baselineTier: 'high',
+      });
+    });
+
+    it('should show baseline_low_date for both high and promoted low features', async () => {
+      timers.setSystemTime(dateOct.getTime());
+      const traceEvents = [
+        {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'},
+        {args: {feature: 'abortsignal-any'}, cat: 'blink.webdx_feature_usage'},
+      ];
+
+      const result = await Baseline.audit({Trace: {traceEvents}});
+
+      expect(result.details.items).toEqual([
+        {
+          featureId: {
+            type: 'link',
+            text: 'abortsignal-any',
+            url: 'https://webstatus.dev/features/abortsignal-any',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2024-03-19)',
+          },
+          source: undefined,
+        },
+        {
+          featureId: {
+            type: 'link',
+            text: 'forced-colors',
+            url: 'https://webstatus.dev/features/forced-colors',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2022-09-12)',
+          },
+          source: undefined,
+        },
+      ]);
+    });
+
+    it('should return limited status for limited features', () => {
+      const status = Baseline.getFeatureStatus('limited-feature', fakeData, dateJune);
+      expect(status).toEqual({
+        displayStatus: 'Limited Availability',
+        baselineTier: 'limited',
+      });
+    });
+
+    it('should return null for unknown features', () => {
+      const status = Baseline.getFeatureStatus('unknown-feature-id', fakeData, dateJune);
+      expect(status).toBeNull();
+    });
+  });
+
+  describe('getLowDate & web-features-data.json format', () => {
+    // In build/build-baseline-data.js, `feature.status.baseline_low_date` is written into both
+    // `out.high[id]` and `out.low[id]`. Therefore, dates stored in `featureData.high` are ALREADY
+    // the feature's `baseline_low_date`.
+    // Previously, `getLowDate` subtracted 30 months from `featureData.high` dates, which shifted
+    // dates back 2.5 years (e.g. '2022-09-12' -> '2020-03-12').
+    // Furthermore, features with approximate dates in web-features start with a '≤' prefix
+    // (such as 'opacity-svg': '≤2020-03-24' or 'output': '≤2018-10-02'), which we now strip at
+    // build time in `build/build-baseline-data.js` so all stored dates are valid `YYYY-MM-DD`.
+    it('should return baseline_low_date directly for high features ' +
+      'without subtracting 30 months', () => {
+      expect(Baseline.getLowDate('forced-colors', Baseline.featureData)).toEqual('2022-09-12');
+    });
+
+    it('should return baseline_low_date for low features', () => {
+      expect(Baseline.getLowDate('abortsignal-any', Baseline.featureData)).toEqual('2024-03-19');
+    });
+
+    it('should return null for features not in high or low', () => {
+      expect(Baseline.getLowDate('accelerometer', Baseline.featureData)).toBeNull();
+      expect(Baseline.getLowDate('unknown-feature', Baseline.featureData)).toBeNull();
+    });
+
+    it('should ensure all dates in generated web-features-data.json are clean YYYY-MM-DD ' +
+      'without ≤ prefixes', () => {
+      for (const dateStr of [
+        ...Object.values(originalData.high),
+        ...Object.values(originalData.low),
+      ]) {
+        expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
     });
   });
 });

@@ -24,7 +24,7 @@ fs.mkdirSync(distDir, {recursive: true});
 function buildEntryPoint() {
   const inFile = `${sourceDir}/${entrySourceName}`;
   const outFile = `${distDir}/${entryDistName}`;
-  return buildBundle(inFile, outFile, {minify: false});
+  return buildBundle(inFile, outFile, {minify: true});
 }
 
 async function buildReportGenerator() {

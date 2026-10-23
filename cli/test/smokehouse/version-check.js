@@ -22,7 +22,7 @@ function parseVersion(versionString) {
  * @param {number[]} versionB
  */
 function compareVersions(versionA, versionB) {
-  for (let i = 0; i < versionA.length; i++) {
+  for (let i = 0; i < Math.max(versionA.length, versionB.length); i++) {
     if ((versionA[i] ?? 0) > (versionB[i] ?? 0)) return 1;
     if ((versionA[i] ?? 0) < (versionB[i] ?? 0)) return -1;
   }

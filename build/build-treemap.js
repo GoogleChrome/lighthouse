@@ -52,9 +52,8 @@ async function main() {
     ],
     javascripts: [
       buildStrings(),
-      {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
       {path: require.resolve('webtreemap-cdt')},
-      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: require.resolve('pako/browser/inflate')},
       {path: 'src/main.js', esbuild: true},
     ],
     assets: [

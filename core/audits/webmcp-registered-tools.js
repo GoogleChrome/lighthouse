@@ -15,7 +15,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that lists registered WebMCP tools. "WebMCP" stands for "Web Model Context Protocol" and should not be translated. */
   title: 'WebMCP tools registered',
   /** Description of a Lighthouse audit that lists registered WebMCP tools. This is displayed after a user expands the section to see more. No character length limits. "WebMCP" stands for "Web Model Context Protocol", neither should be translated. */
-  description: 'Lists the [WebMCP tools](http://goo.gle/webmcp-docs) registered at the time of analysis.',
+  description: 'Lists the [WebMCP tools](https://developer.chrome.com/docs/ai/webmcp) registered at the time of analysis.',
   /** Label for a column in a data table; entries will be the name of a WebMCP tool. */
   columnTool: 'Tool name',
   /** Label for a column in a data table; entries will be the description of a WebMCP tool. */
@@ -30,9 +30,18 @@ const UIStrings = {
   titleImperativeTools: 'Imperative Tools',
   /** Title for the table listing declarative WebMCP tools. */
   titleDeclarativeTools: 'Declarative Tools',
+  /**
+   * @description Warning message shown when the number of registered tools exceeds the recommended limit.
+   * @example {40} maxTools
+   */
+  warningMaxRecommendedTools: 'Registering more than {maxTools} tools is not recommended. ' +
+    'Doing so consumes model context tokens, adds latency, ' +
+    'and increases the risk of tool confusion.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+
+const MAX_RECOMMENDED_TOOLS = 40;
 
 class WebMCPRegisteredTools extends Audit {
   /**
@@ -45,7 +54,7 @@ class WebMCPRegisteredTools extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       requiredArtifacts: ['WebMCP'],
-      supportedModes: ['navigation', 'snapshot'],
+      supportedModes: ['navigation'],
     };
   }
 
@@ -138,12 +147,18 @@ class WebMCPRegisteredTools extends Audit {
       };
     }
 
+    const warnings = [];
+    if (imperativeResults.length + declarativeResults.length > MAX_RECOMMENDED_TOOLS) {
+      warnings.push(str_(UIStrings.warningMaxRecommendedTools, {maxTools: MAX_RECOMMENDED_TOOLS}));
+    }
+
     return {
       score: 1,
       details: Audit.makeListDetails(list),
+      warnings: warnings.length ? warnings : undefined,
     };
   }
 }
 
 export default WebMCPRegisteredTools;
-export {UIStrings};
+export {UIStrings, MAX_RECOMMENDED_TOOLS};

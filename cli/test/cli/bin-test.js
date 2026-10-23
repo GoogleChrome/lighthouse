@@ -17,58 +17,61 @@ const mockAskPermission = fnAny();
 const mockSentryInit = fnAny();
 const mockLoggerSetLevel = fnAny();
 
-/** @type {import('../../bin.js')} */
-let bin;
-before(async () => {
-  await td.replaceEsm('../../run.js', {
-    runLighthouse: mockRunLighthouse,
-  });
-  await td.replaceEsm('../../cli-flags.js', {
-    getFlags: mockGetFlags,
-  });
-  await td.replaceEsm('../../sentry-prompt.js', {
-    askPermission: mockAskPermission,
-  });
-  await td.replaceEsm('../../../core/lib/sentry.js', {
-    Sentry: {
-      init: mockSentryInit,
-    },
-  });
-  await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
-  bin = await import('../../bin.js');
-});
-
-/** @type {LH.CliFlags} */
-let cliFlags;
-
-beforeEach(async () => {
-  mockAskPermission.mockReset();
-  mockGetFlags.mockReset();
-  mockLoggerSetLevel.mockReset();
-  mockRunLighthouse.mockReset();
-  mockSentryInit.mockReset();
-  mockRunLighthouse.mockResolvedValue({});
-  cliFlags = {
-    _: ['http://example.com'],
-    output: ['html'],
-    chromeIgnoreDefaultFlags: false,
-    chromeFlags: '',
-    outputPath: '',
-    saveAssets: false,
-    view: false,
-    verbose: false,
-    quiet: false,
-    port: 0,
-    hostname: '',
-    // Command modes
-    listAllAudits: false,
-    listLocales: false,
-    listTraceCategories: false,
-  };
-  mockGetFlags.mockImplementation(() => cliFlags);
-});
-
 describe('CLI bin', function() {
+  /** @type {typeof import('../../bin.js')} */
+  let bin;
+  before(async () => {
+    await td.replaceEsm('../../run.js', {
+      runLighthouse: mockRunLighthouse,
+    });
+    await td.replaceEsm('../../cli-flags.js', {
+      getFlags: mockGetFlags,
+    });
+    await td.replaceEsm('../../sentry-prompt.js', {
+      askPermission: mockAskPermission,
+    });
+    await td.replaceEsm('../../../core/lib/sentry.js', {
+      Sentry: {
+        init: mockSentryInit,
+      },
+    });
+    await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
+    bin = await import('../../bin.js');
+  });
+
+  after(() => {
+    td.reset();
+  });
+
+  /** @type {LH.CliFlags} */
+  let cliFlags;
+
+  beforeEach(async () => {
+    mockAskPermission.mockReset();
+    mockGetFlags.mockReset();
+    mockLoggerSetLevel.mockReset();
+    mockRunLighthouse.mockReset();
+    mockSentryInit.mockReset();
+    mockRunLighthouse.mockResolvedValue({});
+    cliFlags = {
+      _: ['http://example.com'],
+      output: ['html'],
+      chromeIgnoreDefaultFlags: false,
+      chromeFlags: '',
+      outputPath: '',
+      saveAssets: false,
+      view: false,
+      verbose: false,
+      quiet: false,
+      port: 0,
+      hostname: '',
+      // Command modes
+      listAllAudits: false,
+      listLocales: false,
+      listTraceCategories: false,
+    };
+    mockGetFlags.mockImplementation(() => cliFlags);
+  });
   /**
    * @return {any}
    */
@@ -83,8 +86,7 @@ describe('CLI bin', function() {
 
   describe('config', () => {
     it('should load the config from the path (common js)', async () => {
-      // TODO(esmodules): change this test when config file is esm.
-      const configPath = `${LH_ROOT}/core/config/lr-desktop-config.js`;
+      const configPath = `${LH_ROOT}/cli/test/fixtures/cjs-config.cjs`;
       cliFlags = {...cliFlags, configPath: configPath};
       const actualConfig = (await import(pathToFileURL(configPath).href)).default;
       await bin.begin();
@@ -149,6 +151,14 @@ describe('CLI bin', function() {
       cliFlags = {...cliFlags, output: ['csv']};
       await bin.begin();
 
+      expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
+    });
+
+    it('should not use stdout when using json with multiple URLs', async () => {
+      cliFlags = {...cliFlags, _: ['http://example.com', 'http://example.org'], output: ['json']};
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[0]).toEqual(['http://example.com', 'http://example.org']);
       expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
     });
   });

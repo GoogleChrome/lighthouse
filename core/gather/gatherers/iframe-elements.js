@@ -14,7 +14,6 @@ import {pageFunctions} from '../../lib/page-functions.js';
 /**
  * @return {LH.Artifacts['IFrameElements']}
  */
-/* c8 ignore start */
 function collectIFrameElements() {
   const realBoundingClientRect = window.__HTMLElementBoundingClientRect ||
     window.HTMLElement.prototype.getBoundingClientRect;
@@ -35,7 +34,6 @@ function collectIFrameElements() {
     };
   });
 }
-/* c8 ignore stop */
 
 class IFrameElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */

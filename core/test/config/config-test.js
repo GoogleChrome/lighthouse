@@ -158,6 +158,52 @@ describe('Config', () => {
     });
   });
 
+  it('should support .cjs plugins', async () => {
+    const {resolvedConfig} = await initializeConfig('navigation', undefined, {
+      configPath: `${LH_ROOT}/core/test/fixtures/config-plugins/`,
+      plugins: ['lighthouse-plugin-cjs'],
+    });
+
+    expect(resolvedConfig).toMatchObject({
+      categories: {
+        'lighthouse-plugin-cjs': {title: 'CJS Plugin'},
+      },
+      groups: {
+        'lighthouse-plugin-cjs-new-group': {title: 'New Group'},
+      },
+    });
+  });
+
+  it('should support .cjs custom gatherers and audits', async () => {
+    const config = {
+      artifacts: [
+        {id: 'HTML', gatherer: `${LH_ROOT}/core/test/fixtures/valid-custom-gatherer.cjs`},
+      ],
+      audits: [`${LH_ROOT}/core/test/fixtures/valid-custom-audit.cjs`],
+    };
+    const {resolvedConfig} = await initializeConfig('navigation', config);
+
+    expect(resolvedConfig.artifacts).toMatchObject([
+      {
+        id: 'HTML',
+        gatherer: {
+          path: `${LH_ROOT}/core/test/fixtures/valid-custom-gatherer.cjs`,
+          implementation: expect.any(Function),
+          instance: expect.objectContaining({
+            meta: {supportedModes: ['navigation']},
+          }),
+        },
+      },
+    ]);
+    expect(resolvedConfig.audits).toMatchObject([
+      {
+        path: `${LH_ROOT}/core/test/fixtures/valid-custom-audit.cjs`,
+        implementation: expect.any(Function),
+      },
+    ]);
+    expect(resolvedConfig.audits?.[0].implementation.meta).toMatchObject({id: 'valid-audit'});
+  });
+
   it('is idempotent when using the resolved config as the config input', async () => {
     const config = {
       extends: 'lighthouse:default',

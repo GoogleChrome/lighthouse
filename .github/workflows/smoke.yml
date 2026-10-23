@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 env:
   PUPPETEER_SKIP_DOWNLOAD: 1
 
@@ -31,15 +38,19 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
         fetch-depth: 2
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     # Since Ubuntu 23, dev builds of Chromium need this.
     # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
@@ -60,7 +71,7 @@ jobs:
 
     # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
     - name: Run smoke tests (lantern + trace)
-      if: matrix.smoke-test-shard == 1 && matrix.chrome-channel == 'ToT'
+      if: matrix.smoke-test-shard == 3 && matrix.chrome-channel == 'ToT'
       run: |
         yarn smoke --debug -j=2 --retries=2 lantern
       env:
@@ -71,7 +82,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
         path: .tmp/smokehouse-failures/
@@ -87,13 +98,18 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
 
     # Use Node 18 here earlier than everywhere else, see https://github.com/GoogleChrome/lighthouse/issues/15160#issuecomment-1589913408
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - name: Define ToT chrome path
       run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\.tmp\chrome-tot\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -114,7 +130,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Smokehouse (windows)
         path: .tmp/smokehouse-failures/
@@ -136,12 +152,17 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -162,7 +183,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Smokehouse (bundled)
         path: .tmp/smokehouse-failures/
@@ -184,12 +205,17 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -210,7 +236,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Smokehouse (devtools-mcp) ${{ matrix.smoke-test-shard }}
         path: .tmp/smokehouse-failures/

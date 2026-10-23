@@ -31,7 +31,7 @@ const expectations = {
           items: [
             {
               url: 'http://localhost:10200/legacy-javascript.js',
-              wastedBytes: '124000 +/- 2000',
+              wastedBytes: '127000 +/- 2000',
               subItems: {
                 items: [
                   {signal: '@babel/plugin-transform-classes'},
@@ -50,7 +50,6 @@ const expectations = {
                   {signal: 'Array.prototype.flat'},
                   {signal: 'Array.prototype.flatMap'},
                   {signal: 'Array.prototype.forEach'},
-                  {signal: 'Array.prototype.includes'},
                   {signal: 'Array.prototype.indexOf'},
                   {signal: 'Array.prototype.join'},
                   {signal: 'Array.prototype.map'},

@@ -72,7 +72,7 @@ function getMcpRequiredGathererNames() {
     'MainDocumentContent', 'MetaElements', 'Stacks', 'Trace',
   ];
   const a11yArtifacts = ['Accessibility'];
-  const agenticArtifacts = ['WebMCP', 'LlmsTxt', 'WebMcpSchemaIssues'];
+  const agenticArtifacts = ['WebMCP', 'LlmsTxt', 'WebMcpSchemaIssues', 'AgentResourceDiscovery'];
   for (const id of
     [...seoArtifacts, ...bestPracticesArtifacts, ...a11yArtifacts, ...agenticArtifacts]) {
     const g = artifactToGatherer.get(id);
@@ -171,13 +171,8 @@ async function buildBundle(entryPath, distPath) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    // zlib's decompression code is very large and we don't need it.
-    '__zlib-lib/inflate': `
-      export function inflateInit2() {};
-      export function inflate() {};
-      export function inflateEnd() {};
-      export function inflateReset() {};
-    `,
+    'url': plugins.nodeModuleShims.url,
+    'module': plugins.nodeModuleShims.module,
     // MCP bundle needs generateReport: inline report assets at build time.
     // Requires dist/report/standalone.js (run build-report first).
     [`${LH_ROOT}/report/generator/report-assets.js`]: (() => {
@@ -203,10 +198,8 @@ async function buildBundle(entryPath, distPath) {
   };
 
   const modulesToIgnore = [
-    'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
-    'ws',
     'puppeteer-core',
   ];
   for (const modulePath of modulesToIgnore) shimsObj[modulePath] = 'export default {}';
@@ -286,19 +279,7 @@ async function buildBundle(entryPath, distPath) {
         includedAudits,
         includedGatherers,
       }),
-      plugins.replaceModules({
-        ...shimsObj,
-        'url': `
-          export const URL = globalThis.URL;
-          export const fileURLToPath = url => url;
-          export default {URL, fileURLToPath};
-        `,
-        'module': `
-          export const createRequire = () => ({
-            resolve() { throw new Error('createRequire.resolve is not supported'); },
-          });
-        `,
-      }, {
+      plugins.replaceModules(shimsObj, {
         disableUnusedError: true,
       }),
       plugins.bulkLoader([
@@ -309,6 +290,10 @@ async function buildBundle(entryPath, distPath) {
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          /** @param {string} id */
+          'import.meta.url': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          /** @param {string} id */
+          'import.meta.filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
@@ -399,6 +384,27 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
     if (url && typeof url === 'object') {
       url = url.url;
     }
+    if (url && typeof url === 'string') {
+      url = url.replace(/^git\+/, '').replace(/\.git$/, '');
+      if (url.startsWith('github:')) {
+        url = `https://github.com/${url.substring(7)}`;
+      } else if (url.startsWith('gitlab:')) {
+        url = `https://gitlab.com/${url.substring(7)}`;
+      } else if (url.startsWith('bitbucket:')) {
+        url = `https://bitbucket.org/${url.substring(10)}`;
+      } else if (url.startsWith('ssh://git@github.com/')) {
+        url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
+      } else if (url.startsWith('git://github.com/')) {
+        url = `https://github.com/${url.substring('git://github.com/'.length)}`;
+      } else if (url.startsWith('git@github.com:')) {
+        url = `https://github.com/${url.substring('git@github.com:'.length)}`;
+      } else if (!url.startsWith('http')) {
+        const parts = url.split('/');
+        if (parts.length === 2) {
+          url = `https://github.com/${url}`;
+        }
+      }
+    }
     parts.push(`URL: ${url ?? 'N/A'}`);
     parts.push(`Version: ${dependency.version ?? 'N/A'}`);
     parts.push(`License: ${dependency.license ?? 'N/A'}`);
@@ -409,7 +415,8 @@ function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
     return parts.join('\n');
   }).join(divider);
 
-  fs.writeFileSync('dist/LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES', stringifiedDependencies);
+  fs.writeFileSync(
+    path.join(distDir, 'LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES'), stringifiedDependencies);
 }
 
 /**

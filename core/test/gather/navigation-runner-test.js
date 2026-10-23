@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as td from 'testdouble';
+
 import {
   createMockDriver,
   createMockBaseArtifacts,
@@ -15,25 +17,48 @@ import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js
 import {Runner as runnerActual} from '../../runner.js';
 import {defaultSettings} from '../../config/constants.js';
 
-const mocks = await mockDriverSubmodules();
-const mockRunner = await mockRunnerModule();
-beforeEach(async () => {
-  mockRunner.reset();
-  mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
-  mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
-});
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const runner = await import('../../gather/navigation-runner.js');
-const {LighthouseError} = await import('../../lib/lh-error.js');
-const DevtoolsLogGatherer = (await import('../../gather/gatherers/devtools-log.js')).default;
-const TraceGatherer = (await import('../../gather/gatherers/trace.js')).default;
-const {initializeConfig} = await import('../../config/config.js');
+/** @type {Awaited<ReturnType<typeof mockDriverSubmodules>>} */
+let mocks;
+/** @type {Awaited<ReturnType<typeof mockRunnerModule>>} */
+let mockRunner;
+/** @type {typeof import('../../gather/navigation-runner.js')} */
+let runner;
+/** @type {typeof import('../../lib/lh-error.js')['LighthouseError']} */
+let LighthouseError;
+/** @type {typeof import('../../gather/gatherers/devtools-log.js').default} */
+let DevtoolsLogGatherer;
+/** @type {typeof import('../../gather/gatherers/trace.js').default} */
+let TraceGatherer;
+/** @type {typeof import('../../config/config.js')['initializeConfig']} */
+let initializeConfig;
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any>, startInstrumentation: Mock<any>, stopInstrumentation: Mock<any>, startSensitiveInstrumentation: Mock<any>, stopSensitiveInstrumentation:  Mock<any>}} MockGatherer */
 
 describe('NavigationRunner', () => {
+  before(async () => {
+    mocks = await mockDriverSubmodules();
+    mockRunner = await mockRunnerModule();
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    runner = await import('../../gather/navigation-runner.js');
+    ({LighthouseError} = await import('../../lib/lh-error.js'));
+    DevtoolsLogGatherer = (await import('../../gather/gatherers/devtools-log.js')).default;
+    TraceGatherer = (await import('../../gather/gatherers/trace.js')).default;
+    ({initializeConfig} = await import('../../config/config.js'));
+  });
+
+  after(() => {
+    mocks.reset();
+    mockRunner.reset();
+    td.reset();
+  });
+
+  beforeEach(async () => {
+    mockRunner.reset();
+    mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
+    mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
+  });
   let requestedUrl = '';
   /** @type {LH.NavigationRequestor} */
   let requestor;
@@ -176,7 +201,7 @@ describe('NavigationRunner', () => {
       mockDriver._executionContext.evaluate.mockReset();
       mockDriver._executionContext.evaluate.mockRejectedValue(new Error('Not available'));
       const setupPromise = runner._setup({driver, resolvedConfig, requestor: requestedUrl});
-      await expect(setupPromise).rejects.toThrowError(/Not available/);
+      await expect(setupPromise).rejects.toThrow(/Not available/);
       expect(mocks.prepareMock.prepareTargetForNavigationMode).not.toHaveBeenCalled();
     });
   });
@@ -457,7 +482,7 @@ describe('NavigationRunner', () => {
 
     it('should throw regular errors', async () => {
       mocks.navigationMock.gotoURL.mockRejectedValue(new Error('Other fatal error'));
-      await expect(run()).rejects.toThrowError('Other fatal error');
+      await expect(run()).rejects.toThrow('Other fatal error');
     });
   });
 

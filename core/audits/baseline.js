@@ -18,7 +18,7 @@ const UIStrings = {
    */
   description:
     'Lists web features used on the page and their Baseline status as of {date}. ' +
-    '[Learn more about Baseline](https://webstatus.dev/).',
+    '[Learn more about Baseline](https://developer.chrome.com/docs/lighthouse/best-practices/baseline-features).',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
   /** Label for the column displaying the feature\'s baseline status. */
@@ -31,6 +31,8 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /** @typedef {LH.TraceEvent & {args: {feature: string, url?: string, lineNumber?: number, columnNumber?: number}}} DXFeatureEvent */
 
 class Baseline extends Audit {
+  static featureData = data;
+
   /**
    * @return {LH.Audit.Meta}
    */
@@ -45,6 +47,83 @@ class Baseline extends Audit {
   }
 
   /**
+   * Determines the baseline status and display string for a given feature ID.
+   *
+   * Baseline tiers & dates (built by `build/build-baseline-data.js`):
+   * - `limited`: `baseline === false` (Limited Availability — not yet in all core browsers, no date).
+   * - `low`: `baseline === 'low'` (Newly Available — in all core browsers; value is `baseline_low_date`).
+   * - `high`: `baseline === 'high'` (Widely Available — 30 months past `baseline_low_date`; note that
+   *   `featureData.high[id]` still stores the feature's `baseline_low_date`).
+   *
+   * Widely Available rows always show `baseline_low_date`, including rows promoted at runtime.
+   * If a feature in `featureData.low` has reached `baseline_low_date + 30 months <= currentDate` at runtime,
+   * we dynamically promote it from `low` (Newly Available) to `high` (Widely Available); promotion
+   * only changes the tier.
+   *
+   * @param {string} featureId
+   * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
+   * @param {Date} currentDate
+   * @return {{displayStatus: string, baselineTier: 'high' | 'low' | 'limited'} | null}
+   */
+  static getFeatureStatus(featureId, featureData, currentDate) {
+    if (featureId in featureData.high) {
+      const highData = /** @type {Record<string, string>} */ (featureData.high);
+      return {
+        displayStatus: `Widely Available (${highData[featureId]})`,
+        baselineTier: 'high',
+      };
+    }
+
+    if (featureId in featureData.low) {
+      const lowData = /** @type {Record<string, string>} */ (featureData.low);
+      const widelyAvailableDate = new Date(lowData[featureId]);
+      widelyAvailableDate.setUTCMonth(widelyAvailableDate.getUTCMonth() + 30);
+
+      if (widelyAvailableDate <= currentDate) {
+        return {
+          displayStatus: `Widely Available (${lowData[featureId]})`,
+          baselineTier: 'high',
+        };
+      } else {
+        return {
+          displayStatus: `Newly Available (${lowData[featureId]})`,
+          baselineTier: 'low',
+        };
+      }
+    }
+
+    if (featureData.limited.includes(featureId)) {
+      return {
+        displayStatus: 'Limited Availability',
+        baselineTier: 'limited',
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * Returns the `baseline_low_date` (YYYY-MM-DD, when the feature became Newly Available)
+   * for both `low` and `high` features, since `build/build-baseline-data.js` stores
+   * `baseline_low_date` in both `featureData.low` and `featureData.high`.
+   *
+   * @param {string} featureId
+   * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
+   * @return {string|null}
+   */
+  static getLowDate(featureId, featureData) {
+    if (featureId in featureData.low) {
+      const lowData = /** @type {Record<string, string>} */ (featureData.low);
+      return lowData[featureId];
+    }
+    if (featureId in featureData.high) {
+      const highData = /** @type {Record<string, string>} */ (featureData.high);
+      return highData[featureId];
+    }
+    return null;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
@@ -54,15 +133,14 @@ class Baseline extends Audit {
     /** @type {Map<string, {featureId: string, source: LH.Audit.Details.SourceLocationValue | undefined}>} */
     const featuresMap = new Map();
 
-    const dxEvents = /** @type {DXFeatureEvent[]} */ (
-      (trace.traceEvents || []).filter(e => e.cat === 'blink.webdx_feature_usage' &&
-        e.args?.feature)
-    );
+    for (const e of trace.traceEvents || []) {
+      if (e.cat !== 'blink.webdx_feature_usage' || !e.args?.feature) {
+        continue;
+      }
+      const event = /** @type {DXFeatureEvent} */ (e);
 
-    for (const event of dxEvents) {
-      const key = `${event.args.feature}`;
-
-      if (featuresMap.has(key)) continue;
+      const feature = /** @type {string} */ (event.args.feature);
+      if (featuresMap.has(feature)) continue;
 
       /** @type {LH.Audit.Details.SourceLocationValue | undefined} */
       let source;
@@ -74,14 +152,15 @@ class Baseline extends Audit {
         source = Audit.makeSourceLocation(event.args.url, line, column);
       }
 
-      featuresMap.set(key, {
-        featureId: event.args.feature,
+      featuresMap.set(feature, {
+        featureId: feature,
         source,
       });
     }
 
     const baselineFeatures = Array.from(featuresMap.values());
     const baselineStatus = [];
+    const currentDate = new Date;
 
     for (const feature of baselineFeatures) {
       if (!feature.featureId) {
@@ -90,20 +169,11 @@ class Baseline extends Audit {
 
       const featureId = feature.featureId;
 
-      let displayStatus = 'Limited Availability';
-      let baselineTier = 'limited';
+      const status = Baseline.getFeatureStatus(featureId, Baseline.featureData, currentDate);
+      if (!status) continue;
+      const {displayStatus, baselineTier} = status;
 
-      if (featureId in data.high) {
-        const highData = /** @type {Record<string, string>} */ (data.high);
-        displayStatus = `Widely Available (${highData[featureId]})`;
-        baselineTier = 'high';
-      } else if (featureId in data.low) {
-        const lowData = /** @type {Record<string, string>} */ (data.low);
-        displayStatus = `Newly Available (${lowData[featureId]})`;
-        baselineTier = 'low';
-      } else if (!data.limited.includes(featureId)) {
-        continue;
-      }
+      const lowDate = Baseline.getLowDate(featureId, Baseline.featureData) || '';
 
       baselineStatus.push({
         featureId: {
@@ -117,11 +187,12 @@ class Baseline extends Audit {
           displayString: displayStatus,
         },
         source: feature.source,
+        lowDate,
       });
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
+    const webFeatureHeadings = [
       {
         key: 'featureId',
         valueType: 'link',
@@ -139,43 +210,53 @@ class Baseline extends Audit {
       },
     ];
 
-    /**
-     * Determines the sorting rank of a baseline status.
-     * @param {string} status The display status string.
-     * @return {number} The numerical rank (1 is the highest priority).
-     */
-    const getStatusRank = (status) => {
-      if (status.startsWith('Limited')) {
-        return 1;
-      }
-      if (status.startsWith('Newly')) {
-        return 2;
-      }
-      if (status.startsWith('Widely')) {
-        return 3;
-      }
-      return 4;
+    /** @type {Record<string, number>} */
+    const TIER_RANKS = {
+      limited: 1,
+      low: 2,
+      high: 3,
     };
 
     const sortedStatuses = baselineStatus.sort((featureA, featureB) => {
-      const rankA = getStatusRank(featureA.displayStatus.displayString);
-      const rankB = getStatusRank(featureB.displayStatus.displayString);
+      const rankA = TIER_RANKS[featureA.displayStatus.status] || 4;
+      const rankB = TIER_RANKS[featureB.displayStatus.status] || 4;
 
       if (rankA !== rankB) {
         return rankA - rankB;
       }
 
-      const hasSourceA = !!featureA.source;
-      const hasSourceB = !!featureB.source;
-
-      if (hasSourceA !== hasSourceB) {
-        return hasSourceA ? -1 : 1;
-      }
-
-      return 0;
+      return featureB.lowDate.localeCompare(featureA.lowDate);
     });
 
-    const details = Audit.makeTableDetails(headings, sortedStatuses);
+    const hasLimited = baselineStatus.some(item => item.displayStatus.status === 'limited');
+
+    /** @type {LH.Audit.Details.DebugData | undefined} */
+    let debugData;
+    if (!hasLimited && sortedStatuses.length > 0) {
+      const newestFeature = sortedStatuses[0];
+      const featureName = newestFeature.featureId.text;
+      const lowDate = newestFeature.lowDate;
+      if (lowDate) {
+        const year = lowDate.substring(0, 4);
+        debugData = {
+          type: 'debugdata',
+          newestFeatureId: featureName,
+          newestFeatureYear: year,
+          newestFeatureLowDate: lowDate,
+        };
+      }
+    }
+
+    // Remove `lowDate` property from items before generating details table.
+    const tableItems = sortedStatuses.map(item => {
+      const {lowDate: _, ...rest} = item;
+      return rest;
+    });
+
+    const details = Audit.makeTableDetails(webFeatureHeadings, tableItems);
+    if (debugData) {
+      details.debugData = debugData;
+    }
 
     return {
       score: 1,

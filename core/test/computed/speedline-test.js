@@ -63,4 +63,19 @@ describe('Speedline gatherer', () => {
         }
       });
   }, 10000);
+
+  it('only retains the frame getters used by Lighthouse', async () => {
+    const context = {computedCache: new Map()};
+    const speedline = await Speedline.request(threeFrameTrace, context);
+    const frame = speedline.frames[0];
+    assert.deepStrictEqual(Object.keys(frame), [
+      'getImage',
+      'getTimeStamp',
+      'isProgressInterpolated',
+    ]);
+    assert.ok(Buffer.isBuffer(frame.getImage()));
+    assert.equal(typeof frame.getTimeStamp(), 'number');
+    assert.equal(typeof frame.isProgressInterpolated(), 'boolean');
+  });
 });
+

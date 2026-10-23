@@ -81,8 +81,7 @@ class Deprecations extends Audit {
         /** @type {LH.Audit.Details.TableItem} */
         const item = {
           value: deprecationMeta.message || legacyMessage || deprecation.type,
-          // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
-          source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
+          source: Audit.makeSourceLocation(url, lineNumber, columnNumber, bundle),
           subItems,
         };
         return item;

@@ -9,7 +9,6 @@ import path from 'path';
 
 
 import log from 'lighthouse-logger';
-import {isEqual} from 'lodash-es';
 
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
@@ -20,11 +19,12 @@ import {Sentry} from './lib/sentry.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../shared/root.js';
-import {getModuleDirectory} from '../shared/esm-utils.js';
 import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
+import {Util} from '../shared/util.js';
+import {isEqual} from './lib/arbitrary-equality-map.js';
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
@@ -70,9 +70,29 @@ class Runner {
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.
       const axeVersion = artifacts.Accessibility?.version;
+      /** @type {Record<string, string|undefined>} */
       const credits = {
         'axe-core': axeVersion,
       };
+
+      // Add plugins to the credits.
+      //
+      // This won't work in bundled environments, but we currently don't ship plugins
+      // in DevTools or PSI. So until we do, don't bother figuring out how to support
+      // bundled code.
+      if (resolvedConfig.categories) {
+        for (const categoryId of Object.keys(resolvedConfig.categories)) {
+          const isPlugin = Util.isPluginCategory(categoryId);
+          if (!isPlugin) continue;
+
+          try {
+            const require = (await import('module')).createRequire(import.meta.url);
+            credits[categoryId] = require(`${categoryId}/package.json`).version;
+          } catch {
+            // Ignore if we can't find it.
+          }
+        }
+      }
 
       /** @type {Record<string, LH.RawIcu<LH.Result.Category>>} */
       let categories = {};
@@ -209,6 +229,7 @@ class Runner {
       log.time(runnerStatus, 'verbose');
 
       const artifacts = await gatherFn({resolvedConfig: options.resolvedConfig});
+      options.resolvedConfig.artifacts = null;
       log.timeEnd(runnerStatus);
 
       // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.

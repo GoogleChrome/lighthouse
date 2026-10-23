@@ -8,8 +8,6 @@ import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 
 /* globals getElementsInDocument getNodeDetails */
-
-/* c8 ignore start */
 function collectMetaElements() {
   const functions = /** @type {typeof pageFunctions} */({
     // @ts-expect-error - getElementsInDocument put into scope via stringification
@@ -36,7 +34,6 @@ function collectMetaElements() {
     };
   });
 }
-/* c8 ignore stop */
 
 class MetaElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */

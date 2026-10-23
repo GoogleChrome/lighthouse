@@ -9,7 +9,6 @@ import BaseGatherer from '../base-gatherer.js';
 /**
  * @return {LH.Artifacts.ViewportDimensions}
  */
-/* c8 ignore start */
 function getViewportDimensions() {
   // window.innerWidth to get the scrollable size of the window (irrespective of zoom)
   // window.outerWidth to get the size of the visible area
@@ -22,7 +21,6 @@ function getViewportDimensions() {
     devicePixelRatio: window.devicePixelRatio,
   };
 }
-/* c8 ignore stop */
 
 class ViewportDimensions extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */

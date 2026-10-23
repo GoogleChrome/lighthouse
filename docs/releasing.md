@@ -42,6 +42,8 @@ In general, Lighthouse should be using the latest version of its critical depend
 bash core/scripts/upgrade-deps.sh
 ```
 
+Follow the instructions printed to stdout re: testing in LR.
+
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
@@ -88,7 +90,8 @@ git log
 git push --tags
 
 # Publish to npm.
-npm publish
+# This part happens in GitHub CI because of the tag push - see the publish.yml worfklow.
+# No need to wait before doing next step.
 
 # Publish viewer and treemap.
 yarn deploy-viewer
@@ -96,6 +99,7 @@ yarn deploy-treemap
 ```
 
 ### Create a release on GitHub
+
 Go to https://github.com/GoogleChrome/lighthouse/releases and create a new release from the tag.
 Include the changelog.
 

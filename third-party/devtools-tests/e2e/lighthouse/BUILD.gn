@@ -4,7 +4,7 @@
 
 import("../../../scripts/build/typescript/typescript.gni")
 
-ts_e2e_library("lighthouse") {
+node_ts_library("lighthouse") {
   sources = [
     "devtools-settings.test.ts",
     "navigation.test.ts",
@@ -13,8 +13,12 @@ ts_e2e_library("lighthouse") {
     "timespan.test.ts",
   ]
 
-  deps = [
-    "../../shared",
+  ts_deps = [
+    "../../../front_end/core/common:bundle",
+    "../../../front_end/core/sdk:bundle",
+    "../../conductor:implementation",
+    "../conductor:implementation",
     "../helpers",
+    "../shared",
   ]
 }

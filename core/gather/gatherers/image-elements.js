@@ -17,7 +17,6 @@ import {pageFunctions} from '../../lib/page-functions.js';
 /* global getElementsInDocument, getNodeDetails */
 
 /** @param {Element} element */
-/* c8 ignore start */
 function getClientRect(element) {
   const clientRect = element.getBoundingClientRect();
   return {
@@ -28,7 +27,6 @@ function getClientRect(element) {
     right: clientRect.right,
   };
 }
-/* c8 ignore stop */
 
 /**
  * If an image is within `picture`, the `picture` element's css position
@@ -36,7 +34,6 @@ function getClientRect(element) {
  * @param {Element} element
  * @param {CSSStyleDeclaration} computedStyle
  */
-/* c8 ignore start */
 function getPosition(element, computedStyle) {
   if (element.parentElement && element.parentElement.tagName === 'PICTURE') {
     const parentStyle = window.getComputedStyle(element.parentElement);
@@ -44,13 +41,11 @@ function getPosition(element, computedStyle) {
   }
   return computedStyle.getPropertyValue('position');
 }
-/* c8 ignore stop */
 
 /**
  * @param {Array<Element>} allElements
  * @return {Array<LH.Artifacts.ImageElement>}
  */
-/* c8 ignore start */
 function getHTMLImages(allElements) {
   const allImageElements = /** @type {Array<HTMLImageElement>} */ (allElements.filter(element => {
     return element.localName === 'img';
@@ -89,13 +84,11 @@ function getHTMLImages(allElements) {
     };
   });
 }
-/* c8 ignore stop */
 
 /**
  * @param {Array<Element>} allElements
  * @return {Array<LH.Artifacts.ImageElement>}
  */
-/* c8 ignore start */
 function getCSSImages(allElements) {
   // Chrome normalizes background image style from getComputedStyle to be an absolute URL in quotes.
   // Only match basic background-image: url("http://host/image.jpeg") declarations
@@ -138,23 +131,19 @@ function getCSSImages(allElements) {
 
   return images;
 }
-/* c8 ignore stop */
 
 /** @return {Array<LH.Artifacts.ImageElement>} */
-/* c8 ignore start */
 function collectImageElementInfo() {
   /** @type {Array<Element>} */
   // @ts-expect-error - added by getElementsInDocumentFnString
   const allElements = getElementsInDocument();
   return getHTMLImages(allElements).concat(getCSSImages(allElements));
 }
-/* c8 ignore stop */
 
 /**
  * @param {string} url
  * @return {Promise<{naturalWidth: number, naturalHeight: number}>}
  */
-/* c8 ignore start */
 function determineNaturalSize(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -169,7 +158,6 @@ function determineNaturalSize(url) {
     img.src = url;
   });
 }
-/* c8 ignore stop */
 
 /**
  * @param {Partial<Pick<LH.Crdp.CSS.CSSStyle, 'cssProperties'>>|undefined} rule
@@ -189,7 +177,7 @@ function findSizeDeclaration(rule, property) {
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
- * @param {function(LH.Crdp.CSS.CSSStyle):boolean|string|undefined} isDeclarationOfInterest
+ * @param {(style: LH.Crdp.CSS.CSSStyle) => boolean|string|undefined} isDeclarationOfInterest
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
   let mostSpecificRule;
@@ -252,6 +240,21 @@ function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules},
 
 /**
  * @param {LH.Artifacts.ImageElement} element
+ * @return {boolean}
+ */
+function needsSourceRules(element) {
+  if (element.isInShadowDOM || element.isCss) return false;
+  if (
+    ImageElements.doesHtmlAttrProvideExplicitSize(element.attributeWidth) &&
+    ImageElements.doesHtmlAttrProvideExplicitSize(element.attributeHeight)
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * @param {LH.Artifacts.ImageElement} element
  * @return {number}
  */
 function getPixelArea(element) {
@@ -266,6 +269,28 @@ class ImageElements extends BaseGatherer {
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
   };
+
+  /**
+   * An img size attribute prevents layout shifts if it is a non-negative integer (incl zero!).
+   * @url https://html.spec.whatwg.org/multipage/embedded-content-other.html#dimension-attributes
+   * @param {string | null} attrValue
+   * @return {boolean}
+   */
+  static doesHtmlAttrProvideExplicitSize(attrValue) {
+    if (!attrValue) return false;
+
+    // First, superweird edge case of using the positive-sign. The spec _sorta_ says it's valid...
+    // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers
+    //   > Otherwise, if the character is … (+): Advance position to the next character.
+    //   > (The "+" is ignored, but it is not conforming.)
+    // lol.  Irrelevant though b/c Chrome (at least) doesn't ignore. It rejects this as a non-conforming value.
+    if (attrValue.startsWith('+')) return false;
+
+    // parseInt isn't exactly the same as the html's spec for parsing integers, but it's close enough
+    // https://tc39.es/ecma262/#sec-parseint-string-radix
+    const int = parseInt(attrValue, 10);
+    return int >= 0;
+  }
 
   constructor() {
     super();
@@ -334,24 +359,32 @@ class ImageElements extends BaseGatherer {
   async collectExtraDetails(driver, elements) {
     // Don't do more than 5s of this expensive devtools protocol work. See #11289
     let reachedGatheringBudget = false;
-    setTimeout(_ => (reachedGatheringBudget = true), 5000);
+    const timeoutId = setTimeout(_ => (reachedGatheringBudget = true), 5000);
     let skippedCount = 0;
 
-    for (const element of elements) {
-      if (reachedGatheringBudget) {
-        skippedCount++;
-        continue;
-      }
+    try {
+      for (const element of elements) {
+        if (reachedGatheringBudget) {
+          skippedCount++;
+          continue;
+        }
 
-      // Need source rules to determine if sized via CSS (for unsized-images).
-      if (!element.isInShadowDOM && !element.isCss) {
-        await this.fetchSourceRules(driver.defaultSession, element.node.devtoolsNodePath, element);
+        // Need source rules to determine if sized via CSS (for unsized-images).
+        if (needsSourceRules(element)) {
+          await this.fetchSourceRules(
+            driver.defaultSession,
+            element.node.devtoolsNodePath,
+            element
+          );
+        }
+        // Images within `picture` behave strangely and natural size information isn't accurate,
+        // CSS images have no natural size information at all. Try to get the actual size if we can.
+        if (element.isPicture || element.isCss || element.srcset) {
+          await this.fetchElementWithSizeInformation(driver, element);
+        }
       }
-      // Images within `picture` behave strangely and natural size information isn't accurate,
-      // CSS images have no natural size information at all. Try to get the actual size if we can.
-      if (element.isPicture || element.isCss || element.srcset) {
-        await this.fetchElementWithSizeInformation(driver, element);
-      }
+    } finally {
+      clearTimeout(timeoutId);
     }
 
     if (reachedGatheringBudget) {
@@ -381,11 +414,14 @@ class ImageElements extends BaseGatherer {
       ],
     });
 
-    await Promise.all([
-      session.sendCommand('DOM.enable'),
-      session.sendCommand('CSS.enable'),
-      session.sendCommand('DOM.getDocument', {depth: -1, pierce: true}),
-    ]);
+    const shouldFetchSourceRules = elements.some(needsSourceRules);
+    if (shouldFetchSourceRules) {
+      await Promise.all([
+        session.sendCommand('DOM.enable'),
+        session.sendCommand('CSS.enable'),
+        session.sendCommand('DOM.getDocument', {depth: -1, pierce: true}),
+      ]);
+    }
 
     // Spend our extra details budget on highest impact images.
     // Our best approximation of impact without network records is to use pixel area.
@@ -393,11 +429,14 @@ class ImageElements extends BaseGatherer {
 
     await this.collectExtraDetails(context.driver, elements);
 
-    await Promise.all([
-      session.sendCommand('DOM.disable'),
-      session.sendCommand('CSS.disable'),
-    ]);
+    if (shouldFetchSourceRules) {
+      await Promise.all([
+        session.sendCommand('DOM.disable'),
+        session.sendCommand('CSS.disable'),
+      ]);
+    }
 
+    this._naturalSizeCache.clear();
     return elements;
   }
 }

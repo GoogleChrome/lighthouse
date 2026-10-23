@@ -57,6 +57,10 @@ export const UIStrings = {
    */
   DataUrlInSvgUse: "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future.",
   /**
+   * @description Warning displayed to developers when an unknown protocol string is used in a call to navigator.credentials.get() or create() with the 'digital' option.
+   */
+  DigitalCredentialsUnknownProtocol: "An unknown Digital Credentials protocol was requested in navigator.credentials.get() or create(). In a future release, unrecognized protocols will be blocked.",
+  /**
    * @description Warning displayed to developers when document.createEvent() is called with 'KeyboardEvents', which is a non-standard event interface that will be removed.
    */
   DocumentCreateEventKeyboardEvents: "document.createEvent('KeyboardEvents') is deprecated and will be removed. Use `new KeyboardEvent()` instead.",
@@ -68,6 +72,10 @@ export const UIStrings = {
    * @description Translation is not needed, this will never be exposed in production code.
    */
   ExampleBrowserProcessDeprecation: "This is an example for showing the code required for a browser process reported deprecation.",
+  /**
+   * @description Warning displayed to developers that they are using the Fenced Frame API which has been deprecated and is scheduled to be removed.
+   */
+  FencedFrame: "Fenced Frame API is deprecated and scheduled for removal.",
   /**
    * @description A deprecation warning shown in the DevTools Issues tab. It's shown when one of the Protected Audience APIs like `navigator.joinAdInterestGroup`, `navigator.getInterestGroupAdAuctionData` or `navigator.runAdAuction` are called.
    */
@@ -334,6 +342,10 @@ export const DEPRECATIONS_METADATA = {
     "chromeStatusFeature": 5128825141198848,
     "milestone": 119
   },
+  "DigitalCredentialsUnknownProtocol": {
+    "chromeStatusFeature": 6492906882990080,
+    "milestone": 160
+  },
   "DocumentCreateEventKeyboardEvents": {
     "chromeStatusFeature": 5095987863486464,
     "milestone": 151
@@ -341,6 +353,10 @@ export const DEPRECATIONS_METADATA = {
   "DocumentCreateEventTransitionEvent": {
     "chromeStatusFeature": 5095987863486464,
     "milestone": 151
+  },
+  "FencedFrame": {
+    "chromeStatusFeature": 6366274495053824,
+    "milestone": 156
   },
   "IdentityInCanMakePaymentEvent": {
     "chromeStatusFeature": 5190978431352832

@@ -8,9 +8,8 @@
 import fs from 'fs';
 
 import {flowReportAssets} from './flow-report-assets.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 const REPORT_TEMPLATE = fs.readFileSync(moduleDir + '/../assets/standalone-template.html',
     'utf8');

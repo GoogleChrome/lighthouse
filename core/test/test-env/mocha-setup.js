@@ -21,14 +21,34 @@ import fs from 'fs';
 
 import path from 'path';
 import {expect} from 'expect';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
-import jestSnapshot from 'jest-snapshot';
+import {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} from 'jest-snapshot';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import './expect-setup.js';
 import {timers} from './fake-timers.js';
 
-const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
+/**
+ * `jest-mock` does not export `restoreAllMocks` from its default `ModuleMocker` instance,
+ * so we capture the singleton instance here to call `restoreAllMocks()` in `afterEach`.
+ */
+const jestMocker = (() => {
+  /** @type {jestMock.ModuleMocker} */
+  let instance;
+  // @ts-expect-error
+  const orig = jestMock.ModuleMocker.prototype._defaultMockConfig;
+  // @ts-expect-error
+  jestMock.ModuleMocker.prototype._defaultMockConfig = function() {
+    instance = this;
+    return orig.call(this);
+  };
+  jestMock.fn();
+  // @ts-expect-error
+  jestMock.ModuleMocker.prototype._defaultMockConfig = orig;
+  // @ts-expect-error
+  return instance;
+})();
 
 // Use consistent TZ across testing environments.
 // Timezone is used to construct date strings.
@@ -43,11 +63,10 @@ global.expect = expect;
 const performance = global.performance;
 // @ts-expect-error
 global.performance = undefined;
-// @ts-expect-error: no types
 await import('marky');
 global.performance = performance;
 
-/** @type {Map<string, SnapshotState['prototype']>} */
+/** @type {Map<string, InstanceType<typeof SnapshotState>>} */
 const snapshotStatesByTestFile = new Map();
 let snapshotTestFailed = false;
 
@@ -129,6 +148,7 @@ expect.extend({
 });
 
 const testPlugins = [
+  'lighthouse-plugin-cjs',
   'lighthouse-plugin-no-category',
   'lighthouse-plugin-no-groups',
   'lighthouse-plugin-simple',
@@ -161,6 +181,8 @@ const rootHooks = {
   },
   /** @this {Mocha.Context} */
   afterEach() {
+    jestMocker.restoreAllMocks();
+
     if (!this.currentTest) throw new Error('unexpected value');
 
     const {file, title, state} = this.currentTest;

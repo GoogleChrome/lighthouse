@@ -10,7 +10,7 @@ import * as LH from '../../types/lh.js';
  * ignoring normal browser constraints such as CORS.
  */
 
-/** @typedef {{content: string|null, status: number|null}} FetchResponse */
+/** @typedef {{content: string|null, status: number|null, headers?: Record<string, string>|null}} FetchResponse */
 
 class Fetcher {
   /**
@@ -38,6 +38,26 @@ class Fetcher {
   }
 
   /**
+   * @param {Headers|Record<string, string|number|boolean>|null|undefined} rawHeaders
+   * @return {Record<string, string>|null}
+   */
+  _normalizeHeaders(rawHeaders) {
+    if (!rawHeaders) return null;
+
+    /** @type {Record<string, string>} */
+    const headers = {};
+    const entries = typeof /** @type {Headers} */ (rawHeaders).entries === 'function' ?
+    /** @type {Headers} */ (rawHeaders).entries() :
+      Object.entries(rawHeaders);
+
+    for (const [key, value] of entries) {
+      headers[key.toLowerCase()] = String(value);
+    }
+
+    return headers;
+  }
+
+  /**
    * @param {string} url
    * @return {Promise<FetchResponse>}
    */
@@ -49,9 +69,12 @@ class Fetcher {
       content = await response.text();
     } catch {}
 
+    const headers = this._normalizeHeaders(response.headers);
+
     return {
       content,
       status: response.status,
+      headers,
     };
   }
 
@@ -82,7 +105,7 @@ class Fetcher {
 
   /**
    * @param {string} url
-   * @return {Promise<{stream: LH.Crdp.IO.StreamHandle|null, status: number|null}>}
+   * @return {Promise<{stream: LH.Crdp.IO.StreamHandle|null, status: number|null, headers?: Record<string, string>|null}>}
    */
   async _loadNetworkResource(url) {
     const frameTreeResponse = await this.session.sendCommand('Page.getFrameTree');
@@ -98,6 +121,7 @@ class Fetcher {
     return {
       stream: networkResponse.resource.success ? (networkResponse.resource.stream || null) : null,
       status: networkResponse.resource.httpStatusCode || null,
+      headers: networkResponse.resource.headers || null,
     };
   }
 
@@ -110,12 +134,14 @@ class Fetcher {
     const startTime = Date.now();
     const response = await this._wrapWithTimeout(this._loadNetworkResource(url), options.timeout);
 
+    const headers = this._normalizeHeaders(response.headers);
+
     const isOk = response.status && response.status >= 200 && response.status <= 299;
-    if (!response.stream || !isOk) return {status: response.status, content: null};
+    if (!response.stream || !isOk) return {status: response.status, content: null, headers};
 
     const timeout = options.timeout - (Date.now() - startTime);
     const content = await this._readIOStream(response.stream, {timeout});
-    return {status: response.status, content};
+    return {status: response.status, content, headers};
   }
 
   /**

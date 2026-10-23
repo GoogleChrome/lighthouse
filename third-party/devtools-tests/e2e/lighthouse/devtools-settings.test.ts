@@ -4,8 +4,10 @@
 import {assert} from 'chai';
 import * as path from 'node:path';
 
+import type * as Common from '../../../front_end/core/common/common.js';
 import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
+import {describe, it} from '../conductor/mocha-interface.js';
 import {getZoom, openDeviceToolbar, selectDevice, selectZoomLevel} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,
@@ -14,7 +16,7 @@ import {
   selectCategories,
   waitForResult,
 } from '../helpers/lighthouse-helpers.js';
-import type {DevToolsPage} from '../shared/frontend-helper.js';
+import type {DevToolsPage} from '../shared/DevToolsPage.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
@@ -47,10 +49,12 @@ async function blockCss(devToolsPage: DevToolsPage) {
   await devToolsPage.evaluate(async () => {
     // @ts-expect-error executed from DevTools
     const SDKModule: typeof SDK = await import('./core/sdk/sdk.js');
+    // @ts-expect-error executed from DevTools
+    const CommonModule: typeof Common = await import('./core/common/common.js');
     const networkManager = SDKModule.NetworkManager.MultitargetNetworkManager.instance();
     networkManager.requestConditions.conditionsEnabled = true;
-    networkManager.requestConditions.add(
-        SDKModule.NetworkManager.RequestCondition.createFromSetting({enabled: true, url: '*.css'}));
+    networkManager.requestConditions.add(SDKModule.NetworkManager.RequestCondition.createFromSetting(
+        {enabled: true, url: '*://*:*/*.css'}, CommonModule.Settings.Settings.instance()));
   });
 }
 
@@ -59,13 +63,12 @@ describe('DevTools', function() {
   this.timeout(60_000);
 
   describe('request blocking', () => {
-    // https://crbug.com/466057104 the feature roll has make this test fail
-    it.skip('[crbug.com/466057104] is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
+    it('is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       expectErrors();
       await blockCss(devToolsPage);
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
 
-      await selectCategories(['performance'], devToolsPage);
+      await selectCategories(devToolsPage, ['performance']);
 
       await clickStartButton(devToolsPage);
 
@@ -92,15 +95,15 @@ describe('DevTools', function() {
     it('is restored after a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       await openDeviceToolbar(devToolsPage, inspectedPage);
       // Use iPad Mini in landscape mode and custom zoom.
-      await selectDevice('iPad Mini', devToolsPage);
+      await selectDevice(devToolsPage, 'iPad Mini');
       const rotateButton = await devToolsPage.waitForAria('Rotate');
       await rotateButton.click();
       await selectZoomLevel(devToolsPage, '75%');
 
       assert.deepEqual(await getTargetViewport(inspectedPage), IPAD_MINI_LANDSCAPE_VIEWPORT_DIMENSIONS);
 
-      await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
-      await selectCategories(['performance', 'best-practices'], devToolsPage);
+      await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
+      await selectCategories(devToolsPage, ['performance', 'best-practices']);
       await clickStartButton(devToolsPage);
 
       const {artifacts} = await waitForResult(devToolsPage, inspectedPage);

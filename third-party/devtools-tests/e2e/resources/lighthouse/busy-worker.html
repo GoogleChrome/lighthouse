@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Worker Hang Repro</title>
+</head>
+<body>
+    <h1>Lighthouse Worker Hang Repro</h1>
+    <p>This page spawns a Web Worker that immediately enters an infinite, synchronous loop.</p>
+    <p>Before the fix, running a Lighthouse report on this page would cause DevTools to hang during the cleanup phase because it would wait indefinitely for the frozen worker target to respond to a CDP <code>resume</code> command.</p>
+    <p>Context: <a href="https://github.com/GoogleChrome/lighthouse/issues/13613">https://github.com/GoogleChrome/lighthouse/issues/13613</a></p>
+
+    <script>
+        // Create an inline worker that runs an infinite loop
+        const workerCode = `
+            console.log("Worker started. Entering infinite loop...");
+            // Block the worker's event loop entirely
+            while (true) {
+                // busy wait
+            }
+        `;
+
+        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        const workerUrl = URL.createObjectURL(blob);
+        
+        console.log("Spawning worker...");
+        const worker = new Worker(workerUrl);
+        
+        // This will never be called
+        worker.onmessage = (e) => {
+            console.log("Message from worker:", e.data);
+        };
+    </script>
+</body>
+</html>

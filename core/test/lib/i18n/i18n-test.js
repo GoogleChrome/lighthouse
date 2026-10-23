@@ -7,12 +7,11 @@
 import path from 'path';
 
 import log from 'lighthouse-logger';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import * as i18n from '../../../lib/i18n/i18n.js';
-import {getModuleDirectory} from '../../../../shared/esm-utils.js';
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 describe('i18n', () => {
   describe('#createIcuMessageFn', () => {
@@ -52,8 +51,8 @@ describe('i18n', () => {
 
       expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
 
-      expect(logListener).toBeCalledTimes(1);
-      expect(logListener).toBeCalledWith(['i18n',
+      expect(logListener).toHaveBeenCalledTimes(1);
+      expect(logListener).toHaveBeenCalledWith(['i18n',
         `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
 
       log.events.off('warning', logListener);
@@ -61,6 +60,7 @@ describe('i18n', () => {
 
     it('falls back to root tag prefix if specific locale not available', () => {
       expect(i18n.lookupLocale('es-JKJK')).toEqual('es');
+      expect(i18n.lookupLocale('de-CH-1996')).toEqual('de');
     });
 
     it('falls back to en-US if no match is available', () => {

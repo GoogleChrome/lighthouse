@@ -24,7 +24,6 @@ import {makeComputedArtifact} from './computed-artifact.js';
  * @property {string} scriptId
  * @property {number} wastedBytes
  * @property {number} totalBytes
- * @property {number} wastedBytes
  * @property {number=} wastedPercent
  * @property {Record<string, number>=} sourcesWastedBytes Keyed by file name. Includes (unmapped) key too.
  */

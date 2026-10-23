@@ -12,9 +12,6 @@ import {Util} from '../../shared/util.js';
  * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  *
- * Every function in this module only runs in the browser, so it is ignored from
- * the c8 code coverage tool. See c8.sh
- *
  * Important: this module should only be imported like this:
  *     const pageFunctions = require('...');
  * Never like this:
@@ -100,13 +97,10 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
   }
 
   try {
-    /** @type {Element} */
-    // @ts-expect-error - clone will be same type as element - see https://github.com/microsoft/TypeScript/issues/283
-    const clone = element.cloneNode();
-
-    // Prevent any potential side-effects by appending to a template element.
+    // Prevent any potential side-effects by cloning into a template element.
     // See https://github.com/GoogleChrome/lighthouse/issues/11465
     const template = element.ownerDocument.createElement('template');
+    const clone = template.content.ownerDocument.importNode(element);
     template.content.append(clone);
     ignoreAttrs.concat(autoFillIgnoreAttrs).forEach(attribute =>{
       clone.removeAttribute(attribute);

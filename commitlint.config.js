@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-module.exports = {
+export default {
   extends: ['cz'],
   rules: {
     'body-leading-blank': [1, 'always'],

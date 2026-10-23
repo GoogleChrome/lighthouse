@@ -11,12 +11,15 @@ import {CdpBrowser} from 'puppeteer-core/lib/puppeteer/cdp/Browser.js';
 import {Connection as PptrConnection} from 'puppeteer-core/lib/puppeteer/cdp/Connection.js';
 
 import lighthouse, * as api from '../../core/index.js';
+import {navigationGather} from '../../core/gather/navigation-runner.js';
+import {Runner} from '../../core/runner.js';
 import {LighthouseError} from '../../core/lib/lh-error.js';
 import {processForProto} from '../../core/lib/proto-preprocessor.js';
 import * as assetSaver from '../../core/lib/asset-saver.js';
 import mobileConfig from '../../core/config/lr-mobile-config.js';
 import desktopConfig from '../../core/config/lr-desktop-config.js';
 import {pageFunctions} from '../../core/lib/page-functions.js';
+import {registerLocaleData} from '../../shared/localization/format.js';
 
 /** @type {Record<'mobile'|'desktop', LH.Config>} */
 const LR_PRESETS = {
@@ -42,8 +45,10 @@ async function getPageFromConnection(connection) {
   const channel = connection.channel_ || connection.rootSessionConnection_;
   const transport = channel.root_.transport_;
 
+  // @ts-expect-error Connection constructor expects more arguments in puppeteer-core types, but optional in js.
   const pptrConnection = new PptrConnection(mainTargetInfo.url, transport);
 
+  // @ts-expect-error CdpBrowser._create expects more arguments in puppeteer-core types, but optional in js.
   const browser = await CdpBrowser._create(
     pptrConnection,
     [] /* contextIds */,
@@ -71,14 +76,27 @@ async function getPageFromConnection(connection) {
  * Run lighthouse for connection and provide similar results as in CLI.
  *
  * If configOverride is provided, lrDevice and categoryIDs are ignored.
+ *
  * @param {any} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config, ignoreStatusCode?: boolean}} lrOpts Options coming from Lightrider
+ * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config, ignoreStatusCode?: boolean, locale?: string, localeData?: any}} lrOpts Options coming from Lightrider
  * @return {Promise<string>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
-  const {lrDevice, categoryIDs, logAssets, configOverride, ignoreStatusCode} = lrOpts;
+  const {lrDevice,
+    categoryIDs,
+    logAssets,
+    configOverride,
+    ignoreStatusCode,
+    locale,
+    localeData,
+  } = lrOpts;
+
+  if (locale && localeData) {
+    registerLocaleData(/** @type {LH.Locale} */(locale), localeData);
+    flags.locale = /** @type {LH.Locale} */(locale);
+  }
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightrider = true;
@@ -102,7 +120,18 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
 
   try {
     const page = await runLighthouseInLR.getPageFromConnection(connection);
-    const runnerResult = await lighthouse(url, flags, config, page);
+    let gatherResult;
+    try {
+      gatherResult = await navigationGather(page, url, {config, flags});
+    } finally {
+      // Close it before we begin auditing to decrease peak memory usage in Lightrider.
+      try {
+        await page.close();
+      } catch (err) {
+        log.warn('lightrider-entry', err.message);
+      }
+    }
+    const runnerResult = await Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
 
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
@@ -162,8 +191,10 @@ const {computeBenchmarkIndex} = pageFunctions;
 runLighthouseInLR.getPageFromConnection = getPageFromConnection;
 
 export {
+  lighthouse,
   runLighthouseInLR,
   api,
+  api as index,
   listenForStatus,
   LR_PRESETS,
   computeBenchmarkIndex,

@@ -13,8 +13,7 @@ const PSI_DEFAULT_CATEGORIES = [
   'accessibility',
   'seo',
   'best-practices',
-  // TODO: this is not supported in PSI yet.
-  // 'agentic-browsing',
+  'agentic-browsing',
 ];
 
 /**

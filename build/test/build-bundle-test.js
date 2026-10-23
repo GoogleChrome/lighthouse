@@ -25,19 +25,38 @@ const TEST_HTML = `
 
 describe('Main Bundle build', () => {
   const bundlePath = `${LH_ROOT}/dist/lighthouse-test-bundle.js`;
+  const minifiedBundlePath = `${LH_ROOT}/dist/lighthouse-test-bundle.min.js`;
   const entryPath = path.join(LH_ROOT, 'clients/devtools/devtools-entry.js');
 
   before(async () => {
     await buildBundle(entryPath, bundlePath, {minify: false});
+    await buildBundle(entryPath, minifiedBundlePath, {minify: true});
   });
 
   after(() => {
     if (fs.existsSync(bundlePath)) fs.unlinkSync(bundlePath);
     if (fs.existsSync(bundlePath + '.map')) fs.unlinkSync(bundlePath + '.map');
+    if (fs.existsSync(minifiedBundlePath)) fs.unlinkSync(minifiedBundlePath);
+    if (fs.existsSync(minifiedBundlePath + '.map')) fs.unlinkSync(minifiedBundlePath + '.map');
   });
 
   it('bundle exists', () => {
     expect(fs.existsSync(bundlePath)).toBe(true);
+    expect(fs.existsSync(minifiedBundlePath)).toBe(true);
+  });
+
+  it('bundle size is reasonable', () => {
+    const code = fs.readFileSync(minifiedBundlePath, 'utf-8');
+    expect(code.length).toBeLessThan(3_000_000); // 3 MB
+  });
+
+  it('minified bundle contains only ASCII characters', () => {
+    const code = fs.readFileSync(minifiedBundlePath, 'utf-8');
+    let nonAscii = 0;
+    for (let i = 0; i < code.length; i++) {
+      if (code.charCodeAt(i) > 0x7f) nonAscii++;
+    }
+    expect(nonAscii).toBe(0);
   });
 
   it('bundle can run in a browser', async () => {

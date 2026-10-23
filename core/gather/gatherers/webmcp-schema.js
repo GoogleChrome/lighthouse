@@ -11,7 +11,7 @@ import {pageFunctions} from '../../lib/page-functions.js';
 class WebMcpSchemaIssues extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['navigation', 'snapshot'],
+    supportedModes: ['navigation'],
   };
 
   constructor() {

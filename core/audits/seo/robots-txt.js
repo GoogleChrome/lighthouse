@@ -27,7 +27,7 @@ const DIRECTIVE_SAFELIST = new Set([
   DIRECTIVE_ALLOW, DIRECTIVE_SITEMAP, // universally supported
   'crawl-delay', // yahoo, bing, yandex
   'clean-param', 'host', // yandex
-  'request-rate', 'visit-time', 'noindex', 'content-signal', // not officially supported, but used in the wild
+  'request-rate', 'visit-time', 'noindex', 'content-signal', 'license', // not officially supported, but used in the wild
 ]);
 const SITEMAP_VALID_PROTOCOLS = new Set(['https:', 'http:', 'ftp:']);
 
@@ -50,8 +50,13 @@ const UIStrings = {
     =1 {1 error found}
     other {# errors found}
     }`,
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the robots.txt file for the site.  Note: "robots.txt" is a canonical filename and should not be translated.
+   * @example {Timed out fetching resource} error
+   * */
+  explanationWithError: 'Fetch of robots.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the robots.txt file for the site.  Note: "robots.txt" is a canonical filename and should not be translated. */
-  explanation: 'Lighthouse was unable to download a robots.txt file',
+  explanation: 'Fetch of robots.txt failed',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -200,30 +205,34 @@ class RobotsTxt extends Audit {
     const {
       status,
       content,
+      errorMessage,
     } = artifacts.RobotsTxt;
 
-    if (!status) {
-      return {
-        score: 0,
-        explanation: str_(UIStrings.explanation),
-      };
-    }
-
-    if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
+    // Do specific error messages first.
+    if (status && (status >= HTTP_SERVER_ERROR_CODE_LOW || status === 429)) {
       return {
         score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
       };
-    } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
+    } else if (status && status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
       return {
         score: 1,
         notApplicable: true,
       };
     }
 
-    // If status is good, content must be not null.
-    if (content === null) {
-      throw new Error(`Status ${status} was valid, but content was null`);
+    if (errorMessage) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWithError, {error: errorMessage}),
+      };
+    }
+
+    if (!status || content === null) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanation),
+      };
     }
 
     const validationErrors = validateRobots(content);

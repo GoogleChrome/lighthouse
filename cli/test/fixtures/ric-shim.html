@@ -31,17 +31,17 @@ Request Idle Callback Shim Smoke Test
   }
 
   function task(deadline) {
-    while (deadline.timeRemaining() > 0) {
+    do {
       sleep(ricTaskDuration);
-    }
+    } while (deadline.timeRemaining() > 0);
 
     if (count < iterations - 1) {
       count++;
-      requestIdleCallback(task);
+      requestIdleCallback(task, {timeout: 100});
     }
   }
 
-  requestIdleCallback(task);
+  requestIdleCallback(task, {timeout: 100});
 </script>
 </body>
 </html>

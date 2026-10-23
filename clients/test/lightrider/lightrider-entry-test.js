@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
 import {Runner} from '../../../core/runner.js';
@@ -15,6 +15,7 @@ import {createMockPage} from '../../../core/test/gather/mock-driver.js';
 
 describe('lightrider-entry', () => {
   let mockConnection;
+  const originalGetPageFromConnection = runLighthouseInLR.getPageFromConnection;
 
   beforeEach(() => {
     mockConnection = {
@@ -28,6 +29,11 @@ describe('lightrider-entry', () => {
       await connection.connect();
       return createMockPage();
     };
+  });
+
+  afterEach(() => {
+    runLighthouseInLR.getPageFromConnection = originalGetPageFromConnection;
+    delete global.isLightrider;
   });
 
   describe('#runLighthouseInLR', () => {
@@ -84,6 +90,13 @@ describe('lightrider-entry', () => {
       await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const resolvedConfig = runStub.mock.calls[0][1].resolvedConfig;
       assert.equal(resolvedConfig.settings.formFactor, 'desktop');
+      const errorsInConsoleAudit = resolvedConfig.audits.find(a => a.path === 'errors-in-console');
+      assert.deepStrictEqual(errorsInConsoleAudit.options, {
+        ignoredPatterns: [
+          'ERR_BLOCKED_BY_CLIENT.Inspector',
+          /^WebSocket connection to 'wss?:\/\/.*' failed:/,
+        ],
+      });
 
       runStub.mockRestore();
     });
@@ -97,6 +110,13 @@ describe('lightrider-entry', () => {
       await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const resolvedConfig = runStub.mock.calls[0][1].resolvedConfig;
       assert.equal(resolvedConfig.settings.formFactor, 'mobile');
+      const errorsInConsoleAudit = resolvedConfig.audits.find(a => a.path === 'errors-in-console');
+      assert.deepStrictEqual(errorsInConsoleAudit.options, {
+        ignoredPatterns: [
+          'ERR_BLOCKED_BY_CLIENT.Inspector',
+          /^WebSocket connection to 'wss?:\/\/.*' failed:/,
+        ],
+      });
 
       runStub.mockRestore();
     });
@@ -133,12 +153,15 @@ describe('lightrider-entry', () => {
       runStub.mockRestore();
     });
 
-    let originalRun;
+    let originalGather;
+    let originalAudit;
     beforeEach(() => {
-      originalRun = Runner.run;
+      originalGather = Runner.gather;
+      originalAudit = Runner.audit;
     });
     afterEach(() => {
-      Runner.run = originalRun;
+      Runner.gather = originalGather;
+      Runner.audit = originalAudit;
     });
 
     it('exposes artifacts when logAssets is true', async () => {
@@ -162,6 +185,32 @@ describe('lightrider-entry', () => {
           message: 'some error',
         },
       });
+    });
+
+    it('closes the page before auditing', async () => {
+      const events = [];
+      const mockPage = createMockPage();
+      mockPage.close = jestMock.fn(async () => events.push('page.close'));
+      runLighthouseInLR.getPageFromConnection = async (connection) => {
+        await connection.connect();
+        return mockPage;
+      };
+
+      Runner.gather = jestMock.fn(async () => {
+        events.push('Runner.gather');
+        return {};
+      });
+      Runner.audit = jestMock.fn(async () => {
+        events.push('Runner.audit');
+        return {lhr: {}, artifacts: {}};
+      });
+
+      await runLighthouseInLR(mockConnection, 'https://example.com', {}, {});
+      assert.deepStrictEqual(events, [
+        'Runner.gather',
+        'page.close',
+        'Runner.audit',
+      ]);
     });
   });
 });

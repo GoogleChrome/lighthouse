@@ -65,7 +65,7 @@ We use `testdouble` and `mocha` to mock modules for testing. However, [mocha wil
 Analyzing the dependency trees can be complicated, so we recommend importing as many modules as possible (read: all non-test modules, typically) dynamically and only using static imports for test libraries (e.g. `testdouble`, `jest-mock`, `assert`). For example:
 
 ```js
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 await td.replaceEsm('./module-to-mock.js', {
