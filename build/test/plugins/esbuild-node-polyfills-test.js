@@ -49,11 +49,17 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
         const b64 = utf8Buf.toString('base64');
         const roundTrip = Buffer.from(b64, 'base64').toString('utf-8');
         const urlSafeRoundTrip = Buffer.from('SGVsbG8tV29ybGRf', 'base64').toString('utf8');
+        const singleCharB64 = Buffer.from('a', 'base64').toString('utf8');
+        const trailingOneCharQuantum = Buffer.from('YWJjZ', 'base64').toString('utf8');
+        const midPaddingB64 = Buffer.from('YWJj==ZGVm', 'base64').toString('utf8');
         const allocBuf = Buffer.alloc(4, 0x41);
         return {
           isBuf: Buffer.isBuffer(utf8Buf),
           roundTrip,
           urlSafeRoundTrip,
+          singleCharB64,
+          trailingOneCharQuantum,
+          midPaddingB64,
           allocStr: allocBuf.toString('utf8'),
         };
       }
@@ -68,6 +74,9 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
       isBuf: true,
       roundTrip: 'Hello Lighthouse 🚀',
       urlSafeRoundTrip: 'Hello-World_',
+      singleCharB64: '',
+      trailingOneCharQuantum: 'abc',
+      midPaddingB64: 'abc',
       allocStr: 'AAAA',
     });
 
@@ -77,6 +86,9 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
       isBuf: true,
       roundTrip: 'Hello Lighthouse 🚀',
       urlSafeRoundTrip: 'Hello-World_',
+      singleCharB64: '',
+      trailingOneCharQuantum: 'abc',
+      midPaddingB64: 'abc',
       allocStr: 'AAAA',
     });
   });
@@ -155,7 +167,7 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
 
   it('shims process, url, module, and replaces fs, stream, zlib with empty stubs', async () => {
     const mod = await bundleAndEvaluate(`
-      import process from 'process';
+      import process, {cwd} from 'process';
       import url from 'url';
       import {createRequire} from 'module';
       import fs from 'fs';
@@ -173,6 +185,8 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
         return {
           ticked,
           browser: process.browser,
+          cwd: process.cwd(),
+          namedCwd: cwd(),
           filePath: url.fileURLToPath('file:///path/to/file.js'),
           emptyRequire: Object.keys(createRequire('file:///a.js')).length === 0,
           fsEmpty: Object.keys(fs).length === 0,
@@ -184,6 +198,8 @@ describe('esbuild-node-polyfills (nodeModuleShims)', () => {
     expect(await mod.run()).toEqual({
       ticked: true,
       browser: true,
+      cwd: '/',
+      namedCwd: '/',
       filePath: 'file:///path/to/file.js',
       emptyRequire: true,
       fsEmpty: true,

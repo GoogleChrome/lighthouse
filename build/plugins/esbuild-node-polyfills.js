@@ -42,7 +42,10 @@ function decodeUtf8(bytes) {
 }
 
 function decodeBase64(str) {
-  let b64 = str.replace(/-/g, '+').replace(/_/g, '/').replace(/[^A-Za-z0-9+/]/g, '');
+  let b64 = str.split('=')[0].replace(/-/g, '+').replace(/_/g, '/').replace(/[^A-Za-z0-9+/]/g, '');
+  if (b64.length % 4 === 1) {
+    b64 = b64.slice(0, -1);
+  }
   while (b64.length % 4) b64 += '=';
   if (typeof Uint8Array.fromBase64 === 'function') {
     return Uint8Array.fromBase64(b64);
@@ -281,6 +284,7 @@ export const env = {};
 export const version = '';
 export const versions = {};
 export const platform = '';
+export const cwd = () => '/';
 export const nextTick = (fn, ...args) => queueMicrotask(() => fn(...args));
 export default {
   browser,
@@ -288,6 +292,7 @@ export default {
   version,
   versions,
   platform,
+  cwd,
   nextTick,
 };
 `;
