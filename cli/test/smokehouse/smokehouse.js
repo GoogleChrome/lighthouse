@@ -190,10 +190,10 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
         clearTimeout(timeoutId);
       }
 
-      if (!timedResult.lhr?.audits || !timedResult.artifacts) {
+      if (!timedResult?.lhr?.audits || !timedResult.artifacts) {
         // Something went really wrong and the runner didn't catch it.
         throw new Error('lighthouse runner returned a bad result. got lhr:\n' +
-          JSON.stringify(timedResult.lhr, null, 2));
+          JSON.stringify(timedResult?.lhr, null, 2));
       }
 
       result = {
@@ -206,9 +206,17 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       if (takeNetworkRequestUrls) takeNetworkRequestUrls();
 
       logChildProcessError(bufferedConsole, e);
+      const runnerLog = logger.getLog();
       if (isTimeout) {
         bufferedConsole.log('Timed out. log from lighthouseRunner:');
-        bufferedConsole.log(logger.getLog());
+        bufferedConsole.log(runnerLog);
+      } else if (
+        !(e instanceof ChildProcessError) &&
+        runnerLog &&
+        !e.message?.includes(runnerLog)
+      ) {
+        bufferedConsole.log('log from lighthouseRunner:');
+        bufferedConsole.log(runnerLog);
       }
       continue; // Retry, if possible.
     }
