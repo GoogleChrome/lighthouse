@@ -75,15 +75,44 @@ describe('ArbitraryEqualityMap', () => {
     assert.equal(deepEquals(/abc/g, /abc/i), false);
     assert.equal(deepEquals(new Uint8Array([1, 2]), new Uint8Array([1, 2])), true);
     assert.equal(deepEquals(new Uint8Array([1, 2]), new Uint8Array([1, 3])), false);
+    assert.equal(deepEquals(new Uint8Array([1, 2]).buffer, new Uint8Array([1, 2]).buffer), true);
+    assert.equal(deepEquals(new Uint8Array([1, 2]).buffer, new Uint8Array([1, 3]).buffer), false);
+    assert.equal(deepEquals(new ArrayBuffer(2), new ArrayBuffer(4)), false);
     assert.equal(deepEquals(new Set([1, 2]), new Set([1, 2])), true);
     assert.equal(deepEquals(new Set([1, 2]), new Set([1, 3])), false);
+    assert.equal(deepEquals(new Set([{x: 1}, {y: 2}]), new Set([{y: 2}, {x: 1}])), true);
+    assert.equal(deepEquals(new Set([{x: 1}, {x: 1}]), new Set([{x: 1}, {x: 2}])), false);
     assert.equal(deepEquals(new Map([['a', {x: 1}]]), new Map([['a', {x: 1}]])), true);
     assert.equal(deepEquals(new Map([['a', {x: 1}]]), new Map([['a', {x: 2}]])), false);
+    assert.equal(deepEquals(new Error('a'), new Error('a')), true);
+    assert.equal(deepEquals(new Error('a'), new Error('b')), false);
+    assert.equal(deepEquals(new Error('a'), new TypeError('a')), false);
+    assert.equal(
+      deepEquals(new Error('a', {cause: {x: 1}}), new Error('a', {cause: {x: 1}})),
+      true
+    );
+    assert.equal(
+      deepEquals(new Error('a', {cause: {x: 1}}), new Error('a', {cause: {x: 2}})),
+      false
+    );
 
     const cyclicA = {name: 'a'};
     cyclicA.self = cyclicA;
     const cyclicB = {name: 'a'};
     cyclicB.self = cyclicB;
     assert.equal(deepEquals(cyclicA, cyclicB), true);
+
+    const multiCyclicA = {};
+    multiCyclicA.x = multiCyclicA;
+    multiCyclicA.y = multiCyclicA;
+    const multiCyclicB1 = {};
+    const multiCyclicB2 = {};
+    multiCyclicB1.x = multiCyclicB2;
+    multiCyclicB1.y = multiCyclicB1;
+    multiCyclicB2.x = multiCyclicB1;
+    multiCyclicB2.y = multiCyclicB2;
+    assert.equal(deepEquals(multiCyclicA, multiCyclicB1), true);
+    multiCyclicB2.y = {x: multiCyclicB1, y: {}};
+    assert.equal(deepEquals(multiCyclicA, multiCyclicB1), false);
   });
 });
