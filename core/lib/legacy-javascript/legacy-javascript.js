@@ -189,8 +189,8 @@ function getPolyfillPatterns() {
   // 4. es-shims: `no(Object,{entries:r},{entries:function`
   const esShimsBranches = [];
   for (const [object, props] of byObject) {
-    const propAlt = `(?:${props.join('|')})`;
-    esShimsBranches.push(`${escapeRegExp(object)},\\s*{${propAlt}:.*},\\s*{${propAlt}`);
+    const propBranches = props.map(p => `${p}:[^};]*},\\s*{${p}\\b`).join('|');
+    esShimsBranches.push(`${escapeRegExp(object)},\\s*{(?:${propBranches})`);
   }
 
   // 5. core-js@3 minified pattern:
