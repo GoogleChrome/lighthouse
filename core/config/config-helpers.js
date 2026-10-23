@@ -245,8 +245,13 @@ async function requireGatherer(gathererPath, coreGathererList, configDir) {
 
   let requirePath = `../gather/gatherers/${gathererPath}`;
   if (!coreGatherer) {
-    // Otherwise, attempt to find it elsewhere. This throws if not found.
-    requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
+    if (bundledModules.size > 0) {
+      // This is for plugin bundling.
+      requirePath = gathererPath;
+    } else {
+      // Otherwise, attempt to find it elsewhere. This throws if not found.
+      requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
+    }
   }
 
   const GathererClass = /** @type {GathererConstructor} */ (await requireWrapper(requirePath));
@@ -270,7 +275,7 @@ function requireAudit(auditPath, coreAuditList, configDir) {
   const coreAudit = coreAuditList.find(a => a === auditPathJs);
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
-    if (bundledModules.has(auditPath)) {
+    if (bundledModules.size > 0) {
       // This is for plugin bundling.
       requirePath = auditPath;
     } else {
@@ -353,7 +358,7 @@ async function mergePlugins(config, configDir, flags) {
     validation.assertValidPluginName(config, pluginName);
 
     // In bundled contexts, `resolveModulePath` will fail, so use the raw pluginName directly.
-    const pluginPath = bundledModules.has(pluginName) ?
+    const pluginPath = bundledModules.size > 0 ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
     const rawPluginJson = await requireWrapper(pluginPath);

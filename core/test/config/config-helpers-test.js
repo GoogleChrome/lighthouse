@@ -234,6 +234,19 @@ describe('.mergePlugins', () => {
       .toThrow(/Unable to locate plugin/);
   });
 
+  it('throws when plugin is missing from bundledModules in bundled environment', async () => {
+    bundledModules.set('some-bundled-module', Promise.resolve({}));
+    try {
+      const config = {audits: ['installable-manifest', 'metrics']};
+      const flags = {plugins: ['lighthouse-plugin-missing']};
+      await expect(mergePlugins(config, configDir, flags)).rejects.toThrow(
+        /Unable to locate module 'lighthouse-plugin-missing' in bundled Lighthouse/
+      );
+    } finally {
+      bundledModules.clear();
+    }
+  });
+
   it('validate plugin structure', async () => {
     const config = {audits: ['installable-manifest', 'metrics']};
     const flags = {plugins: ['lighthouse-plugin-no-category']};
@@ -408,6 +421,37 @@ describe('.resolveGathererToDefn', () => {
     await expect(resolveGathererToDefn({path: 1234})).rejects.toThrow(/Invalid Gatherer type/);
   });
 
+  it('should find custom gatherer in bundledModules', async () => {
+    class CustomBundledGatherer extends BaseGatherer {}
+    bundledModules.set('custom-bundled-gatherer', Promise.resolve({
+      default: CustomBundledGatherer,
+    }));
+    try {
+      const result = await resolveGathererToDefn('custom-bundled-gatherer', coreList);
+      expect(result).toEqual({
+        path: 'custom-bundled-gatherer',
+        implementation: CustomBundledGatherer,
+        instance: expect.any(CustomBundledGatherer),
+      });
+    } finally {
+      bundledModules.clear();
+    }
+  });
+
+  it('throws when gatherer is missing from bundledModules in bundled environment', async () => {
+    bundledModules.set('some-bundled-module', Promise.resolve({}));
+    try {
+      await expect(resolveGathererToDefn('image-elements', coreList)).rejects.toThrow(
+        /Unable to locate module '\.\.\/gather\/gatherers\/image-elements' in bundled Lighthouse/
+      );
+      await expect(resolveGathererToDefn('custom-gatherer', coreList)).rejects.toThrow(
+        /Unable to locate module 'custom-gatherer' in bundled Lighthouse/
+      );
+    } finally {
+      bundledModules.clear();
+    }
+  });
+
   it('throws but not for missing gatherer when it has a node dependency error', async () => {
     const resultPromise =
       resolveGathererToDefn('../fixtures/invalid-gatherers/require-error.js', [], moduleDir);
@@ -499,6 +543,9 @@ describe('.resolveAuditsToDefns', () => {
     try {
       await expect(resolveAuditsToDefns(['user-timings'])).rejects.toThrow(
         /Unable to locate module '\.\.\/audits\/user-timings' in bundled Lighthouse/
+      );
+      await expect(resolveAuditsToDefns(['custom-audit'])).rejects.toThrow(
+        /Unable to locate module 'custom-audit' in bundled Lighthouse/
       );
     } finally {
       bundledModules.clear();
