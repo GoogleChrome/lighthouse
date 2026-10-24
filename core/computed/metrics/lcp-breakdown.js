@@ -15,7 +15,7 @@ import {NavigationInsights} from '../navigation-insights.js';
 /**
  * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
  * @param {string} requestId
- * @return {LH.Gatherer.Simulation.NodeTiming|undefined}
+ * @return {(LH.Gatherer.Simulation.NodeTiming & {queuedTime?: number})|undefined}
  */
 function findNetworkNodeTiming(nodeTimings, requestId) {
   for (const [node, timing] of nodeTimings.entries()) {
@@ -65,15 +65,16 @@ class LCPBreakdown {
       let unclampedLoadEnd;
       if (optimisticTiming && pessimisticTiming) {
         const {optimistic, pessimistic} = LanternLargestContentfulPaint.coefficients;
-        unclampedLoadStart =
-          optimistic * optimisticTiming.startTime + pessimistic * pessimisticTiming.startTime;
+        const optimisticStart = optimisticTiming.queuedTime ?? optimisticTiming.startTime;
+        const pessimisticStart = pessimisticTiming.queuedTime ?? pessimisticTiming.startTime;
+        unclampedLoadStart = optimistic * optimisticStart + pessimistic * pessimisticStart;
         unclampedLoadEnd =
           optimistic * optimisticTiming.endTime + pessimistic * pessimisticTiming.endTime;
       } else if (optimisticTiming) {
-        unclampedLoadStart = optimisticTiming.startTime;
+        unclampedLoadStart = optimisticTiming.queuedTime ?? optimisticTiming.startTime;
         unclampedLoadEnd = optimisticTiming.endTime;
       } else if (pessimisticTiming) {
-        unclampedLoadStart = pessimisticTiming.startTime;
+        unclampedLoadStart = pessimisticTiming.queuedTime ?? pessimisticTiming.startTime;
         unclampedLoadEnd = pessimisticTiming.endTime;
       } else {
         const throttleRatio = metricLcp / observedLcp;
