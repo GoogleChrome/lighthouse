@@ -280,7 +280,8 @@ function filterConfigForSoftNavigation(resolvedConfig) {
       softNavigationAuditIds.has(meta.id);
   });
   const audits = filterAuditsByAvailableArtifacts(supportedAudits, artifacts || []);
-  const categories = filterCategoriesByAvailableAudits(resolvedConfig.categories, audits || []);
+  const supportedCategories = filterCategoriesByGatherMode(resolvedConfig.categories, 'timespan');
+  const categories = filterCategoriesByAvailableAudits(supportedCategories, audits || []);
 
   return {
     ...resolvedConfig,

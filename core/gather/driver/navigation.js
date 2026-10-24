@@ -178,12 +178,14 @@ async function gotoURL(driver, requestor, options) {
   let mainDocumentUrl;
   if (waitForSoftNav) {
     // A soft navigation has no document request. The URL the main frame navigated to within the
-    // document serves as both the requested URL and the main document URL.
+    // document serves as both the requested URL and the main document URL. When the main frame
+    // never navigated, the run continues on the current URL so the trace is still processed and
+    // the metrics report why no soft navigation was found.
     if (!softNavigationUrl) {
-      throw Error('No soft navigation detected when running user defined requestor.');
+      log.warn('Navigation', 'No soft navigation detected when running user defined requestor.');
     }
-    requestedUrl = softNavigationUrl;
-    mainDocumentUrl = softNavigationUrl;
+    requestedUrl = softNavigationUrl || await driver.url();
+    mainDocumentUrl = requestedUrl;
   } else {
     const navigationUrls = await networkMonitor.getNavigationUrls();
 

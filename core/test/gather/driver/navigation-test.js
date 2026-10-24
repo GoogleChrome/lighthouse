@@ -261,28 +261,32 @@ describe('.gotoURL', () => {
     expect(await loadPromise).toEqual({requestedUrl: url, mainDocumentUrl: url, warnings: []});
   });
 
-  it('throws if no soft navigation is observed before the timeout', async () => {
-    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
-    mockDriver.defaultSession.sendCommand
-      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
-    await driver.networkMonitor.enable();
+  it('continues on the current URL if no soft navigation is observed before the timeout',
+    async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      mockDriver.defaultSession.sendCommand
+        .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
+      mockDriver.url.mockResolvedValue('https://www.example.com/current');
+      await driver.networkMonitor.enable();
 
-    const requestor = () => Promise.resolve();
+      const requestor = () => Promise.resolve();
 
-    const loadPromise = makePromiseInspectable(gotoURL(driver, requestor, {
-      waitUntil: ['softNavigation'],
-      maxWaitForLoad: 1000,
-      cpuQuietThresholdMs: 0,
-      networkQuietThresholdMs: 0,
-    }));
-    await flushAllTimersAndMicrotasks();
-    timers.advanceTimersByTime(1001);
-    await flushAllTimersAndMicrotasks();
+      const loadPromise = makePromiseInspectable(gotoURL(driver, requestor, {
+        waitUntil: ['softNavigation'],
+        maxWaitForLoad: 1000,
+        cpuQuietThresholdMs: 0,
+        networkQuietThresholdMs: 0,
+      }));
+      await flushAllTimersAndMicrotasks();
+      timers.advanceTimersByTime(1001);
+      await flushAllTimersAndMicrotasks();
 
-    await expect(loadPromise).rejects.toThrow(
-      'No soft navigation detected when running user defined requestor.'
-    );
-  });
+      const results = await loadPromise;
+      expect(results.requestedUrl).toEqual('https://www.example.com/current');
+      expect(results.mainDocumentUrl).toEqual('https://www.example.com/current');
+      expect(results.warnings).toHaveLength(1);
+      expect(results.warnings[0]).toBeDisplayString(/loaded too slowly/);
+    });
 
   it('throws when asked to wait for a soft navigation and a page load', async () => {
     mockDriver.defaultSession.on = mockDriver.defaultSession.once;

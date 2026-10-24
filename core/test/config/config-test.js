@@ -132,6 +132,12 @@ describe('Config', () => {
       resolvedConfig.categories?.performance.auditRefs.map(ref => ref.id) || [];
     expect(performanceAuditIds).toContain('first-contentful-paint');
     expect(performanceAuditIds).not.toContain('speed-index');
+
+    // Categories that don't support timespan mode don't apply to a soft navigation either.
+    expect(Object.keys(resolvedConfig.categories || {})).toEqual([
+      'performance',
+      'best-practices',
+    ]);
   });
 
   it('should ensure minimum quiet thresholds when throttlingMethod is devtools', async () => {
