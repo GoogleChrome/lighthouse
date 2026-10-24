@@ -16,10 +16,12 @@
  */
 
 /** @typedef {Omit<LH.Artifacts.NavigationTraceTimes, 'firstContentfulPaintAllFrames'|'traceEnd'>} TraceNavigationTimesForFrame */
-/** @typedef {'lastNavigationStart'|'firstResourceSendRequest'|'lighthouseMarker'|'auto'} TimeOriginDeterminationMethod */
+/** @typedef {'lastNavigationStart'|'firstResourceSendRequest'|'lighthouseMarker'|'softNavigationStart'|'auto'} TimeOriginDeterminationMethod */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number}, frame: string}}} LCPCandidateEvent */
+/** @typedef {LH.TraceEvent & {name: 'SoftNavigationStart', args: {context: {URL?: string, firstContentfulPaint?: number, performanceTimelineNavigationId?: number, softNavContextId?: number, timeOrigin: number}}}} SoftNavigationStartEvent */
+/** @typedef {LH.TraceEvent & {name: 'largestContentfulPaint::CandidateForSoftNavigation', args: {data: {performanceTimelineNavigationId?: number}}}} SoftNavigationLCPCandidateEvent */
 
 import log from 'lighthouse-logger';
 
@@ -40,6 +42,10 @@ const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue'
 class TraceProcessor {
   static get TIMESPAN_MARKER_ID() {
     return '__lighthouseTimespanStart__';
+  }
+
+  static get SOFT_NAVIGATION_MARKER_ID() {
+    return '__lighthouseSoftNavigationStart__';
   }
 
   /**
@@ -68,6 +74,13 @@ class TraceProcessor {
    */
   static createNoFirstContentfulPaintError() {
     return new Error('No FirstContentfulPaint event found');
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoSoftNavigationError() {
+    return new Error('No SoftNavigationStart event found');
   }
 
   /**
@@ -870,6 +883,15 @@ class TraceProcessor {
       mainFrameInfo,
     } = processedTrace;
 
+    if (timeOriginEvt.name === 'SoftNavigationStart') {
+      return this.processSoftNavigation(processedTrace);
+    }
+    if (timeOriginEvt.name === 'clock_sync' &&
+        timeOriginEvt.args.sync_id === TraceProcessor.SOFT_NAVIGATION_MARKER_ID) {
+      // Lighthouse expected a soft navigation but Chrome never reported one.
+      throw this.createNoSoftNavigationError();
+    }
+
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeNavigationTimingsForFrame(frameEvents, {timeOriginEvt});
 
@@ -929,6 +951,85 @@ class TraceProcessor {
   }
 
   /**
+   * Computes the key timings of a soft navigation (a same-document navigation triggered by user
+   * interaction) whose `SoftNavigationStart` event is the time origin of the processed trace.
+   *
+   * Chrome reports the soft navigation's first contentful paint on the `SoftNavigationStart` event
+   * itself and its LCP candidates as `largestContentfulPaint::CandidateForSoftNavigation` events,
+   * correlated by `performanceTimelineNavigationId`. The soft navigation is observed until the next
+   * one starts. There is no first paint, load or DOMContentLoaded for a soft navigation.
+   *
+   * @param {LH.Artifacts.ProcessedTrace} processedTrace
+   * @return {LH.Artifacts.ProcessedNavigation}
+   */
+  static processSoftNavigation(processedTrace) {
+    const {frameEvents, timeOriginEvt, timings, timestamps} = processedTrace;
+    const softNavigationStartEvt = /** @type {SoftNavigationStartEvent} */ (timeOriginEvt);
+    const {context} = softNavigationStartEvt.args;
+
+    const nextSoftNavigationStartEvt = frameEvents.find(
+      e => e.name === 'SoftNavigationStart' && e.ts > timeOriginEvt.ts
+    );
+    const windowEnd = nextSoftNavigationStartEvt?.ts ?? Infinity;
+    /** @param {number} ts */
+    const isInWindow = ts => ts >= timeOriginEvt.ts && ts < windowEnd;
+
+    const firstContentfulPaintTs = context.firstContentfulPaint;
+    if (firstContentfulPaintTs === undefined || !isInWindow(firstContentfulPaintTs)) {
+      throw this.createNoFirstContentfulPaintError();
+    }
+
+    // frameEvents are sorted by timestamp, so the last matching candidate is the final LCP.
+    const largestContentfulPaintEvt = frameEvents
+      .filter(e => e.name === 'largestContentfulPaint::CandidateForSoftNavigation')
+      .map(e => /** @type {SoftNavigationLCPCandidateEvent} */ (e))
+      .filter(e => {
+        return e.args.data.performanceTimelineNavigationId ===
+          context.performanceTimelineNavigationId && isInWindow(e.ts);
+      })
+      .at(-1);
+
+    /** @param {number} ts */
+    const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
+    /** @param {number=} ts */
+    const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
+
+    return {
+      timings: {
+        timeOrigin: timings.timeOrigin,
+        firstPaint: undefined,
+        firstContentfulPaint: getTiming(firstContentfulPaintTs),
+        firstContentfulPaintAllFrames: getTiming(firstContentfulPaintTs),
+        largestContentfulPaint: maybeGetTiming(largestContentfulPaintEvt?.ts),
+        largestContentfulPaintAllFrames: maybeGetTiming(largestContentfulPaintEvt?.ts),
+        load: undefined,
+        domContentLoaded: undefined,
+        traceEnd: timings.traceEnd,
+      },
+      timestamps: {
+        timeOrigin: timestamps.timeOrigin,
+        firstPaint: undefined,
+        firstContentfulPaint: firstContentfulPaintTs,
+        firstContentfulPaintAllFrames: firstContentfulPaintTs,
+        largestContentfulPaint: largestContentfulPaintEvt?.ts,
+        largestContentfulPaintAllFrames: largestContentfulPaintEvt?.ts,
+        load: undefined,
+        domContentLoaded: undefined,
+        traceEnd: timestamps.traceEnd,
+      },
+      firstPaintEvt: undefined,
+      // There is no dedicated FCP event for a soft navigation; the start event carries its timing.
+      firstContentfulPaintEvt: softNavigationStartEvt,
+      firstContentfulPaintAllFramesEvt: softNavigationStartEvt,
+      largestContentfulPaintEvt,
+      largestContentfulPaintAllFramesEvt: largestContentfulPaintEvt,
+      loadEvt: undefined,
+      domContentLoadedEvt: undefined,
+      lcpInvalidated: false,
+    };
+  }
+
+  /**
    * Computes the last observable timestamp in a set of trace events.
    *
    * @param {Array<LH.TraceEvent>} events
@@ -981,6 +1082,23 @@ class TraceProcessor {
       );
     };
 
+    const softNavigationMarker = () => {
+      return traceEventSubsets.keyEvents.find(
+        evt =>
+          evt.name === 'clock_sync' &&
+          evt.args.sync_id === TraceProcessor.SOFT_NAVIGATION_MARKER_ID
+      );
+    };
+
+    const softNavigationStart = () => {
+      // Our time origin will be the first soft navigation of the frame that Lighthouse observed.
+      // The marker, when present, excludes soft navigations that completed before the run began.
+      const marker = softNavigationMarker();
+      return traceEventSubsets.frameEvents.find(
+        evt => evt.name === 'SoftNavigationStart' && (!marker || evt.ts >= marker.ts)
+      );
+    };
+
     switch (method) {
       case 'firstResourceSendRequest': {
         // Our time origin will be the timestamp of the first request that's sent in the frame.
@@ -1002,8 +1120,15 @@ class TraceProcessor {
         if (!marker) throw this.createNoLighthouseMarkerError();
         return marker;
       }
+      case 'softNavigationStart': {
+        // Fall back to the marker so the trace is still usable when no soft navigation was detected.
+        const softNavStart = softNavigationStart() || softNavigationMarker();
+        if (!softNavStart) throw this.createNoSoftNavigationError();
+        return softNavStart;
+      }
       case 'auto': {
-        const marker = lighthouseMarker() || lastNavigationStart();
+        const marker = lighthouseMarker() || lastNavigationStart() ||
+          softNavigationStart() || softNavigationMarker();
         if (!marker) throw this.createNoNavstartError();
         return marker;
       }

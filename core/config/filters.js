@@ -253,6 +253,45 @@ function filterConfigByGatherMode(resolvedConfig, mode) {
 }
 
 /**
+ * Audits that only declare support for navigation mode but can also evaluate a soft navigation.
+ * Every other navigation-only audit depends on the main document request, which a soft navigation
+ * does not have.
+ */
+const softNavigationAuditIds = new Set([
+  'first-contentful-paint',
+  'largest-contentful-paint',
+]);
+
+/**
+ * Filters a navigation config down to what can evaluate a soft navigation. A soft navigation
+ * happens on a page that is already loaded, so it is observed like a timespan: only the gatherers
+ * and audits that support timespan mode run, plus the navigation-only metrics in
+ * `softNavigationAuditIds`. Audits of the resulting page state belong in a snapshot.
+ *
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
+ * @return {LH.Config.ResolvedConfig}
+ */
+function filterConfigForSoftNavigation(resolvedConfig) {
+  const artifacts = filterArtifactsByGatherMode(resolvedConfig.artifacts, 'timespan');
+  const supportedAudits = resolvedConfig.audits && resolvedConfig.audits.filter(audit => {
+    const meta = audit.implementation.meta;
+    return !meta.supportedModes ||
+      meta.supportedModes.includes('timespan') ||
+      softNavigationAuditIds.has(meta.id);
+  });
+  const audits = filterAuditsByAvailableArtifacts(supportedAudits, artifacts || []);
+  const supportedCategories = filterCategoriesByGatherMode(resolvedConfig.categories, 'timespan');
+  const categories = filterCategoriesByAvailableAudits(supportedCategories, audits || []);
+
+  return {
+    ...resolvedConfig,
+    artifacts,
+    audits,
+    categories,
+  };
+}
+
+/**
  * Filters a config's artifacts, audits, and categories down to the requested set.
  * Skip audits overrides inclusion via `onlyAudits`/`onlyCategories`.
  *
@@ -311,6 +350,7 @@ function filterConfigByExplicitFilters(resolvedConfig, filters) {
 export {
   filterConfigByGatherMode,
   filterConfigByExplicitFilters,
+  filterConfigForSoftNavigation,
   filterArtifactsByGatherMode,
   filterArtifactsByAvailableAudits,
   filterAuditsByAvailableArtifacts,

@@ -73,6 +73,7 @@ const defaultSettings = {
   usePassiveGathering: false,
   disableFullPageScreenshot: false,
   skipAboutBlank: false,
+  softNavigation: false,
   blankPage: 'about:blank',
   ignoreStatusCode: false,
 

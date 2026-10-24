@@ -6,7 +6,12 @@
 
 import log from 'lighthouse-logger';
 
-import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js';
+import {
+  waitForFullyLoaded,
+  waitForFrameNavigated,
+  waitForSoftNavigation,
+  waitForUserToContinue,
+} from './wait-for-condition.js';
 import * as constants from '../../config/constants.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import UrlUtils from '../../lib/url-utils.js';
@@ -39,7 +44,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
-/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>, signal?: AbortSignal} & Partial<LH.Config.Settings>} NavigationOptions */
+/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'|'softNavigation'>, signal?: AbortSignal} & Partial<LH.Config.Settings>} NavigationOptions */
 
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
@@ -104,9 +109,12 @@ async function gotoURL(driver, requestor, options) {
   const waitForNavigated = options.waitUntil.includes('navigated');
   const waitForLoad = options.waitUntil.includes('load');
   const waitForFcp = options.waitUntil.includes('fcp');
+  const waitForSoftNav = options.waitUntil.includes('softNavigation');
 
   /** @type {Array<Promise<{timedOut: boolean}>>} */
   const waitConditionPromises = [];
+  /** @type {string|undefined} */
+  let softNavigationUrl;
   /** @type {Array<() => void>} */
   const cleanups = [];
 
@@ -129,7 +137,19 @@ async function gotoURL(driver, requestor, options) {
       .catch(() => ({timedOut: false})));
   }
 
-  if (waitForLoad) {
+  if (waitForSoftNav) {
+    if (waitForLoad || waitForNavigated) {
+      throw new Error('Cannot wait for a soft navigation and a page load at the same time');
+    }
+    const waitOptions = resolveWaitForFullyLoadedOptions(options);
+    waitConditionPromises.push(
+      waitForSoftNavigation(session, networkMonitor, waitOptions, options.signal)
+        .then(result => {
+          softNavigationUrl = result.url;
+          return {timedOut: result.timedOut};
+        })
+    );
+  } else if (waitForLoad) {
     const waitOptions = resolveWaitForFullyLoadedOptions(options);
     waitConditionPromises.push(
       waitForFullyLoaded(session, networkMonitor, waitOptions, options.signal)
@@ -151,21 +171,38 @@ async function gotoURL(driver, requestor, options) {
     for (const cleanup of cleanups) cleanup();
   }
   const timedOut = waitConditions.some(condition => condition.timedOut);
-  const navigationUrls = await networkMonitor.getNavigationUrls();
 
-  let requestedUrl = navigationUrls.requestedUrl;
-  if (typeof requestor === 'string') {
-    if (requestedUrl && !UrlUtils.equalWithExcludedFragments(requestor, requestedUrl)) {
-      log.error(
-        'Navigation',
-        `Provided URL (${requestor}) did not match initial navigation URL (${requestedUrl})`
-      );
+  /** @type {string|undefined} */
+  let requestedUrl;
+  /** @type {string|undefined} */
+  let mainDocumentUrl;
+  if (waitForSoftNav) {
+    // A soft navigation has no document request. The URL the main frame navigated to within the
+    // document serves as both the requested URL and the main document URL. When the main frame
+    // never navigated, the run continues on the current URL so the trace is still processed and
+    // the metrics report why no soft navigation was found.
+    if (!softNavigationUrl) {
+      log.warn('Navigation', 'No soft navigation detected when running user defined requestor.');
     }
-    requestedUrl = requestor;
-  }
-  if (!requestedUrl) throw Error('No navigations detected when running user defined requestor.');
+    requestedUrl = softNavigationUrl || await driver.url();
+    mainDocumentUrl = requestedUrl;
+  } else {
+    const navigationUrls = await networkMonitor.getNavigationUrls();
 
-  const mainDocumentUrl = navigationUrls.mainDocumentUrl || requestedUrl;
+    requestedUrl = navigationUrls.requestedUrl;
+    if (typeof requestor === 'string') {
+      if (requestedUrl && !UrlUtils.equalWithExcludedFragments(requestor, requestedUrl)) {
+        log.error(
+          'Navigation',
+          `Provided URL (${requestor}) did not match initial navigation URL (${requestedUrl})`
+        );
+      }
+      requestedUrl = requestor;
+    }
+    if (!requestedUrl) throw Error('No navigations detected when running user defined requestor.');
+
+    mainDocumentUrl = navigationUrls.mainDocumentUrl || requestedUrl;
+  }
 
   // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
   await Promise.race(options.signal ?

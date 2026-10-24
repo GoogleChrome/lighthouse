@@ -293,6 +293,128 @@ describe('waitForFullyLoaded()', () => {
   });
 });
 
+describe('waitForSoftNavigation()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
+  let session;
+  let networkMonitor;
+  /** @type {import('../../../gather/driver/wait-for-condition.js').WaitOptions} */
+  let options;
+
+  beforeEach(() => {
+    session = {sendCommand: fnAny().mockResolvedValue(), setNextProtocolTimeout: fnAny()};
+    networkMonitor = {getInflightRequests: fnAny().mockReturnValue([])};
+
+    options = {
+      pauseAfterFcpMs: 0,
+      pauseAfterLoadMs: 0,
+      networkQuietThresholdMs: 5000,
+      cpuQuietThresholdMs: 5000,
+      maxWaitForLoadedMs: 60000,
+      maxWaitForFcpMs: undefined,
+      _waitForTestOverrides: {
+        waitForFcp: createMockWaitForFn(),
+        waitForLoadEvent: createMockWaitForFn(),
+        waitForNetworkIdle: createMockMultipleInvocationWaitForFn(),
+        waitForCPUIdle: createMockWaitForFn(),
+        waitForNavigatedWithinDocument: createMockWaitForFn(),
+      },
+    };
+  });
+
+  it('should wait for the navigation and network idle, then CPU idle', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = makePromiseInspectable(
+      wait.waitForSoftNavigation(session, networkMonitor, options)
+    );
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for anything');
+
+    overrides.waitForNetworkIdle.waitForCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for the navigation');
+    expect(overrides.waitForCPUIdle).not.toHaveBeenCalled();
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for CPU idle');
+    expect(overrides.waitForCPUIdle).toHaveBeenCalled();
+
+    overrides.waitForCPUIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(await waitPromise).toEqual({timedOut: false, url: 'https://example.com/next'});
+  });
+
+  it('should not wait for a load event or FCP', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = makePromiseInspectable(
+      wait.waitForSoftNavigation(session, networkMonitor, options)
+    );
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    overrides.waitForNetworkIdle.waitForCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    overrides.waitForCPUIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+
+    expect(waitPromise).toBeDone('Waited for something else');
+    expect(overrides.waitForLoadEvent).not.toHaveBeenCalled();
+    expect(overrides.waitForFcp).not.toHaveBeenCalled();
+  });
+
+  it('should treat DOMContentLoaded as already fired for network idle', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = wait.waitForSoftNavigation(session, networkMonitor, options);
+
+    const networkIdleCalls = overrides.waitForNetworkIdle.waitForCalls;
+    expect(networkIdleCalls).toHaveLength(2);
+    for (const call of networkIdleCalls) {
+      expect(call.arguments[2]).toMatchObject({pretendDCLAlreadyFired: true});
+    }
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    networkIdleCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    overrides.waitForCPUIdle.mockResolve();
+    await waitPromise;
+  });
+
+  it('should time out but keep the URL when the navigation was observed', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = makePromiseInspectable(
+      wait.waitForSoftNavigation(session, networkMonitor, options)
+    );
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for network idle');
+
+    timers.advanceTimersByTime(60001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not wait for timeout');
+    // Check that we cancelled all our listeners
+    expect(overrides.waitForNavigatedWithinDocument.getMockCancelFn()).toHaveBeenCalled();
+    for (const result of overrides.waitForNetworkIdle.mock.results) {
+      expect(result.value.cancel).toHaveBeenCalled();
+    }
+
+    expect(await waitPromise).toEqual({timedOut: true, url: 'https://example.com/next'});
+  });
+
+  it('should time out without a URL when no navigation was observed', async () => {
+    const waitPromise = makePromiseInspectable(
+      wait.waitForSoftNavigation(session, networkMonitor, options)
+    );
+
+    timers.advanceTimersByTime(60001);
+    await flushAllTimersAndMicrotasks();
+
+    expect(await waitPromise).toEqual({timedOut: true, url: undefined});
+  });
+});
+
 describe('waitForFcp()', () => {
   before(() => timers.useFakeTimers());
   after(() => timers.dispose());

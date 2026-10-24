@@ -73,6 +73,73 @@ describe('Config', () => {
     });
   });
 
+  it('should override settings for a soft navigation', async () => {
+    const {resolvedConfig} = await initializeConfig(
+      'navigation',
+      undefined,
+      {softNavigation: true, throttlingMethod: 'simulate'}
+    );
+
+    expect(resolvedConfig.settings).toMatchObject({
+      throttlingMethod: 'devtools',
+      skipAboutBlank: true,
+      disableStorageReset: true,
+    });
+  });
+
+  it('should ignore softNavigation outside of navigation mode', async () => {
+    const {resolvedConfig} = await initializeConfig(
+      'timespan',
+      undefined,
+      {softNavigation: true}
+    );
+
+    expect(resolvedConfig.settings).toMatchObject({
+      skipAboutBlank: false,
+      disableStorageReset: false,
+    });
+  });
+
+  it('should filter audits that need a document request for a soft navigation', async () => {
+    const {resolvedConfig} = await initializeConfig(
+      'navigation',
+      undefined,
+      {softNavigation: true}
+    );
+
+    const auditIds = resolvedConfig.audits?.map(audit => audit.implementation.meta.id) || [];
+    expect(auditIds).toEqual(expect.arrayContaining([
+      'first-contentful-paint',
+      'largest-contentful-paint',
+      'cumulative-layout-shift',
+      'total-blocking-time',
+    ]));
+    expect(auditIds).not.toContain('speed-index');
+    expect(auditIds).not.toContain('interactive');
+    expect(auditIds).not.toContain('server-response-time');
+    expect(auditIds).not.toContain('redirects');
+    // Audits of the page state need artifacts that are only gathered for a snapshot or page load.
+    expect(auditIds).not.toContain('csp-xss');
+    expect(auditIds).not.toContain('charset');
+    expect(auditIds).not.toContain('color-contrast');
+
+    const artifactIds = resolvedConfig.artifacts?.map(artifact => artifact.id) || [];
+    expect(artifactIds).toEqual(expect.arrayContaining(['Trace', 'DevtoolsLog', 'SourceMaps']));
+    expect(artifactIds).not.toContain('MainDocumentContent');
+    expect(artifactIds).not.toContain('MetaElements');
+
+    const performanceAuditIds =
+      resolvedConfig.categories?.performance.auditRefs.map(ref => ref.id) || [];
+    expect(performanceAuditIds).toContain('first-contentful-paint');
+    expect(performanceAuditIds).not.toContain('speed-index');
+
+    // Categories that don't support timespan mode don't apply to a soft navigation either.
+    expect(Object.keys(resolvedConfig.categories || {})).toEqual([
+      'performance',
+      'best-practices',
+    ]);
+  });
+
   it('should ensure minimum quiet thresholds when throttlingMethod is devtools', async () => {
     gatherMode = 'navigation';
     const config = {

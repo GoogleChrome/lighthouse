@@ -81,6 +81,12 @@ export type ScreenEmulationSettings = {
   debugNavigation?: boolean;
   /** If set to true, will skip the initial navigation to about:blank. */
   skipAboutBlank?: boolean;
+  /**
+   * EXPERIMENTAL. If set to true, the navigation is expected to be a soft navigation (a same-document
+   * navigation triggered by user interaction) instead of a full page load. Requires a callback
+   * requestor and Chrome 149 or newer. Audits that depend on the main document request are skipped.
+   */
+  softNavigation?: boolean;
   /** If set to true, gatherers should avoid any behavior that may be destructive to the page state. (e.g. extra navigations, resizing the viewport) */
   usePassiveGathering?: boolean;
 
