@@ -75,6 +75,21 @@ This callback function _must_ perform an action that will trigger a navigation. 
 
 The `startNavigation`/`endNavigation` functions _must_ surround an action that triggers a navigation. Any interactions completed after `startNavigation` is invoked and before `endNavigation` is invoked will be captured by the navigation.
 
+##### Soft navigations (experimental)
+
+A [soft navigation](https://github.com/WICG/soft-navigations) is a same-document navigation triggered by user interaction, such as a single-page app updating its URL and content on a link click. Lighthouse can audit one as a navigation step when the `softNavigation` flag is set. The step must use a callback or `startNavigation`/`endNavigation`, since there is no URL to load, and the interaction must happen on a page that has already loaded.
+
+```js
+await flow.navigate('https://example.com');
+
+// The click updates the URL and renders new content without loading a new document.
+await flow.navigate(async () => {
+  await page.click('a.product-link');
+}, {softNavigation: true});
+```
+
+Chrome 149 or newer is required to report soft navigations. Only one soft navigation should be triggered per step; if several are detected, only the first is measured. The step is observed like a timespan with the addition of FCP and LCP: audits that depend on the main document request, such as server response time or redirects, are skipped, as are audits of the resulting page state, which belong in a snapshot step. Simulated throttling is replaced with DevTools throttling.
+
 ### Timespan
 
 <img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png">
