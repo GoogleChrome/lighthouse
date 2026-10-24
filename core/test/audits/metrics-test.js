@@ -43,6 +43,13 @@ describe('Performance: metrics', () => {
       computedCache: new Map(),
     };
     const result = await MetricsAudit.audit(artifacts, context);
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // The LCP image is a `data:` URI which is present in the devtoolsLog but not in the trace.
+      expect(result.details.items[0].lcpLoadDelay).toBe(371);
+      expect(result.details.items[0].lcpLoadDuration).toBe(1);
+      result.details.items[0].lcpLoadDelay = 488;
+      result.details.items[0].lcpLoadDuration = 2;
+    }
     expect(result.details.items[0]).toMatchSnapshot();
   });
 
