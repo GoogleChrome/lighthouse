@@ -5,6 +5,7 @@
  */
 
 import {EventEmitter} from 'events';
+import {setTimeout} from 'timers/promises';
 
 import {CdpCDPSession} from 'puppeteer-core/lib/puppeteer/cdp/CdpSession.js';
 
@@ -320,7 +321,7 @@ describe('TargetManager', () => {
       rootSession.emit('sessionattached', iframeSession);
 
       // Wait for iframe session to be attached.
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await setTimeout(0);
 
       const rootListener = fnAny();
       const iframeListener = fnAny();
