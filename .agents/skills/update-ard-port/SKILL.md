@@ -80,7 +80,7 @@ Rules to preserve:
 - Treat non-object roots/entries as empty instead of throwing.
 - Push `{element, message}` objects; never return formatted strings.
 - Log through `lighthouse-logger`, not `console`.
-- Only `ConformanceTester` and `classify_media_type` are exported; add exports only if
+- Only `ARD_VERSION`, `ConformanceTester` and `classify_media_type` are exported; add exports only if
   tests need them.
 
 If `classify_media_type` / `parse_media_type` changed, run a parity check against the
@@ -120,8 +120,9 @@ rather than the output.
 
 - README "Modifications for Lighthouse" if a new deviation was introduced, and the
   "Updating Conformance Script" steps if the process changed.
-- `@fileoverview` comments in `ard.js`, the gatherer and the audit that mention the spec
-  version.
+- `ARD_VERSION` in `ard.js` is updated automatically by `yarn update:ard-spec --ack-port`;
+  update `@fileoverview` comments in `ard.js`, the gatherer and the audit if the major/minor
+  spec version changed.
 - Audit `UIStrings` if user-facing wording or the spec link changed.
 
 ### 8. Verify, then acknowledge

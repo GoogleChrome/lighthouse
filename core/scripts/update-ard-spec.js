@@ -45,6 +45,7 @@ const REVIEWED_FILES = ['conformance/bin/conformance-test', 'spec/ard.md'];
 
 const LOCAL_SCHEMA_PATH = path.join(LH_ROOT, 'third-party/ard', SCHEMA_PATH);
 const LOCAL_README_PATH = path.join(LH_ROOT, 'third-party/ard/README.md');
+const LOCAL_ARD_JS_PATH = path.join(LH_ROOT, 'third-party/ard/ard.js');
 
 const HEADERS = {'User-Agent': 'Lighthouse-ARD-Update-Script'};
 
@@ -129,8 +130,9 @@ async function main() {
       throw new Error(`Could not find reviewed hash line for \`${filePath}\` in ` +
         'third-party/ard/README.md.');
     }
-    const actual = sha256(await fetchText(`${RAW_URL}/${latestSha}/${filePath}`));
-    reviewed.push({filePath, recorded: match[2], actual, changed: match[2] !== actual});
+    const content = await fetchText(`${RAW_URL}/${latestSha}/${filePath}`);
+    const actual = sha256(content);
+    reviewed.push({filePath, content, recorded: match[2], actual, changed: match[2] !== actual});
   }
   const portChanges = reviewed.filter(r => r.changed);
 
@@ -189,6 +191,16 @@ async function main() {
     readme = readme.replace(
       /(\*?\*?Pinned Commit SHA\*?\*?:\s*)`[^`]*`/, `$1\`${latestSha}\``);
     console.log(`Updated pinned commit SHA in README.md to ${latestSha}`);
+
+    const specMd = reviewed.find(r => r.filePath === 'spec/ard.md')?.content || '';
+    const specVersionMatch = specMd.match(/\*\*Version\*\*:\s*v?(\S+)/);
+    if (specVersionMatch) {
+      const ardVersion = `${specVersionMatch[1]} (${latestSha.slice(0, 7)})`;
+      const ardJs = fs.readFileSync(LOCAL_ARD_JS_PATH, 'utf-8')
+        .replace(/const ARD_VERSION = '[^']*';/, `const ARD_VERSION = '${ardVersion}';`);
+      fs.writeFileSync(LOCAL_ARD_JS_PATH, ardJs);
+      console.log(`Updated ARD_VERSION in ard.js to ${ardVersion}`);
+    }
   }
   fs.writeFileSync(LOCAL_README_PATH, readme);
 }

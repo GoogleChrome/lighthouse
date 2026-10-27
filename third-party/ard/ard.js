@@ -13,6 +13,8 @@
 import log from 'lighthouse-logger';
 import {ArdManifest as validateArdManifest, ArdEntry as validateArdEntry} from './schema-validator.js';
 
+const ARD_VERSION = '0.91 (f073b1e)';
+
 // Strict URN Regex matching urn:air:<publisher>:<namespace>:<agent-name>
 const URN_REGEX = /^urn:air:([a-zA-Z0-9.-]+)(?::([a-zA-Z0-9._:-]+))?:([a-zA-Z0-9._-]+)$/;
 
@@ -436,4 +438,4 @@ class ConformanceTester {
     }
 }
 
-export { ConformanceTester, classify_media_type };
+export { ARD_VERSION, ConformanceTester, classify_media_type };
