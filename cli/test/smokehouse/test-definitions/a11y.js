@@ -150,7 +150,7 @@ const expectations = {
                 },
                 'selector': 'body > section > div#aria-hidden-focus',
                 'snippet': '<div id="aria-hidden-focus" aria-hidden="true">',
-                'explanation': 'Fix all of the following:\n  Focusable content should be disabled or be removed from the DOM',
+                'explanation': 'Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden',
                 'nodeLabel': 'Focusable Button',
               },
             },
