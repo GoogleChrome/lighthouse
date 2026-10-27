@@ -237,6 +237,8 @@ describe('ReportRenderer', () => {
       expect(itemsTxt).toContain(sampleResults.environment.networkUserAgent);
       expect(itemsTxt).toMatch('412x823, DPR 1.75');
       expect(itemsTxt).toContain('Initial page load');
+      expect(itemsTxt).toContain('Axe version: 4.11.2');
+      expect(itemsTxt).toContain('ARD version: 0.91 (f073b1e)');
     });
 
     it('renders a timespan footer', () => {

@@ -978,4 +978,31 @@ describe('Runner', () => {
     assert.ok(JSON.parse(results.report[0]), 'did not return json output');
     assert.ok(/<!doctype/.test(results.report[1]), 'did not return html output');
   });
+
+  it('includes ard version in environment.credits when AgentResourceDiscovery ran', async () => {
+    const baseArtifacts = assetSaver.loadArtifacts(
+      moduleDir + '/fixtures/artifacts/empty-artifacts/'
+    );
+    const {resolvedConfig} = await initializeConfig('navigation', {
+      audits: [],
+    });
+
+    const withoutArd = await Runner.audit(baseArtifacts, {
+      resolvedConfig,
+      computedCache: new Map(),
+    });
+    assert.strictEqual(withoutArd.lhr.environment.credits['ard'], undefined);
+
+    const withErroredArd = await Runner.audit(
+      {...baseArtifacts, AgentResourceDiscovery: new Error('ard failed')},
+      {resolvedConfig, computedCache: new Map()}
+    );
+    assert.strictEqual(withErroredArd.lhr.environment.credits['ard'], undefined);
+
+    const withArd = await Runner.audit(
+      {...baseArtifacts, AgentResourceDiscovery: {manifest: null, discoverySignals: {}}},
+      {resolvedConfig, computedCache: new Map()}
+    );
+    assert.strictEqual(withArd.lhr.environment.credits['ard'], '0.91 (f073b1e)');
+  });
 });

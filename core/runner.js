@@ -23,6 +23,7 @@ import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
 import {Util} from '../shared/util.js';
 import {isEqual} from './lib/arbitrary-equality-map.js';
+import {ARD_VERSION} from '../third-party/ard/ard.js';
 
 const moduleDir = import.meta.dirname;
 
@@ -70,9 +71,14 @@ class Runner {
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.
       const axeVersion = artifacts.Accessibility?.version;
+      const ardVersion = (
+        artifacts.AgentResourceDiscovery &&
+        !(artifacts.AgentResourceDiscovery instanceof Error)
+      ) ? ARD_VERSION : undefined;
       /** @type {Record<string, string|undefined>} */
       const credits = {
         'axe-core': axeVersion,
+        'ard': ardVersion,
       };
 
       // Add plugins to the credits.
