@@ -189,6 +189,8 @@ export class DOM {
 
     if (parsed && allowedProtocols.includes(parsed.protocol)) {
       elem.href = parsed.href;
+    } else {
+      elem.removeAttribute('href');
     }
   }
 

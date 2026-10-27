@@ -134,7 +134,7 @@ class TreemapViewer {
 
     const urlEl = dom.find('a.lh-header--url');
     urlEl.textContent = this.documentUrl.toString();
-    urlEl.href = this.documentUrl.toString();
+    dom.safelySetHref(urlEl, this.documentUrl.toString());
 
     this.viewModeSelector = this.createViewModeSelector();
     this.bundleSelector = this.createBundleSelector();

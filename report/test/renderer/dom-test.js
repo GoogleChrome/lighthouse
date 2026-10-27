@@ -232,8 +232,10 @@ describe('DOM', () => {
 
     it('handles if url is undefined (because of proto roundtrip)', () => {
       const a = dom.createElement('a');
+      a.href = 'https://previous.com/';
       dom.safelySetHref(a, undefined);
       expect(a.href).toEqual('');
+      expect(a.getAttribute('href')).toEqual(null);
     });
   });
 
