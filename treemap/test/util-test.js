@@ -83,4 +83,19 @@ describe('TreemapUtil', () => {
       }
     });
   });
+
+  describe('sanitizeJson', () => {
+    it('escapes closing script tags and line/paragraph separators', () => {
+      const input = {
+        html: '</script><script>alert(1)</script>',
+        separators: 'line\u2028paragraph\u2029',
+      };
+      const sanitized = TreemapUtil.sanitizeJson(input);
+      expect(sanitized).not.toContain('</script>');
+      expect(sanitized).toContain('\\u003c/script>');
+      expect(sanitized).toContain('\\u2028');
+      expect(sanitized).toContain('\\u2029');
+      expect(JSON.parse(sanitized)).toEqual(input);
+    });
+  });
 });

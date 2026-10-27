@@ -881,7 +881,7 @@ function injectOptions(options) {
 
   scriptEl = dom.createChildOf(document.head, 'script', 'lh-injectedoptions');
   scriptEl.textContent = `
-    window.__treemapOptions = ${JSON.stringify(options)};
+    window.__treemapOptions = ${TreemapUtil.sanitizeJson(options)};
   `;
 }
 
