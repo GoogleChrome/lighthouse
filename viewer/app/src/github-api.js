@@ -92,7 +92,7 @@ export class GithubApi {
    * @return {Promise<LH.Result>}
    */
   getGistFileContentAsJson(id) {
-    if (!/^[a-f0-9]+$/i.test(id)) {
+    if (typeof id !== 'string' || !/^[a-f0-9]+$/i.test(id)) {
       return Promise.reject(new Error('Invalid gist ID'));
     }
 

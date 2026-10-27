@@ -15,11 +15,12 @@ describe('GithubApi', () => {
         '0123456789abcdef/commits',
         '0123456789abcdef?foo=bar',
         'not-a-hex-id',
+        ['0123456789abcdef'],
       ];
 
       for (const id of invalidIds) {
         await expect(
-          GithubApi.prototype.getGistFileContentAsJson.call({}, id)
+          () => GithubApi.prototype.getGistFileContentAsJson.call({}, id)
         ).rejects.toThrow('Invalid gist ID');
       }
     });
