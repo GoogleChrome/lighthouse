@@ -1,3 +1,183 @@
+<a name="13.6.0"></a>
+# 13.6.0 (2026-10-27)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.5.0...v13.6.0)
+
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XXX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Nikolay Vitkov @Lightning00Blade
+- MohammadHossein Jahanbakhsh @MHJahanbakhsh
+- Rafe Blandford @rafeblandford
+- Roman @gameroman
+- Ivan Akulov @iamakulov
+- Francesco Marinoni Moretto @frmoretto
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+## Core
+
+* fix cycle tracking and built-in type checks in deep-equals ([#17422](https://github.com/GoogleChrome/lighthouse/pull/17422))
+* release retained gatherer and trace engine intermediate state ([#17290](https://github.com/GoogleChrome/lighthouse/pull/17290))
+* populate numericValue on performance insight audits ([#17346](https://github.com/GoogleChrome/lighthouse/pull/17346))
+* do not throw when robots.txt or llms.txt content is null ([#17294](https://github.com/GoogleChrome/lighthouse/pull/17294))
+* fail robots-txt and llms-txt on HTTP 429 ([#17295](https://github.com/GoogleChrome/lighthouse/pull/17295))
+* fix insight audits picking the wrong navigation's data ([#17174](https://github.com/GoogleChrome/lighthouse/pull/17174))
+* ard: include ARD spec version in LHR credits and report footer ([#17452](https://github.com/GoogleChrome/lighthouse/pull/17452))
+* ard: sync port with upstream f073b1e ([#17448](https://github.com/GoogleChrome/lighthouse/pull/17448))
+* ard: make upstream sync check content-based ([#17261](https://github.com/GoogleChrome/lighthouse/pull/17261))
+* ard: report legacy and unreachable discovery sources ([#17260](https://github.com/GoogleChrome/lighthouse/pull/17260))
+* ard: discover manifests per spec §5.1 ([#17259](https://github.com/GoogleChrome/lighthouse/pull/17259))
+* ard: port conformance test to ARD v0.91 ([#17258](https://github.com/GoogleChrome/lighthouse/pull/17258))
+* baseline: link to developer.chrome.com docs ([#17177](https://github.com/GoogleChrome/lighthouse/pull/17177))
+* baseline: show baseline_low_date for Widely Available features ([#17337](https://github.com/GoogleChrome/lighthouse/pull/17337))
+* baseline: fix getLowDate for high features, move web-features to devDeps ([#17283](https://github.com/GoogleChrome/lighthouse/pull/17283))
+* cdt: convert core/lib/cdt to ESM ([#17340](https://github.com/GoogleChrome/lighthouse/pull/17340))
+* config: throw when module is missing from bundledModules in bundled env ([#17398](https://github.com/GoogleChrome/lighthouse/pull/17398))
+* driver: skip clearDataForOrigin when origin is null ([#17347](https://github.com/GoogleChrome/lighthouse/pull/17347))
+* full-page-screenshot: preserve emulated width during resize ([#17330](https://github.com/GoogleChrome/lighthouse/pull/17330))
+* image-elements: skip source rules when HTML dimensions are explicit ([#17287](https://github.com/GoogleChrome/lighthouse/pull/17287))
+* lantern-metric: use last main-frame navigation in trace mode ([#17433](https://github.com/GoogleChrome/lighthouse/pull/17433))
+* lcp-network-record: rename artifact, include Media requests ([#17324](https://github.com/GoogleChrome/lighthouse/pull/17324))
+* legacy-javascript: fix es-shims regex matching ([#17421](https://github.com/GoogleChrome/lighthouse/pull/17421))
+* legacy-javascript: update core-js data, detect newly baseline polyfills ([#17304](https://github.com/GoogleChrome/lighthouse/pull/17304))
+* legacy-javascript: optimize pattern matching and source map lookup ([#17301](https://github.com/GoogleChrome/lighthouse/pull/17301))
+* legacy-javascript: fix CRLF and multi-line line/column tracking ([#17300](https://github.com/GoogleChrome/lighthouse/pull/17300))
+* legacy-javascript: skip newly baseline features ([#17299](https://github.com/GoogleChrome/lighthouse/pull/17299))
+* minification-estimator: avoid per-character substring allocations ([#17288](https://github.com/GoogleChrome/lighthouse/pull/17288))
+* network-request: update Lightrider protocol, size, and timings on redirects ([#17415](https://github.com/GoogleChrome/lighthouse/pull/17415))
+* network-request: set renderBlocking from protocol ([#16869](https://github.com/GoogleChrome/lighthouse/pull/16869))
+* page-dependency-graph: strip #hash fragments from trace request URLs ([#17431](https://github.com/GoogleChrome/lighthouse/pull/17431))
+* page-functions: clone element into template document ([#17273](https://github.com/GoogleChrome/lighthouse/pull/17273))
+* predictive-perf: fix simulated LCP breakdown ([#17269](https://github.com/GoogleChrome/lighthouse/pull/17269))
+* robots-txt: add `License` directive ([#17160](https://github.com/GoogleChrome/lighthouse/pull/17160))
+* script-treemap-data: pass deduplicated scripts to module duplication ([#17427](https://github.com/GoogleChrome/lighthouse/pull/17427))
+* script-treemap-data: deduplicate scripts sharing a network record ([#17382](https://github.com/GoogleChrome/lighthouse/pull/17382))
+* scripts: remove leftover _scriptContents reset ([#17377](https://github.com/GoogleChrome/lighthouse/pull/17377))
+* scripts: reuse script sources from trace rundown events ([#17289](https://github.com/GoogleChrome/lighthouse/pull/17289))
+* speedline: evict decoded RGBA buffers from frame closures ([#17286](https://github.com/GoogleChrome/lighthouse/pull/17286))
+* trace: use ReturnAsStream transferMode for Tracing.start ([#17407](https://github.com/GoogleChrome/lighthouse/pull/17407))
+* unused-css: merge overlapping and duplicate rule usage ranges ([#17412](https://github.com/GoogleChrome/lighthouse/pull/17412))
+
+## CLI
+
+* follow symlinks when checking directory paths ([#17416](https://github.com/GoogleChrome/lighthouse/pull/17416))
+* support auditing multiple URLs in bulk ([#17404](https://github.com/GoogleChrome/lighthouse/pull/17404))
+
+## Report
+
+* validate image and screenshot URLs before rendering ([#17446](https://github.com/GoogleChrome/lighthouse/pull/17446))
+* add rel=noopener to target=_blank links ([#17449](https://github.com/GoogleChrome/lighthouse/pull/17449))
+* render performance diagnostics when insights group is missing ([#17406](https://github.com/GoogleChrome/lighthouse/pull/17406))
+* file-namer: truncate name in generated filename prefix ([#17423](https://github.com/GoogleChrome/lighthouse/pull/17423))
+* file-namer: include pathname in generated filename prefix ([#17405](https://github.com/GoogleChrome/lighthouse/pull/17405))
+
+## Deps
+
+* upgrade deps ([#17445](https://github.com/GoogleChrome/lighthouse/pull/17445))
+* remove csv-validator ([#17399](https://github.com/GoogleChrome/lighthouse/pull/17399))
+* replace conventional-changelog-cli with conventional-changelog ([#17394](https://github.com/GoogleChrome/lighthouse/pull/17394))
+* bump idb-keyval to v6 ([#17393](https://github.com/GoogleChrome/lighthouse/pull/17393))
+* bump web-features to v3.43.0 ([#17391](https://github.com/GoogleChrome/lighthouse/pull/17391))
+* bump acorn to v8.19.0 ([#17390](https://github.com/GoogleChrome/lighthouse/pull/17390))
+* bump @testing-library/preact and remove @testing-library/preact-hooks ([#17389](https://github.com/GoogleChrome/lighthouse/pull/17389))
+* bump pako to v3 ([#17387](https://github.com/GoogleChrome/lighthouse/pull/17387))
+* bump devDependencies and move ajv to devDependencies ([#17386](https://github.com/GoogleChrome/lighthouse/pull/17386))
+* bump runtime dependencies ([#17385](https://github.com/GoogleChrome/lighthouse/pull/17385))
+* replace rollup-plugin-polyfill-node with native Web API shims ([#17375](https://github.com/GoogleChrome/lighthouse/pull/17375))
+* remove angular devDependency ([#17373](https://github.com/GoogleChrome/lighthouse/pull/17373))
+* replace @typescript-eslint packages with typescript-eslint ([#17372](https://github.com/GoogleChrome/lighthouse/pull/17372))
+* bump jest and expect packages to v30 ([#17371](https://github.com/GoogleChrome/lighthouse/pull/17371))
+* remove eslint-formatter-codeframe ([#17370](https://github.com/GoogleChrome/lighthouse/pull/17370))
+* remove lookup-closest-locale ([#17369](https://github.com/GoogleChrome/lighthouse/pull/17369))
+* upgrade trace_engine to 0.0.67 ([#17379](https://github.com/GoogleChrome/lighthouse/pull/17379))
+* replace @esbuild-kit/esm-loader with tsx ([#17367](https://github.com/GoogleChrome/lighthouse/pull/17367))
+* upgrade mocha to 12.0.3 ([#17360](https://github.com/GoogleChrome/lighthouse/pull/17360))
+* inline eslint-config-google and remove eslint compat packages ([#17359](https://github.com/GoogleChrome/lighthouse/pull/17359))
+* migrate Node.js helper packages to native APIs ([#17358](https://github.com/GoogleChrome/lighthouse/pull/17358))
+* bump jsdom to v29 ([#17357](https://github.com/GoogleChrome/lighthouse/pull/17357))
+* bump eslint-plugin-import to v2.32 and remove @eslint/compat ([#17356](https://github.com/GoogleChrome/lighthouse/pull/17356))
+* replace chalk and colors with util.styleText ([#17354](https://github.com/GoogleChrome/lighthouse/pull/17354))
+* remove unused and redundant devDependencies ([#17353](https://github.com/GoogleChrome/lighthouse/pull/17353))
+* upgrade yargs to 18.2.0 and yargs-parser to 22.0.0 ([#17351](https://github.com/GoogleChrome/lighthouse/pull/17351))
+* remove unused ws and @types/ws ([#17352](https://github.com/GoogleChrome/lighthouse/pull/17352))
+* remove lodash-es ([#17350](https://github.com/GoogleChrome/lighthouse/pull/17350))
+* upgrade minor/patch dependencies ([#17325](https://github.com/GoogleChrome/lighthouse/pull/17325))
+* upgrade archiver to 8.0.0 ([#17154](https://github.com/GoogleChrome/lighthouse/pull/17154))
+* upgrade handlebars to 4.7.10 ([#17308](https://github.com/GoogleChrome/lighthouse/pull/17308))
+* upgrade trace_engine to 0.0.66 ([#17307](https://github.com/GoogleChrome/lighthouse/pull/17307))
+* pin to specific axe-core ([#17279](https://github.com/GoogleChrome/lighthouse/pull/17279))
+* upgrade deps ([#17256](https://github.com/GoogleChrome/lighthouse/pull/17256))
+
+## Clients
+
+* lr: ignore WebSocket console errors in Lightrider ([#17414](https://github.com/GoogleChrome/lighthouse/pull/17414))
+* lr: close page after gather ([#17285](https://github.com/GoogleChrome/lighthouse/pull/17285))
+
+## Docs
+
+* remove outdated related projects from readme ([#17410](https://github.com/GoogleChrome/lighthouse/pull/17410))
+* convert agentic-web issue template to GitHub issue form ([#17366](https://github.com/GoogleChrome/lighthouse/pull/17366))
+* quote name in agentic-web issue template front matter ([#17272](https://github.com/GoogleChrome/lighthouse/pull/17272))
+* cli: mention directory support in --output-path description ([#17413](https://github.com/GoogleChrome/lighthouse/pull/17413))
+
+## Tests
+
+* add regression tests for CommonJS support ([#17339](https://github.com/GoogleChrome/lighthouse/pull/17339))
+* remove mocha worker isolation and fix cross-test state contamination ([#17329](https://github.com/GoogleChrome/lighthouse/pull/17329))
+* restore jest-mock spies in afterEach ([#17328](https://github.com/GoogleChrome/lighthouse/pull/17328))
+* assert expectations for INTERNAL_LANTERN_USE_TRACE ([#17314](https://github.com/GoogleChrome/lighthouse/pull/17314))
+* update expectations for M157 favicon cache clearing ([#17311](https://github.com/GoogleChrome/lighthouse/pull/17311))
+* cli: update expected filename prefix in run-test ([#17409](https://github.com/GoogleChrome/lighthouse/pull/17409))
+* devtools: stringify to avoid V8 returnByValue limit ([#17429](https://github.com/GoogleChrome/lighthouse/pull/17429))
+* devtools: sync e2e tests ([#17335](https://github.com/GoogleChrome/lighthouse/pull/17335))
+* devtools: speed up devtools CI workflow ([#17313](https://github.com/GoogleChrome/lighthouse/pull/17313))
+* lantern: update golden trace dataset for 2026 ([#17411](https://github.com/GoogleChrome/lighthouse/pull/17411))
+* lantern: check all keys, run on trace-engine/package.json changes ([#17322](https://github.com/GoogleChrome/lighthouse/pull/17322))
+* lantern: restore test-lantern in CI using GitHub release assets ([#17316](https://github.com/GoogleChrome/lighthouse/pull/17316))
+* legacy-javascript: declare core-js in package.json, dedupe lockfile ([#17302](https://github.com/GoogleChrome/lighthouse/pull/17302))
+* legacy-javascript: fix build cache, rollup resolution, test assertions ([#17296](https://github.com/GoogleChrome/lighthouse/pull/17296))
+* network-request: add renderBlocking roundtrip ([#17263](https://github.com/GoogleChrome/lighthouse/pull/17263))
+* package-test: use local static server URL and retry fast run ([#17430](https://github.com/GoogleChrome/lighthouse/pull/17430))
+* package-test: run smoke subset and drop redundant build-report ([#17317](https://github.com/GoogleChrome/lighthouse/pull/17317))
+* smoke: exhaustively assert expected baseline features ([#17326](https://github.com/GoogleChrome/lighthouse/pull/17326))
+* smoke: use WebRTC instead of unload to trigger bf-cache failure in dbw ([#17348](https://github.com/GoogleChrome/lighthouse/pull/17348))
+* smoke: update flags required for WebMCP smoke tests ([#17270](https://github.com/GoogleChrome/lighthouse/pull/17270))
+* smoke: disable webmcp ([#17278](https://github.com/GoogleChrome/lighthouse/pull/17278))
+* smokehouse: log runner output on non-timeout runner errors ([#17424](https://github.com/GoogleChrome/lighthouse/pull/17424))
+* smokehouse: fix static-server reuse and runner error logging ([#17284](https://github.com/GoogleChrome/lighthouse/pull/17284))
+* smokehouse: fix retry state, timeout cleanup, and error logging ([#17276](https://github.com/GoogleChrome/lighthouse/pull/17276))
+* smokehouse: fix assertion and version check bugs ([#17275](https://github.com/GoogleChrome/lighthouse/pull/17275))
+* tbt-impact-tasks: pass networkRecords to createTestTrace ([#16870](https://github.com/GoogleChrome/lighthouse/pull/16870))
+
+## Misc
+
+* sanitize header URL links in treemap and flow-report ([#17443](https://github.com/GoogleChrome/lighthouse/pull/17443))
+* add skill for updating trace_engine ([#17380](https://github.com/GoogleChrome/lighthouse/pull/17380))
+* replace getModuleDirectory with import.meta.dirname ([#17341](https://github.com/GoogleChrome/lighthouse/pull/17341))
+* build: convert changelog-generator and commitlint configs  to ESM ([#17343](https://github.com/GoogleChrome/lighthouse/pull/17343))
+* build: escape non-ASCII characters in bundle ([#17345](https://github.com/GoogleChrome/lighthouse/pull/17345))
+* ci: enable yarn cache on setup-node across workflows ([#17319](https://github.com/GoogleChrome/lighthouse/pull/17319))
+* ci: remove duplicate unit-lantern-trace and deduplicate test-viewer ([#17318](https://github.com/GoogleChrome/lighthouse/pull/17318))
+* ci: cancel superseded PR runs and balance smoke shards ([#17321](https://github.com/GoogleChrome/lighthouse/pull/17321))
+* ci: remove broken buildtracker, dead dogfood-lhci, and unused docs install ([#17320](https://github.com/GoogleChrome/lighthouse/pull/17320))
+* ci: pin actions to shas, fix zizmor findings, and add zizmor script ([#17315](https://github.com/GoogleChrome/lighthouse/pull/17315))
+* lint: remove obsolete eslint-local-rules.cjs ([#17342](https://github.com/GoogleChrome/lighthouse/pull/17342))
+* release: fix empty contributors check and null commit headers ([#17420](https://github.com/GoogleChrome/lighthouse/pull/17420))
+* release: simplify changelog generation ([#17249](https://github.com/GoogleChrome/lighthouse/pull/17249))
+* scripts: remove dead fallback in pptr-run-devtools ([#17453](https://github.com/GoogleChrome/lighthouse/pull/17453))
+* scripts: use timers/promises for sleeps ([#17440](https://github.com/GoogleChrome/lighthouse/pull/17440))
+* sentry: add browser version context ([#17381](https://github.com/GoogleChrome/lighthouse/pull/17381))
+* treemap: sanitize JSON in injectOptions ([#17444](https://github.com/GoogleChrome/lighthouse/pull/17444))
+* viewer: validate gist ID in getGistFileContentAsJson ([#17447](https://github.com/GoogleChrome/lighthouse/pull/17447))
+* viewer: prevent web crawlers from triggering PSI runs ([#17384](https://github.com/GoogleChrome/lighthouse/pull/17384))
+
 <a name="13.5.0"></a>
 # 13.5.0 (2026-09-17)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.4.1...v13.5.0)
