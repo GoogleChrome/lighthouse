@@ -180,7 +180,7 @@ async function waitForLighthouseReady() {
       }));
     } else {
       while (targetManager.primaryPageTarget() === null) {
-        await sleep(100);
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
   }
