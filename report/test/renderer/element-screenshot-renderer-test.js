@@ -197,6 +197,7 @@ describe('ElementScreenshotRenderer', () => {
         'https://example.com/image.jpg',
         'javascript:alert(1)',
         `data:image/jpeg;base64,foo'); background: url('https://evil.com`,
+        'data:image/jpeg;base64,foo\nbar',
       ];
       for (const data of invalidUrls) {
         const el = dom.createElement('div');
