@@ -157,7 +157,7 @@ class TreemapUtil {
    */
   static sanitizeJson(object) {
     return JSON.stringify(object)
-      .replace(/</g, '\\u003c') // replaces opening script tags
+      .replace(/</g, '\\u003c') // replaces script tags and HTML comments
       .replace(/\u2028/g, '\\u2028') // replaces line separators
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
   }

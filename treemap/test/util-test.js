@@ -91,7 +91,7 @@ describe('TreemapUtil', () => {
         separators: 'line\u2028paragraph\u2029',
       };
       const sanitized = TreemapUtil.sanitizeJson(input);
-      expect(sanitized).not.toContain('</script>');
+      expect(sanitized).not.toContain('<');
       expect(sanitized).toContain('\\u003c/script>');
       expect(sanitized).toContain('\\u2028');
       expect(sanitized).toContain('\\u2029');
