@@ -6,10 +6,10 @@ The original Python script is located in the `ards-project/ard-spec` repository:
 - **Upstream Repository**: https://github.com/ards-project/ard-spec
 - **Source Script**: `conformance/bin/conformance-test`
 - **Schema**: `spec/schemas/ard-entry.schema.json` (`$defs/ArdManifest` and `$defs/ArdEntry`)
-- **Pinned Commit SHA**: `b76f235a8f461876ad4f1e77abd0eb0eb302b48d`
+- **Pinned Commit SHA**: `f073b1ea9b01a5f068d0b0986426f2ea49fa30b2`
 - **Reviewed Upstream Files** (SHA-256 of the upstream content the port was last verified against; maintained by `yarn update:ard-spec --ack-port`, do not edit by hand):
-  - `conformance/bin/conformance-test`: `ac2f3cae1c4ac75261fe45786a117aaad275322c92b74110529ad03a794275b4`
-  - `spec/ard.md`: `6deb2cc58216fb279569d8ff61bd4595ccdf6ceaeef6766a1a1c9f25b6b68a62`
+  - `conformance/bin/conformance-test`: `428b6cc17e8bb76c796c79b30953a02d70e92a6a9da8d0ef43027f7e968c1c7c`
+  - `spec/ard.md`: `6d11107b60ff962d636c2bb66bf242d2c5d4f47eb0fbbec3b498deb3db771b78`
 
 ## Modifications for Lighthouse:
 While the validation rules and test suite maintain 1:1 parity with the reference suite, the following adaptations were made for Lighthouse integration:
