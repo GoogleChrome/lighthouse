@@ -265,4 +265,35 @@ describe('DOM', () => {
       });
     });
   });
+
+  describe('safelySetImageSrc', () => {
+    it('sets src for safe image URLs', () => {
+      [
+        'https://safe.com/image.png',
+        'http://safe.com/image.jpg',
+        'data:image/jpeg;base64,foobar',
+        'data:image/svg+xml;utf8,<svg></svg>',
+      ].forEach(url => {
+        const img = dom.createElement('img');
+        dom.safelySetImageSrc(img, url);
+        expect(img.src).toEqual(url);
+      });
+    });
+
+    it('does not set src if destination is unsafe', () => {
+      [
+        'javascript:evil()',
+        'data:text/html;base64,abcdef',
+        'file:///etc/passwd',
+        'ftp://evil.com/img.png',
+        'chrome://favicon/',
+      ].forEach(url => {
+        const img = dom.createElement('img');
+        img.src = 'https://previous.com/img.png';
+        dom.safelySetImageSrc(img, url);
+        expect(img.src).toEqual('');
+        expect(img.getAttribute('src')).toEqual(null);
+      });
+    });
+  });
 });

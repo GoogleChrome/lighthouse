@@ -58,6 +58,18 @@ describe('DetailsRenderer', () => {
       assert.ok(thumbnails[0].alt, 'did not set alt text');
     });
 
+    it('omits filmstrip thumbnail src for unsafe URLs', () => {
+      const el = renderer.render({
+        type: 'filmstrip',
+        items: [
+          {timing: 1020, data: 'javascript:alert(1)'},
+        ],
+      });
+
+      const thumbnail = el.querySelector('.lh-filmstrip__thumbnail');
+      assert.equal(thumbnail.getAttribute('src'), null);
+    });
+
     it('renders tables', () => {
       const el = renderer.render({
         type: 'table',
