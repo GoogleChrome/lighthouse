@@ -429,6 +429,7 @@ export class DetailsRenderer {
       this._dom.safelySetHref(entityLinkEl, matchedEntity.homepage);
       if (entityLinkEl.href) {
         entityLinkEl.target = '_blank';
+        entityLinkEl.rel = 'noopener';
         entityLinkEl.title = Globals.strings.openInANewTabTooltip;
         entityLinkEl.classList.add('lh-report-icon--external');
         firstTdEl.append(' ', entityLinkEl);
