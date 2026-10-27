@@ -19,6 +19,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {setTimeout} from 'timers/promises';
 
 import {LH_ROOT} from '../../../shared/root.js';
 
@@ -44,11 +45,6 @@ const HEADERS = {Authorization: `token ${process.env.GH_TOKEN}`};
  * @property {Array<{body: string, user: {login: string}, submitted_at?: string, created_at: string}>} comments
  * @property {Array<{event: 'labeled'|'unlabeled'|'closed'|'assigned', actor: {login: string}, assignee?: {login: string}, label?: {name: string}, created_at: string}>} events
  */
-
-/** @param {number} ms @return {Promise<void>} */
-function wait(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
 
 /**
  * @param {AugmentedGitHubIssue} issue
@@ -113,12 +109,12 @@ async function downloadIssues(urlToStartAt) {
     await Promise.all([
       fetchAndInjectEvents(issue).catch(async err => {
         console.error('Events failed! Trying again', err);
-        await wait(60 * 1000);
+        await setTimeout(60 * 1000);
         return fetchAndInjectEvents(issue);
       }),
       fetchAndInjectComments(issue).catch(async err => {
         console.error('Comments failed! Trying again', err);
-        await wait(60 * 1000);
+        await setTimeout(60 * 1000);
         return fetchAndInjectComments(issue);
       }),
     ]);

@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import assert from 'assert/strict';
+import {setTimeout as sleep} from 'timers/promises';
 
 import puppeteer from 'puppeteer';
 import {expect} from 'expect';
@@ -298,7 +299,7 @@ describe('Lighthouse Viewer', () => {
       new Promise((resolve, reject) => setTimeout(reject, 5_000)),
     ]);
     // Give async work some time to happen (ex: SwapLocaleFeature.enable).
-    await new Promise(resolve => setTimeout(resolve, 3_000));
+    await sleep(3_000);
     await ensureNoErrors();
 
     const content = await viewerPage.$eval('main', el => el.textContent);

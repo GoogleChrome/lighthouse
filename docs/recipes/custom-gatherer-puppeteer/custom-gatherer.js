@@ -6,6 +6,8 @@
 
 /* global document */
 
+import {setTimeout} from 'timers/promises';
+
 import {Gatherer} from 'lighthouse';
 
 class CustomGatherer extends Gatherer {
@@ -24,7 +26,7 @@ class CustomGatherer extends Gatherer {
       document.body.append(el);
     }
     await executionContext.evaluate(makeInput, {args: []});
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await setTimeout(100);
 
     // Prove that `driver` (Lighthouse) and `page` (Puppeteer) are talking to the same page.
     await executionContext.evaluateAsync(`document.querySelector('input').value = '1'`);

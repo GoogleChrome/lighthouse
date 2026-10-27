@@ -24,6 +24,7 @@
 import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
+import {setTimeout as sleep} from 'timers/promises';
 
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
@@ -111,7 +112,7 @@ async function waitForFunction(session, fn, deps) {
         console.error(err);
         console.error('Retrying...');
       }
-      await new Promise(r => setTimeout(r, 500));
+      await sleep(500);
     } finally {
       ++iterations;
     }

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {setTimeout} from 'timers/promises';
+
 import WebMCP from '../../../gather/gatherers/webmcp.js';
 import {createMockContext} from '../mock-driver.js';
 
@@ -32,7 +34,7 @@ describe('WebMCP Gatherer', () => {
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await setTimeout(0);
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
@@ -79,7 +81,7 @@ describe('WebMCP Gatherer', () => {
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await setTimeout(0);
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
@@ -126,7 +128,7 @@ describe('WebMCP Gatherer', () => {
       .mockResponse('WebMCP.disable');
 
     await gatherer.startInstrumentation(mockContext.asContext());
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await setTimeout(0);
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
@@ -208,7 +210,7 @@ describe('WebMCP Gatherer', () => {
       .mockResolvedValue({snippet: '<form></form>', selector: 'form'});
 
     await gatherer.startInstrumentation(mockContext.asContext());
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await setTimeout(0);
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     const artifact = await gatherer.getArtifact(mockContext.asContext());
