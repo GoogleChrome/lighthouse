@@ -172,16 +172,10 @@ async function waitForLighthouseReady() {
 
   const targetManager = TargetManager.TargetManager.instance();
   if (targetManager.primaryPageTarget() === null) {
-    if (targetManager?.observeTargets) {
-      await new Promise(resolve => targetManager.observeTargets({
-        targetAdded: resolve,
-        targetRemoved: () => {},
-      }));
-    } else {
-      while (targetManager.primaryPageTarget() === null) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-    }
+    await new Promise(resolve => targetManager.observeTargets({
+      targetAdded: resolve,
+      targetRemoved: () => {},
+    }));
   }
 
   // Ensure the emulation model is ready before Lighthouse starts by enabling device emulation.
