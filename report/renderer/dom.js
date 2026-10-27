@@ -206,6 +206,32 @@ export class DOM {
   }
 
   /**
+   * Set img src, but safely, only allowing `https:`, `http:`, and `data:image/`.
+   * @param {HTMLImageElement} elem
+   * @param {string} url
+   */
+  safelySetImageSrc(elem, url) {
+    url = url || '';
+
+    if (url.startsWith('data:image/')) {
+      elem.src = url;
+      return;
+    }
+
+    const allowedProtocols = ['https:', 'http:'];
+    let parsed;
+    try {
+      parsed = new URL(url);
+    } catch (_) {}
+
+    if (parsed && allowedProtocols.includes(parsed.protocol)) {
+      elem.src = parsed.href;
+    } else {
+      elem.removeAttribute('src');
+    }
+  }
+
+  /**
    * @param {string} markdownText
    * @return {Element}
    */

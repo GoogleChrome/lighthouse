@@ -134,6 +134,9 @@ export class ElementScreenshotRenderer {
    * @param {LH.Result.FullPageScreenshot['screenshot']} screenshot
    */
   static installFullPageScreenshot(el, screenshot) {
+    if (!screenshot.data.startsWith('data:image/') || /['"()\\]/.test(screenshot.data)) {
+      return;
+    }
     el.style.setProperty('--element-screenshot-url', `url('${screenshot.data}')`);
   }
 
