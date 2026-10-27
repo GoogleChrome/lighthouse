@@ -149,6 +149,8 @@ describe('PerfCategoryRenderer', () => {
     assert.strictEqual(disclamerUrl.hostname, 'developer.chrome.com');
     const calcLink = disclaimerEl.querySelector('a.lh-calclink');
     assert.ok(calcLink, 'disclaimer contains scorecalc link');
+    assert.strictEqual(calcLink.target, '_blank');
+    assert.strictEqual(calcLink.rel, 'noopener');
     assert.strictEqual(new URL(calcLink.href).hostname, 'googlechrome.github.io');
   });
 

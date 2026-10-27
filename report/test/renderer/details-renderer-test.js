@@ -794,6 +794,8 @@ describe('DetailsRenderer', () => {
           const validLinks = rows[0].querySelectorAll('a.lh-report-icon--external');
           assert.equal(validLinks.length, 1);
           assert.equal(validLinks[0].href, 'https://valid.com/');
+          assert.equal(validLinks[0].target, '_blank');
+          assert.equal(validLinks[0].rel, 'noopener');
 
           // Row 1 is invalid.com, should NOT have the external link anchor tag
           assert.deepStrictEqual(

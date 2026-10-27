@@ -183,6 +183,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         // Add link to score calculator.
         const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
         calculatorLink.target = '_blank';
+        calculatorLink.rel = 'noopener';
         calculatorLink.textContent = strings.calculatorLink;
         this.dom.safelySetHref(calculatorLink, this._getScoringCalculatorHref(category.auditRefs));
       }
