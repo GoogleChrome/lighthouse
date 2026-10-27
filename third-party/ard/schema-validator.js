@@ -201,7 +201,7 @@ const schema34 = {
     },
     "attestations": {
       "type": "array",
-      "description": "Verifiable claims (compliance audits, certifications).",
+      "description": "Verifiable claims (e.g., organizational compliance audits, artifact security scans, build provenance, transparency-log receipts, or runtime evaluations).",
       "items": {
         "type": "object",
         "required": [
