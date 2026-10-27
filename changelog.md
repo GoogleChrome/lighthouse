@@ -2,10 +2,7 @@
 # 13.6.0 (2026-10-27)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.5.0...v13.6.0)
 
-
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XXX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
-
+We expect this release to ship in the DevTools of [Chrome 159](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
 
 ## New contributors
 
