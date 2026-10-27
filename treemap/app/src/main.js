@@ -133,8 +133,8 @@ class TreemapViewer {
     /*  eslint-enable no-unused-expressions */
 
     const urlEl = dom.find('a.lh-header--url');
-    urlEl.textContent = this.documentUrl.toString();
-    dom.safelySetHref(urlEl, this.documentUrl.toString());
+    urlEl.textContent = this.documentUrl.href;
+    dom.safelySetHref(urlEl, this.documentUrl.href);
 
     this.viewModeSelector = this.createViewModeSelector();
     this.bundleSelector = this.createBundleSelector();

@@ -169,7 +169,7 @@ export class DOM {
    * Set link href, but safely, preventing `javascript:` protocol, etc.
    * @see https://github.com/google/safevalues/
    * @param {HTMLAnchorElement} elem
-   * @param {string} url
+   * @param {string|undefined} url
    */
   safelySetHref(elem, url) {
     // Defaults to '' to fix proto roundtrip issue. See https://github.com/GoogleChrome/lighthouse/issues/12868

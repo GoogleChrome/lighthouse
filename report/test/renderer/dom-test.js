@@ -223,6 +223,7 @@ describe('DOM', () => {
         'chrome://chrome-urls/',
       ].forEach(url => {
         const a = dom.createElement('a');
+        a.href = 'https://previous.com/';
         dom.safelySetHref(a, url);
 
         expect(a.href).toEqual('');
