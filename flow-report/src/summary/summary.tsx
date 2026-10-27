@@ -19,11 +19,19 @@ const THUMBNAIL_WIDTH = 40;
 const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
   const strings = useLocalizedStrings();
 
+  let safeHref: string|undefined;
+  try {
+    const parsed = new URL(lhr.finalDisplayedUrl);
+    if (['https:', 'http:'].includes(parsed.protocol)) {
+      safeHref = parsed.href;
+    }
+  } catch {}
+
   return (
     <div className="SummaryNavigationHeader" data-testid="SummaryNavigationHeader">
       <FlowSegment/>
       <div className="SummaryNavigationHeader__url">
-        <a rel="noopener" target="_blank" href={lhr.finalDisplayedUrl}>{lhr.finalDisplayedUrl}</a>
+        <a rel="noopener" target="_blank" href={safeHref}>{lhr.finalDisplayedUrl}</a>
       </div>
       <div className="SummaryNavigationHeader__category">
         {strings.categoryPerformance}
