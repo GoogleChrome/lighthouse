@@ -79,6 +79,7 @@ ${extraCode}`.trimStart();
       ['  chromeStatusFeature?: number;\n}', ''],
       [' as const', ''],
       ['// This file is auto-generated, do not edit manually.', ''],
+      ['// Re-generate with: scripts/tools/dt.py generate-protocol-resources', ''],
       // Some patterns are supported in DevTools UIStrings, but not ours.
       [/\\\\/g, ''],
       [`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`],

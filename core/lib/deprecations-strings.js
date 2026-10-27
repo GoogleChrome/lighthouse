@@ -5,7 +5,7 @@
 // found in the LICENSE file.
 
 
-// Re-generate with: scripts/tools/dt.py generate-protocol-resources
+
 
 export const UIStrings = {
   /**
