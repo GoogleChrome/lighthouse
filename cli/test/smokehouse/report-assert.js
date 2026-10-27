@@ -30,7 +30,7 @@ import {chromiumVersionCheck} from './version-check.js';
  * @property {Difference[]|null} diffs
  */
 
-const NUMBER_REGEXP = /(?:\d|\.)+/.source;
+const NUMBER_REGEXP = /-?(?:\d|\.)+/.source;
 const OPS_REGEXP = /<=?|>=?|\+\/-|±/.source;
 // An optional number, optional whitespace, an operator, optional whitespace, a number.
 const NUMERICAL_EXPECTATION_REGEXP =
@@ -48,21 +48,27 @@ const NUMERICAL_EXPECTATION_REGEXP =
  * @return {boolean}
  */
 function matchesExpectation(actual, expected) {
-  if (typeof actual === 'number' && NUMERICAL_EXPECTATION_REGEXP.test(expected)) {
+  if (
+    typeof actual === 'number' &&
+    typeof expected === 'string' &&
+    NUMERICAL_EXPECTATION_REGEXP.test(expected)
+  ) {
     const parts = expected.match(NUMERICAL_EXPECTATION_REGEXP);
+    if (!parts) return false;
     const [, prefixNumber, operator, postfixNumber] = parts;
     switch (operator) {
       case '>':
-        return actual > postfixNumber;
+        return prefixNumber === undefined && actual > Number(postfixNumber);
       case '>=':
-        return actual >= postfixNumber;
+        return prefixNumber === undefined && actual >= Number(postfixNumber);
       case '<':
-        return actual < postfixNumber;
+        return prefixNumber === undefined && actual < Number(postfixNumber);
       case '<=':
-        return actual <= postfixNumber;
+        return prefixNumber === undefined && actual <= Number(postfixNumber);
       case '+/-':
       case '±':
-        return Math.abs(actual - prefixNumber) <= postfixNumber;
+        return prefixNumber !== undefined &&
+          Math.abs(actual - Number(prefixNumber)) <= Number(postfixNumber);
       default:
         throw new Error(`unexpected operator ${operator}`);
     }
@@ -117,21 +123,8 @@ function findDifferences(path, actual, expected) {
     const expectedValue = expected[key];
 
     if (key === '_includes') {
-      if (Array.isArray(actual)) {
-        inclExclCopy = [...actual];
-      } else if (typeof actual === 'object') {
-        inclExclCopy = Object.entries(actual);
-      }
-
       if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
-      if (!inclExclCopy) {
-        diffs.push({
-          path,
-          actual: 'Actual value is not an array or object',
-          expected,
-        });
-        continue;
-      }
+      inclExclCopy = Array.isArray(actual) ? [...actual] : Object.entries(actual);
 
       for (const expectedEntry of expectedValue) {
         const matchingIndex =
@@ -153,24 +146,11 @@ function findDifferences(path, actual, expected) {
     }
 
     if (key === '_excludes') {
+      if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
       // Re-use state from `_includes` check, if there was one.
       if (!inclExclCopy) {
-        if (Array.isArray(actual)) {
-          // We won't be removing items, so we can just copy the reference.
-          inclExclCopy = actual;
-        } else if (typeof actual === 'object') {
-          inclExclCopy = Object.entries(actual);
-        }
-      }
-
-      if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
-      if (!inclExclCopy) {
-        diffs.push({
-          path,
-          actual: 'Actual value is not an array or object',
-          expected,
-        });
-        continue;
+        // We won't be removing items, so we can just copy the reference.
+        inclExclCopy = Array.isArray(actual) ? actual : Object.entries(actual);
       }
 
       const expectedExclusions = expectedValue;
@@ -201,7 +181,7 @@ function findDifferences(path, actual, expected) {
   // This still allows for asserting that the first n elements of an array are specified elements,
   // but requires using an object literal (ex: {0: x, 1: y, 2: z} matches [x, y, z, q, w, e] and
   // {0: x, 1: y, 2: z, length: 5} does not match [x, y, z].
-  if (Array.isArray(expected) && actual.length !== expected.length) {
+  if (Array.isArray(expected) && (!Array.isArray(actual) || actual.length !== expected.length)) {
     diffs.push({
       path: `${path}.length`,
       actual,
@@ -256,6 +236,7 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
+    if (!obj._minChromiumVersion && !obj._maxChromiumVersion) return false;
     return !chromiumVersionCheck({
       version: getChromeVersionString(),
       min: obj._minChromiumVersion,
@@ -376,6 +357,10 @@ function collateResults(localConsole, actual, expected) {
   /** @type {Comparison[]} */
   const extraAssertions = [];
 
+  if (expected.lhr.userAgent) {
+    extraAssertions.push(makeComparison('userAgent', actual.lhr.userAgent, expected.lhr.userAgent));
+  }
+
   if (expected.lhr.timing) {
     const comparison = makeComparison('timing', actual.lhr.timing, expected.lhr.timing);
     extraAssertions.push(comparison);
@@ -425,7 +410,7 @@ function reportAssertion(localConsole, assertion) {
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
   if (assertion.equal) {
-    if (isPlainObject(assertion.actual)) {
+    if (isPlainObject(assertion.actual) || Array.isArray(assertion.actual)) {
       localConsole.log(`  ${log.greenify(log.tick)} ${assertion.name}`);
     } else {
       localConsole.log(`  ${log.greenify(log.tick)} ${assertion.name}: ` +

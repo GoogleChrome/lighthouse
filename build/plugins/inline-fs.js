@@ -6,11 +6,11 @@
 
 import assert from 'assert/strict';
 import fs from 'fs';
+import {createRequire} from 'module';
 import path from 'path';
 
 import * as acorn from 'acorn';
 import MagicString from 'magic-string';
-import resolve from 'resolve';
 import * as terser from 'terser';
 
 import {LH_ROOT} from '../../shared/root.js';
@@ -67,7 +67,7 @@ async function inlineFs(code, filepath, trackedFiles) {
 
     let parsed;
     try {
-      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
+      parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest', sourceType: 'module'});
     } catch (err) {
       // `err.loc` added by acorn.
       warnings.push(createWarning(err, filepath, err.loc));
@@ -140,9 +140,9 @@ async function inlineFs(code, filepath, trackedFiles) {
  * @return {Node}
  */
 function parseExpressionAt(input, offset, options) {
+  // @ts-expect-error - Parser constructor is marked protected in acorn types.
   const parser = new acorn.Parser(options, input, offset);
   parser.nextToken();
-  // @ts-expect-error - Not part of the current acorn types.
   return parser.parseMaybeAssign();
 }
 
@@ -313,6 +313,17 @@ function collapseToStringLiteral(node, filepath) {
       throw new AstError(`unsupported identifier '${node.name}'`, node);
     }
 
+    case 'MemberExpression': {
+      if (node.object.type === 'MetaProperty' && node.property.type === 'Identifier') {
+        if (node.property.name === 'dirname') {
+          return path.dirname(filepath);
+        } else if (node.property.name === 'filename') {
+          return filepath;
+        }
+      }
+      throw new AstError(`unsupported member expression`, node);
+    }
+
     case 'CallExpression': {
       return evaluateCallExpression(node, filepath);
     }
@@ -371,7 +382,7 @@ function evaluateCallExpression(node, filepath) {
       throw new AstError('only single-argument `require.resolve` is supported', node);
     }
     const argument = collapseToStringLiteral(node.arguments[0], filepath);
-    return resolve.sync(argument, {basedir: path.dirname(filepath)});
+    return createRequire(filepath).resolve(argument);
   }
 
   if (node.callee.object.name !== 'path') throw new AstError(unsupportedMsg, node);

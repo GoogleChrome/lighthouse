@@ -41,7 +41,7 @@ function isDev() {
 }
 
 /**
- * @return {Promise<LH.RunnerResult|void>}
+ * @return {Promise<LH.RunnerResult|LH.RunnerResult[]|void>}
  */
 async function begin() {
   const cliFlags = getFlags();
@@ -61,7 +61,7 @@ async function begin() {
     commands.listTraceCategories();
   }
 
-  const urlUnderTest = cliFlags._[0];
+  const urlsUnderTest = cliFlags._.length > 1 ? cliFlags._ : cliFlags._[0];
 
   /** @type {LH.Config|undefined} */
   let config;
@@ -89,6 +89,7 @@ async function begin() {
   log.setLevel(cliFlags.logLevel);
 
   if (
+    cliFlags._.length <= 1 &&
     cliFlags.output.length === 1 &&
     cliFlags.output[0] === Printer.OutputMode.json &&
     !cliFlags.outputPath
@@ -120,7 +121,7 @@ async function begin() {
   }
   if (cliFlags.enableErrorReporting) {
     await Sentry.init({
-      url: urlUnderTest,
+      url: cliFlags._.join(', '),
       flags: cliFlags,
       config,
       environmentData: {
@@ -131,7 +132,7 @@ async function begin() {
     });
   }
 
-  return runLighthouse(urlUnderTest, cliFlags, config);
+  return runLighthouse(urlsUnderTest, cliFlags, config);
 }
 
 export {

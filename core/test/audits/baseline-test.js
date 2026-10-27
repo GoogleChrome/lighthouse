@@ -256,8 +256,8 @@ describe('Baseline Audit', () => {
     expect(result.details.debugData).toEqual({
       type: 'debugdata',
       newestFeatureId: 'forced-colors',
-      newestFeatureYear: '2020',
-      newestFeatureLowDate: '2020-03-12',
+      newestFeatureYear: '2022',
+      newestFeatureLowDate: '2022-09-12',
     });
   });
 
@@ -294,9 +294,48 @@ describe('Baseline Audit', () => {
     it('should return high status for low features if over 30 months', () => {
       const status = Baseline.getFeatureStatus('low-feature', fakeData, dateOct);
       expect(status).toEqual({
-        displayStatus: 'Widely Available (2026-09-01)',
+        displayStatus: 'Widely Available (2024-03-01)',
         baselineTier: 'high',
       });
+    });
+
+    it('should show baseline_low_date for both high and promoted low features', async () => {
+      timers.setSystemTime(dateOct.getTime());
+      const traceEvents = [
+        {args: {feature: 'forced-colors'}, cat: 'blink.webdx_feature_usage'},
+        {args: {feature: 'abortsignal-any'}, cat: 'blink.webdx_feature_usage'},
+      ];
+
+      const result = await Baseline.audit({Trace: {traceEvents}});
+
+      expect(result.details.items).toEqual([
+        {
+          featureId: {
+            type: 'link',
+            text: 'abortsignal-any',
+            url: 'https://webstatus.dev/features/abortsignal-any',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2024-03-19)',
+          },
+          source: undefined,
+        },
+        {
+          featureId: {
+            type: 'link',
+            text: 'forced-colors',
+            url: 'https://webstatus.dev/features/forced-colors',
+          },
+          displayStatus: {
+            type: 'baseline-status',
+            status: 'high',
+            displayString: 'Widely Available (2022-09-12)',
+          },
+          source: undefined,
+        },
+      ]);
     });
 
     it('should return limited status for limited features', () => {
@@ -310,6 +349,40 @@ describe('Baseline Audit', () => {
     it('should return null for unknown features', () => {
       const status = Baseline.getFeatureStatus('unknown-feature-id', fakeData, dateJune);
       expect(status).toBeNull();
+    });
+  });
+
+  describe('getLowDate & web-features-data.json format', () => {
+    // In build/build-baseline-data.js, `feature.status.baseline_low_date` is written into both
+    // `out.high[id]` and `out.low[id]`. Therefore, dates stored in `featureData.high` are ALREADY
+    // the feature's `baseline_low_date`.
+    // Previously, `getLowDate` subtracted 30 months from `featureData.high` dates, which shifted
+    // dates back 2.5 years (e.g. '2022-09-12' -> '2020-03-12').
+    // Furthermore, features with approximate dates in web-features start with a '≤' prefix
+    // (such as 'opacity-svg': '≤2020-03-24' or 'output': '≤2018-10-02'), which we now strip at
+    // build time in `build/build-baseline-data.js` so all stored dates are valid `YYYY-MM-DD`.
+    it('should return baseline_low_date directly for high features ' +
+      'without subtracting 30 months', () => {
+      expect(Baseline.getLowDate('forced-colors', Baseline.featureData)).toEqual('2022-09-12');
+    });
+
+    it('should return baseline_low_date for low features', () => {
+      expect(Baseline.getLowDate('abortsignal-any', Baseline.featureData)).toEqual('2024-03-19');
+    });
+
+    it('should return null for features not in high or low', () => {
+      expect(Baseline.getLowDate('accelerometer', Baseline.featureData)).toBeNull();
+      expect(Baseline.getLowDate('unknown-feature', Baseline.featureData)).toBeNull();
+    });
+
+    it('should ensure all dates in generated web-features-data.json are clean YYYY-MM-DD ' +
+      'without ≤ prefixes', () => {
+      for (const dateStr of [
+        ...Object.values(originalData.high),
+        ...Object.values(originalData.low),
+      ]) {
+        expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
     });
   });
 });

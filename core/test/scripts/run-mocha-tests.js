@@ -11,13 +11,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import {Worker, isMainThread, parentPort, workerData} from 'worker_threads';
-import {once} from 'events';
 
 import Mocha from 'mocha';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
-import glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
@@ -27,14 +24,6 @@ process.env.LH_FPS_TEST = '1';
 
 const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
 
-if (!isMainThread && parentPort) {
-  // Worker.
-  const {test, mochaArgs, numberMochaInvocations} = workerData;
-  const numberFailures = await runMocha([test], mochaArgs, numberMochaInvocations);
-  parentPort?.postMessage({type: 'result', numberFailures});
-  process.exit(0);
-}
-
 /** @param {string} text */
 function escapeRegex(text) {
   return text.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -42,60 +31,11 @@ function escapeRegex(text) {
 
 function getFailedTests() {
   const allFailedTests = [];
-  for (const file of glob.sync('*.json', {cwd: failedTestsDir, absolute: true})) {
-    allFailedTests.push(...JSON.parse(fs.readFileSync(file, 'utf-8')));
+  for (const file of fs.globSync('*.json', {cwd: failedTestsDir}).sort()) {
+    allFailedTests.push(...JSON.parse(fs.readFileSync(path.join(failedTestsDir, file), 'utf-8')));
   }
   return allFailedTests;
 }
-
-// Some tests replace real modules with mocks in the global scope of the test file
-// (outside 'before' lifecycle / a test unit). Before doing any lifecycle stuff, Mocha will load
-// all test files (everything if --no-parallel, else each worker will load a subset of the files
-// all at once). This results in unexpected mocks contaminating other test files.
-//
-// For now, we isolate a number of tests until they can be refactored.
-//
-// To run tests without isolation, and all in one process:
-//    yarn mocha --no-isolation --no-parallel core/test
-//
-// Because mocha workers can divide up test files that mess with global scope in a way that
-// _just happens_ to not cause anything to fail, use this command to verify that
-// all necessary tests are isolated:
-//    yarn mocha --no-parallel
-// (also, just comment out the `testsToRunIsolated` below, as they won't impact this verification)
-const testsToIsolate = new Set([
-  // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
-  'core/test/gather/snapshot-runner-test.js',
-  'core/test/gather/timespan-runner-test.js',
-  'core/test/user-flow-test.js',
-  'core/test/gather/driver/prepare-test.js',
-  'core/test/gather/gatherers/link-elements-test.js',
-  'core/test/runner-test.js',
-
-  // grep -lRE --include='-test.js' 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' --include='*-test.*' --exclude-dir=node_modules
-  'core/test/gather/navigation-runner-test.js',
-  'core/test/gather/snapshot-runner-test.js',
-  'core/test/gather/timespan-runner-test.js',
-  'core/test/user-flow-test.js',
-  'core/test/runner-test.js',
-
-  // These tend to timeout in puppeteer when run in parallel with other tests.
-  'core/test/scenarios/api-test-pptr.js',
-  'core/test/scenarios/cross-origin-test-pptr.js',
-  'core/test/scenarios/disconnect-test-pptr.js',
-
-  // ?
-  'clients/test/lightrider/lightrider-entry-test.js', // Runner overrides.
-  'flow-report/test/flow-report-pptr-test.ts',
-  'cli/test/cli/bin-test.js',
-  'cli/test/cli/run-test.js',
-  'core/test/config/config-test.js',
-  'core/test/lib/emulation-test.js',
-  'core/test/lib/sentry-test.js',
-  'report/test/clients/bundle-test.js',
-  'report/test/clients/bundle-test.js',
-  'shared/test/localization/format-test.js',
-]);
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
 // TODO: -t => --fgrep
@@ -117,19 +57,6 @@ const rawArgv = y
       type: 'boolean',
       default: false,
       describe: 'Update snapshots',
-    },
-    'isolation': {
-      type: 'boolean',
-      default: true,
-    },
-    'parallel': {
-      type: 'boolean',
-      // Although much faster, mocha's parallel test runner defers printing errors until
-      // all tests have finished. This may be undesired for local development, so enable
-      // parallel mode by default only in CI.
-      // Also, good to default to false locally because that avoids missing cross-file
-      // test contamination by chance of mocha splitting up the work in a way that hides it.
-      default: Boolean(process.env.CI),
     },
     'bail': {
       alias: 'b',
@@ -191,8 +118,11 @@ const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg
 function getTestFiles() {
   // Collect all the possible test files, based off the provided testMatch glob pattern
   // or the default patterns defined above.
-  const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
-  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT, ignore: '**/node_modules/**'});
+  const testsGlob = argv.testMatch || defaultTestMatches;
+  const allTestFiles = fs.globSync(testsGlob, {
+    cwd: LH_ROOT,
+    exclude: ['**/node_modules/**'],
+  }).sort();
 
   // If provided, filter the test files using a basic string includes on the absolute path of
   // each test file.
@@ -261,7 +191,6 @@ function exit({numberFailures}) {
  * @property {RegExp | string | undefined} grep
  * @property {boolean} bail
  * @property {boolean} forbidOnly
- * @property {boolean} parallel
  * @property {string | undefined} require
  * @property {number | undefined} retries
  */
@@ -269,11 +198,10 @@ function exit({numberFailures}) {
 /**
  * @param {string[]} tests
  * @param {OurMochaArgs} mochaArgs
- * @param {number} invocationNumber
  */
-async function runMocha(tests, mochaArgs, invocationNumber) {
-  const failedTestsFile = `${failedTestsDir}/output-${invocationNumber}.json`;
-  const notRunnableTestsFile = `${failedTestsDir}/output-${invocationNumber}-not-runnable.json`;
+async function runMocha(tests, mochaArgs) {
+  const failedTestsFile = `${failedTestsDir}/output.json`;
+  const notRunnableTestsFile = `${failedTestsDir}/output-not-runnable.json`;
   process.env.LH_FAILED_TESTS_FILE = failedTestsFile;
 
   const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
@@ -285,9 +213,6 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
     bail: mochaArgs.bail,
     grep: mochaArgs.grep,
     forbidOnly: mochaArgs.forbidOnly,
-    // TODO: not working
-    // parallel: parsableTests.length > 1 && mochaArgs.parallel,
-    parallel: false,
     retries: mochaArgs.retries,
   });
 
@@ -337,23 +262,6 @@ async function main() {
   process.env.SNAPSHOT_UPDATE = argv.update ? '1' : '';
 
   const {filteredTests: testsToRun, grep} = getTestFiles();
-  const testsToRunTogether = [];
-  const testsToRunIsolated = [];
-  for (const test of testsToRun) {
-    if (argv.isolation && testsToIsolate.has(test)) {
-      testsToRunIsolated.push(test);
-    } else {
-      testsToRunTogether.push(test);
-    }
-  }
-
-  // If running only a single test file, no need for isolation at all. Move
-  // the singular test to `testsToRunTogether` so that it's run in-process,
-  // allowing for better DX when doing a `node --inspect-brk` workflow.
-  if (testsToRunTogether.length === 0 && testsToRunIsolated.length === 1) {
-    testsToRunTogether.push(testsToRunIsolated[0]);
-    testsToRunIsolated.splice(0, 1);
-  }
 
   fs.rmSync(failedTestsDir, {recursive: true, force: true});
   fs.mkdirSync(failedTestsDir, {recursive: true});
@@ -362,43 +270,16 @@ async function main() {
   const mochaArgs = {
     grep,
     bail: argv.bail,
-    parallel: argv.parallel,
     require: argv.require,
     retries: argv.retries,
     forbidOnly: argv.forbidOnly,
   };
 
   mochaGlobalSetup();
-  let numberMochaInvocations = 0;
   let numberFailures = 0;
   try {
-    if (testsToRunTogether.length) {
-      numberFailures += await runMocha(testsToRunTogether, mochaArgs, numberMochaInvocations);
-      numberMochaInvocations += 1;
-      if (numberFailures && argv.bail) exit({numberFailures});
-    }
-
-    for (const test of testsToRunIsolated) {
-      console.log(`Running test in isolation: ${test}`);
-      const worker = new Worker(new URL(import.meta.url), {
-        workerData: {
-          test,
-          mochaArgs,
-          numberMochaInvocations,
-        },
-      });
-
-      try {
-        const [workerResponse] = await once(worker, 'message');
-        numberFailures += workerResponse.numberFailures;
-      } catch (err) {
-        // `once` throws an error if the underlying event emitter produces an 'error' message.
-        console.error(err);
-        numberFailures += 1;
-      }
-
-      numberMochaInvocations += 1;
-      if (numberFailures && argv.bail) exit({numberFailures});
+    if (testsToRun.length) {
+      numberFailures = await runMocha(testsToRun, mochaArgs);
     }
   } finally {
     mochaGlobalTeardown();

@@ -176,11 +176,32 @@ class ScriptTreemapDataAudit extends Audit {
     const nodes = [];
     /** @type {Map<string, LH.Treemap.Node>} */
     const htmlNodesByFrameId = new Map();
-    const bundles = await JSBundles.request(artifacts, context);
-    const duplicationByPath = await ModuleDuplication.request(artifacts, context);
+    /** @type {Set<LH.Artifacts.NetworkRequest>} */
+    const seenNetworkRecords = new Set();
+    const deduplicatedScripts = artifacts.Scripts.filter(script => {
+      if (script.scriptLanguage !== 'JavaScript') return false;
 
-    for (const script of artifacts.Scripts) {
-      if (script.scriptLanguage !== 'JavaScript') continue;
+      const networkRecord = isInline(script) ?
+        undefined :
+        getRequestForScript(networkRecords, script);
+      if (networkRecord) {
+        if (seenNetworkRecords.has(networkRecord)) return false;
+        seenNetworkRecords.add(networkRecord);
+      }
+
+      return true;
+    });
+    const deduplicatedArtifacts = deduplicatedScripts.length === artifacts.Scripts.length ?
+      artifacts :
+      {...artifacts, Scripts: deduplicatedScripts};
+    const bundles = await JSBundles.request(deduplicatedArtifacts, context);
+    const duplicationByPath = await ModuleDuplication.request(deduplicatedArtifacts, context);
+
+    for (const script of deduplicatedScripts) {
+      const isInlineScript = isInline(script);
+      const networkRecord = isInlineScript ?
+        undefined :
+        getRequestForScript(networkRecords, script);
 
       const name = script.url;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId) ?? null;
@@ -246,7 +267,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       // If this is an inline script, place the node inside a top-level (aka depth-one) node.
       // Also separate each iframe / the main page's inline scripts into their own top-level nodes.
-      if (isInline(script)) {
+      if (isInlineScript) {
         let htmlNode = htmlNodesByFrameId.get(script.executionContextAuxData.frameId);
         if (!htmlNode) {
           htmlNode = {
@@ -269,7 +290,6 @@ class ScriptTreemapDataAudit extends Audit {
         // Non-inline scripts each have their own top-level node.
         nodes.push(node);
 
-        const networkRecord = getRequestForScript(networkRecords, script);
         if (networkRecord) {
           const bodyTransferSize =
             networkRecord.transferSize - networkRecord.responseHeadersTransferSize;

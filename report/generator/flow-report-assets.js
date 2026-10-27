@@ -7,9 +7,7 @@
 
 import fs from 'fs';
 
-import {getModuleDirectory} from '../../shared/esm-utils.js';
-
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /* eslint-disable max-len */
 const FLOW_REPORT_TEMPLATE = fs.readFileSync(`${moduleDir}/../../flow-report/assets/standalone-flow-template.html`, 'utf8');

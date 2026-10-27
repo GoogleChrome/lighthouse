@@ -6,7 +6,7 @@
 
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
-import glob from 'glob';
+import fs from 'fs';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
@@ -21,16 +21,16 @@ const enUsLhl = readJson('shared/localization/locales/en-US.json');
  */
 function countTranslatedMessages() {
   // Find all locale files, ignoring self-generated en-US and en-XL, and ctc files.
-  const ignore = [
-    '**/.ctc.json',
+  const exclude = [
+    '**/*.ctc.json',
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
-  const localeFilenames = glob.sync(globPattern, {
-    ignore,
+  const globPattern = 'shared/localization/locales/**/*.json';
+  const localeFilenames = fs.globSync(globPattern, {
+    exclude,
     cwd: LH_ROOT,
-  });
+  }).sort();
 
   /** @type {Array<[string, number]>} */
   const enUsEntries = Object.keys(enUsLhl).map(key => [key, 0]);

@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import SourceMap from './generated/SourceMap.js';
+
 const SDK = {
-  SourceMap: require('./generated/SourceMap.js'),
+  SourceMap,
 };
 
 // Add `lastColumnNumber` to mappings. This will eventually be added to CDT.
@@ -25,4 +27,4 @@ SDK.SourceMap.prototype.computeLastGeneratedColumns = function() {
   // Now, all but the last mapping on each line will have 'lastColumnNumber' set to a number.
 };
 
-module.exports = SDK;
+export default SDK;

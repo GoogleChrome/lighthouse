@@ -46,12 +46,15 @@ function upperBound(array, needle, comparator, left, right) {
   return r;
 }
 
-module.exports = {
-  ArrayUtilities: {
-    lowerBound,
-    upperBound,
-  },
-  DevToolsPath: {
-    EmptyUrlString: '',
-  },
+const ArrayUtilities = {
+  lowerBound,
+  upperBound,
+};
+const DevToolsPath = {
+  EmptyUrlString: '',
+};
+
+export {
+  ArrayUtilities,
+  DevToolsPath,
 };

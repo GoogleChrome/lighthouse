@@ -20,7 +20,6 @@ import {isObjectOfUnknownValues} from '../shared/type-verifiers.js';
  */
 function getYargsParser(manualArgv) {
   const y = manualArgv ?
-    // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
     yargs(manualArgv) :
     yargs(yargsHelpers.hideBin(process.argv));
 
@@ -208,12 +207,22 @@ function getYargsParser(manualArgv) {
         type: 'boolean',
         describe: 'Disables failing on all error status codes, and instead issues a warning.',
       },
+      'url-file': {
+        type: 'string',
+        coerce: coerceUrlFile,
+        describe: 'The path to a file containing newline-delimited URLs to audit.',
+      },
+      'fail-fast': {
+        type: 'boolean',
+        describe: 'Stop auditing remaining URLs immediately if a run fails.',
+      },
     })
     .group([
       'save-assets', 'list-all-audits', 'list-locales', 'list-trace-categories', 'additional-trace-categories',
       'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'reuse-page', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
       'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
       'only-audits', 'only-categories', 'skip-audits', 'disable-full-page-screenshot', 'ignore-status-code',
+      'url-file', 'fail-fast',
     ], 'Configuration:')
 
     // Output
@@ -227,7 +236,8 @@ function getYargsParser(manualArgv) {
       'output-path': {
         type: 'string',
         coerce: coerceOutputPath,
-        describe: `The file path to output the results. Use 'stdout' to write to stdout.
+        describe: `The file or directory path to output the results. Use 'stdout' to write to stdout.
+Directories in the path must already exist. If a directory is specified, the file name will be based on the test URL and date.
 If using JSON output, default is stdout.
 If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
 If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.
@@ -310,6 +320,24 @@ Example: --output-path=./lighthouse-results.html`,
     .choices('preset', /** @type {const} */ (['perf', 'experimental', 'desktop']))
 
     .check(argv => {
+      if (Array.isArray(argv.urlFile)) {
+        argv._.push(...argv.urlFile);
+      }
+
+      if (argv._.length > 1) {
+        if (argv.gatherMode || argv.auditMode) {
+          throw new Error('Cannot use -G/--gather-mode or -A/--audit-mode when auditing multiple URLs');
+        }
+
+        if (
+          typeof argv.outputPath === 'string' &&
+          argv.outputPath &&
+          (!fs.existsSync(argv.outputPath) || !fs.statSync(argv.outputPath).isDirectory())
+        ) {
+          throw new Error('--output-path must be an existing directory when auditing multiple URLs');
+        }
+      }
+
       // Lighthouse doesn't need a URL if...
       //   - We're just listing the available options.
       //   - We're just printing the config.
@@ -421,6 +449,29 @@ function coerceOutputPath(value) {
   }
 
   return value;
+}
+
+/**
+ * Reads newline-delimited URLs from a file, ignoring empty lines and `#` comments.
+ * @param {unknown=} value
+ * @return {Array<string>=}
+ */
+function coerceUrlFile(value) {
+  if (value === undefined) return;
+
+  if (
+    typeof value !== 'string' ||
+    !value ||
+    !fs.existsSync(value) ||
+    fs.statSync(value).isDirectory()
+  ) {
+    throw new Error(`--url-file (${value}) cannot be read`);
+  }
+
+  return fs.readFileSync(value, 'utf-8')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(line => line.length > 0 && !line.startsWith('#'));
 }
 
 /**

@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 env:
   PUPPETEER_SKIP_DOWNLOAD: 1
 
@@ -23,24 +30,28 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
         fetch-depth: 2
+        persist-credentials: false
 
     - name: Use Node.js ${{ matrix.node }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: ${{ matrix.node }}
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - name: Set up protoc
-      uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3
+      uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3 # v1.1.2
       with:
         version: '3.20'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@0f07f7f756721ebd886c2462646a35f78a8bc4de # v1
       with:
         python-version: 3
     - name: Install Python dependencies
@@ -65,18 +76,17 @@ jobs:
 
     - name: yarn unit
       run: yarn unit:ci
-    - name: yarn unit-lantern-trace
-      run: yarn unit-lantern-trace:ci
 
     # Runs here because it needs the roundtrip proto.
     - name: yarn test-viewer
+      if: matrix.node == '24'
       run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
 
     - run: git add -A && git diff --cached --exit-code
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
         name: Unit (ubuntu; node ${{ matrix.node }})
         path: .tmp/unit-failures/
@@ -88,12 +98,15 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report

@@ -8,100 +8,131 @@ import fs from 'fs';
 import assert from 'assert/strict';
 import path from 'path';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {makeMocksForGatherRunner} from './test-utils.js';
 import {createMockDriver} from './gather/mock-driver.js';
 
-await makeMocksForGatherRunner();
-
-/** @type {jestMock.Mock} */
-let saveArtifactsSpy;
-/** @type {jestMock.Mock} */
-let saveLhrSpy;
-/** @type {jestMock.Mock} */
-let loadArtifactsSpy;
-/** @type {jestMock.Mock} */
-let runAuditSpy;
-/** @type {jestMock.Mock} */
-let mockGatherImpl;
-
-let driverMock = createMockDriver();
-
-await td.replaceEsm('../lib/asset-saver.js', {
-  saveArtifacts: saveArtifactsSpy = jestMock.fn((...args) => assetSaver.saveArtifacts(...args)),
-  saveLhr: saveLhrSpy = jestMock.fn(),
-  loadArtifacts: loadArtifactsSpy = jestMock.fn((...args) => assetSaver.loadArtifacts(...args)),
-});
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const {Runner} = await import('../runner.js');
-const {initializeConfig} = await import('../config/config.js');
-const {Audit} = await import('../audits/audit.js');
-const {default: Gatherer} = await import('../gather/base-gatherer.js');
-const i18n = await import('../lib/i18n/i18n.js');
-const {getModuleDirectory} = await import('../../shared/esm-utils.js');
-const {LighthouseError} = await import('../lib/lh-error.js');
-const {finalizeArtifacts, getBaseArtifacts} = await import('../gather/base-artifacts.js');
-const {gotoURL} = await import('../gather/driver/navigation.js');
-const {
-  awaitArtifacts,
-  collectPhaseArtifacts,
-  getEmptyArtifactState,
-} = await import('../gather/runner-helpers.js');
-
-// All mocks must come first, then we can load the "original" version of asset-saver (which will
-// contain references to all the correct mocked modules, and have the same LighthouseError class
-// that the test file uses).
-const assetSaver = await import('../lib/asset-saver.js?__quibbleoriginal');
-
-const moduleDir = getModuleDirectory(import.meta);
-
-beforeEach(() => {
-  driverMock = createMockDriver();
-  driverMock._executionContext.evaluate.mockReturnValue({});
-  runAuditSpy = jestMock.spyOn(Runner, '_runAudit');
-  mockGatherImpl = jestMock.fn().mockImplementation(async (url, opts) => {
-    const baseArtifacts =
-      await getBaseArtifacts(opts.resolvedConfig, driverMock, {gatherMode: 'navigation'});
-    baseArtifacts.URL = {
-      requestedUrl: url,
-      mainDocumentUrl: url,
-      finalDisplayedUrl: url,
-    };
-
-    const artifactDefinitions = opts.resolvedConfig.artifacts || [];
-    const artifactState = getEmptyArtifactState();
-    await gotoURL(driverMock, url);
-    await collectPhaseArtifacts({
-      phase: 'getArtifact',
-      gatherMode: 'navigation',
-      driver: driverMock,
-      page: driverMock._page,
-      baseArtifacts,
-      artifactDefinitions,
-      artifactState,
-      computedCache: new Map(),
-      settings: opts.resolvedConfig.settings,
-    });
-
-    await driverMock.disconnect();
-
-    const artifacts = await awaitArtifacts(artifactState);
-    return finalizeArtifacts(baseArtifacts, artifacts);
-  });
-});
-
-afterEach(() => {
-  saveArtifactsSpy.mockClear();
-  saveLhrSpy.mockClear();
-  loadArtifactsSpy.mockClear();
-  runAuditSpy.mockRestore();
-});
+const moduleDir = import.meta.dirname;
 
 describe('Runner', () => {
+  /** @type {jestMock.Mock} */
+  let saveArtifactsSpy;
+  /** @type {jestMock.Mock} */
+  let saveLhrSpy;
+  /** @type {jestMock.Mock} */
+  let loadArtifactsSpy;
+  /** @type {jestMock.Mock} */
+  let runAuditSpy;
+  /** @type {jestMock.Mock} */
+  let mockGatherImpl;
+
+  let driverMock = createMockDriver();
+
+  /** @type {typeof import('../runner.js').Runner} */
+  let Runner;
+  /** @type {typeof import('../config/config.js').initializeConfig} */
+  let initializeConfig;
+  /** @type {typeof import('../audits/audit.js').Audit} */
+  let Audit;
+  /** @type {typeof import('../gather/base-gatherer.js').default} */
+  let Gatherer;
+  /** @type {typeof import('../lib/i18n/i18n.js')} */
+  let i18n;
+  /** @type {typeof import('../lib/lh-error.js').LighthouseError} */
+  let LighthouseError;
+  /** @type {typeof import('../gather/base-artifacts.js').finalizeArtifacts} */
+  let finalizeArtifacts;
+  /** @type {typeof import('../gather/base-artifacts.js').getBaseArtifacts} */
+  let getBaseArtifacts;
+  /** @type {typeof import('../gather/driver/navigation.js').gotoURL} */
+  let gotoURL;
+  /** @type {typeof import('../gather/runner-helpers.js').awaitArtifacts} */
+  let awaitArtifacts;
+  /** @type {typeof import('../gather/runner-helpers.js').collectPhaseArtifacts} */
+  let collectPhaseArtifacts;
+  /** @type {typeof import('../gather/runner-helpers.js').getEmptyArtifactState} */
+  let getEmptyArtifactState;
+  /** @type {typeof import('../lib/asset-saver.js')} */
+  let assetSaver;
+
+  before(async () => {
+    await makeMocksForGatherRunner();
+
+    await td.replaceEsm('../lib/asset-saver.js', {
+      saveArtifacts: saveArtifactsSpy = jestMock.fn((...args) => assetSaver.saveArtifacts(...args)),
+      saveLhr: saveLhrSpy = jestMock.fn(),
+      loadArtifacts: loadArtifactsSpy = jestMock.fn((...args) => assetSaver.loadArtifacts(...args)),
+    });
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ({Runner} = await import('../runner.js'));
+    ({initializeConfig} = await import('../config/config.js'));
+    ({Audit} = await import('../audits/audit.js'));
+    ({default: Gatherer} = await import('../gather/base-gatherer.js'));
+    i18n = await import('../lib/i18n/i18n.js');
+    ({LighthouseError} = await import('../lib/lh-error.js'));
+    ({finalizeArtifacts, getBaseArtifacts} = await import('../gather/base-artifacts.js'));
+    ({gotoURL} = await import('../gather/driver/navigation.js'));
+    ({
+      awaitArtifacts,
+      collectPhaseArtifacts,
+      getEmptyArtifactState,
+    } = await import('../gather/runner-helpers.js'));
+
+    // All mocks must come first, then we can load the "original" version of asset-saver (which will
+    // contain references to all the correct mocked modules, and have the same LighthouseError class
+    // that the test file uses).
+    assetSaver = await import('../lib/asset-saver.js?fresh=1&__quibbleoriginal');
+  });
+
+  after(() => {
+    td.reset();
+  });
+
+  beforeEach(() => {
+    driverMock = createMockDriver();
+    driverMock._executionContext.evaluate.mockReturnValue({});
+    runAuditSpy = jestMock.spyOn(Runner, '_runAudit');
+    mockGatherImpl = jestMock.fn().mockImplementation(async (url, opts) => {
+      const baseArtifacts =
+        await getBaseArtifacts(opts.resolvedConfig, driverMock, {gatherMode: 'navigation'});
+      baseArtifacts.URL = {
+        requestedUrl: url,
+        mainDocumentUrl: url,
+        finalDisplayedUrl: url,
+      };
+
+      const artifactDefinitions = opts.resolvedConfig.artifacts || [];
+      const artifactState = getEmptyArtifactState();
+      await gotoURL(driverMock, url);
+      await collectPhaseArtifacts({
+        phase: 'getArtifact',
+        gatherMode: 'navigation',
+        driver: driverMock,
+        page: driverMock._page,
+        baseArtifacts,
+        artifactDefinitions,
+        artifactState,
+        computedCache: new Map(),
+        settings: opts.resolvedConfig.settings,
+      });
+
+      await driverMock.disconnect();
+
+      const artifacts = await awaitArtifacts(artifactState);
+      return finalizeArtifacts(baseArtifacts, artifacts);
+    });
+  });
+
+  afterEach(() => {
+    saveArtifactsSpy.mockClear();
+    saveLhrSpy.mockClear();
+    loadArtifactsSpy.mockClear();
+    runAuditSpy.mockRestore();
+  });
   const createGatherFn = url => {
     return opts => {
       return mockGatherImpl(url, opts);
@@ -318,10 +349,11 @@ describe('Runner', () => {
       ],
     });
 
+    assert.ok(typeof resolvedConfig.artifacts[0] === 'object');
     return runGatherAndAudit(createGatherFn(url),
         {resolvedConfig, driverMock, computedCache: new Map()}).then(_ => {
       expect(mockGatherImpl).toHaveBeenCalled();
-      assert.ok(typeof resolvedConfig.artifacts[0] === 'object');
+      assert.strictEqual(resolvedConfig.artifacts, null);
     });
   });
 
@@ -862,40 +894,40 @@ describe('Runner', () => {
   });
 
   describe('lhr.runtimeError', () => {
-    const NO_FCP = LighthouseError.errors.NO_FCP;
-    class RuntimeErrorGatherer extends Gatherer {
-      meta = {
-        supportedModes: ['navigation'],
+    it('includes a top-level runtimeError when a gatherer throws one', async () => {
+      const NO_FCP = LighthouseError.errors.NO_FCP;
+      class RuntimeErrorGatherer extends Gatherer {
+        meta = {
+          supportedModes: ['navigation'],
+        };
+
+        getArtifact() {
+          throw new LighthouseError(NO_FCP);
+        }
+      }
+
+      class WarningAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'test-audit',
+            title: 'A test audit',
+            failureTitle: 'A test audit',
+            description: 'An audit for testing',
+            requiredArtifacts: ['RuntimeErrorGatherer'],
+          };
+        }
+        static audit() {
+          throw new Error('Should not get here');
+        }
+      }
+
+      const config = {
+        artifacts: [
+          {id: 'RuntimeErrorGatherer', gatherer: RuntimeErrorGatherer},
+        ],
+        audits: [WarningAudit],
       };
 
-      getArtifact() {
-        throw new LighthouseError(NO_FCP);
-      }
-    }
-
-    class WarningAudit extends Audit {
-      static get meta() {
-        return {
-          id: 'test-audit',
-          title: 'A test audit',
-          failureTitle: 'A test audit',
-          description: 'An audit for testing',
-          requiredArtifacts: ['RuntimeErrorGatherer'],
-        };
-      }
-      static audit() {
-        throw new Error('Should not get here');
-      }
-    }
-
-    const config = {
-      artifacts: [
-        {id: 'RuntimeErrorGatherer', gatherer: RuntimeErrorGatherer},
-      ],
-      audits: [WarningAudit],
-    };
-
-    it('includes a top-level runtimeError when a gatherer throws one', async () => {
       const {resolvedConfig} = await initializeConfig('navigation', config);
       const {lhr} = await runGatherAndAudit(createGatherFn('https://example.com/'),
         {resolvedConfig, driverMock, computedCache: new Map()});

@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 env:
   PUPPETEER_SKIP_DOWNLOAD: 1
 
@@ -17,15 +24,19 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      with:
+        persist-credentials: false
 
     - name: Use Node.js 22.19
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: '22.19'
+        cache: 'yarn'
+      env:
+        FORCE_COLOR: 0
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
 
     - run: bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
 

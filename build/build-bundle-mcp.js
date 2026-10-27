@@ -171,13 +171,8 @@ async function buildBundle(entryPath, distPath) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    // zlib's decompression code is very large and we don't need it.
-    '__zlib-lib/inflate': `
-      export function inflateInit2() {};
-      export function inflate() {};
-      export function inflateEnd() {};
-      export function inflateReset() {};
-    `,
+    'url': plugins.nodeModuleShims.url,
+    'module': plugins.nodeModuleShims.module,
     // MCP bundle needs generateReport: inline report assets at build time.
     // Requires dist/report/standalone.js (run build-report first).
     [`${LH_ROOT}/report/generator/report-assets.js`]: (() => {
@@ -203,10 +198,8 @@ async function buildBundle(entryPath, distPath) {
   };
 
   const modulesToIgnore = [
-    'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
-    'ws',
     'puppeteer-core',
   ];
   for (const modulePath of modulesToIgnore) shimsObj[modulePath] = 'export default {}';
@@ -286,19 +279,7 @@ async function buildBundle(entryPath, distPath) {
         includedAudits,
         includedGatherers,
       }),
-      plugins.replaceModules({
-        ...shimsObj,
-        'url': `
-          export const URL = globalThis.URL;
-          export const fileURLToPath = url => url;
-          export default {URL, fileURLToPath};
-        `,
-        'module': `
-          export const createRequire = () => ({
-            resolve() { throw new Error('createRequire.resolve is not supported'); },
-          });
-        `,
-      }, {
+      plugins.replaceModules(shimsObj, {
         disableUnusedError: true,
       }),
       plugins.bulkLoader([
@@ -309,6 +290,10 @@ async function buildBundle(entryPath, distPath) {
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          /** @param {string} id */
+          'import.meta.url': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          /** @param {string} id */
+          'import.meta.filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),

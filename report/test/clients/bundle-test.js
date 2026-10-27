@@ -7,7 +7,7 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {createQuietConsole} from '../renderer/jsdom-setup.js';
 import * as lighthouseRenderer from '../../clients/bundle.js';
@@ -18,6 +18,7 @@ const sampleResultsStr =
 
 describe('lighthouseRenderer bundle', () => {
   let document;
+  const origConsoleWarn = global.console.warn;
   before(() => {
     global.console.warn = jestMock.fn();
 
@@ -25,6 +26,7 @@ describe('lighthouseRenderer bundle', () => {
     document = window.document;
 
     global.window = global.self = window;
+    global.document = window.document;
     global.requestAnimationFrame = fn => fn();
     global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
@@ -42,7 +44,11 @@ describe('lighthouseRenderer bundle', () => {
   });
 
   after(() => {
+    global.console.warn = origConsoleWarn;
     global.window = global.self = undefined;
+    global.document = undefined;
+    global.requestAnimationFrame = undefined;
+    global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
     global.CustomEvent = undefined;
   });

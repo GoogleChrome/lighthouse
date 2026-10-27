@@ -18,7 +18,7 @@ const UIStrings = {
    */
   description:
     'Lists web features used on the page and their Baseline status as of {date}. ' +
-    '[Learn more about Baseline](https://webstatus.dev/).',
+    '[Learn more about Baseline](https://developer.chrome.com/docs/lighthouse/best-practices/baseline-features).',
   /** Label for the column displaying the feature ID. */
   columnFeature: 'Web-features',
   /** Label for the column displaying the feature\'s baseline status. */
@@ -48,6 +48,18 @@ class Baseline extends Audit {
 
   /**
    * Determines the baseline status and display string for a given feature ID.
+   *
+   * Baseline tiers & dates (built by `build/build-baseline-data.js`):
+   * - `limited`: `baseline === false` (Limited Availability — not yet in all core browsers, no date).
+   * - `low`: `baseline === 'low'` (Newly Available — in all core browsers; value is `baseline_low_date`).
+   * - `high`: `baseline === 'high'` (Widely Available — 30 months past `baseline_low_date`; note that
+   *   `featureData.high[id]` still stores the feature's `baseline_low_date`).
+   *
+   * Widely Available rows always show `baseline_low_date`, including rows promoted at runtime.
+   * If a feature in `featureData.low` has reached `baseline_low_date + 30 months <= currentDate` at runtime,
+   * we dynamically promote it from `low` (Newly Available) to `high` (Widely Available); promotion
+   * only changes the tier.
+   *
    * @param {string} featureId
    * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
    * @param {Date} currentDate
@@ -66,11 +78,10 @@ class Baseline extends Audit {
       const lowData = /** @type {Record<string, string>} */ (featureData.low);
       const widelyAvailableDate = new Date(lowData[featureId]);
       widelyAvailableDate.setUTCMonth(widelyAvailableDate.getUTCMonth() + 30);
-      const widelyAvailableDateStr = widelyAvailableDate.toISOString().slice(0, 10);
 
       if (widelyAvailableDate <= currentDate) {
         return {
-          displayStatus: `Widely Available (${widelyAvailableDateStr})`,
+          displayStatus: `Widely Available (${lowData[featureId]})`,
           baselineTier: 'high',
         };
       } else {
@@ -92,6 +103,10 @@ class Baseline extends Audit {
   }
 
   /**
+   * Returns the `baseline_low_date` (YYYY-MM-DD, when the feature became Newly Available)
+   * for both `low` and `high` features, since `build/build-baseline-data.js` stores
+   * `baseline_low_date` in both `featureData.low` and `featureData.high`.
+   *
    * @param {string} featureId
    * @param {{high: Record<string, string>, low: Record<string, string>, limited: string[]}} featureData
    * @return {string|null}
@@ -103,9 +118,7 @@ class Baseline extends Audit {
     }
     if (featureId in featureData.high) {
       const highData = /** @type {Record<string, string>} */ (featureData.high);
-      const date = new Date(highData[featureId]);
-      date.setUTCMonth(date.getUTCMonth() - 30);
-      return date.toISOString().slice(0, 10);
+      return highData[featureId];
     }
     return null;
   }

@@ -69,7 +69,7 @@ describe('ElementScreenshotRenderer', () => {
 " 
 <div class=\\"lh-element-screenshot__content\\"> 
 <div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"> 
-<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(#clip-0);\\"> 
+<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(&quot;#clip-0&quot;);\\"> 
 <svg height=\\"0\\" width=\\"0\\"> <defs> 
 <clipPath clipPathUnits=\\"objectBoundingBox\\" id=\\"clip-0\\">
 <polygon points=\\"0,0             1,0            1,0.1          0,0.1\\"></polygon>

@@ -5,5 +5,11 @@
  */
 
 module.exports = import('../../gather/base-gatherer.js').then(({default: Gatherer}) => {
-  return class CustomGatherer extends Gatherer {};
+  return class CustomGatherer extends Gatherer {
+    meta = {
+      supportedModes: /** @type {const} */ (['navigation']),
+    };
+
+    getArtifact() {}
+  };
 });

@@ -6,6 +6,7 @@
 
 import {NO_NAVIGATION} from '@paulirish/trace_engine/models/trace/types/TraceEvents.js';
 
+import {Helpers} from '../../lib/trace-engine.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import {Audit} from '../audit.js';
@@ -28,8 +29,8 @@ async function getInsightSet(artifacts, context) {
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const insights = navigationId ?
-    [...traceEngineResult.insights.values()]
-      .find(insightSet => insightSet.navigation?.args.data?.navigationId) :
+    [...traceEngineResult.insights.values()].find(insightSet =>
+      Helpers.Trace.navigationIDForEvent(insightSet.navigation) === navigationId) :
     traceEngineResult.insights.get(NO_NAVIGATION);
 
   return {insights, data: traceEngineResult.data};
@@ -136,36 +137,41 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   // TODO: consider adding a `estimatedSavingsText` to InsightModel, which can capture
   // the exact i18n string used by RPP; and include the same est. timing savings.
   let displayValue;
+  let wastedMs;
+
+  switch (insight.insightKey) {
+    case 'DocumentLatency':
+    case 'FontDisplay':
+    case 'RenderBlocking': {
+      wastedMs = metricSavings?.FCP ?? 0;
+      break;
+    }
+
+    case 'LCPDiscovery':
+    case 'ModernHTTP': {
+      wastedMs = metricSavings?.LCP ?? 0;
+      break;
+    }
+
+    case 'Viewport': {
+      wastedMs = metricSavings?.INP ?? 0;
+      break;
+    }
+  }
 
   if (insight.wastedBytes) {
     displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: insight.wastedBytes});
-  } else {
-    let wastedMs;
+  } else if (wastedMs) {
+    displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
+  }
 
-    switch (insight.insightKey) {
-      case 'DocumentLatency':
-      case 'DuplicatedJavaScript':
-      case 'FontDisplay':
-      case 'LegacyJavaScript':
-      case 'RenderBlocking': {
-        wastedMs = metricSavings?.FCP;
-        break;
-      }
-
-      case 'LCPDiscovery':
-      case 'ModernHTTP': {
-        wastedMs = metricSavings?.LCP;
-        break;
-      }
-
-      case 'Viewport': {
-        wastedMs = metricSavings?.INP;
-        break;
-      }
-    }
-
-    if (wastedMs) {
-      displayValue = str_(i18n.UIStrings.displayValueMsSavings, {wastedMs});
+  if (numericValue === undefined) {
+    if (wastedMs !== undefined) {
+      numericValue = wastedMs;
+      numericUnit = 'millisecond';
+    } else if (insight.wastedBytes !== undefined) {
+      numericValue = insight.wastedBytes;
+      numericUnit = 'byte';
     }
   }
 
@@ -225,5 +231,6 @@ function makeNodeItemForNodeId(traceElements, nodeId) {
 
 export {
   adaptInsightToAuditProduct,
+  getInsightSet,
   makeNodeItemForNodeId,
 };

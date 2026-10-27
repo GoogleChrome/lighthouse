@@ -5,12 +5,13 @@
  */
 
 import log from 'lighthouse-logger';
-import {isEqual} from 'lodash-es';
 
 import {
   getBrowserVersion, getBenchmarkIndex, getEnvironmentWarnings,
   getDevicePixelRatio,
 } from './driver/environment.js';
+import {isEqual} from '../lib/arbitrary-equality-map.js';
+import {Sentry} from '../lib/sentry.js';
 
 /**
  * @param {LH.Config.ResolvedConfig} resolvedConfig
@@ -22,6 +23,11 @@ async function getBaseArtifacts(resolvedConfig, driver, context) {
   const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
   const {userAgent, product} = await getBrowserVersion(driver.defaultSession);
   const HostDPR = await getDevicePixelRatio(driver.executionContext);
+
+  const [name, version] = product.split('/');
+  if (name && version) {
+    Sentry.setContext('browser', {name, version});
+  }
 
   return {
     // Meta artifacts.

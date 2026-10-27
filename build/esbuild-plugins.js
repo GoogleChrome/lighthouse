@@ -6,14 +6,14 @@
 
 import fs from 'fs';
 import path from 'path';
-import {createRequire} from 'module';
+import {createRequire, builtinModules} from 'module';
 
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
-import builtin from 'builtin-modules';
 
 import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
+import {nodeModuleShims} from './plugins/esbuild-node-polyfills.js';
 
 /**
  * @typedef PartialLoader
@@ -27,7 +27,7 @@ const partialLoaders = {
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',
     async onLoad(code) {
-      return {code: code.replace(/getModuleDirectory\(import.meta\)/g, '""')};
+      return {code: code.replace(/import\.meta\.dirname/g, '""')};
     },
   },
   /**
@@ -126,6 +126,21 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
       // Capture modules of interest and resolve them to their absolute paths.
       // This handles real-files on disk, and builtin specifiers.
       build.onResolve({filter: /.*/}, (args) => {
+        if (args.path in replaceMap) {
+          return {path: args.path, namespace: 'replace-modules'};
+        }
+
+        if (args.path.startsWith('.')) {
+          const absPath = path.resolve(args.resolveDir, args.path);
+          if (absPath in replaceMap) {
+            return {path: absPath, namespace: 'replace-modules'};
+          }
+          if ((absPath + '.js') in replaceMap) {
+            return {path: absPath + '.js', namespace: 'replace-modules'};
+          }
+          return;
+        }
+
         let resolvedPath;
         try {
           resolvedPath = require.resolve(args.path, {paths: [args.resolveDir]});
@@ -177,7 +192,7 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
  * @return {esbuild.Plugin}
  */
 function ignoreBuiltins(opts = {}) {
-  let builtinList = [...builtin];
+  let builtinList = builtinModules.filter(m => !m.startsWith('_'));
   if (opts.exclude) {
     builtinList = builtinList.filter(b => !opts?.exclude?.includes(b));
   }
@@ -549,4 +564,5 @@ export {
   umd,
   lighthouseShimPlugin,
   postprocess,
+  nodeModuleShims,
 };

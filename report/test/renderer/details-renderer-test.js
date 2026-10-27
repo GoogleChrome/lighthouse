@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {DOM} from '../../renderer/dom.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';

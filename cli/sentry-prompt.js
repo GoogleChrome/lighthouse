@@ -60,16 +60,15 @@ function prompt() {
 function askPermission() {
   return Promise.resolve().then(_ => {
     const configstore = new Configstore('lighthouse');
-    let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
+    const isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
     if (typeof isErrorReportingEnabled === 'boolean') {
       return Promise.resolve(isErrorReportingEnabled);
     }
 
     return prompt()
       .then(response => {
-        isErrorReportingEnabled = response;
-        configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
-        return isErrorReportingEnabled;
+        configstore.set('isErrorReportingEnabled', response);
+        return response;
       });
   // Error accessing configstore; default to false.
   }).catch(_ => false);

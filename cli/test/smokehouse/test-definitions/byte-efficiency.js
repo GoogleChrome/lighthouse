@@ -142,9 +142,18 @@ const expectations = {
       'unused-css-rules': {
         details: {
           overallSavingsBytes: '>40000',
-          items: {
-            length: 2,
-          },
+          items: [
+            {
+              url: /^\.definitely-unused/,
+              wastedBytes: '30000 +/- 1000',
+              wastedPercent: 100,
+            },
+            {
+              url: /^\.kinda-unused/,
+              wastedBytes: '12000 +/- 1000',
+              wastedPercent: '67 +/- 5',
+            },
+          ],
         },
       },
       'unused-javascript': {

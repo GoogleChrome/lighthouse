@@ -5,12 +5,14 @@
  */
 
 import assert from 'assert/strict';
+import {createRequire} from 'module';
 
 import lighthouse, {getAuditList, traceCategories} from '../index.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {readJson} from './test-utils.js';
 import * as publicTypes from '../../types.js';
 
+const cjsRequire = createRequire(import.meta.url);
 const pkg = readJson('package.json');
 
 const TEST_DIR = `${LH_ROOT}/core/test`;
@@ -141,6 +143,60 @@ describe('Module Tests', function() {
         audits: [],
       });
       assert.equal(result.lhr.configSettings.channel, 'custom');
+    });
+  });
+
+  describe('CommonJS entrypoint (index.cjs)', () => {
+    const cjsLighthouse = cjsRequire('../index.cjs');
+
+    it('should export lighthouse as a function directly, unlike require("lighthouse")', () => {
+      assert.equal(typeof cjsLighthouse, 'function');
+      assert.equal(cjsLighthouse.default, undefined);
+
+      // require() on the ESM main entrypoint returns a module namespace object, not a function.
+      const esmMain = cjsRequire('../index.js');
+      assert.equal(typeof esmMain, 'object');
+      assert.equal(typeof esmMain.default, 'function');
+    });
+
+    it('should expose runner methods on the exported function', () => {
+      assert.equal(typeof cjsLighthouse.startFlow, 'function');
+      assert.equal(typeof cjsLighthouse.navigation, 'function');
+      assert.equal(typeof cjsLighthouse.startTimespan, 'function');
+      assert.equal(typeof cjsLighthouse.snapshot, 'function');
+    });
+
+    it('should include core/index.cjs in type generation config', () => {
+      assert.ok(pkg.scripts['build-types'].includes('*.d.cts'));
+      assert.ok(pkg.scripts['clean-types'].includes('*.d.cts'));
+    });
+
+    it('should run lighthouse via index.cjs', async () => {
+      const exampleUrl = 'https://www.reddit.com/r/nba';
+      const result = await cjsLighthouse(exampleUrl, {}, {
+        settings: {
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
+          formFactor: 'mobile',
+        },
+        audits: [],
+      });
+      assert.equal(result.lhr.finalDisplayedUrl, exampleUrl);
+      assert.equal(result.lhr.configSettings.channel, 'node');
+    });
+
+    it('should run lighthouse.navigation via index.cjs', async () => {
+      const exampleUrl = 'https://www.reddit.com/r/nba';
+      const result = await cjsLighthouse.navigation(undefined, exampleUrl, {
+        flags: {},
+        config: {
+          settings: {
+            auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
+            formFactor: 'mobile',
+          },
+          audits: [],
+        },
+      });
+      assert.equal(result.lhr.finalDisplayedUrl, exampleUrl);
     });
   });
 });

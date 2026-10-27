@@ -9,7 +9,6 @@ import path from 'path';
 
 
 import log from 'lighthouse-logger';
-import {isEqual} from 'lodash-es';
 
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
@@ -20,12 +19,12 @@ import {Sentry} from './lib/sentry.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../shared/root.js';
-import {getModuleDirectory} from '../shared/esm-utils.js';
 import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
 import {Util} from '../shared/util.js';
+import {isEqual} from './lib/arbitrary-equality-map.js';
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
@@ -230,6 +229,7 @@ class Runner {
       log.time(runnerStatus, 'verbose');
 
       const artifacts = await gatherFn({resolvedConfig: options.resolvedConfig});
+      options.resolvedConfig.artifacts = null;
       log.timeEnd(runnerStatus);
 
       // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.

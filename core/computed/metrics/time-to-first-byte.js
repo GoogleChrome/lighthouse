@@ -6,6 +6,7 @@
 
 import {calculateDocFirstByteTs} from '@paulirish/trace_engine/models/trace/insights/Common.js';
 
+import {Helpers} from '../../lib/trace-engine.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {NavigationMetric} from './navigation-metric.js';
 import {MainResource} from '../main-resource.js';
@@ -52,15 +53,16 @@ class TimeToFirstByte extends NavigationMetric {
       await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
     const lcpBreakdown = navInsights.model.LCPBreakdown;
 
+    const navigationId = Helpers.Trace.navigationIDForEvent(navInsights.navigation);
+
     // Defer to LCP breakdown, but if there's no LCP fallback to manual calculation.
     if (lcpBreakdown && !(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
       return {
         timing: lcpBreakdown.subparts.ttfb.range / 1000,
         timestamp: lcpBreakdown.subparts.ttfb.max,
       };
-    } else if (navInsights.navigation?.args.data?.navigationId) {
-      const request = traceEngineResult.data.NetworkRequests.byId.get(
-        navInsights.navigation.args.data.navigationId);
+    } else if (navInsights.navigation && navigationId) {
+      const request = traceEngineResult.data.NetworkRequests.byId.get(navigationId);
       if (!request) {
         throw new Error();
       }

@@ -13,8 +13,7 @@
 
 import fs from 'fs';
 import path from 'path';
-
-import chalk from 'chalk';
+import {styleText} from 'util';
 
 import constants from './constants.js';
 import {readJson} from '../../test/test-utils.js';
@@ -68,19 +67,20 @@ function toBaselineDiffString(actualValue, baselineValue, options) {
   const isGood = options.isIncreaseGood === isGoingUp;
 
   let arrow = isGoingUp ? '↑' : '↓';
-  let color = isGood ? chalk.green : chalk.red;
-  if (options.alwaysGray) color = chalk.gray;
+  /** @type {'green'|'red'|'gray'} */
+  let color = isGood ? 'green' : 'red';
+  if (options.alwaysGray) color = 'gray';
 
   if (Math.abs(diffAsNumber) < baselineValue * 0.01) {
     arrow = '↔';
-    color = chalk.gray;
+    color = 'gray';
   } else if (Math.abs(diffAsNumber) > baselineValue * 0.1) {
     arrow = arrow + arrow;
   }
 
   const diffAsString = options.format(Math.abs(diffAsNumber));
   const text = `${arrow.padEnd(2)} ${diffAsString}`;
-  return color(text);
+  return styleText(color, text);
 }
 
 /** @param {number} percentAsDecimal */
@@ -122,7 +122,7 @@ function evaluateAndPrintAccuracy(metric, lanternMetric) {
   if (lanternMetric.includes('roughEstimate')) {
     console.log(...strings);
   } else {
-    console.log(chalk.gray(...strings));
+    console.log(styleText('gray', strings.join(' ')));
   }
 }
 /**
@@ -150,20 +150,20 @@ function findAndPrintWorst10Sites(metric, lanternMetrics) {
     worstEntries.push(minEntry);
   }
 
-  console.log(chalk.bold(`\n ------- Worst 10 ${metric} -------`));
+  console.log(styleText('bold', `\n ------- Worst 10 ${metric} -------`));
   worstEntries
     .sort((a, b) => b.diffAsPercent - a.diffAsPercent)
     .slice(0, 10)
     .forEach(entry => {
       console.log(
         entry.actual < entry.expected
-          ? chalk.cyan('underestimated')
-          : chalk.yellow('overestimated'),
+          ? styleText('cyan', 'underestimated')
+          : styleText('yellow', 'overestimated'),
         entry.metric,
-        chalk.gray('by'),
+        styleText('gray', 'by'),
         Math.round(entry.diff),
-        chalk.gray('on'),
-        chalk.magenta(entry.url)
+        styleText('gray', 'on'),
+        styleText('magenta', entry.url)
       );
     });
 }
@@ -185,26 +185,26 @@ function findAndPrintFixesRegressions() {
   const printEvaluation = entry => {
     console.log(
       entry.lanternMetric.replace('roughEstimateOf', ''),
-      chalk.gray('on'),
-      chalk.magenta(entry.url),
+      styleText('gray', 'on'),
+      styleText('magenta', entry.url),
       '-',
       entry.expected,
-      chalk.gray('(real)'),
+      styleText('gray', '(real)'),
       entry.actual,
-      chalk.gray('(cur)'),
+      styleText('gray', '(cur)'),
       // @ts-expect-error - baseline always exists at this point
       entry.baseline.actual,
-      chalk.gray('(prev)')
+      styleText('gray', '(prev)')
     );
   };
 
-  console.log(chalk.bold('\n ------- Fixes Summary -------'));
+  console.log(styleText('bold', '\n ------- Fixes Summary -------'));
   joinedWithBaseline
     .filter(e => e.regression < 0)
     .sort((a, b) => a.regressionAsPercent - b.regressionAsPercent)
     .slice(0, 4)
     .forEach(printEvaluation);
-  console.log(chalk.bold('\n ------- Regression Summary -------'));
+  console.log(styleText('bold', '\n ------- Regression Summary -------'));
   joinedWithBaseline
     .filter(e => e.regression > 0)
     .sort((a, b) => b.regressionAsPercent - a.regressionAsPercent)
@@ -213,11 +213,14 @@ function findAndPrintFixesRegressions() {
 }
 
 console.log(
-  chalk.bold(
-    'Metric'.padEnd(28),
-    'p50 (% Error)'.padEnd(20),
-    'p90 (% Error)'.padEnd(20),
-    'p95 (% Error)'.padEnd(20)
+  styleText(
+    'bold',
+    [
+      'Metric'.padEnd(28),
+      'p50 (% Error)'.padEnd(20),
+      'p90 (% Error)'.padEnd(20),
+      'p95 (% Error)'.padEnd(20),
+    ].join(' ')
   )
 );
 
@@ -237,10 +240,9 @@ evaluateAndPrintAccuracy('largestContentfulPaint', 'optimisticLCP');
 evaluateAndPrintAccuracy('largestContentfulPaint', 'pessimisticLCP');
 evaluateAndPrintAccuracy('largestContentfulPaint', 'roughEstimateOfLCP');
 
-// TODO: enable when new traces are collected (also, do calls to findAndPrintWorst10Sites)
-// evaluateAndPrintAccuracy('timeToFirstByte', 'roughEstimateOfTTFB');
-// evaluateAndPrintAccuracy('largestContentfulPaintLoadStart', 'roughEstimateOfLCPLoadStart');
-// evaluateAndPrintAccuracy('largestContentfulPaintLoadEnd', 'roughEstimateOfLCPLoadEnd');
+evaluateAndPrintAccuracy('timeToFirstByte', 'roughEstimateOfTTFB');
+evaluateAndPrintAccuracy('lcpLoadDelay', 'roughEstimateOfLCPLoadDelay');
+evaluateAndPrintAccuracy('lcpLoadDuration', 'roughEstimateOfLCPLoadDuration');
 
 const estimates = allEvaluations.filter(entry => entry.lanternMetric.includes('roughEstimate'));
 const baselineEstimates = baselineEvaluations.filter(entry =>
@@ -264,6 +266,10 @@ findAndPrintWorst10Sites('largestContentfulPaint', [
   'roughEstimateOfLCP',
 ]);
 
+findAndPrintWorst10Sites('timeToFirstByte', ['roughEstimateOfTTFB']);
+findAndPrintWorst10Sites('lcpLoadDelay', ['roughEstimateOfLCPLoadDelay']);
+findAndPrintWorst10Sites('lcpLoadDuration', ['roughEstimateOfLCPLoadDuration']);
+
 findAndPrintFixesRegressions();
 
 /**
@@ -285,7 +291,7 @@ const printBucket = (label, bucketFilterFn, opts) => {
   );
 };
 
-console.log(chalk.bold('\n ------- Bucket Summary -------'));
+console.log(styleText('bold', '\n ------- Bucket Summary -------'));
 printBucket('Good', isEvaluationGood, {isIncreaseGood: true});
 printBucket('OK', isEvaluationOK, {alwaysGray: true});
 printBucket('Bad', isEvaluationBad, {isIncreaseGood: false});
@@ -305,7 +311,7 @@ const printPercentile = percentile => {
   );
 };
 
-console.log(chalk.bold('\n ------- % Error Summary -------'));
+console.log(styleText('bold', '\n ------- % Error Summary -------'));
 printPercentile(50);
 printPercentile(90);
 printPercentile(95);
@@ -313,6 +319,6 @@ printPercentile(95);
 if (constants.WARNINGS.length) {
   console.log('\n');
   for (const message of new Set(constants.WARNINGS)) {
-    console.warn(chalk.yellowBright(message));
+    console.warn(styleText('yellowBright', message));
   }
 }

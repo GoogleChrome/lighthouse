@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import {act, render} from '@testing-library/preact';
 
 import {timers} from '../../core/test/test-env/fake-timers.js';
