@@ -131,17 +131,17 @@ describe('Config Filtering', () => {
       ]);
     });
 
-    it('should keep artifacts with alwaysRun', () => {
-      const artifactsWithAlwaysRun = [
+    it('should keep artifacts with alwaysGather', () => {
+      const artifactsWithAlwaysGather = [
         ...artifacts,
-        {id: 'AlwaysRunArtifact', gatherer: {instance: snapshotGatherer}, alwaysRun: true},
+        {id: 'AlwaysGatherArtifact', gatherer: {instance: snapshotGatherer}, alwaysGather: true},
       ];
 
-      expect(filters.filterArtifactsByAvailableAudits(artifactsWithAlwaysRun, [
+      expect(filters.filterArtifactsByAvailableAudits(artifactsWithAlwaysGather, [
         {implementation: SnapshotAudit, options: {}},
       ])).toEqual([
         {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
-        {id: 'AlwaysRunArtifact', gatherer: {instance: snapshotGatherer}, alwaysRun: true},
+        {id: 'AlwaysGatherArtifact', gatherer: {instance: snapshotGatherer}, alwaysGather: true},
       ]);
     });
 

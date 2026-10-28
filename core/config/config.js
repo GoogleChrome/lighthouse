@@ -163,7 +163,7 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
       id: artifactJson.id,
       gatherer,
       dependencies: resolveArtifactDependencies(artifactJson, gatherer, artifactDefnsBySymbol),
-      alwaysRun: artifactJson.alwaysRun,
+      alwaysGather: artifactJson.alwaysGather,
     };
 
     const symbol = artifact.gatherer.instance.meta.symbol;

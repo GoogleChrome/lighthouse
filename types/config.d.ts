@@ -43,7 +43,7 @@ declare namespace Config {
   interface ArtifactJson {
     id: string;
     gatherer: GathererJson;
-    alwaysRun?: boolean;
+    alwaysGather?: boolean;
   }
 
   type GathererJson = {
@@ -95,7 +95,7 @@ declare namespace Config {
     dependencies?: TDependencies extends Gatherer.DefaultDependenciesKey ?
       undefined :
       Record<Exclude<TDependencies, Gatherer.DefaultDependenciesKey>, {id: string}>;
-    alwaysRun?: boolean;
+    alwaysGather?: boolean;
   }
 
   type ArtifactDefnExpander<TDependencies extends Gatherer.DependencyKey> =

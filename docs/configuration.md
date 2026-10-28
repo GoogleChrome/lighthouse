@@ -96,7 +96,7 @@ The list of artifacts to collect on a single Lighthouse run. This property is re
 | -- | -- | -- |
 | id | `string` | Unique identifier for this artifact. This is how the artifact is referenced in audits. |
 | gatherer | `string` | Gatherer used to produce this artifact. Does not need to be unique within the `artifacts` list. |
-| alwaysRun | `boolean` (optional) | If `true`, the artifact will always be collected (provided it supports the gather mode) even if no active audit requires it. |
+| alwaysGather | `boolean` (optional) | If `true`, the artifact will always be collected (provided it supports the gather mode) even if no active audit requires it. |
 
 ### `audits: string[]`
 
