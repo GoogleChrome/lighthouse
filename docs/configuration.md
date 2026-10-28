@@ -44,6 +44,7 @@ await lighthouse('https://example.com/', {port: 9222}, config);
 | categories | <code>Object&#124;undefined</code> |
 | groups | <code>Object&#124;undefined</code> |
 | plugins | <code>string[]</code> | Includes plugins and their audits. Refer to the [plugin documentation](https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md) for details.|
+| locales | <code>Object&#124;undefined</code> | Provides custom or overridden locale translations. |
 
 ### `extends: "lighthouse:default"|undefined`
 
@@ -168,6 +169,40 @@ The groups property controls how to visually group audits within a category. For
     },
   }
 }
+```
+
+### `locales: Object|undefined`
+
+The `locales` property provides custom translations for custom audits, categories, and groups (or overrides for built-in Lighthouse translations). Strings authored with `i18n.createIcuMessageFn(fileId, UIStrings)` are looked up by `<fileId> | <key>`.
+
+#### Example
+```js
+import {i18n} from 'lighthouse';
+
+const UIStrings = {
+  categoryTitle: 'My Custom Category',
+};
+const str_ = i18n.createIcuMessageFn('custom-config.js', UIStrings);
+
+export default {
+  extends: 'lighthouse:default',
+  categories: {
+    custom: {
+      title: str_(UIStrings.categoryTitle),
+      auditRefs: [{id: 'my-custom-audit', weight: 1}],
+    },
+  },
+  locales: {
+    es: {
+      'custom-config.js | categoryTitle': {
+        message: 'Mi categoría personalizada',
+      },
+      'my-custom-audit.js | title': {
+        message: 'Título de mi auditoría',
+      },
+    },
+  },
+};
 ```
 
 ## Config Extension

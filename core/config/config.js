@@ -230,6 +230,14 @@ async function initializeConfig(gatherMode, config, flags = {}) {
   configWorkingCopy = resolveExtensions(configWorkingCopy);
   configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, flags);
 
+  if (configWorkingCopy.locales) {
+    for (const [locale, lhlMessages] of Object.entries(configWorkingCopy.locales)) {
+      if (lhlMessages) {
+        format.registerLocaleData(/** @type {LH.Locale} */ (locale), lhlMessages);
+      }
+    }
+  }
+
   const settings = resolveSettings(configWorkingCopy.settings || {}, flags);
   overrideSettingsForGatherMode(settings, gatherMode);
   overrideThrottlingWindows(settings);
