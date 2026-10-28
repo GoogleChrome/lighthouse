@@ -135,6 +135,7 @@ describe('ConfigPlugin', () => {
         'lighthouse-plugin-evil': evilCategory,
       },
       groups: undefined,
+      locales: undefined,
     });
     assert.strictEqual(Object.getOwnPropertyDescriptor(pluginJson, 'audits').get, undefined);
   });
@@ -385,6 +386,67 @@ describe('ConfigPlugin', () => {
         {'lighthouse-plugin-nice-plugin-group-a': {title: 'Group A', description: undefined},
           'lighthouse-plugin-nice-plugin-group-b':
           {title: 'Group B', description: 'This description is optional'}});
+    });
+  });
+
+  describe('`locales`', () => {
+    it('accepts a plugin with no locales', () => {
+      const pluginClone = deepClone(nicePlugin);
+      delete pluginClone.locales;
+      const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      assert.strictEqual(pluginJson.locales, undefined);
+    });
+
+    it('throws if locales is not an object', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.locales = [0, 1, 2, 3];
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin locales json is not defined as an object/);
+    });
+
+    it('throws if a locale entry is not an object', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.locales = {es: 'not-an-object'};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has a locale \(es\) not defined as an object/);
+    });
+
+    it('throws if a locale message entry is not an object', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.locales = {es: {'audit.js | title': 'not-an-object'}};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        // eslint-disable-next-line max-len
+        /^Error: lighthouse-plugin-nice-plugin has a locale message \(audit\.js \| title\) not defined as an object/);
+    });
+
+    it('throws if a locale message string is invalid', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.locales = {es: {'audit.js | title': {message: 55}}};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        // eslint-disable-next-line max-len
+        /^Error: lighthouse-plugin-nice-plugin has an invalid locale message \(audit\.js \| title\)/);
+    });
+
+    it('throws if a locale message entry contains excess properties', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.locales = {es: {'audit.js | title': {message: 'Hola', extra: 'bad'}}};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        // eslint-disable-next-line max-len
+        /^Error: lighthouse-plugin-nice-plugin has unrecognized locale message properties: \[extra\]/);
+    });
+
+    it('correctly passes through the contained locales', () => {
+      const pluginClone = deepClone(nicePlugin);
+      const locales = {
+        es: {
+          'lighthouse-plugin-nice-plugin/audit.js | title': {
+            message: 'Título bonito',
+          },
+        },
+      };
+      pluginClone.locales = locales;
+      const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      assert.deepStrictEqual(pluginJson.locales, locales);
     });
   });
 });

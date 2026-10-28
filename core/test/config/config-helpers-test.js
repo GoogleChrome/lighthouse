@@ -204,7 +204,14 @@ describe('.mergePlugins', () => {
         'lighthouse-plugin-simple': {title: 'Simple'},
       },
       groups: {
-        'lighthouse-plugin-simple-new-group': {title: 'New Group'},
+        'lighthouse-plugin-simple-new-group': {title: expect.toBeDisplayString('New Group')},
+      },
+      locales: {
+        es: {
+          'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+            message: 'Nuevo grupo',
+          },
+        },
       },
     });
   });
@@ -238,6 +245,32 @@ describe('.mergePlugins', () => {
     const config = {audits: ['installable-manifest', 'metrics']};
     const flags = {plugins: ['lighthouse-plugin-no-category']};
     await expect(mergePlugins(config, configDir, flags)).rejects.toThrow(/no valid category/);
+  });
+
+  it('merge locales from plugins with config locales taking precedence', async () => {
+    /** @type {LH.Config} */
+    const config = {
+      audits: ['installable-manifest'],
+      plugins: ['lighthouse-plugin-simple'],
+      locales: {
+        es: {
+          'config.js | title': {message: 'Config traducida'},
+          'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+            message: 'Grupo desde la config',
+          },
+        },
+      },
+    };
+
+    const mergedConfig = await mergePlugins(config, configDir, {});
+    expect(mergedConfig.locales).toEqual({
+      es: {
+        'config.js | title': {message: 'Config traducida'},
+        'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+          message: 'Grupo desde la config',
+        },
+      },
+    });
   });
 });
 

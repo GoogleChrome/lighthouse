@@ -9,6 +9,8 @@ import BaseGatherer from '../../gather/base-gatherer.js';
 import {initializeConfig, getConfigDisplayString} from '../../config/config.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import * as format from '../../../shared/localization/format.js';
+import {locales} from '../../../shared/localization/locales.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import defaultConfig from '../../config/default-config.js';
 import {nonSimulatedSettingsOverrides} from '../../config/constants.js';
 import {fnAny} from '../test-utils.js';
@@ -146,16 +148,62 @@ describe('Config', () => {
     const {resolvedConfig} = await initializeConfig('navigation', undefined, {
       configPath: `${LH_ROOT}/core/test/fixtures/config-plugins/`,
       plugins: ['lighthouse-plugin-simple'],
+      locale: 'es',
     });
 
     expect(resolvedConfig).toMatchObject({
       categories: {
         'lighthouse-plugin-simple': {title: 'Simple'},
       },
-      groups: {
-        'lighthouse-plugin-simple-new-group': {title: 'New Group'},
-      },
     });
+    expect(resolvedConfig.groups?.['lighthouse-plugin-simple-new-group'].title)
+      .toBeDisplayString('New Group');
+
+    const printed = JSON.parse(getConfigDisplayString(resolvedConfig));
+    expect(printed.groups['lighthouse-plugin-simple-new-group'].title).toEqual('Nuevo grupo');
+  });
+
+  it('should register locales from config and preserve existing translations', async () => {
+    const origEs419 = {...locales['es-419']};
+    try {
+      const customUIStrings = {categoryTitle: 'Custom Category'};
+      const str_ = i18n.createIcuMessageFn('custom-config.js', customUIStrings);
+      const {UIStrings: httpsUIStrings} = await import('../../audits/is-on-https.js');
+      const httpsStr_ = i18n.createIcuMessageFn('core/audits/is-on-https.js', httpsUIStrings);
+
+      /** @type {LH.Config} */
+      const config = {
+        extends: 'lighthouse:default',
+        settings: {locale: 'es-419', onlyCategories: ['custom']},
+        categories: {
+          custom: {
+            title: str_(customUIStrings.categoryTitle),
+            auditRefs: [{id: 'is-on-https', weight: 1}],
+          },
+        },
+        locales: {
+          'es-419': {
+            'custom-config.js | categoryTitle': {
+              message: 'Categoría personalizada',
+            },
+            'core/audits/is-on-https.js | title': {
+              message: 'Usa HTTPS (personalizado)',
+            },
+          },
+        },
+      };
+
+      const {resolvedConfig} = await initializeConfig('navigation', config);
+      const printed = JSON.parse(getConfigDisplayString(resolvedConfig));
+
+      expect(printed.categories.custom.title).toEqual('Categoría personalizada');
+      expect(format.getFormatted(httpsStr_(httpsUIStrings.title), 'es-419'))
+        .toEqual('Usa HTTPS (personalizado)');
+      expect(format.getFormatted(httpsStr_(httpsUIStrings.failureTitle), 'es-419'))
+        .toEqual('No usa HTTPS');
+    } finally {
+      locales['es-419'] = origEs419;
+    }
   });
 
   it('should support .cjs plugins', async () => {
