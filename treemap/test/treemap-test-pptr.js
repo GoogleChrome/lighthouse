@@ -89,9 +89,16 @@ describe('Lighthouse Treemap', () => {
     expect(errors).toHaveLength(0);
   }
 
-  afterEach(async () => {
-    await ensureNoErrors();
-    await page.close();
+  afterEach(/** @this {Mocha.Context} */ async function() {
+    try {
+      if (this.currentTest?.state === 'passed') {
+        await ensureNoErrors();
+      } else {
+        pageErrors = [];
+      }
+    } finally {
+      await page.close();
+    }
   });
 
   describe('Recieves options', () => {
