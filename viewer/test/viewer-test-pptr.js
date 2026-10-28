@@ -78,9 +78,9 @@ describe('Lighthouse Viewer', () => {
         if (e.location().url.includes('lighthouse-480x318.jpg')) return;
 
         const describe = (jsHandle) => {
-          return jsHandle.executionContext().evaluate((obj) => {
+          return jsHandle.evaluate((obj) => {
             return JSON.stringify(obj, null, 2);
-          }, jsHandle);
+          });
         };
         const promise = Promise.all(e.args().map(describe)).then(args => {
           return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
@@ -505,9 +505,10 @@ describe('Lighthouse Viewer', () => {
 
       // Expected errors.
       const errors = await claimErrors();
-      expect(errors).toHaveLength(2);
+      expect(errors).toHaveLength(3);
       expect(errors[0]).toContain('500 (Internal Server Error)');
       expect(errors[1]).toContain('badPsiResponse error');
+      expect(errors[2]).toContain('badPsiResponse error');
     });
 
     it('should not call out to PSI for crawler user agents', async () => {
