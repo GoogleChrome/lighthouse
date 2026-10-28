@@ -234,13 +234,17 @@ class TreemapViewer {
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
+      this.formatCaptions();
       this.updateColors();
     }, options);
 
     treemapEl.addEventListener('keyup', (e) => {
       if (!(e instanceof KeyboardEvent)) return;
 
-      if (e.key === 'Enter') this.updateColors();
+      if (e.key === 'Enter') {
+        this.formatCaptions();
+        this.updateColors();
+      }
 
       if (e.key === 'Escape' && this.treemap) {
         this.treemap.zoom([]); // zoom out to root
@@ -493,8 +497,8 @@ class TreemapViewer {
       webtreemap.sort(this.currentTreemapRoot);
 
       this.treemap = new webtreemap.TreeMap(this.currentTreemapRoot, {
-        padding: [16, 3, 3, 3],
-        spacing: 10,
+        padding: [20, 3, 3, 5],
+        spacing: 4,
         caption: node => this.makeCaption(node),
       });
       this.el.textContent = '';
@@ -507,15 +511,7 @@ class TreemapViewer {
         dom.find('.webtreemap-caption', this.el).remove();
       }
 
-      // Format the captions.
-      // The webtreemap `caption` option can only return strings, but we need to
-      // style portions of the caption differently.
-      for (const el of dom.findAll('.webtreemap-caption', this.el)) {
-        const parts = (el.textContent || '').split(' · ', 2);
-        el.textContent = '';
-        dom.createChildOf(el, 'span', 'lh-text-bold').textContent = parts[0];
-        dom.createChildOf(el, 'span', 'lh-text-dim').textContent = parts[1];
-      }
+      this.formatCaptions();
     }
 
     if (rootChanged || viewChanged) {
@@ -701,7 +697,23 @@ class TreemapViewer {
     if (!this.treemap) throw new Error('must call .render() first');
 
     this.treemap.layout(this.currentTreemapRoot, this.el);
+    this.formatCaptions();
     this.updateColors();
+  }
+
+  formatCaptions() {
+    // The webtreemap `caption` option can only return strings, but we need to
+    // style portions of the caption differently.
+    for (const el of dom.findAll('.webtreemap-caption', this.el)) {
+      if (el.children.length) continue;
+
+      const parts = (el.textContent || '').split(' · ', 2);
+      el.textContent = '';
+      dom.createChildOf(el, 'span', 'lh-text-bold').textContent = parts[0];
+      if (parts[1]) {
+        dom.createChildOf(el, 'span', 'lh-text-dim').textContent = parts[1];
+      }
+    }
   }
 
   /**

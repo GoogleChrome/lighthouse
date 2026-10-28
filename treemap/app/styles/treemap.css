@@ -16,6 +16,7 @@
   --text-color: var(--color-gray-900);
   --text-color-active: #2a67ce;
   --text-color-active-secondary: #4484f3c7;
+  --separator-color: rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -32,13 +33,27 @@ body {
   display: none !important;
 }
 
+.lh-button,
+.lh-header__inputs select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+  background-color: white;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}
 .lh-button {
-  background: none;
-  color: var(--text-color-active);
-  border: solid 1px #e1e2e5;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .lh-button--active {
   background-color: var(--control-background-color);
+  border-color: #a8c7fa;
+  color: var(--text-color-active);
 }
 
 .lh-text-dim {
@@ -69,6 +84,11 @@ body {
   align-items: center;
   justify-content: space-between;
   grid-area: 1 / 1 / 2 / 3;
+  height: 56px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--separator-color);
+  box-sizing: border-box;
+  gap: 16px;
 }
 .lh-header > div {
   flex: 1;
@@ -82,29 +102,62 @@ body {
 
 .lh-header__url {
   text-align: center;
+  min-width: 0;
+}
+
+.lh-header--url-and-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .lh-header--url {
-  font-weight: bold;
+  color: var(--text-color);
+  font-weight: 500;
   text-decoration: none;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+.lh-header--url:hover {
+  text-decoration: underline;
+}
+
+.lh-header--url-bytes {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .lh-header__inputs {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 8px;
 }
 .lh-header__inputs select {
   width: 12vw;
-  padding: 2px;
-  margin: 2px;
+  min-width: 120px;
+  text-overflow: ellipsis;
+  /* Replace the native arrow with the design's arrow_drop_down icon. */
+  appearance: none;
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23474747'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
 }
 
 .lh-header__logotitle {
   display: flex;
   align-items: center;
+  gap: 4px;
   font-size: 16px;
+  line-height: 24px;
+  color: var(--text-color-secondary);
+  white-space: nowrap;
 }
 
 .lh-topbar__logo {
@@ -115,7 +168,6 @@ body {
 }
 
 .lh-treemap {
-  margin: 2px;
   grid-area: 2 / 1 / 3 / 2;
 }
 
@@ -123,28 +175,42 @@ body {
   grid-area: 2 / 2 / 3 / 3;
 
   display: grid;
-  grid-template-columns: 4fr 1fr;
-  grid-column-gap: 20px;
-  overflow: scroll;
-  margin: 5px;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 8px;
+  align-content: start;
+  overflow-y: auto;
+  padding: 0 16px 12px;
+  border-left: 1px solid var(--separator-color);
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .lh-table-header {
   grid-column: 1/-1;
-  font-weight: bold;
+  font-weight: 500;
   background-color: white;
   position: sticky;
   top: 0;
 
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+  padding: 12px 0 8px;
+  border-bottom: 1px solid var(--separator-color);
+  margin-bottom: 8px;
+}
+
+.lh-table-header div:first-child {
+  color: var(--text-color-secondary);
 }
 
 .lh-table-row {
   display: contents;
   word-break: break-word;
+}
+
+.lh-table-row div:nth-child(2) {
+  text-align: right;
+  white-space: nowrap;
 }
 
 .lh-table-subrow div:first-child {
@@ -159,19 +225,13 @@ body {
 
 .lh-table-separator {
   grid-column: 1/-1;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
+  border-bottom: 1px solid var(--separator-color);
+  margin: 8px 0;
 }
 
 .lh-coverage-bar {
   grid-column: 1/-1;
   margin: 10px 0;
-}
-
-.tabulator {
-  /* Better default for unloaded portions of table. */
-  background-color: #f3f3f3;
-  contain: strict;
 }
 
 .lh-coverage-bar {
@@ -198,52 +258,6 @@ body {
   );
 }
 
-.view-mode {
-  cursor: pointer;
-  border: solid 1px #e1e2e5;
-  box-shadow: 0 0 0 1px #e1e2e5;
-  padding: 5px;
-  font-size: 16px;
-}
-.view-mode input[type='radio']:focus-visible + label {
-  outline: -webkit-focus-ring-color auto 1px;
-}
-.view-mode--disabled {
-  text-decoration: line-through;
-}
-.view-mode:first-child {
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-}
-.view-mode:last-child {
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
-.view-mode--active {
-  background-color: var(--control-background-color);
-  border-color: #d2e3fc;
-}
-.view-mode--active .view-mode__label {
-  color: var(--text-color-active);
-}
-.view-mode--active .view-mode__sublabel {
-  color: var(--text-color-active-secondary);
-}
-
-.view-mode__button {
-  /* Hide the default browser UI. */
-  position: absolute;
-  left: -9999px;
-}
-
-.view-mode label {
-  cursor: pointer;
-}
-
-header {
-  margin: 5px;
-}
-
 .webtreemap-node {
   cursor: pointer;
   position: absolute;
@@ -256,9 +270,6 @@ header {
 .webtreemap-node--root {
   border: none;
   background-color: transparent !important;
-}
-.webtreemap-node--root > .webtreemap-node {
-  margin: 5px;
 }
 
 .webtreemap-node--hover {
@@ -288,11 +299,19 @@ header {
 
 .webtreemap-caption {
   font-size: 12px;
-  text-align: center;
-  word-break: break-word;
+  line-height: 16px;
+  padding: 2px 6px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color-secondary);
 }
 .webtreemap-caption span {
-  margin: 0 2px;
+  margin-right: 4px;
+}
+.webtreemap-caption .lh-text-dim {
+  opacity: 0.7;
 }
 
 /* Copied from viewer.css */

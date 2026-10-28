@@ -221,5 +221,29 @@ describe('Lighthouse Treemap', () => {
       // CSS pixels won't let us go to 2 decimal places.
       expect(percentRed).toBeApproximately(percentDataUnused, 1);
     });
+
+    it('formats captions on initial render and after zooming', async () => {
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      const getUnformattedCaptions = () => page.evaluate(() => {
+        return Array.from(document.querySelectorAll('.webtreemap-caption'))
+          .filter(el => !el.querySelector('.lh-text-bold') || el.textContent.includes(' · '))
+          .map(el => el.textContent);
+      });
+
+      expect(await getUnformattedCaptions()).toEqual([]);
+
+      // Click on a bundle caption to zoom in and create new child DOM nodes.
+      const bundleCaption = await page.evaluateHandle(() => {
+        const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+        return captionEls.find(el => el.textContent.includes('coursehero.com/ssi/6.'));
+      });
+      await bundleCaption.click();
+
+      expect(await getUnformattedCaptions()).toEqual([]);
+    });
   });
 });
