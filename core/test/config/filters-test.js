@@ -131,6 +131,20 @@ describe('Config Filtering', () => {
       ]);
     });
 
+    it('should keep artifacts with alwaysRun', () => {
+      const artifactsWithAlwaysRun = [
+        ...artifacts,
+        {id: 'AlwaysRunArtifact', gatherer: {instance: snapshotGatherer}, alwaysRun: true},
+      ];
+
+      expect(filters.filterArtifactsByAvailableAudits(artifactsWithAlwaysRun, [
+        {implementation: SnapshotAudit, options: {}},
+      ])).toEqual([
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+        {id: 'AlwaysRunArtifact', gatherer: {instance: snapshotGatherer}, alwaysRun: true},
+      ]);
+    });
+
     it('should handle transitive dependencies', () => {
       const baseSymbol = Symbol('baseGatherer');
       const base = new BaseGatherer();

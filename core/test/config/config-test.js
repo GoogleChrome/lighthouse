@@ -378,6 +378,26 @@ describe('Config', () => {
       if (!hasExtraArtifact) expect(resolvedConfig.artifacts).toContain('ExtraArtifact');
     });
 
+    it('should keep unreferenced artifacts when alwaysRun is true', async () => {
+      const gatherer = new BaseGatherer();
+      gatherer.getArtifact = fnAny();
+      gatherer.meta = {supportedModes: ['navigation']};
+
+      const {resolvedConfig} = await initializeConfig('navigation', {
+        extends: 'lighthouse:default',
+        artifacts: [
+          {id: 'CustomArtifact', gatherer: {instance: gatherer}, alwaysRun: true},
+        ],
+      });
+      if (!resolvedConfig.artifacts) throw new Error('No artifacts created');
+
+      const customArtifact = resolvedConfig.artifacts.find(a => a.id === 'CustomArtifact');
+      expect(customArtifact).toMatchObject({
+        id: 'CustomArtifact',
+        alwaysRun: true,
+      });
+    });
+
     it('should sort artifacts by internal priority', async () => {
       const {resolvedConfig} = await initializeConfig('navigation', extensionConfig);
       if (!resolvedConfig.artifacts) throw new Error(`No artifacts created`);
