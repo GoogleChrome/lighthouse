@@ -245,5 +245,45 @@ describe('Lighthouse Treemap', () => {
 
       expect(await getUnformattedCaptions()).toEqual([]);
     });
+
+    it('shows back button when zoomed in and navigates back to top level on click', async () => {
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      const isBackVisible = () => page.evaluate(() => {
+        const el = document.querySelector('.lh-button--back');
+        return el ? window.getComputedStyle(el).display !== 'none' : false;
+      });
+      const isTitleVisible = () => page.evaluate(() => {
+        const el = document.querySelector('.lh-header--title');
+        return el ? window.getComputedStyle(el).display !== 'none' : false;
+      });
+
+      expect(await isBackVisible()).toBe(false);
+      expect(await isTitleVisible()).toBe(true);
+
+      const bundleCaption = await page.evaluateHandle(() => {
+        const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+        return captionEls.find(el => el.textContent.includes('coursehero.com/ssi/6.'));
+      });
+      const getStyleWidth = () => bundleCaption.evaluate(el => {
+        return parseInt(el.parentElement.style.width);
+      });
+      const initialWidth = await getStyleWidth();
+
+      await bundleCaption.click();
+
+      expect(await isBackVisible()).toBe(true);
+      expect(await isTitleVisible()).toBe(false);
+      expect(await getStyleWidth()).toBeGreaterThan(initialWidth);
+
+      await page.click('.lh-button--back');
+
+      expect(await isBackVisible()).toBe(false);
+      expect(await isTitleVisible()).toBe(true);
+      expect(await getStyleWidth()).toBe(initialWidth);
+    });
   });
 });
