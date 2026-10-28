@@ -80,7 +80,7 @@ jobs:
     # Runs here because it needs the roundtrip proto.
     - name: yarn test-viewer
       if: matrix.node == '24'
-      run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
+      run: yarn build-viewer && yarn test-viewer
 
     - run: git add -A && git diff --cached --exit-code
 

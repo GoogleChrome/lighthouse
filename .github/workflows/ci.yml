@@ -58,11 +58,11 @@ jobs:
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
 
     - name: yarn test-clients
-      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
+      run: yarn test-clients
     - name: yarn test-docs
       run: yarn test-docs
     - name: yarn test-treemap
-      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
+      run: yarn test-treemap
 
     - run: yarn diff:sample-json
     - run: yarn diff:flow-sample-json
