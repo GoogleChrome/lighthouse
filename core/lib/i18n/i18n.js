@@ -9,9 +9,14 @@ import url from 'url';
 
 import log from 'lighthouse-logger';
 
-import {getAvailableLocales} from '../../../shared/localization/format.js';
+import {
+  getAvailableLocales,
+  isIcuMessage,
+  formatMessage,
+  registerLocaleData,
+  DEFAULT_LOCALE,
+} from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -232,4 +237,5 @@ export {
   lookupLocale,
   createIcuMessageFn,
   isStringOrIcuMessage,
+  registerLocaleData,
 };
