@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 import {createRequire} from 'module';
 
-import lighthouse, {getAuditList, traceCategories} from '../index.js';
+import lighthouse, {getAuditList, traceCategories, i18n} from '../index.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {readJson} from './test-utils.js';
 import * as publicTypes from '../../types.js';
@@ -42,6 +42,13 @@ describe('Module Tests', function() {
     const lighthouseTraceCategories = traceCategories;
     assert.ok(Array.isArray(lighthouseTraceCategories));
     assert.notEqual(lighthouseTraceCategories.length, 0);
+  });
+
+  it('should expose i18n utilities', function() {
+    assert.equal(typeof i18n.createIcuMessageFn, 'function');
+    assert.equal(typeof i18n.registerLocaleData, 'function');
+    assert.equal(typeof i18n.lookupLocale, 'function');
+    assert.equal(typeof i18n.UIStrings, 'object');
   });
 
   describe('lighthouse', () => {
