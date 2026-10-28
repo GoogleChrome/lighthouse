@@ -71,14 +71,14 @@ describe('Lighthouse Treemap', () => {
   });
 
   async function claimErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await page.bringToFront();
-    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = (await claimErrors()).filter(error => {
       // Filters out a cookie deprecation error that only occurs on ToT
       // This error comes from gtag.js
@@ -163,7 +163,9 @@ describe('Lighthouse Treemap', () => {
           expect(optionsInPage).toBeUndefined();
           const error = await page.evaluate(() => document.querySelector('#lh-log').textContent);
           expect(error).toBe(testCase.error);
-          pageErrors = [];
+          const errors = await claimErrors();
+          expect(errors).toHaveLength(1);
+          expect(errors[0]).toContain(testCase.error);
         });
       }
     });

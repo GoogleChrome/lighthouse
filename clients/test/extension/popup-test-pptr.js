@@ -35,14 +35,14 @@ describe('Lighthouse chrome popup', function() {
   let pageErrors = [];
 
   async function claimErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await page.bringToFront();
-    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     expect(errors).toHaveLength(0);
   }

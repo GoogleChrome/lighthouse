@@ -98,14 +98,14 @@ describe('Lighthouse Viewer', () => {
   });
 
   async function claimErrors() {
+    await viewerPage.bringToFront();
+    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await viewerPage.bringToFront();
-    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     if (errors.length) {
       assert.fail('errors from page:\n\n' + errors.map(e => e.toString()).join('\n\n'));
