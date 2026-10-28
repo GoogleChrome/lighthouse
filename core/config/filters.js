@@ -69,6 +69,7 @@ function filterArtifactsByAvailableAudits(artifacts, audits) {
   /** @type {Set<string>} */
   const artifactIdsToKeep = new Set([
     ...filterResistantArtifactIds,
+    ...artifacts.filter(artifact => artifact.alwaysGather).map(artifact => artifact.id),
     ...audits.flatMap(audit => audit.implementation.meta.requiredArtifacts),
   ]);
 

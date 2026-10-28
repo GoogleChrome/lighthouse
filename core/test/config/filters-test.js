@@ -131,6 +131,20 @@ describe('Config Filtering', () => {
       ]);
     });
 
+    it('should keep artifacts with alwaysGather', () => {
+      const artifactsWithAlwaysGather = [
+        ...artifacts,
+        {id: 'AlwaysGatherArtifact', gatherer: {instance: snapshotGatherer}, alwaysGather: true},
+      ];
+
+      expect(filters.filterArtifactsByAvailableAudits(artifactsWithAlwaysGather, [
+        {implementation: SnapshotAudit, options: {}},
+      ])).toEqual([
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+        {id: 'AlwaysGatherArtifact', gatherer: {instance: snapshotGatherer}, alwaysGather: true},
+      ]);
+    });
+
     it('should handle transitive dependencies', () => {
       const baseSymbol = Symbol('baseGatherer');
       const base = new BaseGatherer();
