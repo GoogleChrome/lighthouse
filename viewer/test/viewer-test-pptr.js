@@ -112,7 +112,11 @@ describe('Lighthouse Viewer', () => {
     }
   }
 
-  afterEach(async function() {
+  afterEach(/** @this {Mocha.Context} */ async function() {
+    if (this.currentTest?.state !== 'passed') {
+      pageErrors = [];
+      return;
+    }
     // Tests should call this themselves so the failure is associated with them in the test report,
     // but just in case one is missed it won't hurt to repeat the check here.
     await ensureNoErrors();
