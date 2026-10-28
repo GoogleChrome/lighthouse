@@ -945,8 +945,7 @@ const expectations = {
                 'type': 'node',
                 'selector': 'body > section > button#target-size-1',
                 'snippet': '<button id="target-size-1">',
-                // Exact target size can vary depending on the device.
-                'explanation': /^Fix any of the following:\n {2}Target has insufficient size \([0-9.]+px by [0-9.]+px, should be at least 24px by 24px\)\n {2}Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of [0-9.]+px instead of at least 24px\.$/,
+                'explanation': 'Fix any of the following:\n  Target has insufficient size (10px by 18px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 12px instead of at least 24px.',
                 'nodeLabel': '+',
               },
             },
@@ -955,8 +954,7 @@ const expectations = {
                 'type': 'node',
                 'selector': 'body > section > span#target-size-2',
                 'snippet': '<span role="button" tabindex="0" id="target-size-2">',
-                // Exact target size can vary depending on the device.
-                'explanation': /^Fix any of the following:\n {2}Target has insufficient size \([0-9.]+px by [0-9.]+px, should be at least 24px by 24px\)\n {2}Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of [0-9.]+px instead of at least 24px\.$/,
+                'explanation': 'Fix any of the following:\n  Target has insufficient size (10px by 18px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 12px instead of at least 24px.',
                 'nodeLabel': 'o',
               },
             },
