@@ -146,6 +146,10 @@ function getYargsParser(manualArgv) {
         default: '127.0.0.1',
         describe: 'The hostname to use for the debugging protocol.',
       },
+      'reuse-page': {
+        type: 'boolean',
+        describe: 'Run in the page that is already open in the connected browser instead of opening a new one. Only used when the browser has exactly one page open.',
+      },
       'form-factor': {
         type: 'string',
         describe: 'Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, use --preset=desktop instead.',
@@ -215,7 +219,7 @@ function getYargsParser(manualArgv) {
     })
     .group([
       'save-assets', 'list-all-audits', 'list-locales', 'list-trace-categories', 'additional-trace-categories',
-      'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
+      'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'reuse-page', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
       'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
       'only-audits', 'only-categories', 'skip-audits', 'disable-full-page-screenshot', 'ignore-status-code',
       'url-file', 'fail-fast',
