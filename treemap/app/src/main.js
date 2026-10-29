@@ -234,6 +234,7 @@ class TreemapViewer {
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
+      this.updateZoomState(nodeEl);
       this.formatCaptions();
       this.updateColors();
     }, options);
@@ -242,12 +243,16 @@ class TreemapViewer {
       if (!(e instanceof KeyboardEvent)) return;
 
       if (e.key === 'Enter') {
+        if (e.target instanceof HTMLElement) {
+          const nodeEl = e.target.closest('.webtreemap-node');
+          if (nodeEl) this.updateZoomState(nodeEl);
+        }
         this.formatCaptions();
         this.updateColors();
       }
 
       if (e.key === 'Escape' && this.treemap) {
-        this.treemap.zoom([]); // zoom out to root
+        this.zoomOut();
       }
     }, options);
 
@@ -294,6 +299,27 @@ class TreemapViewer {
 
     const toggleTableBtn = dom.find('.lh-button--toggle-table');
     toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable(), options);
+
+    const backBtn = dom.find('.lh-button--back');
+    backBtn.addEventListener('click', () => this.zoomOut(), options);
+  }
+
+  /**
+   * @param {Element} nodeEl
+   */
+  updateZoomState(nodeEl) {
+    const isRoot = nodeEl.classList.contains('webtreemap-node--root');
+    dom.find('.lh-header').classList.toggle('lh-header--zoomed', !isRoot);
+  }
+
+  zoomOut() {
+    if (!this.treemap) return;
+
+    this.treemap.zoom([]);
+    for (const el of dom.findAll('div.webtreemap-node', this.el)) {
+      el.style.zIndex = '';
+    }
+    dom.find('.lh-header').classList.remove('lh-header--zoomed');
   }
 
   applyActiveViewModeClass() {
@@ -504,6 +530,7 @@ class TreemapViewer {
       this.el.textContent = '';
       this.treemap.render(this.el);
       dom.find('.webtreemap-node').classList.add('webtreemap-node--root');
+      dom.find('.lh-header').classList.remove('lh-header--zoomed');
 
       // For the "All" selector, delete the root node caption since it duplicates the
       // information in the header.
@@ -697,6 +724,10 @@ class TreemapViewer {
     if (!this.treemap) throw new Error('must call .render() first');
 
     this.treemap.layout(this.currentTreemapRoot, this.el);
+    for (const el of dom.findAll('div.webtreemap-node', this.el)) {
+      el.style.zIndex = '';
+    }
+    dom.find('.lh-header').classList.remove('lh-header--zoomed');
     this.formatCaptions();
     this.updateColors();
   }
