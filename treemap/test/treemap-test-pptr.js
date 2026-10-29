@@ -285,5 +285,177 @@ describe('Lighthouse Treemap', () => {
       expect(await isTitleVisible()).toBe(true);
       expect(await getStyleWidth()).toBe(initialWidth);
     });
+
+    describe('duplicate modules', () => {
+      const getHoverState = () => page.evaluate(() => {
+        const treemapEl = document.querySelector('.lh-treemap');
+        const dupeEls = Array.from(document.querySelectorAll('.webtreemap-node--duplicate'));
+        const leafEls = Array.from(document.querySelectorAll('.webtreemap-node'))
+          .filter(el => !el.querySelector('.webtreemap-node'));
+        const isWhite = el => el.style.backgroundColor === 'white';
+        return {
+          hovering: treemapEl.classList.contains('lh-treemap--hover-duplicate'),
+          coloredDupes: dupeEls.filter(el => !isWhite(el)).length,
+          coloredNonDupes: leafEls
+            .filter(el => !el.classList.contains('webtreemap-node--duplicate'))
+            .filter(el => !isWhite(el)).length,
+          colored: Array.from(document.querySelectorAll('.webtreemap-node'))
+            .filter(el => !el.classList.contains('webtreemap-node--root'))
+            .filter(el => !isWhite(el)).length,
+        };
+      });
+
+      it('outlines duplicate modules in every view mode', async () => {
+        await page.setViewport({width: 1440, height: 960});
+        await page.goto(`${treemapUrl}?debug`, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+
+        for (const viewModeIndex of ['0', '1', '2']) {
+          await page.select('.view-mode-selector', viewModeIndex);
+          const borders = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('.webtreemap-node--duplicate'))
+              .map(el => window.getComputedStyle(el).borderTopColor);
+          });
+          expect(borders.length).toBeGreaterThan(0);
+          for (const border of borders) {
+            expect(border).toBe('rgb(33, 33, 33)');
+          }
+        }
+      });
+
+      it('highlights all copies of a duplicate module on hover', async () => {
+        await page.setViewport({width: 1440, height: 960});
+        await page.goto(`${treemapUrl}?debug`, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+
+        // Pick the largest duplicate module node so it is hoverable.
+        const dupeEl = await page.evaluateHandle(() => {
+          const els = Array.from(document.querySelectorAll('.webtreemap-node--duplicate'));
+          const area = el => el.getBoundingClientRect().width * el.getBoundingClientRect().height;
+          return els.sort((a, b) => area(b) - area(a))[0];
+        });
+
+        const beforeState = await getHoverState();
+        expect(beforeState.hovering).toBe(false);
+
+        await dupeEl.hover();
+        const hoverState = await getHoverState();
+        expect(hoverState.hovering).toBe(true);
+        expect(hoverState.coloredDupes).toBe(1);
+        // Copies too small to render are shown by highlighting their closest rendered ancestor.
+        expect(hoverState.colored).toBeLessThan(beforeState.colored);
+
+        await page.mouse.move(0, 0);
+        const afterState = await getHoverState();
+        expect(afterState.hovering).toBe(false);
+        expect(afterState.coloredNonDupes).toBeGreaterThan(0);
+      });
+
+      it('groups the table by module, sorted by duplicated bytes', async () => {
+        await page.setViewport({width: 1440, height: 960});
+        await page.goto(`${treemapUrl}?debug`, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+
+        await page.select('.view-mode-selector', '2'); // duplicate modules
+        await page.waitForSelector('.lh-treemap--view-mode--duplicate-modules');
+
+        const groups = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('.lh-table-row--group')).map(el => {
+            let numSubrows = 0;
+            let sibling = el.nextElementSibling;
+            while (sibling?.classList.contains('lh-table-subrow')) {
+              numSubrows += 1;
+              sibling = sibling.nextElementSibling;
+            }
+            const bytes = Number(el.children[1].title.replace(/[^\d]/g, ''));
+            return {bytes, numSubrows};
+          });
+        });
+
+        expect(groups.length).toBeGreaterThan(1);
+        for (let i = 0; i < groups.length; i++) {
+          expect(groups[i].numSubrows).toBeGreaterThan(1);
+          if (i > 0) expect(groups[i].bytes).toBeLessThanOrEqual(groups[i - 1].bytes);
+        }
+
+        // Hovering a group row highlights its module in the treemap.
+        await page.hover('.lh-table-row--group > div:first-child');
+        const hoverState = await getHoverState();
+        expect(hoverState.hovering).toBe(true);
+        expect(hoverState.colored).toBeGreaterThan(0);
+      });
+
+      it('shows a hint for copies outside the zoomed-in view', async () => {
+        await page.setViewport({width: 1440, height: 960});
+        await page.goto(`${treemapUrl}?debug`, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+
+        const getHint = () => page.evaluate(() => {
+          const el = document.querySelector('.lh-treemap-hint');
+          return el.classList.contains('hidden') ? null : el.textContent;
+        });
+
+        // Zoom into a bundle. The other copy of popover.js is in a different bundle.
+        const bundleCaption = await page.evaluateHandle(() => {
+          const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+          return captionEls.find(el => el.textContent.includes('coursehero.com/ssi/6.'));
+        });
+        await bundleCaption.click();
+
+        const popoverEl = await page.evaluateHandle(() => {
+          const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+          return captionEls.find(el => el.textContent.startsWith('popover/popover.js'))
+            .parentElement;
+        });
+        // Wait for the zoom transition to finish (position stops changing).
+        await popoverEl.evaluate(el => new Promise(resolve => {
+          let prev = '';
+          let stableFrames = 0;
+          const check = () => {
+            const rect = el.getBoundingClientRect();
+            const current = `${rect.left},${rect.top},${rect.width},${rect.height}`;
+            stableFrames = current === prev ? stableFrames + 1 : 0;
+            prev = current;
+            if (stableFrames >= 3) resolve();
+            else requestAnimationFrame(check);
+          };
+          check();
+        }));
+        await popoverEl.hover();
+        expect(await getHint()).toBe('Copies outside this view: 1');
+
+        await page.mouse.move(0, 0);
+        expect(await getHint()).toBe(null);
+      });
+
+      it('does not fade out everything when no copy of the module is rendered', async () => {
+        await page.setViewport({width: 1440, height: 960});
+        await page.goto(`${treemapUrl}?debug`, {
+          waitUntil: 'networkidle0',
+          timeout: 30000,
+        });
+
+        // Neither copy of this module is big enough to be rendered at the top level.
+        const name = 'node_modules/@formatjs/icu-messageformat-parser/lib/parser.js';
+        const cell = await page.evaluateHandle(name => {
+          return Array.from(document.querySelectorAll('.lh-table-row > div:first-child'))
+            .find(el => el.textContent.endsWith(name));
+        }, name);
+        await cell.evaluate(el => el.scrollIntoView({block: 'center'}));
+        await cell.hover();
+
+        const hoverState = await getHoverState();
+        expect(hoverState.hovering).toBe(true);
+        expect(hoverState.colored).toBeGreaterThan(0);
+      });
+    });
   });
 });

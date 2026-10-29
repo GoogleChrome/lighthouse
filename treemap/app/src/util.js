@@ -29,6 +29,11 @@ const UIStrings = {
   allLabel: 'All',
   /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
   duplicateModulesLabel: 'Duplicate modules',
+  /**
+   * @description Hint shown while hovering a duplicate module (a javascript file included more than once by a web page) when the user has zoomed in and some copies of that module are not visible. "{count}" is replaced with the number of hidden copies.
+   * @example {2} count
+   */
+  duplicateModuleHiddenCopiesLabel: 'Copies outside this view: {count}',
 };
 
 class TreemapUtil {

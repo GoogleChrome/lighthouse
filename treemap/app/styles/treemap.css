@@ -196,6 +196,22 @@ body {
   grid-area: 2 / 1 / 3 / 2;
 }
 
+.lh-treemap-hint {
+  grid-area: 2 / 1 / 3 / 2;
+  align-self: end;
+  justify-self: start;
+  position: relative;
+  z-index: 2;
+  margin: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  background-color: white;
+  font-size: 12px;
+  line-height: 16px;
+  pointer-events: none;
+}
+
 .lh-table {
   grid-area: 2 / 2 / 3 / 3;
 
@@ -239,13 +255,17 @@ body {
 }
 
 .lh-table-subrow div:first-child {
-  margin-left: 10px;
+  margin-left: 0;
   border-left: 1px solid #A8C7FA;
-  padding-left: 5px;
+  padding-left: 8px;
+}
+
+.lh-table-subrow div {
+  padding-top: 4px;
 }
 
 .lh-table-subrow div:nth-child(2) {
-  color: #474747;
+  color: var(--text-color-secondary);
 }
 
 .lh-table-separator {
@@ -286,7 +306,7 @@ body {
 .webtreemap-node {
   cursor: pointer;
   position: absolute;
-  border: solid 1px #666;
+  border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 2px;
   overflow: hidden;
   background: white;
@@ -301,8 +321,13 @@ body {
   outline: 2px solid black;
 }
 
-.lh-treemap--view-mode--all .webtreemap-node {
+.lh-treemap--view-mode--all:not(.lh-treemap--hover-duplicate) .webtreemap-node {
   border: none;
+}
+
+/* Duplicate modules are always outlined, in every view mode. */
+.lh-treemap .webtreemap-node.webtreemap-node--duplicate {
+  border: solid 1px var(--text-color);
 }
 
 .lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
