@@ -355,6 +355,7 @@ class TreemapViewer {
     }
     this.zoomedNodeEl = undefined;
     dom.find('.lh-header').classList.remove('lh-header--zoomed');
+    this.updateColors();
   }
 
   applyActiveViewModeClass() {
@@ -892,18 +893,35 @@ class TreemapViewer {
   }
 
   /**
+   * Colors use OKLCH so that every hue has the same perceived lightness. Lightness
+   * decreases (and chroma increases) with depth, but both are clamped so that
+   * captions always have a good contrast ratio (>= 5.9:1 for #474747 text).
    * @param {number} hue
-   * @param {number|null} depth
+   * @param {number|null} depth Depth relative to the node currently in view. If null,
+   *   returns a more saturated color for highlights.
    */
   getColorFromHue(hue, depth = null) {
     if (depth === null) {
-      return TreemapUtil.hsl(hue, 60, 90);
+      return `oklch(0.88 0.12 ${hue})`;
     }
 
-    return TreemapUtil.hsl(hue, 20 + depth * 5, 90 - depth * 5);
+    const lightness = Math.max(0.86, 0.97 - depth * 0.018);
+    const chroma = Math.min(0.06, 0.02 + depth * 0.008);
+    return `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
+  }
+
+  /**
+   * The depth of the node currently in view (the zoomed-in node, or the root),
+   * in terms of path length.
+   */
+  getViewDepth() {
+    const zoomedNode = this.zoomedNodeEl && this.elementToNodeMap.get(this.zoomedNodeEl);
+    const zoomedPath = zoomedNode && this.nodeToPathMap.get(zoomedNode);
+    return zoomedPath ? zoomedPath.length : 1;
   }
 
   updateColors() {
+    const viewDepth = this.getViewDepth();
     const hoveredDuplicateModule = this.hoveredDuplicateModuleName !== undefined ?
       this.duplicateModules.get(this.hoveredDuplicateModuleName) :
       undefined;
@@ -972,8 +990,9 @@ class TreemapViewer {
         return;
       }
 
+      // Depth is relative to what is in view, so zooming in brings back the lighter colors.
       const depthOneNodeColor = hue !== undefined ?
-        this.getColorFromHue(hue, path.length) :
+        this.getColorFromHue(hue, Math.max(0, path.length - viewDepth)) :
         'white';
       node.dom.style.backgroundColor = depthOneNodeColor;
     });
