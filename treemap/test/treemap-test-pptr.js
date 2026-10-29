@@ -322,6 +322,40 @@ describe('Lighthouse Treemap', () => {
       expect(await getStyleWidth()).toBe(initialWidth);
     });
 
+    it('keeps node colors light enough to read at every depth', async () => {
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      const getLightnesses = () => page.evaluate(() => {
+        return Array.from(document.querySelectorAll('.webtreemap-node'))
+          .map(el => el.style.backgroundColor)
+          .filter(color => color.startsWith('oklch('))
+          .map(color => Number(color.slice('oklch('.length).split(' ')[0]));
+      });
+
+      const topLevel = await getLightnesses();
+      expect(topLevel.length).toBeGreaterThan(0);
+      expect(Math.min(...topLevel)).toBeGreaterThanOrEqual(0.86);
+
+      // Zoom into a bundle with deeply nested modules.
+      const bundleCaption = await page.evaluateHandle(() => {
+        const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+        return captionEls.find(el => el.textContent.includes('coursehero.com/ssi/508.'));
+      });
+      await bundleCaption.click();
+
+      const zoomed = await getLightnesses();
+      expect(Math.min(...zoomed)).toBeGreaterThanOrEqual(0.86);
+      // Depth is relative to the zoomed node, so the bundle itself is the lightest.
+      const bundleLightness = await bundleCaption.evaluate(el => {
+        const color = el.parentElement.style.backgroundColor;
+        return Number(color.slice('oklch('.length).split(' ')[0]);
+      });
+      expect(bundleLightness).toBe(Math.max(...zoomed));
+    });
+
     describe('duplicate modules', () => {
       const getHoverState = () => page.evaluate(() => {
         const treemapEl = document.querySelector('.lh-treemap');
