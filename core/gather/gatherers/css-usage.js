@@ -35,8 +35,6 @@ class CSSUsage extends BaseGatherer {
     });
 
     const {ruleUsage} = await session.sendCommand('CSS.stopRuleUsageTracking');
-    await session.sendCommand('CSS.disable');
-    await session.sendCommand('DOM.disable');
 
     return ruleUsage;
   }

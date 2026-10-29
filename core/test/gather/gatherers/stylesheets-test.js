@@ -22,9 +22,7 @@ describe('Stylesheets gatherer', () => {
       // @ts-expect-error - Force events to emit.
       .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'});
 
     const gatherer = new Stylesheets();
     await gatherer.startInstrumentation(context.asContext());
@@ -57,9 +55,7 @@ describe('Stylesheets gatherer', () => {
       // @ts-expect-error - Force events to emit.
       .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'});
 
     context.gatherMode = 'snapshot';
 
@@ -90,9 +86,7 @@ describe('Stylesheets gatherer', () => {
       .mockResponse('CSS.getStyleSheetText', () => {
         throw new Error('Sheet not found');
       })
-      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'});
 
     const gatherer = new Stylesheets();
     await gatherer.startInstrumentation(context.asContext());
@@ -120,16 +114,8 @@ describe('Stylesheets gatherer', () => {
       .mockResponse('DOM.enable')
       // @ts-expect-error - Force events to emit.
       .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
-      .mockResponse('CSS.startRuleUsageTracking')
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
-      .mockResponse('CSS.stopRuleUsageTracking', {
-        ruleUsage: [
-          {styleSheetId: '1', used: true},
-        ],
-      })
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'});
 
     const gatherer = new Stylesheets();
     await gatherer.startInstrumentation(context.asContext());

@@ -80,13 +80,10 @@ class Stylesheets extends BaseGatherer {
 
     session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
 
-    // Ensure we finish fetching all stylesheet contents before disabling the CSS domain
+    // Ensure we finish fetching all stylesheet contents.
     const sheets = await Promise.all(this._sheetPromises.values());
     this._sheetPromises.clear();
     this._session = undefined;
-
-    await session.sendCommand('CSS.disable');
-    await session.sendCommand('DOM.disable');
 
     /** @type {Map<string, LH.Artifacts.CSSStyleSheetInfo>} */
     const dedupedStylesheets = new Map();

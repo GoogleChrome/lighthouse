@@ -128,6 +128,10 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 const defaultConfig = {
   settings: constants.defaultSettings,
   artifacts: [
+    // Stylesheets must run before other gatherers that enable the CSS domain (CSSUsage, ImageElements)
+    // because CSS.styleSheetAdded events are only emitted when the CSS domain is first enabled.
+    {id: 'Stylesheets', gatherer: 'stylesheets'},
+
     {id: 'WebMCP', gatherer: 'webmcp'},
     {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
     {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
@@ -154,7 +158,6 @@ const defaultConfig = {
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
     {id: 'Stacks', gatherer: 'stacks'},
-    {id: 'Stylesheets', gatherer: 'stylesheets'},
     {id: 'TraceElements', gatherer: 'trace-elements'},
     {id: 'ViewportDimensions', gatherer: 'viewport-dimensions'},
 
