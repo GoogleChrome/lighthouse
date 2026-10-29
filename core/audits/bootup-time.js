@@ -37,6 +37,8 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
+const NON_URL_CATEGORIES = new Set(['Browser', 'Browser GC', 'Unattributable']);
+
 class BootupTime extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -143,7 +145,11 @@ class BootupTime extends Audit {
           scriptParseCompile: parseCompileTotal,
         };
       })
-      .filter(result => result.total >= context.options.thresholdInMs)
+      .filter(result => {
+        if (result.total < context.options.thresholdInMs) return false;
+        return NON_URL_CATEGORIES.has(result.url) ||
+          result.scripting + result.scriptParseCompile > 0;
+      })
       .sort((a, b) => b.total - a.total);
 
 
