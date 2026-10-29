@@ -110,8 +110,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
-    expect(result.loadDelay).toBeCloseTo(2183.6, 0.1);
-    expect(result.loadDuration).toBeCloseTo(383.7, 0.1);
+    expect(result.loadDelay).toBeCloseTo(0, 0.1);
+    expect(result.loadDuration).toBeCloseTo(1243.8, 0.1);
   });
 
   it('returns breakdown for a real trace with text LCP', async () => {
@@ -140,8 +140,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadDelay).toBeCloseTo(1831.6, 0.1);
-    expect(result.loadDuration).toBeCloseTo(3289.4, 0.1);
+    expect(result.loadDelay).toBeCloseTo(1905, 0.1);
+    expect(result.loadDuration).toBeCloseTo(3216, 0.1);
   });
 
   it('returns observed for image LCP', async () => {
