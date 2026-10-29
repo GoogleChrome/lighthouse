@@ -17,6 +17,7 @@ import {Logger} from '../../../report/renderer/logger.js';
 import {DOM} from '../../../report/renderer/dom.js';
 
 /** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
+/** @typedef {{moduleName: string, nodes: Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>, duplicatedBytes: number, color: string}} DuplicateModule */
 
 const dom = new DOM(document, document.documentElement);
 
@@ -131,6 +132,24 @@ class TreemapViewer {
     /** @type {WebTreeMap} */
     this.treemap;
     /*  eslint-enable no-unused-expressions */
+
+    /** @type {Map<string, DuplicateModule>} */
+    this.duplicateModules = new Map();
+    /** @type {string|undefined} */
+    this.hoveredDuplicateModuleName = undefined;
+    /** @type {WeakMap<Element, LH.Treemap.Node>} */
+    this.elementToNodeMap = new WeakMap();
+    /** @type {Element|undefined} The node webtreemap is zoomed into, if not the root. */
+    this.zoomedNodeEl = undefined;
+    /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.Node>} */
+    this.nodeToParentMap = new WeakMap();
+    for (const depthOneNodes of Object.values(this.depthOneNodesByGroup)) {
+      for (const depthOneNode of depthOneNodes) {
+        TreemapUtil.walk(depthOneNode, node => {
+          for (const child of node.children || []) this.nodeToParentMap.set(child, node);
+        });
+      }
+    }
 
     const urlEl = dom.find('a.lh-header--url');
     urlEl.textContent = this.documentUrl.href;
@@ -263,6 +282,9 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       nodeEl.classList.add('webtreemap-node--hover');
+
+      const node = this.elementToNodeMap.get(nodeEl);
+      this.setHoveredDuplicateModule(node && this.getDuplicateModule(node)?.moduleName);
     }, options);
 
     treemapEl.addEventListener('mouseout', (e) => {
@@ -272,6 +294,10 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       nodeEl.classList.remove('webtreemap-node--hover');
+    }, options);
+
+    treemapEl.addEventListener('mouseleave', () => {
+      this.setHoveredDuplicateModule(undefined);
     }, options);
 
     dom.find('.lh-table').addEventListener('mouseover', e => {
@@ -284,7 +310,14 @@ class TreemapViewer {
       const nodes = this.tableRowToNodeMap.get(el);
       if (!nodes) return;
 
-      for (const node of Array.isArray(nodes) ? nodes : [nodes]) {
+      const nodesArr = Array.isArray(nodes) ? nodes : [nodes];
+      const duplicateModule = nodesArr.length ? this.getDuplicateModule(nodesArr[0]) : undefined;
+      this.setHoveredDuplicateModule(duplicateModule?.moduleName);
+      el.addEventListener('mouseout', () => {
+        this.setHoveredDuplicateModule(undefined);
+      }, {once: true});
+
+      for (const node of nodesArr) {
         if (!node.dom) continue;
 
         // TODO: make this bi-directional.
@@ -309,6 +342,7 @@ class TreemapViewer {
    */
   updateZoomState(nodeEl) {
     const isRoot = nodeEl.classList.contains('webtreemap-node--root');
+    this.zoomedNodeEl = isRoot ? undefined : nodeEl;
     dom.find('.lh-header').classList.toggle('lh-header--zoomed', !isRoot);
   }
 
@@ -319,6 +353,7 @@ class TreemapViewer {
     for (const el of dom.findAll('div.webtreemap-node', this.el)) {
       el.style.zIndex = '';
     }
+    this.zoomedNodeEl = undefined;
     dom.find('.lh-header').classList.remove('lh-header--zoomed');
   }
 
@@ -371,45 +406,18 @@ class TreemapViewer {
      * @return {LH.Treemap.ViewMode|undefined}
      */
     const createDuplicateModulesViewMode = (root) => {
-      /** @type {Map<string, Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>>} */
-      const moduleNameToNodes = new Map();
-      for (const d1Node of root.children || []) {
-        TreemapUtil.walk(d1Node, (node, path) => {
-          if (node.children) return;
-          if (!node.duplicatedNormalizedModuleName) return;
-
-          const nodes = moduleNameToNodes.get(node.duplicatedNormalizedModuleName) || [];
-          nodes.push({node, path});
-          moduleNameToNodes.set(node.duplicatedNormalizedModuleName, nodes);
-        });
-      }
-
-      const getHueForModuleNodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
       let potentialByteSavings = 0;
 
       /** @type {LH.Treemap.Highlight[]} */
       const highlights = [];
-      for (const [moduleName, nodesWithSameModuleName] of moduleNameToNodes.entries()) {
-        if (nodesWithSameModuleName.length === 1) continue;
-
-        const bytes = [];
-        for (const {node} of nodesWithSameModuleName) {
-          bytes.push(this.getNodeSizes(node).size);
-        }
-
-        // Sum all but the largest copy.
-        bytes.sort((a, b) => b - a);
-        let duplicatedBytes = 0;
-        for (let i = 1; i < bytes.length; i++) duplicatedBytes += bytes[i];
-        if (duplicatedBytes < DUPLICATED_MODULES_IGNORE_THRESHOLD) continue;
-
-        for (const {path} of nodesWithSameModuleName) {
+      for (const duplicateModule of this.duplicateModules.values()) {
+        for (const {path} of duplicateModule.nodes) {
           highlights.push({
             path: [root.name, ...path],
-            color: this.getColorFromHue(getHueForModuleNodeName(moduleName)),
+            color: duplicateModule.color,
           });
         }
-        potentialByteSavings += duplicatedBytes;
+        potentialByteSavings += duplicateModule.duplicatedBytes;
       }
 
       let enabled = true;
@@ -445,6 +453,114 @@ class TreemapViewer {
   }
 
   /**
+   * Finds every module that is included more than once under `root`, ignoring modules
+   * whose duplicated bytes are below a threshold. Sorted by duplicated bytes, descending.
+   * @param {LH.Treemap.Node} root
+   * @return {Map<string, DuplicateModule>}
+   */
+  computeDuplicateModules(root) {
+    /** @type {Map<string, Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>>} */
+    const moduleNameToNodes = new Map();
+    for (const d1Node of root.children || []) {
+      TreemapUtil.walk(d1Node, (node, path) => {
+        if (node.children) return;
+        if (!node.duplicatedNormalizedModuleName) return;
+
+        const nodes = moduleNameToNodes.get(node.duplicatedNormalizedModuleName) || [];
+        nodes.push({node, path});
+        moduleNameToNodes.set(node.duplicatedNormalizedModuleName, nodes);
+      });
+    }
+
+    const getHueForModuleNodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
+
+    /** @type {DuplicateModule[]} */
+    const duplicateModules = [];
+    for (const [moduleName, nodesWithSameModuleName] of moduleNameToNodes.entries()) {
+      if (nodesWithSameModuleName.length === 1) continue;
+
+      const bytes = [];
+      for (const {node} of nodesWithSameModuleName) {
+        bytes.push(this.getNodeSizes(node).size);
+      }
+
+      // Sum all but the largest copy.
+      bytes.sort((a, b) => b - a);
+      let duplicatedBytes = 0;
+      for (let i = 1; i < bytes.length; i++) duplicatedBytes += bytes[i];
+      if (duplicatedBytes < DUPLICATED_MODULES_IGNORE_THRESHOLD) continue;
+
+      duplicateModules.push({
+        moduleName,
+        nodes: nodesWithSameModuleName,
+        duplicatedBytes,
+        color: this.getColorFromHue(getHueForModuleNodeName(moduleName)),
+      });
+    }
+
+    duplicateModules.sort((a, b) => b.duplicatedBytes - a.duplicatedBytes);
+    return new Map(duplicateModules.map(m => [m.moduleName, m]));
+  }
+
+  /**
+   * Returns the duplicate module the node belongs to, if any.
+   * @param {LH.Treemap.Node} node
+   */
+  getDuplicateModule(node) {
+    if (!node.duplicatedNormalizedModuleName) return;
+    return this.duplicateModules.get(node.duplicatedNormalizedModuleName);
+  }
+
+  /**
+   * Highlights every copy of a duplicate module (fading out everything else), or
+   * restores the default colors when `moduleName` is undefined.
+   * @param {string|undefined} moduleName
+   */
+  setHoveredDuplicateModule(moduleName) {
+    if (moduleName === this.hoveredDuplicateModuleName) return;
+
+    this.hoveredDuplicateModuleName = moduleName;
+    this.updateColors();
+  }
+
+  /**
+   * webtreemap does not render nodes that are too small to see, so a copy of a
+   * duplicate module may not have an element. For each copy, finds the closest
+   * rendered node (itself or an ancestor, excluding the root). Copies that are
+   * outside the currently zoomed-in node are counted as hidden.
+   * @param {DuplicateModule} duplicateModule
+   * @return {{visibleNodes: Set<LH.Treemap.Node>, hiddenCount: number}}
+   */
+  getRenderedDuplicateNodes(duplicateModule) {
+    /** @param {LH.Treemap.Node} node */
+    const isRendered = (node) => {
+      const el = /** @type {NodeWithElement} */ (node).dom;
+      return !!el && el.isConnected && el.offsetWidth > 0 && el.offsetHeight > 0;
+    };
+
+    /** @type {Set<LH.Treemap.Node>} */
+    const visibleNodes = new Set();
+    let hiddenCount = 0;
+    for (const {node} of duplicateModule.nodes) {
+      /** @type {LH.Treemap.Node|undefined} */
+      let current = node;
+      while (current && current !== this.currentTreemapRoot && !isRendered(current)) {
+        current = this.nodeToParentMap.get(current);
+      }
+
+      const el = current && current !== this.currentTreemapRoot ?
+      /** @type {NodeWithElement} */ (current).dom :
+        undefined;
+      if (el && (!this.zoomedNodeEl || this.zoomedNodeEl.contains(el))) {
+        visibleNodes.add(/** @type {LH.Treemap.Node} */ (current));
+      } else {
+        hiddenCount += 1;
+      }
+    }
+    return {visibleNodes, hiddenCount};
+  }
+
+  /**
    * @param {LH.Treemap.Selector} selector
    */
   setSelector(selector) {
@@ -473,6 +589,9 @@ class TreemapViewer {
       throw new Error('unknown selector: ' + JSON.stringify(selector));
     }
 
+    this.duplicateModules = this.computeDuplicateModules(this.currentTreemapRoot);
+    this.hoveredDuplicateModuleName = undefined;
+    this.el.classList.remove('lh-treemap--hover-duplicate');
     this.viewModes = this.createViewModes();
     const currentViewModeIsDisabled = this.currentViewMode &&
       this.viewModes.find(v => v.id === this.currentViewMode.id && !v.enabled);
@@ -530,6 +649,7 @@ class TreemapViewer {
       this.el.textContent = '';
       this.treemap.render(this.el);
       dom.find('.webtreemap-node').classList.add('webtreemap-node--root');
+      this.zoomedNodeEl = undefined;
       dom.find('.lh-header').classList.remove('lh-header--zoomed');
 
       // For the "All" selector, delete the root node caption since it duplicates the
@@ -628,24 +748,18 @@ class TreemapViewer {
     this.tableRowToNodeMap = new WeakMap();
 
     if (this.currentViewMode.id === 'duplicate-modules') {
-      /** @type {Map<string, Array<typeof data[0]>>} */
-      const dataByDupeModule = new Map();
-      for (const row of data) {
-        const dupeName = row.node.duplicatedNormalizedModuleName;
-        if (!dupeName) continue;
+      /** @type {Map<LH.Treemap.Node, typeof data[0]>} */
+      const dataByNode = new Map(data.map(row => [row.node, row]));
 
-        const grouped = dataByDupeModule.get(dupeName) ?? [];
-        dataByDupeModule.set(dupeName, grouped);
-        grouped.push(row);
-      }
+      // `duplicateModules` is already filtered and sorted by duplicated bytes.
+      for (const [dupeName, duplicateModule] of this.duplicateModules) {
+        const rows = duplicateModule.nodes
+          .map(({node}) => dataByNode.get(node))
+          .filter(/** @return {row is typeof data[0]} */ row => !!row)
+          .sort((a, b) => b.size - a.size);
+        const duplicateBytes = duplicateModule.duplicatedBytes;
 
-      for (const [dupeName, rows] of dataByDupeModule) {
-        const duplicateBytes = rows
-          .sort((a, b) => b.size - a.size)
-          .slice(1)
-          .reduce((acc, cur) => acc + cur.size, 0);
-
-        const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row');
+        const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row lh-table-row--group');
 
         const cell1 = dom.createChildOf(rowEl, 'div');
         cell1.textContent = dupeName;
@@ -727,6 +841,7 @@ class TreemapViewer {
     for (const el of dom.findAll('div.webtreemap-node', this.el)) {
       el.style.zIndex = '';
     }
+    this.zoomedNodeEl = undefined;
     dom.find('.lh-header').classList.remove('lh-header--zoomed');
     this.formatCaptions();
     this.updateColors();
@@ -793,8 +908,45 @@ class TreemapViewer {
   }
 
   updateColors() {
+    const hoveredDuplicateModule = this.hoveredDuplicateModuleName !== undefined ?
+      this.duplicateModules.get(this.hoveredDuplicateModuleName) :
+      undefined;
+    const {visibleNodes: hoveredNodes, hiddenCount} = hoveredDuplicateModule ?
+      this.getRenderedDuplicateNodes(hoveredDuplicateModule) :
+      {visibleNodes: new Set(), hiddenCount: 0};
+    // Only fade out the treemap if there is something visible to highlight.
+    const isHoveringDuplicate = hoveredNodes.size > 0;
+    this.el.classList.toggle('lh-treemap--hover-duplicate', isHoveringDuplicate);
+
+    // Let the user know about copies they can't see (e.g. when zoomed in).
+    const hintEl = dom.find('.lh-treemap-hint');
+    hintEl.classList.toggle('hidden', hiddenCount === 0);
+    hintEl.textContent = hiddenCount ?
+      TreemapUtil.strings.duplicateModuleHiddenCopiesLabel.replace('{count}', String(hiddenCount)) :
+      '';
+
     TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
       if (!node.dom) return;
+
+      this.elementToNodeMap.set(node.dom, node);
+
+      // Always outline duplicate modules, regardless of view mode.
+      const duplicateModule = this.getDuplicateModule(node);
+      node.dom.classList.toggle('webtreemap-node--duplicate', !!duplicateModule);
+
+      // Shade the element to communicate coverage.
+      if (this.currentViewMode.id === 'unused-bytes') {
+        const pctUnused = (node.unusedBytes || 0) / node.resourceBytes * 100;
+        node.dom.style.setProperty('--pctUnused', `${pctUnused}%`);
+      }
+
+      // When hovering a duplicate module, only color the copies of that module.
+      if (isHoveringDuplicate && hoveredDuplicateModule) {
+        node.dom.style.backgroundColor = hoveredNodes.has(node) ?
+          hoveredDuplicateModule.color :
+          'white';
+        return;
+      }
 
       // Color a depth one node and all children the same color.
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
@@ -822,12 +974,6 @@ class TreemapViewer {
         this.getColorFromHue(hue, path.length) :
         'white';
       node.dom.style.backgroundColor = depthOneNodeColor;
-
-      // Shade the element to communicate coverage.
-      if (this.currentViewMode.id === 'unused-bytes') {
-        const pctUnused = (node.unusedBytes || 0) / node.resourceBytes * 100;
-        node.dom.style.setProperty('--pctUnused', `${pctUnused}%`);
-      }
     });
   }
 
