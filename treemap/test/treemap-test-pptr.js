@@ -222,6 +222,42 @@ describe('Lighthouse Treemap', () => {
       expect(percentRed).toBeApproximately(percentDataUnused, 1);
     });
 
+    it('renders unused bytes view with plain nodes and per-resource bars', async () => {
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      await page.select('.view-mode-selector', '1'); // unused bytes
+      await page.waitForSelector('.lh-treemap--view-mode--unused-bytes');
+
+      const result = await page.evaluate(() => {
+        const rootEl = document.querySelector('.webtreemap-node--root');
+        const nodeEls = Array.from(document.querySelectorAll('.webtreemap-node'))
+          .filter(el => el !== rootEl);
+        const bars = Array.from(document.querySelectorAll('.lh-coverage-bar')).map(el => {
+          const unusedEl = el.querySelector('.lh-coverage-bar--unused');
+          return {
+            ratio: unusedEl.getBoundingClientRect().width / el.clientWidth,
+            expected: Number(el.style.getPropertyValue('--unused')) /
+              Number(el.style.getPropertyValue('--total')),
+          };
+        });
+        return {
+          rootStripes: window.getComputedStyle(rootEl, '::before').content,
+          nonWhiteNodes: nodeEls.filter(el => el.style.backgroundColor !== 'white').length,
+          bars,
+        };
+      });
+
+      expect(result.rootStripes).toBe('none');
+      expect(result.nonWhiteNodes).toBe(0);
+      expect(result.bars.length).toBeGreaterThan(0);
+      for (const bar of result.bars.slice(0, 10)) {
+        expect(bar.ratio).toBeApproximately(bar.expected, 1);
+      }
+    });
+
     it('formats captions on initial render and after zooming', async () => {
       await page.goto(`${treemapUrl}?debug`, {
         waitUntil: 'networkidle0',

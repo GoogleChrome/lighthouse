@@ -725,8 +725,6 @@ class TreemapViewer {
       return `${TreemapUtil.i18n.formatPercent(percent)} bytes unused`;
     };
 
-    let cachedMaxSize = 0;
-
     const sortByKey = this.currentViewMode.id === 'unused-bytes' ? 'unusedBytes' : 'size';
     data.sort((a, b) => {
       return (b[sortByKey] ?? 0) - (a[sortByKey] ?? 0);
@@ -808,16 +806,14 @@ class TreemapViewer {
       cell2.title = TreemapUtil.i18n.formatBytes(bytes);
 
       if (this.currentViewMode.id === 'unused-bytes') {
-        cachedMaxSize = cachedMaxSize || Math.max(...data.map(node => node.size));
-
+        const unusedBytes = row.unusedBytes ?? 0;
         const el = dom.createChildOf(tableEl, 'div', 'lh-coverage-bar');
         el.title = makeCoverageTooltip(row);
-        el.style.setProperty('--max', String(cachedMaxSize));
-        el.style.setProperty('--used', String(row.size - bytes));
-        el.style.setProperty('--unused', String(row.unusedBytes));
+        el.style.setProperty('--total', String(row.size || 1));
+        el.style.setProperty('--unused', String(unusedBytes));
 
-        dom.createChildOf(el, 'div', 'lh-coverage-bar--used');
-        dom.createChildOf(el, 'div', 'lh-coverage-bar--unused');
+        const unusedEl = dom.createChildOf(el, 'div', 'lh-coverage-bar--unused');
+        unusedEl.classList.toggle('lh-coverage-bar--empty', unusedBytes === 0);
       }
 
       dom.createChildOf(tableEl, 'div', 'lh-table-separator');
@@ -945,6 +941,12 @@ class TreemapViewer {
         node.dom.style.backgroundColor = hoveredNodes.has(node) ?
           hoveredDuplicateModule.color :
           'white';
+        return;
+      }
+
+      // Keep the background plain so the unused stripes stand out.
+      if (this.currentViewMode.id === 'unused-bytes') {
+        node.dom.style.backgroundColor = 'white';
         return;
       }
 

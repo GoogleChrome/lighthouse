@@ -17,6 +17,12 @@
   --text-color-active: #2a67ce;
   --text-color-active-secondary: #4484f3c7;
   --separator-color: rgba(0, 0, 0, 0.1);
+
+  --unused-stripes: repeating-linear-gradient(
+    -45deg,
+    rgba(220, 54, 46, 0.3) 0 1px,
+    transparent 1px 5px
+  ), rgba(220, 54, 46, 0.08);
 }
 
 body {
@@ -276,31 +282,22 @@ body {
 
 .lh-coverage-bar {
   grid-column: 1/-1;
-  margin: 10px 0;
-}
-
-.lh-coverage-bar {
   display: flex;
-  align-items: center;
-  height: 100%;
-}
-.lh-coverage-bar--used {
-  background-color: #63acbe;
-  width: calc(100% * var(--used) / var(--max));
-  height: 7px;
+  justify-content: flex-end;
+  height: 8px;
+  margin-top: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: white;
 }
 .lh-coverage-bar--unused {
-  background-color: #ee442f;
-  width: calc(100% * var(--unused) / var(--max));
-  height: 7px;
-  margin-left: 2px;
-  background: repeating-linear-gradient(
-          -45deg,
-          hsl(7, 85%, 58%),
-          hsl(7, 85%, 58%) 2px,
-          hsla(7, 80%, 45%, 1) 2px,
-          hsla(7, 80%, 45%, 1) 4px
-  );
+  width: calc(100% * var(--unused) / var(--total));
+  border-left: 1px solid var(--separator-color);
+  background: var(--unused-stripes);
+}
+.lh-coverage-bar--unused.lh-coverage-bar--empty {
+  border-left: none;
 }
 
 .webtreemap-node {
@@ -330,7 +327,7 @@ body {
   border: solid 1px var(--text-color);
 }
 
-.lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
+.lh-treemap--view-mode--unused-bytes .webtreemap-node:not(.webtreemap-node--root)::before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -338,13 +335,8 @@ body {
   content: '';
   display: block;
   width: var(--pctUnused);
-  background: repeating-linear-gradient(
-          -45deg,
-          hsla(0, 0%, 0%, 0),
-          hsla(0, 0%, 0%, 0) 2px,
-          hsla(7, 85%, 56%, 0.3) 2px,
-          hsla(7, 85%, 56%, 0.3) 4px
-  );
+  background: var(--unused-stripes);
+  pointer-events: none;
 }
 
 .webtreemap-caption {
