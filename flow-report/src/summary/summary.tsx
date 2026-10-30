@@ -59,7 +59,7 @@ const SummaryFlowStep: FunctionComponent<{
 }> = ({lhr, label, hashIndex}) => {
   const reportResult = useMemo(() => ReportUtils.prepareReportResult(lhr), [lhr]);
   const strings = useLocalizedStrings();
-  const modeDescription = getModeDescription(lhr.gatherMode, strings);
+  const modeDescription = getModeDescription(lhr, strings);
 
   return (
     <div className="SummaryFlowStep">

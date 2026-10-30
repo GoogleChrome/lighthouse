@@ -55,9 +55,12 @@ function getFilmstripFrames(
   return frameItems || undefined;
 }
 
-function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
-  switch (mode) {
-    case 'navigation': return strings.navigationDescription;
+function getModeDescription(lhr: LH.Result, strings: UIStringsType) {
+  switch (lhr.gatherMode) {
+    case 'navigation':
+      return lhr.configSettings.softNavigation ?
+        strings.softNavigationDescription :
+        strings.navigationDescription;
     case 'timespan': return strings.timespanDescription;
     case 'snapshot': return strings.snapshotDescription;
   }

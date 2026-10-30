@@ -23,6 +23,16 @@ import {getPageLoadError} from '../lib/navigation-error.js';
 import Trace from './gatherers/trace.js';
 import DevtoolsLog from './gatherers/devtools-log.js';
 import {NetworkRecords} from '../computed/network-records.js';
+import * as i18n from '../lib/i18n/i18n.js';
+
+/* eslint-disable max-len */
+const UIStrings = {
+  /** A warning that indicates Lighthouse detected more than one soft navigation (a same-document navigation triggered by user interaction) during a run that measures a single one. */
+  warningMultipleSoftNavigations: 'Multiple soft navigations were detected during the run. Only the first soft navigation is measured.',
+};
+/* eslint-enable max-len */
+
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @typedef NavigationContext
@@ -76,6 +86,16 @@ async function _cleanupNavigation({driver}) {
 }
 
 /**
+ * @param {LH.Config.Settings} settings
+ * @return {Array<'fcp'|'load'|'navigated'|'softNavigation'>}
+ */
+function _getWaitUntil(settings) {
+  // A soft navigation never fires a load event or an FCP lifecycle event.
+  if (settings.softNavigation) return ['softNavigation'];
+  return settings.pauseAfterFcpMs ? ['fcp', 'load'] : ['load'];
+}
+
+/**
  * @param {NavigationContext} navigationContext
  * @return {Promise<{requestedUrl: string, mainDocumentUrl: string, navigationError: LH.LighthouseError | undefined}>}
  */
@@ -85,7 +105,7 @@ async function _navigate(navigationContext) {
   try {
     const {requestedUrl, mainDocumentUrl, warnings} = await gotoURL(driver, requestor, {
       ...resolvedConfig.settings,
-      waitUntil: resolvedConfig.settings.pauseAfterFcpMs ? ['fcp', 'load'] : ['load'],
+      waitUntil: _getWaitUntil(resolvedConfig.settings),
       signal,
     });
 
@@ -143,8 +163,10 @@ async function _computeNavigationResult(
   navigateResult
 ) {
   const {navigationError, requestedUrl, mainDocumentUrl} = navigateResult;
+  const {settings} = navigationContext.resolvedConfig;
   const debugData = await _collectDebugData(navigationContext, phaseState);
-  const pageLoadError = debugData.records
+  // A soft navigation has no document request to inspect for page load errors.
+  const pageLoadError = debugData.records && !settings.softNavigation
     ? getPageLoadError(navigationError, {
       url: mainDocumentUrl,
       ignoreStatusCode: navigationContext.resolvedConfig.settings.ignoreStatusCode,
@@ -174,8 +196,26 @@ async function _computeNavigationResult(
   } else {
     await collectPhaseArtifacts({phase: 'getArtifact', ...phaseState});
 
-    return await awaitArtifacts(phaseState.artifactState);
+    const artifacts = await awaitArtifacts(phaseState.artifactState);
+    if (settings.softNavigation) {
+      navigationContext.baseArtifacts.LighthouseRunWarnings.push(
+        ..._getSoftNavigationWarnings(artifacts.Trace));
+    }
+    return artifacts;
   }
+}
+
+/**
+ * @param {LH.Trace|undefined} trace
+ * @return {Array<LH.IcuMessage>}
+ */
+function _getSoftNavigationWarnings(trace) {
+  // The trace artifact is an Error when its collection failed.
+  if (!trace || !Array.isArray(trace.traceEvents)) return [];
+  const softNavigationCount =
+    trace.traceEvents.filter(event => event.name === 'SoftNavigationStart').length;
+  if (softNavigationCount > 1) return [str_(UIStrings.warningMultipleSoftNavigations)];
+  return [];
 }
 
 /**
@@ -264,6 +304,9 @@ async function navigationGather(page, requestor, options = {}) {
   const computedCache = new Map();
 
   const isCallback = typeof requestor === 'function';
+  if (resolvedConfig.settings.softNavigation && !isCallback) {
+    throw new Error('A soft navigation can only be triggered by a callback requestor');
+  }
 
   const runnerOptions = {resolvedConfig, computedCache};
 
@@ -313,4 +356,5 @@ export {
   _navigate,
   _navigation,
   _cleanup,
+  UIStrings,
 };

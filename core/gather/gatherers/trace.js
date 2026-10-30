@@ -161,6 +161,11 @@ class Trace extends BaseGatherer {
     if (gatherMode === 'timespan') {
       await driver.defaultSession.sendCommand('Tracing.recordClockSyncMarker',
         {syncId: TraceProcessor.TIMESPAN_MARKER_ID});
+    } else if (gatherMode === 'navigation' && settings.softNavigation) {
+      // The page is already loaded, so there is no navigationStart to anchor the trace to.
+      // The marker is the fallback time origin when no soft navigation is detected.
+      await driver.defaultSession.sendCommand('Tracing.recordClockSyncMarker',
+        {syncId: TraceProcessor.SOFT_NAVIGATION_MARKER_ID});
     }
   }
 

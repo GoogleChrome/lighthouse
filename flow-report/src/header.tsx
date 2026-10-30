@@ -39,7 +39,7 @@ export const Header: FunctionComponent<{hashState: LH.HashState}> =
   const nextStep = flowResult.steps[index + 1];
 
   const strings = useLocalizedStrings();
-  const modeDescription = getModeDescription(step.lhr.gatherMode, strings);
+  const modeDescription = getModeDescription(step.lhr, strings);
 
   return (
     <div className="Header">

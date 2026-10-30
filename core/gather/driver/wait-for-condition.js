@@ -29,7 +29,7 @@ import {ExecutionContext} from './execution-context.js';
  * @prop {number} cpuQuietThresholdMs
  * @prop {number} maxWaitForLoadedMs
  * @prop {number|undefined} maxWaitForFcpMs
- * @prop {{waitForFcp: typeof waitForFcp, waitForLoadEvent: typeof waitForLoadEvent, waitForNetworkIdle: typeof waitForNetworkIdle, waitForCPUIdle: typeof waitForCPUIdle}} [_waitForTestOverrides]
+ * @prop {{waitForFcp: typeof waitForFcp, waitForLoadEvent: typeof waitForLoadEvent, waitForNetworkIdle: typeof waitForNetworkIdle, waitForCPUIdle: typeof waitForCPUIdle, waitForNavigatedWithinDocument?: typeof waitForNavigatedWithinDocument}} [_waitForTestOverrides]
  */
 
 /**
@@ -64,6 +64,61 @@ function waitForFrameNavigated(session) {
   });
 
   return {promise, cancel};
+}
+
+/**
+ * Returns a promise that resolves with the new URL when the main frame navigates within the same
+ * document (e.g. via the History API), the way a soft navigation does.
+ * @param {LH.Gatherer.ProtocolSession} session
+ * @return {CancellableWait<string>}
+ */
+function waitForNavigatedWithinDocument(session) {
+  /** @type {(() => void)} */
+  let cancel = () => {
+    throw new Error('waitForNavigatedWithinDocument.cancel() called before it was defined');
+  };
+
+  /** @type {Promise<string>} */
+  const promise = new Promise((resolve, reject) => {
+    /** @type {string|undefined} */
+    let mainFrameId;
+    /** @type {Array<LH.Crdp.Page.NavigatedWithinDocumentEvent>} */
+    const events = [];
+
+    // The main frame id is resolved asynchronously, so buffer events until it is known.
+    const resolveIfMainFrameNavigated = () => {
+      if (!mainFrameId) return;
+      const event = events.find(e => e.frameId === mainFrameId);
+      if (!event) return;
+      resolve(event.url);
+      cancel();
+    };
+
+    /** @param {LH.Crdp.Page.NavigatedWithinDocumentEvent} e */
+    const listener = e => {
+      events.push(e);
+      resolveIfMainFrameNavigated();
+    };
+    session.on('Page.navigatedWithinDocument', listener);
+
+    session.sendCommand('Page.getFrameTree').then(({frameTree}) => {
+      mainFrameId = frameTree.frame.id;
+      resolveIfMainFrameNavigated();
+    }).catch(reject);
+
+    let canceled = false;
+    cancel = () => {
+      if (canceled) return;
+      canceled = true;
+      session.off('Page.navigatedWithinDocument', listener);
+      reject(new Error('Wait for navigated within document canceled'));
+    };
+  });
+
+  return {
+    promise,
+    cancel,
+  };
 }
 
 /**
@@ -403,7 +458,13 @@ async function isPageHung(session) {
 }
 
 /** @type {Required<WaitOptions>['_waitForTestOverrides']} */
-const DEFAULT_WAIT_FUNCTIONS = {waitForFcp, waitForLoadEvent, waitForCPUIdle, waitForNetworkIdle};
+const DEFAULT_WAIT_FUNCTIONS = {
+  waitForFcp,
+  waitForLoadEvent,
+  waitForCPUIdle,
+  waitForNetworkIdle,
+  waitForNavigatedWithinDocument,
+};
 
 /**
  * Returns a promise that resolves when:
@@ -552,6 +613,125 @@ async function waitForFullyLoaded(session, networkMonitor, options, signal) {
 }
 
 /**
+ * Returns a promise that resolves when:
+ * - All of the following conditions have been met:
+ *    - the main frame has navigated within the same document (a soft navigation).
+ *    - networkQuietThresholdMs milliseconds have passed since the last network request that exceeded
+ *      2 inflight requests (network-2-quiet has been reached).
+ *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
+ * - maxWaitForLoadedMs milliseconds have passed.
+ * A soft navigation has no load event or FCP lifecycle event, so network and CPU quiet stand in for
+ * them. Resolves with the URL the main frame navigated to, when it was observed.
+ * @param {LH.Gatherer.ProtocolSession} session
+ * @param {NetworkMonitor} networkMonitor
+ * @param {WaitOptions} options
+ * @param {AbortSignal} [signal]
+ * @return {Promise<{timedOut: boolean, url?: string}>}
+ */
+async function waitForSoftNavigation(session, networkMonitor, options, signal) {
+  const {networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitForLoadedMs} = options;
+  const waitFunctions = options._waitForTestOverrides || DEFAULT_WAIT_FUNCTIONS;
+  const {waitForNetworkIdle, waitForCPUIdle} = waitFunctions;
+  const waitForNavigatedWithinDocumentFn =
+    waitFunctions.waitForNavigatedWithinDocument || waitForNavigatedWithinDocument;
+  /** @type {NodeJS.Timeout|undefined} */
+  let maxTimeoutHandle;
+  /** @type {string|undefined} */
+  let url;
+
+  // Listener for the same-document navigation of the main frame.
+  const resolveOnNavigatedWithinDocument = waitForNavigatedWithinDocumentFn(session);
+  resolveOnNavigatedWithinDocument.promise.then(navigatedUrl => {
+    url = navigatedUrl;
+  }).catch(() => {});
+  // General network listener. Resolves when the network has been 2-idle for networkQuietThresholdMs.
+  // The document was loaded long ago, so DCL is treated as already fired.
+  const resolveOnNetworkIdle = waitForNetworkIdle(session, networkMonitor, {
+    networkQuietThresholdMs,
+    busyEvent: 'network-2-busy',
+    idleEvent: 'network-2-idle',
+    isIdle: recorder => recorder.is2Idle(),
+    pretendDCLAlreadyFired: true,
+  });
+  // Critical network listener. Resolves when the network has had 0 critical requests for networkQuietThresholdMs.
+  const resolveOnCriticalNetworkIdle = waitForNetworkIdle(session, networkMonitor, {
+    networkQuietThresholdMs,
+    busyEvent: 'network-critical-busy',
+    idleEvent: 'network-critical-idle',
+    isIdle: recorder => recorder.isCriticalIdle(),
+    pretendDCLAlreadyFired: true,
+  });
+  // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
+  let resolveOnCPUIdle = waitForNothing();
+
+  /** @type {Promise<() => Promise<{timedOut: boolean, url?: string}>>} */
+  const navigatedPromise = Promise.all([
+    resolveOnNavigatedWithinDocument.promise,
+    resolveOnNetworkIdle.promise,
+    resolveOnCriticalNetworkIdle.promise,
+  ]).then(() => {
+    resolveOnCPUIdle = waitForCPUIdle(session, cpuQuietThresholdMs);
+    return resolveOnCPUIdle.promise;
+  }).then(() => {
+    /** @return {Promise<{timedOut: boolean, url?: string}>} */
+    const cleanupFn = async function() {
+      log.verbose('waitFor', 'navigated within document and network considered idle');
+      return {timedOut: false, url};
+    };
+
+    return cleanupFn;
+  }).catch(err => {
+    // Throw the error in the cleanupFn so we still cleanup all our handlers.
+    return function() {
+      throw err;
+    };
+  });
+
+  // Last resort timeout. Resolves maxWaitForLoadedMs ms from now.
+  /** @type {Promise<() => Promise<{timedOut: boolean, url?: string}>>} */
+  const maxTimeoutPromise = new Promise((resolve, reject) => {
+    maxTimeoutHandle = setTimeout(resolve, maxWaitForLoadedMs);
+  }).then(_ => {
+    return async () => {
+      log.warn('waitFor', 'Timed out waiting for soft navigation. Checking if page is hung...');
+      if (await isPageHung(session)) {
+        log.warn('waitFor', 'Page appears to be hung, killing JavaScript...');
+        // We don't await these, as we want to exit with PAGE_HUNG
+        void session.sendCommandAndIgnore('Emulation.setScriptExecutionDisabled', {value: true});
+        void session.sendCommandAndIgnore('Runtime.terminateExecution');
+        throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
+      }
+
+      return {timedOut: true, url};
+    };
+  });
+
+  /** @type {(event: Event) => void} */
+  let onAbort = () => {};
+  /** @type {Promise<() => Promise<{timedOut: boolean, url?: string}>>} */
+  const abortPromise = new Promise((resolve) => {
+    signal?.throwIfAborted();
+    onAbort = () => resolve(async () => ({timedOut: false, url}));
+    signal?.addEventListener('abort', onAbort, {once: true});
+  });
+
+  const cleanupFn = await Promise.race([
+    navigatedPromise,
+    maxTimeoutPromise,
+    abortPromise,
+  ]);
+
+  signal?.removeEventListener('abort', onAbort);
+  maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
+  resolveOnNavigatedWithinDocument.cancel();
+  resolveOnNetworkIdle.cancel();
+  resolveOnCriticalNetworkIdle.cancel();
+  resolveOnCPUIdle.cancel();
+
+  return cleanupFn();
+}
+
+/**
  * @param {LH.Gatherer.Driver} driver
  */
 function waitForUserToContinue(driver) {
@@ -583,5 +763,7 @@ export {
   waitForNetworkIdle,
   waitForCPUIdle,
   waitForFullyLoaded,
+  waitForNavigatedWithinDocument,
+  waitForSoftNavigation,
   waitForUserToContinue,
 };
