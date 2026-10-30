@@ -25,6 +25,11 @@ import Util_ from './utility-types.js';
 
 // Construct hierarchy of global types under the LH namespace.
 export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
+/**
+ * Either a URL to navigate to, or a callback that triggers a full, cross-document page load
+ * (e.g. by clicking a link). Same-document navigations (History API or fragment changes) are not
+ * supported by navigation mode; use a timespan for single-page-app transitions.
+ */
 export type NavigationRequestor = string | (() => Promise<void> | void);
 
 export import Util = Util_;
