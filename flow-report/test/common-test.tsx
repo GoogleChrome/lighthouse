@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import {act, render} from '@testing-library/preact';
 
 import {timers} from '../../core/test/test-env/fake-timers.js';
@@ -27,14 +27,14 @@ describe('FlowStepThumbnail', () => {
           details: {
             type: 'filmstrip',
             items: [
-              {data: 'frame1'},
-              {data: 'frame2'},
+              {data: 'data:image/jpeg;base64,frame1'},
+              {data: 'data:image/jpeg;base64,frame2'},
             ],
           },
         },
       },
       fullPageScreenshot: {
-        screenshot: {data: 'FPS', width: 400, height: 600},
+        screenshot: {data: 'data:image/jpeg;base64,FPS', width: 400, height: 600},
         nodes: {},
       },
     } as any;
@@ -99,5 +99,13 @@ describe('FlowStepThumbnail', () => {
       timers.advanceTimersByTime(501);
     });
     expect(thumbnail.src).toContain('frame2');
+  });
+
+  it('ignores non-data:image/ URLs', () => {
+    delete lhr.audits['screenshot-thumbnails'];
+    lhr.fullPageScreenshot!.screenshot.data = 'javascript:alert(1)';
+    const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
+
+    expect(() => root.getByAltText(/Screenshot/)).toThrow();
   });
 });

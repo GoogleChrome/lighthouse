@@ -23,7 +23,7 @@ const exclusions = {
     'redirects-http',
     // Disabled because these tests use settings that cannot be fully configured in
     // DevTools (e.g. throttling method "provided").
-    'metrics-tricky-tti', 'metrics-tricky-tti-late-fcp', 'screenshot',
+    'metrics-delayed-lcp', 'metrics-tricky-tti', 'metrics-tricky-tti-late-fcp', 'screenshot',
     // Disabled because of differences that need further investigation
     'byte-efficiency', 'byte-gzip', 'perf-preload',
     // Disabled because a renderer crash also breaks devtools frontend
@@ -78,6 +78,8 @@ const exclusions = {
 };
 
 for (const array of Object.values(exclusions)) {
+  // https://github.com/GoogleChrome/lighthouse/issues/17277
+  array.push('webmcp');
   // https://github.com/GoogleChrome/lighthouse/issues/14271
   array.push('lantern-idle-callback-short');
   // glitch is gone.

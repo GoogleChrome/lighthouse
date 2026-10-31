@@ -1,0 +1,54 @@
+name: "Agentic Web: Proposal & Feedback"
+description: Propose a new quality signal or provide feedback on an existing experimental audit.
+labels: [agentic-web]
+body:
+  - type: dropdown
+    id: submission-type
+    attributes:
+      label: Submission Type
+      options:
+        - New Audit Proposal
+        - Feedback / Bug Report on Existing Audit
+    validations:
+      required: true
+  - type: input
+    id: audit-name
+    attributes:
+      label: Audit Name / Affected Audit
+      placeholder: e.g., WebMCP Validation, Token Efficiency, Semantic Structure
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description & Rationale
+      description: |
+        - **For Proposals**: Why is this audit important for AI agents? What problem does it solve?
+        - **For Feedback/Bugs**: Please describe the issue or feedback. Are there false positives/negatives?
+    validations:
+      required: true
+  - type: input
+    id: target-agents
+    attributes:
+      label: Target Agents
+      description: Which agentic browsers or models would benefit from this signal?
+      placeholder: e.g., Bluedog, OpenAI Atlas, Perplexity
+    validations:
+      required: false
+  - type: textarea
+    id: proposed-implementation
+    attributes:
+      label: Proposed Implementation / Suggested Improvement
+      description: |
+        - **For Proposals**: How should this be measured? Describe the deterministic logic if possible.
+        - **For Feedback/Bugs**: How can we make this audit more useful or accurate?
+    validations:
+      required: false
+  - type: input
+    id: url
+    attributes:
+      label: Example URL
+      description: If applicable, please provide a URL demonstrating the issue or use case.
+      placeholder: https://example.com
+    validations:
+      required: false

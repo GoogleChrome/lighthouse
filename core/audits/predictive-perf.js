@@ -76,8 +76,8 @@ class PredictivePerf extends Audit {
       pessimisticLCP: lcp.pessimisticEstimate.timeInMs,
 
       roughEstimateOfTTFB: timingSummary.metrics.timeToFirstByte,
-      roughEstimateOfLCPLoadStart: timingSummary.metrics.lcpLoadDelay,
-      roughEstimateOfLCPLoadEnd: timingSummary.metrics.lcpLoadDuration,
+      roughEstimateOfLCPLoadDelay: timingSummary.metrics.lcpLoadDelay,
+      roughEstimateOfLCPLoadDuration: timingSummary.metrics.lcpLoadDuration,
     };
 
     const score = Audit.computeLogNormalScore(

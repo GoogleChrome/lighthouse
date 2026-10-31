@@ -8,6 +8,7 @@ import * as LH from '../../types/lh.js';
 import {Audit} from '../audits/audit.js';
 import BaseGatherer from '../gather/base-gatherer.js';
 import * as i18n from '../lib/i18n/i18n.js';
+import {Util} from '../../shared/util.js';
 
 /**
  * Determines if the artifact dependency direction is valid. The dependency's minimum supported mode
@@ -37,6 +38,7 @@ function isValidArtifactDependency(dependent, dependency) {
  * @param {string} pluginName
  */
 function assertValidPluginName(config, pluginName) {
+  const originalPluginName = pluginName;
   const parts = pluginName.split('/');
   if (parts.length === 2) {
     pluginName = parts[1];
@@ -47,6 +49,10 @@ function assertValidPluginName(config, pluginName) {
 
   if (config.categories?.[pluginName]) {
     throw new Error(`plugin name '${pluginName}' not allowed because it is the id of a category already found in config`); // eslint-disable-line max-len
+  }
+
+  if (!Util.isPluginCategory(originalPluginName)) {
+    throw new Error(`plugin name '${originalPluginName}' has invalid npm package name characters`);
   }
 }
 

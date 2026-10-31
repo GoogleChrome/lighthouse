@@ -119,6 +119,7 @@ export class ReportRenderer {
     const channel = report.configSettings.channel;
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
     const axeVersion = report.environment.credits?.['axe-core'];
+    const ardVersion = report.environment.credits?.['ard'];
 
     const devicesTooltipTextLines = [
       `${Globals.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}`,
@@ -131,6 +132,9 @@ export class ReportRenderer {
     if (axeVersion) {
       devicesTooltipTextLines.push(`${Globals.strings.runtimeSettingsAxeVersion}: ${axeVersion}`);
     }
+    if (ardVersion) {
+      devicesTooltipTextLines.push(`${Globals.strings.runtimeSettingsArdVersion}: ${ardVersion}`);
+    }
 
     let stopwatchLabel = Globals.strings.runtimeAnalysisWindow;
     if (report.gatherMode === 'timespan') {
@@ -139,7 +143,8 @@ export class ReportRenderer {
       stopwatchLabel = Globals.strings.runtimeAnalysisWindowSnapshot;
     }
 
-    // [CSS icon class, textContent, tooltipText]
+    // [CSS icon class, textContent, tooltipText, linkHref]
+    /** @type {Array<[string, string, string?, string?]>} */
     const metaItems = [
       ['date',
         `Captured at ${Globals.i18n.formatDateTime(report.fetchTime)}`],
@@ -159,10 +164,30 @@ export class ReportRenderer {
         `${Globals.strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
     ];
 
+    // One row per plugin. A plugin's category ID is its npm package name, so it doubles as
+    // the npm link; its version comes from the LHR credits, and is omitted if absent.
+    const pluginIds = Object.keys(report.categories)
+      .filter(categoryId => ReportUtils.isPluginCategory(categoryId));
+    for (const pluginId of pluginIds) {
+      const version = report.environment.credits?.[pluginId];
+      metaItems.push(['plugin',
+        version ? `${pluginId} ${version}` : pluginId,
+        undefined,
+        `https://www.npmjs.com/package/${pluginId}`]);
+    }
+
     const metaItemsEl = this._dom.find('.lh-meta__items', footer);
-    for (const [iconname, text, tooltip] of metaItems) {
+    for (const [iconname, text, tooltip, linkHref] of metaItems) {
       const itemEl = this._dom.createChildOf(metaItemsEl, 'li', 'lh-meta__item');
-      itemEl.textContent = text;
+      if (linkHref) {
+        const linkEl = this._dom.createChildOf(itemEl, 'a');
+        linkEl.rel = 'noopener';
+        linkEl.target = '_blank';
+        linkEl.textContent = text;
+        this._dom.safelySetHref(linkEl, linkHref);
+      } else {
+        itemEl.textContent = text;
+      }
       if (tooltip) {
         itemEl.classList.add('lh-tooltip-boundary');
         const tooltipEl = this._dom.createChildOf(itemEl, 'div', 'lh-tooltip');

@@ -7,9 +7,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import {getModuleDirectory} from './esm-utils.js';
-
-const LH_ROOT = path.dirname(getModuleDirectory(import.meta));
+const LH_ROOT = path.dirname(import.meta.dirname);
 const pkg = JSON.parse(fs.readFileSync(`${LH_ROOT}/package.json`, 'utf-8'));
 const lighthouseVersion = pkg.version;
 

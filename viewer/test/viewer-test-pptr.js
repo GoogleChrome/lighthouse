@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import assert from 'assert/strict';
+import {setTimeout as sleep} from 'timers/promises';
 
 import puppeteer from 'puppeteer';
 import {expect} from 'expect';
@@ -77,9 +78,9 @@ describe('Lighthouse Viewer', () => {
         if (e.location().url.includes('lighthouse-480x318.jpg')) return;
 
         const describe = (jsHandle) => {
-          return jsHandle.executionContext().evaluate((obj) => {
+          return jsHandle.evaluate((obj) => {
             return JSON.stringify(obj, null, 2);
-          }, jsHandle);
+          });
         };
         const promise = Promise.all(e.args().map(describe)).then(args => {
           return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
@@ -97,21 +98,25 @@ describe('Lighthouse Viewer', () => {
   });
 
   async function claimErrors() {
+    await viewerPage.bringToFront();
+    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await viewerPage.bringToFront();
-    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     if (errors.length) {
       assert.fail('errors from page:\n\n' + errors.map(e => e.toString()).join('\n\n'));
     }
   }
 
-  afterEach(async function() {
+  afterEach(/** @this {Mocha.Context} */ async function() {
+    if (this.currentTest?.state !== 'passed') {
+      pageErrors = [];
+      return;
+    }
     // Tests should call this themselves so the failure is associated with them in the test report,
     // but just in case one is missed it won't hurt to repeat the check here.
     await ensureNoErrors();
@@ -298,12 +303,20 @@ describe('Lighthouse Viewer', () => {
       new Promise((resolve, reject) => setTimeout(reject, 5_000)),
     ]);
     // Give async work some time to happen (ex: SwapLocaleFeature.enable).
-    await new Promise(resolve => setTimeout(resolve, 3_000));
+    await sleep(3_000);
     await ensureNoErrors();
 
     const content = await viewerPage.$eval('main', el => el.textContent);
     for (const line of content.split('\n')) {
       expect(line).not.toContain('undefined');
+    }
+
+    const auditCounts = await viewerPage.$$eval('.lh-category', categoryEls => {
+      return categoryEls.map(el => ({id: el.id, count: el.querySelectorAll('.lh-audit').length}));
+    });
+    expect(auditCounts.length).toBeGreaterThan(0);
+    for (const {count} of auditCounts) {
+      expect(count).toBeGreaterThan(0);
     }
   }
 
@@ -440,6 +453,10 @@ describe('Lighthouse Viewer', () => {
 
       // Should not clear the query string.
       expect(await viewerPage.url()).toEqual(url);
+
+      // Should add a noindex robots meta tag for deep-linked reports.
+      const robotsMeta = await viewerPage.$eval('meta[name="robots"]', el => el.content);
+      expect(robotsMeta).toBe('noindex, nofollow');
     });
 
     it('should call out to PSI with specified categories', async () => {
@@ -488,9 +505,39 @@ describe('Lighthouse Viewer', () => {
 
       // Expected errors.
       const errors = await claimErrors();
-      expect(errors).toHaveLength(2);
+      expect(errors).toHaveLength(3);
       expect(errors[0]).toContain('500 (Internal Server Error)');
       expect(errors[1]).toContain('badPsiResponse error');
+      expect(errors[2]).toContain('badPsiResponse error');
+    });
+
+    it('should not call out to PSI for crawler user agents', async () => {
+      psiResponse = goodPsiResponse;
+      const originalUA = await browser.userAgent();
+      await viewerPage.setUserAgent(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 ' +
+        '(KHTML, like Gecko) Version/13.1.1 Safari/605.1.15 ' +
+        '(Applebot/0.1; +http://www.apple.com/go/applebot)'
+      );
+
+      try {
+        const url = `${viewerUrl}?psiurl=https://www.example.com`;
+        await viewerPage.goto(url);
+
+        const errorEl = await viewerPage.waitForSelector('#lh-log.lh-show');
+        const errorMessage = await viewerPage.evaluate(errorEl => errorEl.textContent, errorEl);
+        expect(errorMessage).toBe('Automated crawlers are not permitted to trigger PSI runs');
+        expect(interceptedRequest).toBeUndefined();
+
+        const robotsMeta = await viewerPage.$eval('meta[name="robots"]', el => el.content);
+        expect(robotsMeta).toBe('noindex, nofollow');
+
+        const errors = await claimErrors();
+        expect(errors).toHaveLength(1);
+        expect(errors[0]).toContain('Automated crawlers are not permitted to trigger PSI runs');
+      } finally {
+        await viewerPage.setUserAgent(originalUA);
+      }
     });
   });
 });

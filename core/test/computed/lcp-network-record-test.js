@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LCPImageRecord} from '../../computed/lcp-image-record.js';
+import {LCPNetworkRecord} from '../../computed/lcp-network-record.js';
 import {createTestTrace} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
@@ -74,12 +74,22 @@ function mockNetworkRecords() {
   }];
 }
 
-describe('LCPImageRecord', () => {
+describe('LCPNetworkRecord', () => {
   it('returns the correct LCP network record', async () => {
     const networkRecords = mockNetworkRecords();
     const data = mockData(networkRecords);
 
-    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
+
+    expect(result.requestId).toEqual('4');
+  });
+
+  it('returns the LCP network record when resourceType is Media (e.g. video LCP)', async () => {
+    const networkRecords = mockNetworkRecords();
+    networkRecords[3].resourceType = 'Media';
+    const data = mockData(networkRecords);
+
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
 
     expect(result.requestId).toEqual('4');
   });
@@ -91,7 +101,7 @@ describe('LCPImageRecord', () => {
       data.trace.traceEvents.findIndex(e => e.name === 'LargestImagePaint::Candidate');
     data.trace.traceEvents.splice(eventIndex, 1);
 
-    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
     expect(result).toBeUndefined();
   });
 
@@ -102,7 +112,7 @@ describe('LCPImageRecord', () => {
 
     const data = mockData(networkRecords);
 
-    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
     expect(result).toBeUndefined();
   });
 
@@ -113,7 +123,7 @@ describe('LCPImageRecord', () => {
 
     const data = mockData(networkRecords);
 
-    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
     expect(result).toBeUndefined();
   });
 
@@ -133,7 +143,7 @@ describe('LCPImageRecord', () => {
     });
     const data = mockData(networkRecords);
 
-    const result = await LCPImageRecord.request(data, {computedCache: new Map()});
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
     expect(result.requestId).toEqual('4');
   });
 
@@ -144,7 +154,7 @@ describe('LCPImageRecord', () => {
       data.trace.traceEvents.findIndex(e => e.name === 'largestContentfulPaint::Candidate');
     data.trace.traceEvents.splice(eventIndex, 1);
 
-    const resultPromise = LCPImageRecord.request(data, {computedCache: new Map()});
+    const resultPromise = LCPNetworkRecord.request(data, {computedCache: new Map()});
     await expect(resultPromise).rejects.toThrow('NO_LCP');
   });
 });

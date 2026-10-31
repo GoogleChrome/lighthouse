@@ -67,6 +67,12 @@ describe('.clearDataForOrigin', () => {
     const resultPromise = storage.clearDataForOrigin(sessionMock.asSession(), 'https://example.com', []);
     await expect(resultPromise).rejects.toThrow('Not a timeout');
   });
+
+  it('skips clearing data for null origins', async () => {
+    const warnings = await storage.clearDataForOrigin(sessionMock.asSession(), 'chrome://kill', []);
+    expect(warnings).toHaveLength(0);
+    expect(sessionMock.sendCommand).not.toHaveBeenCalled();
+  });
 });
 
 describe('.clearBrowserCaches', () => {

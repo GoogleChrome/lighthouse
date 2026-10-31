@@ -243,8 +243,6 @@ const expectations = {
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
             {
-              // In the DT runner, the initial page load before staring Lighthouse will prevent this error.
-              _excludeRunner: 'devtools',
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
@@ -290,19 +288,9 @@ const expectations = {
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
                 urlProvider: 'network',
                 line: '>0',
-                column: 6,
+                column: '6+/-1',
               },
               subItems: undefined,
-            },
-            {
-              value: /Unload event listeners are deprecated and will be removed/,
-              source: {
-                type: 'source-location',
-                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-                urlProvider: 'network',
-                line: '>0',
-                column: 9,
-              },
             },
           ],
         },
@@ -431,7 +419,7 @@ const expectations = {
         details: {
           items: [
             {
-              reason: 'The page has an unload handler in the main frame.',
+              reason: /Pages with WebRTC (cannot|can’t) enter back\/forward cache/,
               failureType: 'Actionable',
               subItems: {
                 items: [{
@@ -473,7 +461,7 @@ const expectations = {
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
           lcpLoadDelay: '>5000',
-          lcpLoadDuration: '>5000',
+          lcpLoadDuration: '>0',
         }}},
       },
       'third-party-cookies': {
@@ -524,5 +512,4 @@ export default {
   id: 'dbw',
   expectations,
   config,
-  runSerially: true, // Need access to network request assertions.
 };

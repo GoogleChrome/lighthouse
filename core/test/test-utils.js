@@ -6,20 +6,15 @@
 
 import fs from 'fs';
 import path from 'path';
-import url from 'url';
-import {createRequire} from 'module';
 import {gunzipSync} from 'zlib';
 
 import * as td from 'testdouble';
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../shared/root.js';
 import * as mockCommands from './gather/mock-commands.js';
 import {NetworkRecorder} from '../lib/network-recorder.js';
 import {timers} from './test-env/fake-timers.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
-
-const require = createRequire(import.meta.url);
 
 /**
  * Some tests use the result of a LHR processed by our proto serialization.
@@ -198,7 +193,8 @@ async function makeMocksForGatherRunner() {
   await td.replaceEsm('../gather/driver/environment.js', {
     getBenchmarkIndex: () => Promise.resolve(150),
     getDevicePixelRatio: () => Promise.resolve(2),
-    getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
+    getBrowserVersion: async () =>
+      ({userAgent: 'Chrome', product: 'Chrome/80.0.0.0', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
   await td.replaceEsm('../lib/emulation.js', {
@@ -302,24 +298,6 @@ async function importMock(modulePath, importMeta) {
 }
 
 /**
- * Same as importMock, but uses require instead to avoid
- * an unnecessary `.default` or Promise return value.
- *
- * @param {string} modulePath
- * @param {ImportMeta} importMeta
- * @return {Record<string, Mock<any>>}
- */
-function requireMock(modulePath, importMeta) {
-  const dir = path.dirname(url.fileURLToPath(importMeta.url));
-  modulePath = path.resolve(dir, modulePath);
-  const mock = require(modulePath);
-  if (!Object.keys(mock).some(key => mock[key]?.mock)) {
-    throw new Error(`${modulePath} was not mocked!`);
-  }
-  return mock;
-}
-
-/**
  * Return parsed json object.
  * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
  * Supports `.json.gz`
@@ -331,7 +309,7 @@ function requireMock(modulePath, importMeta) {
  * @param {ImportMeta=} importMeta
  */
 function readJson(filePath, importMeta) {
-  const dir = importMeta ? getModuleDirectory(importMeta) : LH_ROOT;
+  const dir = importMeta ? importMeta.dirname : LH_ROOT;
   filePath = path.resolve(dir, filePath);
   if (filePath.endsWith('.gz')) {
     return JSON.parse(gunzipSync(fs.readFileSync(filePath)).toString('utf-8'));
@@ -355,6 +333,5 @@ export {
   createScript,
   getURLArtifactFromDevtoolsLog,
   importMock,
-  requireMock,
   readJson,
 };

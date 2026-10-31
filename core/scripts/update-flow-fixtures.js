@@ -8,6 +8,7 @@
 
 import fs from 'fs';
 import assert from 'assert/strict';
+import {setTimeout} from 'timers/promises';
 
 import open from 'open';
 import waitForExpect from 'wait-for-expect';
@@ -64,7 +65,7 @@ async function waitForImagesToLoad(page) {
     assert.deepStrictEqual(completeImages, firstRunImages);
 
     // Next check we haven't added any new images in the quiet window.
-    await new Promise(r => setTimeout(r, QUIET_WINDOW));
+    await setTimeout(QUIET_WINDOW);
     const secondRunImages = await getImageLoadingStates();
     assert.deepStrictEqual(secondRunImages, firstRunImages);
   }, TIMEOUT);

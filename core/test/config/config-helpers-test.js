@@ -7,9 +7,10 @@
 import path from 'path';
 import {createRequire} from 'module';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {
+  bundledModules,
   deepClone,
   deepCloneConfigJson,
   resolveSettings,
@@ -22,18 +23,15 @@ import {
 } from '../../config/config-helpers.js';
 import {Runner} from '../../runner.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
-import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
-import UserTimingsAudit from '../../audits/user-timings.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {getModuleDirectory} from '../../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
-const originalCwd = process.cwd;
-after(() => {
-  process.cwd = originalCwd;
-});
+/** @type {typeof import('../../gather/gatherers/image-elements.js').default} */
+let ImageElementsGatherer;
+/** @type {typeof import('../../audits/user-timings.js').default} */
+let UserTimingsAudit;
 
 describe('.mergeConfigFragment', () => {
   it('should merge properties in like Object.assign', () => {
@@ -141,6 +139,10 @@ describe('.deepClone', () => {
 });
 
 describe('.deepCloneConfigJson', () => {
+  before(async () => {
+    ({default: UserTimingsAudit} = await import('../../audits/user-timings.js'));
+  });
+
   it('should clone a config deeply', () => {
     const TimingGatherer = new BaseGatherer();
     const input = {
@@ -202,7 +204,14 @@ describe('.mergePlugins', () => {
         'lighthouse-plugin-simple': {title: 'Simple'},
       },
       groups: {
-        'lighthouse-plugin-simple-new-group': {title: 'New Group'},
+        'lighthouse-plugin-simple-new-group': {title: expect.toBeDisplayString('New Group')},
+      },
+      locales: {
+        es: {
+          'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+            message: 'Nuevo grupo',
+          },
+        },
       },
     });
   });
@@ -236,6 +245,32 @@ describe('.mergePlugins', () => {
     const config = {audits: ['installable-manifest', 'metrics']};
     const flags = {plugins: ['lighthouse-plugin-no-category']};
     await expect(mergePlugins(config, configDir, flags)).rejects.toThrow(/no valid category/);
+  });
+
+  it('merge locales from plugins with config locales taking precedence', async () => {
+    /** @type {LH.Config} */
+    const config = {
+      audits: ['installable-manifest'],
+      plugins: ['lighthouse-plugin-simple'],
+      locales: {
+        es: {
+          'config.js | title': {message: 'Config traducida'},
+          'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+            message: 'Grupo desde la config',
+          },
+        },
+      },
+    };
+
+    const mergedConfig = await mergePlugins(config, configDir, {});
+    expect(mergedConfig.locales).toEqual({
+      es: {
+        'config.js | title': {message: 'Config traducida'},
+        'lighthouse-plugin-simple/plugin-simple.js | groupTitle': {
+          message: 'Grupo desde la config',
+        },
+      },
+    });
   });
 });
 
@@ -324,6 +359,10 @@ describe('.resolveSettings', () => {
 describe('.resolveGathererToDefn', () => {
   const coreList = Runner.getGathererList();
 
+  before(async () => {
+    ({default: ImageElementsGatherer} = await import('../../gather/gatherers/image-elements.js'));
+  });
+
   it('should expand core gatherer', async () => {
     const result = await resolveGathererToDefn('image-elements', coreList);
     expect(result).toEqual({
@@ -362,7 +401,14 @@ describe('.resolveGathererToDefn', () => {
 
     expect(result1).toMatchObject({path: '../fixtures/valid-custom-gatherer'});
     expect(result2).toMatchObject({path: '../fixtures/valid-custom-gatherer.js'});
-    expect(result3).toMatchObject({path: '../fixtures/valid-custom-gatherer.cjs'});
+    expect(result3).toMatchObject({
+      path: '../fixtures/valid-custom-gatherer.cjs',
+      implementation: expect.any(Function),
+      instance: expect.objectContaining({
+        meta: {supportedModes: ['navigation']},
+      }),
+    });
+    expect(result3.instance).toBeInstanceOf(result3.implementation);
   });
 
   it('should expand gatherer impl short-hand', async () => {
@@ -403,6 +449,10 @@ describe('.resolveGathererToDefn', () => {
 });
 
 describe('.resolveAuditsToDefns', () => {
+  before(async () => {
+    ({default: UserTimingsAudit} = await import('../../audits/user-timings.js'));
+  });
+
   it('should expand core audit', async () => {
     const result = await resolveAuditsToDefns(['user-timings']);
 
@@ -445,8 +495,13 @@ describe('.resolveAuditsToDefns', () => {
     expect(result).toMatchObject([
       {path: '../fixtures/valid-custom-audit', options: {}},
       {path: '../fixtures/valid-custom-audit.js', options: {}},
-      {path: '../fixtures/valid-custom-audit.cjs', options: {}},
+      {
+        path: '../fixtures/valid-custom-audit.cjs',
+        options: {},
+        implementation: expect.any(Function),
+      },
     ]);
+    expect(result?.[2].implementation.meta).toMatchObject({id: 'valid-audit'});
   });
 
   it('should handle multiple audit definition styles', async () => {
@@ -472,6 +527,17 @@ describe('.resolveAuditsToDefns', () => {
     await expect(resolveAuditsToDefns([new BaseGatherer()])).rejects.toThrow(/Invalid Audit type/);
   });
 
+  it('throws when audit is missing from bundledModules in bundled environment', async () => {
+    bundledModules.set('some-bundled-module', Promise.resolve({}));
+    try {
+      await expect(resolveAuditsToDefns(['user-timings'])).rejects.toThrow(
+        /Unable to locate module '\.\.\/audits\/user-timings' in bundled Lighthouse/
+      );
+    } finally {
+      bundledModules.clear();
+    }
+  });
+
   it('throws but not for missing audit when it has a node dependency error', async () => {
     const resultPromise = resolveAuditsToDefns([
       '../fixtures/invalid-audits/require-error.js',
@@ -482,9 +548,14 @@ describe('.resolveAuditsToDefns', () => {
 
 describe('.resolveModulePath', () => {
   const configFixturePath = path.resolve(moduleDir, '../fixtures/config');
+  const originalCwd = process.cwd;
 
   beforeEach(() => {
     process.cwd = jestMock.fn(() => configFixturePath);
+  });
+
+  afterEach(() => {
+    process.cwd = originalCwd;
   });
 
   it('lighthouse and plugins are installed in the same path', () => {

@@ -7,6 +7,7 @@ import * as path from 'node:path';
 import type * as Common from '../../../front_end/core/common/common.js';
 import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
+import {describe, it} from '../conductor/mocha-interface.js';
 import {getZoom, openDeviceToolbar, selectDevice, selectZoomLevel} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,
@@ -15,7 +16,7 @@ import {
   selectCategories,
   waitForResult,
 } from '../helpers/lighthouse-helpers.js';
-import type {DevToolsPage} from '../shared/frontend-helper.js';
+import type {DevToolsPage} from '../shared/DevToolsPage.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.

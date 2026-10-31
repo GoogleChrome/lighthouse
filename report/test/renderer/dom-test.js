@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import jsdom from 'jsdom';
 
 import {createQuietConsole} from './jsdom-setup.js';
@@ -223,6 +223,7 @@ describe('DOM', () => {
         'chrome://chrome-urls/',
       ].forEach(url => {
         const a = dom.createElement('a');
+        a.href = 'https://previous.com/';
         dom.safelySetHref(a, url);
 
         expect(a.href).toEqual('');
@@ -232,8 +233,10 @@ describe('DOM', () => {
 
     it('handles if url is undefined (because of proto roundtrip)', () => {
       const a = dom.createElement('a');
+      a.href = 'https://previous.com/';
       dom.safelySetHref(a, undefined);
       expect(a.href).toEqual('');
+      expect(a.getAttribute('href')).toEqual(null);
     });
   });
 
@@ -258,7 +261,38 @@ describe('DOM', () => {
         const a = dom.createElement('a');
         expect(() => {
           dom.safelySetBlobHref(a, blob);
-        }).toThrowError(/Unsupported blob/);
+        }).toThrow(/Unsupported blob/);
+      });
+    });
+  });
+
+  describe('safelySetImageSrc', () => {
+    it('sets src for safe image URLs', () => {
+      [
+        'https://safe.com/image.png',
+        'http://safe.com/image.jpg',
+        'data:image/jpeg;base64,foobar',
+        'data:image/svg+xml;utf8,<svg></svg>',
+      ].forEach(url => {
+        const img = dom.createElement('img');
+        dom.safelySetImageSrc(img, url);
+        expect(img.src).toEqual(url);
+      });
+    });
+
+    it('does not set src if destination is unsafe', () => {
+      [
+        'javascript:evil()',
+        'data:text/html;base64,abcdef',
+        'file:///etc/passwd',
+        'ftp://evil.com/img.png',
+        'chrome://favicon/',
+      ].forEach(url => {
+        const img = dom.createElement('img');
+        img.src = 'https://previous.com/img.png';
+        dom.safelySetImageSrc(img, url);
+        expect(img.src).toEqual('');
+        expect(img.getAttribute('src')).toEqual(null);
       });
     });
   });

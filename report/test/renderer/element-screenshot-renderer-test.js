@@ -69,7 +69,7 @@ describe('ElementScreenshotRenderer', () => {
 " 
 <div class=\\"lh-element-screenshot__content\\"> 
 <div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"> 
-<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(#clip-0);\\"> 
+<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(&quot;#clip-0&quot;);\\"> 
 <svg height=\\"0\\" width=\\"0\\"> <defs> 
 <clipPath clipPathUnits=\\"objectBoundingBox\\" id=\\"clip-0\\">
 <polygon points=\\"0,0             1,0            1,0.1          0,0.1\\"></polygon>
@@ -177,6 +177,37 @@ describe('ElementScreenshotRenderer', () => {
           top: 250,
         },
       });
+    });
+  });
+
+  describe('installFullPageScreenshot', () => {
+    it('sets --element-screenshot-url for valid data:image/ URLs', () => {
+      const el = dom.createElement('div');
+      ElementScreenshotRenderer.installFullPageScreenshot(el, {
+        data: 'data:image/jpeg;base64,foobar',
+        width: 100,
+        height: 100,
+      });
+      expect(el.style.getPropertyValue('--element-screenshot-url'))
+        .toBe(`url('data:image/jpeg;base64,foobar')`);
+    });
+
+    it('ignores non-data:image/ or CSS-breaking URLs', () => {
+      const invalidUrls = [
+        'https://example.com/image.jpg',
+        'javascript:alert(1)',
+        `data:image/jpeg;base64,foo'); background: url('https://evil.com`,
+        'data:image/jpeg;base64,foo\nbar',
+      ];
+      for (const data of invalidUrls) {
+        const el = dom.createElement('div');
+        ElementScreenshotRenderer.installFullPageScreenshot(el, {
+          data,
+          width: 100,
+          height: 100,
+        });
+        expect(el.style.getPropertyValue('--element-screenshot-url')).toBe('');
+      }
     });
   });
 });

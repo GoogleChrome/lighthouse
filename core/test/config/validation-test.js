@@ -15,21 +15,20 @@ import LinkElements from '../../gather/gatherers/link-elements.js';
 
 let ExampleAudit = class extends BaseAudit {};
 
-beforeEach(() => {
-  class ExampleAudit_ extends BaseAudit {
-    static meta = {
-      id: 'audit',
-      title: 'Title',
-      failureTitle: 'Title',
-      description: 'Audit',
-      requiredArtifacts: [],
-    };
-    static audit = BaseAudit.audit.bind(ExampleAudit_);
-  }
-  ExampleAudit = ExampleAudit_;
-});
-
 describe('Config Validation', () => {
+  beforeEach(() => {
+    class ExampleAudit_ extends BaseAudit {
+      static meta = {
+        id: 'audit',
+        title: 'Title',
+        failureTitle: 'Title',
+        description: 'Audit',
+        requiredArtifacts: [],
+      };
+      static audit = BaseAudit.audit.bind(ExampleAudit_);
+    }
+    ExampleAudit = ExampleAudit_;
+  });
   describe('isValidArtifactDependency', () => {
     /** @type {Array<{dependent: SupportedModes, dependency: SupportedModes, isValid: boolean}>} */
     const combinations = [
@@ -79,6 +78,11 @@ describe('Config Validation', () => {
       config.categories = {...defaultConfig.categories, 'lighthouse-plugin-test': category};
       const invocation = () => validation.assertValidPluginName(config, 'lighthouse-plugin-test');
       expect(invocation).toThrow(/not allowed because.*already found/);
+    });
+    it('should throw if plugin has invalid npm package name characters', () => {
+      const invocation = () =>
+        validation.assertValidPluginName(defaultConfig, 'lighthouse-plugin- invalid');
+      expect(invocation).toThrow(/has invalid npm package name characters/);
     });
   });
 
@@ -274,7 +278,10 @@ describe('Config Validation', () => {
     });
 
     it('should throw on mismatched formFactor to screenEmulation', () => {
-      const settings = {...defaultSettings};
+      const settings = {
+        ...defaultSettings,
+        screenEmulation: {...defaultSettings.screenEmulation},
+      };
 
       settings.screenEmulation.mobile = true;
       settings.formFactor = 'desktop';
@@ -286,7 +293,10 @@ describe('Config Validation', () => {
     });
 
     it('should not care about mismatched formFactor when screenEmulation is disabled', () => {
-      const settings = {...defaultSettings};
+      const settings = {
+        ...defaultSettings,
+        screenEmulation: {...defaultSettings.screenEmulation},
+      };
 
       settings.screenEmulation.disabled = true;
       settings.screenEmulation.mobile = true;

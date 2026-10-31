@@ -1,21 +1,110 @@
-import path from 'node:path';
-import {fileURLToPath} from 'node:url';
-
-import localRules from 'eslint-plugin-local-rules';
 import _import from 'eslint-plugin-import';
-import {fixupPluginRules} from '@eslint/compat';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import js from '@eslint/js';
-import {FlatCompat} from '@eslint/eslintrc';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+/**
+ * Rules inlined from `eslint-config-google` v0.14.0 (excluding `valid-jsdoc`
+ * and `require-jsdoc`, which were removed in ESLint v9).
+ * @type {import('eslint').Linter.RulesRecord}
+ */
+const googleRules = {
+  // Possible Errors
+  'no-cond-assign': 0,
+  'no-irregular-whitespace': 2,
+  'no-unexpected-multiline': 2,
+
+  // Best Practices
+  'curly': [2, 'multi-line'],
+  'guard-for-in': 2,
+  'no-caller': 2,
+  'no-extend-native': 2,
+  'no-extra-bind': 2,
+  'no-invalid-this': 2,
+  'no-multi-spaces': 2,
+  'no-multi-str': 2,
+  'no-new-wrappers': 2,
+  'no-throw-literal': 2,
+  'no-with': 2,
+  'prefer-promise-reject-errors': 2,
+
+  // Variables
+  'no-unused-vars': [2, {args: 'none'}],
+
+  // Stylistic Issues
+  'array-bracket-newline': 0,
+  'array-bracket-spacing': [2, 'never'],
+  'array-element-newline': 0,
+  'block-spacing': [2, 'never'],
+  'brace-style': 2,
+  'camelcase': [2, {properties: 'never'}],
+  'comma-dangle': [2, 'always-multiline'],
+  'comma-spacing': 2,
+  'comma-style': 2,
+  'computed-property-spacing': 2,
+  'eol-last': 2,
+  'func-call-spacing': 2,
+  'indent': [
+    2, 2, {
+      CallExpression: {arguments: 2},
+      FunctionDeclaration: {body: 1, parameters: 2},
+      FunctionExpression: {body: 1, parameters: 2},
+      MemberExpression: 2,
+      ObjectExpression: 1,
+      SwitchCase: 1,
+      ignoredNodes: ['ConditionalExpression'],
+    },
+  ],
+  'key-spacing': 2,
+  'keyword-spacing': 2,
+  'linebreak-style': 2,
+  'max-len': [2, {
+    code: 80,
+    tabWidth: 2,
+    ignoreUrls: true,
+    ignorePattern: 'goog\\.(module|require)',
+  }],
+  'new-cap': 2,
+  'no-array-constructor': 2,
+  'no-mixed-spaces-and-tabs': 2,
+  'no-multiple-empty-lines': [2, {max: 2}],
+  'no-new-object': 2,
+  'no-tabs': 2,
+  'no-trailing-spaces': 2,
+  'object-curly-spacing': 2,
+  'one-var': [2, {
+    var: 'never',
+    let: 'never',
+    const: 'never',
+  }],
+  'operator-linebreak': [2, 'after'],
+  'padded-blocks': [2, 'never'],
+  'quote-props': [2, 'consistent'],
+  'quotes': [2, 'single', {allowTemplateLiterals: true}],
+  'semi': 2,
+  'semi-spacing': 2,
+  'space-before-blocks': 2,
+  'space-before-function-paren': [2, {
+    asyncArrow: 'always',
+    anonymous: 'never',
+    named: 'never',
+  }],
+  'spaced-comment': [2, 'always'],
+  'switch-colon-spacing': 2,
+
+  // ECMAScript 6
+  'arrow-parens': [2, 'always'],
+  'constructor-super': 2,
+  'generator-star-spacing': [2, 'after'],
+  'no-new-symbol': 2,
+  'no-this-before-super': 2,
+  'no-var': 2,
+  'prefer-const': [2, {destructuring: 'all'}],
+  'prefer-rest-params': 2,
+  'prefer-spread': 2,
+  'rest-spread-spacing': 2,
+  'yield-star-spacing': [2, 'after'],
+};
 
 // See https://eslint.org/docs/latest/use/configure/configuration-files
 export default [{
@@ -43,10 +132,11 @@ export default [{
     'core/scripts/legacy-javascript/variants/**',
     'coverage/**',
   ],
-}, ...compat.extends('eslint:recommended', 'google'), {
+}, js.configs.recommended, {
+  rules: googleRules,
+}, {
   plugins: {
-    'local-rules': localRules,
-    'import': fixupPluginRules(_import),
+    'import': _import,
   },
 
   languageOptions: {
@@ -54,7 +144,7 @@ export default [{
       ...globals.node,
     },
 
-    parser: tsParser,
+    parser: tseslint.parser,
     ecmaVersion: 2020,
     sourceType: 'module',
 
@@ -152,9 +242,6 @@ export default [{
       },
     }],
 
-    'local-rules/require-file-extension': 2,
-    'require-jsdoc': 0,
-    'valid-jsdoc': 0,
     'arrow-parens': 0,
   },
 }, {

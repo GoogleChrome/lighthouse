@@ -5,6 +5,7 @@
  */
 
 import {EventEmitter} from 'events';
+import {setTimeout} from 'timers/promises';
 
 import {CdpCDPSession} from 'puppeteer-core/lib/puppeteer/cdp/CdpSession.js';
 
@@ -204,7 +205,7 @@ describe('TargetManager', () => {
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Network.enable')
         .mockResponse('Target.setAutoAttach', () => Promise.reject(fatalError));
-      await expect(targetManager.enable()).rejects.toThrowError(
+      await expect(targetManager.enable()).rejects.toThrow(
         'Protocol error (Target.setAutoAttach): Fatal error');
 
       // Should still attempt to resume target.
@@ -320,7 +321,7 @@ describe('TargetManager', () => {
       rootSession.emit('sessionattached', iframeSession);
 
       // Wait for iframe session to be attached.
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await setTimeout(0);
 
       const rootListener = fnAny();
       const iframeListener = fnAny();

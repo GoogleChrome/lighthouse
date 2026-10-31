@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {setTimeout} from 'timers/promises';
 
 import log from 'lighthouse-logger';
 
@@ -40,14 +41,10 @@ function checkOutputPath(path) {
  * @param {string} output
  * @return {Promise<void>}
  */
-function writeToStdout(output) {
-  return new Promise(resolve => {
-    // small delay to avoid race with debug() logs
-    setTimeout(_ => {
-      process.stdout.write(`${output}\n`);
-      resolve();
-    }, 50);
-  });
+async function writeToStdout(output) {
+  // small delay to avoid race with debug() logs
+  await setTimeout(50);
+  process.stdout.write(`${output}\n`);
 }
 
 /**

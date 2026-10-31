@@ -4,22 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fs from 'fs';
-import {MessageChannel} from 'worker_threads';
-
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import {JSDOM, VirtualConsole} from 'jsdom';
 import * as preact from 'preact';
-
-import {LH_ROOT} from '../../../shared/root.js';
-
-// These modules aren't imported correctly if these directories aren't defined to use ES modules.
-// Similar to this, which was resolved but their fix didn't work for us:
-// https://github.com/testing-library/preact-testing-library/issues/36#issuecomment-1136484478
-fs.writeFileSync(`${LH_ROOT}/node_modules/@testing-library/preact/dist/esm/package.json`,
-  '{"type": "module"}');
-fs.writeFileSync(`${LH_ROOT}/node_modules/@testing-library/preact-hooks/src/package.json`,
-  '{"type": "module"}');
 
 const rootHooks = {
   beforeAll() {
@@ -55,9 +42,6 @@ const rootHooks = {
     global.self.matchMedia = jestMock.fn<any>(() => ({
       addListener: jestMock.fn(),
     }));
-
-    // @ts-expect-error: for @testing-library/preact-hooks
-    global.MessageChannel = MessageChannel;
 
     // @ts-expect-error
     global.requestAnimationFrame = fn => fn();

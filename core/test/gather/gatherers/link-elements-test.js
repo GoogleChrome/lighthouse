@@ -4,24 +4,33 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 const mockMainResource = jestMock.fn();
-await td.replaceEsm('../../../computed/main-resource.js', {
-  MainResource: {request: mockMainResource},
-});
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 /** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
-const LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
-
-beforeEach(() => {
-  mockMainResource.mockReset();
-});
+/** @type {typeof import('../../../gather/gatherers/link-elements.js').default} */
+let LinkElements;
 
 describe('Link Elements gatherer', () => {
+  before(async () => {
+    await td.replaceEsm('../../../computed/main-resource.js', {
+      MainResource: {request: mockMainResource},
+    });
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
+  });
+
+  after(() => {
+    td.reset();
+  });
+
+  beforeEach(() => {
+    mockMainResource.mockReset();
+  });
   /**
    * @param {Partial<LH.Artifact.LinkElement>} overrides
    * @return {LH.Artifact.LinkElement}

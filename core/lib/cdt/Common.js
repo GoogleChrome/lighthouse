@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const ParsedURL = require('./generated/ParsedURL.js');
+import * as ParsedURL from './generated/ParsedURL.js';
 
-module.exports = {
+export {
   ParsedURL,
 };

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import {DragAndDrop} from '../app/src/drag-and-drop.js';
 import * as testHelpers from './test-helpers.js';
@@ -38,7 +38,7 @@ describe('DragAndDrop', () => {
     new DragAndDrop(mockCallback);
 
     document.dispatchEvent(new window.CustomEvent('drop'));
-    expect(mockCallback).not.toBeCalled();
+    expect(mockCallback).not.toHaveBeenCalled();
   });
 
   it('document responds to dragover event with file', () => {

@@ -183,6 +183,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         // Add link to score calculator.
         const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
         calculatorLink.target = '_blank';
+        calculatorLink.rel = 'noopener';
         calculatorLink.textContent = strings.calculatorLink;
         this.dom.safelySetHref(calculatorLink, this._getScoringCalculatorHref(category.auditRefs));
       }
@@ -226,7 +227,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {Element|null}
    */
   renderFilterableSection(category, groups, groupNames, metricAudits) {
-    if (groupNames.some(groupName => !groups[groupName])) return null;
+    groupNames = groupNames.filter(groupName => Boolean(groups[groupName]));
+    if (!groupNames.length) return null;
 
     const element = this.dom.createElement('div');
 

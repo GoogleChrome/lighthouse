@@ -8,7 +8,6 @@ import fs from 'fs';
 
 import IntlMessageFormat from 'intl-messageformat';
 
-import {getModuleDirectory} from '../esm-utils.js';
 import {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} from '../type-verifiers.js';
 import {locales} from './locales.js';
 
@@ -25,7 +24,7 @@ const TYPE = /** @type {const} */ ({
   tag: 8,
 });
 
-const moduleDir = getModuleDirectory(import.meta);
+const moduleDir = import.meta.dirname;
 
 /** Contains available locales with messages. May be an empty object if bundled. */
 const LOCALE_MESSAGES = locales;
@@ -467,7 +466,10 @@ function getAvailableLocales() {
  * @param {import('./locales').LhlMessages} lhlMessages
  */
 function registerLocaleData(locale, lhlMessages) {
-  LOCALE_MESSAGES[locale] = lhlMessages;
+  LOCALE_MESSAGES[locale] = {
+    ...LOCALE_MESSAGES[locale],
+    ...lhlMessages,
+  };
 }
 
 /**

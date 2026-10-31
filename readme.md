@@ -106,10 +106,14 @@ Configuration:
   --only-categories              Only run the specified categories. Available categories: accessibility, best-practices, performance, seo  [array]
   --skip-audits                  Run everything except these audits  [array]
   --disable-full-page-screenshot Disables collection of the full page screenshot, which can be quite large  [boolean]
+  --ignore-status-code           Disables failing on all error status codes, and instead issues a warning.  [boolean]
+  --url-file                     The path to a file containing newline-delimited URLs to audit.  [string]
+  --fail-fast                    Stop auditing remaining URLs immediately if a run fails.  [boolean]
 
 Output:
   --output       Reporter for the results, supports multiple values. choices: "json", "html", "csv"  [array] [default: ["html"]]
-  --output-path  The file path to output the results. Use 'stdout' to write to stdout.
+  --output-path  The file or directory path to output the results. Use 'stdout' to write to stdout.
+                   Directories in the path must already exist. If a directory is specified, the file name will be based on the test URL and date.
                    If using JSON output, default is stdout.
                    If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
                    If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.
@@ -177,6 +181,12 @@ lighthouse --output-path=~/mydir/foo.out --save-assets
 
 lighthouse --output-path=./report.json --output json
 # saves `./report.json`
+
+lighthouse https://example.com https://example.org
+# audits multiple URLs sequentially and saves `./<HOST>_<DATE>.report.html` for each
+
+lighthouse --url-file=./urls.txt --output-path=./reports
+# audits all URLs in `./urls.txt` and saves reports into the existing `./reports` directory
 ```
 
 ##### Lifecycle Examples
@@ -394,32 +404,17 @@ This section details services that have integrated Lighthouse data. If you're wo
 Other awesome open source projects that use Lighthouse.
 
 * **[auto-lighthouse](https://github.com/TGiles/auto-lighthouse)** - a CLI for crawling a domain and generating mobile and desktop reports for each page.
-* **[Exthouse](https://github.com/treosh/exthouse)** - Analyze the impact of a browser extension on web performance.
-* **[Gimbal](https://labs.moduscreate.com/gimbal-web-performance-audit-budgeting)** - An [open source (MIT licensed)](https://github.com/ModusCreateOrg/gimbal) tool used to measure, analyze, and budget aspects of a web application. Gimbal also integrates reports with GitHub pull requests.
-* **[Gradle Lighthouse Plugin](https://github.com/Cognifide/gradle-lighthouse-plugin)** - An open source Gradle plugin that runs Lighthouse tests on multiple URLs and asserts category score thresholds (useful in continuous integration).
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
-* **[lighthouse-batch](https://github.com/mikestead/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
-* **[lighthouse-batch-parallel](https://github.com/Carr1005/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
 * **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A GitHub Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
-* **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
 * **[GoogleChrome/lighthouse-ci](https://github.com/GoogleChrome/lighthouse-ci)** - (**official**) Automate running Lighthouse for every commit, viewing the changes, and preventing regressions.
 * **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A GitHub Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
-* **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
-* **[lighthouse-jest-example](https://github.com/justinribeiro/lighthouse-jest-example)** - Gather performance metrics via Lighthouse and assert results with Jest; uses Puppeteer to start Chrome with network emulation settings defined by WebPageTest.
-* **[lighthouse-lambda](https://github.com/Otterseer/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
 * **[lighthouse-matchers](https://github.com/ackama/lighthouse-matchers)** - Provides RSpec matchers for executing and evaluating Google Chrome Lighthouse audit scores.
-* **[lighthouse-mocha-example](https://github.com/rishichawda/lighthouse-mocha-example)** - Run Lighthouse performance tests with Mocha and chrome-launcher.
-* **[lighthouse-monitor](https://github.com/verivox/lighthouse-monitor)** - Run Lighthouse against all your URLs. Send metrics to any backend you want, save all reports with automatic data retention, and compare any two results in a web UI.
 * **[lighthouse-persist](https://github.com/foo-software/lighthouse-persist)** - Run Lighthouse and upload HTML reports to an AWS S3 bucket.
 * **[lighthouse-viewer](https://github.com/dvelasquez/lighthouse-viewer/tree/main/packages/lighthouse-viewer)** - Render the Lighthouse JSON into a report, using the Lighthouse Report Renderer repackaged as UMD and ESM. Also available with React, Svelte and Vue wrappers.
-* **[lighthouse4u](https://github.com/godaddy/lighthouse4u)** - LH4U provides Google Lighthouse as a service, surfaced by both a friendly UI+API, and backed by Elastic Search for easy querying and visualization.
-* **[react-lighthouse-viewer](https://www.npmjs.com/package/react-lighthouse-viewer)** - Render a Lighthouse JSON report in a React Component.
+* **[react-lighthouse-viewer](https://github.com/blencorp/react-lighthouse-viewer)** - Render a Lighthouse JSON report in a React Component.
 * **[site-audit-seo](https://github.com/viasite/site-audit-seo)** - CLI tool for SEO site audit, crawl site, lighthouse each page. Output to console and tables in csv, xlsx, json, web or Google Drive.
-* **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
-* **[cypress-audit](https://github.com/mfrachet/cypress-audit)** - Run Lighthouse and Pa11y audits directly in your E2E test suites.
-* **[laravel-lighthouse](https://github.com/adityadees/laravel-lighthouse)** - Google Lighthouse wrapper for laravel framework to run Google Lighthouse CLI with custom option and can automatically save result in your server directory.
-* **[Neodymium](https://github.com/Xceptance/neodymium/wiki/Accessibility)** - The Neodymium test automation framework integrates Lighthouse for accessibility and Web Vitals verification, allowing programmatic validation and assertion of all audit values.
+* **[Neodymium](https://docs.xceptance.com/neodymium/features/accessibility/)** - The Neodymium test automation framework integrates Lighthouse for accessibility and Web Vitals verification, allowing programmatic validation and assertion of all audit values.
 
 ## FAQ
 

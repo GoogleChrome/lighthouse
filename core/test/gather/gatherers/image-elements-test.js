@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 
 import ImageElements from '../../../gather/gatherers/image-elements.js';
 import {createMockContext, createMockDriver, createMockSession} from
@@ -282,6 +282,27 @@ describe('ImageElements', () => {
       expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(2);
     });
 
+    it('skips source rules when width and height attributes are explicitly set', async () => {
+      const elements = [
+        mockElement({
+          isInShadowDOM: false,
+          isCss: false,
+          attributeWidth: '200',
+          attributeHeight: '100',
+        }),
+        mockElement({
+          isInShadowDOM: false,
+          isCss: false,
+          attributeWidth: '200',
+          attributeHeight: '',
+        }),
+      ];
+
+      await gatherer.collectExtraDetails(driver, elements);
+
+      expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(1);
+    });
+
     it('fetch size information for image with picture', async () => {
       const elements = [
         mockElement({src: 'https://example.com/a.png', isPicture: false, isCss: true, srcset: 'src'}),
@@ -326,5 +347,47 @@ describe('ImageElements', () => {
         },
       }),
     ]);
+  });
+
+  it('skips DOM and CSS domain enable when no images need source rules', async () => {
+    const gatherer = new ImageElements();
+    const mockContext = createMockContext();
+    const sizedElement = mockElement({attributeWidth: '200', attributeHeight: '200'});
+    mockContext.driver._executionContext.evaluate.mockReturnValue([sizedElement]);
+
+    const artifact = await gatherer.getArtifact({
+      ...mockContext.asContext(),
+      dependencies: {DevtoolsLog: devtoolsLog},
+    });
+
+    expect(mockContext.driver.defaultSession.sendCommand).not.toHaveBeenCalled();
+    expect(artifact).toEqual([sizedElement]);
+  });
+
+  describe('html attribute sized check', () => {
+    it('fails if it is empty', () => {
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('')).toEqual(false);
+    });
+
+    it('handles non-numeric edgecases', () => {
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('zero')).toEqual(false);
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('1002$')).toEqual(true); // interpretted as 1002
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('s-5')).toEqual(false);
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('3,000')).toEqual(true); // interpretted as 3
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('100.0')).toEqual(true); // interpretted as 100
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('2/3')).toEqual(true); // interpretted as 2
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('-2020')).toEqual(false);
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('+2020')).toEqual(false); // see doesHtmlAttrProvideExplicitSize comments about positive-sign
+    });
+
+    it('passes on zero input', () => {
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('0')).toEqual(true);
+    });
+
+    it('passes on non-zero non-negative integer input', () => {
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('1')).toEqual(true);
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('250')).toEqual(true);
+      expect(ImageElements.doesHtmlAttrProvideExplicitSize('4000000')).toEqual(true);
+    });
   });
 });

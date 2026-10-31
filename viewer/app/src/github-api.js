@@ -8,7 +8,7 @@
 
 /** @typedef {{etag: ?string, content: LH.Result}} CachableGist */
 
-import idbKeyval from 'idb-keyval';
+import * as idbKeyval from 'idb-keyval';
 
 import {FirebaseAuth} from './firebase-auth.js';
 import {getLhrFilenamePrefix, getFlowResultFilenamePrefix} from '../../../report/generator/file-namer.js';
@@ -92,6 +92,10 @@ export class GithubApi {
    * @return {Promise<LH.Result>}
    */
   getGistFileContentAsJson(id) {
+    if (typeof id !== 'string' || !/^[a-f0-9]+$/i.test(id)) {
+      return Promise.reject(new Error('Invalid gist ID'));
+    }
+
     logger.log('Fetching report from GitHub...', false);
 
     return this._auth.getAccessTokenIfLoggedIn().then(accessToken => {
@@ -124,7 +128,7 @@ export class GithubApi {
               return Promise.resolve(cachedGist);
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
-              idbKeyval.delete(id); // Note: async.
+              idbKeyval.del(id); // Note: async.
             } else if (resp.status === 401 && accessToken) {
               this._auth.signOut();
             }

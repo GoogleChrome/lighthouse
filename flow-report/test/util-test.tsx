@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
-import {render} from '@testing-library/preact';
-import {renderHook} from '@testing-library/preact-hooks/src/index';
+import * as jestMock from 'jest-mock';
+import {render, renderHook, waitFor} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
 
@@ -58,14 +57,15 @@ describe('useHashState', () => {
     await act(() => {
       global.location.hash = '#index=2&anchor=seo';
     });
-    await render.waitForNextUpdate();
+    await waitFor(() => {
+      expect(render.result.current).toEqual({
+        index: 2,
+        currentLhr: flowResult.steps[2].lhr,
+        anchor: 'seo',
+      });
+    });
 
     expect(console.warn).not.toHaveBeenCalled();
-    expect(render.result.current).toEqual({
-      index: 2,
-      currentLhr: flowResult.steps[2].lhr,
-      anchor: 'seo',
-    });
   });
 
   it('return null if lhr index is unset', () => {

@@ -169,7 +169,7 @@ export class DOM {
    * Set link href, but safely, preventing `javascript:` protocol, etc.
    * @see https://github.com/google/safevalues/
    * @param {HTMLAnchorElement} elem
-   * @param {string} url
+   * @param {string|undefined} url
    */
   safelySetHref(elem, url) {
     // Defaults to '' to fix proto roundtrip issue. See https://github.com/GoogleChrome/lighthouse/issues/12868
@@ -189,6 +189,8 @@ export class DOM {
 
     if (parsed && allowedProtocols.includes(parsed.protocol)) {
       elem.href = parsed.href;
+    } else {
+      elem.removeAttribute('href');
     }
   }
 
@@ -203,6 +205,32 @@ export class DOM {
     }
     const href = URL.createObjectURL(blob);
     elem.href = href;
+  }
+
+  /**
+   * Set img src, but safely, only allowing `https:`, `http:`, and `data:image/`.
+   * @param {HTMLImageElement} elem
+   * @param {string} url
+   */
+  safelySetImageSrc(elem, url) {
+    url = url || '';
+
+    if (url.startsWith('data:image/')) {
+      elem.src = url;
+      return;
+    }
+
+    const allowedProtocols = ['https:', 'http:'];
+    let parsed;
+    try {
+      parsed = new URL(url);
+    } catch (_) {}
+
+    if (parsed && allowedProtocols.includes(parsed.protocol)) {
+      elem.src = parsed.href;
+    } else {
+      elem.removeAttribute('src');
+    }
   }
 
   /**

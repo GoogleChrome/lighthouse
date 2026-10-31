@@ -24,6 +24,7 @@
 import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
+import {setTimeout as sleep} from 'timers/promises';
 
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
@@ -111,7 +112,7 @@ async function waitForFunction(session, fn, deps) {
         console.error(err);
         console.error('Retrying...');
       }
-      await new Promise(r => setTimeout(r, 500));
+      await sleep(500);
     } finally {
       ++iterations;
     }
@@ -172,16 +173,10 @@ async function waitForLighthouseReady() {
 
   const targetManager = TargetManager.TargetManager.instance();
   if (targetManager.primaryPageTarget() === null) {
-    if (targetManager?.observeTargets) {
-      await new Promise(resolve => targetManager.observeTargets({
-        targetAdded: resolve,
-        targetRemoved: () => {},
-      }));
-    } else {
-      while (targetManager.primaryPageTarget() === null) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-    }
+    await new Promise(resolve => targetManager.observeTargets({
+      targetAdded: resolve,
+      targetRemoved: () => {},
+    }));
   }
 
   // Ensure the emulation model is ready before Lighthouse starts by enabling device emulation.

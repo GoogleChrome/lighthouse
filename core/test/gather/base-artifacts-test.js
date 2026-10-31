@@ -4,10 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as jestMock from 'jest-mock';
+
 import {getBaseArtifacts, finalizeArtifacts} from '../../gather/base-artifacts.js';
 import {initializeConfig} from '../../config/config.js';
 import {createMockDriver} from './mock-driver.js';
 import {LighthouseError} from '../../lib/lh-error.js';
+import {Sentry} from '../../lib/sentry.js';
 
 function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
@@ -46,6 +49,14 @@ describe('getBaseArtifacts', () => {
     const {resolvedConfig} = await initializeConfig('navigation');
     const artifacts = await getBaseArtifacts(resolvedConfig, driverMock.asDriver(), {gatherMode});
     expect(artifacts.settings).toEqual(resolvedConfig.settings);
+  });
+
+  it('should set browser context on Sentry', async () => {
+    const spy = jestMock.spyOn(Sentry, 'setContext');
+    const {resolvedConfig} = await initializeConfig('navigation');
+    await getBaseArtifacts(resolvedConfig, driverMock.asDriver(), {gatherMode});
+    expect(spy).toHaveBeenCalledWith('browser', {name: 'Chrome', version: '92.0.4515.159'});
+    spy.mockRestore();
   });
 });
 
@@ -122,7 +133,7 @@ describe('finalizeArtifacts', () => {
     expect(run).not.toThrow();
 
     baseArtifacts.URL = {finalDisplayedUrl: ''};
-    expect(run).toThrowError(/finalDisplayedUrl/);
+    expect(run).toThrow(/finalDisplayedUrl/);
   });
 
   it('should not throw if URL was not set for an error reason', () => {

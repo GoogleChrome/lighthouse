@@ -64,7 +64,7 @@ describe('PerfCategoryRenderer', () => {
     const value = categoryDOM.querySelector('.lh-category-header .lh-exp-gauge__percentage');
     const title = score.querySelector('.lh-exp-gauge__label');
 
-    assert.deepEqual(score, score.firstElementChild, 'first child is a score');
+    assert.equal(score, categoryDOM.firstElementChild, 'first child is a score');
     const scoreInDom = Number(value.textContent);
     assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'category score is rounded');
     assert.equal(title.textContent, category.title, 'title is set');
@@ -149,6 +149,8 @@ describe('PerfCategoryRenderer', () => {
     assert.strictEqual(disclamerUrl.hostname, 'developer.chrome.com');
     const calcLink = disclaimerEl.querySelector('a.lh-calclink');
     assert.ok(calcLink, 'disclaimer contains scorecalc link');
+    assert.strictEqual(calcLink.target, '_blank');
+    assert.strictEqual(calcLink.rel, 'noopener');
     assert.strictEqual(new URL(calcLink.href).hostname, 'googlechrome.github.io');
   });
 
@@ -219,6 +221,34 @@ describe('PerfCategoryRenderer', () => {
       ReportUtils.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedInsights.length + passedDiagnostics.length);
+  });
+
+  it('renders diagnostics when insights group is missing (pre-12.6 reports)', () => {
+    const groupsWithoutInsights = JSON.parse(JSON.stringify(sampleResults.categoryGroups));
+    delete groupsWithoutInsights.insights;
+
+    const categoryDOM = renderer.render(category, groupsWithoutInsights);
+    const insightSection = categoryDOM.querySelector(
+      '.lh-category .lh-audit-group.lh-audit-group--insights');
+    assert.equal(insightSection, null);
+
+    const diagnosticSection = categoryDOM.querySelector(
+      '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
+    const diagnosticAuditIds = category.auditRefs.filter(audit => {
+      return audit.group === 'diagnostics' &&
+        !ReportUtils.showAsPassed(audit.result);
+    }).map(audit => audit.id).sort();
+    assert.ok(diagnosticAuditIds.length > 0);
+    const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')]
+      .map(el => el.id).sort();
+    assert.deepStrictEqual(diagnosticElementIds, diagnosticAuditIds);
+
+    const passedSection = categoryDOM.querySelector('.lh-perf-audits .lh-clump--passed');
+    const passedDiagnostics = category.auditRefs.filter(audit =>
+      audit.group === 'diagnostics' &&
+      ReportUtils.showAsPassed(audit.result));
+    const passedElements = passedSection.querySelectorAll('.lh-audit');
+    assert.equal(passedElements.length, passedDiagnostics.length);
   });
 
   // Unsupported by perf cat renderer right now.
@@ -446,24 +476,29 @@ Array [
       ...metricAudits];
 
       const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
+      renderer.dom.document().body.append(categoryDOM);
 
-      const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
-      let diagnosticElements = [...diagnosticSection.querySelectorAll('.lh-audit')];
-      expect(diagnosticElements.map(el => el.id)).toEqual(['audit-3', 'audit-1', 'audit-4', 'audit-2']); // eslint-disable-line max-len
+      try {
+        const diagnosticSection = categoryDOM.querySelector(
+          '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
+        let diagnosticElements = [...diagnosticSection.querySelectorAll('.lh-audit')];
+        expect(diagnosticElements.map(el => el.id)).toEqual(['audit-3', 'audit-1', 'audit-4', 'audit-2']); // eslint-disable-line max-len
 
-      let hiddenElements = [...diagnosticSection.querySelectorAll('.lh-audit[hidden]')];
-      expect(hiddenElements).toHaveLength(0);
+        let hiddenElements = [...diagnosticSection.querySelectorAll('.lh-audit[hidden]')];
+        expect(hiddenElements).toHaveLength(0);
 
-      const fcpFilterButton =
-        categoryDOM.querySelector('.lh-metricfilter__label[title="First Contentful Paint"]');
-      fcpFilterButton.click();
+        const fcpFilterButton =
+          categoryDOM.querySelector('.lh-metricfilter__label[title="First Contentful Paint"]');
+        fcpFilterButton.click();
 
-      diagnosticElements = [...diagnosticSection.querySelectorAll('.lh-audit')];
-      expect(diagnosticElements.map(el => el.id)).toEqual(['audit-3', 'audit-4', 'audit-1', 'audit-2']); // eslint-disable-line max-len
+        diagnosticElements = [...diagnosticSection.querySelectorAll('.lh-audit')];
+        expect(diagnosticElements.map(el => el.id)).toEqual(['audit-3', 'audit-4', 'audit-1', 'audit-2']); // eslint-disable-line max-len
 
-      hiddenElements = [...diagnosticSection.querySelectorAll('.lh-audit[hidden]')];
-      expect(hiddenElements.map(el => el.id)).toEqual(['audit-2']);
+        hiddenElements = [...diagnosticSection.querySelectorAll('.lh-audit[hidden]')];
+        expect(hiddenElements.map(el => el.id)).toEqual(['audit-2']);
+      } finally {
+        categoryDOM.remove();
+      }
     });
 
     it('audits sorted with guidance level', () => {

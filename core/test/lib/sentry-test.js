@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
+import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {Sentry} from '../../lib/sentry.js';
@@ -18,6 +18,7 @@ describe('Sentry', () => {
   beforeEach(async () => {
     await td.replaceEsm('@sentry/node', (sentryNodeMock = {
       init: jestMock.fn().mockReturnValue({install: jestMock.fn()}),
+      setContext: jestMock.fn(),
       setExtras: jestMock.fn(),
       setTags: jestMock.fn(),
       captureException: jestMock.fn(),
@@ -44,6 +45,7 @@ describe('Sentry', () => {
   afterEach(() => {
     // Reset the methods on the Sentry object, see note above.
     Object.assign(Sentry, originalSentry);
+    td.reset();
   });
 
   describe('.init', () => {
@@ -86,6 +88,12 @@ describe('Sentry', () => {
         channel: 'test',
         formFactor: 'mobile',
         throttlingMethod: 'devtools',
+      });
+
+      Sentry.setContext('browser', {name: 'Chrome', version: '147.0.7727.116'});
+      expect(sentryNodeMock.setContext).toHaveBeenCalledWith('browser', {
+        name: 'Chrome',
+        version: '147.0.7727.116',
       });
     });
   });

@@ -7,6 +7,7 @@
 import log from 'lighthouse-logger';
 
 import * as i18n from '../lib/i18n/i18n.js';
+import * as Lantern from '../lib/lantern/lantern.js';
 import * as TraceEngine from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {CumulativeLayoutShift} from './metrics/cumulative-layout-shift.js';
@@ -26,7 +27,9 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(_traceEvents, settings, SourceMaps, HostDPR) {
-    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
+    const config = TraceEngine.Types.Configuration.defaults();
+    config.enableSoftNavigation = false;
+    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers, config);
     const traceEvents =
       /** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (_traceEvents);
 
@@ -66,8 +69,20 @@ class TraceEngineResult {
     });
     if (!processor.data) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
-    this.localizeInsights(processor.insights);
-    return {data: processor.data, insights: processor.insights};
+    const data = processor.data;
+    const insights = processor.insights;
+    this.localizeInsights(insights);
+
+    // Release intermediate handler state retained in module-level TraceHandlers singletons
+    // and static Lantern simulation node timings after trace processing completes.
+    for (const handler of Object.values(TraceEngine.TraceHandlers)) {
+      handler.reset();
+    }
+    if (!process.env.LANTERN_DEBUG) {
+      Lantern.Simulation.Simulator.allNodeTimings.clear();
+    }
+
+    return {data, insights};
   }
 
   /**
@@ -236,8 +251,9 @@ class TraceEngineResult {
     const layoutShiftEvents = new Set(
       CumulativeLayoutShift.getLayoutShiftEvents(processedTrace).map(e => e.event));
 
-    // Avoid modifying the input array.
-    const traceEvents = [...data.trace.traceEvents];
+    // Avoid modifying the input array, copying only if an event is modified.
+    let traceEvents = data.trace.traceEvents;
+    let copied = false;
     for (let i = 0; i < traceEvents.length; i++) {
       let event = traceEvents[i];
       if (event.name !== 'LayoutShift') continue;
@@ -245,6 +261,10 @@ class TraceEngineResult {
 
       const isConsidered = layoutShiftEvents.has(event);
       if (event.args.data.had_recent_input && isConsidered) {
+        if (!copied) {
+          traceEvents = [...traceEvents];
+          copied = true;
+        }
         event = JSON.parse(JSON.stringify(event));
         // @ts-expect-error impossible for data to be missing.
         event.args.data.had_recent_input = false;

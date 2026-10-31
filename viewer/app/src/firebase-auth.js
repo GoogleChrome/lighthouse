@@ -6,7 +6,7 @@
 
 import {initializeApp} from 'firebase/app';
 import {getAuth, signInWithPopup, GithubAuthProvider, signOut} from 'firebase/auth';
-import idbKeyval from 'idb-keyval';
+import * as idbKeyval from 'idb-keyval';
 
 /**
  * Wrapper for Firebase authentication.
@@ -85,7 +85,7 @@ export class FirebaseAuth {
    */
   async signOut() {
     this._accessToken = null;
-    await idbKeyval.delete('accessToken');
+    await idbKeyval.del('accessToken');
     await signOut(this._auth);
   }
 }

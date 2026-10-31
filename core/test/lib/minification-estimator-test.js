@@ -6,14 +6,13 @@
 
 import fs from 'fs';
 import assert from 'assert/strict';
-import {createRequire} from 'module';
 
 import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js';
 import {LH_ROOT} from '../../../shared/root.js';
 
-const require = createRequire(import.meta.url);
-
-const angularJs = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
+const zoneFilename =
+  `${LH_ROOT}/cli/test/fixtures/dobetterweb/third_party/aggressive-promise-polyfill.js`;
+const zoneJs = fs.readFileSync(zoneFilename, 'utf8');
 const courseheroFilename =
   `${LH_ROOT}/core/test/fixtures/source-maps/coursehero-bundle-2.js`;
 const courseheroJs = fs.readFileSync(courseheroFilename, 'utf8');
@@ -228,10 +227,10 @@ describe('minification estimator', () => {
     });
 
     it('should handle large, real, unminified javscript files', () => {
-      assert.equal(angularJs.length, 1374505);
-      const minificationPct = 1 - computeJSTokenLength(angularJs) / angularJs.length;
-      // Unminified source script. estimated 75.3% smaller minified
-      expect(minificationPct).toBeCloseTo(0.753);
+      assert.equal(zoneJs.length, 166320);
+      const minificationPct = 1 - computeJSTokenLength(zoneJs) / zoneJs.length;
+      // Unminified source script. estimated 50.2% smaller minified
+      expect(minificationPct).toBeCloseTo(0.502);
     });
 
     it('should handle large, real, already-minified javscript files', () => {

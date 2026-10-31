@@ -64,10 +64,12 @@ class WebMcpFormCoverage extends Audit {
       }
     }
 
+    // Every form is annotated, so surface this as a pass rather than hiding it as
+    // "not applicable".
     if (withoutTools.length === 0) {
       return {
-        notApplicable: true,
         score: 1,
+        scoreDisplayMode: Audit.SCORING_MODES.BINARY,
       };
     }
 

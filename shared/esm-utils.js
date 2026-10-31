@@ -5,8 +5,6 @@
  */
 
 import {createRequire} from 'module';
-import url from 'url';
-import path from 'path';
 
 /**
  * Commonjs equivalent of `require.resolve`.
@@ -17,22 +15,6 @@ function resolveModulePath(packageName) {
   return require.resolve(packageName);
 }
 
-/**
- * @param {ImportMeta} importMeta
- */
-function getModulePath(importMeta) {
-  return url.fileURLToPath(importMeta.url);
-}
-
-/**
- * @param {ImportMeta} importMeta
- */
-function getModuleDirectory(importMeta) {
-  return path.dirname(getModulePath(importMeta));
-}
-
 export {
   resolveModulePath,
-  getModulePath,
-  getModuleDirectory,
 };

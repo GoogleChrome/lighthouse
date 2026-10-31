@@ -72,7 +72,7 @@ describe('Deprecations audit', () => {
     assert.equal(auditResult.details.items[0].value, 'Deprecation message 123');
     assert.equal(auditResult.details.items[0].source.url, URL);
     assert.equal(auditResult.details.items[0].source.line, 123);
-    assert.equal(auditResult.details.items[0].source.column, 99);
+    assert.equal(auditResult.details.items[0].source.column, 100);
     assert.equal(auditResult.details.items[1].value, 'Deprecation message 456');
     expect(auditResult.details.items[2].value).toEqual('EventPath');
     expect(auditResult.details.items[2].subItems).toEqual(undefined);

@@ -17,4 +17,4 @@ ARGS=(
 )
 
 cd "$LH_ROOT"
-node --loader=@esbuild-kit/esm-loader core/test/scripts/run-mocha-tests.js ${ARGS[*]} "$@"
+node --import=tsx/esm core/test/scripts/run-mocha-tests.js ${ARGS[*]} "$@"

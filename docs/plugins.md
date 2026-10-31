@@ -61,10 +61,10 @@ A Lighthouse plugin is just a node module with a name that starts with `lighthou
   "type": "module",
   "main": "plugin.js",
   "peerDependencies": {
-    "lighthouse": "^13.4.1"
+    "lighthouse": "^13.6.0"
   },
   "devDependencies": {
-    "lighthouse": "^13.4.1"
+    "lighthouse": "^13.6.0"
   }
 }
 ```
@@ -183,6 +183,69 @@ It is an object whose keys are the group IDs and whose values are objects with t
 **Example of Category _without_ Groups**
 
 <img alt="audit group without groups" src="https://user-images.githubusercontent.com/2301202/56936043-c0a4d500-6aba-11e9-9e37-0bc131010a37.png" width=550>
+
+#### `locales`
+
+Defines localized message dictionaries for the plugin's category, groups, and audits. Strings created with `i18n.createIcuMessageFn(id, UIStrings)` are keyed by `<id> | <key>`:
+
+**`plugin.js`**
+```js
+import {i18n} from 'lighthouse';
+
+const UIStrings = {
+  categoryTitle: 'Cats',
+};
+const str_ = i18n.createIcuMessageFn('lighthouse-plugin-example/plugin.js', UIStrings);
+
+export default {
+  audits: [{path: 'lighthouse-plugin-example/audits/has-cat-images.js'}],
+  category: {
+    title: str_(UIStrings.categoryTitle),
+    auditRefs: [{id: 'has-cat-images-id', weight: 1}],
+  },
+  locales: {
+    es: {
+      'lighthouse-plugin-example/plugin.js | categoryTitle': {
+        message: 'Gatos',
+      },
+      'lighthouse-plugin-example/audits/has-cat-images.js | title': {
+        message: 'La página tiene al menos una imagen de un gato',
+      },
+      'lighthouse-plugin-example/audits/has-cat-images.js | failureTitle': {
+        message: 'La página no tiene al menos una imagen de un gato',
+      },
+    },
+  },
+};
+```
+
+**`audits/has-cat-images.js`**
+```js
+import {Audit, i18n} from 'lighthouse';
+
+const UIStrings = {
+  title: 'Page has at least one cat image',
+  failureTitle: 'Page does not have at least one cat image',
+  description: 'Pages should have lots of cat images to keep users happy.',
+};
+const str_ = i18n.createIcuMessageFn(
+  'lighthouse-plugin-example/audits/has-cat-images.js',
+  UIStrings
+);
+
+class CatAudit extends Audit {
+  static get meta() {
+    return {
+      id: 'has-cat-images-id',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
+      requiredArtifacts: ['ImageElements'],
+    };
+  }
+  // ...
+}
+```
 
 ### Plugin Audits
 

@@ -14,11 +14,6 @@ describe('Metrics: LCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute predicted value', async () => {
-    // TODO(15841): investigate difference.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
@@ -31,9 +26,9 @@ describe('Metrics: LCP', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 1445,
-  "pessimistic": 1603,
-  "timing": 1524,
+  "optimistic": 1059,
+  "pessimistic": 1059,
+  "timing": 1059,
 }
 `);
   });

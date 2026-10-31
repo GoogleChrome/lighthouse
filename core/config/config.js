@@ -28,11 +28,10 @@ import {
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } from './config-helpers.js';
-import {getModuleDirectory} from '../../shared/esm-utils.js';
 import * as format from '../../shared/localization/format.js';
 
 const defaultConfigPath = path.join(
-  getModuleDirectory(import.meta),
+  import.meta.dirname,
   '../../config/default-config.js'
 );
 
@@ -164,6 +163,7 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
       id: artifactJson.id,
       gatherer,
       dependencies: resolveArtifactDependencies(artifactJson, gatherer, artifactDefnsBySymbol),
+      alwaysGather: artifactJson.alwaysGather,
     };
 
     const symbol = artifact.gatherer.instance.meta.symbol;
@@ -229,6 +229,14 @@ async function initializeConfig(gatherMode, config, flags = {}) {
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
   configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, flags);
+
+  if (configWorkingCopy.locales) {
+    for (const [locale, lhlMessages] of Object.entries(configWorkingCopy.locales)) {
+      if (lhlMessages) {
+        format.registerLocaleData(/** @type {LH.Locale} */ (locale), lhlMessages);
+      }
+    }
+  }
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, flags);
   overrideSettingsForGatherMode(settings, gatherMode);

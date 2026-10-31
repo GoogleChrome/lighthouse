@@ -35,14 +35,14 @@ describe('Lighthouse chrome popup', function() {
   let pageErrors = [];
 
   async function claimErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await page.bringToFront();
-    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     expect(errors).toHaveLength(0);
   }
@@ -58,9 +58,9 @@ describe('Lighthouse chrome popup', function() {
     page.on('console', (e) => {
       if (e.type() === 'error' || e.type() === 'warning') {
         const describe = (jsHandle) => {
-          return jsHandle.executionContext().evaluate((obj) => {
+          return jsHandle.evaluate((obj) => {
             return JSON.stringify(obj, null, 2);
-          }, jsHandle);
+          });
         };
         const promise = Promise.all(e.args().map(describe)).then(args => {
           return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;

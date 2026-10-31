@@ -41,12 +41,13 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
  * @return {Promise<LH.IcuMessage[]>}
  */
 async function clearDataForOrigin(session, url, clearStorageTypes) {
+  const origin = new URL(url).origin;
+  if (origin === 'null') return [];
+
   const status = {msg: 'Cleaning origin data', id: 'lh:storage:clearDataForOrigin'};
   log.time(status);
 
   const warnings = [];
-
-  const origin = new URL(url).origin;
 
   const typesToClear = clearStorageTypes.join(',');
 

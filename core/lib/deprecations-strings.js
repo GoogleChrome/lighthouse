@@ -73,6 +73,10 @@ export const UIStrings = {
    */
   ExampleBrowserProcessDeprecation: "This is an example for showing the code required for a browser process reported deprecation.",
   /**
+   * @description Warning displayed to developers that they are using the Fenced Frame API which has been deprecated and is scheduled to be removed.
+   */
+  FencedFrame: "Fenced Frame API is deprecated and scheduled for removal.",
+  /**
    * @description A deprecation warning shown in the DevTools Issues tab. It's shown when one of the Protected Audience APIs like `navigator.joinAdInterestGroup`, `navigator.getInterestGroupAdAuctionData` or `navigator.runAdAuction` are called.
    */
   Fledge: "The Protected Audience API is deprecated and will be removed in a future release.",
@@ -241,6 +245,10 @@ export const UIStrings = {
    */
   RTCConstraintEnableDtlsSrtpTrue: "The constraint `DtlsSrtpKeyAgreement` is removed. You have specified a `true` value for this constraint, which had no effect, but you can remove this constraint for tidiness.",
   /**
+   * @description Warning displayed to developers when the non-standard RTCPeerConnection.createDTMFSender() method is used. Developers should use the standard RTCRtpSender.dtmf attribute instead.
+   */
+  RTCPeerConnectionCreateDTMFSender: "RTCPeerConnection.createDTMFSender() is deprecated and will be removed. Please use RTCRtpSender.dtmf instead.",
+  /**
    * @description WebRTC is set of JavaScript APIs for sending and receiving data, audio and video. getStats() is a method used to obtain network and quality metrics. There are two versions of this method, one is being deprecated because it is non-standard.
    */
   RTCPeerConnectionGetStatsLegacyNonCompliant: "The callback-based getStats() is deprecated and will be removed. Use the spec-compliant getStats() instead.",
@@ -252,14 +260,6 @@ export const UIStrings = {
    * @description A deprecation warning shown in the DevTools Issues tab. The placeholder is always the noun 'SharedArrayBuffer' which refers to a JavaScript construct.
    */
   SharedArrayBufferConstructedWithoutIsolation: "`SharedArrayBuffer` will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details.",
-  /**
-   * @description A deprecation warning shown in the DevTools Issues tab. It's shown when one of the Shared Storage APIs like `sharedStorage.set()`, `sharedStorage.worklet.addModule()`, `sharedStorage.selectURL()`, etc., along with `<img sharedstoragewritable>`, `<iframe sharedstoragewritable>`, or `fetch(url, {sharedStorageWritable: true})` are used.
-   */
-  SharedStorage: "The Shared Storage API is deprecated and will be removed in a future release.",
-  /**
-   * @description A deprecation warning shown in the DevTools Issues tab. It's shown when the `document.requestStorageAccessFor` API is called. The placeholder will always be the string `document.requestStorageAccessFor`.
-   */
-  StorageAccessAPI_requestStorageAccessFor_Method: "`document.requestStorageAccessFor` is deprecated and will be removed. See https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ for more details.",
   /**
    * @description A deprecation warning shown in the DevTools Issues tab. It's shown when the speech synthesis API is called before the page receives a user activation.
    */
@@ -276,6 +276,10 @@ export const UIStrings = {
    * @description A deprecation warning shown in the DevTools Issues tab. The placeholder is always the noun 'SharedArrayBuffer' which refers to a JavaScript construct. 'Extensions' refers to Chrome extensions. The warning is shown when Chrome Extensions attempt to use 'SharedArrayBuffer's under insecure circumstances.
    */
   V8SharedArrayBufferConstructedInExtensionWithoutIsolation: "Extensions should opt into cross-origin isolation to continue using `SharedArrayBuffer`. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/.",
+  /**
+   * @description Warning displayed to developers when an SVG filter is applied to view transition content, which is disallowed because the content may contain cross-origin iframes or plugins. `::view-transition-old()` and `::view-transition-new()` are CSS pseudo-element names and should not be translated.
+   */
+  ViewTransitionPreventSvgFilterPaint: "SVG filters cannot be applied to view transition content, such as `::view-transition-old()` and `::view-transition-new()`, as it may contain cross-origin iframes or plugins.",
   /**
    * @description This warning occurs when the deprecated `BluetoothRemoteGATTCharacteristic.writeValue()` method is used. Developers should use `writeValueWithResponse()` or `writeValueWithoutResponse()` instead.
    */
@@ -350,6 +354,10 @@ export const DEPRECATIONS_METADATA = {
     "chromeStatusFeature": 5095987863486464,
     "milestone": 151
   },
+  "FencedFrame": {
+    "chromeStatusFeature": 6366274495053824,
+    "milestone": 156
+  },
   "IdentityInCanMakePaymentEvent": {
     "chromeStatusFeature": 5190978431352832
   },
@@ -420,6 +428,10 @@ export const DEPRECATIONS_METADATA = {
   "RTCConstraintEnableDtlsSrtpTrue": {
     "milestone": 97
   },
+  "RTCPeerConnectionCreateDTMFSender": {
+    "chromeStatusFeature": 5160724576993280,
+    "milestone": 160
+  },
   "RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "chromeStatusFeature": 4631626228695040,
     "milestone": 117
@@ -436,12 +448,6 @@ export const DEPRECATIONS_METADATA = {
   },
   "SharedArrayBufferConstructedWithoutIsolation": {
     "milestone": 106
-  },
-  "SharedStorage": {
-    "chromeStatusFeature": 5076349064708096
-  },
-  "StorageAccessAPI_requestStorageAccessFor_Method": {
-    "chromeStatusFeature": 5162221567082496
   },
   "TextToSpeech_DisallowedByAutoplay": {
     "chromeStatusFeature": 5687444770914304,

@@ -6,14 +6,14 @@
 
 import fs from 'fs';
 import path from 'path';
-import {createRequire} from 'module';
+import {createRequire, builtinModules} from 'module';
 
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
-import builtin from 'builtin-modules';
 
 import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
+import {nodeModuleShims} from './plugins/esbuild-node-polyfills.js';
 
 /**
  * @typedef PartialLoader
@@ -27,7 +27,7 @@ const partialLoaders = {
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',
     async onLoad(code) {
-      return {code: code.replace(/getModuleDirectory\(import.meta\)/g, '""')};
+      return {code: code.replace(/import\.meta\.dirname/g, '""')};
     },
   },
   /**
@@ -92,6 +92,18 @@ function bulkLoader(partialLoaders) {
 }
 
 /**
+ * Converts an absolute path inside LH_ROOT to a POSIX path relative to LH_ROOT.
+ * Leaves bare specifiers and paths outside LH_ROOT unchanged.
+ * @param {string} p
+ * @return {string}
+ */
+function toProjectRelativePath(p) {
+  if (!path.isAbsolute(p)) return p;
+  const rel = path.relative(LH_ROOT, p);
+  return rel.startsWith('..') ? p : rel.replaceAll('\\', '/');
+}
+
+/**
  * Given a module path, replace the contents with the provided text.
  *
  * - If the module is a file on disk, the path MUST be absolute.
@@ -109,23 +121,40 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
   // Allow callers to specifier an unresolved path, but normalize things
   // by resolving those paths now.
   // TODO: really this should use import.meta.resolve, but... that's not a thing yet!
+  /** @type {Record<string, string>} */
+  const normalizedReplaceMap = {};
   const require = createRequire(import.meta.url);
   for (const [k, v] of Object.entries(replaceMap)) {
+    let resolvedPath = k;
     try {
-      const resolvedPath = require.resolve(k);
-      if (resolvedPath !== k) {
-        replaceMap[resolvedPath] = v;
-        delete replaceMap[k];
-      }
+      resolvedPath = require.resolve(k);
     } catch {}
+    normalizedReplaceMap[toProjectRelativePath(resolvedPath)] = v;
   }
 
   return {
     name: 'replace-modules',
     setup(build) {
-      // Capture modules of interest and resolve them to their absolute paths.
+      // Capture modules of interest and resolve them to their project-relative paths.
       // This handles real-files on disk, and builtin specifiers.
       build.onResolve({filter: /.*/}, (args) => {
+        const relArgPath = toProjectRelativePath(args.path);
+        if (relArgPath in normalizedReplaceMap) {
+          return {path: relArgPath, namespace: 'replace-modules'};
+        }
+
+        if (args.path.startsWith('.')) {
+          const absPath = path.resolve(args.resolveDir, args.path);
+          const relPath = toProjectRelativePath(absPath);
+          if (relPath in normalizedReplaceMap) {
+            return {path: relPath, namespace: 'replace-modules'};
+          }
+          if ((relPath + '.js') in normalizedReplaceMap) {
+            return {path: relPath + '.js', namespace: 'replace-modules'};
+          }
+          return;
+        }
+
         let resolvedPath;
         try {
           resolvedPath = require.resolve(args.path, {paths: [args.resolveDir]});
@@ -135,18 +164,20 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
           return;
         }
 
-        // `resolvedPath` is now either an absolute path on disk, or a builtin module (like `url`).
-        if (!(resolvedPath in replaceMap)) return;
+        const relResolvedPath = toProjectRelativePath(resolvedPath);
+        // `relResolvedPath` is now either a project-relative path on disk, or a builtin module (like `url`).
+        if (!(relResolvedPath in normalizedReplaceMap)) return;
 
         // Put everything we see here into our namespace.
-        return {path: resolvedPath, namespace: 'replace-modules'};
+        return {path: relResolvedPath, namespace: 'replace-modules'};
       });
 
-      const modulesNotSeen = new Set(Object.keys(replaceMap));
+      const modulesNotSeen = new Set(Object.keys(normalizedReplaceMap));
       build.onLoad({filter: /.*/, namespace: 'replace-modules'}, async (args) => {
-        // Anything in our namespace is guaranteed to be something in replaceMap.
+        // Anything in our namespace is guaranteed to be something in normalizedReplaceMap.
         modulesNotSeen.delete(args.path);
-        return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+        const resolveDir = path.resolve(LH_ROOT, path.dirname(args.path));
+        return {contents: normalizedReplaceMap[args.path], resolveDir};
       });
 
       // Handle the third case - when a module is created by some other plugin, and the user of this
@@ -154,9 +185,11 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
       build.onLoad({filter: /.*/}, async (args) => {
         // The `onResolve` hook moved all the real modules (builtins and real files on disk) to the `replace-modules`
         // namespace. What remains here are modules that were injected by other plugins. Example: __zlib-lib/inflate
-        if (args.path in replaceMap) {
-          modulesNotSeen.delete(args.path);
-          return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+        const relArgPath = toProjectRelativePath(args.path);
+        if (relArgPath in normalizedReplaceMap) {
+          modulesNotSeen.delete(relArgPath);
+          const resolveDir = path.resolve(LH_ROOT, path.dirname(relArgPath));
+          return {contents: normalizedReplaceMap[relArgPath], resolveDir};
         }
         return null;
       });
@@ -177,7 +210,7 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
  * @return {esbuild.Plugin}
  */
 function ignoreBuiltins(opts = {}) {
-  let builtinList = [...builtin];
+  let builtinList = builtinModules.filter(m => !m.startsWith('_'));
   if (opts.exclude) {
     builtinList = builtinList.filter(b => !opts?.exclude?.includes(b));
   }
@@ -353,12 +386,12 @@ function lighthouseShimPlugin(options) {
 
         // Resolve to absolute path to ensure we have a consistent base for shimDir
         const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {path: absolutePath, namespace: 'lh-audit-shim'};
+        return {path: toProjectRelativePath(absolutePath), namespace: 'lh-audit-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-audit-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        const shimDir = path.dirname(args.path);
+        const shimDir = path.resolve(LH_ROOT, path.dirname(args.path));
         return {contents: generateAuditShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
 
@@ -369,12 +402,12 @@ function lighthouseShimPlugin(options) {
         if (isIncluded) return;
 
         const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {path: absolutePath, namespace: 'lh-gatherer-shim'};
+        return {path: toProjectRelativePath(absolutePath), namespace: 'lh-gatherer-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-gatherer-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        const shimDir = path.dirname(args.path);
+        const shimDir = path.resolve(LH_ROOT, path.dirname(args.path));
         return {contents: generateGathererShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
     },
@@ -427,7 +460,7 @@ function postprocess(options = {}) {
 
         if (result.metafile && result.metafile.inputs) {
           for (const inputPath of Object.keys(result.metafile.inputs)) {
-            let modulePath = inputPath;
+            let modulePath = inputPath.replace(/^replace-modules:/, '');
             if (modulePath.startsWith('node_modules/')) {
               modulePath = modulePath.slice('node_modules/'.length);
             } else if (modulePath.includes('/node_modules/')) {
@@ -549,4 +582,5 @@ export {
   umd,
   lighthouseShimPlugin,
   postprocess,
+  nodeModuleShims,
 };

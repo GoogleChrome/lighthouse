@@ -11,6 +11,8 @@
 
 /* global document */
 
+import {setTimeout} from 'timers/promises';
+
 import * as puppeteer from 'puppeteer-core';
 import {getChromePath} from 'chrome-launcher';
 
@@ -24,7 +26,7 @@ async function runOctane(page) {
   process.stdout.write(`Running Octane...\n`);
   await page.goto('https://chromium.github.io/octane/', {waitUntil: 'networkidle0'});
   await page.waitForSelector('#run-octane');
-  await new Promise(r => setTimeout(r, 5000));
+  await setTimeout(5000);
   page.on('console', pageLogger);
   await page.click('#run-octane');
   await page.waitForFunction(() => {
@@ -48,7 +50,7 @@ async function runSpeedometer(page) {
   process.stdout.write(`Running Speedometer...\n`);
   await page.goto('https://browserbench.org/Speedometer2.0/', {waitUntil: 'networkidle0'});
   await page.waitForSelector('#home button');
-  await new Promise(r => setTimeout(r, 5000));
+  await setTimeout(5000);
   await page.click('#home button');
 
   const loggerInterval = setInterval(async () => {
