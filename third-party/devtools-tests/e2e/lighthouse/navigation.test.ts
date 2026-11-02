@@ -6,6 +6,7 @@ import {assert} from 'chai';
 import type * as puppeteer from 'puppeteer-core';
 
 import {expectError} from '../../conductor/events.js';
+import {DEVTOOLS_BUNDLED_CHROMIUM_DEPS} from '../../conductor/paths.js';
 import {describe, it, setup} from '../conductor/mocha-interface.js';
 import {
   clickStartButton,
@@ -286,7 +287,7 @@ describe('Navigation', function() {
 });
 
 describe('with changed settings', function() {
-  setup({devToolsSettings: {language: 'es'}});
+  setup({devToolsSettings: {language: 'zh'}});
 
   // The tests in this suite are particularly slow
   if (this.timeout() !== 0) {
@@ -302,10 +303,13 @@ describe('with changed settings', function() {
     devToolsPage.page.on('console', consoleListener);
     try {
       expectErrors();
+      if (!DEVTOOLS_BUNDLED_CHROMIUM_DEPS) {
+        expectError(/timed out fetching locale|Unexpected token/);
+      }
       await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
       await registerServiceWorker(inspectedPage);
-      await setToolbarCheckboxWithText(devToolsPage, true, 'Habilitar muestreo de JS');
-      await setToolbarCheckboxWithText(devToolsPage, false, 'Borrar almacenamiento');
+      await setToolbarCheckboxWithText(devToolsPage, true, '启用 JS 采样');
+      await setToolbarCheckboxWithText(devToolsPage, false, '清除存储数据');
       await selectCategories(devToolsPage, ['performance', 'best-practices']);
       await selectDevice(devToolsPage, 'desktop');
 
@@ -336,14 +340,20 @@ describe('with changed settings', function() {
       assert.notInclude(lhr.configSettings.emulatedUserAgent, 'Mobile');
       assert.notInclude(lhr.environment.networkUserAgent, 'Mobile');
 
-      const viewTreemapButton = await devToolsPage.$textContent('Ver gráfico de rectángulos', reportEl);
-      assert.isOk(viewTreemapButton);
+      // Lighthouse locale files (third_party/lighthouse/locales/*.json) are
+      // shipped separately and not bundled into resources.pak. Only check
+      // localized Lighthouse report strings when running with
+      // --custom-devtools-frontend (DEVTOOLS_BUNDLED_CHROMIUM_DEPS).
+      if (DEVTOOLS_BUNDLED_CHROMIUM_DEPS) {
+        const viewTreemapButton = await devToolsPage.$textContent('查看树状图', reportEl);
+        assert.isOk(viewTreemapButton);
 
-      const footerIssueText = await reportEl.$eval('.lh-footer__version_issue', footerIssueEl => {
-        return footerIssueEl.textContent;
-      });
-      assert.strictEqual(lhr.i18n.rendererFormattedStrings.footerIssue, 'Notificar un problema');
-      assert.strictEqual(footerIssueText, 'Notificar un problema');
+        const footerIssueText = await reportEl.$eval('.lh-footer__version_issue', footerIssueEl => {
+          return footerIssueEl.textContent;
+        });
+        assert.strictEqual(lhr.i18n.rendererFormattedStrings.footerIssue, '提交问题');
+        assert.strictEqual(footerIssueText, '提交问题');
+      }
 
       // Ensure service worker is not cleared because we disable the storage reset.
       assert.strictEqual(await getServiceWorkerCount(inspectedPage), 1);
