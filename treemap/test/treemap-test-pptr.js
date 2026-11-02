@@ -245,7 +245,8 @@ describe('Lighthouse Treemap', () => {
         });
         return {
           rootStripes: window.getComputedStyle(rootEl, '::before').content,
-          nonWhiteNodes: nodeEls.filter(el => el.style.backgroundColor !== 'white').length,
+          nonWhiteNodes: nodeEls
+            .filter(el => el.style.backgroundColor !== 'var(--node-background-color)').length,
           bars,
         };
       });
@@ -356,13 +357,49 @@ describe('Lighthouse Treemap', () => {
       expect(bundleLightness).toBe(Math.max(...zoomed));
     });
 
+    it('supports dark mode, and recolors when the theme changes', async () => {
+      await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: 'dark'}]);
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      const getState = () => page.evaluate(() => {
+        const lightnesses = Array.from(document.querySelectorAll('.webtreemap-node'))
+          .map(el => el.style.backgroundColor)
+          .filter(color => color.startsWith('oklch('))
+          .map(color => Number(color.slice('oklch('.length).split(' ')[0]));
+        return {
+          background: window.getComputedStyle(document.body).backgroundColor,
+          minLightness: Math.min(...lightnesses),
+          maxLightness: Math.max(...lightnesses),
+        };
+      });
+
+      const dark = await getState();
+      expect(dark.background).toBe('rgb(31, 31, 31)');
+      expect(dark.minLightness).toBeGreaterThanOrEqual(0.26);
+      expect(dark.maxLightness).toBeLessThanOrEqual(0.40);
+
+      await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: 'light'}]);
+      // The app listens for the media query `change` event, which is dispatched async.
+      await page.waitForFunction(() => {
+        const color = document.querySelector('.webtreemap-node:not(.webtreemap-node--root)')
+          .style.backgroundColor;
+        return Number(color.slice('oklch('.length).split(' ')[0]) >= 0.86;
+      }, {timeout: 5000});
+      const light = await getState();
+      expect(light.background).toBe('rgb(255, 255, 255)');
+      expect(light.minLightness).toBeGreaterThanOrEqual(0.86);
+    });
+
     describe('duplicate modules', () => {
       const getHoverState = () => page.evaluate(() => {
         const treemapEl = document.querySelector('.lh-treemap');
         const dupeEls = Array.from(document.querySelectorAll('.webtreemap-node--duplicate'));
         const leafEls = Array.from(document.querySelectorAll('.webtreemap-node'))
           .filter(el => !el.querySelector('.webtreemap-node'));
-        const isWhite = el => el.style.backgroundColor === 'white';
+        const isWhite = el => el.style.backgroundColor === 'var(--node-background-color)';
         return {
           hovering: treemapEl.classList.contains('lh-treemap--hover-duplicate'),
           coloredDupes: dupeEls.filter(el => !isWhite(el)).length,
