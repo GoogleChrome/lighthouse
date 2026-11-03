@@ -186,6 +186,12 @@ describe('batch runLighthouse', () => {
   before(async () => {
     await td.replaceEsm('chrome-launcher', {
       launch: mockLaunch,
+      Launcher: {
+        defaultFlags: () => [
+          '--disable-features=Translate,OptimizationHints,RenderDocument',
+          '--disable-extensions',
+        ],
+      },
     });
     await td.replaceEsm('../../../core/index.js', undefined, mockLighthouse);
     await td.replaceEsm('../../printer.js', {
@@ -313,6 +319,35 @@ describe('batch runLighthouse', () => {
       'open',
       'open',
     ]);
+  });
+
+  it('removes RenderDocument from chrome-launcher default --disable-features', async () => {
+    const mockKill = fnAny();
+    mockLaunch.mockResolvedValue({port: 9999, kill: mockKill});
+    mockLighthouse.mockImplementation(async (/** @type {string} */ url) => ({
+      lhr: {
+        finalDisplayedUrl: url,
+        fetchTime: '2026-10-21T20:00:00.000Z',
+        audits: {},
+      },
+      artifacts: {},
+      report: ['{}'],
+    }));
+
+    const flags = getFlags('https://example.com/1 --chrome-flags="--headless=new"');
+    await mockedRun.runLighthouse('https://example.com/1', flags, undefined);
+
+    expect(mockLaunch).toHaveBeenCalledWith({
+      port: 0,
+      ignoreDefaultFlags: true,
+      chromeFlags: [
+        '--disable-features=Translate,OptimizationHints',
+        '--disable-extensions',
+        ...(process.platform === 'linux' ? ['--disable-setuid-sandbox'] : []),
+        '--headless=new',
+      ],
+      logLevel: undefined,
+    });
   });
 });
 

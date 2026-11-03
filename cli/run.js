@@ -83,10 +83,24 @@ function getDebuggableChrome(flags) {
     }
   }
 
+  const defaultFlags = flags.chromeIgnoreDefaultFlags ? [] :
+    ChromeLauncher.Launcher.defaultFlags().map(flag => {
+      if (flag.startsWith('--disable-features=')) {
+        return flag
+          .split(',')
+          .filter(feature => feature !== 'RenderDocument')
+          .join(',');
+      }
+      return flag;
+    });
+  if (!flags.chromeIgnoreDefaultFlags && process.platform === 'linux') {
+    defaultFlags.push('--disable-setuid-sandbox');
+  }
+
   return ChromeLauncher.launch({
     port: flags.port,
-    ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
-    chromeFlags: parseChromeFlags(flags.chromeFlags),
+    ignoreDefaultFlags: true,
+    chromeFlags: [...defaultFlags, ...parseChromeFlags(flags.chromeFlags)],
     logLevel: flags.logLevel,
   });
 }
