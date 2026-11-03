@@ -18,7 +18,26 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
    */
   static async computeMetricWithGraphs(data, context, extras) {
     const params = await getComputationDataParams(data, context);
-    return Promise.resolve(this.compute(params, extras)).catch(lanternErrorAdapter);
+    try {
+      const result = this.compute(params, extras);
+      const estimatesByLabel = /** @type {const} */ ([
+        ['optimisticLargestContentfulPaint', result.optimisticEstimate],
+        ['pessimisticLargestContentfulPaint', result.pessimisticEstimate],
+      ]);
+      for (const [label, estimate] of estimatesByLabel) {
+        const completeNodeTimings = Lantern.Simulation.Simulator.allNodeTimings.get(label);
+        if (!completeNodeTimings) continue;
+        for (const [node, timing] of estimate.nodeTimings.entries()) {
+          const completeTiming = completeNodeTimings.get(node);
+          if (completeTiming) {
+            Object.assign(timing, {queuedTime: completeTiming.queuedTime});
+          }
+        }
+      }
+      return result;
+    } catch (err) {
+      return lanternErrorAdapter(err);
+    }
   }
 
   /**
