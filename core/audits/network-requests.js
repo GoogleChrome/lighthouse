@@ -40,11 +40,12 @@ class NetworkRequests extends Audit {
     );
 
     // Optional mainFrameId check because the main resource is only available for
-    // navigations. TODO: https://github.com/GoogleChrome/lighthouse/issues/14157
+    // page loads, not timespans or soft navigations.
+    // TODO: https://github.com/GoogleChrome/lighthouse/issues/14157
     // for the general solution to this.
     /** @type {string|undefined} */
     let mainFrameId;
-    if (artifacts.GatherContext.gatherMode === 'navigation') {
+    if (artifacts.GatherContext.gatherMode === 'navigation' && !context.settings?.softNavigation) {
       const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
       mainFrameId = mainResource.frameId;
     }

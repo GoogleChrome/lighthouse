@@ -29,6 +29,11 @@ const UIStrings = {
    */
   defaultNavigationName: 'Navigation report ({url})',
   /**
+   * @description Default name for a Lighthouse report that analyzes a soft navigation: a same-document navigation triggered by user interaction, such as a single-page app changing its URL and content on a link click. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
+   */
+  defaultSoftNavigationName: 'Soft navigation report ({url})',
+  /**
    * @description Default name for a Lighthouse report that analyzes user interactions over a period of time. "url" is a trimmed version of a url that only includes the domain name and path.
    * @example {example.com/page} url
    */
@@ -295,6 +300,9 @@ function getStepName(flags, artifacts) {
   const shortUrl = shortenUrl(artifacts.URL.finalDisplayedUrl);
   switch (artifacts.GatherContext.gatherMode) {
     case 'navigation':
+      if (artifacts.settings.softNavigation) {
+        return translate(UIStrings.defaultSoftNavigationName, {url: shortUrl}, locale);
+      }
       return translate(UIStrings.defaultNavigationName, {url: shortUrl}, locale);
     case 'timespan':
       return translate(UIStrings.defaultTimespanName, {url: shortUrl}, locale);

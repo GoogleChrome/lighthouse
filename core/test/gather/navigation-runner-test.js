@@ -404,6 +404,67 @@ describe('NavigationRunner', () => {
       });
     });
 
+    it('ignores network records for page load errors in a soft navigation', async () => {
+      mocks.navigationMock.gotoURL.mockReturnValue({
+        requestedUrl,
+        mainDocumentUrl: requestedUrl,
+        warnings: [],
+      });
+
+      const devtoolsLogInstance = new DevtoolsLogGatherer();
+      const traceInstance = new TraceGatherer();
+
+      // @ts-expect-error mock config
+      const resolvedConfig = /** @type {LH.Config.ResolvedConfig} */ ({
+        settings: {...JSON.parse(JSON.stringify(defaultSettings)), softNavigation: true},
+        artifacts: [
+          {id: 'DevtoolsLog', gatherer: {instance: devtoolsLogInstance}},
+          {id: 'Trace', gatherer: {instance: traceInstance}},
+        ],
+      });
+
+      // There is no document request in a soft navigation, so a failed request is not a page load error.
+      const devtoolsLog = networkRecordsToDevtoolsLog([{url: requestedUrl, failed: true}]);
+      devtoolsLogInstance.getDebugData = fnAny().mockReturnValue(devtoolsLog);
+      traceInstance.getDebugData = fnAny().mockReturnValue({traceEvents: []});
+
+      const artifacts = await runner._navigation({
+        driver,
+        page,
+        resolvedConfig,
+        requestor,
+        computedCache,
+        baseArtifacts,
+      });
+
+      expect(baseArtifacts.PageLoadError).toBeNull();
+      expect(artifacts).not.toHaveProperty('DevtoolsLogError');
+      expect(artifacts).not.toHaveProperty('TraceError');
+    });
+
+    it('warns when multiple soft navigations were detected', async () => {
+      const {resolvedConfig, gatherers} = createMockConfig();
+      resolvedConfig.settings.softNavigation = true;
+      // @ts-expect-error mock config
+      resolvedConfig.artifacts.find(artifact => artifact.id === 'Timespan').id = 'Trace';
+      gatherers.timespan.getArtifact = fnAny().mockResolvedValue({
+        traceEvents: [{name: 'SoftNavigationStart'}, {name: 'SoftNavigationStart'}],
+      });
+
+      await runner._navigation({
+        driver,
+        page,
+        resolvedConfig,
+        requestor,
+        computedCache,
+        baseArtifacts,
+      });
+
+      expect(baseArtifacts.LighthouseRunWarnings).toHaveLength(1);
+      expect(baseArtifacts.LighthouseRunWarnings[0])
+        .toBeDisplayString(/Multiple soft navigations were detected/);
+    });
+
     it('cleans up throttling before getArtifact', async () => {
       const {resolvedConfig, gatherers} = createMockConfig();
       gatherers.navigation.getArtifact = fnAny().mockImplementation(() => {
@@ -456,6 +517,16 @@ describe('NavigationRunner', () => {
         expect.anything(),
         requestedUrl,
         expect.anything()
+      );
+    });
+
+    it('should wait for a soft navigation when configured', async () => {
+      resolvedConfig.settings.softNavigation = true;
+      await run();
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledWith(
+        expect.anything(),
+        requestedUrl,
+        expect.objectContaining({waitUntil: ['softNavigation']})
       );
     });
 
@@ -514,6 +585,18 @@ describe('NavigationRunner', () => {
       const navigatePromise = runner.navigationGather(mockDriver._page.asPage(), '');
 
       await expect(navigatePromise).rejects.toThrow('INVALID_URL');
+    });
+
+    it('should throw when a soft navigation is requested with a URL', async () => {
+      const navigatePromise = runner.navigationGather(
+        mockDriver._page.asPage(),
+        'http://example.com',
+        {flags: {softNavigation: true}}
+      );
+
+      await expect(navigatePromise).rejects.toThrow(
+        'A soft navigation can only be triggered by a callback requestor'
+      );
     });
 
     it('should initialize config', async () => {

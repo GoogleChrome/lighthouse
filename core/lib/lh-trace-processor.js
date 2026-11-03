@@ -40,6 +40,13 @@ class LHTraceProcessor extends TraceProcessor {
   static createNoFirstContentfulPaintError() {
     return new LighthouseError(LighthouseError.errors.NO_FCP);
   }
+
+  /**
+   * @return {Error}
+   */
+  static createNoSoftNavigationError() {
+    return new LighthouseError(LighthouseError.errors.NO_SOFT_NAVIGATION);
+  }
 }
 
 export default LHTraceProcessor;

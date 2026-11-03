@@ -29,6 +29,11 @@ const UIStrings = {
    * */
   noLcp: 'The page did not display content that qualifies as a Largest Contentful Paint (LCP). Ensure the page has a valid LCP element and then try again. ({errorCode})',
   /**
+   * @description Error message explaining that no soft navigation (a same-document navigation triggered by user interaction) was detected during a Lighthouse run that expected one.
+   * @example {NO_SOFT_NAVIGATION} errorCode
+   * */
+  noSoftNavigation: 'Lighthouse did not detect a soft navigation. Make sure the interaction updates the URL and renders new content, and that Chrome 149 or newer is being used. ({errorCode})',
+  /**
    * @description Error message explaining that the page loaded too slowly to perform a Lighthouse run.
    * @example {NO_TTI_CPU_IDLE_PERIOD} errorCode
    * */
@@ -295,6 +300,11 @@ const ERRORS = {
   NO_LCP_ALL_FRAMES: {
     code: 'NO_LCP_ALL_FRAMES',
     message: UIStrings.noLcp,
+  },
+  NO_SOFT_NAVIGATION: {
+    code: 'NO_SOFT_NAVIGATION',
+    message: UIStrings.noSoftNavigation,
+    lhrRuntimeError: true,
   },
   UNSUPPORTED_OLD_CHROME: {
     code: 'UNSUPPORTED_OLD_CHROME',

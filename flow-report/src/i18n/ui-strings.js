@@ -11,6 +11,8 @@
 export const UIStrings = {
   /** Description of a report that evaluates a web page as it loads, but before the user interacts with it. */
   navigationDescription: 'Page load',
+  /** Description of a report that evaluates a soft navigation: a same-document navigation triggered by user interaction, such as a single-page app changing its URL and content on a link click. */
+  softNavigationDescription: 'Soft navigation',
   /** Description of a report that evaluates a web page over a period of time where a user could have interacted with the page. */
   timespanDescription: 'User interactions',
   /** Description of a report that evaluates the state of a web page at a single point in time. */

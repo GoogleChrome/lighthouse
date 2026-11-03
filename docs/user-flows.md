@@ -20,8 +20,8 @@ Lighthouse can now run in three modes: navigations, timespans, and snapshots. Ea
 
 | | |
 |:---:|---|
-| Navigation <br> <img src="https://user-images.githubusercontent.com/39191/170560057-4f7cab97-ee6b-497f-8e18-1f84ba3616dd.png" height="96" width="141">  | **Use Cases** <br>  ✅ Obtain a Lighthouse Performance score and all performance metrics.<br>✅ Assess Progressive Web App capabilities.<br>✅ Analyze accessibility immediately after page load.<br><br> **Limitations** <br>  🤔 Cannot analyze form submissions or single page app transitions.<br>🤔 Cannot analyze content that isn't available immediately on page load. |
-| Timespan <br> <img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png" height="96" width="141">  | **Use Cases** <br> ✅ Measure layout shifts and JavaScript execution time over a timerange including interactions.<br>✅ Discover performance opportunities to improve the experience for long-lived pages and SPAs.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score.<br>🤔 Cannot analyze moment-based performance metrics (e.g. Largest Contentful Paint).<br>🤔 Cannot analyze state-of-the-page issues (e.g. no Accessibility category) |
+| Navigation <br> <img src="https://user-images.githubusercontent.com/39191/170560057-4f7cab97-ee6b-497f-8e18-1f84ba3616dd.png" height="96" width="141">  | **Use Cases** <br>  ✅ Obtain a Lighthouse Performance score and all performance metrics.<br>✅ Assess Progressive Web App capabilities.<br>✅ Analyze accessibility immediately after page load.<br><br> **Limitations** <br>  🤔 Cannot analyze form submissions. Single page app transitions are only supported as [experimental soft navigations](#soft-navigations-experimental).<br>🤔 Cannot analyze content that isn't available immediately on page load. |
+| Timespan <br> <img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png" height="96" width="141">  | **Use Cases** <br> ✅ Measure layout shifts and JavaScript execution time over a timerange including interactions.<br>✅ Discover performance opportunities to improve the experience for long-lived pages and SPAs.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score.<br>🤔 Cannot analyze moment-based performance metrics (e.g. Largest Contentful Paint). For single page app transitions, see [soft navigations](#soft-navigations-experimental).<br>🤔 Cannot analyze state-of-the-page issues (e.g. no Accessibility category) |
 | Snapshot <br> <img src="https://user-images.githubusercontent.com/39191/170560049-a6b630a2-187a-4233-9f8b-8d7fb276f51e.png" height="96" width="141">  | **Use Cases** <br> ✅ Analyze the page in its current state.<br> ✅ Find accessibility issues deep within SPAs or complex forms.<br>✅ Evaluate best practices of menus and UI elements hidden behind interaction.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score or metrics.<br>🤔 Cannot analyze any issues outside the current DOM (e.g. no network, main-thread, or performance analysis). |
 
 
@@ -74,6 +74,37 @@ Instead of providing a URL to navigate to, you can provide a callback function o
 This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
 
 The `startNavigation`/`endNavigation` functions _must_ surround an action that triggers a navigation. Any interactions completed after `startNavigation` is invoked and before `endNavigation` is invoked will be captured by the navigation.
+
+##### Soft navigations (experimental)
+
+A [soft navigation](https://github.com/WICG/soft-navigations) is a same-document navigation triggered by user interaction, such as a single-page app updating its URL and content on a link click. Lighthouse can audit one as a navigation step when the `softNavigation` flag is set. The step must use a callback or `startNavigation`/`endNavigation`, since there is no URL to load, and the interaction must happen on a page that has already loaded.
+
+```js
+await flow.navigate('https://example.com');
+
+// The click updates the URL and renders new content without loading a new document.
+await flow.navigate(async () => {
+  await page.click('a.product-link');
+}, {softNavigation: true});
+
+// The same with startNavigation/endNavigation.
+await flow.startNavigation({softNavigation: true});
+await page.click('a.checkout-link');
+await flow.endNavigation();
+
+// Audit the state of the page after the soft navigation separately.
+await flow.snapshot();
+```
+
+Chrome detects a soft navigation when a user interaction changes the URL and paints new content. An interaction that pushes the same URL again, or that does not update the URL, is not a soft navigation. Chrome 149 or newer is required.
+
+What to expect from a soft navigation step:
+
+- The step is a navigation report named "Soft navigation report" by default, with a Performance score. First Contentful Paint and Largest Contentful Paint are measured from the interaction; there is no Speed Index or Time to Interactive.
+- Only the audits that also work in a timespan run, so the report has the Performance and Best Practices categories. Audits that depend on the main document request, such as server response time or redirects, are skipped, as are audits of the resulting page state. Pair the step with a snapshot for accessibility and SEO.
+- Simulated throttling is replaced with DevTools throttling, and the page is never reset to `about:blank` or cleared of storage before the step.
+- Trigger a single soft navigation per step. If several are detected, only the first one is measured and the report carries a warning.
+- If no soft navigation is detected, Lighthouse waits for `maxWaitForLoad`, then the step completes with a `NO_SOFT_NAVIGATION` error on the metrics and the flow continues. Without the `softNavigation` flag, a callback that performs a soft navigation fails with `NO_FCP` after `maxWaitForFcp`, since Lighthouse waits for a page load that never comes.
 
 ### Timespan
 
@@ -252,6 +283,7 @@ await flow.navigate('https://example.com');
 
 - Keep timespan recordings _short_ and focused on a single interaction sequence or page transition.
 - Always audit page navigations with navigation mode, avoid auditing hard page navigations with timespan mode.
+- Audit single page app route changes as [soft navigations](#soft-navigations-experimental) when you need FCP and LCP for the transition, and as timespans when you only need layout shifts, responsiveness and main-thread activity.
 - Use snapshot recordings when a substantial portion of the page content has changed.
 - Always wait for transitions and interactions to finish before ending a timespan. The puppeteer APIs `page.waitForSelector`/`page.waitForFunction`/`page.waitForResponse`/`page.waitForTimeout` are your friends here.
 - Use `flow.dispose()` to cancel navigations and gracefully cleanup wait conditions. This allows you to handle failed navigations programmatically.

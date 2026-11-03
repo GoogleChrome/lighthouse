@@ -70,9 +70,10 @@ class ByteEfficiencyAudit extends Audit {
     const hasContentfulRecords = networkRecords.some(record => record.transferSize);
 
     // Requesting load simulator requires non-empty network records.
-    // Timespans are not guaranteed to have any network activity.
+    // Timespans and soft navigations are not guaranteed to have any network activity.
     // There are no bytes to be saved if no bytes were downloaded, so mark N/A if empty.
-    if (!hasContentfulRecords && gatherContext.gatherMode === 'timespan') {
+    const isPageLoad = gatherContext.gatherMode === 'navigation' && !settings.softNavigation;
+    if (!hasContentfulRecords && !isPageLoad) {
       return {
         score: 1,
         notApplicable: true,
@@ -167,7 +168,11 @@ class ByteEfficiencyAudit extends Audit {
     // `wastedMs` may be negative, if making the opportunity change could be detrimental.
     // This is useful information in the LHR and should be preserved.
     let wastedMs;
-    if (metricComputationInput.gatherContext.gatherMode === 'navigation') {
+    // The page dependency graph is rooted at the main document request, which a soft navigation
+    // does not have.
+    const isPageLoad = metricComputationInput.gatherContext.gatherMode === 'navigation' &&
+      !metricComputationInput.settings.softNavigation;
+    if (isPageLoad) {
       const optimisticFCPGraph = (await LanternFCP.request(metricComputationInput, context))
         .optimisticGraph;
       const optimisticLCPGraph = (await LanternLCP.request(metricComputationInput, context))

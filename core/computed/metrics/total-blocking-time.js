@@ -45,7 +45,16 @@ class TotalBlockingTime extends ComputedMetric {
   static async computeObservedMetric(data, context) {
     const events = TraceProcessor.getMainThreadTopLevelEvents(data.processedTrace);
 
-    if (data.processedNavigation) {
+    if (data.processedNavigation && data.settings.softNavigation) {
+      // A soft navigation has no load event or TTI, so observe from its FCP to the end of the trace.
+      return {
+        timing: calculateSumOfBlockingTime(
+          events,
+          data.processedNavigation.timings.firstContentfulPaint,
+          data.processedTrace.timings.traceEnd
+        ),
+      };
+    } else if (data.processedNavigation) {
       const {firstContentfulPaint} = data.processedNavigation.timings;
       const metricData = ComputedMetric.getMetricComputationInput(data);
       const interactiveTimeMs = (await Interactive.request(metricData, context)).timing;
