@@ -142,7 +142,11 @@ class ConsoleMessages extends BaseGatherer {
     session.on('Log.entryAdded', this._onLogEntryAdded);
     await session.sendCommand('Log.enable');
     await session.sendCommand('Log.startViolationsReport', {
-      config: [{name: 'discouragedAPIUse', threshold: -1}],
+      // Threshold must be < 0 so 0ms violations (`discouragedAPIUse`) pass `threshold < time`,
+      // and must not be `-1` because Blink's `InspectorLogAgent` uses `-1.0` as the default
+      // sentinel for `violation_thresholds_`, which prevents `-1` from being persisted across
+      // RenderDocument frame swaps in `InspectorLogAgent::Restore()`.
+      config: [{name: 'discouragedAPIUse', threshold: -2}],
     });
 
     session.on('Runtime.consoleAPICalled', this._onConsoleAPICalled);
