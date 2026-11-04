@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "L'API Fenced Frames està obsoleta i se n'ha programat la supressió."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "L'API Protected Audience està obsoleta i se suprimirà en una versió futura."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() i watchPosition() ja no funcionen en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Per obtenir més informació, consulta https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "El lloc web ha sol·licitat un subrecurs des d'una xarxa a la qual només ha pogut accedir gràcies a la posició privilegiada a la xarxa dels seus usuaris. Aquestes sol·licituds exposen els dispositius i els servidors que no són públics a Internet, amb la qual cosa augmenta el risc de patir una fuita d'informació o un atac de falsificació de sol·licituds entre llocs web (CSRF). Per reduir aquests riscos, Chrome discontinua les sol·licituds a subrecursos que no són públics quan s'inicien des de contexts no segurs i comença a bloquejar-los."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "Al camp dailyUpdateUrl de InterestGroups que s'ha transferit a joinAdInterestGroup() se li ha canviat el nom a updateUrl per reflectir el comportament amb més precisió."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator està obsoleta. Substitueix-la per Intl.Segmenter."
@@ -2231,6 +2225,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "La restricció DtlsSrtpKeyAgreement s'ha suprimit. Has especificat un valor true per a aquesta restricció, la qual cosa no ha tingut cap efecte, però pots suprimir aquesta restricció per organitzar-te millor."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() is deprecated and will be removed. Please use RTCRtpSender.dtmf instead."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "El mètode getStats() basat en crida de retorn està obsolet i se suprimirà. Utilitza un getStats() que compleixi les especificacions."
   },
@@ -2292,7 +2289,7 @@
     "message": "Clúster de canvi de disseny als {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
-    "message": "No s'ha detectat cap causant del canvi de disseny"
+    "message": "Couldn’t detect any layout shift culprits"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
     "message": "No hi ha canvis de disseny"
@@ -2760,7 +2757,7 @@
     "message": "Chrome ha detectat un intent d'executar JavaScript mentre era a la memòria cau"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "Actualment, les pàgines que han sol·licitat un AppBanner no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that requested an AppBanner aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "chrome://flags ha desactivat la memòria cau endavant/enrere. Visita chrome://flags/#back-forward-cache per activar-la de manera local en aquest dispositiu."
@@ -2772,76 +2769,76 @@
     "message": "La memòria cau endavant/enrere està desactivada perquè no hi ha prou memòria"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "El delegat no admet la memòria cau endavant/enrere"
+    "message": "Back/forward cache isn’t supported by delegate"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
     "message": "La memòria cau endavant/enrere s'ha desactivat per al prerenderitzador"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
-    "message": "La pàgina no es pot desar a la memòria cau perquè té una instància BroadcastChannel amb detectors registrats"
+    "message": "The page can’t be cached because it has a BroadcastChannel instance with registered listeners"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Les pàgines amb una capçalera cache-control:no-store no poden entrar a la memòria cau endavant/enrere"
+    "message": "Pages with cache-control:no-store header can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
     "message": "La memòria cau s'ha esborrat intencionadament"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina"
+    "message": "The page was evicted from the cache to allow another page to be cached"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "Actualment, les pàgines que contenen connectors no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages containing plugins aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Sense definir"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "Les pàgines que utilitzen l'API FileChooser no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use FileChooser API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "Les pàgines que utilitzen l'API File System Access no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use File System Access API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Les pàgines que utilitzen Media Device Dispatcher no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use Media Device Dispatcher aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
     "message": "Un reproductor multimèdia estava reproduint contingut en sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "Les pàgines que utilitzen l'API MediaSession i tenen establert un estat de reproducció no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use MediaSession API and set a playback state aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurats gestors d'acció no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use MediaSession API and set action handlers aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
     "message": "La memòria cau endavant/enrere està desactivada a causa d'un lector de pantalla"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "Les pàgines que utilitzen SecurityHandler no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use SecurityHandler aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "Les pàgines que utilitzen l'API Serial no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use Serial API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "Les pàgines que utilitzen l'API WebAuthentication no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebAuthentication API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "Les pàgines que utilitzen l'API WebBluetooth no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebBluetooth API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "Les pàgines que utilitzen l'API WebUSB no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebUSB API aren’t eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
     "message": "La memòria cau endavant/enrere està desactivada perquè les galetes estan desactivades en una pàgina que utilitza Cache-Control: no-store"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "Actualment, les pàgines que utilitzen un worker o un worklet especial no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use a dedicated worker or worklet aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "El document no s'havia acabat de carregar abans de sortir-ne"
+    "message": "The document didn’t finish loading before navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "Hi havia el bàner d'aplicacions en sortir de la pàgina"
+    "message": "App banner was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
     "message": "Hi havia el gestor de contrasenyes de Chrome en sortir de la pàgina"
@@ -2850,7 +2847,7 @@
     "message": "Hi havia un procés de DOM Distiller en curs en sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "Hi havia el lector de DOM Distiller en sortir de la pàgina"
+    "message": "DOM distiller viewer was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
     "message": "La memòria cau endavant/enrere està desactivada perquè hi ha extensions que utilitzen l'API de missatges"
@@ -2865,16 +2862,16 @@
     "message": "La memòria cau endavant/enrere està desactivada a causa de les extensions"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Es mostrava un quadre de diàleg modal (per exemple, de reenviament d'un formulari o de contrasenya HTTP) en sortir de la pàgina"
+    "message": "Modal dialog such as form resubmission or HTTP password dialog was shown for the page upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
     "message": "Es mostrava la pàgina sense connexió en sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "Hi havia la barra d'intervenció de memòria insuficient en sortir de la pàgina"
+    "message": "Out-of-memory intervention bar was present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "Hi havia sol·licituds de permisos en sortir de la pàgina"
+    "message": "Permission requests were present upon navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "Hi havia un bloquejador de finestres emergents en sortir de la pàgina"
@@ -2892,22 +2889,22 @@
     "message": "La memòria cau endavant/enrere està desactivada a causa d'un error del document"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Les pàgines que fan servir FencedFrames no es poden emmagatzemar a la memòria cau endavant/enrere"
+    "message": "Pages using FencedFrames can’t be stored in back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina"
+    "message": "The page was evicted from the cache to allow another page to be cached"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "Actualment, les pàgines que han donat accés de transmissió de contingut multimèdia no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have granted media stream access aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Actualment, les pàgines que tenen determinats tipus de contingut incrustat (p. ex., PDF) no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have certain kinds of embedded content (e.g. PDFs) aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Actualment, les pàgines que utilitzen IdleManager no són aptes per a la memòria cau endavant i enrere"
+    "message": "Pages that use IdleManager aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "Actualment, les pàgines que tenen una connexió IndexedDB oberta no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have an open IndexedDB connection aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
     "message": "La memòria cau endavant/enrere està desactivada a causa d'un esdeveniment IndexedDB"
@@ -2916,13 +2913,13 @@
     "message": "S'han utilitzat API no aptes"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Actualment, les pàgines en què s'injecta JavaScript mitjançant extensions no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that JavaScript is injected into by extensions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "Actualment, les pàgines en què s'injecta StyleSheet mitjançant extensions no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that a StyleSheet is injected into by extensions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
-    "message": "Error intern"
+    "message": "Internal error"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
     "message": "La memòria cau endavant/enrere està desactivada perquè alguna sol·licitud de xarxa de JavaScript ha rebut un recurs amb una capçalera Cache-Control: no-store"
@@ -2931,16 +2928,16 @@
     "message": "La memòria cau endavant/enrere està desactivada a causa d'una sol·licitud de keepalive"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "Actualment, les pàgines que utilitzen el bloqueig de teclat no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use keyboard lock aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "La pàgina no s'ha acabat de carregar abans de sortir-ne"
+    "message": "The page didn’t finish loading before navigating away"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Les pàgines el recurs principal de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages whose main resource has cache-control:no-cache can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Les pàgines el recurs principal de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages whose main resource has cache-control:no-store can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "La navegació s'ha cancel·lat abans que la pàgina es pogués restaurar de la memòria cau endavant/enrere"
@@ -2949,7 +2946,7 @@
     "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa activa ha rebut massa dades. Chrome limita la quantitat de dades que pot rebre una pàgina mentre està desada a la memòria cau."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Actualment, les pàgines que tenen un fetch() o un XHR en trànsit no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have inflight fetch() or XHR aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
     "message": "La pàgina s'ha tret de la memòria cau endavant/enrere perquè una sol·licitud a la xarxa activa incloïa una redirecció"
@@ -2958,34 +2955,34 @@
     "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa ha estat oberta massa temps. Chrome limita la quantitat de temps durant el qual una pàgina pot rebre dades mentre està desada a la memòria cau."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Les pàgines que no tenen una capçalera de resposta vàlida no poden entrar a la memòria cau endavant/enrere"
+    "message": "Pages that don’t have a valid response head can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
     "message": "La navegació ha tingut lloc en un marc diferent del marc principal"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "Actualment, les pàgines amb transaccions de base de dades indexades en curs no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages with ongoing indexed DB transactions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages with an in-flight network request aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa de recollida en trànsit no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages with an in-flight fetch network request aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages with an in-flight network request aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa XHR en trànsit no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages with an in-flight XHR network request aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "Actualment, les pàgines que utilitzen PaymentManager no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use PaymentManager aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Actualment, les pàgines que utilitzen imatge sobre imatge no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use Picture-in-Picture aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "Actualment, les pàgines que mostren la IU d'impressió no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that show printing UI aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
     "message": "La pàgina s'ha obert amb window.open() i una altra pestanya hi fa referència o la pàgina ha obert una finestra"
@@ -2997,25 +2994,25 @@
     "message": "El procés renderitzador de la pàgina s'ha cancel·lat a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de captura d'àudio no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested audio capture permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de sensor no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested sensor permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de recollida o sincronització en segon pla no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested background sync or fetch permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos MIDI no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested MIDI permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de notificacions no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested notifications permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "Actualment, les pàgines que han sol·licitat accés d'emmagatzematge no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested storage access aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de captura de vídeo no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have requested video capture permissions aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
     "message": "Només es poden desar a la memòria cau les pàgines amb un esquema d'URL HTTP o HTTPS"
@@ -3036,25 +3033,25 @@
     "message": "S'ha reiniciat Chrome i s'han esborrat les entrades de la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "Actualment, les pàgines que utilitzen SharedWorker no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use SharedWorker aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "La pàgina s'ha tret de la memòria cau perquè ha rebut un missatge d'un shared worker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "Actualment, les pàgines que utilitzen SpeechRecognizer no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use SpeechRecognizer aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "Actualment, les pàgines que utilitzen SpeechSynthesis no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use SpeechSynthesis aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "Un iframe de la pàgina ha començat una navegació que no s'ha completat"
+    "message": "An iframe on the page started a navigation that didn’t complete"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Les pàgines el subrecurs de les quals té la capçalera cache-control:no-cache no poden entrar a la memòria cau endavant/enrere"
+    "message": "Pages whose subresource has cache-control:no-cache can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Les pàgines el subrecurs de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages whose subresource has cache-control:no-store can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
     "message": "La pàgina ha excedit el temps màxim a la memòria cau endavant/enrere i ha caducat"
@@ -3072,46 +3069,46 @@
     "message": "El navegador ha canviat la capçalera de substitució de l'agent d'usuari"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Actualment, les pàgines que han donat accés per gravar vídeo o àudio no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that have granted access to record video or audio aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "Actualment, les pàgines que utilitzen WebDatabase no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebDatabase aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "Actualment, les pàgines que utilitzen WebHID no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebHID aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "Actualment, les pàgines que utilitzen WebLocks no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebLocks aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "Actualment, les pàgines que utilitzen WebNfc no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebNfc aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "Actualment, les pàgines que utilitzen WebOTPService no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebOTPService aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "Les pàgines amb WebRTC no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages with WebRTC can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "Actualment, les pàgines que utilitzen WebShare no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebShare aren’t currently eligible for back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "Les pàgines amb WebSocket no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages with WebSocket can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
     "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "Les pàgines amb WebTransport no poden accedir a la memòria cau endavant/enrere"
+    "message": "Pages with WebTransport can’t enter back/forward cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
     "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "Actualment, les pàgines que utilitzen WebXR no són aptes per a la memòria cau endavant/enrere"
+    "message": "Pages that use WebXR aren’t currently eligible for back/forward cache"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "En el cas de contingut animat, fes servir [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) per minimitzar l'ús de la CPU quan el contingut és fora de la pantalla."

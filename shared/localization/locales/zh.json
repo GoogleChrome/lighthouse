@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "Fenced Frame API 已被弃用，并计划移除。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "Protected Audience API 已弃用，将在未来版本中移除。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() 和 watchPosition() 不再适用于不安全的源。若要使用此功能，您应考虑将应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/。"
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "该网站向网络请求了一项子资源，而且仅仅因为其用户的特权网络位置而能够访问此项资源。此类请求会向互联网公开非公用设备和服务器，这会增加跨站请求伪造 (CSRF) 攻击和/或信息泄露的风险。为降低这类风险，Chrome 不再支持从非安全上下文发起针对非公用子资源的请求，并将开始阻止此类请求。"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "向 joinAdInterestGroup() 传递的 InterestGroups 所含 dailyUpdateUrl 字段已被重命名为 updateUrl，以便更准确地反映其行为。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator 已被弃用。请改用 Intl.Segmenter。"
@@ -2231,6 +2225,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "约束条件 DtlsSrtpKeyAgreement 已被移除。您已为此约束条件指定 true 值，这没有任何作用，但为整洁起见，您可以移除此约束条件。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() 已被弃用，并将被移除。请改用 RTCRtpSender.dtmf。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "基于回调的 getStats() 已被弃用，并将被移除。请改用符合规范的 getStats()。"
   },
@@ -2238,7 +2235,7 @@
     "message": "Range.expand() 已被弃用。请改用 Selection.modify()。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
-    "message": "Related Website Sets 已被弃用，并将被移除。如需了解详情，请访问 https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/。"
+    "message": "Related Website Sets 已弃用并将移除。如需了解详情，请访问 https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "如果对应的网址包含嵌入式凭证（例如 https://user:pass@host/），子资源请求会被屏蔽。"
@@ -2760,7 +2757,7 @@
     "message": "Chrome 检测到一项在储存于缓存期间执行 JavaScript 的意图"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "已请求 AppBanner 的网页目前无法储存至往返缓存"
+    "message": "已请求 AppBanner 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "往返缓存被相关 flag 停用了。请在此设备上访问 chrome://flags/#back-forward-cache 以从本地启用该功能。"
@@ -2781,67 +2778,67 @@
     "message": "该网页无法缓存，因为它包含的 BroadcastChannel 实例具有已注册的监听器"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "含 cache-control:no-store 标头的网页无法储存至往返缓存"
+    "message": "含 cache-control:no-store 标头的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
     "message": "缓存被刻意清除了"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
-    "message": "该网页被逐出了缓存，以使另一个网页能够缓存"
+    "message": "该网页已从缓存中移除，以便为其他网页腾出缓存空间"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "包含插件的网页目前无法储存至往返缓存"
+    "message": "包含插件的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "未定义"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "使用 FileChooser API 的网页无法储存至往返缓存"
+    "message": "使用 FileChooser API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "使用 File System Access API 的网页无法储存至往返缓存"
+    "message": "使用 File System Access API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "使用媒体设备调度程序的网页无法储存至往返缓存"
+    "message": "使用媒体设备调度程序的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
     "message": "媒体播放器正在播放内容时用户就离开了网页"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "使用 MediaSession API 并设置了播放状态的网页无法储存至往返缓存"
+    "message": "使用 MediaSession API 并设置了播放状态的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "使用 MediaSession API 并设置了操作处理程序的网页无法储存至往返缓存"
+    "message": "使用 MediaSession API 并设置了操作处理程序的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
     "message": "往返缓存已被停用，因为受屏幕阅读器影响"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "使用 SecurityHandler 的网页无法储存至往返缓存"
+    "message": "使用 SecurityHandler 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "使用 Serial API 的网页无法储存至往返缓存"
+    "message": "使用 Serial API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "使用 WebAuthetication API 的网页无法储存至往返缓存"
+    "message": "使用 WebAuthentication API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "使用 WebBluetooth API 的网页无法储存至往返缓存"
+    "message": "使用 WebBluetooth API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "使用 WebUSB API 的网页无法储存至往返缓存"
+    "message": "使用 WebUSB API 的网页不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
     "message": "往返缓存已被停用，因为在使用 Cache-Control: no-store 的网页上 Cookie 处于停用状态"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "使用专用 worker 或 worklet 的网页目前无法储存至往返缓存"
+    "message": "使用专用 worker 或 worklet 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "该文档还未加载完毕时用户就离开了"
+    "message": "在离开前，文档尚未加载完毕"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "用户离开网页时，系统显示了应用横幅"
+    "message": "在离开网页时，系统显示了应用横幅"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
     "message": "用户离开网页时，系统显示了 Chrome 密码管理工具"
@@ -2850,7 +2847,7 @@
     "message": "用户离开网页时，DOM 提取正在进行"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
-    "message": "用户离开网页时，系统显示了 DOM Distiller Viewer"
+    "message": "在离开网页时，系统显示了 DOM Distiller Viewer"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
     "message": "往返缓存已被停用，因为扩展程序使用了 Messaging API"
@@ -2865,16 +2862,16 @@
     "message": "往返缓存已被停用，因为受扩展程序影响"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "用户离开网页时，该网页上显示了模态对话框（例如表单重新提交）或 HTTP 密码对话框"
+    "message": "在离开网页时，该网页上显示了模态对话框（例如表单重新提交）或 HTTP 密码对话框"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
     "message": "用户离开网页时，系统显示了离线版网页"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
-    "message": "用户离开网页时，系统显示了 Out-Of-Memory Intervention 栏"
+    "message": "在离开网页时，系统显示了内存不足干预栏"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "用户离开网页时，系统显示了权限请求"
+    "message": "在离开网页时，系统显示了权限请求"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "用户离开网页时，系统显示了弹窗拦截器"
@@ -2892,22 +2889,22 @@
     "message": "往返缓存已被停用，因为文档出错了"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "采用 FencedFrame 的网页无法存储在 bfcache 中"
+    "message": "使用 FencedFrame 的网页无法存储至往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
-    "message": "该网页被逐出了缓存，以使另一个网页能够缓存"
+    "message": "该网页已从缓存中移除，以便为其他网页腾出缓存空间"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "已被授予媒体流访问权限的网页目前无法储存至往返缓存"
+    "message": "已被授予媒体流访问权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "包含某些类型嵌入内容（例如 PDF）的网页目前无法储存至往返缓存"
+    "message": "包含某些类型嵌入内容（例如 PDF）的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "使用 IdleManager 的网页目前无法储存至往返缓存"
+    "message": "使用 IdleManager 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "具备开放的 IndexedDB 连接的网页目前无法储存至往返缓存"
+    "message": "具备开放的 IndexedDB 连接的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
     "message": "往返缓存已被停用，因为发生了 IndexedDB 事件"
@@ -2916,10 +2913,10 @@
     "message": "使用了不符合条件的 API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "已被扩展程序注入 JavaScript 的网页目前无法储存至往返缓存"
+    "message": "已被扩展程序注入 JavaScript 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "已被扩展程序注入 StyleSheet 的网页目前无法储存至往返缓存"
+    "message": "已被扩展程序注入 StyleSheet 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
     "message": "内部错误"
@@ -2931,16 +2928,16 @@
     "message": "往返缓存已被停用，因为这是一项 keepalive 请求"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "使用“键盘锁定”功能的网页目前无法储存至往返缓存"
+    "message": "使用键盘锁定功能的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "该网页还未加载完毕时用户就离开了"
+    "message": "在离开前，网页尚未加载完毕"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "主资源包含 cache-control:no-cache 的网页无法储存至往返缓存"
+    "message": "主资源包含 cache-control:no-cache 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "主资源包含 cache-control:no-store 的网页无法储存至往返缓存"
+    "message": "主资源包含 cache-control:no-store 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "该网页还没从往返缓存中恢复时导航就被取消了"
@@ -2949,7 +2946,7 @@
     "message": "该网页被逐出了缓存，因为有一项使用中的网络连接收到了太多数据。Chrome 会限制网页在缓存期间可接收的数据量。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "包含传输中的 fetch() 或 XHR 的网页目前无法储存至往返缓存"
+    "message": "包含传输中的 fetch() 或 XHR 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
     "message": "该网页被逐出了往返缓存，因为有一项使用中的网络请求涉及了重定向"
@@ -2958,34 +2955,34 @@
     "message": "该网页被逐出了缓存，因为有一项网络连接处于开放状态的时间太长。Chrome 会限制网页在缓存期间可接收数据的时长。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "不含有效响应标头的网页无法储存至往返缓存"
+    "message": "不包含有效响应标头的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
     "message": "导航是在主框架之外的某个框架中发生的"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "正在针对已建立索引的数据库处理事务的网页目前无法储存至往返缓存"
+    "message": "包含正在进行的 IndexedDB 事务的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存"
+    "message": "包含传输中的网络请求的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "包含传输中的 fetch() 网络请求的网页目前无法储存至往返缓存"
+    "message": "包含传输中的 fetch() 网络请求的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存"
+    "message": "包含传输中的网络请求的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "包含传输中的 XHR 网络请求的网页目前无法储存至往返缓存"
+    "message": "包含传输中的 XHR 网络请求的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "使用 PaymentManager 的网页目前无法储存至往返缓存"
+    "message": "使用 PaymentManager 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "使用“画中画”功能的网页目前无法储存至往返缓存"
+    "message": "使用“画中画”功能的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "显示打印界面的网页目前无法储存至往返缓存"
+    "message": "显示打印界面的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
     "message": "该网页是使用“window.open()”打开的，而另一个标签页引用了该网页；或者，该网页打开了一个窗口"
@@ -2997,25 +2994,25 @@
     "message": "储存于往返缓存中的网页的渲染程序进程被终止了"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "已请求音频截取权的网页目前无法储存至往返缓存"
+    "message": "已请求音频拍摄权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "已请求传感器使用权的网页目前无法储存至往返缓存"
+    "message": "已请求传感器使用权的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "已请求后台同步或提取权限的网页目前无法储存至往返缓存"
+    "message": "已请求后台同步或提取权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "已请求 MIDI 权限的网页目前无法储存至往返缓存"
+    "message": "已请求 MIDI 权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "已请求通知权限的网页目前无法储存至往返缓存"
+    "message": "已请求通知权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "已请求存储空间访问权限的网页目前无法储存至往返缓存"
+    "message": "已请求存储空间访问权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "已请求视频拍摄权限的网页目前无法储存至往返缓存"
+    "message": "已请求视频拍摄权限的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
     "message": "只有网址协议为 HTTP/HTTPS 的网页才能被缓存"
@@ -3036,25 +3033,25 @@
     "message": "Chrome 重启了，因而清除了往返缓存条目"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "使用 SharedWorker 的网页目前无法储存至往返缓存"
+    "message": "使用 SharedWorker 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "该网页被逐出了缓存，因为它收到了来自 SharedWorker 的消息"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "使用 SpeechRecognizer 的网页目前无法储存至往返缓存"
+    "message": "使用 SpeechRecognizer 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "使用 SpeechSynthesis 的网页目前无法储存至往返缓存"
+    "message": "使用 SpeechSynthesis 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "该网页上某个 iframe 发起的导航并未完成"
+    "message": "该网页上的某个 iframe 发起了一次导航，但未能完成"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "子资源包含 cache-control:no-cache 的网页无法储存至往返缓存"
+    "message": "子资源包含 cache-control:no-cache 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "子资源包含 cache-control:no-store 的网页无法储存至往返缓存"
+    "message": "子资源包含 cache-control:no-store 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
     "message": "该网页超出了往返缓存中的储存时长上限，因而已过期"
@@ -3072,31 +3069,31 @@
     "message": "浏览器更改了用户代理替换标头"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "已被授予视频/音频录制权的网页目前无法储存至往返缓存"
+    "message": "已被授予视频/音频录制权的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "使用 WebDatabase 的网页目前无法储存至往返缓存"
+    "message": "使用 WebDatabase 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "使用 WebHID 的网页目前无法储存至往返缓存"
+    "message": "使用 WebHID 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "使用 WebLocks 的网页目前无法储存至往返缓存"
+    "message": "使用 WebLocks 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "使用 WebNfc 的网页目前无法储存至往返缓存"
+    "message": "使用 WebNfc 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "使用 WebOTPService 的网页目前无法储存至往返缓存"
+    "message": "使用 WebOTPService 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "使用 WebRTC 的网页无法储存至往返缓存"
+    "message": "使用 WebRTC 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "往返缓存已被停用，因为使用了 WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "使用 WebShare 的网页目前无法储存至往返缓存"
+    "message": "使用 WebShare 的网页目前不适用往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "使用 WebSocket 的网页无法进入往返缓存"
@@ -3105,13 +3102,13 @@
     "message": "往返缓存已被停用，因为使用了 WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "使用 WebTransport 的网页无法储存至往返缓存"
+    "message": "使用 WebTransport 的网页无法进入往返缓存"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
     "message": "往返缓存已被停用，因为使用了 WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "使用 WebXR 的网页目前无法储存至往返缓存"
+    "message": "使用 WebXR 的网页目前不适用往返缓存"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "对于动画内容，请使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) 尽量减少当内容在屏幕外时的 CPU 使用量。"

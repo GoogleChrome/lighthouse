@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "L'API Fenced Frame est obsolète et sera supprimée."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "L'API Protected Audience est obsolète et sera supprimée dans une prochaine version."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() et watchPosition() ne fonctionnent plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre appli, par exemple HTTPS. Consultez https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ pour en savoir plus."
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "Le site Web a demandé une sous-ressource auprès d'un réseau auquel il pouvait uniquement accéder en raison de la position privilégiée de ses utilisateurs sur le réseau. Ces requêtes exposent les serveurs et les appareils non publics à Internet, ce qui augmente le risque d'attaque par falsification des requêtes intersites (CSRF) et/ou les fuites d'informations. Pour réduire ces risques, Chrome n'accepte plus les requêtes auprès de sous-ressources non publiques émises depuis des contextes non sécurisés et va commencer à les bloquer."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "Le champ dailyUpdateUrl de InterestGroups transmis à joinAdInterestGroup() a été renommé updateUrl pour refléter plus précisément son comportement."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator est obsolète. Veuillez utiliser Intl.Segmenter à la place."
@@ -2231,6 +2225,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "La contrainte DtlsSrtpKeyAgreement a été supprimée. Vous avez spécifié une valeur true pour cette contrainte, qui est sans effet. Vous pouvez toutefois la supprimer pour plus de clarté."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() est obsolète et sera supprimé. Veuillez utiliser RTCRtpSender.dtmf à la place."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "La méthode getStats() basée sur le rappel est obsolète et sera supprimée. Utilisez plutôt la méthode getStats() conforme aux spécifications."
   },
@@ -2238,7 +2235,7 @@
     "message": "Range.expand() est obsolète. Veuillez plutôt utiliser Selection.modify()."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
-    "message": "L'API Related Website Sets est obsolète et sera supprimée. Pour en savoir plus, consultez https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/."
+    "message": "Les Related Website Sets sont obsolètes et vont être supprimés. Pour en savoir plus, consultez https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "Les requêtes de sous-ressources dont les URL contiennent des identifiants intégrés (https://user:pass@host/, par exemple) sont bloquées."
@@ -2781,7 +2778,7 @@
     "message": "La page ne peut pas être mise en cache, car elle contient une instance BroadcastChannel avec des écouteurs inscrits"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Les pages qui contiennent l'en-tête \"cache-control:no-store\" ne peuvent pas être incluses dans le cache back/forward"
+    "message": "Les pages qui contiennent l'en-tête cache-control:no-store ne peuvent pas être incluses dans le cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
     "message": "Le cache a été effacé volontairement"
@@ -2802,7 +2799,7 @@
     "message": "Les pages qui utilisent l'API File System Access ne sont pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Les pages qui utilisent Media Device Dispatcher ne sont actuellement pas éligibles au cache back/forward"
+    "message": "Les pages qui utilisent Media Device Dispatcher ne sont pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
     "message": "La page a été quittée alors qu'un lecteur multimédia s'exécutait"
@@ -2838,7 +2835,7 @@
     "message": "Les pages qui utilisent un worker ou un worklet dédiés ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "La page a été quittée avant que le document soit entièrement chargé"
+    "message": "Le chargement du document n'était pas terminé au moment de quitter la page"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
     "message": "La page a été quittée alors qu'une bannière d'appli était présente"
@@ -2865,7 +2862,7 @@
     "message": "Le cache back/forward est désactivé en raison des extensions"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "La page a été quittée alors qu'une boîte de dialogue pour renvoyer un formulaire ou indiquer un mot de passe HTTP, par exemple, était affichée pour cette page"
+    "message": "La page a été quittée alors qu'une boîte de dialogue modale pour renvoyer un formulaire ou indiquer un mot de passe HTTP, par exemple, était affichée pour cette page"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
     "message": "La page a été quittée alors que la page hors connexion était affichée"
@@ -2874,7 +2871,7 @@
     "message": "La page a été quittée alors que la barre d'intervention pour mémoire insuffisante était présente"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "La page a été quittée alors que des demandes d'autorisation étaient en cours"
+    "message": "Des demandes d'autorisation étaient présentes lorsque la page a été quittée"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "La page a été quittée alors que le bloqueur de pop-up était actif"
@@ -2892,7 +2889,7 @@
     "message": "Le cache back/forward est désactivé en raison d'une erreur liée au document"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Les pages qui utilisent FencedFrames ne peuvent pas être stockées dans le bfcache"
+    "message": "Les pages qui utilisent FencedFrames ne peuvent pas être stockées dans le cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
     "message": "La page a été exclue du cache afin de laisser la place à une autre"
@@ -2937,7 +2934,7 @@
     "message": "La page a été quittée avant d'être entièrement chargée"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Les pages dont la ressource principale contient \"cache-control:no-cache\" ne peuvent pas être incluses dans le cache back/forward"
+    "message": "Les pages dont la ressource principale contient cache-control:no-cache ne peuvent pas être incluses dans le cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
     "message": "Les pages dont la ressource principale contient cache-control:no-store ne peuvent pas être incluses dans le cache back/forward"
@@ -2976,13 +2973,13 @@
     "message": "Les pages ayant une requête réseau en cours ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Les pages ayant une requête réseau XHR en cours ne sont actuellement pas éligibles au cache back/forward"
+    "message": "Les pages avec une requête réseau XHR en cours ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
     "message": "Les pages qui utilisent PaymentManager ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Les pages qui utilisent le Picture-in-picture ne sont actuellement pas éligibles au cache back/forward"
+    "message": "Les pages qui utilisent Picture-in-picture ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
     "message": "Les pages qui affichent l'UI d'impression ne sont actuellement pas éligibles au cache back/forward"
@@ -3051,7 +3048,7 @@
     "message": "Un iFrame sur la page a lancé une navigation qui n'a pas abouti"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Les pages dont la sous-ressource contient \"cache-control:no-cache\" ne peuvent pas être incluses dans le cache back/forward"
+    "message": "Les pages dont la sous-ressource contient cache-control:no-cache ne peuvent pas être incluses dans le cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
     "message": "Les pages dont la sous-ressource contient cache-control:no-store ne peuvent pas être incluses dans le cache back/forward"
@@ -3087,7 +3084,7 @@
     "message": "Les pages qui utilisent WebNfc ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "Les pages qui utilisent WebOTPService ne sont actuellement pas éligibles au bfcache"
+    "message": "Les pages qui utilisent WebOTPService ne sont actuellement pas éligibles au cache back/forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Les pages avec WebRTC ne peuvent pas être incluses dans le cache back/forward"
