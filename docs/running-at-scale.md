@@ -23,7 +23,7 @@ The [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse#using-the-node-c
 
 Many teams have wrapped around the Lighthouse CLI with bash, python, or node scripts. The npm modules [multihouse](https://github.com/samdutton/multihouse) and [lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch) both leverage this pattern.
 
-You'll be running Lighthouse CLI on your own machines, and we have guidance on the [specs of machines suitable](./variability.md#run-on-adequate-hardware) for running Lighthouse without skewing performance results. The environment must also be able to run either headful Chrome or headless Chrome.
+You'll be running Lighthouse CLI on your own machines, and we have guidance on the [specs of machines suitable](./variability.md#run-on-adequate-hardware) for running Lighthouse without skewing performance results. The environment must also be able to run either headful Chrome or headless Chrome. If running inside Linux containers (Docker, Kubernetes, etc.) where `/dev/shm` defaults to `64MB`, increase shared memory (e.g. `docker run --shm-size=1g`) or pass `--chrome-flags="--disable-dev-shm-usage"` to avoid Chrome tab crashes and `PROTOCOL_TIMEOUT` errors.
 
 * PRO: Ultimate configurability
 * CON: Must create and maintain testing environment
