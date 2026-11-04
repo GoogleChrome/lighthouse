@@ -18,8 +18,8 @@
 /** @typedef {Omit<LH.Artifacts.NavigationTraceTimes, 'firstContentfulPaintAllFrames'|'traceEnd'>} TraceNavigationTimesForFrame */
 /** @typedef {'lastNavigationStart'|'firstResourceSendRequest'|'lighthouseMarker'|'auto'} TimeOriginDeterminationMethod */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
-/** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
-/** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number}, frame: string}}} LCPCandidateEvent */
+/** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number, nodeId?: number, type?: string}, frame: string}}} LCPEvent */
+/** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number, nodeId?: number, type?: string}, frame: string}}} LCPCandidateEvent */
 
 import log from 'lighthouse-logger';
 
@@ -925,6 +925,7 @@ class TraceProcessor {
       loadEvt: frameTimings.loadEvt,
       domContentLoadedEvt: frameTimings.domContentLoadedEvt,
       lcpInvalidated: frameTimings.lcpInvalidated,
+      lcpImageUrl: frameTimings.lcpImageUrl,
     };
   }
 
@@ -1034,6 +1035,17 @@ class TraceProcessor {
     // This function accepts events spanning multiple frames, but this usage will only provide events from the main frame.
     const frameId = frameEvents.map(e => TraceProcessor.getFrameId(e)).find(Boolean);
     const lcpResult = this.computeValidLCPAllFrames(frameEvents, timeOriginEvt, frameId);
+    const lcpEvent = lcpResult.lcp;
+    const lcpImagePaintEvt = lcpEvent && lcpEvent.args.data?.nodeId !== undefined ?
+      frameEvents.filter(e => {
+        return e.name === 'LargestImagePaint::Candidate' &&
+            e.args.frame === lcpEvent.args.frame &&
+            e.args.data?.DOMNodeId === lcpEvent.args.data?.nodeId &&
+            (lcpEvent.args.data?.size === undefined ||
+              e.args.data?.size === lcpEvent.args.data?.size);
+      }).sort((a, b) => b.ts - a.ts)[0] :
+      undefined;
+    const lcpImageUrl = lcpImagePaintEvt?.args.data?.imageUrl;
 
     const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > timeOriginEvt.ts);
     const domContentLoaded = frameEvents.find(
@@ -1076,6 +1088,7 @@ class TraceProcessor {
       loadEvt: load,
       domContentLoadedEvt: domContentLoaded,
       lcpInvalidated: lcpResult.invalidated,
+      lcpImageUrl,
     };
   }
 }
