@@ -594,6 +594,20 @@ const expectations = {
           ],
         },
       },
+      'frame-title-unique': {
+        score: 1,
+        scoreDisplayMode: 'informative',
+        details: {
+          items: [
+            {
+              node: {
+                selector: 'body > section > iframe#frame-title-unique-1',
+                snippet: '<iframe id="frame-title-unique-1">',
+              },
+            },
+          ],
+        },
+      },
       'heading-order': {
         score: 0,
         details: {
