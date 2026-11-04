@@ -402,6 +402,18 @@ async function isPageHung(session) {
   }
 }
 
+/**
+ * Disables script execution and terminates active JS execution on a hung page.
+ * Does not await the protocol commands so callers can immediately exit with `PAGE_HUNG`.
+ * @param {LH.Gatherer.ProtocolSession} session
+ */
+function killHungPage(session) {
+  void session.sendCommandAndIgnore('Emulation.setScriptExecutionDisabled', {value: true})
+    .catch(() => {});
+  void session.sendCommandAndIgnore('Runtime.terminateExecution')
+    .catch(() => {});
+}
+
 /** @type {Required<WaitOptions>['_waitForTestOverrides']} */
 const DEFAULT_WAIT_FUNCTIONS = {waitForFcp, waitForLoadEvent, waitForCPUIdle, waitForNetworkIdle};
 
@@ -503,9 +515,7 @@ async function waitForFullyLoaded(session, networkMonitor, options, signal) {
       log.warn('waitFor', 'Timed out waiting for page load. Checking if page is hung...');
       if (await isPageHung(session)) {
         log.warn('waitFor', 'Page appears to be hung, killing JavaScript...');
-        // We don't await these, as we want to exit with PAGE_HUNG
-        void session.sendCommandAndIgnore('Emulation.setScriptExecutionDisabled', {value: true});
-        void session.sendCommandAndIgnore('Runtime.terminateExecution');
+        killHungPage(session);
         throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       }
 
@@ -576,6 +586,8 @@ function waitForUserToContinue(driver) {
 }
 
 export {
+  isPageHung,
+  killHungPage,
   waitForNothing,
   waitForFrameNavigated,
   waitForFcp,

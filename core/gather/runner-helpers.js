@@ -25,7 +25,19 @@
 
 import log from 'lighthouse-logger';
 
+import {LighthouseError} from '../lib/lh-error.js';
 import {Sentry} from '../lib/sentry.js';
+import {isPageHung, killHungPage} from './driver/wait-for-condition.js';
+
+/**
+ * @param {unknown} err
+ * @return {boolean}
+ */
+function isPossiblePageHangError(err) {
+  if (!(err instanceof Error)) return false;
+  return (err instanceof LighthouseError && err.code === 'PROTOCOL_TIMEOUT') ||
+    ('protocolError' in err && err.protocolError === 'Execution was terminated');
+}
 
 /**
  *
@@ -84,6 +96,9 @@ async function collectPhaseArtifacts(options) {
   const priorPhase = phaseToPriorPhase[phase];
   const priorPhaseArtifacts = (priorPhase && artifactState[priorPhase]) || {};
   const isFinalPhase = phase === 'getArtifact';
+  /** @type {LighthouseError | undefined} */
+  let fatalGatherError;
+  let hasReportedFatalGatherError = false;
 
   for (const artifactDefn of artifactDefinitions) {
     log.verbose(`artifacts:${phase}`, artifactDefn.id);
@@ -91,6 +106,10 @@ async function collectPhaseArtifacts(options) {
 
     const priorArtifactPromise = priorPhaseArtifacts[artifactDefn.id] || Promise.resolve();
     const artifactPromise = priorArtifactPromise.then(async () => {
+      if (fatalGatherError) {
+        throw fatalGatherError;
+      }
+
       const dependencies = isFinalPhase
         ? await collectArtifactDependencies(artifactDefn, artifactState.getArtifact)
         : /** @type {Dependencies} */ ({});
@@ -103,24 +122,64 @@ async function collectPhaseArtifacts(options) {
         log.time(status);
       }
 
-      const artifact = await gatherer[phase]({
-        gatherMode,
-        driver,
-        page,
-        baseArtifacts,
-        dependencies,
-        computedCache,
-        settings,
-      });
+      try {
+        return await gatherer[phase]({
+          gatherMode,
+          driver,
+          page,
+          baseArtifacts,
+          dependencies,
+          computedCache,
+          settings,
+        });
+      } catch (err) {
+        if (isFinalPhase && !fatalGatherError) {
+          if (err instanceof LighthouseError && err.code === 'TARGET_CRASHED') {
+            fatalGatherError = err;
+            baseArtifacts.LighthouseRunWarnings.push(fatalGatherError.friendlyMessage);
+            throw fatalGatherError;
+          }
 
-      if (isFinalPhase) {
-        log.timeEnd(status);
+          if (isPossiblePageHangError(err)) {
+            log.warn(artifactDefn.id, 'Gatherer timed out. Checking if page is hung...');
+            try {
+              if (await isPageHung(driver.defaultSession)) {
+                log.warn(artifactDefn.id, 'Page appears to be hung, killing JavaScript...');
+                killHungPage(driver.defaultSession);
+                fatalGatherError = new LighthouseError(
+                  LighthouseError.errors.PAGE_HUNG,
+                  undefined,
+                  {cause: err}
+                );
+                baseArtifacts.LighthouseRunWarnings.push(fatalGatherError.friendlyMessage);
+                throw fatalGatherError;
+              }
+            } catch (hangCheckErr) {
+              if (hangCheckErr instanceof LighthouseError &&
+                  (hangCheckErr.code === 'PAGE_HUNG' || hangCheckErr.code === 'TARGET_CRASHED')) {
+                if (!fatalGatherError) {
+                  fatalGatherError = hangCheckErr;
+                  baseArtifacts.LighthouseRunWarnings.push(fatalGatherError.friendlyMessage);
+                }
+                throw fatalGatherError;
+              }
+              throw hangCheckErr;
+            }
+          }
+        }
+        throw err;
+      } finally {
+        if (isFinalPhase) {
+          log.timeEnd(status);
+        }
       }
-
-      return artifact;
     });
 
     await artifactPromise.catch((err) => {
+      if (err === fatalGatherError) {
+        if (hasReportedFatalGatherError) return;
+        hasReportedFatalGatherError = true;
+      }
       Sentry.captureException(err, {
         tags: {gatherer: artifactDefn.id, phase},
         level: 'error',

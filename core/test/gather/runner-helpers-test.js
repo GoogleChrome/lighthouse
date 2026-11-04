@@ -4,9 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as jestMock from 'jest-mock';
+
 import * as helpers from '../../gather/runner-helpers.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {defaultSettings} from '../../config/constants.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import {Sentry} from '../../lib/sentry.js';
 import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js';
 
 describe('collectArtifactDependencies', () => {
@@ -248,5 +252,173 @@ describe('collectPhaseArtifacts', () => {
       message: 'stopInstrumentation rejection',
     });
     expect(gatherers.timespan.getArtifact).not.toHaveBeenCalled();
+  });
+
+  describe('PAGE_HUNG attribution in getArtifact', () => {
+    /** @type {jestMock.SpiedFunction<typeof Sentry.captureException>} */
+    let captureExceptionSpy;
+
+    beforeEach(() => {
+      captureExceptionSpy = jestMock.spyOn(Sentry, 'captureException');
+    });
+
+    afterEach(() => {
+      captureExceptionSpy.mockRestore();
+    });
+
+    it('attributes PROTOCOL_TIMEOUT to PAGE_HUNG and skips remaining gatherers', async () => {
+      const {artifactDefinitions, gatherers} = createGathererSet();
+      const timeoutError = new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Runtime.evaluate',
+      });
+      gatherers.snapshot.getArtifact.mockRejectedValue(timeoutError);
+
+      // `isPageHung` Runtime.evaluate("ping") also times out.
+      mockDriver.defaultSession.sendCommand.mockResponse('Runtime.evaluate', () =>
+        Promise.reject(new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+          protocolMethod: 'Runtime.evaluate',
+        }))
+      );
+      mockDriver.defaultSession.sendCommand.mockResponse('Emulation.setScriptExecutionDisabled');
+      mockDriver.defaultSession.sendCommand.mockResponse('Runtime.terminateExecution');
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      // Earlier gatherer succeeded and keeps its artifact.
+      expect(await artifactState.getArtifact.Timespan).toEqual({type: 'timespan'});
+
+      // Timed-out gatherer is converted to PAGE_HUNG with original cause preserved.
+      await expect(artifactState.getArtifact.Snapshot).rejects.toMatchObject({
+        code: 'PAGE_HUNG',
+        cause: timeoutError,
+      });
+
+      // Subsequent gatherer short-circuits with PAGE_HUNG without running getArtifact.
+      await expect(artifactState.getArtifact.Navigation).rejects.toMatchObject({
+        code: 'PAGE_HUNG',
+      });
+      expect(gatherers.navigation.getArtifact).not.toHaveBeenCalled();
+
+      // JS execution was disabled and terminated.
+      expect(
+        mockDriver.defaultSession.sendCommand.findInvocation('Emulation.setScriptExecutionDisabled')
+      ).toEqual({value: true});
+      expect(mockDriver.defaultSession.sendCommand).toHaveBeenCalledWith(
+        'Runtime.terminateExecution'
+      );
+
+      // Top-level run warning was added once and Sentry was only notified once.
+      expect(baseArtifacts.LighthouseRunWarnings).toHaveLength(1);
+      expect(baseArtifacts.LighthouseRunWarnings[0]).toBeDisplayString(/stopped responding/);
+      expect(captureExceptionSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('attributes "Execution was terminated" errors to PAGE_HUNG when hung', async () => {
+      const {artifactDefinitions, gatherers} = createGathererSet();
+      const evalTerminatedError = LighthouseError.fromProtocolMessage('Runtime.evaluate', {
+        message: 'Execution was terminated',
+      });
+      gatherers.snapshot.getArtifact.mockRejectedValue(evalTerminatedError);
+
+      mockDriver.defaultSession.sendCommand.mockResponse('Runtime.evaluate', () =>
+        Promise.reject(new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+          protocolMethod: 'Runtime.evaluate',
+        }))
+      );
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      await expect(artifactState.getArtifact.Snapshot).rejects.toMatchObject({
+        code: 'PAGE_HUNG',
+        cause: evalTerminatedError,
+      });
+      await expect(artifactState.getArtifact.Navigation).rejects.toMatchObject({
+        code: 'PAGE_HUNG',
+      });
+      expect(gatherers.navigation.getArtifact).not.toHaveBeenCalled();
+    });
+
+    it('preserves PROTOCOL_TIMEOUT and continues when page responds to ping', async () => {
+      const {artifactDefinitions, gatherers} = createGathererSet();
+      const timeoutError = new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Network.getResponseBody',
+      });
+      gatherers.snapshot.getArtifact.mockRejectedValue(timeoutError);
+
+      // `isPageHung` Runtime.evaluate("ping") succeeds -> page is NOT hung.
+      mockDriver.defaultSession.sendCommand.mockResponse('Runtime.evaluate', {
+        result: {type: 'string', value: 'ping'},
+      });
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      expect(await artifactState.getArtifact.Timespan).toEqual({type: 'timespan'});
+      await expect(artifactState.getArtifact.Snapshot).rejects.toBe(timeoutError);
+      expect(await artifactState.getArtifact.Navigation).toEqual({type: 'navigation'});
+      expect(gatherers.navigation.getArtifact).toHaveBeenCalledTimes(1);
+      expect(baseArtifacts.LighthouseRunWarnings).toEqual([]);
+    });
+
+    it('attributes to TARGET_CRASHED when hang check detects a crashed target', async () => {
+      const {artifactDefinitions, gatherers} = createGathererSet();
+      const timeoutError = new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Runtime.evaluate',
+      });
+      gatherers.snapshot.getArtifact.mockRejectedValue(timeoutError);
+
+      const crashError = new LighthouseError(LighthouseError.errors.TARGET_CRASHED);
+      mockDriver.defaultSession.sendCommand.mockResponse('Runtime.evaluate', () =>
+        Promise.reject(crashError)
+      );
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      await expect(artifactState.getArtifact.Snapshot).rejects.toBe(crashError);
+      await expect(artifactState.getArtifact.Navigation).rejects.toBe(crashError);
+      expect(gatherers.navigation.getArtifact).not.toHaveBeenCalled();
+      expect(baseArtifacts.LighthouseRunWarnings).toHaveLength(1);
+      expect(baseArtifacts.LighthouseRunWarnings[0]).toBeDisplayString(/unexpectedly crashed/);
+      expect(captureExceptionSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

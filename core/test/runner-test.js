@@ -940,6 +940,60 @@ describe('Runner', () => {
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
       expect(lhr.runtimeError.message).toMatch(/did not paint any content.*\(NO_FCP\)/);
     });
+
+    it('attributes a gatherer PROTOCOL_TIMEOUT on a hung page to PAGE_HUNG', async () => {
+      class HungGatherer extends Gatherer {
+        meta = {
+          supportedModes: ['navigation'],
+        };
+
+        getArtifact() {
+          throw new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+            protocolMethod: 'Runtime.evaluate',
+          });
+        }
+      }
+
+      class HungAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'test-audit',
+            title: 'A test audit',
+            failureTitle: 'A test audit',
+            description: 'An audit for testing',
+            requiredArtifacts: ['HungGatherer'],
+          };
+        }
+        static audit() {
+          throw new Error('Should not get here');
+        }
+      }
+
+      driverMock.defaultSession.sendCommand.mockResponse('Runtime.evaluate', () =>
+        Promise.reject(new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+          protocolMethod: 'Runtime.evaluate',
+        }))
+      );
+
+      const config = {
+        artifacts: [
+          {id: 'HungGatherer', gatherer: HungGatherer},
+        ],
+        audits: [HungAudit],
+      };
+
+      const {resolvedConfig} = await initializeConfig('navigation', config);
+      const {lhr} = await runGatherAndAudit(createGatherFn('https://example.com/'),
+        {resolvedConfig, driverMock, computedCache: new Map()});
+
+      expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
+      expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining('PAGE_HUNG'));
+      expect(lhr.runtimeError?.code).toEqual('PAGE_HUNG');
+      expect(lhr.runtimeError?.message).toMatch(/stopped responding/);
+      expect(lhr.runWarnings).toEqual([
+        expect.stringMatching(/stopped responding/),
+      ]);
+    });
   });
 
   it('localized errors thrown in gather fn', async () => {
