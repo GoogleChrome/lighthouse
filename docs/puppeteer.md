@@ -74,3 +74,5 @@ console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score
 await browser.disconnect();
 chrome.kill();
 ```
+
+> **Note:** Avoid running concurrent Puppeteer/Playwright automation commands or leaving active CDP listeners manipulating the audited tab while Lighthouse is gathering (especially when sharing a browser via `--port`). Concurrent CDP control over the same target can cause `PROTOCOL_TIMEOUT` errors.

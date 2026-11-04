@@ -70,7 +70,7 @@ Loading modern webpages on a modern browser is not an easy task. Using appropria
 
 - Minimum 2 dedicated cores (4 recommended)
 - Minimum 2GB RAM (4-8GB recommended)
-- Avoid non-standard Chromium flags (`--single-process` is not supported, `--no-sandbox` and `--headless` should be OK, though educate yourself about [sandbox tradeoffs](https://github.com/GoogleChrome/lighthouse-ci/tree/fbb540507c031100ee13bf7eb1a4b61c79c5e1e6/docs/recipes/docker-client#--no-sandbox-issues-explained))
+- Avoid non-standard Chromium flags (`--single-process` is not supported, `--no-sandbox` and `--headless` should be OK, though educate yourself about [sandbox tradeoffs](https://github.com/GoogleChrome/lighthouse-ci/tree/fbb540507c031100ee13bf7eb1a4b61c79c5e1e6/docs/recipes/docker-client#--no-sandbox-issues-explained); in Docker/Kubernetes containers with a `64MB` `/dev/shm`, increase `/dev/shm` size or pass `--disable-dev-shm-usage` to avoid crashes and `PROTOCOL_TIMEOUT` errors)
 - Avoid function-as-a-service infrastructure (Lambda, GCF, etc)
 - Avoid "burstable" or "shared-core" instance types (AWS `t` instances, GCP shared-core N1 and E2 instances, etc)
 
