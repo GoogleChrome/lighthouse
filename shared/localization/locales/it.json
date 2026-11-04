@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "L'API Fenced Frame è deprecata e verrà rimossa."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "L'API Protected Audience è deprecata e verrà rimossa in una release futura."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() e watchPosition() non funzionano più su origini non sicure. Per utilizzare questa funzionalità, considera di passare la tua applicazione a un'origine sicura, come HTTPS. Per maggiori dettagli, visita la pagina https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "Il sito web ha richiesto una sottorisorsa da una rete a cui può accedere solo a causa della posizione di rete privilegiata dei relativi utenti. Queste richieste espongono dispositivi e servizi non pubblici a Internet, aumentando il rischio di un attacco Cross-Site Request Forgery (CSRF) e/o una fuga di informazioni. Per limitare questi rischi, Chrome depreca le richieste a sottorisorse non pubbliche quando iniziate da contesti non sicuri e le blocca."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "Il campo dailyUpdateUrl di InterestGroups passato a joinAdInterestGroup() è stato rinominato in updateUrl per rispecchiare in modo più preciso il suo comportamento."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "L'API Intl.v8BreakIterator è deprecata. Utilizza invece Intl.Segmenter."
@@ -2230,6 +2224,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "Il vincolo DtlsSrtpKeyAgreement è stato rimosso. Hai specificato un valore true per questo vincolo, il che non ha avuto alcun effetto, ma puoi rimuovere il vincolo per fare ordine."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() è deprecato e verrà rimosso. Utilizza invece RTCRtpSender.dtmf."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "Il metodo getStats() basato su callback è deprecato e verrà rimosso. Usa invece il metodo getStats() conforme alle specifiche."
@@ -2760,7 +2757,7 @@
     "message": "Chrome ha rilevato un tentativo di eseguire JavaScript mentre la pagina si trovava nella cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "Al momento le pagine che hanno richiesto un AppBanner non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto un AppBanner non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "La cache back-forward è stata disattivata in chrome://flags. Visita la pagina chrome://flags/#back-forward-cache per attivarla localmente su questo dispositivo."
@@ -2772,7 +2769,7 @@
     "message": "La cache back-forward è stata disattivata a causa dell'insufficienza di memoria"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "La cache back/forward non è supportata dal delegato"
+    "message": "La cache back-forward non è supportata dal delegato."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
     "message": "La cache back-forward è stata disattivata per lo strumento di prerendering"
@@ -2790,7 +2787,7 @@
     "message": "La pagina è stata eliminata dalla cache per consentire a un'altra pagina di essere memorizzata nella cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "Al momento le pagine che contengono plug-in non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che contengono plug-in non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Non definito"
@@ -2799,7 +2796,7 @@
     "message": "Le pagine che utilizzano l'API FileChooser non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "Le pagine che utilizzano l'API File System Access non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine che utilizzano l'API File System Access non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
     "message": "Le pagine che utilizzano Media Device Dispatcher non sono idonee per la cache back-forward"
@@ -2817,13 +2814,13 @@
     "message": "La cache back-forward è stata disattivata a causa di uno screen reader"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "Le pagine che utilizzano SecurityHandler non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine che utilizzano SecurityHandler non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
     "message": "Le pagine che utilizzano l'API Serial non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "Le pagine che utilizzano l'API WebAuthetication non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine che utilizzano l'API WebAuthentication non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
     "message": "Le pagine che utilizzano l'API WebBluetooth non possono essere memorizzate nella cache back-forward"
@@ -2841,7 +2838,7 @@
     "message": "L'utente è uscito dal documento prima che venisse completato il caricamento"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
-    "message": "Era presente App Banner al momento dell'uscita"
+    "message": "Al momento dell'uscita dalla pagina era presente un banner dell'app"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
     "message": "Era presente Gestore delle password di Chrome al momento dell'uscita"
@@ -2865,7 +2862,7 @@
     "message": "La cache back-forward è stata disattivata a causa delle estensioni"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
-    "message": "Al momento dell'uscita era mostrata una finestra di dialogo modale come un nuovo invio di un modulo o la finestra di dialogo di una password http"
+    "message": "Al momento dell'uscita era mostrata una finestra di dialogo modale come un nuovo invio di un modulo o la finestra di dialogo di una password HTTP"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
     "message": "La pagina offline è stata mostrata durante la navigazione verso un altro sito"
@@ -2874,7 +2871,7 @@
     "message": "La barra Out-Of-Memory Intervention era attiva al momento dell'uscita dalla pagina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "Erano presenti richieste di autorizzazione al momento dell'uscita dalla pagina"
+    "message": "Erano presenti richieste di autorizzazione al momento dell'uscita"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "Il blocco popup era attivo al momento dell'uscita dalla pagina"
@@ -2892,22 +2889,22 @@
     "message": "La cache back-forward è stata disattivata a causa di un errore del documento"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Le pagine che utilizzano FencedFrames non possono essere salvate nella bfcache"
+    "message": "Le pagine che usano FencedFrames non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
     "message": "La pagina è stata eliminata dalla cache per consentire a un'altra pagina di essere memorizzata nella cache"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "Al momento le pagine che hanno concesso l'accesso alla riproduzione in streaming di contenuti multimediali non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno concesso l'accesso alla riproduzione in streaming di contenuti multimediali non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
     "message": "Al momento le pagine che hanno determinati tipi di contenuti incorporati (ad es. PDF) non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Al momento le pagine che utilizzano IdleManager non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano IdleManager non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "Al momento le pagine che hanno una connessione IndexedDB aperta non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno una connessione IndexedDB aperta non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
     "message": "La cache back-forward è stata disattivata a causa di un evento IndexedDB"
@@ -2916,7 +2913,7 @@
     "message": "Sono state usate API non idonee"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Al momento le pagine in cui l'elemento JavaScript viene inserito dalle estensioni non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine in cui JavaScript viene inserito dalle estensioni non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
     "message": "Al momento le pagine in cui StyleSheet viene inserito dalle estensioni non possono essere memorizzate nella cache back-forward"
@@ -2937,10 +2934,10 @@
     "message": "L'utente è uscito dalla pagina prima che venisse completato il caricamento"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Le pagine la cui risorsa principale presenta l'intestazione cache-control:no-cache non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine la cui risorsa principale presenta l'intestazione cache-control:no-cache non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Le pagine la cui principale risorsa presenta l'intestazione cache-control:no-store non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine la cui risorsa principale presenta l'intestazione cache-control:no-cache non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "La navigazione è stata annullata prima che la pagina potesse essere ripristinata dalla cache back-forward"
@@ -2949,7 +2946,7 @@
     "message": "La pagina è stata eliminata dalla cache perché una connessione di rete attiva ha ricevuto troppi dati. Chrome limita la quantità di dati che una pagina può ricevere mentre è memorizzata nella cache."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Al momento le pagine con una richiesta di rete XHR o fetch() in corso non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine con richieste fetch() o XHR in corso non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
     "message": "La pagina è stata eliminata dalla cache back-forward perché una richiesta di rete attiva ha coinvolto un reindirizzamento"
@@ -2967,16 +2964,16 @@
     "message": "Al momento le pagine con transazioni DB indicizzate in corso non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Al momento le pagine con una richiesta di rete in corso non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine con una richiesta di rete in corso non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "Al momento le pagine con una richiesta di rete fetch in corso non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine con una richiesta di rete fetch in corso non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "Al momento le pagine con una richiesta di rete in corso non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine con una richiesta di rete in corso non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Al momento le pagine con una richiesta di rete XHR in corso non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine con una richiesta di rete XHR in corso non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
     "message": "Al momento le pagine che utilizzano PaymentManager non possono essere memorizzate nella cache back-forward"
@@ -2997,22 +2994,22 @@
     "message": "Il processo di rendering della pagina nella cache back-forward è stato interrotto"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative all'acquisizione di audio non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto l'autorizzazione ad acquisire l'audio non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative ai sensori non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative ai sensori non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative al recupero o alla sincronizzazione in background non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative al recupero o alla sincronizzazione in background non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "Al momento le pagine che hanno richiesto autorizzazioni per accedere a dispositivi MIDI non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto le autorizzazioni MIDI non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Al momento le pagine che hanno richiesto autorizzazioni relative alle notifiche non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto l'autorizzazione alle notifiche non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "Al momento le pagine che hanno richiesto l'accesso allo spazio di archiviazione non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che hanno richiesto l'accesso allo spazio di archiviazione non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
     "message": "Al momento le pagine che hanno richiesto autorizzazioni relative all'acquisizione di video non possono essere memorizzate nella cache back-forward"
@@ -3042,19 +3039,19 @@
     "message": "La pagina è stata eliminata dalla cache perché ha ricevuto un messaggio da un SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "Al momento le pagine che utilizzano SpeechRecognizer non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano SpeechRecognizer non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "Al momento le pagine che utilizzano SpeechSynthesis non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano SpeechSynthesis non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "Un iframe sulla pagina ha avviato una navigazione che non è stata completata"
+    "message": "Un iframe sulla pagina ha avviato una navigazione che non è stata completata."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Le pagine le cui sottorisorse presentano l'intestazione cache-control:no-cache non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine la cui sottorisorsa presenta l'intestazione cache-control:no-store non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Le pagine le cui sottorisorse presentano l'intestazione cache-control:no-store non possono essere memorizzate nella cache back-forward"
+    "message": "Le pagine la cui sottorisorsa presenta l'intestazione cache-control:no-store non possono essere memorizzate nella cache back-forward."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
     "message": "La pagina ha superato il tempo massimo nella cache back-forward ed è scaduta"
@@ -3078,16 +3075,16 @@
     "message": "Al momento le pagine che utilizzano WebDatabase non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "Al momento le pagine che utilizzano WebHID non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano WebHID non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "Al momento le pagine che utilizzano WebLocks non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano WebLocks non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "Al momento le pagine che utilizzano WebNfc non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano WebNfc non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "Al momento le pagine che utilizzano WebOTPService non possono essere memorizzate nella bfcache"
+    "message": "Al momento le pagine che utilizzano WebOTPService non possono essere memorizzate nella cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Le pagine con WebRTC non possono essere memorizzate nella cache back-forward"
@@ -3096,7 +3093,7 @@
     "message": "La cache back-forward è stata disattivata perché è stato utilizzato WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "Al momento le pagine che utilizzano WebShare non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano WebShare non sono idonee per la cache back-forward"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Le pagine con WebSocket non possono essere memorizzate nella cache back-forward"
@@ -3111,7 +3108,7 @@
     "message": "La cache back-forward è stata disattivata perché è stato utilizzato WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "Al momento le pagine che utilizzano WebXR non possono essere memorizzate nella cache back-forward"
+    "message": "Al momento le pagine che utilizzano WebXR non sono idonee per la cache back-forward"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Per i contenuti animati, usa [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) per ridurre al minimo l'utilizzo di CPU mentre i contenuti sono fuori dallo schermo."

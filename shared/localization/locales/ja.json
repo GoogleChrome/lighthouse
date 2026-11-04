@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "Fenced Frame API は非推奨となり、削除される予定です。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "Protected Audience API はサポートを終了し、今後のリリースで削除される予定です。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() と watchPosition() は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ をご覧ください。"
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "ウェブサイトが、ネットワークで特権を持つユーザーのみアクセス可能な、ネットワークのサブリソースをリクエストしました。これらのリクエストにより、非公開のデバイスやサーバーがインターネット上で参照できるようになるため、クロスサイト リクエスト フォージェリ（CSRF）攻撃や情報漏洩のリスクが高まります。これらのリスクを軽減するため、Chrome では、保護されていないコンテキストからの非公開サブリソースへのリクエストは非推奨となっており、今後ブロックされるようになる予定です。"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "動作を正確に反映させるため、joinAdInterestGroup() に渡される InterestGroups の dailyUpdateUrl フィールドの名前を updateUrl に変更しました。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator は非推奨になりました。代わりに Intl.Segmenter を使用してください。"
@@ -2231,6 +2225,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "DtlsSrtpKeyAgreement の制約は削除されました。この制約に指定されている true 値は適用されませんが、この制約を削除するとシンプルにできます。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() は非推奨となり、今後削除されます。代わりに RTCRtpSender.dtmf を使用してください。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "コールバックベースの getStats() は非推奨になっており、今後削除されます。代わりに、仕様に準拠した getStats() を使用してください。"
   },
@@ -2238,7 +2235,7 @@
     "message": "Range.expand() は非推奨になりました。代わりに Selection.modify() を使用してください。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RelatedWebsiteSets": {
-    "message": "Related Website Sets は非推奨となり、削除される予定です。詳しくは、https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ をご覧ください。"
+    "message": "Related Website Sets はサポートを終了し、削除される予定です。詳しくは、https://privacysandbox.com/news/update-on-plans-for-privacy-sandbox-technologies/ をご覧ください。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
     "message": "URL に埋め込み認証情報（https://user:pass@host/ など）が含まれるサブリソース リクエストはブロックされます。"
@@ -2772,7 +2769,7 @@
     "message": "バックフォワード キャッシュはメモリ不足のため無効になっています"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
-    "message": "バックフォワード キャッシュは委任には対応していません"
+    "message": "バックフォワード キャッシュはデリゲート側でサポートされていません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
     "message": "バックフォワード キャッシュは事前レンダリングのため無効になっています"
@@ -2838,7 +2835,7 @@
     "message": "専用のワーカーまたはワークレットを使用するページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "読み込みが終了していないドキュメントから移動しました"
+    "message": "ページから移動するときにドキュメントの読み込みが完了していませんでした"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
     "message": "ページから移動するときにアプリバナーが実行中でした"
@@ -2892,7 +2889,7 @@
     "message": "バックフォワード キャッシュはドキュメントのエラーが原因で無効になっています"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Fenced Frame を使用しているページは、バックフォワード キャッシュに保存できません"
+    "message": "FencedFrames を使用しているページは、バックフォワード キャッシュに保存できません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
     "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました"
@@ -2919,7 +2916,7 @@
     "message": "拡張機能によって JavaScript が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "拡張機能によって「StyleSheet」が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません"
+    "message": "拡張機能によって StyleSheet が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
     "message": "内部エラー"
@@ -2934,7 +2931,7 @@
     "message": "キーボード ロックを使用するページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "読み込みが終了していないページから移動しました"
+    "message": "ページから移動するときに読み込みが完了していませんでした"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
     "message": "Cache-Control:no-cache のメインリソースがあるページは、バックフォワード キャッシュに保存できません"
@@ -3048,7 +3045,7 @@
     "message": "SpeechSynthesis を使用するページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
-    "message": "ページ上で iframe が移動を開始し、完了しませんでした"
+    "message": "ページ上の iframe から開始したナビゲーションが完了していませんでした"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
     "message": "Cache-Control:no-cache のサブリソースがあるページは、バックフォワード キャッシュに保存できません"
@@ -3072,7 +3069,7 @@
     "message": "ブラウザによりユーザー エージェント オーバーライド ヘッダーが変更されました"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "録画や録音が可能なページは、現時点ではバックフォワード キャッシュの対象になりません"
+    "message": "録画や録音のアクセス許可が与えられているページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
     "message": "WebDatabase を使用するページは、現時点ではバックフォワード キャッシュの対象になりません"
@@ -3090,7 +3087,7 @@
     "message": "WebOTPService を使用するページは、現時点ではバックフォワード キャッシュの対象になりません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "WebRTC を使用するページは、バックフォワード キャッシュに保存できません"
+    "message": "WebRTC を使用するページはバックフォワード キャッシュに保存できません"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "バックフォワード キャッシュは、WebRTC が使用されているため無効になっています"
