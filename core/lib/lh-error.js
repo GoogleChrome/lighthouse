@@ -345,7 +345,7 @@ const ERRORS = {
     message: UIStrings.pageLoadFailedInterstitial,
     lhrRuntimeError: true,
   },
-  /* Used when the page stopped responding and did not finish loading. */
+  /* Used when the page stopped responding during page load or artifact gathering. */
   PAGE_HUNG: {
     code: 'PAGE_HUNG',
     message: UIStrings.pageLoadFailedHung,

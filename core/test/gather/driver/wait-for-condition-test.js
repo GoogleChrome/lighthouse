@@ -7,6 +7,7 @@
 import log from 'lighthouse-logger';
 
 import * as wait from '../../../gather/driver/wait-for-condition.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 import {
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
@@ -61,7 +62,12 @@ describe('waitForFullyLoaded()', () => {
   let options;
 
   beforeEach(() => {
-    session = {sendCommand: fnAny().mockResolvedValue(), setNextProtocolTimeout: fnAny()};
+    session = {
+      sendCommand: fnAny().mockResolvedValue(),
+      sendCommandAndIgnore: fnAny().mockResolvedValue(),
+      setNextProtocolTimeout: fnAny(),
+      onCrashPromise: fnAny().mockReturnValue(new Promise(() => {})),
+    };
     networkMonitor = {getInflightRequests: fnAny().mockReturnValue([])};
 
     const overrides = {
@@ -228,6 +234,37 @@ describe('waitForFullyLoaded()', () => {
     expect(await loadPromise).toMatchObject({timedOut: true});
   });
 
+  it('should throw PAGE_HUNG and kill JS when timed out and page is hung', async () => {
+    options._waitForTestOverrides.waitForLoadEvent = createMockWaitForFn();
+    options._waitForTestOverrides.waitForNetworkIdle = createMockWaitForFn();
+    options._waitForTestOverrides.waitForCPUIdle = createMockWaitForFn();
+    session.sendCommand.mockRejectedValue(
+      new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Runtime.evaluate',
+      })
+    );
+
+    const loadPromise = makePromiseInspectable(wait.waitForFullyLoaded(
+      session,
+      networkMonitor,
+      {...options, maxWaitForLoadedMs: 60000}
+    ));
+
+    options._waitForTestOverrides.waitForLoadEvent.mockResolve();
+    options._waitForTestOverrides.waitForNetworkIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+
+    timers.advanceTimersByTime(60001);
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).toBeDone();
+    await expect(loadPromise).rejects.toMatchObject({code: 'PAGE_HUNG'});
+    expect(session.sendCommandAndIgnore).toHaveBeenCalledWith(
+      'Emulation.setScriptExecutionDisabled',
+      {value: true}
+    );
+    expect(session.sendCommandAndIgnore).toHaveBeenCalledWith('Runtime.terminateExecution');
+  });
+
   it('should cleanup listeners even when waits reject', async () => {
     options._waitForTestOverrides.waitForLoadEvent = createMockWaitForFn();
 
@@ -363,5 +400,70 @@ describe('waitForFcp()', () => {
     expect(waitPromise).toBeDone('Did not cancel promise');
     expect(session.off).toHaveBeenCalled();
     await expect(waitPromise).rejects.toMatchObject({message: 'Wait for FCP canceled'});
+  });
+});
+
+describe('isPageHung()', () => {
+  let session;
+
+  beforeEach(() => {
+    session = createMockSession();
+  });
+
+  it('returns false when Runtime.evaluate ping succeeds', async () => {
+    session.sendCommand.mockResponse('Runtime.evaluate', {
+      result: {type: 'string', value: 'ping'},
+    });
+
+    expect(await wait.isPageHung(session.asSession())).toBe(false);
+    expect(session.setNextProtocolTimeout).toHaveBeenCalledWith(1000);
+    expect(session.sendCommand.findInvocation('Runtime.evaluate')).toEqual({
+      expression: '"ping"',
+      returnByValue: true,
+    });
+  });
+
+  it('returns true when Runtime.evaluate ping times out', async () => {
+    session.sendCommand.mockResponse('Runtime.evaluate', () =>
+      Promise.reject(new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Runtime.evaluate',
+      }))
+    );
+
+    expect(await wait.isPageHung(session.asSession())).toBe(true);
+  });
+
+  it('rethrows TARGET_CRASHED when Runtime.evaluate rejects with TARGET_CRASHED', async () => {
+    const crashError = new LighthouseError(LighthouseError.errors.TARGET_CRASHED);
+    session.sendCommand.mockResponse('Runtime.evaluate', () => Promise.reject(crashError));
+
+    await expect(wait.isPageHung(session.asSession())).rejects.toBe(crashError);
+  });
+
+  it('rethrows TARGET_CRASHED when onCrashPromise rejected after PROTOCOL_TIMEOUT', async () => {
+    const crashError = new LighthouseError(LighthouseError.errors.TARGET_CRASHED);
+    session.onCrashPromise.mockReturnValue(Promise.reject(crashError));
+    session.sendCommand.mockResponse('Runtime.evaluate', () =>
+      Promise.reject(new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod: 'Runtime.evaluate',
+      }))
+    );
+
+    await expect(wait.isPageHung(session.asSession())).rejects.toBe(crashError);
+  });
+});
+
+describe('killHungPage()', () => {
+  it('disables script execution and terminates active JS execution', () => {
+    const session = createMockSession();
+    session.sendCommand.mockResponse('Emulation.setScriptExecutionDisabled');
+    session.sendCommand.mockResponse('Runtime.terminateExecution');
+
+    wait.killHungPage(session.asSession());
+
+    expect(session.sendCommand.findInvocation('Emulation.setScriptExecutionDisabled')).toEqual({
+      value: true,
+    });
+    expect(session.sendCommand).toHaveBeenCalledWith('Runtime.terminateExecution');
   });
 });
