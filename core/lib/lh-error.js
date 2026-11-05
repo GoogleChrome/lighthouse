@@ -24,6 +24,11 @@ const UIStrings = {
    * */
   noFcp: 'The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})',
   /**
+   * @description Error message explaining that the user-provided navigation callback only changed the URL within the current document (for example with the History API or a fragment change) instead of loading a new page, which Lighthouse navigation mode cannot analyze.
+   * @example {SOFT_NAVIGATION_NOT_SUPPORTED} errorCode
+   * */
+  softNavigationNotSupported: 'The navigation callback only performed a same-document navigation (for example a History API or fragment change) and did not load a new page. Navigation mode requires a full page load; use timespan mode to analyze single-page-app transitions. ({errorCode})',
+  /**
    * @description Error message explaining that the Largest Contentful Paint metric was not seen during the page load.
    * @example {NO_LCP} errorCode
    * */
@@ -277,6 +282,12 @@ const ERRORS = {
   NO_FCP: {
     code: 'NO_FCP',
     message: UIStrings.noFcp,
+    lhrRuntimeError: true,
+  },
+  /* Used when a user-defined navigation callback only triggered a same-document navigation. */
+  SOFT_NAVIGATION_NOT_SUPPORTED: {
+    code: 'SOFT_NAVIGATION_NOT_SUPPORTED',
+    message: UIStrings.softNavigationNotSupported,
     lhrRuntimeError: true,
   },
   NO_DCL: {

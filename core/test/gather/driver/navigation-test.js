@@ -121,13 +121,156 @@ describe('.gotoURL', () => {
     );
     await flushAllTimersAndMicrotasks();
 
-    // Trigger the load listener, but not the network monitor one.
-    const [_, listener] = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    // Trigger the load listener, but not the network monitor or soft navigation watcher ones.
+    const listeners = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    const listener = listeners[listeners.length - 1];
     listener({frame: {id: 'ABC', url: 'https://www.example.com'}});
 
     await expect(loadPromise).rejects.toThrow(
       'No navigations detected when running user defined requestor.'
     );
+  });
+
+  describe('soft navigations with a callback requestor', () => {
+    /** @param {LH.Crdp.Page.NavigatedWithinDocumentEvent} event */
+    const navigateWithinDocument = event => {
+      const listeners = mockDriver.defaultSession.on.getListeners('Page.navigatedWithinDocument');
+      expect(listeners.length).toBeGreaterThan(0);
+      for (const listener of listeners) listener(event);
+    };
+
+    /** @param {{frame: {id: string, url: string, parentId?: string}}} event */
+    const frameNavigated = event => {
+      const listeners = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+      for (const listener of listeners) listener(event);
+    };
+
+    it('fails fast when the callback only performs a same-document navigation', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      const requestor = () => Promise.resolve();
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {waitUntil: ['navigated']})
+      );
+      await flushAllTimersAndMicrotasks();
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/#/route', navigationType: 'historyApi'});
+
+      await flushAllTimersAndMicrotasks(2000);
+      expect(loadPromise).not.toBeDone('Did not wait for the grace period');
+
+      await flushAllTimersAndMicrotasks(2000);
+      expect(loadPromise).toBeDone('Did not fail after the grace period');
+      await expect(loadPromise).rejects.toMatchObject({code: 'SOFT_NAVIGATION_NOT_SUPPORTED'});
+      expect(mockDriver.defaultSession.off).toHaveBeenCalledWith(
+        'Page.navigatedWithinDocument', expect.anything()
+      );
+    });
+
+    it('does not start the grace period until the callback settles', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      /** @type {() => void} */
+      let settleRequestor = () => {};
+      /** @return {Promise<void>} */
+      const requestor = () => new Promise(resolve => {
+        settleRequestor = () => resolve();
+      });
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {waitUntil: ['navigated']})
+      );
+      await flushAllTimersAndMicrotasks();
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/#/route', navigationType: 'historyApi'});
+
+      await flushAllTimersAndMicrotasks(5000);
+      expect(loadPromise).not.toBeDone('Failed before the callback settled');
+
+      settleRequestor();
+      await flushAllTimersAndMicrotasks(5000);
+      await expect(loadPromise).rejects.toMatchObject({code: 'SOFT_NAVIGATION_NOT_SUPPORTED'});
+    });
+
+    it('succeeds when a same-document navigation is followed by a full navigation', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      const requestor = () => Promise.resolve();
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {waitUntil: ['navigated']})
+      );
+      await flushAllTimersAndMicrotasks();
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/#/route', navigationType: 'historyApi'});
+      await flushAllTimersAndMicrotasks(1000);
+      frameNavigated({frame: {id: 'ABC', url: 'https://www.example.com/next'}});
+
+      const results = await loadPromise;
+      expect(results.requestedUrl).toEqual('https://www.example.com/next');
+      expect(results.mainDocumentUrl).toEqual('https://www.example.com/next');
+    });
+
+    it('ignores same-document navigations once the main frame has navigated', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      const requestor = () => Promise.resolve();
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {waitUntil: ['navigated']})
+      );
+      await flushAllTimersAndMicrotasks();
+      frameNavigated({frame: {id: 'ABC', url: 'https://www.example.com/next'}});
+      // Pages commonly call `history.replaceState` during load.
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/next?canonical', navigationType: 'historyApi'});
+      await flushAllTimersAndMicrotasks(5000);
+
+      const results = await loadPromise;
+      expect(results.requestedUrl).toEqual('https://www.example.com/next');
+    });
+
+    it('reports a soft navigation instead of NO_FCP when the FCP wait times out', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      // A callback that never settles (e.g. `startNavigation` without `endNavigation`).
+      const requestor = () => new Promise(() => {});
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {
+          waitUntil: ['fcp', 'load'],
+          maxWaitForFcp: 5000,
+          maxWaitForLoad: 10000,
+        })
+      );
+      await flushAllTimersAndMicrotasks();
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/#/route', navigationType: 'historyApi'});
+
+      await flushAllTimersAndMicrotasks(6000);
+      await expect(loadPromise).rejects.toMatchObject({code: 'SOFT_NAVIGATION_NOT_SUPPORTED'});
+    });
+
+    it('reports a soft navigation instead of no navigations detected', async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      await driver.networkMonitor.enable();
+
+      // A callback that never settles (e.g. `startNavigation` without `endNavigation`).
+      const requestor = () => new Promise(() => {});
+
+      const loadPromise = makePromiseInspectable(
+        gotoURL(driver, requestor, {waitUntil: ['navigated']})
+      );
+      await flushAllTimersAndMicrotasks();
+      navigateWithinDocument({frameId: 'ABC', url: 'https://www.example.com/#/route', navigationType: 'historyApi'});
+
+      // Trigger the load listener, but not the network monitor or soft navigation watcher ones.
+      const listeners = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+      listeners[listeners.length - 1]({frame: {id: 'ABC', url: 'https://www.example.com'}});
+
+      await expect(loadPromise).rejects.toMatchObject({code: 'SOFT_NAVIGATION_NOT_SUPPORTED'});
+    });
   });
 
   it('does not add warnings when URLs are equal', async () => {
