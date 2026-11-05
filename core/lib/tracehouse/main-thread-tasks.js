@@ -474,9 +474,6 @@ class MainThreadTasks {
       case 'ParseHTML':
         taskURLs = [argsData.url, frameURL];
         break;
-      case 'ParseAuthorStyleSheet':
-        taskURLs = [argsData.styleSheetUrl, frameURL];
-        break;
       case 'UpdateLayoutTree':
       case 'Layout':
       case 'Paint':
