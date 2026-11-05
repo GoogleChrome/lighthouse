@@ -6,7 +6,7 @@ import {assert} from 'chai';
 import type * as puppeteer from 'puppeteer-core';
 
 import {expectError} from '../../conductor/events.js';
-import {DEVTOOLS_BUNDLED_CHROMIUM_DEPS} from '../../conductor/paths.js';
+import {BUILD_WITH_CHROMIUM} from '../../conductor/paths.js';
 import {describe, it, setup} from '../conductor/mocha-interface.js';
 import {
   clickStartButton,
@@ -303,7 +303,7 @@ describe('with changed settings', function() {
     devToolsPage.page.on('console', consoleListener);
     try {
       expectErrors();
-      if (!DEVTOOLS_BUNDLED_CHROMIUM_DEPS) {
+      if (BUILD_WITH_CHROMIUM) {
         expectError(/timed out fetching locale|Unexpected token/);
       }
       await navigateToLighthouseTab(devToolsPage, inspectedPage, 'lighthouse/hello.html');
@@ -343,8 +343,8 @@ describe('with changed settings', function() {
       // Lighthouse locale files (third_party/lighthouse/locales/*.json) are
       // shipped separately and not bundled into resources.pak. Only check
       // localized Lighthouse report strings when running with
-      // --custom-devtools-frontend (DEVTOOLS_BUNDLED_CHROMIUM_DEPS).
-      if (DEVTOOLS_BUNDLED_CHROMIUM_DEPS) {
+      // --custom-devtools-frontend (!BUILD_WITH_CHROMIUM).
+      if (!BUILD_WITH_CHROMIUM) {
         const viewTreemapButton = await devToolsPage.$textContent('查看树状图', reportEl);
         assert.isOk(viewTreemapButton);
 
