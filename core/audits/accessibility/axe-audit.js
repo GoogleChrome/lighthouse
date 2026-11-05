@@ -15,6 +15,12 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Label of a table column that identifies HTML elements that have failed an audit. */
   failingElementsHeader: 'Failing Elements',
+  /** Label for elements that require manual accessibility review. */
+  manualReviewElementsHeader: 'Elements to manually review',
+  /** Heading for confirmed accessibility violations. */
+  violationsSection: 'Accessibility violations',
+  /** Heading for accessibility checks that require manual review. */
+  manualReviewSection: 'Needs manual review',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -54,26 +60,23 @@ class AxeAudit extends Audit {
     }
 
     const isInformative = this.meta.scoreDisplayMode === Audit.SCORING_MODES.INFORMATIVE;
-    const violations = artifacts.Accessibility.violations || [];
-    const failureCases = isInformative ? violations.concat(incomplete) : violations;
-    const rule = failureCases.find(result => result.id === this.meta.id);
+    const violation = (artifacts.Accessibility.violations || [])
+        .find(result => result.id === this.meta.id);
+    const rule = violation || incompleteResult;
     const impact = rule?.impact;
     const tags = rule?.tags;
 
-    // Handle absence of aXe failure results for informative rules as 'not applicable'
-    // This scenario indicates that no action is required by the web property owner
-    // Since there is no score impact from informative rules, display the rule as not applicable
     if (isInformative && !rule) {
-      return {
-        score: null,
-        notApplicable: true,
-      };
+      return {score: null, notApplicable: true};
     }
 
-    /** @type {LH.Audit.Details.Table['items']}>} */
-    let items = [];
-    if (rule?.nodes) {
-      items = rule.nodes.map(axeNode => ({
+    /** @param {LH.Artifacts.AxeRuleResult|undefined} axeRule
+     * @param {boolean} manual
+     * @return {LH.Audit.Details.Table}
+     */
+    const makeTable = (axeRule, manual) => {
+      /** @type {LH.Audit.Details.Table['items']} */
+      const items = (axeRule?.nodes || []).map(axeNode => ({
         node: {
           ...Audit.makeNodeItem(axeNode.node),
           explanation: axeNode.failureSummary,
@@ -83,28 +86,43 @@ class AxeAudit extends Audit {
           items: axeNode.relatedNodes.map(node => ({relatedNode: Audit.makeNodeItem(node)})),
         } : undefined,
       }));
-    }
-
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
-      /* eslint-disable max-len */
-      {key: 'node', valueType: 'node', subItemsHeading: {key: 'relatedNode', valueType: 'node'}, label: str_(UIStrings.failingElementsHeader)},
-      /* eslint-enable max-len */
-    ];
+      /** @type {LH.Audit.Details.Table['headings']} */
+      const headings = [{
+        key: 'node', valueType: 'node', subItemsHeading: {key: 'relatedNode', valueType: 'node'},
+        label: str_(manual ? UIStrings.manualReviewElementsHeader :
+          UIStrings.failingElementsHeader),
+      }];
+      return Audit.makeTableDetails(headings, items);
+    };
 
     /** @type {LH.Audit.Details.DebugData|undefined} */
     let debugData;
     if (impact || tags) {
-      debugData = {
-        type: 'debugdata',
-        impact,
-        tags,
+      debugData = {type: 'debugdata', impact, tags};
+    }
+
+    if (violation && incompleteResult) {
+      return {
+        score: 0,
+        displayValue: str_(UIStrings.manualReviewSection),
+        details: {
+          ...Audit.makeListDetails([
+            Audit.makeListDetailSectionItem(
+              makeTable(violation, false), str_(UIStrings.violationsSection)),
+            Audit.makeListDetailSectionItem(
+              makeTable(incompleteResult, true), str_(UIStrings.manualReviewSection)),
+          ]),
+          debugData,
+        },
       };
     }
 
     return {
       score: Number(rule === undefined),
-      details: {...Audit.makeTableDetails(headings, items), debugData},
+      displayValue: incompleteResult ? str_(UIStrings.manualReviewSection) : undefined,
+      scoreDisplayMode: !violation && incompleteResult ?
+        Audit.SCORING_MODES.INFORMATIVE : undefined,
+      details: {...makeTable(rule, Boolean(incompleteResult)), debugData},
     };
   }
 }
