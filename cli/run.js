@@ -25,6 +25,7 @@ import UrlUtils from '../core/lib/url-utils.js';
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
+const _SHM_SIZE_THRESHOLD_BYTES = 64 * 1024 * 1024;
 
 /**
  * exported for testing
@@ -65,12 +66,38 @@ function parseChromeFlags(flags = '') {
 }
 
 /**
+ * Logs a warning on Linux when `/dev/shm` is small (e.g. default 64MB in Docker/CI containers)
+ * and `--disable-dev-shm-usage` was not passed, as Chrome may crash or hang (`PROTOCOL_TIMEOUT`).
+ * @param {Array<string>} chromeFlags
+ * @param {NodeJS.Platform} [platform]
+ */
+function checkDevShmUsage(chromeFlags, platform = process.platform) {
+  if (platform !== 'linux') return;
+  if (chromeFlags.includes('--disable-dev-shm-usage')) return;
+
+  try {
+    const {bsize, blocks} = fs.statfsSync('/dev/shm');
+    const totalBytes = bsize * blocks;
+    if (totalBytes > 0 && totalBytes <= _SHM_SIZE_THRESHOLD_BYTES) {
+      const sizeMb = Math.round(totalBytes / (1024 * 1024));
+      log.warn(
+        'CLI',
+        `Detected small /dev/shm (${sizeMb}MB). Pass --chrome-flags="--disable-dev-shm-usage" ` +
+        'or increase shared memory size to avoid Chrome crashes and PROTOCOL_TIMEOUT errors.'
+      );
+    }
+  } catch {
+    // Ignore if /dev/shm does not exist or cannot be inspected.
+  }
+}
+
+/**
  * Attempts to connect to an instance of Chrome with an open remote-debugging
  * port. If none is found, launches a debuggable instance.
  * @param {LH.CliFlags} flags
  * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
-function getDebuggableChrome(flags) {
+async function getDebuggableChrome(flags) {
   if (process.platform === 'darwin' && process.arch === 'x64') {
     const cpus = os.cpus();
     if (cpus[0].model.includes('Apple')) {
@@ -83,12 +110,23 @@ function getDebuggableChrome(flags) {
     }
   }
 
-  return ChromeLauncher.launch({
+  const chromeFlags = parseChromeFlags(flags.chromeFlags);
+  if (!flags.port) {
+    checkDevShmUsage(chromeFlags);
+  }
+
+  const launchedChrome = await ChromeLauncher.launch({
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
-    chromeFlags: parseChromeFlags(flags.chromeFlags),
+    chromeFlags,
     logLevel: flags.logLevel,
   });
+
+  if (flags.port && launchedChrome.pid) {
+    checkDevShmUsage(chromeFlags);
+  }
+
+  return launchedChrome;
 }
 
 /** @return {never} */
@@ -288,6 +326,7 @@ async function runLighthouse(urlOrUrls, flags, config) {
 }
 
 export {
+  checkDevShmUsage,
   parseChromeFlags,
   saveResults,
   runLighthouse,
