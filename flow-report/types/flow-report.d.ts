@@ -22,7 +22,7 @@ declare global {
     export type ConfigSettings = Settings.ConfigSettings;
 
     export interface FlowReportOptions {
-      getReportHtml?: (flowResult: FlowResult_) => string;
+      getReportHtml?: (flowResult: FlowResult_) => string | Promise<string>;
       saveAsGist?: (flowResult: FlowResult_) => void;
     }
 

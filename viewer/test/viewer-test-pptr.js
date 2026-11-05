@@ -5,7 +5,9 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 import assert from 'assert/strict';
+import {pathToFileURL} from 'url';
 import {setTimeout as sleep} from 'timers/promises';
 
 import puppeteer from 'puppeteer';
@@ -143,6 +145,51 @@ describe('Lighthouse Viewer', () => {
       );
       assert.equal(scores.length, 14);
 
+      await ensureNoErrors();
+    });
+
+    it('saves standalone HTML with export resources loaded on demand', async () => {
+      const saveSelector = '[aria-label="Button that saves the report as HTML"]';
+      expect(await viewerPage.$(saveSelector)).not.toBeNull();
+      const exportRequestCount = () => viewerPage.evaluate(() =>
+        performance.getEntriesByType('resource').filter(entry =>
+          entry.name.includes('/src/flow-report-generator.js')).length);
+      expect(await exportRequestCount()).toBe(0);
+
+      const tmpDir = fs.mkdtempSync(path.join(LH_ROOT, '.tmp/pptr-flow-downloads-'));
+      const session = await viewerPage.target().createCDPSession();
+      await session.send('Browser.setDownloadBehavior', {
+        behavior: 'allow',
+        downloadPath: tmpDir,
+        eventsEnabled: true,
+      });
+      const filenamePromise = new Promise(resolve => {
+        session.once('Browser.downloadWillBegin', ({suggestedFilename}) => {
+          resolve(suggestedFilename);
+        });
+      });
+      const completedPromise = new Promise(resolve => {
+        session.on('Browser.downloadProgress', ({state}) => {
+          if (state === 'completed') resolve();
+        });
+      });
+
+      await viewerPage.click(saveSelector);
+      const [filename] = await Promise.all([filenamePromise, completedPromise]);
+      expect(await exportRequestCount()).toBe(1);
+      await session.detach();
+
+      const savedPage = await browser.newPage();
+      const savedPageErrors = [];
+      savedPage.on('pageerror', error => savedPageErrors.push(error.message));
+      try {
+        await savedPage.setOfflineMode(true);
+        await savedPage.goto(pathToFileURL(`${tmpDir}/${filename}`).href);
+        await savedPage.waitForSelector('.Summary');
+        expect(savedPageErrors).toEqual([]);
+      } finally {
+        await savedPage.close();
+      }
       await ensureNoErrors();
     });
   });

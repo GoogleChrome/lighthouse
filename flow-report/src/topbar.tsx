@@ -66,9 +66,14 @@ const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLButtonEl
       {
         getReportHtml &&
           <TopbarButton
-            onClick={() => {
-              const htmlStr = getReportHtml(flowResult);
-              saveHtml(flowResult, htmlStr);
+            onClick={async () => {
+              try {
+                const htmlStr = await getReportHtml(flowResult);
+                saveHtml(flowResult, htmlStr);
+              } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('Could not export as HTML.', error);
+              }
             }}
             label="Button that saves the report as HTML"
           >{strings.save}</TopbarButton>
