@@ -2962,7 +2962,8 @@
       "title": "Background and foreground colors have a sufficient contrast ratio",
       "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.14/color-contrast).",
       "score": 1,
-      "scoreDisplayMode": "binary",
+      "scoreDisplayMode": "informative",
+      "displayValue": "Needs manual review",
       "details": {
         "type": "table",
         "headings": [
@@ -2973,10 +2974,46 @@
               "key": "relatedNode",
               "valueType": "node"
             },
-            "label": "Failing Elements"
+            "label": "Elements to manually review"
           }
         ],
-        "items": []
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "lhId": "1-15-H2",
+              "path": "2,HTML,1,BODY,9,DIV,2,H2",
+              "selector": "body > div > h2#toppy",
+              "boundingRect": {
+                "top": 338,
+                "bottom": 365,
+                "left": 8,
+                "right": 404,
+                "width": 396,
+                "height": 27
+              },
+              "snippet": "<h2 id=\"toppy\" style=\"background-image:url('');\">",
+              "nodeLabel": "Do better web tester page",
+              "explanation": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          }
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ]
+        }
       }
     },
     "definition-list": {
@@ -6627,7 +6664,7 @@
         },
         {
           "id": "color-contrast",
-          "weight": 7,
+          "weight": 0,
           "group": "a11y-color-contrast"
         },
         {
@@ -6877,7 +6914,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.75
+      "score": 0.74
     },
     "best-practices": {
       "title": "Best Practices",
@@ -10822,7 +10859,6 @@
         "audits[aria-roles].details.headings[0].label",
         "audits[aria-valid-attr-value].details.headings[0].label",
         "audits[aria-valid-attr].details.headings[0].label",
-        "audits[color-contrast].details.headings[0].label",
         "audits[document-title].details.headings[0].label",
         "audits[heading-order].details.headings[0].label",
         "audits[html-has-lang].details.headings[0].label",
@@ -10978,6 +11014,12 @@
       ],
       "core/audits/accessibility/color-contrast.js | description": [
         "audits[color-contrast].description"
+      ],
+      "core/audits/accessibility/axe-audit.js | manualReviewSection": [
+        "audits[color-contrast].displayValue"
+      ],
+      "core/audits/accessibility/axe-audit.js | manualReviewElementsHeader": [
+        "audits[color-contrast].details.headings[0].label"
       ],
       "core/audits/accessibility/definition-list.js | title": [
         "audits[definition-list].title"

@@ -9,6 +9,9 @@ import assert from 'assert/strict';
 import jsdom from 'jsdom';
 import * as jestMock from 'jest-mock';
 
+import AxeAudit from '../../../core/audits/accessibility/axe-audit.js';
+import {Audit} from '../../../core/audits/audit.js';
+import * as format from '../../../shared/localization/format.js';
 import {DOM} from '../../renderer/dom.js';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -37,6 +40,29 @@ describe('DetailsRenderer', () => {
   });
 
   describe('render', () => {
+    it('renders confirmed and manual-review axe results in separate sections', () => {
+      class ExampleAudit extends AxeAudit {
+        static get meta() {
+          return {id: 'example', title: 'Example', description: 'Example',
+            requiredArtifacts: ['Accessibility']};
+        }
+      }
+      const makeRule = selector => ({id: 'example',
+        nodes: [{node: {selector, snippet: selector}, relatedNodes: []}]});
+      const product = ExampleAudit.audit({Accessibility: {
+        violations: [makeRule('#bad')], incomplete: [makeRule('#review')],
+      }});
+      const result = Audit.generateAuditResult(ExampleAudit, product);
+      format.replaceIcuMessages(result, 'en-US');
+      const json = JSON.parse(JSON.stringify(result));
+      const el = renderer.render(json.details);
+      assert.equal(el.querySelectorAll('table').length, 2);
+      assert.match(el.textContent, /Accessibility violations/);
+      assert.match(el.textContent, /Needs manual review/);
+      assert.match(el.textContent, /#bad/);
+      assert.match(el.textContent, /#review/);
+    });
+
     it('renders filmstrips', () => {
       const el = renderer.render({
         type: 'filmstrip',
