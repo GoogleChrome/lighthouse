@@ -86,6 +86,10 @@ async function startTimespanGather(page, options = {}) {
         driver.defaultSession.off('Page.frameNavigated', onFrameNavigated);
         if (pageNavigationDetected) {
           baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningNavigationDetected));
+          baseArtifacts.LighthouseRuntimeWarnings.push({
+            code: 'TIMESPAN_NAVIGATION_DETECTED',
+            message: str_(UIStrings.warningNavigationDetected),
+          });
         }
 
         await collectPhaseArtifacts({phase: 'getArtifact', ...phaseOptions});

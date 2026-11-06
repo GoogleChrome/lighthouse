@@ -42,6 +42,8 @@ interface UniversalBaseArtifacts {
   fetchTime: string;
   /** A set of warnings about unexpected things encountered while loading and testing the page. */
   LighthouseRunWarnings: Array<string | IcuMessage>;
+  /** Structured runtime warnings for this Lighthouse run. */
+  LighthouseRuntimeWarnings: Array<{code: string; message: string | IcuMessage}>;
   /** The benchmark index that indicates rough device class. */
   BenchmarkIndex: number;
   /** An object containing information about the testing configuration used by Lighthouse. */
