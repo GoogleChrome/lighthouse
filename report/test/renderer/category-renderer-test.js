@@ -75,7 +75,10 @@ describe('CategoryRenderer', () => {
       assert.equal(result.scoreDisplayMode, 'informative');
       assert.equal(category.auditRefs[0].weight, 0);
       assert.equal(category.score, 0);
-      assert.equal(el.querySelector('.lh-gauge__percentage').textContent, '0');
+      assert.equal(el.querySelector('.lh-gauge__percentage').textContent, '-');
+      assert.equal(el.querySelector('.lh-gauge__percentage').title, 'Unscored');
+      assert.equal(result.title, 'Accessibility check: example');
+      assert.equal(el.querySelector('#example .lh-audit__title').textContent, result.title);
       const audit = el.querySelector('#example');
       assert.ok(audit.classList.contains('lh-audit--informative'));
       assert.ok(audit.querySelector('.lh-audit__adorn'));
@@ -85,13 +88,45 @@ describe('CategoryRenderer', () => {
       assert.match(details.querySelector('summary').textContent, /needs manual review/i);
     });
 
-    it('shows a null category score as an error, not a neutral unscored state', () => {
+    it('shows a null category score as an error when a weighted audit failed', () => {
       const {category} = renderResult([], [axeRule('#review')]);
       category.score = null;
+      category.auditRefs[0].weight = 1;
+      category.auditRefs[0].result.scoreDisplayMode = 'error';
       const el = renderer.render(category, {});
       const gauge = el.querySelector('.lh-gauge__percentage');
       assert.equal(gauge.textContent, '');
       assert.ok(gauge.classList.contains('lh-gauge--error'));
+    });
+
+    it('preserves an error for a null score with a zero-weight error audit', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      category.score = null;
+      category.auditRefs[0].result.scoreDisplayMode = 'error';
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '');
+      assert.ok(gauge.classList.contains('lh-gauge--error'));
+      assert.equal(gauge.title, 'Error!');
+    });
+
+    it('keeps a real weighted failing score at zero', () => {
+      const {category} = renderResult([axeRule('#bad')], [axeRule('#review')]);
+      assert.equal(category.score, 0);
+      assert.equal(category.auditRefs[0].weight, 1);
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '0');
+      assert.ok(!gauge.classList.contains('lh-gauge--error'));
+    });
+
+    it('does not label a zero-score category unscored if an audit has an error', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      category.auditRefs.push({id: 'broken', weight: 0, result: {
+        id: 'broken', title: 'Error', description: 'Error', score: null,
+        scoreDisplayMode: 'error',
+      }});
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '0');
+      assert.notEqual(gauge.title, 'Unscored');
     });
 
     it('shows a zero-weight informative category as a neutral 0/0 fraction', () => {

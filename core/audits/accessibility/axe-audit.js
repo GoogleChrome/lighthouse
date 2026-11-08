@@ -19,6 +19,11 @@ const UIStrings = {
   manualReviewElementsHeader: 'Elements to manually review',
   /** Heading for confirmed accessibility violations. */
   violationsSection: 'Accessibility violations',
+  /**
+   * @description Neutral audit title when automated checks are inconclusive.
+   * @example {color-contrast} ruleId
+   */
+  manualReviewTitle: 'Accessibility check: {ruleId}',
   /** Heading for accessibility checks that require manual review. */
   manualReviewSection: 'Needs manual review',
 };
@@ -119,6 +124,8 @@ class AxeAudit extends Audit {
 
     return {
       score: Number(rule === undefined),
+      title: !violation && incompleteResult ?
+        str_(UIStrings.manualReviewTitle, {ruleId: this.meta.id}) : undefined,
       displayValue: incompleteResult ? str_(UIStrings.manualReviewSection) : undefined,
       scoreDisplayMode: !violation && incompleteResult ?
         Audit.SCORING_MODES.INFORMATIVE : undefined,

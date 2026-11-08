@@ -8,6 +8,7 @@ import assert from 'assert/strict';
 import AxeAudit from '../../../audits/accessibility/axe-audit.js';
 import {Audit} from '../../../audits/audit.js';
 import {ReportScoring} from '../../../scoring.js';
+import * as format from '../../../../shared/localization/format.js';
 
 class TestAudit extends AxeAudit {
   static get meta() {
@@ -58,6 +59,25 @@ describe('Accessibility incomplete results', () => {
       categories, {'test-rule': output, 'other': {score: 0}});
     assert.equal(scored.accessibility.score, 0);
     assert.equal(scored.accessibility.auditRefs[0].weight, 0);
+  });
+
+  it('keeps the neutral title in JSON without localization metadata', () => {
+    const output = result([], [rule('#review')]);
+    format.replaceIcuMessages(output, 'en-US');
+    const json = JSON.parse(JSON.stringify(output));
+    assert.equal(json.title, 'Accessibility check: test-rule');
+    assert.equal(json.scoreDisplayMode, 'informative');
+    assert.equal(json.score, 1);
+    assert.equal(json.displayValue, 'Needs manual review');
+  });
+
+  it('does not replace the title of mixed, passing, or errored results', () => {
+    const mixed = result([rule('#bad')], [rule('#review')]);
+    const passing = result([], []);
+    const errored = result([], [{...rule('#review'), error: {message: 'axe failed'}}]);
+    assert.equal(mixed.title, 'Test');
+    assert.equal(passing.title, 'Test');
+    assert.equal(errored.title, 'Test');
   });
 
   it('keeps ordinary violations as a table with binary score', () => {
