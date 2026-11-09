@@ -549,7 +549,7 @@ const expectations = {
     //             type: 'node',
     //             snippet: '<select id="state_billing" name="state_billing">',
     //             nodeLabel:
-    //               '\n            Select a state\n            CA\n            MA\n            NY\n      …',
+    //               '\n            Select a state\n            CA\n            MA\n            NY\n      ...',
     //           },
     //           suggestion: 'address-level1',
     //           current: '',

@@ -45,6 +45,7 @@ async function buildEntryPoint() {
           '__LOCALES__': JSON.stringify(locales),
         }),
       ]),
+      plugins.postprocess(),
     ],
   });
 }

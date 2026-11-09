@@ -57,13 +57,15 @@ describe('Main Bundle build', () => {
     expect(code.length).toBeLessThan(3_000_000); // 3 MB
   });
 
-  it('minified bundle contains only ASCII characters', () => {
-    const code = fs.readFileSync(minifiedBundlePath, 'utf-8');
-    let nonAscii = 0;
-    for (let i = 0; i < code.length; i++) {
-      if (code.charCodeAt(i) > 0x7f) nonAscii++;
+  it('bundles contain only ASCII characters', () => {
+    for (const file of [bundlePath, minifiedBundlePath]) {
+      const code = fs.readFileSync(file, 'utf-8');
+      let nonAscii = 0;
+      for (let i = 0; i < code.length; i++) {
+        if (code.charCodeAt(i) > 0x7f) nonAscii++;
+      }
+      expect(nonAscii).toBe(0);
     }
-    expect(nonAscii).toBe(0);
   });
 
   it('bundle can run in a browser', async () => {

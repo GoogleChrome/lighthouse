@@ -31,7 +31,8 @@ import {chromiumVersionCheck} from './version-check.js';
  */
 
 const NUMBER_REGEXP = /-?(?:\d|\.)+/.source;
-const OPS_REGEXP = /<=?|>=?|\+\/-|±/.source;
+// Escape plus-minus sign (\u00b1) in RegExp literal so the bundle stays ASCII-only.
+const OPS_REGEXP = /<=?|>=?|\+\/-|\u00b1/.source;
 // An optional number, optional whitespace, an operator, optional whitespace, a number.
 const NUMERICAL_EXPECTATION_REGEXP =
   new RegExp(`^(${NUMBER_REGEXP})?\\s*(${OPS_REGEXP})\\s*(${NUMBER_REGEXP})$`);

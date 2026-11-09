@@ -419,7 +419,8 @@ const expectations = {
         details: {
           items: [
             {
-              reason: /Pages with WebRTC (cannot|can’t) enter back\/forward cache/,
+              // Escape right single quotation mark (\u2019) in RegExp literal so the bundle stays ASCII-only.
+              reason: /Pages with WebRTC (cannot|can\u2019t) enter back\/forward cache/,
               failureType: 'Actionable',
               subItems: {
                 items: [{

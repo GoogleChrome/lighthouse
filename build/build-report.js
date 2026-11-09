@@ -57,7 +57,7 @@ async function buildFlowReport() {
     entryPoints: ['flow-report/clients/standalone.ts'],
     outfile: 'dist/report/flow.js',
     format: 'iife',
-    charset: 'utf8',
+    charset: 'ascii',
     bundle: true,
     minify: !process.env.DEBUG,
     plugins: [

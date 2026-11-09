@@ -108,7 +108,8 @@ const expectations = {
       _includes: [
         {
           url: 'http://localhost:10200/simple-script.js',
-          content: /🪁/,
+          // Escape kite emoji (\ud83e\ude81) in RegExp literal so the bundle stays ASCII-only.
+          content: /\ud83e\ude81/,
         },
         {
           url: 'http://localhost:10200/oopif-simple-page.html',

@@ -41,6 +41,15 @@ describe('MCP Bundle build', () => {
     expect(fs.existsSync(bundlePath)).toBe(true);
   });
 
+  it('bundle contains only ASCII characters', () => {
+    const code = fs.readFileSync(bundlePath, 'utf-8');
+    let nonAscii = 0;
+    for (let i = 0; i < code.length; i++) {
+      if (code.charCodeAt(i) > 0x7f) nonAscii++;
+    }
+    expect(nonAscii).toBe(0);
+  });
+
   it('bundle has correct exports', async () => {
     const mcpBundle = await import(bundlePath);
     expect(typeof mcpBundle.navigation).toBe('function');

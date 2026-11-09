@@ -231,6 +231,20 @@ function ignoreBuiltins(opts = {}) {
 }
 
 /**
+ * Escapes any remaining non-ASCII characters (e.g. in comments or regex literals
+ * that esbuild's `charset: 'ascii'` does not escape) so V8 keeps the bundle in
+ * a 1-byte string buffer.
+ * @param {string} code
+ * @return {string}
+ */
+function escapeNonAscii(code) {
+  return code.replace(
+    /[\u0080-\uffff]/g,
+    c => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`
+  );
+}
+
+/**
  * Currently there is no umd support in esbuild,
  * so we take the output of an iife build and create our own umd bundle.
  * https://github.com/evanw/esbuild/pull/1331
@@ -255,7 +269,7 @@ function generateUMD(iifeCode, moduleName) {
     'root.Lighthouse.ReportGenerator.ReportGenerator = root.Lighthouse.ReportGenerator;' :
     '';
 
-  return `(function(root, factory) {
+  return escapeNonAscii(`(function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else if (typeof module === "object" && module.exports) {
@@ -270,7 +284,7 @@ function generateUMD(iifeCode, moduleName) {
   ${iifeCode.replace('"use strict";\n', '')};
   return umdExports.${moduleLastName} ?? umdExports;
 }));
-`;
+`);
 }
 
 /**
@@ -421,8 +435,9 @@ function lighthouseShimPlugin(options) {
 function postprocess(options = {}) {
   return {
     name: 'postprocess',
-    setup({onEnd}) {
-      onEnd(async (result) => {
+    setup(build) {
+      build.initialOptions.write = false;
+      build.onEnd(async (result) => {
         if (result.errors.length) return;
 
         const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
@@ -430,7 +445,7 @@ function postprocess(options = {}) {
         if (!codeFile) throw new Error('missing output');
 
         // Just make sure the shimming worked.
-        let code = codeFile.text;
+        let code = escapeNonAscii(codeFile.text);
         if (code.includes('inflate_fast')) {
           throw new Error('Expected zlib inflate code to have been removed');
         }

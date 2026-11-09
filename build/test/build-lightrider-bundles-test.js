@@ -28,6 +28,11 @@ describe('Lightrider Bundle builds', () => {
     expect(fs.existsSync(lrBundlePath)).toBe(true);
     const content = fs.readFileSync(lrBundlePath, 'utf8');
     expect(content).toContain('Lighthouse');
+    let nonAscii = 0;
+    for (let i = 0; i < content.length; i++) {
+      if (content.charCodeAt(i) > 0x7f) nonAscii++;
+    }
+    expect(nonAscii).toBe(0);
 
     const origProcess = globalThis.process;
     try {

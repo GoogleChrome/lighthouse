@@ -214,7 +214,10 @@ class GhPagesApp {
     if (process.env.DEBUG) return contents.join('\n');
 
     const options = {
-      output: {preamble: license}, // Insert license at top.
+      output: {
+        preamble: license, // Insert license at top.
+        ascii_only: true,
+      },
     };
     const uglified = await terser.minify(contents, options);
     if (!uglified.code) {
