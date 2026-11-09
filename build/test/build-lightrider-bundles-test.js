@@ -29,6 +29,13 @@ describe('Lightrider Bundle builds', () => {
     const content = fs.readFileSync(lrBundlePath, 'utf8');
     expect(content).toContain('Lighthouse');
 
+    // Ensure V8 keeps the script source in a 1-byte Latin-1 string (SeqOneByteString, <= 0xff).
+    let twoByteCount = 0;
+    for (let i = 0; i < content.length; i++) {
+      if (content.charCodeAt(i) > 0xff) twoByteCount++;
+    }
+    expect(twoByteCount).toBe(0);
+
     const origProcess = globalThis.process;
     try {
       // Test CommonJS environment (Smashberry / Calypso / Node.js in Google3).
@@ -107,6 +114,12 @@ describe('Lightrider Bundle builds', () => {
     const content = fs.readFileSync(reportGenBundlePath, 'utf8');
     // UMD bundle for ReportGenerator
     expect(content).toContain('ReportGenerator');
+
+    let twoByteCount = 0;
+    for (let i = 0; i < content.length; i++) {
+      if (content.charCodeAt(i) > 0xff) twoByteCount++;
+    }
+    expect(twoByteCount).toBe(0);
   });
 
   it('builds the static server bundle', async () => {
