@@ -129,8 +129,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * @return {Array<NetworkRequest>}
    */
   getInflightRequests() {
-    if (!this._networkRecorder) return [];
-    return this._networkRecorder.getRawRecords().filter(request => !request.finished);
+    return this.getRawRecords().filter(request => !request.finished);
   }
 
   /**

@@ -92,10 +92,11 @@ describe('ARD Gatherer Static Helpers', () => {
 
   describe('getHttpHeaderLinks', () => {
     /**
-     * @param {Array<{name: string, value: string}>|Error|null} responseHeaders
+     * @param {Array<{name: string, value: string}>|null} responseHeaders
+     * @param {{resourceType?: string, failed?: boolean}} [recordOverrides]
      * @return {LH.Gatherer.Context}
      */
-    function contextWithResponseHeaders(responseHeaders) {
+    function contextWithResponseHeaders(responseHeaders, recordOverrides = {}) {
       return /** @type {LH.Gatherer.Context} */ (/** @type {unknown} */ ({
         gatherMode: 'navigation',
         baseArtifacts: {
@@ -104,13 +105,13 @@ describe('ARD Gatherer Static Helpers', () => {
         driver: {
           networkMonitor: {
             getRawRecords: () => {
-              if (responseHeaders instanceof Error) throw responseHeaders;
               if (!responseHeaders) return [];
               return [{
                 url: finalUrl,
                 resourceType: 'Document',
                 failed: false,
                 responseHeaders,
+                ...recordOverrides,
               }];
             },
           },
@@ -170,11 +171,19 @@ describe('ARD Gatherer Static Helpers', () => {
       expect(result).toEqual({ard: null, legacy: null});
     });
 
-    it('returns nulls when main resource is not found or throws', async () => {
+    it('returns nulls when there is no main document record', async () => {
+      const result = await AgentResourceDiscovery.getHttpHeaderLinks(
+        contextWithResponseHeaders(null), finalUrl);
+      expect(result).toEqual({ard: null, legacy: null});
+    });
+
+    it('ignores failed and non-document records for the main document URL', async () => {
+      const headers = [{name: 'Link', value: '</header-ard.json>; rel="ard"'}];
       expect(await AgentResourceDiscovery.getHttpHeaderLinks(
-        contextWithResponseHeaders(null), finalUrl)).toEqual({ard: null, legacy: null});
+        contextWithResponseHeaders(headers, {failed: true}), finalUrl))
+        .toEqual({ard: null, legacy: null});
       expect(await AgentResourceDiscovery.getHttpHeaderLinks(
-        contextWithResponseHeaders(new Error('Network error')), finalUrl))
+        contextWithResponseHeaders(headers, {resourceType: 'Fetch'}), finalUrl))
         .toEqual({ard: null, legacy: null});
     });
   });
