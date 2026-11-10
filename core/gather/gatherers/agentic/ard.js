@@ -16,6 +16,7 @@ import LinkHeader from 'http-link-header';
 
 import BaseGatherer from '../../base-gatherer.js';
 import RobotsTxt from '../seo/robots-txt.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
 
 /**
  * Link relations for ARD entry sources. `ai-catalog` is the predecessor relation, which
@@ -161,15 +162,26 @@ class AgentResourceDiscovery extends BaseGatherer {
   static async getHttpHeaderLinks(context, finalDisplayedUrl) {
     if (context.gatherMode !== 'navigation') return NO_LINKS;
 
-    try {
-      const mainResourceResponse = await context.driver.fetcher.fetchResource(finalDisplayedUrl);
-      const linkHeader = mainResourceResponse.headers?.link;
-      if (!linkHeader) return NO_LINKS;
+    const {mainDocumentUrl} = context.baseArtifacts.URL;
+    if (!mainDocumentUrl) return NO_LINKS;
 
-      const parsed = LinkHeader.parse(linkHeader.replace(/\n/g, ','));
+    try {
+      // Read the headers from the network monitor rather than a DevtoolsLog dependency, since
+      // this gatherer also supports snapshot mode and so cannot depend on DevtoolsLog.
+      const records = context.driver.networkMonitor.getRawRecords();
+      const mainResource = Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(
+        records,
+        mainDocumentUrl
+      );
+      if (!mainResource) return NO_LINKS;
+
+      // NetworkRequest already splits multi-value headers into separate entries.
+      const refs = mainResource.responseHeaders
+        .filter(header => header.name.toLowerCase() === 'link')
+        .flatMap(header => LinkHeader.parse(header.value).refs);
       /** @param {string} rel */
       const getUri = rel =>
-        resolveUrl(parsed.refs.find(ref => ref.rel?.toLowerCase() === rel)?.uri, finalDisplayedUrl);
+        resolveUrl(refs.find(ref => ref.rel?.toLowerCase() === rel)?.uri, finalDisplayedUrl);
       return {ard: getUri(REL_ARD), legacy: getUri(REL_LEGACY)};
     } catch (err) {
       log.verbose('AgentResourceDiscovery', `Could not read Link header: ${err.message}`);
