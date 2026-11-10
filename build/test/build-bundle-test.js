@@ -36,8 +36,12 @@ describe('Main Bundle build', () => {
   after(() => {
     if (fs.existsSync(bundlePath)) fs.unlinkSync(bundlePath);
     if (fs.existsSync(bundlePath + '.map')) fs.unlinkSync(bundlePath + '.map');
+    if (fs.existsSync(bundlePath + '.LEGAL.txt')) fs.unlinkSync(bundlePath + '.LEGAL.txt');
     if (fs.existsSync(minifiedBundlePath)) fs.unlinkSync(minifiedBundlePath);
     if (fs.existsSync(minifiedBundlePath + '.map')) fs.unlinkSync(minifiedBundlePath + '.map');
+    if (fs.existsSync(minifiedBundlePath + '.LEGAL.txt')) {
+      fs.unlinkSync(minifiedBundlePath + '.LEGAL.txt');
+    }
   });
 
   it('bundle exists', () => {
@@ -66,6 +70,31 @@ describe('Main Bundle build', () => {
       }
       expect(nonAscii).toBe(0);
     }
+  });
+
+  describe('licensing', () => {
+    const licensePath = path.join(LH_ROOT, 'dist/LICENSE');
+
+    it('includes bundled dependencies and excludes shimmed modules', () => {
+      const legalTxt = fs.readFileSync(bundlePath + '.LEGAL.txt', 'utf-8');
+      const licenseTxt = fs.readFileSync(licensePath, 'utf-8');
+
+      const expectedDeps = [
+        'ard-spec',
+        'axe-core',
+        'js-library-detector',
+        '@paulirish/trace_engine',
+      ];
+      for (const dep of expectedDeps) {
+        expect(legalTxt).toContain(`- ${dep}@`);
+        expect(licenseTxt).toContain(`${dep} (v`);
+      }
+
+      for (const shimmed of ['@sentry/node', 'puppeteer-core', 'source-map']) {
+        expect(legalTxt).not.toContain(`- ${shimmed}`);
+        expect(licenseTxt).not.toContain(`\n${shimmed} (`);
+      }
+    });
   });
 
   it('bundle can run in a browser', async () => {

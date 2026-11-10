@@ -20,37 +20,8 @@ import {Runner} from '../core/runner.js';
 import defaultConfig from '../core/config/default-config.js';
 import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
-import {ARD_VERSION} from '../third-party/ard/ard.js';
 
 const require = createRequire(import.meta.url);
-
-/**
- * @typedef {{
- *   name: string,
- *   url?: string,
- *   version?: string,
- *   license?: string,
- *   licenseText?: string,
- * }} DependencyNotice
- */
-
-/**
- * Metadata for vendored directories under `third-party/` that do not have their own `package.json`.
- * @type {Record<string, {npmPackage: string} | {name: string, url: string, version: string, license: string, licenseFile: string}>}
- */
-const VENDORED_THIRD_PARTY_DIRS = {
-  'ard': {
-    name: 'ard-spec',
-    url: 'https://github.com/ards-project/ard-spec',
-    version: ARD_VERSION,
-    license: 'Apache-2.0',
-    licenseFile: path.join(LH_ROOT, 'third-party/ard/LICENSE'),
-  },
-  // `third-party/axe/valid-langs.js` is extracted from `axe-core`.
-  'axe': {
-    npmPackage: 'axe-core',
-  },
-};
 
 /** Categories included in the MCP bundle (as shown in DevTools): accessibility, SEO, Best practices, agentic browsing. */
 const MCP_CATEGORY_IDS = ['accessibility', 'seo', 'best-practices', 'agentic-browsing'];
@@ -329,7 +300,9 @@ async function buildBundle(entryPath, distPath) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      plugins.postprocess(),
+      plugins.postprocess({
+        inlinedFilesByImporter,
+      }),
     ],
   });
 
@@ -346,95 +319,6 @@ async function buildBundle(entryPath, distPath) {
 }
 
 /**
- * Returns true if `modulePath` is a virtual/shimmed module in an esbuild plugin namespace
- * (e.g. `replace-modules:...`, `lh-audit-shim:...`, `lh-gatherer-shim:...`).
- * @param {string} modulePath
- * @return {boolean}
- */
-function isShimmedOrVirtualModule(modulePath) {
-  return /^[a-z][a-z0-9-]+:/.test(modulePath);
-}
-
-/**
- * @param {unknown} rawUrl
- * @return {string | undefined}
- */
-function normalizePackageUrl(rawUrl) {
-  const candidate = rawUrl && typeof rawUrl === 'object' && 'url' in rawUrl ?
-    rawUrl.url :
-    rawUrl;
-  if (!candidate || typeof candidate !== 'string') return undefined;
-
-  const url = candidate.replace(/^git\+/, '').replace(/\.git$/, '');
-  if (url.startsWith('github:')) {
-    return `https://github.com/${url.substring(7)}`;
-  }
-  if (url.startsWith('gitlab:')) {
-    return `https://gitlab.com/${url.substring(7)}`;
-  }
-  if (url.startsWith('bitbucket:')) {
-    return `https://bitbucket.org/${url.substring(10)}`;
-  }
-  if (url.startsWith('ssh://git@github.com/')) {
-    return `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
-  }
-  if (url.startsWith('git://github.com/')) {
-    return `https://github.com/${url.substring('git://github.com/'.length)}`;
-  }
-  if (url.startsWith('git@github.com:')) {
-    return `https://github.com/${url.substring('git@github.com:'.length)}`;
-  }
-  if (!url.startsWith('http')) {
-    const parts = url.split('/');
-    if (parts.length === 2) {
-      return `https://github.com/${url}`;
-    }
-  }
-  return url;
-}
-
-/**
- * @param {string} packageDir
- * @return {DependencyNotice}
- */
-function readPackageNotice(packageDir) {
-  const pkg = JSON.parse(fs.readFileSync(path.join(packageDir, 'package.json'), 'utf-8'));
-  const preferredLicenseFiles = [
-    'LICENSE',
-    'LICENSE.txt',
-    'LICENSE.md',
-    'license.md',
-    'LICENSE.MIT',
-    'LICENSE.APACHE',
-  ];
-
-  let licenseText;
-  for (const fileName of preferredLicenseFiles) {
-    const candidate = path.join(packageDir, fileName);
-    if (fs.existsSync(candidate)) {
-      licenseText = fs.readFileSync(candidate, 'utf-8');
-      break;
-    }
-  }
-  if (!licenseText) {
-    const fallbackFile = fs.readdirSync(packageDir)
-      .find(f => /^licen[sc]e/i.test(f) || /^copying/i.test(f));
-    if (fallbackFile) {
-      licenseText = fs.readFileSync(path.join(packageDir, fallbackFile), 'utf-8');
-    }
-  }
-
-  const license = typeof pkg.license === 'object' ? pkg.license?.type : pkg.license;
-  return {
-    name: pkg.name ?? 'N/A',
-    url: normalizePackageUrl(pkg.homepage ?? pkg.repository),
-    version: pkg.version,
-    license,
-    licenseText,
-  };
-}
-
-/**
  * @param {{
  *   metafile: import('esbuild').Metafile,
  *   sources: string[],
@@ -443,97 +327,18 @@ function readPackageNotice(packageDir) {
  * }} options
  */
 function generateThirdPartyNotices({metafile, sources, inlinedFilesByImporter, distDir}) {
-  const jsOutput = Object.entries(metafile.outputs)
-    .find(([outPath]) => outPath.endsWith('.js'))?.[1];
-
-  /** @type {Set<string>} */
-  const activeOutputInputs = new Set();
-  for (const [inputPath, info] of Object.entries(jsOutput?.inputs ?? {})) {
-    if (isShimmedOrVirtualModule(inputPath)) continue;
-    if (info.bytesInOutput <= 0) continue;
-    activeOutputInputs.add(path.resolve(process.cwd(), inputPath));
-  }
-
-  /** @type {Set<string>} */
-  const paths = new Set(activeOutputInputs);
-  for (const source of sources) {
-    if (isShimmedOrVirtualModule(source)) continue;
-    paths.add(path.resolve(distDir, source));
-  }
-  for (const [importerPath, files] of inlinedFilesByImporter.entries()) {
-    if (!activeOutputInputs.has(path.resolve(importerPath))) continue;
-    for (const file of files) {
-      paths.add(path.resolve(file));
-    }
-  }
-
-  /** @type {Map<string, DependencyNotice>} */
-  const noticesByName = new Map();
-  /** @type {Set<string>} */
-  const seenPkgDirs = new Set();
-  const thirdPartyRoot = path.join(LH_ROOT, 'third-party');
-
-  for (const resolvedPath of paths) {
-    let dir = fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory() ?
-      resolvedPath :
-      path.dirname(resolvedPath);
-    let pkgJsonPath;
-    while (dir.startsWith(LH_ROOT) && dir !== LH_ROOT) {
-      const candidate = path.join(dir, 'package.json');
-      if (fs.existsSync(candidate)) {
-        pkgJsonPath = candidate;
-        break;
-      }
-      dir = path.dirname(dir);
-    }
-
-    if (pkgJsonPath) {
-      const pkgDir = path.dirname(pkgJsonPath);
-      if (!seenPkgDirs.has(pkgDir)) {
-        seenPkgDirs.add(pkgDir);
-        const notice = readPackageNotice(pkgDir);
-        // We only care about third-party packages (or workspace packages that aren't the root).
-        if (notice.name !== 'N/A' && notice.name !== 'lighthouse') {
-          noticesByName.set(notice.name, notice);
-        }
-      }
-      continue;
-    }
-
-    if (resolvedPath.startsWith(thirdPartyRoot + path.sep)) {
-      const subdir = path.relative(thirdPartyRoot, resolvedPath).split(path.sep)[0];
-      const vendored = VENDORED_THIRD_PARTY_DIRS[subdir];
-      if (!vendored) {
-        throw new Error(
-          `Missing third-party license metadata for vendored directory: third-party/${subdir}`
-        );
-      }
-      if ('npmPackage' in vendored) {
-        if (!noticesByName.has(vendored.npmPackage)) {
-          const npmPkgDir = path.dirname(require.resolve(`${vendored.npmPackage}/package.json`));
-          seenPkgDirs.add(npmPkgDir);
-          noticesByName.set(vendored.npmPackage, readPackageNotice(npmPkgDir));
-        }
-      } else if (!noticesByName.has(vendored.name)) {
-        noticesByName.set(vendored.name, {
-          name: vendored.name,
-          url: vendored.url,
-          version: vendored.version,
-          license: vendored.license,
-          licenseText: fs.readFileSync(vendored.licenseFile, 'utf-8'),
-        });
-      }
-    }
-  }
+  const notices = plugins.collectThirdPartyNotices({
+    metafile,
+    sources,
+    inlinedFilesByImporter,
+    distDir,
+  });
 
   const divider =
     '\n\n-------------------- DEPENDENCY DIVIDER --------------------\n\n';
 
-  const stringifiedDependencies = Array.from(noticesByName.keys())
-    .sort()
-    .map(name => {
-      const dependency = noticesByName.get(name);
-      if (!dependency) return '';
+  const stringifiedDependencies = notices
+    .map(dependency => {
       const parts = [
         `Name: ${dependency.name}`,
         `URL: ${dependency.url ?? 'N/A'}`,
