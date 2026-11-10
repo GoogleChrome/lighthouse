@@ -6,7 +6,7 @@ _Some incomplete notes_
 
 ## Components & Terminology
 
-* **Driver** - Interfaces with [Puppeteer](https://github.com/puppeteer/puppeteer) and [Chrome Debugging Protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)  ([API viewer](https://chromedevtools.github.io/debugger-protocol-viewer/))
+* **Driver** - Interfaces with [Puppeteer](https://github.com/puppeteer/puppeteer) and [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/).
 * **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.  Run Lighthouse with `--gather-mode` to see the 3 primary outputs from gathering:
   1. `artifacts.json`: The output from all [gatherers](../core/gather/gatherers).
   2. `trace.json`: Most performance characteristics come from here. You can view it in the DevTools Peformance panel.
@@ -23,7 +23,7 @@ _Some incomplete notes_
 
 ## Protocol
 
-* _Interacting with Chrome:_ The Chrome protocol connection maintained via [WebSocket](https://github.com/websockets/ws) for the CLI [`chrome.debuggger` API](https://developer.chrome.com/extensions/debugger) when in the Chrome extension.
+* _Interacting with Chrome:_ The Chrome protocol connection is maintained via [WebSocket](https://github.com/websockets/ws) for the CLI, and the [`chrome.debugger` API](https://developer.chrome.com/docs/extensions/reference/api/debugger) when in the Chrome extension.
 * _Event binding & domains_: Some domains must be `enable()`d so they issue events. Once enabled, they flush any events that represent state. As such, network events will only issue after the domain is enabled. All the protocol agents resolve their `Domain.enable()` callback _after_ they have flushed any pending events. See example:
 
 ```js
