@@ -16,6 +16,7 @@ import LinkHeader from 'http-link-header';
 
 import BaseGatherer from '../../base-gatherer.js';
 import RobotsTxt from '../seo/robots-txt.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
 
 /**
  * Link relations for ARD entry sources. `ai-catalog` is the predecessor relation, which
@@ -162,8 +163,18 @@ class AgentResourceDiscovery extends BaseGatherer {
     if (context.gatherMode !== 'navigation') return NO_LINKS;
 
     try {
-      const mainResourceResponse = await context.driver.fetcher.fetchResource(finalDisplayedUrl);
-      const linkHeader = mainResourceResponse.headers?.link;
+      const mainDocumentUrl = context.baseArtifacts.URL.mainDocumentUrl || finalDisplayedUrl;
+      const records = context.driver.networkMonitor.getRawRecords();
+      const mainResource = Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(
+        records,
+        mainDocumentUrl
+      );
+      if (!mainResource) return NO_LINKS;
+
+      const linkHeader = mainResource.responseHeaders
+        .filter(header => header.name.toLowerCase() === 'link')
+        .map(header => header.value)
+        .join(',');
       if (!linkHeader) return NO_LINKS;
 
       const parsed = LinkHeader.parse(linkHeader.replace(/\n/g, ','));

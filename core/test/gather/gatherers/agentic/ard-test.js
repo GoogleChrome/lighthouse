@@ -92,17 +92,27 @@ describe('ARD Gatherer Static Helpers', () => {
 
   describe('getHttpHeaderLinks', () => {
     /**
-     * @param {string|Error} linkHeader
+     * @param {Array<{name: string, value: string}>|Error|null} responseHeaders
      * @return {LH.Gatherer.Context}
      */
-    function contextWithLinkHeader(linkHeader) {
+    function contextWithResponseHeaders(responseHeaders) {
       return /** @type {LH.Gatherer.Context} */ (/** @type {unknown} */ ({
         gatherMode: 'navigation',
+        baseArtifacts: {
+          URL: {mainDocumentUrl: finalUrl, finalDisplayedUrl: finalUrl},
+        },
         driver: {
-          fetcher: {
-            fetchResource: () => linkHeader instanceof Error ?
-              Promise.reject(linkHeader) :
-              Promise.resolve({status: 200, content: '', headers: {'link': linkHeader}}),
+          networkMonitor: {
+            getRawRecords: () => {
+              if (responseHeaders instanceof Error) throw responseHeaders;
+              if (!responseHeaders) return [];
+              return [{
+                url: finalUrl,
+                resourceType: 'Document',
+                failed: false,
+                responseHeaders,
+              }];
+            },
           },
         },
       }));
@@ -117,8 +127,10 @@ describe('ARD Gatherer Static Helpers', () => {
     });
 
     it('extracts and resolves rel="ard" and rel="ai-catalog" URLs', async () => {
-      const context = contextWithLinkHeader(
-        '<https://example.com/header-ard.json>; rel="ard", </legacy.json>; rel=ai-catalog');
+      const context = contextWithResponseHeaders([{
+        name: 'Link',
+        value: '<https://example.com/header-ard.json>; rel="ard", </legacy.json>; rel=ai-catalog',
+      }]);
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
       expect(result).toEqual({
         ard: 'https://example.com/header-ard.json',
@@ -127,8 +139,10 @@ describe('ARD Gatherer Static Helpers', () => {
     });
 
     it('matches rel values case-insensitively in Link headers', async () => {
-      const context = contextWithLinkHeader(
-        '<https://example.com/header-ard.json>; rel="ARD", </legacy.json>; rel="AI-Catalog"');
+      const context = contextWithResponseHeaders([{
+        name: 'link',
+        value: '<https://example.com/header-ard.json>; rel="ARD", </legacy.json>; rel="AI-Catalog"',
+      }]);
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
       expect(result).toEqual({
         ard: 'https://example.com/header-ard.json',
@@ -136,9 +150,11 @@ describe('ARD Gatherer Static Helpers', () => {
       });
     });
 
-    it('reads both links when Chrome joins two Link headers with a newline', async () => {
-      const context = contextWithLinkHeader(
-        '</legacy.json>; rel=ai-catalog\n</header-ard.json>; rel="ard"');
+    it('reads both links across multiple Link header entries', async () => {
+      const context = contextWithResponseHeaders([
+        {name: 'Link', value: '</legacy.json>; rel=ai-catalog'},
+        {name: 'link', value: '</header-ard.json>; rel="ard"'},
+      ]);
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
       expect(result).toEqual({
         ard: 'https://example.com/header-ard.json',
@@ -147,15 +163,19 @@ describe('ARD Gatherer Static Helpers', () => {
     });
 
     it('returns nulls when Link header has neither relation', async () => {
-      const context = contextWithLinkHeader('<https://example.com/styles.css>; rel="stylesheet"');
+      const context = contextWithResponseHeaders([
+        {name: 'Link', value: '<https://example.com/styles.css>; rel="stylesheet"'},
+      ]);
       const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
       expect(result).toEqual({ard: null, legacy: null});
     });
 
-    it('returns nulls when fetchResource throws', async () => {
-      const context = contextWithLinkHeader(new Error('Network error'));
-      const result = await AgentResourceDiscovery.getHttpHeaderLinks(context, finalUrl);
-      expect(result).toEqual({ard: null, legacy: null});
+    it('returns nulls when main resource is not found or throws', async () => {
+      expect(await AgentResourceDiscovery.getHttpHeaderLinks(
+        contextWithResponseHeaders(null), finalUrl)).toEqual({ard: null, legacy: null});
+      expect(await AgentResourceDiscovery.getHttpHeaderLinks(
+        contextWithResponseHeaders(new Error('Network error')), finalUrl))
+        .toEqual({ard: null, legacy: null});
     });
   });
 });
@@ -184,7 +204,7 @@ describe('AgentResourceDiscovery Gatherer', () => {
     const context = /** @type {LH.Gatherer.Context<'RobotsTxt'>} */ (/** @type {unknown} */ ({
       gatherMode: 'navigation',
       baseArtifacts: {
-        URL: {finalDisplayedUrl: pageUrl},
+        URL: {mainDocumentUrl: pageUrl, finalDisplayedUrl: pageUrl},
       },
       dependencies: {
         RobotsTxt: {status: robotsTxtContent ? 200 : 404, content: robotsTxtContent},
@@ -193,15 +213,16 @@ describe('AgentResourceDiscovery Gatherer', () => {
         executionContext: {
           evaluate: () => Promise.resolve({ard: null, legacy: null, ...domLinks}),
         },
+        networkMonitor: {
+          getRawRecords: () => [{
+            url: pageUrl,
+            resourceType: 'Document',
+            failed: false,
+            responseHeaders: linkHeader ? [{name: 'link', value: linkHeader}] : [],
+          }],
+        },
         fetcher: {
           fetchResource: (/** @type {string} */ targetUrl) => {
-            if (targetUrl === pageUrl) {
-              return Promise.resolve({
-                status: 200,
-                content: '',
-                headers: linkHeader ? {link: linkHeader} : {},
-              });
-            }
             fetched.push(targetUrl);
             const response = responses[targetUrl];
             if (response instanceof Error) return Promise.reject(response);
@@ -517,6 +538,9 @@ describe('AgentResourceDiscovery Gatherer', () => {
       driver: {
         executionContext: {
           evaluate: () => Promise.resolve({ard: null, legacy: null}),
+        },
+        networkMonitor: {
+          getRawRecords: () => [],
         },
         fetcher: {
           fetchResource: () => Promise.reject(new Error('Connection refused')),
