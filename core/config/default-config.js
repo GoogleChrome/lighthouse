@@ -128,13 +128,15 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 const defaultConfig = {
   settings: constants.defaultSettings,
   artifacts: [
-    {id: 'WebMCP', gatherer: 'webmcp'},
-    {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
-    {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
     // Artifacts which can be depended on come first.
     {id: 'DevtoolsLog', gatherer: 'devtools-log'},
     {id: 'Trace', gatherer: 'trace'},
+    {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
 
+    {id: 'WebMCP', gatherer: 'webmcp'},
+    {id: 'WebMcpSchemaIssues', gatherer: 'webmcp-schema'},
+    {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
+    {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'AnchorElements', gatherer: 'anchor-elements'},
     {id: 'ConsoleMessages', gatherer: 'console-messages'},
@@ -149,8 +151,6 @@ const defaultConfig = {
     {id: 'MainDocumentContent', gatherer: 'main-document-content'},
     {id: 'MetaElements', gatherer: 'meta-elements'},
     {id: 'NetworkUserAgent', gatherer: 'network-user-agent'},
-    {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
-    {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
     {id: 'Stacks', gatherer: 'stacks'},
