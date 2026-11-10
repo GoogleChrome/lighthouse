@@ -17,11 +17,14 @@ import {Logger} from '../../../report/renderer/logger.js';
 import {DOM} from '../../../report/renderer/dom.js';
 
 /** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
-/** @typedef {{moduleName: string, nodes: Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>, duplicatedBytes: number, color: string}} DuplicateModule */
+/** @typedef {{moduleName: string, nodes: Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>, duplicatedBytes: number, hue: number}} DuplicateModule */
 
 const dom = new DOM(document, document.documentElement);
 
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024 * 0.5;
+
+/** Background for nodes that aren't colored. Defined in treemap.css, and changes with the theme. */
+const PLAIN_NODE_COLOR = 'var(--node-background-color)';
 
 const logEl = document.querySelector('div#lh-log');
 if (!logEl) {
@@ -96,6 +99,12 @@ class TreemapViewer {
     this.documentUrl = new URL(documentUrlString);
     this.el = el;
     this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
+
+    // Node colors are computed here rather than in CSS, so recolor when the theme changes.
+    this.darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkModeQuery.addEventListener('change', () => {
+      if (this.treemap) this.updateColors();
+    }, {signal: this.abortController.signal});
 
     // These depth one node uses the network URL for the name, but we want
     // to elide common parts of the URL so text fits better in the UI.
@@ -415,7 +424,6 @@ class TreemapViewer {
         for (const {path} of duplicateModule.nodes) {
           highlights.push({
             path: [root.name, ...path],
-            color: duplicateModule.color,
           });
         }
         potentialByteSavings += duplicateModule.duplicatedBytes;
@@ -495,7 +503,7 @@ class TreemapViewer {
         moduleName,
         nodes: nodesWithSameModuleName,
         duplicatedBytes,
-        color: this.getColorFromHue(getHueForModuleNodeName(moduleName)),
+        hue: getHueForModuleNodeName(moduleName),
       });
     }
 
@@ -893,19 +901,25 @@ class TreemapViewer {
   }
 
   /**
-   * Colors use OKLCH so that every hue has the same perceived lightness. Lightness
-   * decreases (and chroma increases) with depth, but both are clamped so that
-   * captions always have a good contrast ratio (>= 5.9:1 for #474747 text).
+   * Colors use OKLCH so that every hue has the same perceived lightness. Moving away
+   * from the background color with depth (darker in light mode, lighter in dark mode),
+   * with chroma increasing too, but both are clamped so that captions always have a
+   * good contrast ratio (>= 5.9:1 for #474747 text in light mode, >= 5.2:1 for #c4c7c5
+   * text in dark mode).
    * @param {number} hue
    * @param {number|null} depth Depth relative to the node currently in view. If null,
    *   returns a more saturated color for highlights.
    */
   getColorFromHue(hue, depth = null) {
+    const isDark = this.darkModeQuery.matches;
+
     if (depth === null) {
-      return `oklch(0.88 0.12 ${hue})`;
+      return isDark ? `oklch(0.42 0.10 ${hue})` : `oklch(0.88 0.12 ${hue})`;
     }
 
-    const lightness = Math.max(0.86, 0.97 - depth * 0.018);
+    const lightness = isDark ?
+      Math.min(0.40, 0.26 + depth * 0.025) :
+      Math.max(0.86, 0.97 - depth * 0.018);
     const chroma = Math.min(0.06, 0.02 + depth * 0.008);
     return `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
   }
@@ -957,14 +971,14 @@ class TreemapViewer {
       // When hovering a duplicate module, only color the copies of that module.
       if (isHoveringDuplicate && hoveredDuplicateModule) {
         node.dom.style.backgroundColor = hoveredNodes.has(node) ?
-          hoveredDuplicateModule.color :
-          'white';
+          this.getColorFromHue(hoveredDuplicateModule.hue, null) :
+          PLAIN_NODE_COLOR;
         return;
       }
 
       // Keep the background plain so the unused stripes stand out.
       if (this.currentViewMode.id === 'unused-bytes') {
-        node.dom.style.backgroundColor = 'white';
+        node.dom.style.backgroundColor = PLAIN_NODE_COLOR;
         return;
       }
 
@@ -981,10 +995,14 @@ class TreemapViewer {
         if (highlight) {
           const depthOneNodeColor = hue !== undefined ?
             this.getColorFromHue(hue, null) :
-            'white';
-          backgroundColor = highlight.color || depthOneNodeColor;
+            PLAIN_NODE_COLOR;
+          // Copies of a duplicate module share a color, which depends on the theme.
+          const highlightDuplicateModule = this.getDuplicateModule(node);
+          backgroundColor = highlightDuplicateModule ?
+            this.getColorFromHue(highlightDuplicateModule.hue, null) :
+            highlight.color || depthOneNodeColor;
         } else {
-          backgroundColor = 'white';
+          backgroundColor = PLAIN_NODE_COLOR;
         }
         node.dom.style.backgroundColor = backgroundColor;
         return;
@@ -993,7 +1011,7 @@ class TreemapViewer {
       // Depth is relative to what is in view, so zooming in brings back the lighter colors.
       const depthOneNodeColor = hue !== undefined ?
         this.getColorFromHue(hue, Math.max(0, path.length - viewDepth)) :
-        'white';
+        PLAIN_NODE_COLOR;
       node.dom.style.backgroundColor = depthOneNodeColor;
     });
   }

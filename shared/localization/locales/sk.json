@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "Podpora rozhrania Fenced Frame API bola ukončená a je naplánované jeho odstránenie."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "Podpora rozhrania Protected Audience API bola ukončená a v budúcom vydaní bude odstránené."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "Funkcie getCurrentPosition() a watchPosition() už nepracujú v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "Web požiadal o podzdroj zo siete, ku ktorému má prístup iba na základe privilegovanej pozície siete svojich používateľov. Tieto požiadavky vystavujú neverejné zariadenia a servery internetu, čím zvyšujú riziko útoku zahrnujúceho falšovanie požiadaviek z iného webu alebo úniku informácií. Na zmiernenie týchto rizík Chrome ukončuje podporu požiadaviek neverejných podzdrojov pri ich odoslaní z nezabezpečených kontextov a začne ich blokovať."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "Pole dailyUpdateUrl položky InterestGroups odovzdané položke joinAdInterestGroup() bolo premenované na updateUrl, aby presnejšie vyjadrovalo vlastné správanie."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Podpora volania Intl.v8BreakIterator bola ukončená. Namiesto neho použite volanie Intl.Segmenter."
@@ -2230,6 +2224,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "Obmedzenie DtlsSrtpKeyAgreement bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu true, ktorá nemala žiadny účinok. Toto obmedzenie však môžete odstrániť pre poriadok."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "Podpora metódy RTCPeerConnection.createDTMFSender() bola ukončená a táto metóda bude odstránená. Použite namiesto nej RTCRtpSender.dtmf."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "Podpora metódy callback-based getStats() bola ukončená. Táto metóda bude odstránená. Použite namiesto nej spec-compliant getStats()."
@@ -2760,7 +2757,7 @@
     "message": "Chrome rozpoznal pokus o spustenie JavaScriptu počas uloženia vo vyrovnávacej pamäti"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
-    "message": "Stránky, ktoré požiadali o AppBanner, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o AppBanner, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
     "message": "Spätná vyrovnávacia pamäť bola deaktivovaná experimentálnymi funkciami. Prejdite na chrome://flags/#back-forward-cache a aktivujte ju miestne v tomto zariadení."
@@ -2781,7 +2778,7 @@
     "message": "Stránka sa nedá uložiť do vyrovnávacej pamäte, pretože má inštanciu BroadcastChannel s registrovanými prijímačmi"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
-    "message": "Stránky s hlavičkou cache‑control:no‑store nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky s hlavičkou cache‑control:no‑store sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
     "message": "Vyrovnávacia pamäť bola zámerne vyčistená"
@@ -2790,55 +2787,55 @@
     "message": "Táto stránka bola vylúčená z vyrovnávacej pamäte, aby sa do nej dala uložiť iná stránka"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
-    "message": "Stránky s doplnkami momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s doplnkami momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
     "message": "Neurčené"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
-    "message": "Stránky s rozhraním FileChooser API nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním FileChooser API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
-    "message": "Stránky s rozhraním File System Access API momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním File System Access API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Stránky s nástrojom Media Device Dispatcher nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním Media Device Dispatcher nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
     "message": "V čase odchodu hral prehrávač médií"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "Stránky s rozhraním MediaSession API a nastaveným stavom prehrávania nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním MediaSession API a nastaveným stavom prehrávania nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
-    "message": "Stránky s rozhraním MediaSession API a nastavenými obslužnými nástrojmi akcií momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním MediaSession API a nastavenými obslužnými nástrojmi akcií nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
     "message": "Spätná vyrovnávacia pamäť je vypnutá. Príčinou je čítačka obrazovky."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
-    "message": "Stránky s nástrojom SecurityHandler nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním SecurityHandler nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
-    "message": "Stránky s rozhraním Serial API nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním Serial API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
-    "message": "Stránky s rozhraním WebAuthetication API nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebAuthentication API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
-    "message": "Stránky s rozhraním WebBluetooth API nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebBluetooth API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
-    "message": "Stránky s rozhraním WebUSB API nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebUSB API nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
     "message": "Spätná vyrovnávacia pamäť je vypnutá, pretože na stránke s hlavičkou Cache-Control: no-store sú súbory cookie zakázané"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
-    "message": "Stránky s vyhradenou obsluhou alebo workletom momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s vyhradeným workerom alebo workletom momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "Načítavanie dokumentu nebolo dokončené, než ste odišli preč"
+    "message": "V čase odchodu načítavanie dokumentu nebolo dokončené"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
     "message": "V čase odchodu bol zobrazený banner aplikácie"
@@ -2874,7 +2871,7 @@
     "message": "V čase odchodu bol zobrazený intervenčný pruh s upozornením na nedostatok pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
-    "message": "V čase odchodu boli zaznamenané žiadosti o povolenie"
+    "message": "V čase odchodu existovali žiadosti o povolenie"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
     "message": "V čase odchodu bola zobrazená možnosť blokovania vyskakovacích okien"
@@ -2892,22 +2889,22 @@
     "message": "Spätná vyrovnávacia pamäť je vypnutá pre chybu v dokumente"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
-    "message": "Stránky, ktoré používajú FencedFrames, sa nedajú uložiť do spätnej vyrovnávacej pamäte"
+    "message": "Stránky s prvkami FencedFrame sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
     "message": "Táto stránka bola vylúčená z vyrovnávacej pamäte, aby sa do nej dala uložiť iná stránka"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
-    "message": "Stránky, ktoré udelili prístup k streamu médií, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré udelili prístup k streamu médií, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Stránky s určitými druhmi vloženého obsahu (napr. súbormi PDF) momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s určitými druhmi vloženého obsahu (napr. súbormi PDF) momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Stránky s nástrojom IdleManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním IdleManager momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
-    "message": "Stránky s otvoreným pripojením IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s otvoreným pripojením k databáze IndexedDB momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
     "message": "Spätná vyrovnávacia pamäť bola vypnutá v dôsledku udalosti IndexedDB"
@@ -2916,10 +2913,10 @@
     "message": "Boli použité nevhodné rozhrania API"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
-    "message": "Stránky, do ktorých rozšírenia vložili JavaScript, nemôžu momentálne používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, do ktorých rozšírenia vložili JavaScript, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
-    "message": "Stránky, do ktorých rozšírenia vložili šablónu StyleSheet, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, do ktorých rozšírenia vložili šablónu StyleSheet, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
     "message": "Interná chyba"
@@ -2931,16 +2928,16 @@
     "message": "Spätná vyrovnávacia pamäť bola vypnutá v dôsledku žiadosti so signálom keepalive"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
-    "message": "Stránky so zámkou klávesnice momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky so zámkou klávesnice momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
     "message": "V čase odchodu načítavanie stránky nebolo dokončené"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache‑control:no‑cache, nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache‑control:no‑cache, sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache‑control:no‑store, nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache‑control:no‑store, sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "Navigácia bola zrušená, skôr ako došlo k obnoveniu stránky zo spätnej vyrovnávacej pamäte"
@@ -2949,7 +2946,7 @@
     "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože aktívne pripojenie k sieti dostalo príliš veľa dát. Chrome obmedzuje objem dát, ktoré môže dostávať stránka vo vyrovnávacej pamäti."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Stránky s načítavaním počas prenosu() alebo XHR momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcimi požiadavkami fetch() alebo XHR momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
     "message": "Stránka bola vylúčená zo spätnej vyrovnávacej pamäte, pretože aktívna sieťová požiadavka zahŕňala presmerovanie"
@@ -2958,34 +2955,34 @@
     "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože pripojenie k sieti bolo príliš dlho otvorené. Chrome obmedzuje obdobie, počas ktorého môže stránka vo vyrovnávacej pamäti dostávať dáta."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
-    "message": "Stránky bez platnej hlavičky odpovede nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky bez platnej hlavičky odpovede sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
     "message": "Navigácia sa uskutočnila v inom než hlavnom ráme"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
-    "message": "Stránky s prebiehajúcimi transakciami IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcimi transakciami IndexedDB momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcou sieťovou požiadavkou momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
-    "message": "Stránky so sieťovou požiadavkou na načítanie počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcou sieťovou požiadavkou fetch momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
-    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcou sieťovou požiadavkou momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
-    "message": "Stránky so sieťovou požiadavkou XHR počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s prebiehajúcou sieťovou požiadavkou XHR momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
-    "message": "Stránky s nástrojom PaymentManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním PaymentManager momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
-    "message": "Stránky s obrazom v obraze momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s obrazom v obraze momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
-    "message": "Stránky zobrazujúce používateľské rozhranie na tlač momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky zobrazujúce používateľské rozhranie na tlač momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
     "message": "Stránka bola otvorená metódou window.open() a ďalšia karta na ňu odkazuje, prípadne daná stránka otvorila okno"
@@ -2997,25 +2994,25 @@
     "message": "Proces vykresľovacieho modulu pre danú stránku v spätnej vyrovnávacej pamäti bol zrušený"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
-    "message": "Stránky, ktoré požiadali o povolenia na zaznamenávanie zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o povolenia na zaznamenávanie zvuku, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Stránky, ktoré požiadali o povolenia pre senzory, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o povolenia na prístup k senzorom, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
-    "message": "Stránky, ktoré požiadali o synchronizáciu na pozadí alebo načítanie povolení, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o synchronizáciu na pozadí alebo povolenia na načítanie, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
-    "message": "Stránky, ktoré požiadali o povolenia pre MIDI, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o povolenia na používanie MIDI, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
-    "message": "Stránky, ktoré požiadali o povolenia posielať upozornenia, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o povolenia posielať upozornenia, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
-    "message": "Stránky, ktoré požiadali o prístup k ukladaciemu priestoru, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o prístup k ukladaciemu priestoru, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
-    "message": "Stránky, ktoré požiadali o povolenia na snímanie videí, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré požiadali o povolenia na snímanie videí, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
     "message": "Do vyrovnávacej pamäte sa dajú uložiť iba stránky, ktorých schéma webovej adresy je HTTP alebo HTTPS"
@@ -3036,25 +3033,25 @@
     "message": "Chrome sa reštartoval a vymazal záznamy v spätnej vyrovnávacej pamäti"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
-    "message": "Stránky s rozhraním SharedWorker momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním SharedWorker momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
     "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože dostala správu z rozhrania SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
-    "message": "Stránky s rozhraním SpeechRecognizer momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním SpeechRecognizer momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
-    "message": "Stránky s rozhraním SpeechSynthesis momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním SpeechSynthesis momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
     "message": "Prvok iframe na stránke spustil navigáciu, ktorá nebola dokončená"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Stránky, ktorých podzdroj má hlavičku cache‑control:no‑cache, nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky, ktorých podzdroj má hlavičku cache‑control:no‑cache, sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
-    "message": "Stránky, ktorých podzdroj má hlavičku cache‑control:no‑store, nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky, ktorých podzdroj má hlavičku cache‑control:no‑store, sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
     "message": "Stránka prekročila maximálny čas v spätnej vyrovnávacej pamäti a vypršala"
@@ -3072,46 +3069,46 @@
     "message": "Prehliadač zmenil hlavičku prepísania používateľského agenta"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
-    "message": "Stránky, ktoré udelili prístup na nahrávanie videa alebo zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky, ktoré udelili prístup na nahrávanie videa alebo zvuku, momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
-    "message": "Stránky s rozhraním WebDatabase momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebDatabase momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
-    "message": "Stránky s rozhraním WebHID momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebHID momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
-    "message": "Stránky s rozhraním WebLocks momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebLocks momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
-    "message": "Stránky s rozhraním WebNfc momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebNfc momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
-    "message": "Stránky s rozhraním WebOTPService momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebOTPService momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
-    "message": "Stránky s rozhraním WebRTC nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky s rozhraním WebRTC sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "Spätná vyrovnávacia pamäť bola vypnutá, pretože bol použitý protokol WebRTC"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
-    "message": "Stránky s rozhraním WebShare momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebShare momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
-    "message": "Stránky s protokolom WebSocket nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky s protokolom WebSocket sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
     "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože bol použitý protokol WebSocket"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
-    "message": "Stránky s rozhraním WebTransport nemajú prístup do spätnej vyrovnávacej pamäte"
+    "message": "Stránky s rozhraním WebTransport sa nemôžu ukladať do spätnej vyrovnávacej pamäte"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
     "message": "Spätná vyrovnávacia pamäť je vypnutá, pretože bol použitý protokol WebTransport"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
-    "message": "Stránky s rozhraním WebXR momentálne nemôžu používať spätnú vyrovnávaciu pamäť"
+    "message": "Stránky s rozhraním WebXR momentálne nespĺňajú podmienky na ukladanie do spätnej vyrovnávacej pamäte"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."

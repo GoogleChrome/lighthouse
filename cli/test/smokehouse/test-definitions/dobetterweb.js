@@ -327,8 +327,8 @@ const expectations = {
         },
       },
       'image-delivery-insight': {
-        score: '<0.5',
-        metricSavings: {LCP: '>2000'},
+        score: 0.5,
+        metricSavings: {LCP: 0},
         details: {
           debugData: {wastedBytes: '>1100000'},
           items: [

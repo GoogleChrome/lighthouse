@@ -637,6 +637,8 @@ declare namespace Artifacts {
     domContentLoadedEvt?: TraceEvent;
     /** Whether LCP was invalidated without a new candidate. */
     lcpInvalidated: boolean;
+    /** The URL of the main-frame LCP image from LargestImagePaint::Candidate, if LCP was an image. */
+    lcpImageUrl?: string;
   }
 
   /** Information on a tech stack (e.g. a JS library) used by the page. */

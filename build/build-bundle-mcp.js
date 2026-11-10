@@ -257,7 +257,8 @@ async function buildBundle(entryPath, distPath) {
     outfile: distPath,
     write: false,
     format: 'esm',
-    charset: 'utf8',
+    // Escape non-ASCII characters so V8 keeps the bundle in a 1-byte string buffer.
+    charset: 'ascii',
     bundle: true,
     minify: false,
     treeShaking: true,

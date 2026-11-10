@@ -582,7 +582,25 @@ Object {
         const trace = TraceProcessor.processTrace(testTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         assert.equal(navigation.timestamps.largestContentfulPaint, undefined);
+        assert.equal(navigation.lcpImageUrl, undefined);
         assert.ok(!navigation.lcpInvalidated);
+      });
+
+      it('extracts lcpImageUrl from matching LargestImagePaint::Candidate', () => {
+        const testTrace = createTestTrace({
+          timeOrigin: 0,
+          traceEnd: 2000,
+          largestContentfulPaint: 1500,
+        });
+        const trace = TraceProcessor.processTrace(testTrace);
+        const navigation = TraceProcessor.processNavigation(trace);
+        assert.equal(navigation.lcpImageUrl, 'http://www.example.com/image.png');
+
+        // Text LCP trace (paul/trace.json, which also has a smaller LargestImagePaint::Candidate)
+        // must not populate lcpImageUrl.
+        const textTrace = TraceProcessor.processTrace(lcpTrace);
+        const textNavigation = TraceProcessor.processNavigation(textTrace);
+        assert.equal(textNavigation.lcpImageUrl, undefined);
       });
 
 

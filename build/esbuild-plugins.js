@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import {createRequire, builtinModules} from 'module';
 
+import * as acorn from 'acorn';
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
 
@@ -231,6 +232,47 @@ function ignoreBuiltins(opts = {}) {
 }
 
 /**
+ * Escapes non-ASCII characters (`> 0x7f`) inside JS comments as `\uXXXX`.
+ *
+ * Esbuild's `charset: 'ascii'` escapes non-ASCII inside string literals, but
+ * leaves comments, RegExp literals, and tagged template literals untouched.
+ * Escaping comments via an AST parser keeps unminified bundles in 1-byte string
+ * buffers (`<= 0xff`) in Blink/V8 without mutating `RegExp.prototype.source` or
+ * `String.raw` template literals.
+ * @param {string} code
+ * @return {string}
+ */
+function escapeNonAsciiComments(code) {
+  if (!/[\u0080-\uffff]/.test(code)) return code;
+
+  /** @type {Array<{start: number, end: number}>} */
+  const comments = [];
+  acorn.parse(code, {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    onComment: (_isBlock, text, start, end) => {
+      if (/[\u0080-\uffff]/.test(text)) {
+        comments.push({start, end});
+      }
+    },
+  });
+
+  if (comments.length === 0) return code;
+
+  let out = '';
+  let lastIndex = 0;
+  for (const {start, end} of comments) {
+    out += code.slice(lastIndex, start);
+    out += code.slice(start, end).replace(
+      /[\u0080-\uffff]/g,
+      c => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`
+    );
+    lastIndex = end;
+  }
+  return out + code.slice(lastIndex);
+}
+
+/**
  * Currently there is no umd support in esbuild,
  * so we take the output of an iife build and create our own umd bundle.
  * https://github.com/evanw/esbuild/pull/1331
@@ -255,7 +297,7 @@ function generateUMD(iifeCode, moduleName) {
     'root.Lighthouse.ReportGenerator.ReportGenerator = root.Lighthouse.ReportGenerator;' :
     '';
 
-  return `(function(root, factory) {
+  return escapeNonAsciiComments(`(function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else if (typeof module === "object" && module.exports) {
@@ -270,7 +312,7 @@ function generateUMD(iifeCode, moduleName) {
   ${iifeCode.replace('"use strict";\n', '')};
   return umdExports.${moduleLastName} ?? umdExports;
 }));
-`;
+`);
 }
 
 /**
@@ -421,8 +463,9 @@ function lighthouseShimPlugin(options) {
 function postprocess(options = {}) {
   return {
     name: 'postprocess',
-    setup({onEnd}) {
-      onEnd(async (result) => {
+    setup(build) {
+      build.initialOptions.write = false;
+      build.onEnd(async (result) => {
         if (result.errors.length) return;
 
         const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
@@ -452,6 +495,17 @@ function postprocess(options = {}) {
           };
 
           code = code.replace(re, replaceFn);
+        }
+
+        code = escapeNonAsciiComments(code);
+        const twoByteMatch = /[\u0100-\uffff]/.exec(code);
+        if (twoByteMatch) {
+          const {line, column} = acorn.getLineInfo(code, twoByteMatch.index);
+          const hex = twoByteMatch[0].charCodeAt(0).toString(16).padStart(4, '0');
+          throw new Error(
+            `Unexpected character > 0xff (\\u${hex}) at ${codeFile.path}:${line}:${column}; ` +
+            'this widens the V8 script source buffer to 2-byte UTF-16'
+          );
         }
 
         let allDepsList = '';
@@ -579,6 +633,7 @@ export {
   bulkLoader,
   replaceModules,
   ignoreBuiltins,
+  escapeNonAsciiComments,
   umd,
   lighthouseShimPlugin,
   postprocess,
