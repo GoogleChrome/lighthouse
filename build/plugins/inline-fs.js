@@ -31,13 +31,32 @@ class AstError extends Error {
 }
 
 /**
+ * @param {Set<string> | Map<string, Set<string>> | undefined} trackedFiles
+ * @param {string} importerPath
+ * @param {string} targetPath
+ */
+function trackInlinedFile(trackedFiles, importerPath, targetPath) {
+  if (!trackedFiles) return;
+  if (trackedFiles instanceof Map) {
+    let files = trackedFiles.get(importerPath);
+    if (!files) {
+      files = new Set();
+      trackedFiles.set(importerPath, files);
+    }
+    files.add(targetPath);
+  } else {
+    trackedFiles.add(targetPath);
+  }
+}
+
+/**
  * Inlines the values of selected `fs` methods if their targets can be
  * statically determined. Currently `readFileSync` and `readdirSync` are
  * supported.
  * Returns `null` as code if no changes were made.
  * @param {string} code
  * @param {string} filepath
- * @param {Set<string>=} trackedFiles
+ * @param {Set<string> | Map<string, Set<string>>=} trackedFiles
  * @return {Promise<{code: string|null, warnings: Array<Warning>}>}
  */
 async function inlineFs(code, filepath, trackedFiles) {
@@ -92,12 +111,12 @@ async function inlineFs(code, filepath, trackedFiles) {
     try {
       if (parsed.callee.property.name === 'readFileSync') {
         const constructedPath = await getReadFilePath(parsed, filepath);
-        if (trackedFiles) trackedFiles.add(constructedPath);
         content = await getReadFileReplacement(constructedPath, parsed);
+        trackInlinedFile(trackedFiles, filepath, constructedPath);
       } else if (parsed.callee.property.name === 'readdirSync') {
         const constructedPath = await getReaddirPath(parsed, filepath);
-        if (trackedFiles) trackedFiles.add(constructedPath);
         content = await getReaddirReplacement(constructedPath, parsed);
+        trackInlinedFile(trackedFiles, filepath, constructedPath);
       } else {
         throw new AstError(`unexpected fs call 'fs.${parsed.callee.property.name}'`,
             parsed.callee.property);
