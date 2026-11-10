@@ -12,7 +12,7 @@ This is the standard recommendation for mobile throttling:
 
 These exact figures are [defined in the Lighthouse constants](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js#:~:text=of%204G%20connections.-,mobileSlow4G,-%3A%20%7B) and used as Lighthouse's throttling default.
 They represent roughly the bottom 25% of 4G connections and top 25% of 3G connections (in Lighthouse this configuration is currently called "Slow 4G" but used to be labeled as "Fast 3G").
-This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample).
+This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/catchpoint/WebPageTest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/catchpoint/WebPageTest/blob/master/www/settings/connectivity.ini.sample).
 
 ## Types of network throttling
 
@@ -21,7 +21,7 @@ Within web performance testing, there are four typical styles of network throttl
 1. **_Simulated throttling_**, which Lighthouse uses by **default**, uses a simulation of a page load, based on the data observed in the initial unthrottled load. This approach makes it both very fast and deterministic. However, due to the imperfect nature of predicting alternate execution paths, there is inherent inaccuracy that is summarized in this doc: [Lighthouse Metric Variability and Accuracy](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit). The TLDR: while it's roughly as accurate or better than DevTools throttling for most sites, it suffers from edge cases and a deep investigation to performance should use _Packet-level_ throttling tools.
 1. **_Request-level throttling_** , also referred to as **_DevTools throttling_** in the Lighthouse panel or _`devtools` throttling_ in Lighthouse configuration, is how throttling is implemented with Chrome DevTools. In real mobile connectivity, latency affects things at the packet level rather than the request level. As a result, this throttling isn't highly accurate. It also has a few more downsides that are summarized in [Network Throttling & Chrome - status](https://docs.google.com/document/d/1TwWLaLAfnBfbk5_ZzpGXegPapCIfyzT4MWuZgspKUAQ/edit). The TLDR: while it's a [decent approximation](https://docs.google.com/document/d/10lfVdS1iDWCRKQXPfbxEn4Or99D64mvNlugP1AQuFlE/edit), it's not a sufficient model of a slow connection. The [multipliers used in Lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js#:~:text=*%201024%2C-,requestLatencyMs,-%3A%20150%20*) attempt to correct for the differences.
 1. **_Proxy-level_** throttling tools do not affect UDP data, so they're decent, but not ideal.
-1. **_Packet-level_** throttling tools are able to make the most accurate network simulation. While this approach can model real network conditions most effectively, it also can introduce [more variance](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit) than request-level or simulated throttling. [WebPageTest uses](https://github.com/WPO-Foundation/wptagent/blob/master/docs/remote_trafficshaping.md) packet-level throttling.
+1. **_Packet-level_** throttling tools are able to make the most accurate network simulation. While this approach can model real network conditions most effectively, it also can introduce [more variance](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit) than request-level or simulated throttling. [WebPageTest uses](https://github.com/catchpoint/WebPageTest.agent/blob/master/docs/remote_trafficshaping.md) packet-level throttling.
 
 Lighthouse, by default, uses simulated throttling as it provides both quick evaluation and minimized variance. However, some may want to experiment with more accurate throttling... [Learn more about these throttling types and how they behave in in different scenarios](https://www.debugbear.com/blog/network-throttling-methods).
 
@@ -32,7 +32,7 @@ The Lighthouse panel has a simplified throttling setup:
 1. _Simulated throttling_ remains the default setting. This matches the setup of PageSpeed Insights and the Lighthouse CLI default, maintaining cross-tool consistency.
    - If you click the `View Original Trace` button, the trace values will not match up with Lighthouse's metric results, as the original trace is prior to the simulation.
 1. _DevTools throttling_ is available within the Lighthouse panel settings (⚙): select _DevTools throttling_ from the throttling method dropdown.
-   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developers.google.com/web/updates/2018/04/devtools#traces) will match Lighthouses's numbers.
+   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developer.chrome.com/blog/new-in-devtools-67/) will match Lighthouses's numbers.
 
 Of course, CLI users can still control the exact [configuration](../readme.md#cli-options) of throttling.
 
