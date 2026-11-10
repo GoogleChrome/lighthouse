@@ -519,5 +519,25 @@ describeSkipOnWindows('inline-fs', () => {
         });
       });
     });
+
+    describe('trackedFiles', () => {
+      it('tracks inlined paths in a Set', async () => {
+        fs.writeFileSync(tmpPath, 'tracked text');
+        /** @type {Set<string>} */
+        const tracked = new Set();
+        const content = `const text = fs.readFileSync('${tmpPath}', 'utf8');`;
+        await inlineFs(content, filepath, tracked);
+        expect([...tracked]).toEqual([tmpPath]);
+      });
+
+      it('tracks inlined paths keyed by importer path in a Map', async () => {
+        fs.writeFileSync(tmpPath, 'tracked text');
+        /** @type {Map<string, Set<string>>} */
+        const tracked = new Map();
+        const content = `const text = fs.readFileSync('${tmpPath}', 'utf8');`;
+        await inlineFs(content, filepath, tracked);
+        expect([...(tracked.get(filepath) ?? [])]).toEqual([tmpPath]);
+      });
+    });
   });
 });
