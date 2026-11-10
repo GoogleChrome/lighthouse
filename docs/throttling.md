@@ -32,7 +32,7 @@ The Lighthouse panel has a simplified throttling setup:
 1. _Simulated throttling_ remains the default setting. This matches the setup of PageSpeed Insights and the Lighthouse CLI default, maintaining cross-tool consistency.
    - If you click the `View Original Trace` button, the trace values will not match up with Lighthouse's metric results, as the original trace is prior to the simulation.
 1. _DevTools throttling_ is available within the Lighthouse panel settings (⚙): select _DevTools throttling_ from the throttling method dropdown.
-   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developers.google.com/web/updates/2018/04/devtools#traces) will match Lighthouses's numbers.
+   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developer.chrome.com/blog/new-in-devtools-67/#traces) will match Lighthouses's numbers.
 
 Of course, CLI users can still control the exact [configuration](../readme.md#cli-options) of throttling.
 
