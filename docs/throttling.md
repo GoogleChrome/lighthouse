@@ -12,7 +12,7 @@ This is the standard recommendation for mobile throttling:
 
 These exact figures are [defined in the Lighthouse constants](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js#:~:text=of%204G%20connections.-,mobileSlow4G,-%3A%20%7B) and used as Lighthouse's throttling default.
 They represent roughly the bottom 25% of 4G connections and top 25% of 3G connections (in Lighthouse this configuration is currently called "Slow 4G" but used to be labeled as "Fast 3G").
-This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/catchpoint/WebPageTest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/catchpoint/WebPageTest/blob/master/www/settings/connectivity.ini.sample).
+This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample).
 
 ## Types of network throttling
 
