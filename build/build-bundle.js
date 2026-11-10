@@ -132,6 +132,9 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     shimsObj[modulePath] = 'export default {}';
   }
 
+  /** @type {Map<string, Set<string>>} */
+  const inlinedFilesByImporter = new Map();
+
   await esbuild.build({
     entryPoints: [entryPath],
     outfile: distPath,
@@ -173,6 +176,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         // resolved eventually.
         plugins.partialLoaders.inlineFs({
           verbose: Boolean(process.env.DEBUG),
+          trackedFiles: inlinedFilesByImporter,
         }),
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
@@ -190,7 +194,10 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      plugins.postprocess({removeExtraLicenses: true}),
+      plugins.postprocess({
+        removeExtraLicenses: true,
+        inlinedFilesByImporter,
+      }),
     ],
   });
 }
