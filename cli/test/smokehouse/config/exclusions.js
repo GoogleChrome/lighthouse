@@ -78,8 +78,6 @@ const exclusions = {
 };
 
 for (const array of Object.values(exclusions)) {
-  // https://github.com/GoogleChrome/lighthouse/issues/17277
-  array.push('webmcp');
   // https://github.com/GoogleChrome/lighthouse/issues/14271
   array.push('lantern-idle-callback-short');
   // glitch is gone.
