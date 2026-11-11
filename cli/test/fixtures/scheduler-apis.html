@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+ * @license
+ * Copyright 2024 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<body>
+Scheduler APIs Smoke Test
+<script>
+  const useYield = window.location.search.includes('yield');
+  const usePostTask = window.location.search.includes('postTask');
+
+  function sleep(milliseconds) {
+    const timeStart = Date.now();
+    while (Date.now() - timeStart < milliseconds) {}
+  }
+
+  async function doWork() {
+    for (let i = 0; i < 40; i++) {
+      // 40ms is under the 50ms threshold. Under 4x CPU throttling, this simulates to 160ms.
+      // If our fix is working, these shouldn't be penalized as long tasks.
+      sleep(40);
+      
+      if (useYield && 'scheduler' in window && 'yield' in scheduler) {
+        await scheduler.yield();
+      } else if (usePostTask && 'scheduler' in window && 'postTask' in scheduler) {
+        await scheduler.postTask(() => {});
+      } else {
+        await new Promise(r => setTimeout(r, 0));
+      }
+    }
+  }
+
+  doWork();
+</script>
+</body>
+</html>
