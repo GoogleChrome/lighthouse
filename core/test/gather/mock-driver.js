@@ -29,6 +29,7 @@ function createMockSession() {
     setTargetInfo: fnAny(),
     sendCommand: mockSendCommand,
     sendCommandAndIgnore: mockSendCommand,
+    isDomainEnabled: fnAny().mockImplementation(domain => mockSendCommand.isDomainEnabled(domain)),
     setNextProtocolTimeout: fnAny(),
     hasNextProtocolTimeout: fnAny(),
     getNextProtocolTimeout: fnAny(),
@@ -37,7 +38,9 @@ function createMockSession() {
     off: fnAny(),
     addProtocolMessageListener: createMockOnFn(),
     removeProtocolMessageListener: fnAny(),
-    dispose: fnAny(),
+    dispose: fnAny().mockImplementation(() => {
+      mockSendCommand.clearEnabledDomains();
+    }),
     onCrashPromise: fnAny().mockReturnValue(new Promise(() => {})),
 
     /** @return {LH.Gatherer.ProtocolSession} */

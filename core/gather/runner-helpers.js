@@ -25,7 +25,17 @@
 
 import log from 'lighthouse-logger';
 
+import {sharedDomCssDomainSymbol} from './base-gatherer.js';
 import {Sentry} from '../lib/sentry.js';
+
+/**
+ * @param {LH.Gatherer.AnyGathererInstance|undefined} gatherer
+ * @return {boolean}
+ */
+function usesSharedDomCssDomain(gatherer) {
+  return Boolean(gatherer && sharedDomCssDomainSymbol in gatherer &&
+    gatherer[sharedDomCssDomainSymbol]);
+}
 
 /**
  *
@@ -85,7 +95,8 @@ async function collectPhaseArtifacts(options) {
   const priorPhaseArtifacts = (priorPhase && artifactState[priorPhase]) || {};
   const isFinalPhase = phase === 'getArtifact';
 
-  for (const artifactDefn of artifactDefinitions) {
+  for (let i = 0; i < artifactDefinitions.length; i++) {
+    const artifactDefn = artifactDefinitions[i];
     log.verbose(`artifacts:${phase}`, artifactDefn.id);
     const gatherer = artifactDefn.gatherer.instance;
 
@@ -128,6 +139,18 @@ async function collectPhaseArtifacts(options) {
       log.error(artifactDefn.id, err.message);
     });
     artifactState[phase][artifactDefn.id] = artifactPromise;
+
+    if (isFinalPhase && usesSharedDomCssDomain(gatherer)) {
+      const nextGatherer = artifactDefinitions[i + 1]?.gatherer.instance;
+      if (!usesSharedDomCssDomain(nextGatherer)) {
+        if (driver.defaultSession.isDomainEnabled?.('CSS')) {
+          await driver.defaultSession.sendCommandAndIgnore('CSS.disable');
+        }
+        if (driver.defaultSession.isDomainEnabled?.('DOM')) {
+          await driver.defaultSession.sendCommandAndIgnore('DOM.disable');
+        }
+      }
+    }
   }
 }
 

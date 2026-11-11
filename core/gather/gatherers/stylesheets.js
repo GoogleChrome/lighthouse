@@ -10,10 +10,12 @@
 
 import log from 'lighthouse-logger';
 
-import BaseGatherer from '../base-gatherer.js';
+import BaseGatherer, {sharedDomCssDomainSymbol} from '../base-gatherer.js';
 import {Sentry} from '../../lib/sentry.js';
 
 class Stylesheets extends BaseGatherer {
+  [sharedDomCssDomainSymbol] = true;
+
   constructor() {
     super();
     /** @type {LH.Gatherer.ProtocolSession|undefined} */
@@ -67,26 +69,35 @@ class Stylesheets extends BaseGatherer {
     const session = context.driver.defaultSession;
     this._session = session;
 
-    session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
+    /** @type {Array<LH.Artifacts.CSSStyleSheetInfo|null>} */
+    let sheets;
+    try {
+      await session.sendCommand('DOM.enable');
+      if (session.isDomainEnabled?.('CSS')) {
+        // CSS.styleSheetAdded events for existing stylesheets are emitted when the CSS domain
+        // transitions from disabled to enabled. Reset if an earlier gatherer already enabled it.
+        await session.sendCommand('CSS.disable');
+      }
 
-    await session.sendCommand('DOM.enable');
-    await session.sendCommand('CSS.enable');
+      session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
+      try {
+        await session.sendCommand('CSS.enable');
 
-    // Force style to recompute.
-    // Doesn't appear to be necessary in newer versions of Chrome.
-    await executionContext.evaluate(() => window.getComputedStyle(document.body), {
-      args: [],
-    });
+        // Force style to recompute.
+        // Doesn't appear to be necessary in newer versions of Chrome.
+        await executionContext.evaluate(() => window.getComputedStyle(document.body), {
+          args: [],
+        });
+      } finally {
+        session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
+      }
 
-    session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
-
-    // Ensure we finish fetching all stylesheet contents before disabling the CSS domain
-    const sheets = await Promise.all(this._sheetPromises.values());
-    this._sheetPromises.clear();
-    this._session = undefined;
-
-    await session.sendCommand('CSS.disable');
-    await session.sendCommand('DOM.disable');
+      // Ensure we finish fetching all stylesheet contents.
+      sheets = await Promise.all(this._sheetPromises.values());
+    } finally {
+      this._sheetPromises.clear();
+      this._session = undefined;
+    }
 
     /** @type {Map<string, LH.Artifacts.CSSStyleSheetInfo>} */
     const dedupedStylesheets = new Map();

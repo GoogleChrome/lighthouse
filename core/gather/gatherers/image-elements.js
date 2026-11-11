@@ -11,7 +11,7 @@
 
 import log from 'lighthouse-logger';
 
-import BaseGatherer from '../base-gatherer.js';
+import BaseGatherer, {sharedDomCssDomainSymbol} from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 
 /* global getElementsInDocument, getNodeDetails */
@@ -265,6 +265,8 @@ function getPixelArea(element) {
 }
 
 class ImageElements extends BaseGatherer {
+  [sharedDomCssDomainSymbol] = true;
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
@@ -428,13 +430,6 @@ class ImageElements extends BaseGatherer {
     elements.sort((a, b) => getPixelArea(b) - getPixelArea(a));
 
     await this.collectExtraDetails(context.driver, elements);
-
-    if (shouldFetchSourceRules) {
-      await Promise.all([
-        session.sendCommand('DOM.disable'),
-        session.sendCommand('CSS.disable'),
-      ]);
-    }
 
     this._naturalSizeCache.clear();
     return elements;
