@@ -9,6 +9,12 @@ import * as LH from '../../types/lh.js';
 /* eslint-disable no-unused-vars */
 
 /**
+ * Internal symbol marking gatherers that share `DOM`/`CSS` CDP domain lifetime during `getArtifact`.
+ * Kept off `GathererMeta` so it does not pollute the public plugin interface.
+ */
+const sharedDomCssDomainSymbol = Symbol('sharedDomCssDomain');
+
+/**
  * Base class for all gatherers.
  *
  * @implements {LH.Gatherer.GathererInstance}
@@ -57,3 +63,4 @@ class BaseGatherer {
 }
 
 export default BaseGatherer;
+export {sharedDomCssDomainSymbol};

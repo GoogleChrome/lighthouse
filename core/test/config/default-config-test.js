@@ -34,4 +34,18 @@ describe('Default Config', () => {
     assert(score < 0.7);
     assert(score >= 0.65);
   });
+
+  it('groups DOM/CSS gatherers consecutively after Accessibility with Stylesheets first', () => {
+    const artifactIds = defaultConfig.artifacts.map(a => a.id);
+    const accessibilityIndex = artifactIds.indexOf('Accessibility');
+    const stylesheetsIndex = artifactIds.indexOf('Stylesheets');
+
+    assert.notStrictEqual(accessibilityIndex, -1);
+    assert.notStrictEqual(stylesheetsIndex, -1);
+    assert.ok(accessibilityIndex < stylesheetsIndex);
+    assert.deepStrictEqual(
+      artifactIds.slice(stylesheetsIndex, stylesheetsIndex + 4),
+      ['Stylesheets', 'CSSUsage', 'AnchorElements', 'ImageElements']
+    );
+  });
 });

@@ -138,13 +138,21 @@ const defaultConfig = {
     {id: 'LlmsTxt', gatherer: 'agentic/llms-txt'},
     {id: 'AgentResourceDiscovery', gatherer: 'agentic/ard'},
     {id: 'Accessibility', gatherer: 'accessibility'},
-    {id: 'AnchorElements', gatherer: 'anchor-elements'},
-    {id: 'ConsoleMessages', gatherer: 'console-messages'},
+
+    // Group DOM/CSS gatherers consecutively after Accessibility so the runner keeps DOM and CSS
+    // alive across them without pushing DOM mutation events during axe-core execution, and tears
+    // both domains down right after the group. Stylesheets must run before other CSS-enabling
+    // gatherers because CSS.styleSheetAdded events for existing stylesheets are emitted when the
+    // CSS domain transitions from disabled to enabled.
+    {id: 'Stylesheets', gatherer: 'stylesheets'},
     {id: 'CSSUsage', gatherer: 'css-usage'},
+    {id: 'AnchorElements', gatherer: 'anchor-elements'},
+    {id: 'ImageElements', gatherer: 'image-elements'},
+
+    {id: 'ConsoleMessages', gatherer: 'console-messages'},
     {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
     {id: 'Inputs', gatherer: 'inputs'},
     {id: 'IFrameElements', gatherer: 'iframe-elements'},
-    {id: 'ImageElements', gatherer: 'image-elements'},
     {id: 'InspectorIssues', gatherer: 'inspector-issues'},
     {id: 'JsUsage', gatherer: 'js-usage'},
     {id: 'LinkElements', gatherer: 'link-elements'},
@@ -154,7 +162,6 @@ const defaultConfig = {
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
     {id: 'Stacks', gatherer: 'stacks'},
-    {id: 'Stylesheets', gatherer: 'stylesheets'},
     {id: 'TraceElements', gatherer: 'trace-elements'},
     {id: 'ViewportDimensions', gatherer: 'viewport-dimensions'},
 

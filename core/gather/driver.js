@@ -27,6 +27,7 @@ const throwingSession = {
   off: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
   sendCommandAndIgnore: throwNotConnectedFn,
+  isDomainEnabled: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
   onCrashPromise: throwNotConnectedFn,
 };

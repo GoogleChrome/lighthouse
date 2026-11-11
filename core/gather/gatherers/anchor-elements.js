@@ -6,7 +6,7 @@
 
 /* global getNodeDetails */
 
-import BaseGatherer from '../base-gatherer.js';
+import BaseGatherer, {sharedDomCssDomainSymbol} from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import {resolveDevtoolsNodePathToObjectId} from '../driver/dom.js';
 
@@ -131,6 +131,8 @@ async function getEventListeners(session, devtoolsNodePath) {
 }
 
 class AnchorElements extends BaseGatherer {
+  [sharedDomCssDomainSymbol] = true;
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
@@ -166,9 +168,7 @@ class AnchorElements extends BaseGatherer {
     });
 
 
-    const result = await Promise.all(anchorsWithEventListeners);
-    await session.sendCommand('DOM.disable');
-    return result;
+    return Promise.all(anchorsWithEventListeners);
   }
 }
 

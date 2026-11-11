@@ -328,9 +328,7 @@ describe('ImageElements', () => {
       .mockResponse('CSS.getMatchedStylesForNode', {attributesStyle: {cssProperties: [
         {name: 'width', value: '200px'},
         {name: 'height', value: '200px'},
-      ]}})
-      .mockResponse('CSS.disable')
-      .mockResponse('DOM.disable');
+      ]}});
     mockContext.driver._executionContext.evaluate.mockReturnValue([mockElement()]);
 
     const artifact = await gatherer.getArtifact({

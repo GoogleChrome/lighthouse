@@ -34,6 +34,7 @@ declare namespace Gatherer {
     off<TEvent extends keyof CrdpEvents>(event: TEvent, callback: (...args: CrdpEvents[TEvent]) => void): void;
     sendCommand<TMethod extends keyof CrdpCommands>(method: TMethod, ...params: CrdpCommands[TMethod]['paramsType']): Promise<CrdpCommands[TMethod]['returnType']>;
     sendCommandAndIgnore<TMethod extends keyof CrdpCommands>(method: TMethod, ...params: CrdpCommands[TMethod]['paramsType']): Promise<void>;
+    isDomainEnabled?(domain: string): boolean;
     dispose(): Promise<void>;
     onCrashPromise(): Promise<never>;
   }

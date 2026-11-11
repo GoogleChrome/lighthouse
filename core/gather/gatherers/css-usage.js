@@ -8,9 +8,11 @@
  * @fileoverview Tracks unused CSS rules.
  */
 
-import BaseGatherer from '../base-gatherer.js';
+import BaseGatherer, {sharedDomCssDomainSymbol} from '../base-gatherer.js';
 
 class CSSUsage extends BaseGatherer {
+  [sharedDomCssDomainSymbol] = true;
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
@@ -35,8 +37,6 @@ class CSSUsage extends BaseGatherer {
     });
 
     const {ruleUsage} = await session.sendCommand('CSS.stopRuleUsageTracking');
-    await session.sendCommand('CSS.disable');
-    await session.sendCommand('DOM.disable');
 
     return ruleUsage;
   }

@@ -40,6 +40,8 @@ class ProtocolSession extends CrdpEventEmitter {
     this._targetInfo = undefined;
     /** @type {number|undefined} */
     this._nextProtocolTimeout = undefined;
+    /** @type {Set<string>} */
+    this._enabledDomains = new Set();
 
     this._handleProtocolEvent = this._handleProtocolEvent.bind(this);
     // @ts-expect-error Puppeteer expects the handler params to be type `unknown`
@@ -134,9 +136,27 @@ class ProtocolSession extends CrdpEventEmitter {
     const resultWithTimeoutPromise =
       Promise.race([resultPromise, timeoutPromise, this._targetCrashedPromise]);
 
-    return resultWithTimeoutPromise.finally(() => {
+    return resultWithTimeoutPromise.then(result => {
+      if (method.endsWith('.enable')) {
+        this._enabledDomains.add(method.slice(0, -'.enable'.length));
+      } else if (method.endsWith('.disable')) {
+        this._enabledDomains.delete(method.slice(0, -'.disable'.length));
+      }
+      return result;
+    }).finally(() => {
       if (timeout) clearTimeout(timeout);
     });
+  }
+
+  /**
+   * Returns whether a CDP domain is currently enabled via `sendCommand` on this `ProtocolSession`.
+   * Domains enabled directly on the underlying `CDPSession` (e.g. by `TargetManager`) are not
+   * tracked.
+   * @param {string} domain
+   * @return {boolean}
+   */
+  isDomainEnabled(domain) {
+    return this._enabledDomains.has(domain);
   }
 
   /**
@@ -156,6 +176,7 @@ class ProtocolSession extends CrdpEventEmitter {
    * @return {Promise<void>}
    */
   async dispose() {
+    this._enabledDomains.clear();
     // @ts-expect-error Puppeteer expects the handler params to be type `unknown`
     this._cdpSession.off('*', this._handleProtocolEvent);
     await this._cdpSession.detach().catch(e => log.verbose('session', 'detach failed', e.message));

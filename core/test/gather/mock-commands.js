@@ -49,6 +49,8 @@ function createMockSendCommandFn() {
    * @type {Array<MockSendCommandEntry>}
    */
   const mockResponses = [];
+  /** @type {Set<string>} */
+  const enabledDomains = new Set();
   const mockFnImpl = fnAny().mockImplementation(
     /**
      * @template {keyof LH.CrdpCommands} C
@@ -61,12 +63,42 @@ function createMockSendCommandFn() {
       if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
       const {response, delay} = mockResponses[indexOfResponse];
       mockResponses.splice(indexOfResponse, 1);
+      const updateDomainState = () => {
+        if (typeof command !== 'string') return;
+        if (command.endsWith('.enable')) {
+          enabledDomains.add(command.slice(0, -'.enable'.length));
+        } else if (command.endsWith('.disable')) {
+          enabledDomains.delete(command.slice(0, -'.disable'.length));
+        }
+      };
       const returnValue = typeof response === 'function' ? response(...args) : response;
-      if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
+      if (delay) {
+        return new Promise(resolve => setTimeout(() => resolve(returnValue), delay)).then(val => {
+          updateDomainState();
+          return val;
+        });
+      }
+      if (returnValue && typeof /** @type {any} */ (returnValue).then === 'function') {
+        return /** @type {Promise<any>} */ (returnValue).then(val => {
+          updateDomainState();
+          return val;
+        });
+      }
+      updateDomainState();
       return returnValue;
     });
 
   const mockFn = Object.assign(mockFnImpl, {
+    /**
+     * @param {string} domain
+     * @return {boolean}
+     */
+    isDomainEnabled(domain) {
+      return enabledDomains.has(domain);
+    },
+    clearEnabledDomains() {
+      enabledDomains.clear();
+    },
     /**
      * @template {keyof LH.CrdpCommands} C
      * @param {C} command

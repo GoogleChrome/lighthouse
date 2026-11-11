@@ -239,4 +239,26 @@ describe('ProtocolSession', () => {
       expect(session.getNextProtocolTimeout()).toBe(2147483597);
     });
   });
+
+  describe('.isDomainEnabled', () => {
+    it('tracks enable, disable, failed enable, and dispose', async () => {
+      expect(session.isDomainEnabled('CSS')).toBe(false);
+
+      await session.sendCommand('CSS.enable');
+      expect(session.isDomainEnabled('CSS')).toBe(true);
+      expect(session.isDomainEnabled('DOM')).toBe(false);
+
+      rawSend.mockRejectedValueOnce(new Error('Enable failed'));
+      await expect(session.sendCommand('DOM.enable')).rejects.toThrow('Enable failed');
+      expect(session.isDomainEnabled('DOM')).toBe(false);
+
+      await session.sendCommand('CSS.disable');
+      expect(session.isDomainEnabled('CSS')).toBe(false);
+
+      await session.sendCommand('CSS.enable');
+      expect(session.isDomainEnabled('CSS')).toBe(true);
+      await session.dispose();
+      expect(session.isDomainEnabled('CSS')).toBe(false);
+    });
+  });
 });

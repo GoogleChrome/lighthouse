@@ -5,7 +5,11 @@
  */
 
 import * as helpers from '../../gather/runner-helpers.js';
-import BaseGatherer from '../../gather/base-gatherer.js';
+import BaseGatherer, {sharedDomCssDomainSymbol} from '../../gather/base-gatherer.js';
+import Stylesheets from '../../gather/gatherers/stylesheets.js';
+import CSSUsage from '../../gather/gatherers/css-usage.js';
+import AnchorElements from '../../gather/gatherers/anchor-elements.js';
+import ImageElements from '../../gather/gatherers/image-elements.js';
 import {defaultSettings} from '../../config/constants.js';
 import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js';
 
@@ -248,5 +252,331 @@ describe('collectPhaseArtifacts', () => {
       message: 'stopInstrumentation rejection',
     });
     expect(gatherers.timespan.getArtifact).not.toHaveBeenCalled();
+  });
+
+  describe('shared DOM/CSS domain lifecycle', () => {
+    /**
+     * @param {(context: LH.Gatherer.Context) => Promise<any>} getArtifactImpl
+     * @param {{shared?: boolean}} [opts]
+     */
+    function createSharedTestGatherer(getArtifactImpl, {shared = true} = {}) {
+      const mock = createMockGathererInstance({supportedModes: ['navigation', 'snapshot']});
+      mock.getArtifact.mockImplementation(getArtifactImpl);
+      if (shared) {
+        Object.assign(mock, {[sharedDomCssDomainSymbol]: true});
+      }
+      return mock;
+    }
+
+    it('marks Stylesheets, CSSUsage, AnchorElements, and ImageElements as shared', () => {
+      expect(new Stylesheets()[sharedDomCssDomainSymbol]).toBe(true);
+      expect(new CSSUsage()[sharedDomCssDomainSymbol]).toBe(true);
+      expect(new AnchorElements()[sharedDomCssDomainSymbol]).toBe(true);
+      expect(new ImageElements()[sharedDomCssDomainSymbol]).toBe(true);
+      expect(sharedDomCssDomainSymbol in new BaseGatherer()).toBe(false);
+    });
+
+    it('keeps DOM/CSS alive across consecutive shared gatherers and disables after', async () => {
+      /** @type {string[]} */
+      const callOrder = [];
+      mockDriver._session.sendCommand
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('CSS.disable', () => {
+          callOrder.push('CSS.disable');
+        })
+        .mockResponse('DOM.disable', () => {
+          callOrder.push('DOM.disable');
+        });
+
+      const stylesheets = createSharedTestGatherer(async ctx => {
+        callOrder.push('Stylesheets');
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+      const cssUsage = createSharedTestGatherer(async ctx => {
+        callOrder.push('CSSUsage');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(true);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(true);
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+      const anchorElements = createSharedTestGatherer(async ctx => {
+        callOrder.push('AnchorElements');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(true);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(true);
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        return [];
+      });
+      const imageElements = createSharedTestGatherer(async ctx => {
+        callOrder.push('ImageElements');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(true);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(true);
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+      const consoleMessages = createSharedTestGatherer(async ctx => {
+        callOrder.push('ConsoleMessages');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(false);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(false);
+        return [];
+      }, {shared: false});
+
+      const artifactDefinitions = [
+        {id: 'Stylesheets', gatherer: {instance: stylesheets.asGatherer()}},
+        {id: 'CSSUsage', gatherer: {instance: cssUsage.asGatherer()}},
+        {id: 'AnchorElements', gatherer: {instance: anchorElements.asGatherer()}},
+        {id: 'ImageElements', gatherer: {instance: imageElements.asGatherer()}},
+        {id: 'ConsoleMessages', gatherer: {instance: consoleMessages.asGatherer()}},
+      ];
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'stopInstrumentation',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+      expect(mockDriver._session.sendCommand).not.toHaveBeenCalled();
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions,
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      expect(callOrder).toEqual([
+        'Stylesheets',
+        'DOM.enable',
+        'CSS.enable',
+        'CSSUsage',
+        'DOM.enable',
+        'CSS.enable',
+        'AnchorElements',
+        'DOM.enable',
+        'ImageElements',
+        'DOM.enable',
+        'CSS.enable',
+        'CSS.disable',
+        'DOM.disable',
+        'ConsoleMessages',
+      ]);
+    });
+
+    it('disables CSS and DOM before an interleaved non-shared gatherer runs', async () => {
+      /** @type {string[]} */
+      const callOrder = [];
+      mockDriver._session.sendCommand
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('CSS.disable', () => {
+          callOrder.push('CSS.disable');
+        })
+        .mockResponse('DOM.disable', () => {
+          callOrder.push('DOM.disable');
+        })
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('CSS.disable', () => {
+          callOrder.push('CSS.disable');
+        })
+        .mockResponse('DOM.disable', () => {
+          callOrder.push('DOM.disable');
+        });
+
+      const sharedFirst = createSharedTestGatherer(async ctx => {
+        callOrder.push('Stylesheets');
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+      const customGatherer = createSharedTestGatherer(async ctx => {
+        callOrder.push('CustomGatherer');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(false);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(false);
+        return {};
+      }, {shared: false});
+      const sharedSecond = createSharedTestGatherer(async ctx => {
+        callOrder.push('ImageElements');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(false);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(false);
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions: [
+          {id: 'Stylesheets', gatherer: {instance: sharedFirst.asGatherer()}},
+          {id: 'CustomGatherer', gatherer: {instance: customGatherer.asGatherer()}},
+          {id: 'ImageElements', gatherer: {instance: sharedSecond.asGatherer()}},
+        ],
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      expect(callOrder).toEqual([
+        'Stylesheets',
+        'DOM.enable',
+        'CSS.enable',
+        'CSS.disable',
+        'DOM.disable',
+        'CustomGatherer',
+        'ImageElements',
+        'DOM.enable',
+        'CSS.enable',
+        'CSS.disable',
+        'DOM.disable',
+      ]);
+    });
+
+    it('disables CSS and DOM after CSSUsage when ImageElements is filtered out', async () => {
+      /** @type {string[]} */
+      const callOrder = [];
+      mockDriver._session.sendCommand
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('DOM.enable', () => {
+          callOrder.push('DOM.enable');
+        })
+        .mockResponse('CSS.enable', () => {
+          callOrder.push('CSS.enable');
+        })
+        .mockResponse('CSS.disable', () => {
+          callOrder.push('CSS.disable');
+        })
+        .mockResponse('DOM.disable', () => {
+          callOrder.push('DOM.disable');
+        });
+
+      const stylesheets = createSharedTestGatherer(async ctx => {
+        callOrder.push('Stylesheets');
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+      const cssUsage = createSharedTestGatherer(async ctx => {
+        callOrder.push('CSSUsage');
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('DOM')).toBe(true);
+        expect(ctx.driver.defaultSession.isDomainEnabled?.('CSS')).toBe(true);
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions: [
+          {id: 'Stylesheets', gatherer: {instance: stylesheets.asGatherer()}},
+          {id: 'CSSUsage', gatherer: {instance: cssUsage.asGatherer()}},
+        ],
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      expect(callOrder).toEqual([
+        'Stylesheets',
+        'DOM.enable',
+        'CSS.enable',
+        'CSSUsage',
+        'DOM.enable',
+        'CSS.enable',
+        'CSS.disable',
+        'DOM.disable',
+      ]);
+      expect(mockDriver._session.isDomainEnabled('CSS')).toBe(false);
+      expect(mockDriver._session.isDomainEnabled('DOM')).toBe(false);
+    });
+
+    it('disables only enabled domains even when a shared gatherer rejects', async () => {
+      mockDriver._session.sendCommand
+        .mockResponse('DOM.enable')
+        .mockResponse('CSS.enable', () => Promise.reject(new Error('CSS enable failed')))
+        .mockResponse('DOM.disable');
+
+      const failingGatherer = createSharedTestGatherer(async ctx => {
+        await ctx.driver.defaultSession.sendCommand('DOM.enable');
+        await ctx.driver.defaultSession.sendCommand('CSS.enable');
+        return [];
+      });
+
+      await helpers.collectPhaseArtifacts({
+        driver,
+        page,
+        artifactDefinitions: [
+          {id: 'Stylesheets', gatherer: {instance: failingGatherer.asGatherer()}},
+        ],
+        artifactState,
+        gatherMode: 'navigation',
+        phase: 'getArtifact',
+        baseArtifacts,
+        computedCache: new Map(),
+        settings: defaultSettings,
+      });
+
+      await expect(artifactState.getArtifact.Stylesheets).rejects.toThrow('CSS enable failed');
+      expect(mockDriver._session.sendCommand.mock.calls.map(c => c[0])).toEqual([
+        'DOM.enable',
+        'CSS.enable',
+        'DOM.disable',
+      ]);
+      expect(mockDriver._session.isDomainEnabled('CSS')).toBe(false);
+      expect(mockDriver._session.isDomainEnabled('DOM')).toBe(false);
+    });
   });
 });
