@@ -31,11 +31,9 @@ function convertNodeTimingsToTrace(nodeTimings) {
       // Represent all CPU work that was bundled in a task as an EvaluateScript event
       traceEvents.push(...createFakeTaskEvents(node, timing));
     } else {
-      /** @type {LH.Artifacts.NetworkRequest} */
-      const record = node.rawRequest;
       // Ignore data URIs as they don't really add much value
-      if (/^data/.test(record.url)) continue;
-      traceEvents.push(...createFakeNetworkEvents(requestId, record, timing));
+      if (/^data/.test(node.request.url)) continue;
+      traceEvents.push(...createFakeNetworkEvents(requestId, node, timing));
       requestId++;
     }
   }
@@ -123,11 +121,10 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
   /**
    * @param {number} requestId
-   * @param {LH.Artifacts.NetworkRequest} record
    * @param {CompleteNodeTiming} timing
    * @return {LH.TraceEvent}
    */
-  function createWillSendRequestEvent(requestId, record, timing) {
+  function createWillSendRequestEvent(requestId, timing) {
     return {
       ...baseEvent,
       ph: 'I',
@@ -142,11 +139,11 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
   /**
    * @param {number} requestId
-   * @param {LH.Artifacts.NetworkRequest} record
+   * @param {LH.Gatherer.Simulation.GraphNetworkNode} node
    * @param {CompleteNodeTiming} timing
    * @return {LH.TraceEvent[]}
    */
-  function createFakeNetworkEvents(requestId, record, timing) {
+  function createFakeNetworkEvents(requestId, node, timing) {
     if (!('connectionTiming' in timing)) {
       throw new Error('Network node timing incomplete');
     }
@@ -156,6 +153,12 @@ function convertNodeTimingsToTrace(nodeTimings) {
     let {startTime, endTime} = timing;
     if (startTime === endTime) endTime += 0.3;
 
+    // Use the Lantern request rather than `rawRequest`, which is only an LH.Artifacts.NetworkRequest
+    // for graphs built by Lighthouse (not for those built by the trace engine).
+    const record = node.request;
+    /** @type {Partial<LH.Artifacts.NetworkRequest>|undefined} */
+    const rawRequest = node.rawRequest;
+
     const requestData = {requestId: requestId.toString(), frame};
     // No `dur` on network instant events but add to keep types happy.
     /** @type {LH.Util.StrictOmit<LH.TraceEvent, 'name'|'ts'|'args'>} */
@@ -163,12 +166,15 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
     const sendRequestData = {
       ...requestData,
-      requestMethod: record.requestMethod,
+      requestMethod: rawRequest?.requestMethod,
       url: record.url,
       priority: record.priority,
     };
 
-    const {dnsResolutionTime, connectionTime, sslTime, timeToFirstByte} = timing.connectionTiming;
+    // Connectionless requests (disk cache, blob:, filesystem:, etc.) are simulated without
+    // any connection timing.
+    const {dnsResolutionTime, connectionTime, sslTime, timeToFirstByte} =
+      timing.connectionTiming || {};
     let sslStart = -1;
     let sslEnd = -1;
     if (connectionTime !== undefined && sslTime !== undefined) {
@@ -181,7 +187,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       mimeType: record.mimeType,
       encodedDataLength: record.transferSize,
       fromCache: record.fromDiskCache,
-      fromServiceWorker: record.fetchedViaServiceWorker,
+      fromServiceWorker: rawRequest?.fetchedViaServiceWorker,
       timing: {
         // `requestTime` is in seconds.
         requestTime: toMicroseconds(startTime) / (1000 * 1000),
@@ -194,7 +200,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
         sslEnd,
         sendStart: connectionTime ?? 0,
         sendEnd: connectionTime ?? 0,
-        receiveHeadersEnd: timeToFirstByte,
+        receiveHeadersEnd: timeToFirstByte ?? 0,
         workerStart: -1,
         workerReady: -1,
         proxyStart: -1,
@@ -217,7 +223,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
     // Navigation request needs an additional ResourceWillSendRequest event.
     if (requestId === 1) {
-      events.push(createWillSendRequestEvent(requestId, record, timing));
+      events.push(createWillSendRequestEvent(requestId, timing));
     }
 
     events.push(
