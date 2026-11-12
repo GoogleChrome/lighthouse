@@ -10,13 +10,13 @@ import fs from 'fs';
 import assert from 'assert/strict';
 import {setTimeout} from 'timers/promises';
 
-import open from 'open';
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
 import log from 'lighthouse-logger';
 
 import {LH_ROOT} from '../../shared/root.js';
+import {openFile} from '../../cli/open-file.js';
 import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
 
@@ -167,7 +167,7 @@ async function generateFlowResult() {
   if (args.view) {
     const htmlReport = await api.generateReport(flowResult);
     fs.writeFileSync(FLOW_REPORT_PATH, htmlReport);
-    open(FLOW_REPORT_PATH);
+    openFile(FLOW_REPORT_PATH);
   }
 }
 

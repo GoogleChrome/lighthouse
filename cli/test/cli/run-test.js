@@ -192,7 +192,7 @@ describe('batch runLighthouse', () => {
       write: mockPrinterWrite,
       OutputMode: {json: 'json', html: 'html', csv: 'csv'},
     });
-    await td.replaceEsm('open', undefined, mockOpen);
+    await td.replaceEsm('../../open-file.js', {openFile: mockOpen});
     // @ts-expect-error - query string busts ESM cache so td.replaceEsm takes effect
     mockedRun = await import('../../run.js?batch');
   });
