@@ -8,6 +8,7 @@
   - [Using the Node CLI](#using-the-node-cli)
     * [CLI options](#cli-options)
   - [Using the Node module](#using-the-node-module)
+  - [Using the PageSpeed Insights API](#using-the-pagespeed-insights-api)
   - [Viewing a report](#viewing-a-report)
     * [Online Viewer](#online-viewer)
   - [Docs & Recipes](#docs--recipes)
@@ -217,6 +218,19 @@ You can also use Lighthouse programmatically with the Node module.
 
 Read [Using Lighthouse programmatically](./docs/readme.md#using-programmatically) for help getting started.\
 Read [Lighthouse Configuration](./docs/configuration.md) to learn more about the configuration options available.
+
+## Using the PageSpeed Insights API
+
+The [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) runs Lighthouse on Google's servers and returns the results as JSON. For example, request a mobile performance report:
+
+```sh
+curl --get 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed' \
+  --data-urlencode 'url=https://example.com/' \
+  --data-urlencode 'strategy=mobile' \
+  --data-urlencode 'category=performance'
+```
+
+The response's `lighthouseResult` property contains the Lighthouse report. See the [API reference](https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed) for other categories and request parameters. An [API key is recommended](https://developers.google.com/speed/docs/insights/v5/get-started#acquiring-and-using-an-api-key) for frequent automated requests.
 
 ## Viewing a report
 
@@ -449,8 +463,9 @@ Read more in our [guide to network throttling](./docs/throttling.md).
 
 ### Are results sent to a remote server?
 
-Nope. Lighthouse runs locally, auditing a page using a local version of the Chrome browser installed on the
-machine. Report results are never processed or beaconed to a remote server.
+Lighthouse runs locally when used through DevTools, the Node CLI or the Node module.
+Those runs use Chrome on the local machine and do not send report results to a remote server.
+The [PageSpeed Insights API](#using-the-pagespeed-insights-api) runs Lighthouse remotely on Google's servers.
 
 ### How do I get localized Lighthouse results via the CLI?
 
