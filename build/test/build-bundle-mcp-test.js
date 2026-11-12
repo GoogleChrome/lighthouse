@@ -109,10 +109,15 @@ describe('MCP Bundle build', () => {
       const pkgNames = new Set(map.sources
         .filter((/** @type {string} */ s) => !/^[a-z][a-z0-9-]+:/.test(s))
         .map((/** @type {string} */ s) => s.match(/node_modules\/((?:@[^/]+\/)?[^/]+)/)?.[1])
-        .filter((/** @type {string|undefined} */ name) => name && name !== 'lighthouse'));
+        .filter((/** @type {string|undefined} */ name) => name && name !== 'lighthouse')
+        // Some deps ship sourcemaps with sources pointing outside their package dir (e.g.
+        // @formatjs/fast-memoize has `"sources": ["../index.ts"]`), producing phantom paths like
+        // `node_modules/@formatjs/index.ts`. Only keep names that are real packages.
+        .filter((/** @type {string} */ name) =>
+          fs.existsSync(path.join(LH_ROOT, 'node_modules', name, 'package.json'))));
 
       for (const name of pkgNames) expect(notices).toContain(`Name: ${name}`);
-      expect(pkgNames.size).toBeGreaterThanOrEqual(15);
+      expect(pkgNames.size).toBeGreaterThanOrEqual(14);
     });
   });
 
