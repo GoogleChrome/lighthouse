@@ -17,6 +17,7 @@ declare global {
     __nativePerformance: Performance;
     __nativeFetch: typeof fetch,
     __nativeURL: typeof URL;
+    __nativeMap: MapConstructor;
     __ElementMatches: Element['matches'];
     __HTMLElementBoundingClientRect: HTMLElement['getBoundingClientRect'];
 

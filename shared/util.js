@@ -181,8 +181,16 @@ class Util {
       return string;
     }
 
-    const segmenter = new Intl.Segmenter(undefined, {granularity: 'grapheme'});
-    const iterator = segmenter.segment(string)[Symbol.iterator]();
+    /** @type {Iterator<Intl.SegmentData>} */
+    let iterator;
+    try {
+      const segmenter = new Intl.Segmenter(undefined, {granularity: 'grapheme'});
+      iterator = segmenter.segment(string)[Symbol.iterator]();
+    } catch {
+      // `Intl.Segmenter` can be missing or broken (e.g. replaced by a page's polyfill when this
+      // runs in the page). Fall back to truncating by code unit.
+      return string.slice(0, Math.max(0, characterLimit - ellipseSuffix.length)) + ellipseSuffix;
+    }
 
     let lastSegmentIndex = 0;
     for (let i = 0; i <= characterLimit - ellipseSuffix.length; i++) {

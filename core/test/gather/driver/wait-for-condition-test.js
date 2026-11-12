@@ -365,3 +365,45 @@ describe('waitForFcp()', () => {
     await expect(waitPromise).rejects.toMatchObject({message: 'Wait for FCP canceled'});
   });
 });
+
+describe('waitForCPUIdle()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
+  let session;
+
+  beforeEach(() => {
+    session = createMockSession();
+    session.sendCommand
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'frame-1'}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 1});
+  });
+
+  it('should resolve when the CPU is idle', async () => {
+    session.sendCommand
+      .mockResponse('Runtime.evaluate', {result: {value: undefined}})
+      .mockResponse('Runtime.evaluate', {result: {value: 2000}});
+
+    const waitPromise = makePromiseInspectable(wait.waitForCPUIdle(session, 1000).promise);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve on CPU idle');
+    await waitPromise;
+  });
+
+  it('should reject if a later idle check fails', async () => {
+    session.sendCommand
+      .mockResponse('Runtime.evaluate', {result: {value: undefined}})
+      .mockResponse('Runtime.evaluate', {result: {value: 100}})
+      .mockResponse('Runtime.evaluate', () => {
+        throw new Error('Session closed');
+      });
+
+    const waitPromise = makePromiseInspectable(wait.waitForCPUIdle(session, 1000).promise);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not reject when the idle check failed');
+    await expect(waitPromise).rejects.toThrow('Session closed');
+    expect(session.sendCommand.findAllInvocations('Runtime.evaluate')).toHaveLength(3);
+  });
+});

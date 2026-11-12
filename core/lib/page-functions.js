@@ -449,7 +449,8 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
  */
 function getNodeDetails(node) {
   // This bookkeeping is for the FullPageScreenshot gatherer.
-  if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) {
+  // Pages may have overwritten this global or `Map` itself (see `_cachedNativesPreamble`).
+  if (!(window.__lighthouseNodesDontTouchOrAllVarianceGoesAway instanceof Map)) {
     window.__lighthouseNodesDontTouchOrAllVarianceGoesAway = new Map();
   }
 
