@@ -11,7 +11,6 @@ import assert from 'assert/strict';
 import {setTimeout} from 'timers/promises';
 
 import open from 'open';
-import waitForExpect from 'wait-for-expect';
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
@@ -46,6 +45,7 @@ const args = yargs(process.argv.slice(2))
 async function waitForImagesToLoad(page) {
   const TIMEOUT = 30_000;
   const QUIET_WINDOW = 3_000;
+  const POLL_INTERVAL = 50;
 
   /** @return {Promise<Array<{src: string, complete: boolean}>>} */
   async function getImageLoadingStates() {
@@ -58,17 +58,24 @@ async function waitForImagesToLoad(page) {
     );
   }
 
-  await waitForExpect(async () => {
-    // First check all images that are in the page are complete.
-    const firstRunImages = await getImageLoadingStates();
-    const completeImages = firstRunImages.filter(image => image.complete);
-    assert.deepStrictEqual(completeImages, firstRunImages);
+  const deadline = Date.now() + TIMEOUT;
+  for (;;) {
+    try {
+      // First check all images that are in the page are complete.
+      const firstRunImages = await getImageLoadingStates();
+      const completeImages = firstRunImages.filter(image => image.complete);
+      assert.deepStrictEqual(completeImages, firstRunImages);
 
-    // Next check we haven't added any new images in the quiet window.
-    await setTimeout(QUIET_WINDOW);
-    const secondRunImages = await getImageLoadingStates();
-    assert.deepStrictEqual(secondRunImages, firstRunImages);
-  }, TIMEOUT);
+      // Next check we haven't added any new images in the quiet window.
+      await setTimeout(QUIET_WINDOW);
+      const secondRunImages = await getImageLoadingStates();
+      assert.deepStrictEqual(secondRunImages, firstRunImages);
+      return;
+    } catch (err) {
+      if (Date.now() >= deadline) throw err;
+      await setTimeout(POLL_INTERVAL);
+    }
+  }
 }
 
 /** @type {LH.Config} */
