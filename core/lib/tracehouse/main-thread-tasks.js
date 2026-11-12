@@ -214,6 +214,21 @@ class MainThreadTasks {
   }
 
   /**
+   * Extends the endTime (and duration) of `task` and its ancestors so that each ends no earlier
+   * than `endTime`.
+   * @param {TaskNode|undefined} task
+   * @param {number} endTime
+   */
+  static _extendAncestorEndTimes(task, endTime) {
+    let cur = task;
+    while (cur && cur.endTime < endTime) {
+      cur.duration += endTime - cur.endTime;
+      cur.endTime = endTime;
+      cur = cur.parent;
+    }
+  }
+
+  /**
    * This function iterates through the tasks to set the `.parent`/`.children` properties of tasks
    * according to their implied nesting structure. If any of these relationships seem impossible based on
    * the timestamps, this method will throw.
@@ -269,12 +284,7 @@ class MainThreadTasks {
             currentTask.duration += timeDelta;
 
             // Recursively extend parent endTimes, as needed.
-            let cur = currentTask.parent;
-            while (cur && cur.endTime < nextTask.endTime) {
-              cur.duration += nextTask.endTime - cur.endTime;
-              cur.endTime = nextTask.endTime;
-              cur = cur.parent;
-            }
+            MainThreadTasks._extendAncestorEndTimes(currentTask.parent, nextTask.endTime);
           } else if (nextTask.unbounded) {
             // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
             nextTask.endTime = currentTask.endTime;
@@ -312,6 +322,8 @@ class MainThreadTasks {
             actualParentTask.parent = grandparentTask;
             actualParentTask.startTime = actualChildTask.startTime;
             actualParentTask.duration = actualParentTask.endTime - actualParentTask.startTime;
+            // The new parent may now end after its ancestors, so extend them as needed.
+            MainThreadTasks._extendAncestorEndTimes(grandparentTask, actualParentTask.endTime);
             currentTask = actualParentTask;
             nextTask = actualChildTask;
           } else {
