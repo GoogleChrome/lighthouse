@@ -5,117 +5,44 @@
  */
 
 /**
- * @fileoverview A minimal replacement for the `open` npm package, used to open a
- * file (e.g. an HTML report) with the OS default application.
+ * @fileoverview Opens a file (e.g. the HTML report for `--view`) with the OS default application.
  */
 
-import {spawn, execFileSync} from 'child_process';
-import fs from 'fs';
+import {spawn} from 'child_process';
 import path from 'path';
 
 import log from 'lighthouse-logger';
 
-/** @typedef {{command: string, args: string[]}} OpenCommand */
-
 /**
- * True when running under Windows Subsystem for Linux, but not inside a
- * container hosted on WSL (where Windows interop is typically unavailable).
- * @return {boolean}
- */
-function isWsl() {
-  if (process.platform !== 'linux') return false;
-
-  try {
-    const version = fs.readFileSync('/proc/version', 'utf8').toLowerCase();
-    if (!version.includes('microsoft')) return false;
-  } catch {
-    return false;
-  }
-
-  return !fs.existsSync('/.dockerenv') && !fs.existsSync('/run/.containerenv');
-}
-
-/**
- * Converts a WSL path to a Windows path using `wslpath`.
- * @param {string} filePath
- * @return {string|undefined}
- */
-function toWindowsPath(filePath) {
-  try {
-    const windowsPath = execFileSync('wslpath', ['-w', filePath], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-    return windowsPath || undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-/**
- * Returns the commands to try, in order, to open `filePath`.
- *
- * On Windows (and WSL) `explorer.exe <path>` is used rather than
- * `cmd /c start "" <path>`: arguments to `cmd` are re-parsed by cmd itself, so
- * characters valid in file names such as `&`, `^` and `%` would need
- * cmd-specific escaping (and `%VAR%` is expanded even inside quotes).
- * `explorer.exe` receives the path as a single, normally quoted argument and
- * opens it with the default associated application.
- *
- * @param {string} filePath An absolute path.
- * @param {{platform: NodeJS.Platform, windowsPath?: string}} env `windowsPath`
- *     is the Windows equivalent of `filePath` when running under WSL.
- * @return {OpenCommand[]}
- */
-function getOpenCommands(filePath, {platform, windowsPath}) {
-  if (platform === 'darwin') return [{command: 'open', args: [filePath]}];
-  if (platform === 'win32') return [{command: 'explorer.exe', args: [filePath]}];
-
-  /** @type {OpenCommand[]} */
-  const commands = [];
-  if (windowsPath) commands.push({command: 'explorer.exe', args: [windowsPath]});
-  commands.push({command: 'xdg-open', args: [filePath]});
-  return commands;
-}
-
-/**
- * Spawns the first command as a detached process, falling back to the next
- * command if it fails to launch (e.g. ENOENT).
- * @param {OpenCommand[]} commands
+ * Opens a file with its default application, without waiting for it. Failures are logged, not
+ * thrown.
  * @param {string} filePath
  */
-function spawnDetached(commands, filePath) {
-  const [{command, args}, ...fallbacks] = commands;
+function openFile(filePath) {
+  const absolutePath = path.resolve(filePath);
 
-  // Arguments are passed as an array with no shell, so paths are never interpreted.
-  // Detaching (and unref'ing) lets the child outlive the CLI, which may exit right away.
-  const child = spawn(command, args, {stdio: 'ignore', detached: true});
+  /** @type {import('child_process').SpawnOptions} */
+  const options = {stdio: 'ignore', detached: true};
+  let command = 'xdg-open';
+  let args = [absolutePath];
+  if (process.platform === 'darwin') {
+    command = 'open';
+  } else if (process.platform === 'win32') {
+    // explorer.exe (unlike `cmd /c start`) doesn't expand `%VAR%` or treat `&` specially, but it
+    // does split unquoted `,` and `=`, which report filenames can contain. Windows paths can't
+    // contain `"`, so quoting verbatim is safe.
+    command = 'explorer.exe';
+    args = [`"${absolutePath}"`];
+    options.windowsVerbatimArguments = true;
+  }
+
+  // Detached and unref'd so the CLI can exit without waiting for (or killing) the child.
+  const child = spawn(command, args, options);
   child.on('error', err => {
-    if (fallbacks.length) {
-      spawnDetached(fallbacks, filePath);
-      return;
-    }
-
-    log.warn('CLI', `Unable to open ${filePath} with \`${command}\` (${err.message}). ` +
+    log.warn('CLI', `Unable to open ${absolutePath} with \`${command}\` (${err.message}). ` +
       'Open it manually in your browser.');
   });
   child.unref();
 }
 
-/**
- * Opens a file with the default application for its type. Does not wait for
- * the application to launch or exit. Failures are logged, not thrown.
- * @param {string} filePath
- */
-function openFile(filePath) {
-  const absolutePath = path.resolve(filePath);
-  const platform = process.platform;
-  const windowsPath = isWsl() ? toWindowsPath(absolutePath) : undefined;
-
-  spawnDetached(getOpenCommands(absolutePath, {platform, windowsPath}), absolutePath);
-}
-
-export {
-  openFile,
-  getOpenCommands,
-};
+export {openFile};
