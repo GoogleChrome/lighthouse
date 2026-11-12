@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as jestMock from 'jest-mock';
+
 import Stylesheets from '../../../gather/gatherers/stylesheets.js';
+import {Sentry} from '../../../lib/sentry.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 import {createMockContext} from '../mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 
@@ -76,6 +80,47 @@ describe('Stylesheets gatherer', () => {
         content: 'CSS text 2',
       },
     ]);
+  });
+
+  it('does not report removed stylesheets to Sentry', async () => {
+    const originalCaptureException = Sentry.captureException;
+    const captureExceptionMock =
+      jestMock.fn(/** @type {typeof Sentry.captureException} */ (async () => {}));
+    Sentry.captureException = captureExceptionMock;
+
+    try {
+      const context = createMockContext();
+      context.driver.defaultSession.on
+        .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '1'}})
+        .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}});
+      context.driver.defaultSession.sendCommand
+        .mockResponse('DOM.enable')
+        // @ts-expect-error - Force events to emit.
+        .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
+        .mockResponse('CSS.getStyleSheetText', () => {
+          throw LighthouseError.fromProtocolMessage('CSS.getStyleSheetText',
+            {message: 'No style sheet with given id found'});
+        })
+        .mockResponse('CSS.getStyleSheetText', () => {
+          throw LighthouseError.fromProtocolMessage('CSS.getStyleSheetText',
+            {message: 'Some other error'});
+        })
+        .mockResponse('CSS.disable')
+        .mockResponse('DOM.disable');
+
+      const gatherer = new Stylesheets();
+      await gatherer.startInstrumentation(context.asContext());
+      await flushAllTimersAndMicrotasks(1);
+      await gatherer.stopInstrumentation(context.asContext());
+      const artifact = await gatherer.getArtifact(context.asContext());
+
+      expect(artifact).toEqual([]);
+      expect(captureExceptionMock).toHaveBeenCalledTimes(1);
+      expect(captureExceptionMock).toHaveBeenCalledWith(
+        expect.objectContaining({protocolError: 'Some other error'}), expect.anything());
+    } finally {
+      Sentry.captureException = originalCaptureException;
+    }
   });
 
   it('ignores sheet if there was an error fetching content', async () => {
