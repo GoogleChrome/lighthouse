@@ -10,6 +10,16 @@ import * as td from 'testdouble';
 import {Sentry} from '../../lib/sentry.js';
 import defaultConfig from '../../config/default-config.js';
 
+/**
+ * A Sentry transport that never sends anything. If the `@sentry/node` mock below ever fails to
+ * apply (e.g. due to module caching or a missing loader), the real SDK would otherwise send these
+ * test errors to Lighthouse's production Sentry project.
+ */
+const noopTransport = () => ({
+  send: () => Promise.resolve({}),
+  flush: () => Promise.resolve(true),
+});
+
 describe('Sentry', () => {
   let sentryNodeMock;
   let configPayload;
@@ -32,7 +42,7 @@ describe('Sentry', () => {
     configPayload = {
       url: 'http://example.com',
       flags: {enableErrorReporting: true},
-      environmentData: {},
+      environmentData: {transport: noopTransport},
     };
 
     // We need to save the Sentry delegate object because every call to `.init` mutates the methods.
@@ -75,7 +85,7 @@ describe('Sentry', () => {
             channel: 'test',
           },
         },
-        environmentData: {},
+        environmentData: {transport: noopTransport},
       });
 
       expect(sentryNodeMock.init).toHaveBeenCalled();
