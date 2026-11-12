@@ -9,6 +9,8 @@ import assert from 'assert/strict';
 import BootupTime from '../../audits/bootup-time.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {defaultSettings} from '../../config/constants.js';
+import {createTestTrace} from '../create-test-trace.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const acceptableDevtoolsLogs = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -183,5 +185,89 @@ Array [
       assert.equal(Math.round(output.numericValue), 0);
       assert.deepStrictEqual(output.metricSavings, {TBT: 0});
     });
+  });
+
+  it('should exclude URLs with 0 JS execution time', async () => {
+    const trace = createTestTrace({
+      frameUrl: 'https://example.com/',
+      traceEnd: 2000,
+      topLevelTasks: [
+        {
+          ts: 100,
+          duration: 100,
+          children: [
+            {ts: 110, duration: 80, url: 'https://example.com/', eventName: 'ParseHTML'},
+          ],
+        },
+        {
+          ts: 300,
+          duration: 100,
+          children: [
+            {ts: 310, duration: 80, url: 'https://example.com/app.js', eventName: 'EvaluateScript'},
+          ],
+        },
+      ],
+    });
+    // Also add a ParseAuthorStyleSheet task to ensure CSS URLs are not attributed.
+    trace.traceEvents.push(
+      {
+        name: 'RunTask',
+        ts: 500 * 1000,
+        dur: 100 * 1000,
+        pid: 1111,
+        tid: 222,
+        ph: 'X',
+        cat: 'disabled-by-default-devtools.timeline',
+        args: {},
+      },
+      {
+        name: 'ParseAuthorStyleSheet',
+        ts: 510 * 1000,
+        dur: 80 * 1000,
+        pid: 1111,
+        tid: 222,
+        ph: 'X',
+        cat: 'blink,devtools.timeline',
+        args: {data: {styleSheetUrl: 'https://example.com/site.css'}},
+      }
+    );
+
+    const devtoolsLog = networkRecordsToDevtoolsLog([
+      {url: 'https://example.com/', resourceType: 'Document'},
+      {url: 'https://example.com/site.css', resourceType: 'Stylesheet'},
+      {url: 'https://example.com/app.js', resourceType: 'Script'},
+    ]);
+
+    const artifacts = {
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
+      URL: {
+        requestedUrl: 'https://example.com/',
+        mainDocumentUrl: 'https://example.com/',
+        finalDisplayedUrl: 'https://example.com/',
+      },
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
+      HostDPR: 1,
+    };
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+    const context = {options: auditOptions, settings, computedCache: new Map()};
+
+    const output = await BootupTime.audit(artifacts, context);
+    expect(output.details.items).toEqual([
+      {
+        url: 'Unattributable',
+        total: 101,
+        scripting: 0,
+        scriptParseCompile: 0,
+      },
+      {
+        url: 'https://example.com/app.js',
+        total: 100,
+        scripting: 80,
+        scriptParseCompile: 0,
+      },
+    ]);
   });
 });
