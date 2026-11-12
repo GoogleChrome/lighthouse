@@ -93,7 +93,7 @@ describe('Performance: page execution timings audit', () => {
       assert.ok(Math.abs(actual - expected) <= 2, `expected ${expected} got ${actual}`);
     }
 
-    assert.equal(Math.round(output.numericValue), 15157);
+    assert.equal(Math.round(output.numericValue), 15156);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0);
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
@@ -123,7 +123,7 @@ describe('Performance: page execution timings audit', () => {
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
   "garbageCollection": 11,
-  "other": 146,
+  "other": 133,
   "paintCompositeRender": 7,
   "parseHTML": 19,
   "scriptEvaluation": 269,
@@ -131,7 +131,7 @@ Object {
   "styleLayout": 71,
 }
 `);
-    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`597`);
+    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`585`);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 1);
     expect(output.metricSavings.TBT).toBeCloseTo(60.29, 0.1);
@@ -156,14 +156,14 @@ Object {
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
   "garbageCollection": 3,
-  "other": 382,
+  "other": 329,
   "paintCompositeRender": 44,
   "parseHTML": 25,
   "scriptEvaluation": 347,
   "styleLayout": 131,
 }
 `);
-    assert.equal(Math.round(output.numericValue), 933);
+    assert.equal(Math.round(output.numericValue), 879);
     assert.equal(output.details.items.length, 6);
     assert.equal(output.score, 1);
   });
