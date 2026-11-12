@@ -10,9 +10,10 @@ import fs from 'fs';
 
 import * as td from 'testdouble';
 import * as jestMock from 'jest-mock';
+import log from 'lighthouse-logger';
 
 import * as run from '../../run.js';
-import {parseChromeFlags} from '../../run.js';
+import {checkDevShmUsage, parseChromeFlags} from '../../run.js';
 import {getFlags} from '../../cli-flags.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {fnAny, readJson} from '../../../core/test/test-utils.js';
@@ -385,5 +386,68 @@ describe('Parsing --chrome-flags', () => {
       parseChromeFlags(['"--no-sandbox --log-level=0"', '--headless']),
       ['--no-sandbox', '--log-level=0', '--headless']
     );
+  });
+});
+
+describe('checkDevShmUsage', () => {
+  /** @type {ReturnType<typeof jestMock.spyOn>} */
+  let statfsSpy;
+  /** @type {ReturnType<typeof jestMock.spyOn>} */
+  let logWarnSpy;
+
+  beforeEach(() => {
+    statfsSpy = jestMock.spyOn(fs, 'statfsSync');
+    logWarnSpy = jestMock.spyOn(log, 'warn');
+  });
+
+  afterEach(() => {
+    statfsSpy.mockRestore();
+    logWarnSpy.mockRestore();
+  });
+
+  it('warns on Linux when /dev/shm is <= 64MB and --disable-dev-shm-usage is missing', () => {
+    statfsSpy.mockReturnValue({bsize: 4096, blocks: 16384}); // 64MB
+
+    checkDevShmUsage(['--headless'], 'linux');
+
+    expect(statfsSpy).toHaveBeenCalledWith('/dev/shm');
+    expect(logWarnSpy).toHaveBeenCalledTimes(1);
+    expect(logWarnSpy).toHaveBeenCalledWith(
+      'CLI',
+      expect.stringContaining('Detected small /dev/shm (64MB)')
+    );
+  });
+
+  it('does not warn when /dev/shm is larger than 64MB', () => {
+    statfsSpy.mockReturnValue({bsize: 4096, blocks: 524288}); // 2GB
+
+    checkDevShmUsage(['--headless'], 'linux');
+
+    expect(logWarnSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not warn when --disable-dev-shm-usage is passed', () => {
+    checkDevShmUsage(['--headless', '--disable-dev-shm-usage'], 'linux');
+
+    expect(statfsSpy).not.toHaveBeenCalled();
+    expect(logWarnSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not warn on non-Linux platforms', () => {
+    checkDevShmUsage(['--headless'], 'darwin');
+    checkDevShmUsage(['--headless'], 'win32');
+
+    expect(statfsSpy).not.toHaveBeenCalled();
+    expect(logWarnSpy).not.toHaveBeenCalled();
+  });
+
+  it('ignores errors when /dev/shm cannot be inspected', () => {
+    statfsSpy.mockImplementation(() => {
+      throw new Error('ENOENT');
+    });
+
+    checkDevShmUsage(['--headless'], 'linux');
+
+    expect(logWarnSpy).not.toHaveBeenCalled();
   });
 });

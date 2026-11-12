@@ -27,6 +27,22 @@ lighthouse --chrome-flags="--headless" https://github.com
 There is also the new `--headless=new` option, which includes functionality that
 was explicitly omitted from the original headless browser.
 
+## Running in Docker / CI containers
+
+Containerized Linux environments (such as Docker, Kubernetes, and many CI runners) default `/dev/shm` shared memory to `64MB`. On modern pages, Chrome can exhaust this shared memory mid-audit, causing the renderer tab to crash (`TARGET_CRASHED`) or stop responding to DevTools protocol commands (`PROTOCOL_TIMEOUT`, see [#6512](https://github.com/GoogleChrome/lighthouse/issues/6512)).
+
+To prevent shared-memory crashes in containers, either pass `--disable-dev-shm-usage` so Chrome writes shared memory files to `/tmp` instead of `/dev/shm`:
+
+```sh
+lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" https://github.com
+```
+
+Or mount a larger `/dev/shm` volume when starting the container (recommended if `/tmp` is backed by slow disk I/O):
+
+```sh
+docker run --shm-size=1g ...
+```
+
 ## CLI (xvfb)
 
 Alternatively, you can run full Chrome + xvfb instead of headless mode. These steps worked on Debian Jessie:
