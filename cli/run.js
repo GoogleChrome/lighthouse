@@ -13,9 +13,9 @@ import os from 'os';
 import * as ChromeLauncher from 'chrome-launcher';
 import yargsParser from 'yargs-parser';
 import log from 'lighthouse-logger';
-import open from 'open';
 
 import * as Printer from './printer.js';
+import {openFile} from './open-file.js';
 import lighthouse from '../core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../core/lib/asset-saver.js';
@@ -272,7 +272,7 @@ async function runLighthouse(urlOrUrls, flags, config) {
   if (htmlReportPaths.length > 0) {
     if (flags.view) {
       for (const htmlPath of htmlReportPaths) {
-        open(htmlPath, {wait: false});
+        openFile(htmlPath);
       }
     } else {
       // eslint-disable-next-line max-len
