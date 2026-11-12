@@ -51,12 +51,45 @@ it('save button opens save dialog for HTML file', async () => {
   const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
 
   const saveButton = root.getByText('Save');
-  saveButton.click();
+  await act(() => saveButton.click());
 
   expect(mockSaveFile).toHaveBeenCalledWith(
     expect.any(Blob),
     'User-flow_2021-09-14_22-24-22.html'
   );
+});
+
+it('waits for asynchronous HTML before saving the file', async () => {
+  mockSaveFile.mockClear();
+  saveHtml.saveFile = mockSaveFile;
+  const html = '<html>async export</html>';
+  options = {getReportHtml: async () => html};
+  const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
+
+  await act(() => root.getByText('Save').click());
+
+  expect(mockSaveFile).toHaveBeenCalledTimes(1);
+  const blob = mockSaveFile.mock.calls[0][0] as Blob;
+  expect(blob.size).toBe(html.length);
+});
+
+it('does not save a file when asynchronous HTML generation fails', async () => {
+  mockSaveFile.mockClear();
+  saveHtml.saveFile = mockSaveFile;
+  const error = new Error('Could not load export resources');
+  const errorLog = jestMock.spyOn(console, 'error').mockImplementation(() => {});
+  options = {getReportHtml: async () => {
+    throw error;
+  }};
+  const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
+
+  try {
+    await act(() => root.getByText('Save').click());
+    expect(mockSaveFile).not.toHaveBeenCalled();
+    expect(errorLog).toHaveBeenCalledWith('Could not export as HTML.', error);
+  } finally {
+    errorLog.mockRestore();
+  }
 });
 
 it('provides save as gist option if defined', async () => {

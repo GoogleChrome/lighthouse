@@ -5,6 +5,7 @@
  */
 
 import {createRequire} from 'module';
+import fs from 'fs';
 
 import esbuild from 'esbuild';
 
@@ -14,15 +15,20 @@ import {LH_ROOT} from '../shared/root.js';
 
 const require = createRequire(import.meta.url);
 
-async function buildReportGenerator() {
+/** @param {{flow?: boolean}} options */
+async function buildReportGenerator({flow = false} = {}) {
   const result = await esbuild.build({
     entryPoints: ['report/generator/report-generator.js'],
     write: false,
     bundle: true,
     minify: !process.env.DEBUG,
+    format: flow ? 'esm' : undefined,
     plugins: [
-      plugins.umd('ReportGenerator'),
-      plugins.replaceModules({
+      ...(flow ? [] : [plugins.umd('ReportGenerator')]),
+      plugins.replaceModules(flow ? {
+        [`${LH_ROOT}/report/generator/report-assets.js`]:
+          'export {flowReportAssets as reportAssets} from "./flow-report-assets.js";',
+      } : {
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
       plugins.ignoreBuiltins(),
@@ -33,6 +39,7 @@ async function buildReportGenerator() {
     ],
   });
 
+  if (flow) return result.outputFiles[0].text;
   // @ts-expect-error placed here by the umd plugin.
   return result.outputFiles[0].textUmd;
 }
@@ -42,6 +49,7 @@ async function buildReportGenerator() {
  */
 async function main() {
   const reportGeneratorJs = await buildReportGenerator();
+  const flowReportGeneratorJs = await buildReportGenerator({flow: true});
 
   const app = new GhPagesApp({
     name: 'viewer',
@@ -75,6 +83,7 @@ async function main() {
   });
 
   await app.build();
+  fs.writeFileSync(`${app.distDir}/src/flow-report-generator.js`, flowReportGeneratorJs);
 
   const argv = process.argv.slice(2);
   if (argv.includes('--deploy')) {
