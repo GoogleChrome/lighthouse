@@ -26,7 +26,7 @@ const UIStrings = {
   /** A failure reason for a Lighthouse audit that flags incorrect use of the `hreflang` attribute on `link` elements. This failure reason is shown when the hreflang language code is unexpected. */
   unexpectedLanguage: 'Unexpected language code',
   /** A failure reason for a Lighthouse audit that flags incorrect use of the `hreflang` attribute on `link` elements. This failure reason is shown when the `href` attribute value is not fully-qualified. */
-  notFullyQualified: 'Relative href value',
+  notFullyQualified: 'href should not be a relative URL',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

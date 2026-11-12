@@ -87,6 +87,14 @@ const expectations = {
         details: {
           items: {
             length: 5,
+            _includes: [{
+              source: {
+                snippet: '<link rel="alternate" hreflang="es" href="/example.html" />',
+              },
+              subItems: {
+                items: [{reason: 'href should not be a relative URL'}],
+              },
+            }],
           },
         },
       },
