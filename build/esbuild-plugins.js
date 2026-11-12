@@ -30,17 +30,27 @@ const require = createRequire(import.meta.url);
  */
 
 /**
+ * @typedef {{npmPackage: string} | {name: string, url: string, version: string, license: string, licenseFile: string}} VendoredThirdPartyNotice
+ */
+
+/**
  * Metadata for vendored directories under `third-party/` that do not have their own `package.json`.
- * @type {Record<string, {npmPackage: string} | {name: string, url: string, version: string, license: string, licenseFile: string}>}
+ * @type {Record<string, VendoredThirdPartyNotice | VendoredThirdPartyNotice[]>}
  */
 const VENDORED_THIRD_PARTY_DIRS = {
-  'ard': {
-    name: 'ard-spec',
-    url: 'https://github.com/ards-project/ard-spec',
-    version: ARD_VERSION,
-    license: 'Apache-2.0',
-    licenseFile: path.join(LH_ROOT, 'third-party/ard/LICENSE'),
-  },
+  'ard': [
+    {
+      name: 'ard-spec',
+      url: 'https://github.com/ards-project/ard-spec',
+      version: ARD_VERSION,
+      license: 'Apache-2.0',
+      licenseFile: path.join(LH_ROOT, 'third-party/ard/LICENSE'),
+    },
+    // `third-party/ard/schema-validator.js` inlines format validators from `ajv-formats`.
+    {
+      npmPackage: 'ajv-formats',
+    },
+  ],
   // `third-party/axe/valid-langs.js` is extracted from `axe-core`.
   'axe': {
     npmPackage: 'axe-core',
@@ -658,26 +668,28 @@ function collectThirdPartyNotices({metafile, sources, inlinedFilesByImporter, di
 
     if (resolvedPath.startsWith(thirdPartyRoot + path.sep)) {
       const subdir = path.relative(thirdPartyRoot, resolvedPath).split(path.sep)[0];
-      const vendored = VENDORED_THIRD_PARTY_DIRS[subdir];
-      if (!vendored) {
+      const vendoredNotices = VENDORED_THIRD_PARTY_DIRS[subdir];
+      if (!vendoredNotices) {
         throw new Error(
           `Missing third-party license metadata for vendored directory: third-party/${subdir}`
         );
       }
-      if ('npmPackage' in vendored) {
-        if (!noticesByName.has(vendored.npmPackage)) {
-          const npmPkgDir = path.dirname(require.resolve(`${vendored.npmPackage}/package.json`));
-          seenPkgDirs.add(npmPkgDir);
-          noticesByName.set(vendored.npmPackage, readPackageNotice(npmPkgDir));
+      for (const vendored of [vendoredNotices].flat()) {
+        if ('npmPackage' in vendored) {
+          if (!noticesByName.has(vendored.npmPackage)) {
+            const npmPkgDir = path.dirname(require.resolve(`${vendored.npmPackage}/package.json`));
+            seenPkgDirs.add(npmPkgDir);
+            noticesByName.set(vendored.npmPackage, readPackageNotice(npmPkgDir));
+          }
+        } else if (!noticesByName.has(vendored.name)) {
+          noticesByName.set(vendored.name, {
+            name: vendored.name,
+            url: vendored.url,
+            version: vendored.version,
+            license: vendored.license,
+            licenseText: fs.readFileSync(vendored.licenseFile, 'utf-8'),
+          });
         }
-      } else if (!noticesByName.has(vendored.name)) {
-        noticesByName.set(vendored.name, {
-          name: vendored.name,
-          url: vendored.url,
-          version: vendored.version,
-          license: vendored.license,
-          licenseText: fs.readFileSync(vendored.licenseFile, 'utf-8'),
-        });
       }
     }
   }
