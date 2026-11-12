@@ -11,6 +11,7 @@ import puppeteer from 'puppeteer';
 import {getChromePath} from 'chrome-launcher';
 
 import AccessibilityGather from '../../../gather/gatherers/accessibility.js';
+import FrameTitleUnique from '../../../audits/accessibility/frame-title-unique.js';
 import {LH_ROOT} from '../../../../shared/root.js';
 import {axeSource} from '../../../../core/lib/axe.js';
 import {pageFunctions} from '../../../../core/lib/page-functions.js';
@@ -75,5 +76,29 @@ describe('a11y audits + aXe', () => {
 
     // 4. Compare. (Received from aXe, Expected is LH audits)
     expect(Array.from(axeRuleIds).sort()).toEqual(filenames.sort());
+  });
+
+  it('surfaces duplicate frame titles for manual review', async () => {
+    const page = await browser.newPage();
+    await page.setContent(`<!doctype html><title>Frames</title>
+      <iframe id="first" title="Preview"></iframe>
+      <iframe id="second" title="Preview"></iframe>`);
+    await page.evaluate(axeSource);
+    await page.evaluate(pageFunctions.getNodeDetails.toString());
+    await page.evaluate(AccessibilityGather.pageFns.runA11yChecks.toString());
+    await page.evaluate(AccessibilityGather.pageFns.createAxeRuleResultArtifact.toString());
+
+    const a11yArtifact = await page.evaluate('runA11yChecks()');
+    const output = FrameTitleUnique.audit({Accessibility: a11yArtifact});
+
+    expect(FrameTitleUnique.meta.scoreDisplayMode).toBe('informative');
+    expect(output.details.items).toHaveLength(1);
+    expect(output.details.items[0].node.selector).toBe('body > iframe#first');
+
+    await page.$eval('#second', frame => frame.setAttribute('title', 'Other preview'));
+    const uniqueTitlesArtifact = await page.evaluate('runA11yChecks()');
+    const uniqueTitlesOutput = FrameTitleUnique.audit({Accessibility: uniqueTitlesArtifact});
+    expect(uniqueTitlesOutput.notApplicable).toBe(true);
+    await page.close();
   });
 });
