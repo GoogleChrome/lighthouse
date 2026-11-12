@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {initializeApp} from 'firebase/app';
-import {getAuth, signInWithPopup, GithubAuthProvider, signOut} from 'firebase/auth';
+import {initializeApp} from '@firebase/app';
+import {getAuth, signInWithPopup, GithubAuthProvider, signOut} from '@firebase/auth';
 import * as idbKeyval from 'idb-keyval';
 
 /**
