@@ -266,7 +266,7 @@ See [Best Practices > Naming](#naming) for best practices on the display strings
 
 #### `audit(artifacts, context)`
 
-The `audit()` property is a function the computes the audit results for the report. It accepts two arguments: `artifacts` and `context`. `artifacts` is an object whose keys will be the values you passed to `requiredArtifacts` in the `meta` object. `context` is an internal object whose primary use in plugins is to derive network request information (see [Using Network Requests](#using-network-requests)).
+The `audit()` property is a function that computes the audit results for the report. It accepts two arguments: `artifacts` and `context`. `artifacts` is an object whose keys will be the values you passed to `requiredArtifacts` in the `meta` object. `context.options` contains the audit's [configured options](./configuration.md#audit-options), overriding its `defaultOptions`. `context` also provides information used to derive network requests (see [Using Network Requests](#using-network-requests)).
 
 The primary objective of the audit function is to return a `score` from `0` to `1` based on the data observed in `artifacts`. There are several other properties that can be returned by an audit to control additional display features. For the complete list, see the [audit results documentation](./understanding-results.md#audit-properties) and [type information](https://github.com/GoogleChrome/lighthouse/blob/623b789497f6c87f85d366b4038deae5dc701c90/types/audit.d.ts#L69-L87).
 
