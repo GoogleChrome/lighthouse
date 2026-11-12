@@ -195,7 +195,8 @@ function getNavigationWarnings(navigation) {
 
   if (navigation.timedOut) warnings.push(str_(UIStrings.warningTimeout));
 
-  if (!UrlUtils.equalWithExcludedFragments(requestedUrl, mainDocumentUrl)) {
+  if (!mainDocumentUrl.startsWith('chrome-error://') &&
+      !UrlUtils.equalWithExcludedFragments(requestedUrl, mainDocumentUrl)) {
     warnings.push(str_(UIStrings.warningRedirected, {
       requested: requestedUrl,
       final: mainDocumentUrl,

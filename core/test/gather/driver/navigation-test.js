@@ -341,9 +341,18 @@ describe('.getNavigationWarnings()', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('adds a url mismatch warning for failed navigations', () => {
+  it('does not add a url mismatch warning for error interstitials', () => {
     const mainDocumentUrl = 'chrome-error://chromewebdata/';
     const warnings = getNavigationWarnings({...normalNavigation, mainDocumentUrl});
-    expect(warnings).toHaveLength(1);
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('keeps timeout warnings for error interstitials', () => {
+    const warnings = getNavigationWarnings({
+      ...normalNavigation,
+      mainDocumentUrl: 'chrome-error://chromewebdata/',
+      timedOut: true,
+    });
+    expect(warnings).toEqual(getNavigationWarnings({...normalNavigation, timedOut: true}));
   });
 });
