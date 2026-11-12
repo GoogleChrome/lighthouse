@@ -51,6 +51,25 @@ describe('a11y audits + aXe', () => {
     await browser.close();
   });
 
+  it('collects every incomplete node for manual review', async () => {
+    const page = await browser.newPage();
+    try {
+      await page.setContent(`<!doctype html><title>Contrast</title>
+        <style>p { color: #777; background: linear-gradient(white, black) }</style>
+        <p id="first">First text</p><p id="second">Second text</p>`);
+      await page.evaluate(axeSource);
+      await page.evaluate(pageFunctions.getNodeDetails.toString());
+      await page.evaluate(AccessibilityGather.pageFns.runA11yChecks.toString());
+      await page.evaluate(AccessibilityGather.pageFns.createAxeRuleResultArtifact.toString());
+      const artifact = await page.evaluate('runA11yChecks()');
+      const contrast = artifact.incomplete.find(rule => rule.id === 'color-contrast');
+      assert.ok(contrast);
+      assert.deepEqual(contrast.nodes.map(node => node.target[0]).sort(), ['#first', '#second']);
+    } finally {
+      await page.close();
+    }
+  });
+
   it('only runs the axe rules we have audits defined for', async () => {
     const page = await browser.newPage();
     page.setContent(`<!doctype html><meta charset="utf8"><title>hi</title>valid.`);

@@ -10,6 +10,9 @@
 import assert from 'assert/strict';
 
 import {ReportGenerator} from '../../generator/report-generator.js';
+import AxeAudit from '../../../core/audits/accessibility/axe-audit.js';
+import {Audit} from '../../../core/audits/audit.js';
+import * as format from '../../../shared/localization/format.js';
 import {readJson} from '../../../core/test/test-utils.js';
 
 const sampleResults = readJson('core/test/results/sample_v2.json');
@@ -124,7 +127,7 @@ describe('ReportGenerator', () => {
 
 category,score
 \\"performance\\",\\"0.32\\"
-\\"accessibility\\",\\"0.75\\"
+\\"accessibility\\",\\"0.74\\"
 \\"best-practices\\",\\"0.31\\"
 \\"seo\\",\\"0.75\\"
 \\"agentic-browsing\\",\\"0.18\\"
@@ -158,6 +161,28 @@ category,audit,score,displayValue,description
           return [category.id, id, String(score), displayValue, description];
         })),
       ]);
+    });
+
+    it('retains the informative audit CSV contract for incomplete-only results', () => {
+      class ExampleAudit extends AxeAudit {
+        static get meta() {
+          return {id: 'color-contrast', title: 'Passing', description: 'Example',
+            requiredArtifacts: ['Accessibility']};
+        }
+      }
+      const node = {node: {selector: '#review'}, relatedNodes: []};
+      const product = ExampleAudit.audit({Accessibility: {
+        violations: [], incomplete: [{id: 'color-contrast', nodes: [node]}],
+      }});
+      const audit = Audit.generateAuditResult(ExampleAudit, product);
+      format.replaceIcuMessages(audit, 'en-US');
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      lhr.audits['color-contrast'] = audit;
+      const rows = parseCsv(ReportGenerator.generateReport(lhr, 'csv'));
+      const row = rows.find(item => item[0] === 'accessibility' && item[1] === 'color-contrast');
+      assert.deepEqual(row,
+        ['accessibility', 'color-contrast', '1', 'Needs manual review', 'Example']);
+      assert.equal(audit.title, 'Accessibility check: color-contrast');
     });
 
     it('creates CSV for results including categories', () => {

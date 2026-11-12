@@ -35,7 +35,7 @@ async function runA11yChecks() {
     },
     // resultTypes doesn't limit the output of the axeResults object. Instead, if it's defined,
     // some expensive element identification is done only for the respective types. https://github.com/dequelabs/axe-core/blob/f62f0cf18f7b69b247b0b6362cf1ae71ffbf3a1b/lib/core/reporters/helpers/process-aggregate.js#L61-L97
-    resultTypes: ['violations', 'inapplicable'],
+    resultTypes: ['violations', 'incomplete', 'inapplicable'],
     rules: {
       // Consider http://go/prcpg for expert review of the aXe rules.
       'accesskeys': {enabled: true},

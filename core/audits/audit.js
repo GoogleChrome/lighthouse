@@ -451,8 +451,8 @@ class Audit {
 
     score = Audit._normalizeAuditScore(score, scoreDisplayMode, audit.meta.id);
 
-    let auditTitle = audit.meta.title;
-    if (audit.meta.failureTitle) {
+    let auditTitle = product.title ?? audit.meta.title;
+    if (product.title === undefined && audit.meta.failureTitle) {
       if (score !== null && score < Util.PASS_THRESHOLD) {
         auditTitle = audit.meta.failureTitle;
       }

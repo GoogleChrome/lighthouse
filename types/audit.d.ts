@@ -81,6 +81,8 @@ declare namespace Audit {
   interface ProductBase {
     /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
     score: number | null;
+    /** An alternative title for this audit result. */
+    title?: string | IcuMessage;
     /** The i18n'd string value that the audit wishes to display for its results. This value is not necessarily the string version of the `numericValue`. */
     displayValue?: string | IcuMessage;
     /** An explanation of why the audit failed on the test page. */
