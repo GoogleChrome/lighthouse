@@ -44,6 +44,10 @@ class Stylesheets extends BaseGatherer {
           'Stylesheets',
           `Error fetching content of stylesheet with URL "${event.header.sourceURL}"`
         );
+        // The stylesheet can be removed between `styleSheetAdded` and fetching its text.
+        // This is an expected race, so don't report it.
+        if (/No style sheet with given id/.test(err.protocolError)) return null;
+
         Sentry.captureException(err, {
           tags: {
             gatherer: 'Stylesheets',

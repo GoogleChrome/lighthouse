@@ -8,6 +8,7 @@ import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {Sentry} from '../../lib/sentry.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import defaultConfig from '../../config/default-config.js';
 
 /**
@@ -22,6 +23,7 @@ const noopTransport = () => ({
 
 describe('Sentry', () => {
   let sentryNodeMock;
+  let sentryScopeMock;
   let configPayload;
   let originalSentry;
 
@@ -32,12 +34,14 @@ describe('Sentry', () => {
       setExtras: jestMock.fn(),
       setTags: jestMock.fn(),
       captureException: jestMock.fn(),
-      withScope: (fn) => fn({
-        setLevel: () => {},
-        setTags: () => {},
-        setExtras: () => {},
-      }),
+      withScope: (fn) => fn(sentryScopeMock),
     }));
+    sentryScopeMock = {
+      setLevel: jestMock.fn(),
+      setTags: jestMock.fn(),
+      setExtras: jestMock.fn(),
+      setFingerprint: jestMock.fn(),
+    };
 
     configPayload = {
       url: 'http://example.com',
@@ -153,6 +157,31 @@ describe('Sentry', () => {
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
 
       expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(1);
+    });
+
+    it('should fingerprint protocol errors by method and normalized message', async () => {
+      await Sentry.init(configPayload);
+      const error = LighthouseError.fromProtocolMessage('DOM.getDocument', {
+        message:
+          'Failed to convert response to JSON: CBOR: stack limit exceeded at position 361589',
+      });
+      await Sentry.captureException(error);
+
+      expect(sentryNodeMock.captureException).toHaveBeenCalledWith(error);
+      expect(sentryScopeMock.setFingerprint).toHaveBeenCalledWith([
+        '{{ default }}',
+        'DOM.getDocument',
+        'Failed to convert response to JSON: CBOR: stack limit exceeded at position <n>',
+      ]);
+      expect(sentryScopeMock.setTags).toHaveBeenCalledWith({protocolMethod: 'DOM.getDocument'});
+    });
+
+    it('should not set a fingerprint for non-protocol errors', async () => {
+      await Sentry.init(configPayload);
+      await Sentry.captureException(new Error('oops'));
+
+      expect(sentryNodeMock.captureException).toHaveBeenCalled();
+      expect(sentryScopeMock.setFingerprint).not.toHaveBeenCalled();
     });
   });
 });

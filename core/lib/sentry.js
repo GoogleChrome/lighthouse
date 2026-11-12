@@ -116,11 +116,17 @@ async function init(opts) {
         sentryExceptionCache.set(key, true);
       }
 
+      /** @type {string[]|undefined} */
+      let fingerprint;
       // @ts-expect-error - properties added to protocol method LighthouseErrors.
       if (err.protocolMethod) {
-        // Protocol errors all share same stack trace, so add more to fingerprint
+        // Protocol errors all share same stack trace, so add more to fingerprint.
+        // Numbers (positions, ids, etc.) are normalized so they don't split one error into
+        // many issues.
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
-        opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
+        const protocolError = String(err.protocolError ?? '').replace(/\d+/g, '<n>');
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
+        fingerprint = ['{{ default }}', err.protocolMethod, protocolError];
 
         opts.tags = opts.tags || {};
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
@@ -134,6 +140,9 @@ async function init(opts) {
         }
         if (opts.tags) {
           scope.setTags(opts.tags);
+        }
+        if (fingerprint) {
+          scope.setFingerprint(fingerprint);
         }
 
         // Add extra details
