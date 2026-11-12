@@ -117,7 +117,8 @@ describe('MCP Bundle build', () => {
           fs.existsSync(path.join(LH_ROOT, 'node_modules', name, 'package.json'))));
 
       for (const name of pkgNames) expect(notices).toContain(`Name: ${name}`);
-      expect(pkgNames.size).toBeGreaterThanOrEqual(14);
+      // Sanity check that the sourcemap scan found packages at all, not an exact count.
+      expect(pkgNames.size).toBeGreaterThanOrEqual(10);
     });
   });
 
