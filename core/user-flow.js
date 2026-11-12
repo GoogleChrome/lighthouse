@@ -130,6 +130,17 @@ class UserFlow {
   }
 
   /**
+   * Analyzes a single page load.
+   *
+   * `requestor` is either a URL to navigate to, or a callback that triggers the navigation
+   * itself (for example by clicking a link or submitting a form). The callback _must_ cause a
+   * full, cross-document page load. A same-document navigation such as a History API
+   * (`pushState`/`replaceState`) route change or a fragment change is not supported and fails
+   * with `SOFT_NAVIGATION_NOT_SUPPORTED`; use `startTimespan()`/`endTimespan()` to analyze
+   * single-page-app transitions instead. Any interactions completed before the callback's promise
+   * resolves are captured by the navigation.
+   * For more on user triggered navigations, see https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md#triggering-a-navigation-via-user-interactions.
+   *
    * @param {LH.NavigationRequestor} requestor
    * @param {LH.UserFlow.StepFlags} [flags]
    */
@@ -149,6 +160,8 @@ class UserFlow {
 
   /**
    * This is an alternative to `navigate()` that can be used to analyze a navigation triggered by user interaction.
+   * The interactions between `startNavigation()` and `endNavigation()` _must_ cause a full,
+   * cross-document page load; same-document (History API or fragment) navigations are not supported.
    * For more on user triggered navigations, see https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md#triggering-a-navigation-via-user-interactions.
    *
    * @param {LH.UserFlow.StepFlags} [stepOptions]

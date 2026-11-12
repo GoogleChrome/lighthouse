@@ -71,9 +71,11 @@ Instead of providing a URL to navigate to, you can provide a callback function o
 
 > Aside: Lighthouse typically clears out any active Service Worker and Cache Storage for the origin under test. However, in this case, as it doesn't know the URL being analyzed, Lighthouse cannot clear this storage. This generally reflects the real user experience, but if you still wish to clear the Service Workers and Cache Storage you must do it manually.
 
-This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
+This callback function _must_ perform an action that will trigger a full page load, i.e. a navigation to a new document such as clicking a link or submitting a form. Any interactions completed before the callback promise resolves will be captured by the navigation.
 
-The `startNavigation`/`endNavigation` functions _must_ surround an action that triggers a navigation. Any interactions completed after `startNavigation` is invoked and before `endNavigation` is invoked will be captured by the navigation.
+The `startNavigation`/`endNavigation` functions _must_ surround an action that triggers a full page load. Any interactions completed after `startNavigation` is invoked and before `endNavigation` is invoked will be captured by the navigation.
+
+> Note: a same-document navigation is **not** a page load. If the action only changes the URL via the History API (`pushState`/`replaceState`), for example a client-side route change in a single page app, or only changes the URL fragment, Lighthouse fails the step with a `SOFT_NAVIGATION_NOT_SUPPORTED` error. Use a [timespan](#timespan) to analyze those transitions instead.
 
 ### Timespan
 
