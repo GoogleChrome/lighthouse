@@ -8,9 +8,56 @@ import process from 'process';
 import {EventEmitter} from 'events';
 
 import debug from 'debug';
-import * as marky from 'marky';
 
 const isWindows = process.platform === 'win32';
+
+// Capture the high resolution clock at module load, so later replacements of the global
+// (e.g. by fake timers in tests) don't affect timing. `performance` is available in both
+// Node and browsers; fall back to `Date.now` just in case.
+const perf = globalThis.performance;
+/** @type {() => number} */
+const now = perf && typeof perf.now === 'function' ? () => perf.now() : () => Date.now();
+
+/**
+ * Start times of in-progress timings, keyed by id.
+ * @type {Map<string, number>}
+ */
+let timeMarks = new Map();
+/**
+ * Completed timings, sorted by startTime.
+ * @type {PerformanceEntry[]}
+ */
+let timeEntries = [];
+
+/**
+ * @param {string} id
+ */
+function markStart(id) {
+  timeMarks.set(id, now());
+}
+
+/**
+ * @param {string} id
+ */
+function markEnd(id) {
+  const endTime = now();
+  const startTime = timeMarks.get(id);
+  if (startTime === undefined) {
+    throw new Error(`no known mark: ${id}`);
+  }
+
+  const entry = /** @type {PerformanceEntry} */ ({
+    name: id,
+    entryType: 'measure',
+    startTime,
+    duration: endTime - startTime,
+  });
+
+  // Insert after any existing entries with the same or earlier startTime, keeping the list sorted.
+  let index = timeEntries.length;
+  while (index > 0 && timeEntries[index - 1].startTime > startTime) index--;
+  timeEntries.splice(index, 0, entry);
+}
 
 // @ts-expect-error: process.browser is set via Rollup.
 const isBrowser = process.browser;
@@ -137,7 +184,7 @@ class Log {
    * @param {string} level
    */
   static time({msg, id, args = []}, level = 'log') {
-    marky.mark(id);
+    markStart(id);
     Log[level]('status', msg, ...args);
   }
 
@@ -147,7 +194,7 @@ class Log {
    */
   static timeEnd({msg, id, args = []}, level = 'verbose') {
     Log[level]('statusEnd', msg, ...args);
-    marky.stop(id);
+    markEnd(id);
   }
 
   /**
@@ -274,14 +321,15 @@ Log.events = new Emitter();
  * @return {PerformanceEntry[]}
  */
 Log.takeTimeEntries = () => {
-  const entries = marky.getEntries();
-  marky.clear();
+  const entries = timeEntries;
+  timeMarks = new Map();
+  timeEntries = [];
   return entries;
 };
 
 /**
  * @return {PerformanceEntry[]}
  */
-Log.getTimeEntries = () => marky.getEntries();
+Log.getTimeEntries = () => [...timeEntries];
 
 export default Log;
