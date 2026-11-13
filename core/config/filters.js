@@ -11,6 +11,7 @@ import {Audit} from '../audits/audit.js';
 const baseArtifactKeySource = {
   fetchTime: '',
   LighthouseRunWarnings: '',
+  LighthouseRuntimeWarnings: '',
   BenchmarkIndex: '',
   HostDPR: '',
   settings: '',
