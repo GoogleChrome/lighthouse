@@ -13,7 +13,7 @@
  *    - saves failed test results if env LH_FAILED_TESTS_FILE is set
  */
 
-/* eslint-disable import/order */
+/* eslint-disable import-x/order */
 
 // TODO: all of test-env should be moved to a root test folder
 
