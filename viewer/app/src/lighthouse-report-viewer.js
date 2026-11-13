@@ -89,7 +89,7 @@ export class LighthouseReportViewer {
    * @return {Promise<void>}
    * @private
    */
-  _loadFromDeepLink() {
+  async _loadFromDeepLink() {
     const params = new URLSearchParams(location.search);
 
     const gistId = params.get('gist');
@@ -100,10 +100,10 @@ export class LighthouseReportViewer {
     const hash = window.__hash ?? location.hash;
     if (hash) {
       try {
-        const hashParams = JSON.parse(TextEncoding.fromBase64(hash.substr(1), {gzip}));
+        const hashParams = JSON.parse(await TextEncoding.fromBase64(hash.substr(1), {gzip}));
         if (hashParams.lhr) {
           this._replaceReportHtml(hashParams.lhr);
-          return Promise.resolve();
+          return;
         } else {
           // eslint-disable-next-line no-console
           console.warn('URL hash is populated, but no LHR was found', hashParams);
@@ -114,7 +114,7 @@ export class LighthouseReportViewer {
       }
     }
 
-    if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
+    if (!gistId && !psiurl && !jsonurl) return;
 
     const meta = dom.createElement('meta');
     meta.name = 'robots';
