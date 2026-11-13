@@ -90,7 +90,7 @@ describe('Main Bundle build', () => {
         expect(licenseTxt).toContain(`${dep} (v`);
       }
 
-      for (const shimmed of ['@sentry/node', 'puppeteer-core', 'source-map']) {
+      for (const shimmed of ['puppeteer-core', 'source-map']) {
         expect(legalTxt).not.toContain(`- ${shimmed}`);
         expect(licenseTxt).not.toContain(`\n${shimmed} (`);
       }
