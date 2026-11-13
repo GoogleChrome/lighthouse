@@ -8,10 +8,9 @@ import log from 'lighthouse-logger';
 
 import {initializeConfig} from '../config/config.js';
 
-/** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
-/** @typedef {import('@sentry/node').NodeClient} NodeClient */
-/** @typedef {import('@sentry/node').NodeOptions} NodeOptions */
-/** @typedef {import('@sentry/node').SeverityLevel} SeverityLevel */
+/** @typedef {import('./sentry-reporter.js').Breadcrumb} Breadcrumb */
+/** @typedef {import('./sentry-reporter.js').EnvironmentData} EnvironmentData */
+/** @typedef {import('./sentry-reporter.js').SeverityLevel} SeverityLevel */
 
 const SENTRY_URL = 'https://a6bb0da87ee048cc9ae2a345fc09ab2e:63a7029f46f74265981b7e005e0f69f8@sentry.io/174697';
 
@@ -43,7 +42,7 @@ const sentryDelegate = {
 
 /**
  * When called, replaces noops with actual Sentry implementation.
- * @param {{url: string, flags: LH.CliFlags, config?: LH.Config, environmentData: NodeOptions}} opts
+ * @param {{url: string, flags: LH.CliFlags, config?: LH.Config, environmentData: EnvironmentData}} opts
  */
 async function init(opts) {
   // If error reporting is disabled, leave the functions as a noop
@@ -57,11 +56,8 @@ async function init(opts) {
   }
 
   try {
-    const Sentry = await import('@sentry/node');
-    Sentry.init({
-      ...opts.environmentData,
-      dsn: SENTRY_URL,
-    });
+    const {createSentryReporter} = await import('./sentry-reporter.js');
+    const Sentry = createSentryReporter(SENTRY_URL, opts.environmentData);
 
     /** @type {LH.Config.Settings | LH.CliFlags} */
     let settings = opts.flags;
@@ -133,28 +129,15 @@ async function init(opts) {
         opts.tags.protocolMethod = err.protocolMethod;
       }
 
-      Sentry.withScope(scope => {
-        if (opts.level) {
-          // @ts-expect-error - allow any string.
-          scope.setLevel(opts.level);
-        }
-        if (opts.tags) {
-          scope.setTags(opts.tags);
-        }
-        if (fingerprint) {
-          scope.setFingerprint(fingerprint);
-        }
+      // @ts-expect-error Non-standard property
+      const extra = {...opts.extra, ...err.extra};
 
-        // Add extra details
-        let extra;
-        if (opts.extra) extra = {...opts.extra};
-        // @ts-expect-error Non-standard property
-        if (err.extra) extra = {...extra, ...err.extra};
-        if (extra) {
-          scope.setExtras(extra);
-        }
-
-        Sentry.captureException(err);
+      await Sentry.captureException(err, {
+        // @ts-expect-error - allow any string.
+        level: opts.level,
+        tags: opts.tags,
+        extra,
+        fingerprint,
       });
     };
   } catch (e) {

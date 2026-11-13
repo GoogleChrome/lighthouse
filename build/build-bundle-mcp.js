@@ -198,7 +198,7 @@ async function buildBundle(entryPath, distPath) {
   };
 
   const modulesToIgnore = [
-    '@sentry/node',
+    `${LH_ROOT}/core/lib/sentry-reporter.js`,
     'source-map',
     'puppeteer-core',
   ];

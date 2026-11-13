@@ -79,7 +79,6 @@ describe('MCP Bundle build', () => {
 
     it('excludes shimmed-out dependencies', () => {
       const content = fs.readFileSync(noticesPath, 'utf-8');
-      expect(content).not.toContain('Name: @sentry/node');
       expect(content).not.toContain('Name: puppeteer-core');
       expect(content).not.toContain('Name: source-map');
       expect(content).not.toContain('Name: speedline-core');
