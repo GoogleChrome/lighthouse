@@ -6,8 +6,7 @@
 
 /* global window */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {ExecutionContext} from './execution-context.js';
 

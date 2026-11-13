@@ -28,7 +28,7 @@ describe('openFile', () => {
 
   before(async () => {
     await td.replaceEsm('child_process', {spawn: mockSpawn});
-    await td.replaceEsm('lighthouse-logger', undefined, {warn: mockWarn});
+    await td.replaceEsm('../../../core/lib/lighthouse-logger.js', undefined, {warn: mockWarn});
     // @ts-expect-error - query string busts ESM cache so td.replaceEsm takes effect
     ({openFile} = await import('../../open-file.js?mocked'));
   });

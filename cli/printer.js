@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import {setTimeout} from 'timers/promises';
 
-import log from 'lighthouse-logger';
+import log from '../core/lib/lighthouse-logger.js';
 
 /**
  * An enumeration of acceptable output modes:

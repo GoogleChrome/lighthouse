@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Core imports `lighthouse-logger` from npm, so import the local package directly to test it.
-import log from '../../../lighthouse-logger/index.js';
+import log from '../../lib/lighthouse-logger.js';
 import {timers} from '../test-env/fake-timers.js';
 
 // Capture the real clock before any test installs fake timers (which also fake `process.hrtime`).

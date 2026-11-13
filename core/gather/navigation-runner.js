@@ -5,8 +5,8 @@
  */
 
 import puppeteer from 'puppeteer-core';
-import log from 'lighthouse-logger';
 
+import log from '../lib/lighthouse-logger.js';
 import {Driver} from './driver.js';
 import {Runner} from '../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';

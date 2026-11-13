@@ -6,8 +6,7 @@
 
 import {EventEmitter} from 'events';
 
-import log from 'lighthouse-logger';
-
+import log from './lighthouse-logger.js';
 import * as LH from '../../types/lh.js';
 import * as Lantern from './lantern/lantern.js';
 import {NetworkRequest} from './network-request.js';

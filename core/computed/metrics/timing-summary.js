@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import {ProcessedTrace} from '../processed-trace.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {Speedline} from '../speedline.js';

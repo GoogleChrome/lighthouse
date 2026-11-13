@@ -525,9 +525,9 @@ function isBundledEnvironment() {
   const require = createRequire(import.meta.url);
 
   try {
-    // Not foolproof, but `lighthouse-logger` is a dependency of lighthouse that should always be resolvable.
+    // Not foolproof, but `debug` is a dependency of lighthouse that should always be resolvable.
     // `require.resolve` will only throw in atypical/bundled environments.
-    require.resolve('lighthouse-logger');
+    require.resolve('debug');
     return false;
   } catch (err) {
     return true;

@@ -10,8 +10,7 @@ import stream from 'stream';
 import url from 'url';
 import {createGzip, gunzipSync} from 'zlib';
 
-import log from 'lighthouse-logger';
-
+import log from './lighthouse-logger.js';
 import * as Lantern from './lantern/lantern.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
 import {MetricTraceEvents} from './traces/metric-trace-events.js';

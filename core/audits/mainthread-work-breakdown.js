@@ -8,8 +8,7 @@
  * @fileoverview Audit a page to show a breakdown of execution timings on the main thread
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import * as i18n from '../lib/i18n/i18n.js';

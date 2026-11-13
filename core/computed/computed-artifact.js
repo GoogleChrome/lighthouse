@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
 import {isUnderTest} from '../lib/lh-env.js';
 

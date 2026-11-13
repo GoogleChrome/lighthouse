@@ -14,8 +14,7 @@
 import {promises as fs} from 'fs';
 import {spawn} from 'child_process';
 
-import log from 'lighthouse-logger';
-
+import log from '../../../../core/lib/lighthouse-logger.js';
 import * as assetSaver from '../../../../core/lib/asset-saver.js';
 import {LocalConsole} from '../lib/local-console.js';
 import {ChildProcessError} from '../lib/child-process-error.js';
