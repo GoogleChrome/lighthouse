@@ -1315,7 +1315,7 @@ async function main() {
   const gzip = queryParams.get('gzip') === '1';
   const hash = window.__hash ?? location.hash;
   const hashParams = hash ?
-    JSON.parse(TextEncoding.fromBase64(hash.substr(1), {gzip})) :
+    JSON.parse(await TextEncoding.fromBase64(hash.substr(1), {gzip})) :
     {};
   /** @type {Record<string, any>} */
   const params = {

@@ -4,15 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createRequire} from 'module';
-
 import esbuild from 'esbuild';
 
 import * as plugins from './esbuild-plugins.js';
 import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../shared/root.js';
-
-const require = createRequire(import.meta.url);
 
 async function buildReportGenerator() {
   const result = await esbuild.build({
@@ -55,7 +51,6 @@ async function main() {
       // TODO: import report generator async
       // https://github.com/GoogleChrome/lighthouse/pull/13429
       reportGeneratorJs,
-      {path: require.resolve('pako/browser/inflate')},
       {path: 'src/main.js', esbuild: true, esbuildPlugins: [
         plugins.replaceModules({
           [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
