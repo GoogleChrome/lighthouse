@@ -7,8 +7,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import {ZipArchive} from 'archiver';
 import esbuild from 'esbuild';
+import {zipSync} from 'fflate';
 
 import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../shared/root.js';
@@ -71,20 +71,17 @@ function copyAssets() {
 async function packageExtension() {
   await fs.promises.mkdir(packagePath, {recursive: true});
 
-  return new Promise((resolve, reject) => {
-    const archive = new ZipArchive({
-      zlib: {level: 9},
-    });
+  /** @type {import('fflate').Zippable} */
+  const files = {};
+  for (const relPath of fs.readdirSync(distDir, {recursive: true, encoding: 'utf-8'})) {
+    const filePath = path.join(distDir, relPath);
+    const entryPath = relPath.replaceAll(path.sep, '/');
+    if (fs.statSync(filePath).isDirectory()) files[`${entryPath}/`] = new Uint8Array();
+    else files[entryPath] = fs.readFileSync(filePath);
+  }
 
-    const outPath = `${packagePath}/lighthouse-${manifestVersion}.zip`;
-    const writeStream = fs.createWriteStream(outPath);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    archive.pipe(writeStream);
-    archive.directory(distDir, false);
-    archive.finalize();
-  });
+  const outPath = `${packagePath}/lighthouse-${manifestVersion}.zip`;
+  await fs.promises.writeFile(outPath, zipSync(files, {level: 9}));
 }
 
 async function main() {

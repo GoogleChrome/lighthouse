@@ -11,15 +11,12 @@
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
 import fs from 'fs';
+import path from 'path';
 import readline from 'readline';
-import {promisify} from 'util';
-import stream from 'stream';
 
-import {ZipArchive} from 'archiver';
+import {zipSync} from 'fflate';
 
 import {LH_ROOT} from '../../../../shared/root.js';
-
-const streamFinished = promisify(stream.finished);
 
 const collectFolder = `${LH_ROOT}/dist/collect-lantern-traces`;
 const summaryPath = `${collectFolder}/summary.json`;
@@ -79,16 +76,17 @@ class ProgressLogger {
 /**
  * @param {string} archiveDir
  */
-function archive(archiveDir) {
-  const archive = new ZipArchive({
-    zlib: {level: 9},
-  });
+async function archive(archiveDir) {
+  /** @type {import('fflate').Zippable} */
+  const files = {};
+  for (const relPath of fs.readdirSync(archiveDir, {recursive: true, encoding: 'utf-8'})) {
+    const filePath = path.join(archiveDir, relPath);
+    const entryPath = relPath.replaceAll(path.sep, '/');
+    if (fs.statSync(filePath).isDirectory()) files[`${entryPath}/`] = new Uint8Array();
+    else files[entryPath] = fs.readFileSync(filePath);
+  }
 
-  const writeStream = fs.createWriteStream(`${archiveDir}.zip`);
-  archive.pipe(writeStream);
-  archive.directory(archiveDir, false);
-  archive.finalize();
-  return streamFinished(archive);
+  await fs.promises.writeFile(`${archiveDir}.zip`, zipSync(files, {level: 9}));
 }
 
 /**
