@@ -21,8 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 
-import log from 'lighthouse-logger';
-
+import log from '../core/lib/lighthouse-logger.js';
 import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';

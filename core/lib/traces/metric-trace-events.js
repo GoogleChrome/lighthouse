@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lighthouse-logger.js';
 import {TraceProcessor} from '../tracehouse/trace-processor.js';
 
 /**

@@ -19,7 +19,6 @@ yarn upgrade --latest \
     csp_evaluator \
     devtools-protocol \
     js-library-detector \
-    lighthouse-logger \
     lighthouse-stack-packs \
     puppeteer \
     puppeteer-core \

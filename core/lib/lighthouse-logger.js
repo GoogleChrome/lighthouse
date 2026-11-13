@@ -59,8 +59,8 @@ function markEnd(id) {
   timeEntries.splice(index, 0, entry);
 }
 
-// @ts-expect-error: process.browser is set via Rollup.
-const isBrowser = process.browser;
+// @ts-expect-error: process.browser is set via bundler.
+const isBrowser = Boolean(process.browser);
 
 const colors = {
   red: isBrowser ? 'crimson' : 1,
@@ -72,20 +72,24 @@ const colors = {
 };
 
 // allow non-red/yellow colors for debug()
+// @ts-expect-error - `colors` is not declared in @types/debug.
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
   // yarn build-types fails without this!
   // https://github.com/microsoft/TypeScript/issues/41672#issuecomment-2303803072
+  /**
+   * @param {ConstructorParameters<typeof EventEmitter>[0]} [options]
+   */
   constructor(options) {
     super(options);
   }
 
   /**
    * Fires off all status updates. Listen with
-   * `require('lib/log').events.addListener('status', callback)`
+   * `log.events.addListener('status', callback)`
    * @param {string} title
-   * @param {!Array<*>} argsArray
+   * @param {Array<any>} argsArray
    */
   issueStatus(title, argsArray) {
     if (title === 'status' || title === 'statusEnd') {
@@ -95,27 +99,36 @@ class Emitter extends EventEmitter {
 
   /**
    * Fires off all warnings. Listen with
-   * `require('lib/log').events.addListener('warning', callback)`
+   * `log.events.addListener('warning', callback)`
    * @param {string} title
-   * @param {!Array<*>} argsArray
+   * @param {Array<any>} argsArray
    */
   issueWarning(title, argsArray) {
     this.emit('warning', [title, ...argsArray]);
   }
 }
 
+/** @type {Record<string, debug.Debugger>} */
 const loggersByTitle = {};
 const loggingBufferColumns = 25;
+/** @type {string|undefined} */
 let level_;
 
 class Log {
+  static events = new Emitter();
+
+  /**
+   * @param {string} title
+   * @param {Array<any>} argsArray
+   */
   static _logToStdErr(title, argsArray) {
     const log = Log.loggerfn(title);
-    log(...argsArray);
+    log(argsArray[0], ...argsArray.slice(1));
   }
 
   /**
    * @param {string} title
+   * @return {debug.Debugger}
    */
   static loggerfn(title) {
     title = `LH:${title}`;
@@ -125,8 +138,10 @@ class Log {
       loggersByTitle[title] = log;
       // errors with red, warnings with yellow.
       if (title.endsWith('error')) {
+        // @ts-expect-error - debug accepts numeric ANSI codes in Node.
         log.color = colors.red;
       } else if (title.endsWith('warn')) {
+        // @ts-expect-error - debug accepts numeric ANSI codes in Node.
         log.color = colors.yellow;
       }
     }
@@ -159,16 +174,16 @@ class Log {
   /**
    * A simple formatting utility for event logging.
    * @param {string} prefix
-   * @param {!Object} data A JSON-serializable object of event data to log.
+   * @param {{method?: string, params?: Record<string, any>}} data A JSON-serializable object of event data to log.
    * @param {string=} level Optional logging level. Defaults to 'log'.
    */
   static formatProtocol(prefix, data, level) {
-    const columns = (!process || process.browser) ? Infinity : process.stdout.columns;
+    const columns = (!process || isBrowser) ? Infinity : process.stdout.columns;
     const method = data.method || '?????';
     const maxLength = columns - method.length - prefix.length - loggingBufferColumns;
     // IO.read ignored here to avoid logging megabytes of trace data
     const snippet = (data.params && method !== 'IO.read') ?
-      JSON.stringify(data.params).substr(0, maxLength) : '';
+      JSON.stringify(data.params).slice(0, maxLength) : '';
     Log._logToStdErr(`${prefix}:${level || ''}`, [method, snippet]);
   }
 
@@ -181,7 +196,7 @@ class Log {
 
   /**
    * @param {{msg: string, id: string, args?: any[]}} status
-   * @param {string} level
+   * @param {'log'|'verbose'|'warn'|'error'} [level]
    */
   static time({msg, id, args = []}, level = 'log') {
     markStart(id);
@@ -190,7 +205,7 @@ class Log {
 
   /**
    * @param {{msg: string, id: string, args?: any[]}} status
-   * @param {string} level
+   * @param {'log'|'verbose'|'warn'|'error'} [level]
    */
   static timeEnd({msg, id, args = []}, level = 'verbose') {
     Log[level]('statusEnd', msg, ...args);
@@ -258,10 +273,6 @@ class Log {
     return '\x1B[31m';
   }
 
-  static get yellow() {
-    return '\x1b[33m';
-  }
-
   static get purple() {
     return '\x1b[95m';
   }
@@ -286,50 +297,22 @@ class Log {
     return isWindows ? '\u00D7' : '✘';
   }
 
-  static get whiteSmallSquare() {
-    return isWindows ? '\u0387' : '▫';
+  /**
+   * @return {PerformanceEntry[]}
+   */
+  static takeTimeEntries() {
+    const entries = timeEntries;
+    timeMarks = new Map();
+    timeEntries = [];
+    return entries;
   }
 
-  static get heavyHorizontal() {
-    return isWindows ? '\u2500' : '━';
-  }
-
-  static get heavyVertical() {
-    return isWindows ? '\u2502 ' : '┃ ';
-  }
-
-  static get heavyUpAndRight() {
-    return isWindows ? '\u2514' : '┗';
-  }
-
-  static get heavyVerticalAndRight() {
-    return isWindows ? '\u251C' : '┣';
-  }
-
-  static get heavyDownAndHorizontal() {
-    return isWindows ? '\u252C' : '┳';
-  }
-
-  static get doubleLightHorizontal() {
-    return '──';
+  /**
+   * @return {PerformanceEntry[]}
+   */
+  static getTimeEntries() {
+    return [...timeEntries];
   }
 }
-
-Log.events = new Emitter();
-
-/**
- * @return {PerformanceEntry[]}
- */
-Log.takeTimeEntries = () => {
-  const entries = timeEntries;
-  timeMarks = new Map();
-  timeEntries = [];
-  return entries;
-};
-
-/**
- * @return {PerformanceEntry[]}
- */
-Log.getTimeEntries = () => [...timeEntries];
 
 export default Log;

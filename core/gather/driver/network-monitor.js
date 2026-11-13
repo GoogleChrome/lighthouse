@@ -11,8 +11,7 @@
 
 import {EventEmitter} from 'events';
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import * as LH from '../../../types/lh.js';
 import {NetworkRecorder} from '../../lib/network-recorder.js';
 import {NetworkRequest} from '../../lib/network-request.js';

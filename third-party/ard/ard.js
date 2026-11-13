@@ -10,7 +10,7 @@
  * and the Lighthouse-specific adaptations.
  */
 
-import log from 'lighthouse-logger';
+import log from '../../core/lib/lighthouse-logger.js';
 import {ArdManifest as validateArdManifest, ArdEntry as validateArdEntry} from './schema-validator.js';
 
 const ARD_VERSION = '0.91 (f073b1e)';

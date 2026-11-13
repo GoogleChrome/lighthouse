@@ -160,7 +160,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     inject: ['./build/process-global.js'],
     alias: {
       'debug': require.resolve('debug/src/browser.js'),
-      'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
     },
     /** @type {esbuild.Plugin[]} */
     plugins: [

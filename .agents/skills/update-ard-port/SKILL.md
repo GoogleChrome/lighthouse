@@ -79,7 +79,7 @@ For every hunk in the upstream `conformance-test` diff decide whether it touches
 Rules to preserve:
 - Treat non-object roots/entries as empty instead of throwing.
 - Push `{element, message}` objects; never return formatted strings.
-- Log through `lighthouse-logger`, not `console`.
+- Log through `core/lib/lighthouse-logger.js`, not `console`.
 - Only `ARD_VERSION`, `ConformanceTester` and `classify_media_type` are exported; add exports only if
   tests need them.
 

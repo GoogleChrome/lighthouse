@@ -6,8 +6,7 @@
 
 import {Buffer} from 'buffer';
 
-import log from 'lighthouse-logger';
-
+import log from '../../core/lib/lighthouse-logger.js';
 import lighthouse, {navigation, startTimespan, snapshot} from '../../core/index.js';
 import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';

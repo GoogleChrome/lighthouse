@@ -35,7 +35,9 @@ describe('CLI bin', function() {
         init: mockSentryInit,
       },
     });
-    await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
+    await td.replaceEsm('../../../core/lib/lighthouse-logger.js', undefined, {
+      setLevel: mockLoggerSetLevel,
+    });
     bin = await import('../../bin.js');
   });
 

@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../../lib/lighthouse-logger.js';
 import BaseGatherer from '../../base-gatherer.js';
 
 class LlmsTxt extends BaseGatherer {

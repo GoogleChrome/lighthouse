@@ -11,9 +11,9 @@
  * @see https://agenticresourcediscovery.org/spec/
  */
 
-import log from 'lighthouse-logger';
 import LinkHeader from 'http-link-header';
 
+import log from '../../../lib/lighthouse-logger.js';
 import BaseGatherer from '../../base-gatherer.js';
 import RobotsTxt from '../seo/robots-txt.js';
 import * as Lantern from '../../../lib/lantern/lantern.js';

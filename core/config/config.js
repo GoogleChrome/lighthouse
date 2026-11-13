@@ -6,8 +6,7 @@
 
 import path from 'path';
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import * as LH from '../../types/lh.js';
 import {Runner} from '../runner.js';
 import defaultConfig from './default-config.js';

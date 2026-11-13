@@ -11,8 +11,7 @@
 
 import EventEmitter from 'events';
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import {ProtocolSession} from '../session.js';
 
 /**
