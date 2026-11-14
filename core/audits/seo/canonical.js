@@ -39,6 +39,11 @@ const UIStrings = {
   /** Explanatory message stating that the page's canonical URL was pointing to the domain's root URL, which is a common mistake. "points" refers to the action of the 'rel=canonical' referencing another link. "root" refers to the starting/home page of the website. "domain" refers to the registered domain name of the website. */
   explanationRoot: 'Points to the domain\'s root URL (the homepage), ' +
     'instead of an equivalent page of content',
+  /**
+   * @description Explanatory message stating that the canonical URL uses HTTP when the current URL uses HTTPS. "protocol" refers to the scheme part of a URL (http or https).
+   * @example {http://example.com} url
+   */
+  explanationInsecure: 'Canonical URL uses HTTP ({url}) instead of HTTPS',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -189,6 +194,14 @@ class Canonical extends Audit {
       return {
         score: 0,
         explanation: str_(UIStrings.explanationRoot),
+      };
+    }
+
+    // canonical URL should prefer HTTPS over HTTP
+    if (baseURL.protocol === 'https:' && canonicalURL.protocol === 'http:') {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationInsecure, {url: canonicalURL.href}),
       };
     }
   }
