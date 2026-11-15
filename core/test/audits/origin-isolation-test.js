@@ -89,6 +89,61 @@ it('Messed up directive.', async () => {
   ]);
 });
 
+it('marked N/A if COOP has a report-to parameter', async () => {
+  const artifacts = {
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Cross-Origin-Opener-Policy',
+            value: `same-origin-allow-popups; report-to="gws"`,
+          },
+        ],
+      },
+    ]),
+    URL: {
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalDisplayedUrl: 'https://example.com',
+    },
+  };
+
+  const results =
+      await OriginIsolation.audit(artifacts, {computedCache: new Map()});
+  expect(results.details.items).toHaveLength(0);
+  expect(results.notApplicable).toBeTruthy();
+});
+
+it('Malformed parameters.', async () => {
+  const artifacts = {
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Cross-Origin-Opener-Policy', value: `same-origin;`},
+        ],
+      },
+    ]),
+    URL: {
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalDisplayedUrl: 'https://example.com',
+    },
+  };
+
+  const results =
+      await OriginIsolation.audit(artifacts, {computedCache: new Map()});
+  expect(results.notApplicable).toBeFalsy();
+  expect(results.details.items[0].description)
+      .toBeDisplayString('Invalid syntax');
+  expect(results.details.items).toMatchObject([
+    {
+      directive: 'same-origin;',
+    },
+  ]);
+});
+
 describe('getRawCoop', () => {
   it('basic case', async () => {
     const artifacts = {
@@ -113,6 +168,64 @@ describe('getRawCoop', () => {
       await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});
     expect(coopHeaders).toEqual([
       `same-origin`,
+    ]);
+  });
+
+  it('strips structured field parameters', async () => {
+    const artifacts = {
+      URL: {
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
+      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin; report-to="coop"`},
+            {name: 'Cross-Origin-Opener-Policy', value: `unsafe-none;report-to="a;b";foo=?1`},
+            {name: 'Cross-Origin-Opener-Policy', value: `fooDirective; report-to="coop"`},
+          ],
+        },
+      ]),
+    };
+    const coopHeaders =
+      await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});
+    expect(coopHeaders).toEqual([
+      `same-origin`,
+      `unsafe-none`,
+      `foodirective`,
+    ]);
+  });
+
+  it('keeps malformed parameters', async () => {
+    const artifacts = {
+      URL: {
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
+      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin;`},
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin ; report-to="coop"`},
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin;\treport-to="coop"`},
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin; Report-To="coop"`},
+            {name: 'Cross-Origin-Opener-Policy', value: `same-origin; report-to="coop`},
+          ],
+        },
+      ]),
+    };
+    const coopHeaders =
+      await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});
+    expect(coopHeaders).toEqual([
+      `same-origin;`,
+      `same-origin;report-to="coop"`,
+      `same-origin;report-to="coop"`,
+      `same-origin;report-to="coop"`,
+      `same-origin;report-to="coop`,
     ]);
   });
 

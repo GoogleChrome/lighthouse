@@ -25,6 +25,15 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
+/**
+ * Matches a header value made of a token followed by well-formed Structured Field parameters,
+ * e.g. `same-origin; report-to="coop"`, capturing the token. Values with malformed parameters
+ * (e.g. a trailing `;`) are not matched, because browsers ignore a COOP header that fails to parse.
+ * @see https://www.rfc-editor.org/rfc/rfc9651#section-3.1.2
+ */
+// eslint-disable-next-line max-len
+const SF_ITEM_WITH_PARAMETERS_REGEX = /^([^\s;]+)(?:; *[a-z*][a-z0-9_.*-]*(?:=(?:"(?:[^"\\]|\\["\\])*"|[A-Za-z*][\w!#$%&'*+.^`|~:/-]*|-?\d+(?:\.\d+)?|\?[01]))?)+$/;
+
 class OriginIsolation extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -57,6 +66,11 @@ class OriginIsolation extends Audit {
               return h.name.toLowerCase() === 'cross-origin-opener-policy';
             })
             .flatMap(h => h.value);
+
+    // COOP is a Structured Field item: the policy token can be followed by parameters such as
+    // `report-to`, which don't change the policy (e.g. `same-origin; report-to="coop"`).
+    // https://html.spec.whatwg.org/multipage/browsers.html#obtain-coop
+    coopHeaders = coopHeaders.map(v => v.trim().replace(SF_ITEM_WITH_PARAMETERS_REGEX, '$1'));
 
     // Sanitize the header value.
     coopHeaders = coopHeaders.map(v => v.toLowerCase().replace(/\s/g, ''));
