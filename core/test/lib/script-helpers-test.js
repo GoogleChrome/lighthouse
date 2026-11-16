@@ -16,6 +16,7 @@ describe('Script helpers', () => {
       assert.equal(estimate(undefined, 1000, 'Stylesheet'), 200);
       assert.equal(estimate(undefined, 1000, 'Script'), 330);
       assert.equal(estimate(undefined, 1000, 'Document'), 330);
+      // @ts-expect-error - testing fallback for empty resourceType
       assert.equal(estimate(undefined, 1000, ''), 500);
     });
 
@@ -52,6 +53,7 @@ describe('Script helpers', () => {
       assert.equal(estimate(undefined, 1000, 'Stylesheet'), 200);
       assert.equal(estimate(undefined, 1000, 'Script'), 330);
       assert.equal(estimate(undefined, 1000, 'Document'), 330);
+      // @ts-expect-error - testing fallback for empty resourceType
       assert.equal(estimate(undefined, 1000, ''), 500);
     });
 
@@ -100,7 +102,6 @@ describe('Script helpers', () => {
       const networkRecords = [
         {url: 'https://example.com/script.js', requestId: '1'},
       ];
-      // @ts-expect-error
       const script = {url: 'https://example.com/script.js'};
       const result = getRequestForScript(networkRecords, script);
       assert.ok(result);
@@ -108,12 +109,9 @@ describe('Script helpers', () => {
     });
 
     it('should follow redirect destination', () => {
-      // @ts-expect-error
       const req2 = {url: 'https://example.com/script-final.js', requestId: '2'};
-      // @ts-expect-error
       const req1 = {url: 'https://example.com/script.js', requestId: '1', redirectDestination: req2};
       const networkRecords = [req1, req2];
-      // @ts-expect-error
       const script = {url: 'https://example.com/script.js'};
       const result = getRequestForScript(networkRecords, script);
       assert.ok(result);
@@ -134,7 +132,6 @@ describe('Script helpers', () => {
         transferSize: 0,
         fromDiskCache: true,
       };
-      // @ts-expect-error
       const networkRecords = [mainFrameRequest, iframeRequest];
 
       const script1 = {
@@ -146,12 +143,10 @@ describe('Script helpers', () => {
         executionContextAuxData: {frameId: 'IFRAME'},
       };
 
-      // @ts-expect-error
       const result1 = getRequestForScript(networkRecords, script1);
       assert.ok(result1);
       assert.equal(result1.requestId, '1');
 
-      // @ts-expect-error
       const result2 = getRequestForScript(networkRecords, script2);
       assert.ok(result2);
       assert.equal(result2.requestId, '2');
@@ -163,13 +158,11 @@ describe('Script helpers', () => {
         requestId: '1',
         frameId: 'SOME_FRAME',
       };
-      // @ts-expect-error
       const networkRecords = [req];
       const script = {
         url: 'https://example.com/script.js',
         executionContextAuxData: {frameId: 'DIFFERENT_FRAME'},
       };
-      // @ts-expect-error
       const result = getRequestForScript(networkRecords, script);
       assert.ok(result);
       assert.equal(result.requestId, '1');

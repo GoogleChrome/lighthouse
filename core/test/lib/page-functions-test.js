@@ -21,15 +21,20 @@ describe('Page Functions', () => {
     global.Node = Node;
     global.HTMLElement = HTMLElement;
     global.document = document;
+    // @ts-expect-error - partial mock window
     global.window = {
       HTMLElement, // for getBoundingClientRect fallback.
     };
   });
 
   after(() => {
+    // @ts-expect-error - cleaning up mocked DOM global
     global.ShadowRoot = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.Node = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.window = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.document = undefined;
   });
 
@@ -196,7 +201,9 @@ describe('Page Functions', () => {
     it('Truncates long text', () => {
       const el = document.createElement('div');
       el.setAttribute('alt', Array(100).fill('a').join(''));
-      assert.equal(pageFunctions.getNodeLabel(el).length, 80);
+      const label = pageFunctions.getNodeLabel(el);
+      assert.ok(label);
+      assert.equal(label.length, 80);
     });
 
     it('Truncates long text containing unicode surrogate pairs', () => {
@@ -225,6 +232,7 @@ describe('Page Functions', () => {
         </section>
       `;
       const img = el.querySelector('img');
+      assert.ok(img);
       // The img is index 1 of section's children (excluding some whitespace only text nodes).
       assert.equal(pageFunctions.getNodePath(img), '0,SECTION,1,IMG');
     });
@@ -253,8 +261,9 @@ describe('Page Functions', () => {
       childEl.id = 'child';
       childEl.className = 'child-el';
       el.append(childEl);
-      const {nodeLabel} = pageFunctions.getNodeDetails(el);
-      assert.equal(nodeLabel, 'div#parent');
+      const details = pageFunctions.getNodeDetails(el);
+      assert.ok(details);
+      assert.equal(details.nodeLabel, 'div#parent');
     });
   });
 });

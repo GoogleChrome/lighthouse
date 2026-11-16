@@ -14,8 +14,10 @@ import AccessibilityGather from '../../../gather/gatherers/accessibility.js';
 import {LH_ROOT} from '../../../../shared/root.js';
 import {axeSource} from '../../../../core/lib/axe.js';
 import {pageFunctions} from '../../../../core/lib/page-functions.js';
+import {createMockContext} from '../mock-driver.js';
 
 describe('Accessibility gatherer', () => {
+  /** @type {AccessibilityGather} */
   let accessibilityGather;
   // Reset the Gatherer before each test.
   beforeEach(() => {
@@ -24,21 +26,16 @@ describe('Accessibility gatherer', () => {
 
   it('propagates error retrieving the results', () => {
     const error = 'There was an error.';
-    return accessibilityGather.getArtifact({
-      driver: {
-        executionContext: {
-          async evaluate() {
-            throw new Error(error);
-          },
-        },
-      },
-    }).then(
+    const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockRejectedValue(new Error(error));
+    return accessibilityGather.getArtifact(mockContext.asContext()).then(
       _ => assert.ok(false),
       err => assert.ok(err.message.includes(error)));
   });
 });
 
 describe('a11y audits + aXe', () => {
+  /** @type {import('puppeteer').Browser} */
   let browser;
 
   before(async () => {
@@ -60,11 +57,17 @@ describe('a11y audits + aXe', () => {
     await page.evaluate(AccessibilityGather.pageFns.createAxeRuleResultArtifact.toString());
 
     // 1. Run axe in the browser.
-    const a11yArtifact = await page.evaluate(`runA11yChecks()`);
+    const a11yArtifact = /** @type {Record<string, Array<{id: string}> | undefined>} */ (
+      await page.evaluate(`runA11yChecks()`)
+    );
     // 2. Get list of the axe rules that ran.
     const axeRuleIds = new Set();
     for (const key of ['violations', 'incomplete', 'notApplicable', 'passes']) {
-      if (a11yArtifact[key]) a11yArtifact[key].forEach(result => axeRuleIds.add(result.id));
+      if (a11yArtifact[key]) {
+        a11yArtifact[key].forEach(/** @param {{id: string}} result */ result => {
+          axeRuleIds.add(result.id);
+        });
+      }
     }
 
     // 3. Get audit list we have implementations for.

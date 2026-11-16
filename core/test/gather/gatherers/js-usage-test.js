@@ -5,7 +5,7 @@
  */
 
 import JsUsage from '../../../gather/gatherers/js-usage.js';
-import {createMockContext, createMockDriver} from '../../gather/mock-driver.js';
+import {createMockContext} from '../../gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 
 describe('JsUsage gatherer', () => {
@@ -15,12 +15,12 @@ describe('JsUsage gatherer', () => {
   /**
    * `scriptParsedEvents` mocks the `Debugger.scriptParsed` events.
    * `coverage` mocks the result of `Profiler.takePreciseCoverage`.
-   * @param {{coverage: LH.Crdp.Profiler.ScriptCoverage[]}} _
+   * @param {{coverage: Array<Partial<LH.Crdp.Profiler.ScriptCoverage>>, scriptParsedEvents?: Array<Partial<LH.Crdp.Debugger.ScriptParsedEvent>>}} _
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
   async function runJsUsage({coverage}) {
-    const driver = createMockDriver();
-    driver._session.sendCommand
+    const context = createMockContext();
+    context.driver._session.sendCommand
       .mockResponse('Profiler.enable', {})
       .mockResponse('Profiler.disable', {})
       .mockResponse('Profiler.startPreciseCoverage', {})
@@ -28,18 +28,18 @@ describe('JsUsage gatherer', () => {
       .mockResponse('Profiler.stopPreciseCoverage', {});
 
     const gatherer = new JsUsage();
-    await gatherer.startInstrumentation({driver});
-    await gatherer.startSensitiveInstrumentation({driver});
+    await gatherer.startInstrumentation(context.asContext());
+    await gatherer.startSensitiveInstrumentation(context.asContext());
 
     // Needed for protocol events to emit.
     await flushAllTimersAndMicrotasks(1);
 
-    await gatherer.stopSensitiveInstrumentation({driver});
-    await gatherer.stopInstrumentation({driver});
+    await gatherer.stopSensitiveInstrumentation(context.asContext());
+    await gatherer.stopInstrumentation(context.asContext());
 
     expect(gatherer._scriptUsages).toEqual(coverage);
 
-    return gatherer.getArtifact({gatherMode: 'navigation'});
+    return gatherer.getArtifact();
   }
 
   it('collects coverage data', async () => {
@@ -114,16 +114,16 @@ Object {
       .mockResponse('Profiler.stopPreciseCoverage', {});
 
     const gatherer = new JsUsage();
-    await gatherer.startInstrumentation(context);
-    await gatherer.startSensitiveInstrumentation(context);
+    await gatherer.startInstrumentation(context.asContext());
+    await gatherer.startSensitiveInstrumentation(context.asContext());
 
     // Needed for protocol events to emit.
     await flushAllTimersAndMicrotasks(1);
 
-    await gatherer.stopSensitiveInstrumentation(context);
-    await gatherer.stopInstrumentation(context);
+    await gatherer.stopSensitiveInstrumentation(context.asContext());
+    await gatherer.stopInstrumentation(context.asContext());
 
-    const artifact = await gatherer.getArtifact(context);
+    const artifact = await gatherer.getArtifact();
 
     expect(artifact).toEqual({
       '1': {

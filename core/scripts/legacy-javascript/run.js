@@ -208,7 +208,9 @@ function makeSummary(legacyJavascriptFilename) {
   let totalSignals = 0;
   const variants = [];
   for (const dir of fs.globSync('*/*', {cwd: VARIANT_DIR}).sort()) {
-    const {group, name} = readJson(`${VARIANT_DIR}/${dir}/variant.json`);
+    const {group, name} = /** @type {{group: string, name: string}} */ (
+      readJson(`${VARIANT_DIR}/${dir}/variant.json`)
+    );
     /** @type {SummaryFile} */
     const summary = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
 
@@ -354,4 +356,8 @@ async function main() {
   createSummarySizes();
 }
 
-await main();
+if (import.meta.main) {
+  await main();
+}
+
+export {makeSummary};

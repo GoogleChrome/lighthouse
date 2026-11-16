@@ -63,11 +63,13 @@ describe('Module Tests', function() {
     });
 
     it('should throw an error when the first parameter is not a string', async () => {
+      // @ts-expect-error - testing invalid url parameter
       const resultPromise = lighthouse({});
       await expect(resultPromise).rejects.toThrow();
     });
 
     it('should throw an error when the second parameter is not an object', async () => {
+      // @ts-expect-error - testing invalid flags parameter
       const resultPromise = lighthouse('chrome://version', 'flags');
       await expect(resultPromise).rejects.toThrow();
     });
@@ -79,6 +81,7 @@ describe('Module Tests', function() {
 
     it('should throw an error when the config contains incorrect audits', async () => {
       const resultPromise = lighthouse('chrome://version', {}, {
+        // @ts-expect-error - testing invalid legacy config property
         passes: [{
           gatherers: [
             'scripts',
@@ -116,6 +119,8 @@ describe('Module Tests', function() {
         audits: [],
       });
 
+      assert.ok(result);
+      assert.ok(typeof result.report === 'string', 'did not create html report');
       assert.ok(/<html/.test(result.report), 'did not create html report');
       assert.ok(result.artifacts.ViewportDimensions, 'did not set artifacts');
       assert.ok(result.lhr.lighthouseVersion);
@@ -136,6 +141,7 @@ describe('Module Tests', function() {
         },
         audits: [],
       });
+      assert.ok(result);
       assert.equal(result.lhr.configSettings.channel, 'node');
     });
 
@@ -149,6 +155,7 @@ describe('Module Tests', function() {
         },
         audits: [],
       });
+      assert.ok(result);
       assert.equal(result.lhr.configSettings.channel, 'custom');
     });
   });

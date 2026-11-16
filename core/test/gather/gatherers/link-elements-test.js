@@ -7,6 +7,8 @@
 import * as jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
+import {createMockContext} from '../mock-driver.js';
+
 const mockMainResource = jestMock.fn();
 
 /** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
@@ -32,8 +34,8 @@ describe('Link Elements gatherer', () => {
     mockMainResource.mockReset();
   });
   /**
-   * @param {Partial<LH.Artifact.LinkElement>} overrides
-   * @return {LH.Artifact.LinkElement}
+   * @param {Partial<LH.Artifacts.LinkElement>} overrides
+   * @return {LH.Artifacts.LinkElement}
    */
   function link(overrides) {
     if (overrides.href && !overrides.hrefRaw) overrides.hrefRaw = overrides.href;
@@ -45,25 +47,30 @@ describe('Link Elements gatherer', () => {
       as: '',
       crossOrigin: null,
       node: null,
+      source: 'head',
       ...overrides,
     };
   }
 
-  function getContext({linkElementsInDOM = [], headers = []}) {
+  /**
+   * @param {{linkElementsInDOM?: LH.Artifacts.LinkElement[], headers?: LH.Artifacts.NetworkRequest['responseHeaders']}} [opts]
+   * @return {LH.Gatherer.Context<'DevtoolsLog'>}
+   */
+  function getContext({linkElementsInDOM = [], headers = []} = {}) {
     const url = 'https://example.com';
     mockMainResource.mockReturnValue({url, responseHeaders: headers, resourceType: 'Document'});
-    const driver = {
-      executionContext: {
-        evaluate: () => Promise.resolve(linkElementsInDOM),
-      },
+    const mockContext = createMockContext();
+    mockContext.url = url;
+    mockContext.baseArtifacts.URL = {
+      requestedUrl: url,
+      mainDocumentUrl: url,
+      finalDisplayedUrl: url,
     };
-    const baseArtifacts = {
-      URL: {
-        finalDisplayedUrl: url,
-      },
-      LighthouseRunWarnings: [],
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(linkElementsInDOM);
+    return {
+      ...mockContext.asContext(),
+      dependencies: {DevtoolsLog: []},
     };
-    return {driver, url, baseArtifacts, dependencies: {}, computedCache: new Map()};
   }
 
   it('returns elements from DOM', async () => {
@@ -118,6 +125,7 @@ describe('Link Elements gatherer', () => {
   });
 
   it('adds toplevel warning on parser error', async () => {
+    /** @type {LH.Artifacts.LinkElement[]} */
     const linkElementsInDOM = [];
     const headers = [
       {name: 'Link', value: '<https://example.com/>a'},
