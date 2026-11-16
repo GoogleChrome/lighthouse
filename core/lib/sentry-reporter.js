@@ -241,10 +241,11 @@ function createSentryReporter(dsn, environmentData) {
     },
     /**
      * @param {string} message
-     * @param {SeverityLevel=} level
+     * @param {SeverityLevel|CaptureOptions=} levelOrOpts
      */
-    captureMessage(message, level = 'info') {
-      return send(() => ({message}), {level});
+    captureMessage(message, levelOrOpts) {
+      const opts = typeof levelOrOpts === 'string' ? {level: levelOrOpts} : levelOrOpts;
+      return send(() => ({message}), {...opts, level: opts?.level || 'info'});
     },
     /**
      * @param {unknown} err

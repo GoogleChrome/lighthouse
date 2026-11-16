@@ -135,6 +135,16 @@ describe('Sentry', () => {
       expect(envelope[1]).toEqual({type: 'event'});
       expect(envelope[2]).toMatchObject({message: 'hello', level: 'warning'});
     });
+
+    it('should accept an options object', async () => {
+      await Sentry.init(configPayload);
+      await Sentry.captureMessage('hello', {tags: {foo: 'bar'}, extra: {a: 1}});
+      await Sentry.captureMessage('hello', {level: 'debug'});
+
+      const [event, event2] = getEvents();
+      expect(event).toMatchObject({level: 'info', tags: {foo: 'bar'}, extra: {a: 1}});
+      expect(event2.level).toEqual('debug');
+    });
   });
 
   describe('.captureException', () => {

@@ -10,6 +10,7 @@ import {initializeConfig} from '../config/config.js';
 /** @typedef {import('./sentry-reporter.js').Breadcrumb} Breadcrumb */
 /** @typedef {import('./sentry-reporter.js').EnvironmentData} EnvironmentData */
 /** @typedef {import('./sentry-reporter.js').SeverityLevel} SeverityLevel */
+/** @typedef {import('./sentry-reporter.js').CaptureOptions} CaptureOptions */
 
 const SENTRY_URL = 'https://a6bb0da87ee048cc9ae2a345fc09ab2e:63a7029f46f74265981b7e005e0f69f8@sentry.io/174697';
 
@@ -24,8 +25,8 @@ const noop = () => { };
  */
 const sentryDelegate = {
   init,
-  /** @type {(message: string, level?: SeverityLevel) => void} */
-  captureMessage: noop,
+  /** @type {(message: string, levelOrOpts?: SeverityLevel|CaptureOptions) => Promise<void>} */
+  captureMessage: async () => { },
   /** @type {(breadcrumb: Breadcrumb) => void} */
   captureBreadcrumb: noop,
   /** @type {() => any} */
