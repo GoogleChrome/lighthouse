@@ -100,7 +100,7 @@ async function init(opts) {
       // @ts-expect-error Non-standard property added to flag error as not needing capturing.
       if (err.expected) return;
 
-      const tags = opts.tags || {};
+      const tags = {...opts.tags};
       if (tags.audit) {
         const key = `audit-${tags.audit}-${err.message}`;
         if (sentryExceptionCache.has(key)) return;
@@ -125,9 +125,8 @@ async function init(opts) {
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
         fingerprint = ['{{ default }}', err.protocolMethod, protocolError];
 
-        opts.tags = opts.tags || {};
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
-        opts.tags.protocolMethod = err.protocolMethod;
+        tags.protocolMethod = err.protocolMethod;
       }
 
       // @ts-expect-error Non-standard property
@@ -136,7 +135,7 @@ async function init(opts) {
       await Sentry.captureException(err, {
         // @ts-expect-error - allow any string.
         level: opts.level,
-        tags: opts.tags,
+        tags,
         extra,
         fingerprint,
       });

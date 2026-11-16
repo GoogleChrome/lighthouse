@@ -232,6 +232,39 @@ describe('Sentry', () => {
       ]);
     });
 
+    it('should not leak per-call options into later events', async () => {
+      await Sentry.init(configPayload);
+      const tags = {audit: 'foo'};
+      const error = LighthouseError.fromProtocolMessage('DOM.getDocument', {message: 'oops'});
+      await Sentry.captureException(error, {level: 'fatal', tags, extra: {a: 1}});
+      await Sentry.captureException(new Error('second'));
+
+      expect(tags).toEqual({audit: 'foo'});
+      const [event, event2] = getEvents();
+      expect(event).toMatchObject({
+        level: 'fatal',
+        tags: {audit: 'foo', protocolMethod: 'DOM.getDocument'},
+        extra: {a: 1},
+        fingerprint: expect.any(Array),
+      });
+      expect(event2.level).toEqual('error');
+      expect(event2.tags.audit).toBeUndefined();
+      expect(event2.tags.protocolMethod).toBeUndefined();
+      expect(event2.extra.a).toBeUndefined();
+      expect(event2.fingerprint).toBeUndefined();
+    });
+
+    it('should keep only the latest 100 breadcrumbs', async () => {
+      await Sentry.init(configPayload);
+      for (let i = 0; i < 105; i++) Sentry.captureBreadcrumb({message: `crumb ${i}`});
+      await Sentry.captureException(new Error('oops'));
+
+      const [event] = getEvents();
+      expect(event.breadcrumbs).toHaveLength(100);
+      expect(event.breadcrumbs[0].message).toEqual('crumb 5');
+      expect(event.breadcrumbs[99].message).toEqual('crumb 104');
+    });
+
     it('should skip expected errors', async () => {
       await Sentry.init(configPayload);
       const error = new Error('oops');
