@@ -9,19 +9,25 @@ import assert from 'assert/strict';
 import {ResourceSummary} from '../../computed/resource-summary.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
+/**
+ * @param {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>} networkRecords
+ */
 function mockArtifacts(networkRecords) {
+  const url = networkRecords[0].url ?? '';
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {
-      requestedUrl: networkRecords[0].url,
-      mainDocumentUrl: networkRecords[0].url,
-      finalDisplayedUrl: networkRecords[0].url,
+      requestedUrl: url,
+      mainDocumentUrl: url,
+      finalDisplayedUrl: url,
     },
   };
 }
 
 describe('Resource summary computed', () => {
+  /** @type {ReturnType<typeof mockArtifacts>} */
   let artifacts;
+  /** @type {LH.Artifacts.ComputedContext} */
   let context;
   beforeEach(() => {
     artifacts = mockArtifacts([
@@ -97,7 +103,7 @@ describe('Resource summary computed', () => {
         {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
         {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
       ]);
-      context = {computedCache: new Map(), settings: {}};
+      context = {computedCache: new Map()};
     });
 
     describe('when firstPartyHostnames is not set', () => {

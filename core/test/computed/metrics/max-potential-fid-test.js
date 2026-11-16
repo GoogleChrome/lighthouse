@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {MaxPotentialFID} from '../../../computed/metrics/max-potential-fid.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
@@ -13,14 +15,16 @@ const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolsl
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: Max Potential FID', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result =
-      // eslint-disable-next-line max-len
-      await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null}, context);
+    // eslint-disable-next-line max-len
+    const result = await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null}, context);
+    assert('optimisticEstimate' in result);
 
     expect({
       timing: Math.round(result.timing),
@@ -30,6 +34,7 @@ describe('Metrics: Max Potential FID', () => {
   });
 
   it('should compute an observed value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result =

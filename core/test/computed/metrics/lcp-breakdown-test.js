@@ -21,6 +21,12 @@ const mainDocumentUrl = 'http://www.example.com:3000';
 const scriptUrl = 'http://www.example.com/script.js';
 const imageUrl = 'http://www.example.com/image.png';
 
+/** @type {LH.Artifacts['GatherContext']} */
+const gatherContext = {gatherMode: 'navigation'};
+
+/**
+ * @param {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>} networkRecords
+ */
 function mockData(networkRecords) {
   return {
     settings: JSON.parse(JSON.stringify(defaultSettings)),
@@ -35,13 +41,16 @@ function mockData(networkRecords) {
       mainDocumentUrl,
       finalDisplayedUrl: mainDocumentUrl,
     },
-    gatherContext: {gatherMode: 'navigation'},
+    gatherContext,
     simulator: null,
     SourceMaps: [],
     HostDPR: 1,
   };
 }
 
+/**
+ * @return {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>}
+ */
 function mockNetworkRecords() {
   return [{
     requestId: 'NAVIGATION_ID',
@@ -103,7 +112,7 @@ describe('LCPBreakdown', () => {
       URL: getURLArtifactFromDevtoolsLog(imageLcpDevtoolsLog),
       SourceMaps: [],
       HostDPR: 1,
-      gatherContext: {gatherMode: 'navigation'},
+      gatherContext,
       simulator: null,
     };
 
@@ -122,7 +131,7 @@ describe('LCPBreakdown', () => {
       URL: getURLArtifactFromDevtoolsLog(textLcpDevtoolsLog),
       SourceMaps: [],
       HostDPR: 1,
-      gatherContext: {gatherMode: 'navigation'},
+      gatherContext,
       simulator: null,
     };
 

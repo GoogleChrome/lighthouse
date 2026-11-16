@@ -27,7 +27,7 @@ class TimingSummary {
      * @param {LH.Trace} trace
      * @param {LH.DevtoolsLog} devtoolsLog
      * @param {LH.Artifacts['GatherContext']} gatherContext
-     * @param {LH.Util.ImmutableObject<LH.Config.Settings>} settings
+     * @param {LH.Artifacts.ComputedSettings} settings
      * @param {LH.Artifacts['URL']} URL
      * @param {LH.Artifacts['SourceMaps']} SourceMaps
      * @param {LH.Artifacts['HostDPR']} HostDPR
@@ -148,7 +148,7 @@ class TimingSummary {
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Util.ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Artifacts.ComputedSettings, URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */

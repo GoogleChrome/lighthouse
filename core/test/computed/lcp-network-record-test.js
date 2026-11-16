@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {LCPNetworkRecord} from '../../computed/lcp-network-record.js';
 import {createTestTrace} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -14,6 +16,9 @@ const mainDocumentUrl = 'http://www.example.com:3000';
 const scriptUrl = 'http://www.example.com/script.js';
 const imageUrl = 'http://www.example.com/image.png';
 
+/**
+ * @param {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>} networkRecords
+ */
 function mockData(networkRecords) {
   return {
     trace: createTestTrace({
@@ -24,6 +29,9 @@ function mockData(networkRecords) {
   };
 }
 
+/**
+ * @return {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>}
+ */
 function mockNetworkRecords() {
   return [{
     requestId: '2',
@@ -81,6 +89,7 @@ describe('LCPNetworkRecord', () => {
 
     const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
 
+    assert.ok(result);
     expect(result.requestId).toEqual('4');
   });
 
@@ -91,6 +100,7 @@ describe('LCPNetworkRecord', () => {
 
     const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
 
+    assert.ok(result);
     expect(result.requestId).toEqual('4');
   });
 
@@ -119,6 +129,7 @@ describe('LCPNetworkRecord', () => {
   it('only considers records from the main frame', async () => {
     const networkRecords = mockNetworkRecords();
     const record = networkRecords.find(r => r.resourceType === 'Image');
+    if (!record) throw new Error('expected record');
     record.frameId = 'CHILD_FRAME';
 
     const data = mockData(networkRecords);
@@ -144,6 +155,7 @@ describe('LCPNetworkRecord', () => {
     const data = mockData(networkRecords);
 
     const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
+    assert.ok(result);
     expect(result.requestId).toEqual('4');
   });
 

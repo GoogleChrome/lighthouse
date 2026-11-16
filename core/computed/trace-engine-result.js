@@ -20,7 +20,7 @@ import * as LH from '../../types/lh.js';
 class TraceEngineResult {
   /**
    * @param {LH.TraceEvent[]} _traceEvents
-   * @param {LH.Audit.Context['settings']} settings
+   * @param {Partial<LH.Artifacts.ComputedSettings>} settings
    * @param {LH.Artifacts['SourceMaps']} SourceMaps
    * @param {LH.Artifacts['HostDPR']} HostDPR
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
@@ -34,7 +34,12 @@ class TraceEngineResult {
 
     const lanternSettings = {};
     if (settings.throttlingMethod) lanternSettings.throttlingMethod = settings.throttlingMethod;
-    if (settings.throttling) lanternSettings.throttling = settings.throttling;
+    if (settings.throttling) {
+      lanternSettings.throttling = {
+        ...Lantern.Simulation.Constants.throttling.mobileSlow4G,
+        ...settings.throttling,
+      };
+    }
     if (settings.precomputedLanternData) {
       lanternSettings.precomputedLanternData = settings.precomputedLanternData;
     }
@@ -236,7 +241,7 @@ class TraceEngineResult {
   }
 
   /**
-   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
+   * @param {{trace: LH.Trace, settings: Partial<LH.Artifacts.ComputedSettings>, SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */

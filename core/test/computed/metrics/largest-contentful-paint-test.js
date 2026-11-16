@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {LargestContentfulPaint} from '../../../computed/metrics/largest-contentful-paint.js';
 import {createTestTrace} from '../../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
@@ -13,14 +15,17 @@ const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Metrics: LCP', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute predicted value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
       settings, URL, SourceMaps: [], HostDPR: 1, simulator: null}, context);
+    assert('optimisticEstimate' in result);
 
     expect({
       timing: Math.round(result.timing),
@@ -36,6 +41,7 @@ Object {
   });
 
   it('should compute an observed value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
@@ -56,6 +62,7 @@ Object {
     const moduleUrl = 'http://www.example.com/app.mjs';
     const apiUrl = 'http://www.example.com/api';
 
+    /** @type {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>} */
     const networkRecords = [
       {
         requestId: '1',
@@ -117,6 +124,7 @@ Object {
     });
     const testDevtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = {
@@ -134,11 +142,14 @@ Object {
       HostDPR: 1,
       simulator: null,
     }, context);
+    assert('optimisticEstimate' in result);
 
+    /** @type {string[]} */
     const optimisticUrls = [];
     result.optimisticGraph.traverse(node => {
       if (node.type === 'network') optimisticUrls.push(node.request.url);
     });
+    /** @type {string[]} */
     const pessimisticUrls = [];
     result.pessimisticGraph.traverse(node => {
       if (node.type === 'network') pessimisticUrls.push(node.request.url);

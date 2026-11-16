@@ -17,9 +17,11 @@ const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', 
 const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: LCP from all frames', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should throw for predicted value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
@@ -32,6 +34,7 @@ describe('Metrics: LCP from all frames', () => {
   });
 
   it('should compute an observed value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(
@@ -44,6 +47,7 @@ describe('Metrics: LCP from all frames', () => {
   });
 
   it('should fail to compute an observed value for old trace', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
@@ -55,6 +59,7 @@ describe('Metrics: LCP from all frames', () => {
   });
 
   it('should use main frame LCP if no other frames', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(

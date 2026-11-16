@@ -97,7 +97,7 @@ class EntityClassification {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{URL: Partial<LH.Artifacts['URL']>, devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.EntityClassification>}
    */
@@ -130,8 +130,10 @@ class EntityClassification {
     // `mainDocumentUrl` (for navigations), and falls back to `finalDisplayedUrl` (for timespan/snapshot).
     // See https://github.com/GoogleChrome/lighthouse/issues/13706
     const firstPartyUrl = data.URL.mainDocumentUrl || data.URL.finalDisplayedUrl;
-    const firstParty = thirdPartyWeb.getEntity(firstPartyUrl) ||
-      EntityClassification._makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
+    const firstParty = firstPartyUrl ?
+      (thirdPartyWeb.getEntity(firstPartyUrl) ||
+        EntityClassification._makeUpAnEntity(madeUpEntityCache, firstPartyUrl)) :
+      undefined;
 
     /**
      * Convenience function to check if a URL belongs to first party.

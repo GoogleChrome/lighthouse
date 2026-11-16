@@ -7,9 +7,16 @@ import assert from 'assert/strict';
 
 import {UnusedJavascriptSummary} from '../../computed/unused-javascript-summary.js';
 
+/**
+ * @param {string} url
+ * @param {Array<[number, number, boolean]>} ranges
+ * @return {LH.Crdp.Profiler.ScriptCoverage}
+ */
 function generateUsage(url, ranges) {
-  const functions = ranges.map(range => {
+  const functions = ranges.map((range, i) => {
     return {
+      functionName: `fn${i}`,
+      isBlockCoverage: true,
       ranges: [
         {
           startOffset: range[0],
@@ -20,7 +27,7 @@ function generateUsage(url, ranges) {
     };
   });
 
-  return {url, functions};
+  return {scriptId: url, url, functions};
 }
 
 describe('UnusedJavascriptSummary computed artifact', () => {
