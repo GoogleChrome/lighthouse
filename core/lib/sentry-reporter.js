@@ -11,7 +11,6 @@
 
 import os from 'os';
 import path from 'path';
-import url from 'url';
 
 import log from './lighthouse-logger.js';
 
@@ -27,19 +26,28 @@ const SEND_TIMEOUT_MS = 5000;
 
 // Same as @sentry/node's stack line parser so frames (and issue grouping) stay similar.
 const FRAME_RE = /at (?:async )?(?:(.+?)\s+\()?(?:(.+):(\d+):(\d+)?|([^)]+))\)?/;
-const BASE_PATH = process.argv[1] ? path.dirname(process.argv[1]) : process.cwd();
+
+/**
+ * Same as @sentry/core: drop any Windows drive letter and use forward slashes.
+ * @param {string} p
+ */
+function normalizePath(p) {
+  return p.replace(/^[A-Za-z]:/, '').replace(/\\/g, '/');
+}
+
+const BASE_PATH = normalizePath(process.argv[1] ? path.dirname(process.argv[1]) : process.cwd());
 
 /**
  * Same as @sentry/node's module naming, e.g. `core.lib:sentry` or `puppeteer-core.lib:foo`.
  * @param {string} filename
  */
 function getModule(filename) {
-  const {dir, name} = path.posix.parse(filename);
+  const {dir, name} = path.posix.parse(normalizePath(filename));
   const nodeModulesIndex = dir.lastIndexOf('/node_modules');
   if (nodeModulesIndex > -1) {
     return `${dir.slice(nodeModulesIndex + 14).replace(/\//g, '.')}:${name}`;
   }
-  if (dir.startsWith(BASE_PATH)) {
+  if (dir === BASE_PATH || dir.startsWith(`${BASE_PATH}/`)) {
     const moduleName = dir.slice(BASE_PATH.length + 1).replace(/\//g, '.');
     return moduleName ? `${moduleName}:${name}` : name;
   }
@@ -60,8 +68,17 @@ function parseStack(stack) {
     if (!match) continue;
 
     let filename = match[2] || match[5];
-    if (filename.startsWith('file://')) filename = url.fileURLToPath(filename);
-    const inApp = filename.startsWith('/') && !filename.includes('/node_modules/');
+    if (filename.startsWith('file://')) {
+      filename = filename.slice(7);
+      // `file:///C:/foo.js` -> `C:/foo.js`
+      if (/^\/[A-Za-z]:/.test(filename)) filename = filename.slice(1);
+      try {
+        filename = decodeURI(filename);
+      } catch {}
+    }
+    const slashFilename = filename.replace(/\\/g, '/');
+    const isAbsolute = slashFilename.startsWith('/') || /^[A-Za-z]:\//.test(slashFilename);
+    const inApp = isAbsolute && !slashFilename.includes('/node_modules/');
 
     frames.push({
       filename,

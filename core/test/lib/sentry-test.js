@@ -286,5 +286,31 @@ describe('Sentry', () => {
         {filename: '/lh/core/runner.js', function: 'Runner._run', lineno: 10, colno: 5},
       ]);
     });
+
+    it('should parse Windows paths', () => {
+      const stack = [
+        'Error: oops',
+        '    at Runner._run (file:///C:/Users/alice/lh/core/my%20runner.js:10:5)',
+        '    at Object.<anonymous> (C:\\Users\\alice\\lh\\node_modules\\pkg\\dist\\index.js:2:3)',
+        '    at C:\\Users\\alice\\lh\\cli\\bin.js:7:9',
+      ].join('\n');
+
+      const frames = parseStack(stack);
+      expect(frames).toMatchObject([
+        {filename: 'C:\\Users\\alice\\lh\\cli\\bin.js', module: 'bin', in_app: true},
+        {
+          filename: 'C:\\Users\\alice\\lh\\node_modules\\pkg\\dist\\index.js',
+          module: 'pkg.dist:index',
+          in_app: false,
+        },
+        {filename: 'C:/Users/alice/lh/core/my runner.js', module: 'my runner', in_app: true},
+      ]);
+      for (const frame of frames) expect(frame.module).not.toContain('alice');
+    });
+
+    it('should not throw on malformed file URLs', () => {
+      const stack = '    at foo (file:///tmp/100%bad.js:1:2)';
+      expect(parseStack(stack)).toMatchObject([{filename: '/tmp/100%bad.js', in_app: true}]);
+    });
   });
 });
