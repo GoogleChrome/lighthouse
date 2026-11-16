@@ -11,6 +11,7 @@ describe('Baking Placeholders', () => {
     const strings = {
       hello: {
         message: 'world',
+        description: 'test',
       },
     };
     const res = bakery.bakePlaceholders(strings);
@@ -25,6 +26,7 @@ describe('Baking Placeholders', () => {
     const strings = {
       hello: {
         message: '$MARKDOWN_SNIPPET_0$',
+        description: 'test',
         placeholders: {
           MARKDOWN_SNIPPET_0: {
             content: '`World`',
@@ -44,6 +46,7 @@ describe('Baking Placeholders', () => {
     const strings = {
       hello: {
         message: '$MARKDOWN_SNIPPET_0$ - $MARKDOWN_SNIPPET_0$',
+        description: 'test',
         placeholders: {
           MARKDOWN_SNIPPET_0: {
             content: '`World`',
@@ -63,6 +66,7 @@ describe('Baking Placeholders', () => {
     const strings = {
       hello: {
         message: 'Hello $MARKDOWN_SNIPPET_0$ $MARKDOWN_SNIPPET_1$',
+        description: 'test',
         placeholders: {
           MARKDOWN_SNIPPET_0: {
             content: '`World`',
@@ -78,6 +82,7 @@ describe('Baking Placeholders', () => {
     const strings = {
       hello: {
         message: 'World',
+        description: 'test',
         placeholders: {
           MARKDOWN_SNIPPET_0: {
             content: '`World`',

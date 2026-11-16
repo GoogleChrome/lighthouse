@@ -38,7 +38,7 @@ function getJavaScriptURLs(records) {
 }
 
 /**
- * @param {LH.Artifacts.TaskNode} task
+ * @param {{attributableURLs: string[], event?: {name: string}}} task
  * @param {Set<string>} jsURLs
  * @return {string}
  */
@@ -49,16 +49,17 @@ function getAttributableURLForTask(task, jsURLs) {
   // If we can't find what URL was responsible for this execution, attribute it to the root page
   // or Chrome depending on the type of work.
   if (!attributableURL || attributableURL === 'about:blank') {
-    if (BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
-    else if (BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser GC';
-    else attributableURL = 'Unattributable';
+    if (task.event && BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
+    else if (task.event && BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) {
+      attributableURL = 'Browser GC';
+    } else attributableURL = 'Unattributable';
   }
 
   return attributableURL;
 }
 
 /**
- * @param {LH.Artifacts.TaskNode[]} tasks
+ * @param {Array<{attributableURLs: string[], selfTime: number, group: LH.Artifacts.TaskNode['group'], event?: {name: string}}>} tasks
  * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
  * @return {Map<string, Record<string, number>>}
  */

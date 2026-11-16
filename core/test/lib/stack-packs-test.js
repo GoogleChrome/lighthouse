@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
 import {initializeConfig} from '../../config/config.js';
@@ -11,6 +13,7 @@ import {stackPacksToInclude, getStackPacks} from '../../lib/stack-packs.js';
 
 async function getAuditIds() {
   const {resolvedConfig} = await initializeConfig('navigation');
+  assert.ok(resolvedConfig.audits);
   return resolvedConfig.audits.flatMap(a => [
     a.implementation.meta.id,
     ...a.implementation.meta.replacesAudits ?? [],
@@ -27,11 +30,11 @@ describe('stack-packs lib', () => {
 
   it('returns packs from page stacks', () => {
     expect(getStackPacks([])).toEqual([]);
-    expect(getStackPacks([{detector: 'js', id: 'i-dont-know-you'}])).toEqual([]);
+    expect(getStackPacks([{detector: 'js', id: 'i-dont-know-you', name: 'Unknown'}])).toEqual([]);
 
     const packs = getStackPacks([
-      {detector: 'js', id: 'wordpress'},
-      {detector: 'js', id: 'react'},
+      {detector: 'js', id: 'wordpress', name: 'WordPress'},
+      {detector: 'js', id: 'react', name: 'React'},
     ]);
 
     expect(packs.map(pack => pack.id)).toEqual(['wordpress', 'react']);
@@ -39,8 +42,8 @@ describe('stack-packs lib', () => {
 
   it('returns packs from page stacks in order defined by us', () => {
     const packs = getStackPacks([
-      {detector: 'js', id: 'react'},
-      {detector: 'js', id: 'wordpress'},
+      {detector: 'js', id: 'react', name: 'React'},
+      {detector: 'js', id: 'wordpress', name: 'WordPress'},
     ]);
 
     expect(packs.map(pack => pack.id)).toEqual(['wordpress', 'react']);
