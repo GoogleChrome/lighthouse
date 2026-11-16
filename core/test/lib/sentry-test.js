@@ -266,6 +266,27 @@ describe('Sentry', () => {
       expect(event.breadcrumbs[99].message).toEqual('crumb 104');
     });
 
+    it('should stop sending while rate limited', async () => {
+      await Sentry.init(configPayload);
+      fetchMock.mockResolvedValueOnce({
+        ok: false,
+        status: 429,
+        headers: new Headers({'Retry-After': '30'}),
+      });
+      await Sentry.captureException(new Error('first'));
+      await Sentry.captureException(new Error('dropped'));
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+
+      const now = Date.now();
+      const dateNowSpy = jestMock.spyOn(Date, 'now').mockReturnValue(now + 31_000);
+      try {
+        await Sentry.captureException(new Error('after backoff'));
+      } finally {
+        dateNowSpy.mockRestore();
+      }
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
     it('should skip expected errors', async () => {
       await Sentry.init(configPayload);
       const error = new Error('oops');

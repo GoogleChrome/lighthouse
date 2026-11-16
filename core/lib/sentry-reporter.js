@@ -24,6 +24,7 @@ const MAX_BREADCRUMBS = 100;
 const MAX_FRAMES = 50;
 const MAX_LINKED_ERRORS = 5;
 const SEND_TIMEOUT_MS = 5000;
+const DEFAULT_RETRY_AFTER_S = 60;
 
 // Same as @sentry/node's stack line parser so frames (and issue grouping) stay similar.
 const FRAME_RE = /at (?:async )?(?:(.+?)\s+\()?(?:(.+):(\d+):(\d+)?|([^)]+))\)?/;
@@ -179,6 +180,8 @@ function createSentryReporter(dsn, environmentData = {}) {
   };
   /** @type {Breadcrumb[]} */
   const breadcrumbs = [];
+  // Set when Sentry rate limits us (HTTP 429); nothing is sent until then.
+  let disabledUntil = 0;
 
   /**
    * Never throws: a failure to report an error must not affect Lighthouse.
@@ -187,6 +190,8 @@ function createSentryReporter(dsn, environmentData = {}) {
    * @return {Promise<void>}
    */
   async function send(getEvent, opts) {
+    if (Date.now() < disabledUntil) return;
+
     try {
       const eventId = crypto.randomUUID().replace(/-/g, '');
       const fullEvent = {
@@ -219,6 +224,11 @@ function createSentryReporter(dsn, environmentData = {}) {
       });
       await response.body?.cancel();
       if (!response.ok) log.verbose('sentry', `Failed to send event: HTTP ${response.status}`);
+      if (response.status === 429) {
+        const retryAfter = Number(response.headers.get('Retry-After'));
+        const seconds = retryAfter > 0 ? retryAfter : DEFAULT_RETRY_AFTER_S;
+        disabledUntil = Date.now() + seconds * 1000;
+      }
     } catch (err) {
       log.verbose('sentry', `Failed to send event: ${err}`);
     }
