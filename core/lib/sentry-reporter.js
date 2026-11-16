@@ -113,6 +113,7 @@ function exceptionValues(err) {
     values.push({
       type: current.name,
       value: current.message,
+      mechanism: {type: 'generic', handled: true},
       stacktrace: {frames: parseStack(current.stack)},
     });
     current = current.cause;
@@ -120,7 +121,11 @@ function exceptionValues(err) {
   // Non-Error throwables (strings, plain objects, ...).
   if (!values.length) {
     const message = err && typeof err === 'object' && 'message' in err ? err.message : err;
-    values.push({type: 'Error', value: String(message)});
+    values.push({
+      type: 'Error',
+      value: String(message),
+      mechanism: {type: 'generic', handled: true},
+    });
   }
   // Sentry expects the root cause first, and the captured error last.
   return values.reverse();
@@ -206,12 +211,14 @@ function createSentryReporter(dsn, environmentData = {}) {
         JSON.stringify(fullEvent, safeJsonReplacer()),
       ].join('\n');
 
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-sentry-envelope', 'X-Sentry-Auth': auth},
         body: envelope,
         signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
       });
+      await response.body?.cancel();
+      if (!response.ok) log.verbose('sentry', `Failed to send event: HTTP ${response.status}`);
     } catch (err) {
       log.verbose('sentry', `Failed to send event: ${err}`);
     }

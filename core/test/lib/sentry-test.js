@@ -168,6 +168,7 @@ describe('Sentry', () => {
       expect(event.level).toEqual('fatal');
       expect(event.extra.fromError).toEqual(true);
       expect(event.exception.values.map(v => v.value)).toEqual(['root cause', 'oops']);
+      expect(event.exception.values[1].mechanism).toEqual({type: 'generic', handled: true});
       const frames = event.exception.values[1].stacktrace.frames;
       expect(frames[frames.length - 1]).toMatchObject({
         filename: expect.stringMatching(/sentry-test\.js$/),
