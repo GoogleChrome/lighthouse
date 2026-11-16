@@ -20,6 +20,7 @@ import lighthouse from '../core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../core/lib/asset-saver.js';
 import UrlUtils from '../core/lib/url-utils.js';
+import {Sentry} from '../core/lib/sentry.js';
 
 /** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
@@ -196,9 +197,10 @@ async function saveResults(runnerResult, flags) {
  */
 async function runLighthouse(urlOrUrls, flags, config) {
   /** @param {any} reason */
-  function handleTheUnhandled(reason) {
+  async function handleTheUnhandled(reason) {
     process.stderr.write(`Unhandled Rejection. Reason: ${reason}\n`);
     launchedChrome?.kill();
+    await Sentry.captureException(reason, {level: 'fatal'});
     process.exit(1);
   }
   process.on('unhandledRejection', handleTheUnhandled);
