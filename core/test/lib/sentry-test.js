@@ -123,6 +123,15 @@ describe('Sentry', () => {
       expect(event.event_id).toMatch(/^[0-9a-f]{32}$/);
       expect(event.breadcrumbs[0].timestamp).toEqual(expect.any(Number));
     });
+
+    it('should handle missing environmentData', async () => {
+      await Sentry.init({...configPayload, environmentData: undefined});
+      await Sentry.captureException(new Error('oops'));
+
+      const [{headers, envelope}] = getRequests();
+      expect(headers['X-Sentry-Auth']).toContain('sentry_client=lighthouse/unknown');
+      expect(envelope[2].sdk).toEqual({name: 'lighthouse', version: 'unknown'});
+    });
   });
 
   describe('.captureMessage', () => {

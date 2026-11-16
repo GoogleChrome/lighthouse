@@ -154,10 +154,10 @@ function safeJsonReplacer() {
 
 /**
  * @param {string} dsn
- * @param {EnvironmentData} environmentData
+ * @param {EnvironmentData=} environmentData
  */
-function createSentryReporter(dsn, environmentData) {
-  const sdkVersion = environmentData.release;
+function createSentryReporter(dsn, environmentData = {}) {
+  const sdkVersion = environmentData.release || 'unknown';
   const {protocol, username: publicKey, host, pathname} = new URL(dsn);
   const endpoint = `${protocol}//${host}/api/${pathname.slice(1)}/envelope/`;
   const auth = `Sentry sentry_version=7, sentry_key=${publicKey}, ` +
