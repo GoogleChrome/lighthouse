@@ -107,7 +107,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     // This module is imported dynamically in a function we never use, so safe to ignore:
     // https://github.com/puppeteer/puppeteer/blob/35f9c6d1e699ea37e89ef3bbb7940f5599df4724/packages/puppeteer-core/src/api/Page.ts#L2365-L2369
     'puppeteer-core/lib/esm/puppeteer/node/ScreenRecorder.js',
-    '@sentry/node',
+    `${LH_ROOT}/core/lib/sentry-reporter.js`,
     'source-map',
   ];
 

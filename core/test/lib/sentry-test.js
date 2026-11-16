@@ -5,48 +5,40 @@
  */
 
 import * as jestMock from 'jest-mock';
-import * as td from 'testdouble';
 
 import {Sentry} from '../../lib/sentry.js';
+import {parseStack} from '../../lib/sentry-reporter.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import defaultConfig from '../../config/default-config.js';
 
-/**
- * A Sentry transport that never sends anything. If the `@sentry/node` mock below ever fails to
- * apply (e.g. due to module caching or a missing loader), the real SDK would otherwise send these
- * test errors to Lighthouse's production Sentry project.
- */
-const noopTransport = () => ({
-  send: () => Promise.resolve({}),
-  flush: () => Promise.resolve(true),
-});
-
 describe('Sentry', () => {
-  let sentryNodeMock;
-  let sentryScopeMock;
   let configPayload;
   let originalSentry;
+  let originalFetch;
+  let fetchMock;
 
-  beforeEach(async () => {
-    await td.replaceEsm('@sentry/node', (sentryNodeMock = {
-      init: jestMock.fn().mockReturnValue({install: jestMock.fn()}),
-      setContext: jestMock.fn(),
-      setExtras: jestMock.fn(),
-      setTags: jestMock.fn(),
-      captureException: jestMock.fn(),
-      withScope: (fn) => fn(sentryScopeMock),
-    }));
-    sentryScopeMock = {
-      setLevel: jestMock.fn(),
-      setTags: jestMock.fn(),
-      setExtras: jestMock.fn(),
-      setFingerprint: jestMock.fn(),
-    };
+  /** @return {Array<{url: string, headers: Record<string, string>, envelope: any[]}>} */
+  function getRequests() {
+    return fetchMock.mock.calls.map(([url, {headers, body}]) => {
+      return {url, headers, envelope: body.split('\n').map(line => JSON.parse(line))};
+    });
+  }
+
+  /** @return {any} */
+  function getEvents() {
+    return getRequests().map(request => request.envelope[2]);
+  }
+
+  beforeEach(() => {
+    // Never send anything for real.
+    originalFetch = globalThis.fetch;
+    fetchMock = jestMock.fn().mockResolvedValue({ok: true});
+    globalThis.fetch = fetchMock;
 
     configPayload = {
       url: 'http://example.com',
       flags: {enableErrorReporting: true},
-      environmentData: {transport: noopTransport},
+      environmentData: {release: '1.2.3', environment: 'test', serverName: 'redacted'},
     };
 
     // We need to save the Sentry delegate object because every call to `.init` mutates the methods.
@@ -59,26 +51,28 @@ describe('Sentry', () => {
   afterEach(() => {
     // Reset the methods on the Sentry object, see note above.
     Object.assign(Sentry, originalSentry);
-    td.reset();
+    globalThis.fetch = originalFetch;
   });
 
   describe('.init', () => {
     it('should noop when !enableErrorReporting', async () => {
       await Sentry.init({url: 'http://example.com', flags: {}});
-      expect(sentryNodeMock.init).not.toHaveBeenCalled();
+      await Sentry.captureException(new Error('oops'));
       await Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: false}});
-      expect(sentryNodeMock.init).not.toHaveBeenCalled();
+      await Sentry.captureException(new Error('oops'));
+      expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it('should noop when not picked for sampling', async () => {
       Sentry._shouldSample.mockReturnValue(false);
       await Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: true}});
-      expect(sentryNodeMock.init).not.toHaveBeenCalled();
+      await Sentry.captureException(new Error('oops'));
+      expect(fetchMock).not.toHaveBeenCalled();
     });
 
-    it('should initialize the Sentry client when enableErrorReporting', async () => {
+    it('should set tags, extras and context when enableErrorReporting', async () => {
       await Sentry.init({
-        url: 'http://example.com',
+        ...configPayload,
         flags: {
           enableErrorReporting: true,
           formFactor: 'mobile',
@@ -89,37 +83,84 @@ describe('Sentry', () => {
             channel: 'test',
           },
         },
-        environmentData: {transport: noopTransport},
-      });
-
-      expect(sentryNodeMock.init).toHaveBeenCalled();
-      expect(sentryNodeMock.setExtras).toHaveBeenCalled();
-      expect(sentryNodeMock.setExtras.mock.calls[0][0]).toEqual({
-        url: 'http://example.com',
-        ...defaultConfig.settings.throttling,
-      });
-      expect(sentryNodeMock.setTags.mock.calls[0][0]).toEqual({
-        channel: 'test',
-        formFactor: 'mobile',
-        throttlingMethod: 'devtools',
       });
 
       Sentry.setContext('browser', {name: 'Chrome', version: '147.0.7727.116'});
-      expect(sentryNodeMock.setContext).toHaveBeenCalledWith('browser', {
-        name: 'Chrome',
-        version: '147.0.7727.116',
+      Sentry.captureBreadcrumb({message: 'Run started', category: 'lifecycle'});
+      await Sentry.captureException(new Error('oops'), {tags: {audit: 'foo'}, extra: {a: 1}});
+
+      const [{url, headers}] = getRequests();
+      expect(url).toEqual('https://sentry.io/api/174697/envelope/');
+      expect(headers['X-Sentry-Auth']).toEqual('Sentry sentry_version=7, ' +
+        'sentry_key=a6bb0da87ee048cc9ae2a345fc09ab2e, sentry_client=lighthouse/1.2.3');
+
+      const [event] = getEvents();
+      expect(event).toMatchObject({
+        platform: 'node',
+        level: 'error',
+        release: '1.2.3',
+        environment: 'test',
+        server_name: 'redacted',
+        tags: {
+          channel: 'test',
+          formFactor: 'mobile',
+          throttlingMethod: 'devtools',
+          audit: 'foo',
+        },
+        extra: {
+          url: 'http://example.com',
+          ...defaultConfig.settings.throttling,
+          a: 1,
+        },
+        contexts: {
+          browser: {name: 'Chrome', version: '147.0.7727.116'},
+          runtime: {name: 'node', version: process.version},
+        },
+        breadcrumbs: [{message: 'Run started', category: 'lifecycle'}],
       });
+      expect(event.event_id).toMatch(/^[0-9a-f]{32}$/);
+      expect(event.breadcrumbs[0].timestamp).toEqual(expect.any(Number));
+    });
+  });
+
+  describe('.captureMessage', () => {
+    it('should send a message event', async () => {
+      await Sentry.init(configPayload);
+      await Sentry.captureMessage('hello', 'warning');
+
+      const [{envelope}] = getRequests();
+      expect(envelope[0].event_id).toEqual(envelope[2].event_id);
+      expect(envelope[1]).toEqual({type: 'event'});
+      expect(envelope[2]).toMatchObject({message: 'hello', level: 'warning'});
     });
   });
 
   describe('.captureException', () => {
-    it('should forward exceptions to Sentry client', async () => {
+    it('should send exceptions with stack frames', async () => {
       await Sentry.init(configPayload);
-      const error = new Error('oops');
-      await Sentry.captureException(error);
+      const cause = new Error('root cause');
+      const error = new Error('oops', {cause});
+      error.extra = {fromError: true};
+      await Sentry.captureException(error, {level: 'fatal'});
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalled();
-      expect(sentryNodeMock.captureException.mock.calls[0][0]).toBe(error);
+      const [event] = getEvents();
+      expect(event.level).toEqual('fatal');
+      expect(event.extra.fromError).toEqual(true);
+      expect(event.exception.values.map(v => v.value)).toEqual(['root cause', 'oops']);
+      const frames = event.exception.values[1].stacktrace.frames;
+      expect(frames[frames.length - 1]).toMatchObject({
+        filename: expect.stringMatching(/sentry-test\.js$/),
+        lineno: expect.any(Number),
+        colno: expect.any(Number),
+        in_app: true,
+      });
+    });
+
+    it('should resolve after the request completes and swallow errors', async () => {
+      await Sentry.init(configPayload);
+      fetchMock.mockRejectedValue(new Error('network down'));
+      await Sentry.captureException(new Error('oops'));
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
     it('should skip expected errors', async () => {
@@ -128,7 +169,7 @@ describe('Sentry', () => {
       error.expected = true;
       await Sentry.captureException(error);
 
-      expect(sentryNodeMock.captureException).not.toHaveBeenCalled();
+      expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it('should skip duplicate audit errors', async () => {
@@ -137,7 +178,7 @@ describe('Sentry', () => {
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(1);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
     it('should still allow different audit errors', async () => {
@@ -147,7 +188,7 @@ describe('Sentry', () => {
       await Sentry.captureException(errorA, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(errorB, {tags: {audit: 'my-audit'}});
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     it('should skip duplicate gatherer errors', async () => {
@@ -156,7 +197,7 @@ describe('Sentry', () => {
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(1);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
     it('should fingerprint protocol errors by method and normalized message', async () => {
@@ -167,21 +208,50 @@ describe('Sentry', () => {
       });
       await Sentry.captureException(error);
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalledWith(error);
-      expect(sentryScopeMock.setFingerprint).toHaveBeenCalledWith([
+      const [event] = getEvents();
+      expect(event.fingerprint).toEqual([
         '{{ default }}',
         'DOM.getDocument',
         'Failed to convert response to JSON: CBOR: stack limit exceeded at position <n>',
       ]);
-      expect(sentryScopeMock.setTags).toHaveBeenCalledWith({protocolMethod: 'DOM.getDocument'});
+      expect(event.tags.protocolMethod).toEqual('DOM.getDocument');
     });
 
     it('should not set a fingerprint for non-protocol errors', async () => {
       await Sentry.init(configPayload);
       await Sentry.captureException(new Error('oops'));
 
-      expect(sentryNodeMock.captureException).toHaveBeenCalled();
-      expect(sentryScopeMock.setFingerprint).not.toHaveBeenCalled();
+      const [event] = getEvents();
+      expect(event.fingerprint).toBeUndefined();
+    });
+  });
+
+  describe('parseStack', () => {
+    it('should parse V8 stacks oldest frame first', () => {
+      const stack = [
+        'Error: oops',
+        'with a second line at foo.js:1:1',
+        '    at Runner._run (file:///lh/core/runner.js:10:5)',
+        '    at async Object.<anonymous> (/lh/node_modules/pkg/dist/index.js:2:3)',
+        '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)',
+        '    at /lh/cli/bin.js:7:9',
+      ].join('\n');
+
+      expect(parseStack(stack)).toMatchObject([
+        {filename: '/lh/cli/bin.js', function: '<anonymous>', lineno: 7, colno: 9, in_app: true},
+        {
+          filename: 'node:internal/process/task_queues',
+          function: 'process.processTicksAndRejections',
+          in_app: false,
+        },
+        {
+          filename: '/lh/node_modules/pkg/dist/index.js',
+          module: 'pkg.dist:index',
+          function: 'Object.<anonymous>',
+          in_app: false,
+        },
+        {filename: '/lh/core/runner.js', function: 'Runner._run', lineno: 10, colno: 5},
+      ]);
     });
   });
 });
