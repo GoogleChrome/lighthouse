@@ -48,9 +48,11 @@ function getModule(filename) {
 
 /**
  * Parses a V8 stack into Sentry frames, oldest call first.
- * @param {string|undefined} stack
+ * @param {unknown} stack
  */
-function parseStack(stack = '') {
+function parseStack(stack) {
+  if (typeof stack !== 'string') return [];
+
   const frames = [];
   const lines = stack.split('\n').filter(line => /^\s+at /.test(line)).slice(0, MAX_FRAMES);
   for (const line of lines) {
@@ -93,6 +95,32 @@ function exceptionValues(err) {
 }
 
 /**
+ * A JSON.stringify replacer that handles values that would otherwise throw or be lost.
+ * Based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value
+ */
+function safeJsonReplacer() {
+  /** @type {unknown[]} */
+  const ancestors = [];
+  /**
+   * @this {unknown}
+   * @param {string} key
+   * @param {unknown} value
+   */
+  return function(key, value) {
+    if (typeof value === 'bigint') return String(value);
+    if (value instanceof Error) {
+      value = {name: value.name, message: value.message, stack: value.stack};
+    }
+    if (typeof value !== 'object' || value === null) return value;
+
+    while (ancestors.length > 0 && ancestors[ancestors.length - 1] !== this) ancestors.pop();
+    if (ancestors.includes(value)) return '[Circular]';
+    ancestors.push(value);
+    return value;
+  };
+}
+
+/**
  * @param {string} dsn
  * @param {EnvironmentData} environmentData
  */
@@ -116,35 +144,36 @@ function createSentryReporter(dsn, environmentData) {
   const breadcrumbs = [];
 
   /**
-   * @param {Record<string, any>} event
+   * Never throws: a failure to report an error must not affect Lighthouse.
+   * @param {() => Record<string, any>} getEvent
    * @param {CaptureOptions} opts
    * @return {Promise<void>}
    */
-  async function send(event, opts) {
-    const eventId = crypto.randomUUID().replace(/-/g, '');
-    const fullEvent = {
-      event_id: eventId,
-      timestamp: Date.now() / 1000,
-      platform: 'node',
-      level: opts.level,
-      release: environmentData.release,
-      environment: environmentData.environment,
-      server_name: environmentData.serverName,
-      tags: {...tags, ...opts.tags},
-      extra: {...extra, ...opts.extra},
-      contexts,
-      breadcrumbs,
-      fingerprint: opts.fingerprint,
-      sdk: {name: 'lighthouse', version: sdkVersion},
-      ...event,
-    };
-    const envelope = [
-      JSON.stringify({event_id: eventId, sent_at: new Date().toISOString()}),
-      JSON.stringify({type: 'event'}),
-      JSON.stringify(fullEvent),
-    ].join('\n');
-
+  async function send(getEvent, opts) {
     try {
+      const eventId = crypto.randomUUID().replace(/-/g, '');
+      const fullEvent = {
+        event_id: eventId,
+        timestamp: Date.now() / 1000,
+        platform: 'node',
+        level: opts.level,
+        release: environmentData.release,
+        environment: environmentData.environment,
+        server_name: environmentData.serverName,
+        tags: {...tags, ...opts.tags},
+        extra: {...extra, ...opts.extra},
+        contexts,
+        breadcrumbs,
+        fingerprint: opts.fingerprint,
+        sdk: {name: 'lighthouse', version: sdkVersion},
+        ...getEvent(),
+      };
+      const envelope = [
+        JSON.stringify({event_id: eventId, sent_at: new Date().toISOString()}),
+        JSON.stringify({type: 'event'}),
+        JSON.stringify(fullEvent, safeJsonReplacer()),
+      ].join('\n');
+
       await fetch(endpoint, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-sentry-envelope', 'X-Sentry-Auth': auth},
@@ -183,15 +212,15 @@ function createSentryReporter(dsn, environmentData) {
      * @param {SeverityLevel=} level
      */
     captureMessage(message, level = 'info') {
-      return send({message}, {level});
+      return send(() => ({message}), {level});
     },
     /**
      * @param {Error} err
-     * @param {CaptureOptions} opts
+     * @param {CaptureOptions=} opts
      */
-    captureException(err, opts = {}) {
-      const event = {exception: {values: exceptionValues(err)}};
-      return send(event, {...opts, level: opts.level || 'error'});
+    captureException(err, opts) {
+      const getEvent = () => ({exception: {values: exceptionValues(err)}});
+      return send(getEvent, {...opts, level: opts?.level || 'error'});
     },
   };
 }

@@ -90,9 +90,10 @@ async function init(opts) {
     // Keep a record of exceptions per audit/gatherer so we can just report once
     const sentryExceptionCache = new Map();
     // Special case captureException to return a Promise so we don't process.exit too early
-    sentryDelegate.captureException = async (err, opts = {}) => {
+    sentryDelegate.captureException = async (err, opts) => {
       // Ignore if there wasn't an error
       if (!err) return;
+      opts = opts || {};
 
       // Ignore expected errors
       // @ts-expect-error Non-standard property added to flag error as not needing capturing.

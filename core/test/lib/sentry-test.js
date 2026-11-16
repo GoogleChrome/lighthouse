@@ -163,6 +163,39 @@ describe('Sentry', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
+    it('should serialize extras that JSON.stringify cannot handle', async () => {
+      await Sentry.init(configPayload);
+      const circular = {name: 'circular'};
+      circular.self = circular;
+      const error = new Error('oops');
+      error.stack = null;
+      await Sentry.captureException(error, {
+        extra: {circular, big: 10n, err: new Error('inner')},
+      });
+      await Sentry.captureException(new Error('null opts'), null);
+
+      const [event, event2] = getEvents();
+      expect(event.extra).toMatchObject({
+        circular: {name: 'circular', self: '[Circular]'},
+        big: '10',
+        err: {name: 'Error', message: 'inner', stack: expect.stringContaining('inner')},
+      });
+      expect(event.exception.values[0].stacktrace.frames).toEqual([]);
+      expect(event2.exception.values[0].value).toEqual('null opts');
+    });
+
+    it('should never reject', async () => {
+      await Sentry.init(configPayload);
+      const error = new Error('oops');
+      Object.defineProperty(error, 'stack', {
+        get() {
+          throw new Error('bad stack');
+        },
+      });
+      await Sentry.captureException(error);
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
     it('should skip expected errors', async () => {
       await Sentry.init(configPayload);
       const error = new Error('oops');
