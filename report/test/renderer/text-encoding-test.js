@@ -6,25 +6,15 @@
 
 import fs from 'fs';
 
-import * as pako from 'pako';
-
 import {TextEncoding} from '../../renderer/text-encoding.js';
 import {LH_ROOT} from '../../../shared/root.js';
 
 describe('TextEncoding', () => {
-  before(() => {
-    global.window = {pako};
-  });
-
-  after(() => {
-    global.window = undefined;
-  });
-
-  /** @type {string} */
+  /** @param {string} str */
   async function test(str) {
     for (const gzip of [false, true]) {
       const binary = await TextEncoding.toBase64(str, {gzip});
-      const roundtrip = TextEncoding.fromBase64(binary, {gzip});
+      const roundtrip = await TextEncoding.fromBase64(binary, {gzip});
       expect(roundtrip.length).toEqual(str.length);
       expect(roundtrip).toEqual(str);
     }

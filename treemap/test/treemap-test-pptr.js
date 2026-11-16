@@ -112,15 +112,15 @@ describe('Lighthouse Treemap', () => {
     });
 
     /**
-     * @param {{options: any, usesGzip: boolean}}
+     * @param {{options: any, usesGzip: boolean}} param
      */
-    async function loadFromEncodedUrl({options, useGzip}) {
+    async function loadFromEncodedUrl({options, usesGzip}) {
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
         ${getTextEncodingCode()}
-        TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: ${useGzip}});
+        TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: ${usesGzip}});
       `);
-      await page.goto(`${treemapUrl}?gzip=${useGzip ? '1' : '0'}#${encoded}`);
+      await page.goto(`${treemapUrl}?gzip=${usesGzip ? '1' : '0'}#${encoded}`);
       await page.waitForFunction(() => {
         if (window.__treemapOptions) return true;
 

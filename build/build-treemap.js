@@ -53,7 +53,6 @@ async function main() {
     javascripts: [
       buildStrings(),
       {path: require.resolve('webtreemap-cdt')},
-      {path: require.resolve('pako/browser/inflate')},
       {path: 'src/main.js', esbuild: true},
     ],
     assets: [
