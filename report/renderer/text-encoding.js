@@ -4,15 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const btoa_ = typeof btoa !== 'undefined' ?
-  btoa :
-  /** @param {string} str */
-  (str) => Buffer.from(str).toString('base64');
-const atob_ = typeof atob !== 'undefined' ?
-  atob :
-  /** @param {string} str */
-  (str) => Buffer.from(str, 'base64').toString();
-
 /**
  * @param {CompressionStream|DecompressionStream} stream
  * @param {Uint8Array<ArrayBuffer>} bytes
@@ -44,7 +35,7 @@ async function toBase64(string, options) {
   for (let i = 0; i < bytes.length; i += chunkSize) {
     binaryString += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
   }
-  return btoa_(binaryString);
+  return btoa(binaryString);
 }
 
 /**
@@ -53,7 +44,7 @@ async function toBase64(string, options) {
  * @return {Promise<string>}
  */
 async function fromBase64(encoded, options) {
-  const binaryString = atob_(encoded);
+  const binaryString = atob(encoded);
   let bytes = Uint8Array.from(binaryString, c => c.charCodeAt(0));
 
   if (options.gzip) {
