@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {ExecutionContext} from './driver/execution-context.js';
 import {TargetManager} from './driver/target-manager.js';
 import {Fetcher} from './fetcher.js';

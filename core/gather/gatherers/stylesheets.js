@@ -8,8 +8,7 @@
  * @fileoverview Collects all stylesheets and their contents.
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import BaseGatherer from '../base-gatherer.js';
 import {Sentry} from '../../lib/sentry.js';
 

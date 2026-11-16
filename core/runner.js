@@ -8,8 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 
-import log from 'lighthouse-logger';
-
+import log from './lib/lighthouse-logger.js';
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
 import * as format from '../shared/localization/format.js';

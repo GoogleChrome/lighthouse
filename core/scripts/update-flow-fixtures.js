@@ -13,8 +13,8 @@ import {setTimeout} from 'timers/promises';
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
-import log from 'lighthouse-logger';
 
+import log from '../lib/lighthouse-logger.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {openFile} from '../../cli/open-file.js';
 import * as api from '../index.js';

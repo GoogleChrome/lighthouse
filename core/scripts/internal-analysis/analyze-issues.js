@@ -13,8 +13,7 @@
  * See the download script for usage information.
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import {readJson} from '../../test/test-utils.js';
 
 /** @typedef {import('./download-issues.js').AugmentedGitHubIssue} AugmentedGitHubIssue */

@@ -18,7 +18,7 @@ While the validation rules and test suite maintain 1:1 parity with the reference
 - **Inlined Format Validation:** The build script emits a small hand-written port of the `uri` and `date-time` validators from `ajv-formats` v3.0.1 (full mode, MIT) into `schema-validator.js`, so neither `ajv-formats` nor `ajv` is a runtime dependency. The build fails if the schema references any other format.
 - **Schema Error Messages:** Ajv reports different messages than Python's `jsonschema`. The first error not nested inside a `oneOf`/`anyOf` branch is reported, with `'x' is a required property` phrasing kept for `required` errors.
 - **Non-object Input:** Upstream assumes the manifest root and each entry are JSON objects. The port treats anything else as empty, so it reports errors instead of throwing.
-- **Lighthouse Logger:** Replaced raw `console.log` with `lighthouse-logger`.
+- **Lighthouse Logger:** Replaced raw `console.log` with `core/lib/lighthouse-logger.js`.
 
 Publisher resolution (upstream's `resolve_publisher`, spec §5.1) is implemented by the gatherer in `core/gather/gatherers/agentic/ard.js`, and the resulting legacy-location warning by the `ard-schema` audit. `infos` are not surfaced in the audit.
 

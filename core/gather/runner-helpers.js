@@ -23,8 +23,7 @@
 
 /** @typedef {LH.Gatherer.Context<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {Sentry} from '../lib/sentry.js';
 
 /**

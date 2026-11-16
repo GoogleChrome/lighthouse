@@ -6,9 +6,9 @@
 
 import path from 'path';
 
-import log from 'lighthouse-logger';
 import * as jestMock from 'jest-mock';
 
+import log from '../../../lib/lighthouse-logger.js';
 import * as i18n from '../../../lib/i18n/i18n.js';
 
 const moduleDir = import.meta.dirname;

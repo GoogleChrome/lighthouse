@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from './lighthouse-logger.js';
 import {initializeConfig} from '../config/config.js';
 
 /** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */

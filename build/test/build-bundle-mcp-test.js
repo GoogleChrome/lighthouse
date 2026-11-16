@@ -71,8 +71,7 @@ describe('MCP Bundle build', () => {
       expect(content).toContain('License: MPL-2.0');
       expect(content).toContain('Name: js-library-detector');
       expect(content).toContain('License: MIT');
-      expect(content).toContain('Name: lighthouse-logger');
-      expect(content).toContain('License: Apache-2.0');
+      expect(content).toContain('Name: debug');
       expect(content).toContain('Name: tldts-core');
       expect(content).toContain('Name: @paulirish/trace_engine');
     });

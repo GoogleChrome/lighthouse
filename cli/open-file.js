@@ -11,7 +11,7 @@
 import {spawn} from 'child_process';
 import path from 'path';
 
-import log from 'lighthouse-logger';
+import log from '../core/lib/lighthouse-logger.js';
 
 /**
  * Opens a file with its default application, without waiting for it. Failures are logged, not

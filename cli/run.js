@@ -12,8 +12,8 @@ import os from 'os';
 
 import * as ChromeLauncher from 'chrome-launcher';
 import yargsParser from 'yargs-parser';
-import log from 'lighthouse-logger';
 
+import log from '../core/lib/lighthouse-logger.js';
 import * as Printer from './printer.js';
 import {openFile} from './open-file.js';
 import lighthouse from '../core/index.js';
