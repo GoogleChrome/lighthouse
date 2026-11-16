@@ -13,7 +13,7 @@ import os from 'os';
 import path from 'path';
 import url from 'url';
 
-import log from 'lighthouse-logger';
+import log from './lighthouse-logger.js';
 
 /** @typedef {'fatal'|'error'|'warning'|'log'|'info'|'debug'} SeverityLevel */
 /** @typedef {{message?: string, category?: string, level?: SeverityLevel, data?: Record<string, any>, timestamp?: number}} Breadcrumb */
