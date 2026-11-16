@@ -131,7 +131,13 @@ async function begin() {
     });
   }
 
-  return runLighthouse(urlsUnderTest, cliFlags, config);
+  try {
+    return await runLighthouse(urlsUnderTest, cliFlags, config);
+  } catch (err) {
+    // Report fatal CLI errors before Node exits (unhandled rejections are reported in run.js).
+    await Sentry.captureException(err, {level: 'fatal'});
+    throw err;
+  }
 }
 
 export {
