@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import vm from 'vm';
+
 import * as jestMock from 'jest-mock';
 
 import {Sentry} from '../../lib/sentry.js';
@@ -194,6 +196,21 @@ describe('Sentry', () => {
       });
       await Sentry.captureException(error);
       expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it('should report non-Error throwables', async () => {
+      await Sentry.init(configPayload);
+      await Sentry.captureException('a string');
+      await Sentry.captureException({message: 'a plain object'});
+      const vmError = vm.runInNewContext('new TypeError("from another realm")');
+      await Sentry.captureException(vmError);
+
+      const values = getEvents().map(event => event.exception.values);
+      expect(values).toMatchObject([
+        [{type: 'Error', value: 'a string'}],
+        [{type: 'Error', value: 'a plain object'}],
+        [{type: 'TypeError', value: 'from another realm'}],
+      ]);
     });
 
     it('should skip expected errors', async () => {

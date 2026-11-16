@@ -11,6 +11,7 @@
 
 import os from 'os';
 import path from 'path';
+import {types} from 'util';
 
 import log from './lighthouse-logger.js';
 
@@ -93,19 +94,33 @@ function parseStack(stack) {
 }
 
 /**
- * @param {Error} err
+ * @param {unknown} value
+ * @return {value is Error}
+ */
+function isError(value) {
+  // `isNativeError` also handles errors from other realms (e.g. `vm` contexts).
+  return value instanceof Error || types.isNativeError(value);
+}
+
+/**
+ * @param {unknown} err
  */
 function exceptionValues(err) {
   const values = [];
   /** @type {unknown} */
   let current = err;
-  while (current instanceof Error && values.length < MAX_LINKED_ERRORS) {
+  while (isError(current) && values.length < MAX_LINKED_ERRORS) {
     values.push({
       type: current.name,
       value: current.message,
       stacktrace: {frames: parseStack(current.stack)},
     });
     current = current.cause;
+  }
+  // Non-Error throwables (strings, plain objects, ...).
+  if (!values.length) {
+    const message = err && typeof err === 'object' && 'message' in err ? err.message : err;
+    values.push({type: 'Error', value: String(message)});
   }
   // Sentry expects the root cause first, and the captured error last.
   return values.reverse();
@@ -232,7 +247,7 @@ function createSentryReporter(dsn, environmentData) {
       return send(() => ({message}), {level});
     },
     /**
-     * @param {Error} err
+     * @param {unknown} err
      * @param {CaptureOptions=} opts
      */
     captureException(err, opts) {
