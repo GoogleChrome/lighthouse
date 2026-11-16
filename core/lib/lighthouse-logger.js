@@ -75,6 +75,9 @@ const colors = {
 // @ts-expect-error - `colors` is not declared in @types/debug.
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
+/** @typedef {{(formatter: any, ...args: any[]): void, color: string|number, enabled: boolean}} LoggerFn */
+
+/** @extends {EventEmitter<Record<string, any[]>>} */
 class Emitter extends EventEmitter {
   // yarn build-types fails without this!
   // https://github.com/microsoft/TypeScript/issues/41672#issuecomment-2303803072
@@ -108,7 +111,7 @@ class Emitter extends EventEmitter {
   }
 }
 
-/** @type {Record<string, debug.Debugger>} */
+/** @type {Record<string, LoggerFn>} */
 const loggersByTitle = {};
 const loggingBufferColumns = 25;
 /** @type {string|undefined} */
@@ -128,7 +131,7 @@ class Log {
 
   /**
    * @param {string} title
-   * @return {debug.Debugger}
+   * @return {LoggerFn}
    */
   static loggerfn(title) {
     title = `LH:${title}`;
@@ -138,10 +141,8 @@ class Log {
       loggersByTitle[title] = log;
       // errors with red, warnings with yellow.
       if (title.endsWith('error')) {
-        // @ts-expect-error - debug accepts numeric ANSI codes in Node.
         log.color = colors.red;
       } else if (title.endsWith('warn')) {
-        // @ts-expect-error - debug accepts numeric ANSI codes in Node.
         log.color = colors.yellow;
       }
     }
