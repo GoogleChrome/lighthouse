@@ -15,9 +15,10 @@ function isInline(script) {
 }
 
 /**
- * @param {LH.Artifacts.NetworkRequest[]} networkRecords
- * @param {LH.Artifacts.Script} script
- * @return {LH.Artifacts.NetworkRequest|undefined}
+ * @template {{url: string, frameId?: string, redirectDestination?: T}} T
+ * @param {T[]} networkRecords
+ * @param {Pick<LH.Artifacts.Script, 'url'|'executionContextAuxData'>} script
+ * @return {T|undefined}
  */
 function getRequestForScript(networkRecords, script) {
   const frameId = script.executionContextAuxData?.frameId;
@@ -43,7 +44,7 @@ function getRequestForScript(networkRecords, script) {
  * Estimates the number of bytes this network record would have consumed on the network based on the
  * uncompressed size (totalBytes). Uses the actual transfer size from the network record if applicable.
  *
- * @param {LH.Artifacts.NetworkRequest|undefined} networkRecord
+ * @param {{resourceType?: LH.Crdp.Network.ResourceType, transferSize?: number, resourceSize?: number}|undefined} networkRecord
  * @param {number} totalBytes Uncompressed size of the resource
  * @param {LH.Crdp.Network.ResourceType=} resourceType
  * @return {number}
@@ -88,7 +89,7 @@ function estimateTransferSize(networkRecord, totalBytes, resourceType) {
  *
  * This differs from `estimateTransferSize` only in that is subtracts the response headers from the estimate.
  *
- * @param {LH.Artifacts.NetworkRequest|undefined} networkRecord
+ * @param {{resourceType?: LH.Crdp.Network.ResourceType, transferSize?: number, resourceSize?: number, responseHeaders: LH.Artifacts.NetworkRequest['responseHeaders'], responseHeadersTransferSize?: number}|undefined} networkRecord
  * @param {number} totalBytes Uncompressed size of the resource
  * @param {LH.Crdp.Network.ResourceType=} resourceType
  * @return {number}
@@ -119,7 +120,7 @@ function estimateCompressedContentSize(networkRecord, totalBytes, resourceType) 
     // This is not encoded, so we can use resourceSize directly.
     // This would be equivalent to transfer size minus headers transfer size, but transfer size
     // may also include bytes for SSL connection etc.
-    contentTransferSize = networkRecord.resourceSize;
+    contentTransferSize = networkRecord.resourceSize || 0;
   } else if (networkRecord.responseHeadersTransferSize) {
     // Subtract the size of the encoded headers.
     contentTransferSize =

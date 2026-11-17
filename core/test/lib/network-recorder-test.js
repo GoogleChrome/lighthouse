@@ -42,6 +42,7 @@ describe('network recorder', function() {
     assert.equal(mainDocument.redirectSource, redirectC);
     assert.equal(mainDocument.redirectDestination, undefined);
 
+    assert.ok(mainDocument.redirects);
     const redirectURLs = mainDocument.redirects.map(request => request.url);
     assert.deepStrictEqual(redirectURLs, [redirectA.url, redirectB.url, redirectC.url]);
 
@@ -85,6 +86,7 @@ describe('network recorder', function() {
     assert.equal(iframeDocument.redirectSource, iframeRedirectB);
     assert.equal(iframeDocument.redirectDestination, undefined);
 
+    assert.ok(iframeDocument.redirects);
     const redirectURLs = iframeDocument.redirects.map(request => request.url);
     assert.deepStrictEqual(redirectURLs, [iframeRedirectA.url, iframeRedirectB.url]);
 
@@ -96,8 +98,10 @@ describe('network recorder', function() {
 
 
   it('recordsFromLogs ignores records with an invalid URL', function() {
+    /** @type {LH.DevtoolsLog} */
     const logs = [
       { // valid request
+        'targetType': 'page',
         'method': 'Network.requestWillBeSent',
         'params': {
           'requestId': '1',
@@ -115,6 +119,7 @@ describe('network recorder', function() {
             },
             'mixedContentType': 'none',
             'initialPriority': 'VeryHigh',
+            'referrerPolicy': 'no-referrer-when-downgrade',
           },
           'timestamp': 107988.912007,
           'wallTime': 1466620735.21187,
@@ -122,9 +127,12 @@ describe('network recorder', function() {
             'type': 'other',
           },
           'type': 'Document',
+          'hasUserGesture': false,
+          'redirectHasExtraInfo': false,
         },
       },
       { // invalid request
+        'targetType': 'page',
         'method': 'Network.requestWillBeSent',
         'params': {
           'requestId': '2',
@@ -149,6 +157,7 @@ describe('network recorder', function() {
           'type': 'Font',
           'frameId': '1',
           'hasUserGesture': false,
+          'redirectHasExtraInfo': false,
         },
       },
     ];
@@ -161,12 +170,15 @@ describe('network recorder', function() {
     const inputRecords = [{url: 'http://example.com', networkRequestTime: 1, networkEndTime: 2}];
     const devtoolsLogs = networkRecordsToDevtoolsLog(inputRecords);
     const responseReceived = devtoolsLogs.find(item => item.method === 'Network.responseReceived');
+    assert.ok(responseReceived);
+    // @ts-expect-error - testing incomplete timing object
     responseReceived.params.response.timing = {requestTime: 0, receiveHeadersEnd: -1};
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
     expect(records).toMatchObject([{url: 'http://example.com', networkRequestTime: 1, networkEndTime: 2}]);
   });
 
   describe('Lightrider', () => {
+    /** @type {NetworkRequest[]} */
     let records;
     before(() => {
       global.isLightrider = true;
@@ -188,6 +200,7 @@ describe('network recorder', function() {
 
     it('should use respect X-Original-Content-Encoding', () => {
       const record = records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js');
+      assert.ok(record);
       expect(NetworkRequest.isContentEncoded(record)).toBe(true);
     });
 
@@ -542,6 +555,7 @@ describe('network recorder', function() {
   it('should discard failed initiators', () => {
     const url = 'https://redirecty.test/';
     const frameId = 'MAIN_FRAME';
+    /** @type {LH.Crdp.Network.Initiator} */
     const redirectInitiator = {
       type: 'script',
       stack: {

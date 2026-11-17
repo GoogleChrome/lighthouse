@@ -7,7 +7,11 @@
 import {computeMedianRun, filterToValidRuns} from '../../lib/median-run.js';
 
 describe('Median Runs', () => {
+  /**
+   * @param {Record<string, number>} auditNumericValues
+   */
   function lhr(auditNumericValues) {
+    /** @type {Record<string, {numericValue: number}>} */
     const audits = {};
     for (const [id, numericValue] of Object.entries(auditNumericValues)) {
       audits[id] = {numericValue};

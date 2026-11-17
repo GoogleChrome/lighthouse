@@ -72,7 +72,9 @@ describe('detectLegacyJavaScript', () => {
       {
         code: (() => {
           // eslint-disable-next-line no-extend-native
-          String.prototype.repeat = function() {};
+          String.prototype.repeat = function() {
+            return '';
+          };
           // eslint-disable-next-line no-extend-native
           Object.defineProperty(String.prototype, 'repeat', function() {});
         }).toString(),
@@ -266,6 +268,7 @@ describe('LegacyJavaScript signals', () => {
 
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
       it(summaryFilename, () => {
+        /** @type {ReturnType<typeof import('../../scripts/legacy-javascript/run.js').makeSummary>} */
         const signalSummary =
           readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
         const failingVariants = [];
@@ -291,6 +294,7 @@ describe('LegacyJavaScript signals', () => {
   describe('expect non-baseline preset-env variants to detect polyfill and plugin signals', () => {
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
       it(summaryFilename, () => {
+        /** @type {ReturnType<typeof import('../../scripts/legacy-javascript/run.js').makeSummary>} */
         const signalSummary = readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
         const variants = signalSummary.variants
           .filter(v => v.dir === 'core-js-3-preset-env/baseline-false-bugfixes-false');
@@ -319,6 +323,7 @@ describe('LegacyJavaScript signals', () => {
   describe('expect only-polyfill/only-plugin variants to detect the target signal', () => {
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
       it(summaryFilename, () => {
+        /** @type {ReturnType<typeof import('../../scripts/legacy-javascript/run.js').makeSummary>} */
         const signalSummary = readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
         const failingVariants = [];
 

@@ -5,7 +5,7 @@
  */
 
 import SourceMaps from '../../../gather/gatherers/source-maps.js';
-import {createMockDriver} from '../mock-driver.js';
+import {createMockContext} from '../mock-driver.js';
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -23,7 +23,7 @@ describe('SourceMaps gatherer', () => {
    * `resolvedSourceMapUrl` is used to assert that the SourceMaps gatherer is using the expected
    *                        url to fetch the source map.
    * `fetchError` mocks an error that happens in the page. Only fetch error message make sense.
-   * @param {Array<{script: LH.Artifacts.Script, map: string, status?: number, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndScripts
+   * @param {Array<{script: Partial<LH.Artifacts.Script> & {name: string, sourceMapURL: string}, map?: string|null, status?: number, resolvedSourceMapUrl?: string, fetchError?: string}>} mapsAndScripts
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndScripts) {
@@ -34,8 +34,10 @@ describe('SourceMaps gatherer', () => {
       }
     }
 
-    const driver = createMockDriver();
+    const mockContext = createMockContext();
+    const driver = mockContext.driver;
 
+    /** @type {LH.Artifacts.Script[]} */
     const Scripts = [];
 
     for (const mapAndScript of mapsAndScripts) {
@@ -47,7 +49,7 @@ describe('SourceMaps gatherer', () => {
         fetchError,
       } = mapAndScript;
 
-      Scripts.push(script);
+      Scripts.push(/** @type {LH.Artifacts.Script} */ (script));
 
       if (script.sourceMapURL.startsWith('data:')) {
         // Only the source maps that need to be fetched use the `fetchMock` code path.
@@ -64,14 +66,18 @@ describe('SourceMaps gatherer', () => {
           throw new Error(fetchError);
         }
 
-        return {content: map, status};
+        return {content: map ?? null, status};
       });
     }
 
     const sourceMaps = new SourceMaps();
-    return sourceMaps.getArtifact({driver, dependencies: {Scripts}});
+    return sourceMaps.getArtifact({
+      ...mockContext.asContext(),
+      dependencies: {Scripts},
+    });
   }
 
+  /** @param {string} data */
   function makeJsonDataUrl(data) {
     return 'data:application/json;charset=utf-8;base64,' + Buffer.from(data).toString('base64');
   }

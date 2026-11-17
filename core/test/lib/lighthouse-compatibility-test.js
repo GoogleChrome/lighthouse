@@ -40,6 +40,7 @@ describe('backward compatibility', () => {
     Object.values(clonedSampleResult.audits).forEach(audit => {
       if (audit.scoreDisplayMode === 'notApplicable') {
         notApplicableCount++;
+        // @ts-expect-error - testing legacy scoreDisplayMode value
         audit.scoreDisplayMode = 'not_applicable';
       }
     });
@@ -60,6 +61,7 @@ describe('backward compatibility', () => {
     for (const audit of Object.values(clonedSampleResult.audits)) {
       if (audit.details && audit.details.type === 'debugdata') {
         undefinedCount++;
+        // @ts-expect-error - testing legacy undefined details.type
         delete audit.details.type;
       }
     }
@@ -79,6 +81,7 @@ describe('backward compatibility', () => {
     for (const audit of Object.values(clonedSampleResult.audits)) {
       if (audit.details && audit.details.type === 'debugdata') {
         diagnosticCount++;
+        // @ts-expect-error - testing legacy diagnostic details.type
         audit.details.type = 'diagnostic';
       }
     }
@@ -116,13 +119,15 @@ describe('backward compatibility', () => {
 
     clonedSampleResult.audits['full-page-screenshot'] = {
       details: {
+        // @ts-expect-error - testing legacy full-page-screenshot details type
         type: 'full-page-screenshot',
         ...sampleResult.fullPageScreenshot,
       },
     };
     delete clonedSampleResult.fullPageScreenshot;
 
-    assert.ok(clonedSampleResult.audits['full-page-screenshot'].details.nodes); // Make sure something's being tested.
+    const legacyDetails = clonedSampleResult.audits['full-page-screenshot'].details;
+    assert.ok(legacyDetails && 'nodes' in legacyDetails && legacyDetails.nodes); // Make sure something's being tested.
     assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
     // Original audit results should be restored.
@@ -135,6 +140,7 @@ describe('backward compatibility', () => {
     const clonedSampleResult = cloneLhr(sampleResult);
 
     clonedSampleResult.lighthouseVersion = '8.6.0';
+    assert.ok(clonedSampleResult.categoryGroups);
     delete clonedSampleResult.categoryGroups['hidden'];
     for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
       if (auditRef.group === 'hidden') {
@@ -177,15 +183,20 @@ describe('backward compatibility', () => {
       .filter(audit => audit.details?.type === 'table');
     assert.notEqual(auditsWithTableDetails.length, 0);
     for (const audit of auditsWithTableDetails) {
+      assert.ok(audit.details?.type === 'table');
       for (const heading of audit.details.headings) {
+        // @ts-expect-error - testing legacy opportunity heading itemType
         heading.itemType = heading.valueType;
+        // @ts-expect-error - testing legacy opportunity heading text
         heading.text = heading.label;
+        // @ts-expect-error - testing legacy opportunity heading missing valueType
         delete heading.valueType;
+        // @ts-expect-error - testing legacy opportunity heading missing label
         delete heading.label;
 
         if (heading.subItemsHeading) {
+          // @ts-expect-error - testing legacy subItemsHeading itemType
           heading.subItemsHeading.itemType = heading.subItemsHeading.valueType;
-          // @ts-expect-error
           delete heading.subItemsHeading.valueType;
         }
       }
@@ -199,9 +210,11 @@ describe('backward compatibility', () => {
     const clonedSampleResult = cloneLhr(sampleResult);
 
     const details = clonedSampleResult.audits['third-party-summary'].details;
+    assert.ok(details?.type === 'table');
     delete details.isEntityGrouped;
     details.headings[0].valueType = 'link';
     for (const item of details.items) {
+      assert.ok(typeof item.entity === 'string');
       item.entity = {
         'type': 'link',
         'text': item.entity,
@@ -212,7 +225,9 @@ describe('backward compatibility', () => {
     // Original audit results should be restored.
     const preparedResult = upgradeLhr(clonedSampleResult);
     assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
-    assert.strictEqual(preparedResult.audits['third-party-summary'].details.isEntityGrouped, true);
+    const upgradedDetails = preparedResult.audits['third-party-summary'].details;
+    assert.ok(upgradedDetails && upgradedDetails.type === 'table');
+    assert.strictEqual(upgradedDetails.isEntityGrouped, true);
   });
 
   it('uses old metric relevance lists to backfill metric savings', () => {
@@ -231,6 +246,8 @@ describe('backward compatibility', () => {
 
     const lcpAuditRef = clonedSampleResult.categories['performance'].auditRefs
       .find(a => a.id === 'largest-contentful-paint');
+    assert.ok(lcpAuditRef);
+    // @ts-expect-error - testing legacy relevantAudits property on AuditRef
     lcpAuditRef.relevantAudits = ['render-blocking-resources'];
 
     // Original audit results should be restored.

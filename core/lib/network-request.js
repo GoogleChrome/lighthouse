@@ -663,7 +663,7 @@ class NetworkRequest {
 
   /**
    * Returns whether the network request was sent encoded.
-   * @param {NetworkRequest} record
+   * @param {Pick<LH.Artifacts.NetworkRequest, 'responseHeaders'>} record
    * @return {boolean}
    */
   static isContentEncoded(record) {
