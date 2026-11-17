@@ -75,7 +75,7 @@ function generateTraceEvents(entries, threadId = 0) {
 
 /**
  * Writes a trace file to disk
- * @param {LH.Result} lhr
+ * @param {Pick<LH.Result, 'timing'>} lhr
  * @return {string}
  */
 function createTraceString(lhr) {

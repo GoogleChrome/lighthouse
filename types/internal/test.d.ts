@@ -49,6 +49,11 @@ declare module 'expect' {
      */
     toBeDisplayString: (pattern: RegExp | string) => R;
   }
+
+  interface AsymmetricMatchers {
+    toBeApproximately(expected: number, numDigits?: number): ReturnType<AsymmetricMatchers['closeTo']>;
+    toBeDisplayString(pattern: RegExp | string): ReturnType<AsymmetricMatchers['closeTo']>;
+  }
 }
 
 export {};
