@@ -63,6 +63,7 @@ node -e "
 
 # Do some stuff that may update checked-in files.
 yarn generate-insight-audits
+yarn build-cdt-strings --roll
 # Only check the ARD port. Acknowledging upstream changes requires porting them first
 # (see third-party/ard/README.md), so a deps upgrade must never bump the pinned SHA itself.
 ARD_OUT_OF_SYNC=0
