@@ -77,15 +77,6 @@ class TraceEngineResult {
     const insights = processor.insights;
     this.localizeInsights(insights);
 
-    // Release intermediate handler state retained in module-level TraceHandlers singletons
-    // and static Lantern simulation node timings after trace processing completes.
-    for (const handler of Object.values(TraceEngine.TraceHandlers)) {
-      handler.reset();
-    }
-    if (!process.env.LANTERN_DEBUG) {
-      Lantern.Simulation.Simulator.allNodeTimings.clear();
-    }
-
     return {data, insights};
   }
 
