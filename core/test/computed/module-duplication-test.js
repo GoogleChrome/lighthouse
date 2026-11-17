@@ -256,15 +256,15 @@ describe('ModuleDuplication computed artifact', () => {
 
   describe('_normalizeAggregatedData', () => {
     it('removes entries with just one value', () => {
-      const data = new Map([['a.js', [{resourceSize: 100}]]]);
+      const data = new Map([['a.js', [{scriptId: '1', resourceSize: 100}]]]);
       ModuleDuplication._normalizeAggregatedData(data);
       expect(data).toMatchInlineSnapshot(`Map {}`);
     });
 
     it('sorts entries based on resource size', () => {
       const data = new Map([
-        ['a.js', [{resourceSize: 250}, {resourceSize: 200}]],
-        ['b.js', [{resourceSize: 200}, {resourceSize: 250}]],
+        ['a.js', [{scriptId: '1', resourceSize: 250}, {scriptId: '2', resourceSize: 200}]],
+        ['b.js', [{scriptId: '1', resourceSize: 200}, {scriptId: '2', resourceSize: 250}]],
       ]);
       ModuleDuplication._normalizeAggregatedData(data);
       expect(data).toMatchInlineSnapshot(`Map {}`);
@@ -272,8 +272,12 @@ describe('ModuleDuplication computed artifact', () => {
 
     it('removes data if size is much smaller than the largest', () => {
       const data = new Map([
-        ['a.js', [{resourceSize: 200}, {resourceSize: 1}, {resourceSize: 250}]],
-        ['b.js', [{resourceSize: 250}, {resourceSize: 1}]],
+        ['a.js', [
+          {scriptId: '1', resourceSize: 200},
+          {scriptId: '2', resourceSize: 1},
+          {scriptId: '3', resourceSize: 250},
+        ]],
+        ['b.js', [{scriptId: '1', resourceSize: 250}, {scriptId: '2', resourceSize: 1}]],
       ]);
       ModuleDuplication._normalizeAggregatedData(data);
       expect(data).toMatchInlineSnapshot(`Map {}`);

@@ -21,7 +21,7 @@ describe('MainResource computed artifact', () => {
       {url: 'http://example.com'},
       record,
     ];
-    const URL = {mainDocumentUrl: 'https://example.com'};
+    const URL = {mainDocumentUrl: 'https://example.com', finalDisplayedUrl: 'https://example.com'};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
@@ -31,10 +31,14 @@ describe('MainResource computed artifact', () => {
   });
 
   it('throws when main resource can\'t be found', () => {
+    /** @type {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>} */
     const networkRecords = [
       {url: 'https://example.com', resourceType: 'Script'},
     ];
-    const URL = {mainDocumentUrl: 'https://m.example.com'};
+    const URL = {
+      mainDocumentUrl: 'https://m.example.com',
+      finalDisplayedUrl: 'https://m.example.com',
+    };
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
@@ -47,7 +51,10 @@ describe('MainResource computed artifact', () => {
 
   it('should identify correct main resource in the wikipedia fixture', () => {
     const wikiDevtoolsLog = wikipediaDevtoolsLog;
-    const URL = {mainDocumentUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const URL = {
+      mainDocumentUrl: 'https://en.m.wikipedia.org/wiki/Main_Page',
+      finalDisplayedUrl: 'https://en.m.wikipedia.org/wiki/Main_Page',
+    };
     const artifacts = {devtoolsLog: wikiDevtoolsLog, URL};
 
     const context = {computedCache: new Map()};
@@ -62,7 +69,8 @@ describe('MainResource computed artifact', () => {
       {url: 'https://beta.httparchive.org/reports/state-of-the-web'},
     ];
 
-    const URL = {mainDocumentUrl: 'https://beta.httparchive.org/reports/state-of-the-web#pctHttps'};
+    const mainDocumentUrl = 'https://beta.httparchive.org/reports/state-of-the-web#pctHttps';
+    const URL = {mainDocumentUrl, finalDisplayedUrl: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const artifacts = {URL, devtoolsLog};
 
@@ -73,6 +81,7 @@ describe('MainResource computed artifact', () => {
   });
 
   it('should identify correct main resource with multiple candidates', () => {
+    /** @type {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>} */
     const networkRecords = [
       {url: 'https://example.com', resourceType: 'Document', failed: true},
       {url: 'https://example.com', resourceType: 'Document', requestId: 'pickme'},
@@ -80,7 +89,7 @@ describe('MainResource computed artifact', () => {
       {url: 'https://example.com', resourceType: 'Document', failed: true},
     ];
 
-    const URL = {mainDocumentUrl: 'https://example.com'};
+    const URL = {mainDocumentUrl: 'https://example.com', finalDisplayedUrl: 'https://example.com'};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const artifacts = {URL, devtoolsLog};
 

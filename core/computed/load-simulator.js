@@ -10,13 +10,20 @@ import {NetworkAnalysis} from './network-analysis.js';
 
 class LoadSimulator {
   /**
-   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings']}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Artifacts.ComputedSettings}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Gatherer.Simulation.Simulator>}
    */
   static async compute_(data, context) {
     const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
-    return Lantern.Simulation.Simulator.createSimulator({...data.settings, networkAnalysis});
+    const throttling = data.settings.throttling ?
+      {...Lantern.Simulation.Constants.throttling.mobileSlow4G, ...data.settings.throttling} :
+      undefined;
+    return Lantern.Simulation.Simulator.createSimulator({
+      ...data.settings,
+      throttling,
+      networkAnalysis,
+    });
   }
 
   /**

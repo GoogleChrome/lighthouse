@@ -14,16 +14,20 @@ import {readJson} from '../test-utils.js';
 const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 function createNetworkNode() {
-  const record = {
-    requestId: '1',
-    protocol: 'http',
-    parsedURL: {scheme: 'http', securityOrigin: 'https://pwa.rocks'},
+  const record = new NetworkRequest();
+  record.requestId = '1';
+  record.protocol = 'http';
+  record.parsedURL = {
+    scheme: 'http',
+    host: 'pwa.rocks',
+    securityOrigin: 'https://pwa.rocks',
   };
   return new Lantern.Graph.NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
 }
 
 describe('Simulator artifact', () => {
   it('returns a simulator for "provided" throttling', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const simulator = await LoadSimulator.request({
@@ -39,6 +43,7 @@ describe('Simulator artifact', () => {
 
   it('returns a simulator for "devtools" throttling', async () => {
     const throttling = {requestLatencyMs: 375, downloadThroughputKbps: 900};
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'devtools', throttling};
     const context = {settings, computedCache: new Map()};
     const simulator = await LoadSimulator.request({
@@ -54,6 +59,7 @@ describe('Simulator artifact', () => {
 
   it('returns a simulator for "simulate" throttling', async () => {
     const throttling = {rttMs: 120, throughputKbps: 1000, cpuSlowdownMultiplier: 3};
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate', throttling};
     const context = {settings, computedCache: new Map()};
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
@@ -65,6 +71,8 @@ describe('Simulator artifact', () => {
     simulator.simulate(createNetworkNode());
 
     const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator.connectionPool.options;
+    assert.ok(additionalRttByOrigin);
+    assert.ok(serverResponseTimeByOrigin);
     expect(additionalRttByOrigin.get('https://pwa.rocks')).toMatchInlineSnapshot(
       `0.3960000176447025`
     );
@@ -85,6 +93,7 @@ describe('Simulator artifact', () => {
       },
     };
 
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate', precomputedLanternData};
     const context = {settings, computedCache: new Map()};
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);

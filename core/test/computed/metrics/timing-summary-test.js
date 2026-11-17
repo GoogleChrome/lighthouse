@@ -12,12 +12,21 @@ const devtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.l
 
 describe('Timing summary', () => {
   it('contains the correct data', async () => {
+    /** @type {LH.Artifacts['GatherContext']} */
     const gatherContext = {gatherMode: 'navigation'};
+    /** @type {LH.Artifacts.ComputedSettings} */
+    const settings = {throttlingMethod: 'devtools'};
     const context = {computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const artifacts =
-      // eslint-disable-next-line max-len
-      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, SourceMaps: [], HostDPR: 1, gatherContext};
+    const artifacts = {
+      URL,
+      settings,
+      trace,
+      devtoolsLog,
+      SourceMaps: [],
+      HostDPR: 1,
+      gatherContext,
+    };
     const result = await TimingSummary.request(artifacts, context);
 
     expect(result.metrics).toMatchInlineSnapshot(`

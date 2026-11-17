@@ -17,13 +17,11 @@ describe('ProcessedTrace', () => {
     expect(processedTrace.processEvents.length).toEqual(118854);
     expect(processedTrace.mainThreadEvents.length).toEqual(55691);
 
-    delete processedTrace.processEvents;
-    delete processedTrace.mainThreadEvents;
-    delete processedTrace.frameTreeEvents;
-    delete processedTrace.frameEvents;
-    delete processedTrace._keyEvents;
+    // eslint-disable-next-line no-unused-vars
+    const {processEvents, mainThreadEvents, frameTreeEvents, frameEvents, _keyEvents, ...rest} =
+      processedTrace;
 
-    expect(processedTrace).toMatchObject({
+    expect(rest).toMatchObject({
       mainFrameInfo: {
         frameId: '4445FED303BABCB702B8DAAA715B1202',
         startingPid: 87728,
@@ -58,7 +56,7 @@ describe('ProcessedTrace', () => {
   it('fails with NO_TRACING_STARTED', async () => {
     const context = {computedCache: new Map()};
     const noTracingStartedTrace = {
-      traceEvents: pwaTrace.traceEvents.filter(event => {
+      traceEvents: pwaTrace.traceEvents.filter(/** @param {LH.TraceEvent} event */ event => {
         if (event.name === 'TracingStartedInBrowser' ||
             event.name === 'TracingStartedInPage' ||
             event.name === 'ResourceSendRequest') {
