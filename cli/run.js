@@ -112,10 +112,6 @@ async function getDebuggableChrome(flags) {
   }
 
   const chromeFlags = parseChromeFlags(flags.chromeFlags);
-  if (!flags.port) {
-    checkDevShmUsage(chromeFlags);
-  }
-
   const launchedChrome = await ChromeLauncher.launch({
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
@@ -123,7 +119,7 @@ async function getDebuggableChrome(flags) {
     logLevel: flags.logLevel,
   });
 
-  if (flags.port && launchedChrome.pid) {
+  if (launchedChrome.pid) {
     checkDevShmUsage(chromeFlags);
   }
 
