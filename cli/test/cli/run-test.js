@@ -194,6 +194,7 @@ describe('batch runLighthouse', () => {
       OutputMode: {json: 'json', html: 'html', csv: 'csv'},
     });
     await td.replaceEsm('../../open-file.js', {openFile: mockOpen});
+    await td.replaceEsm('../../../core/lib/lighthouse-logger.js', undefined, log);
     // @ts-expect-error - query string busts ESM cache so td.replaceEsm takes effect
     mockedRun = await import('../../run.js?batch');
   });
@@ -314,6 +315,62 @@ describe('batch runLighthouse', () => {
       'open',
       'open',
     ]);
+  });
+
+  describe('/dev/shm warning', () => {
+    /** @type {PropertyDescriptor|undefined} */
+    let originalPlatformDescriptor;
+    /** @type {ReturnType<typeof jestMock.spyOn>} */
+    let statfsSpy;
+    /** @type {ReturnType<typeof jestMock.spyOn>} */
+    let logWarnSpy;
+
+    beforeEach(() => {
+      originalPlatformDescriptor = Object.getOwnPropertyDescriptor(process, 'platform');
+      Object.defineProperty(process, 'platform', {value: 'linux', configurable: true});
+      statfsSpy = jestMock.spyOn(fs, 'statfsSync');
+      statfsSpy.mockReturnValue({bsize: 4096, blocks: 16384});
+      logWarnSpy = jestMock.spyOn(log, 'warn');
+      mockLighthouse.mockResolvedValue({
+        lhr: {
+          finalDisplayedUrl: 'https://example.com',
+          fetchTime: '2026-10-21T20:00:00.000Z',
+          audits: {},
+        },
+        artifacts: {},
+        report: ['{}'],
+      });
+    });
+
+    afterEach(() => {
+      if (originalPlatformDescriptor) {
+        Object.defineProperty(process, 'platform', originalPlatformDescriptor);
+      }
+      statfsSpy.mockRestore();
+      logWarnSpy.mockRestore();
+    });
+
+    it('warns when chrome-launcher spawns a new Chrome instance', async () => {
+      mockLaunch.mockResolvedValue({pid: 12345, port: 9222, kill: fnAny()});
+      const flags = getFlags('https://example.com --port=9222');
+
+      await mockedRun.runLighthouse('https://example.com', flags, undefined);
+
+      expect(logWarnSpy).toHaveBeenCalledWith(
+        'CLI',
+        expect.stringContaining('Detected small /dev/shm (64MB)')
+      );
+    });
+
+    it('does not warn when attaching to an existing Chrome via --port', async () => {
+      mockLaunch.mockResolvedValue({pid: undefined, port: 9222, kill: fnAny()});
+      const flags = getFlags('https://example.com --port=9222');
+
+      await mockedRun.runLighthouse('https://example.com', flags, undefined);
+
+      expect(statfsSpy).not.toHaveBeenCalled();
+      expect(logWarnSpy).not.toHaveBeenCalled();
+    });
   });
 });
 
