@@ -113,7 +113,8 @@ describe('Navigation', function() {
         devicePixelRatio: 1.75,
       });
 
-      const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, ['max-potential-fid']);
+      const {auditResults, erroredAudits, failedAudits} =
+          getAuditsBreakdown(lhr, ['max-potential-fid', 'render-blocking-insight']);
       assert.lengthOf(auditResults, 155);
       assert.deepEqual(erroredAudits, []);
       assert.deepEqual(failedAudits.map(audit => audit.id), [
@@ -122,7 +123,6 @@ describe('Navigation', function() {
         'landmark-one-main',
         'meta-description',
         'network-dependency-tree-insight',
-        'render-blocking-insight',
       ]);
 
       const viewTraceButton = await devToolsPage.$textContent('View Trace', reportEl);
@@ -141,9 +141,11 @@ describe('Navigation', function() {
       await navigateToLighthouseTab(devToolsPage, inspectedPage, undefined);
 
       // Test .lh-node is linkified to Elements panel.
-      const lcpBreakdownAudit = await devToolsPage.waitForElementWithTextContent('LCP breakdown', reportEl);
-      await lcpBreakdownAudit.click();
-      const lcpElementLink = await devToolsPage.waitForElementWithTextContent('button');
+      const lcpBreakdownAudit = await devToolsPage.waitFor('#lcp-breakdown-insight', reportEl);
+      await (await devToolsPage.waitForElementWithTextContent('LCP breakdown', lcpBreakdownAudit)).click();
+      const lcpNode = await devToolsPage.waitFor('.lh-node', lcpBreakdownAudit);
+      const lcpElementLink = await devToolsPage.waitFor('.node-link', lcpNode);
+      assert.strictEqual(await lcpElementLink.evaluate(el => el.textContent), 'button');
       await lcpElementLink.click();
 
       selectedTab = await devToolsPage.waitFor('.tabbed-pane-header-tab.selected[aria-label="Elements"]');
