@@ -46,7 +46,7 @@ dist
 
 A Lighthouse report (including what is shown within the Lighthouse panel) can also Export as HTML. Normally the report just uses `documentElement.outerHTML`, but from DevTools we get quine-y and use `Lighthouse.ReportGenerator`. This generator is defined in `report-generator.js`.
 
-`report-generator.js` takes a Lighthouse result and creates an HTML file - it concats all of the report generator assets to create a standalone HTML document. See: https://github.com/GoogleChrome/lighthouse/blob/ee3a9dfd665135b9dc03c18c9758b27464df07e0/core/report/report-generator.js#L35 . Normally when run in Node.js the report assets (JavaScript, which also contains the css; and the html template) are read from disk. But in DevTools, these assets have been inlined in the `report-generator.mjs` bundle.
+`report-generator.js` takes a Lighthouse result and creates an HTML file - it concats all of the report generator assets to create a standalone HTML document. See: https://github.com/GoogleChrome/lighthouse/blob/ee3a9dfd665135b9dc03c18c9758b27464df07e0/lighthouse-core/report/report-generator.js#L35 . Normally when run in Node.js the report assets (JavaScript, which also contains the css; and the html template) are read from disk. But in DevTools, these assets have been inlined in the `report-generator.mjs` bundle.
 
 In short, a Lighthouse report is rendered in two ways inside DevTools:
 
