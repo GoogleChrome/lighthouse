@@ -10,11 +10,11 @@ import fs from 'fs';
 
 import * as td from 'testdouble';
 import * as jestMock from 'jest-mock';
-import log from 'lighthouse-logger';
 
 import * as run from '../../run.js';
 import {checkDevShmUsage, parseChromeFlags} from '../../run.js';
 import {getFlags} from '../../cli-flags.js';
+import log from '../../../core/lib/lighthouse-logger.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {fnAny, readJson} from '../../../core/test/test-utils.js';
 
