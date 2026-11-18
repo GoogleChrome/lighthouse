@@ -126,6 +126,16 @@ describe('LCPNetworkRecord', () => {
     expect(result).toBeUndefined();
   });
 
+  it('returns undefined if the LCP image is a data: URI', async () => {
+    const networkRecords = mockNetworkRecords();
+    networkRecords[3].url = 'data:image/png;base64,iVBORw0KGgo=';
+    networkRecords[3].protocol = 'data';
+    const data = mockData(networkRecords);
+
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
+    expect(result).toBeUndefined();
+  });
+
   it('only considers records from the main frame', async () => {
     const networkRecords = mockNetworkRecords();
     const record = networkRecords.find(r => r.resourceType === 'Image');

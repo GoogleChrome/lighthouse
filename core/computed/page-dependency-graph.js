@@ -36,7 +36,10 @@ class PageDependencyGraph {
       return graph;
     }
 
-    const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
+    // Exclude data: URIs to match TraceEngine's NetworkRequestsHandler.
+    const lanternRequests = networkRecords
+      .filter(record => !record.url.startsWith('data:'))
+      .map(NetworkRequest.asLanternNetworkRequest);
     return Lantern.Graph.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }
