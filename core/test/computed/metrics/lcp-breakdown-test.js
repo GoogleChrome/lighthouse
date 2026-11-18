@@ -119,8 +119,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
-    expect(result.loadDelay).toBeCloseTo(1149.1, 0.1);
-    expect(result.loadDuration).toBeCloseTo(268.0, 0.1);
+    expect(result.loadDelay).toBeCloseTo(0, 0.1);
+    expect(result.loadDuration).toBeCloseTo(837.8, 0.1);
   });
 
   it('returns breakdown for a real trace with text LCP', async () => {
@@ -149,8 +149,147 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadDelay).toBeCloseTo(1831.6, 0.1);
-    expect(result.loadDuration).toBeCloseTo(3289.4, 0.1);
+    expect(result.loadDelay).toBeCloseTo(1905, 0.1);
+    expect(result.loadDuration).toBeCloseTo(3216, 0.1);
+  });
+
+  it('uses simulated nodeTimings when unthrottled image downloads near-instantly', async () => {
+    /** @type {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>} */
+    const networkRecords = [
+      {
+        requestId: 'NAVIGATION_ID',
+        resourceType: 'Document',
+        priority: 'High',
+        isLinkPreload: false,
+        networkRequestTime: 0,
+        responseHeadersEndTime: 50,
+        networkEndTime: 60,
+        timing: {sendEnd: 0, receiveHeadersEnd: 50},
+        transferSize: 16_000,
+        url: requestedUrl,
+        frameId: 'ROOT_FRAME',
+      },
+      {
+        requestId: '2',
+        resourceType: 'Image',
+        priority: 'High',
+        isLinkPreload: false,
+        networkRequestTime: 100,
+        networkEndTime: 102,
+        transferSize: 500_000,
+        url: imageUrl,
+        initiator: {type: 'parser', url: requestedUrl},
+        frameId: 'ROOT_FRAME',
+      },
+    ];
+    const data = {
+      settings: JSON.parse(JSON.stringify(defaultSettings)),
+      trace: createTestTrace({
+        traceEnd: 500,
+        largestContentfulPaint: 150,
+        networkRecords,
+      }),
+      devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      URL: {
+        requestedUrl,
+        mainDocumentUrl: requestedUrl,
+        finalDisplayedUrl: requestedUrl,
+      },
+      gatherContext,
+      simulator: null,
+      SourceMaps: [],
+      HostDPR: 1,
+    };
+
+    const result = await LCPBreakdown.request(data, {computedCache: new Map()});
+
+    // Under simulated Slow 4G, a 500 KB image should take >2000ms to load,
+    // not ~2ms scaled by metricLcp / observedLcp (~40ms).
+    expect(result.ttfb).toBeCloseTo(499.1, 0.1);
+    expect(result.loadDelay).toBeCloseTo(300, 0.1);
+    expect(result.loadDuration).toBeCloseTo(3030, 0.1);
+  });
+
+  it('falls back to ratio scaling when LCP node is absent from Lantern graphs', async () => {
+    /** @type {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>} */
+    const networkRecords = [
+      {
+        requestId: 'NAVIGATION_ID',
+        resourceType: 'Document',
+        priority: 'High',
+        isLinkPreload: false,
+        networkRequestTime: 0,
+        responseHeadersEndTime: 50,
+        networkEndTime: 100,
+        timing: {sendEnd: 0, receiveHeadersEnd: 50},
+        transferSize: 16_000,
+        url: requestedUrl,
+        frameId: 'ROOT_FRAME',
+      },
+      {
+        requestId: '2',
+        resourceType: 'Media',
+        mimeType: 'video/mp4',
+        priority: 'High',
+        isLinkPreload: false,
+        networkRequestTime: 150,
+        networkEndTime: 400,
+        transferSize: 500_000,
+        url: imageUrl,
+        initiator: {type: 'parser', url: requestedUrl},
+        frameId: 'ROOT_FRAME',
+      },
+    ];
+    const data = {
+      settings: JSON.parse(JSON.stringify(defaultSettings)),
+      trace: createTestTrace({
+        traceEnd: 600,
+        largestContentfulPaint: 450,
+        networkRecords,
+      }),
+      devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      URL: {
+        requestedUrl,
+        mainDocumentUrl: requestedUrl,
+        finalDisplayedUrl: requestedUrl,
+      },
+      gatherContext,
+      simulator: null,
+      SourceMaps: [],
+      HostDPR: 1,
+    };
+
+    const result = await LCPBreakdown.request(data, {computedCache: new Map()});
+
+    expect(result.ttfb).toBeCloseTo(499.1, 0.1);
+    expect(result.loadDelay).toBeCloseTo(0, 0.1);
+    expect(result.loadDuration).toBeCloseTo(211.2, 0.1);
+  });
+
+  describe('findLcpNodeTiming', () => {
+    it('matches network nodes by requestId and ignores non-network nodes', () => {
+      const cpuNode = /** @type {any} */ ({type: 'cpu', id: '4:redirect'});
+      const otherNetNode = /** @type {any} */ ({type: 'network', id: '3'});
+      const lcpNetNode = /** @type {any} */ ({type: 'network', id: '4:redirect'});
+      const lcpTiming = {startTime: 1000, endTime: 2500, queuedTime: 800, duration: 1500};
+      const nodeTimings = new Map([
+        [cpuNode, {startTime: 100, endTime: 200, queuedTime: 100, duration: 100}],
+        [otherNetNode, {startTime: 200, endTime: 400, queuedTime: 200, duration: 200}],
+        [lcpNetNode, lcpTiming],
+      ]);
+
+      const match = LCPBreakdown.findLcpNodeTiming(
+        nodeTimings,
+        /** @type {any} */ ({requestId: '4:redirect'})
+      );
+      expect(match).toBe(lcpTiming);
+
+      const missing = LCPBreakdown.findLcpNodeTiming(
+        nodeTimings,
+        /** @type {any} */ ({requestId: '999'})
+      );
+      expect(missing).toBeUndefined();
+    });
   });
 
   it('returns observed for image LCP', async () => {
