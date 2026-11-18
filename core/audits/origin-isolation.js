@@ -58,8 +58,11 @@ class OriginIsolation extends Audit {
             })
             .flatMap(h => h.value);
 
-    // Sanitize the header value.
-    coopHeaders = coopHeaders.map(v => v.toLowerCase().replace(/\s/g, ''));
+    // COOP is a Structured Field item: the policy token can be followed by parameters such as
+    // `report-to`, which don't change the policy (e.g. `same-origin; report-to="coop"`).
+    // https://html.spec.whatwg.org/multipage/browsers.html#obtain-coop
+    // Sanitize the header value and ignore any parameters.
+    coopHeaders = coopHeaders.map(v => v.split(';')[0].toLowerCase().replace(/\s/g, ''));
 
     return coopHeaders;
   }
