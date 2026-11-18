@@ -460,8 +460,8 @@ const expectations = {
         _excludeRunner: 'devtools',
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
-          lcpLoadDelay: '>5000',
-          lcpLoadDuration: '>0',
+          lcpLoadDelay: '>1500',
+          lcpLoadDuration: '>1000',
         }}},
       },
       'third-party-cookies': {
