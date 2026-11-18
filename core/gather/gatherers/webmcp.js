@@ -135,9 +135,10 @@ class WebMCP extends BaseGatherer {
    */
   async getArtifact(context) {
     // WebMCP API surface is churning (as of Nov 2026):
-    // - `navigator.modelContext`: earlier location from the original explainer.
-    // - `document.modelContext`: current location; Chrome plans to remove it after M161 once
-    //   usage drops.
+    // - `navigator.modelContext`: original location, Chrome 143-151 (deprecated in 150, removed
+    //   in 152).
+    // - `document.modelContext`: current location since Chrome 150; Chrome plans to remove it
+    //   after M161 once usage drops.
     // - `window.toolManager`: new location; shipping alongside `document.modelContext` in M161.
     // See https://github.com/webmachinelearning/webmcp
     const isSupported = await context.driver.executionContext.evaluate(
