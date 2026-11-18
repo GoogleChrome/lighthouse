@@ -54,19 +54,7 @@ describe('Metrics: TTI', () => {
       optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
       pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     };
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      // Trace Engine's NetworkRequestsHandler skips 2 `data:image/svg+xml` requests present in
-      // the devtoolsLog, reducing `pessimisticNodeTimings` from 31 to 29 with no effect on timing.
-      expect(summary).toEqual({
-        optimistic: 1107,
-        optimisticNodeTimings: 14,
-        pessimistic: 1134,
-        pessimisticNodeTimings: 29,
-        timing: 1122,
-      });
-    } else {
-      expect(summary).toMatchSnapshot();
-    }
+    expect(summary).toMatchSnapshot();
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

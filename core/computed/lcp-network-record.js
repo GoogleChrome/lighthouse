@@ -42,7 +42,7 @@ class LCPNetworkRecord {
     }).sort((a, b) => b.ts - a.ts)[0];
 
     const lcpUrl = lcpImagePaintEvent?.args.data?.imageUrl;
-    if (!lcpUrl) return;
+    if (!lcpUrl || lcpUrl.startsWith('data:')) return;
 
     const candidates = networkRecords.filter(record => {
       return record.url === lcpUrl &&
