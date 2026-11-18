@@ -134,6 +134,12 @@ class WebMCP extends BaseGatherer {
    * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
+    // WebMCP API surface is churning (as of Nov 2026):
+    // - `navigator.modelContext`: earlier location from the original explainer.
+    // - `document.modelContext`: current location; Chrome plans to remove it after M161 once
+    //   usage drops.
+    // - `window.toolManager`: new location; shipping alongside `document.modelContext` in M161.
+    // See https://github.com/webmachinelearning/webmcp
     const isSupported = await context.driver.executionContext.evaluate(
       () => typeof (/** @type {any} */ (navigator)).modelContext !== 'undefined' ||
         typeof (/** @type {any} */ (document)).modelContext !== 'undefined' ||
