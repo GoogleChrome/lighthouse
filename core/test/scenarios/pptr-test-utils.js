@@ -27,7 +27,10 @@ const FLAKY_AUDIT_IDS_APPLICABILITY = new Set([
 
 const UNIT_OUTPUT_DIR = `${LH_ROOT}/.tmp/unit-failures`;
 
-function createTestState() {
+/**
+ * @param {{chromeArgs?: string[]}} [options]
+ */
+function createTestState({chromeArgs} = {}) {
   /** @param {string} name @return {any} */
   const any = name => new Proxy({}, {get: () => {
     throw new Error(`${name} used without invoking \`state.before\``);
@@ -58,6 +61,7 @@ function createTestState() {
         this.browser = await puppeteer.launch({
           executablePath: getChromePath(),
           ignoreDefaultArgs: ['--enable-automation'],
+          args: chromeArgs,
         });
       });
 

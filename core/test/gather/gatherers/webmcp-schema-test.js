@@ -112,8 +112,11 @@ describe('WebMcpSchemaIssues Gatherer', () => {
           mockSession._issueHandler = handler;
         }
       },
-      off: () => {},
-      sendCommand: async () => {
+      off: (/** @type {string} */ event) => {
+        mockSession._offEvent = event;
+      },
+      sendCommand: async (/** @type {string} */ command) => {
+        if (command !== 'Audits.enable') return {};
         mockSession._issueHandler({
           issue: {
             code: 'GenericIssue',
@@ -132,5 +135,6 @@ describe('WebMcpSchemaIssues Gatherer', () => {
 
     assert.equal(artifact.length, 1);
     assert.equal(artifact[0].errorType, 'FormModelContextMissingToolDescription');
+    assert.equal(mockSession._offEvent, 'Audits.issueAdded');
   });
 });
