@@ -206,4 +206,20 @@ describe('Timespan Runner', () => {
     expect(artifacts.LighthouseRunWarnings[0])
       .toBeDisplayString(/A page navigation was detected during the run. Using timespan mode/);
   });
+
+  it('cleans up throttling before getArtifact', async () => {
+    gathererA.getArtifact.mockImplementation(async () => {
+      expect(mockSubmodules.emulationMock.clearThrottling)
+        .toHaveBeenCalledWith(mockDriver.defaultSession);
+      return 'Artifact A';
+    });
+
+    const timespan = await startTimespanGather(page, {config});
+    expect(mockSubmodules.emulationMock.clearThrottling).not.toHaveBeenCalled();
+
+    await timespan.endTimespanGather();
+    await mockRunner.gather.mock.calls[0][0]();
+
+    expect(mockSubmodules.emulationMock.clearThrottling).toHaveBeenCalledTimes(1);
+  });
 });
