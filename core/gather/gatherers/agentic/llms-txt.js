@@ -20,7 +20,9 @@ class LlmsTxt extends BaseGatherer {
   async getArtifact(passContext) {
     const {finalDisplayedUrl} = passContext.baseArtifacts.URL;
     const llmUrl = new URL('/llms.txt', finalDisplayedUrl).href;
-    return passContext.driver.fetcher.fetchResource(llmUrl)
+    return passContext.driver.fetcher.fetchResource(llmUrl, {
+      allowFetchFallbackOnCspViolation: true,
+    })
       .catch(err => {
         log.error('LlmsTxt', err);
         return {status: null, content: null, errorMessage: err.message};

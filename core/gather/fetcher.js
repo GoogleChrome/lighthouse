@@ -11,6 +11,7 @@ import * as LH from '../../types/lh.js';
  */
 
 /** @typedef {{content: string|null, status: number|null, headers?: Record<string, string>|null}} FetchResponse */
+/** @typedef {{timeout?: number, allowFetchFallbackOnCspViolation?: boolean}} FetchOptions */
 
 class Fetcher {
   /**
@@ -24,17 +25,33 @@ class Fetcher {
    * Fetches any resource using the network directly.
    *
    * @param {string} url
-   * @param {{timeout: number}=} options timeout is in ms
+   * @param {FetchOptions} [options]
    * @return {Promise<FetchResponse>}
    */
-  async fetchResource(url, options = {timeout: 2_000}) {
+  async fetchResource(url, options = {}) {
+    const timeout = options.timeout ?? 2_000;
+
     // In Lightrider, `Network.loadNetworkResource` is not implemented, but fetch
     // is configured to work for any resource.
     if (global.isLightrider) {
-      return this._wrapWithTimeout(this._fetchWithFetchApi(url), options.timeout);
+      return this._wrapWithTimeout(this._fetchWithFetchApi(url), timeout);
     }
 
-    return this._fetchResourceOverProtocol(url, options);
+    const startTime = Date.now();
+    try {
+      return await this._fetchResourceOverProtocol(url, {timeout});
+    } catch (error) {
+      // Site-wide text files can be fetched independently of the document's CSP.
+      // Keep this opt-in so resources such as source maps continue to respect CSP.
+      if (!options.allowFetchFallbackOnCspViolation || !/CSP violation/i.test(String(error))) {
+        throw error;
+      }
+
+      const remainingTimeout = timeout - (Date.now() - startTime);
+      if (remainingTimeout <= 0) throw error;
+
+      return this._wrapWithTimeout(this._fetchWithFetchApi(url), remainingTimeout);
+    }
   }
 
   /**
