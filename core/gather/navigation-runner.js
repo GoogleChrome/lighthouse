@@ -280,8 +280,14 @@ async function navigationGather(page, requestor, options = {}) {
     if (!page) {
       const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
       lhBrowser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`, defaultViewport: null});
-      lhPage = await lhBrowser.newPage();
-      page = lhPage;
+      const openPages = flags.reusePage ? await lhBrowser.pages() : [];
+      if (openPages.length === 1) {
+        // The existing page belongs to the user, so it is not closed during cleanup.
+        page = openPages[0];
+      } else {
+        lhPage = await lhBrowser.newPage();
+        page = lhPage;
+      }
     }
 
     const driver = new Driver(page);

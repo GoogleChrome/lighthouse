@@ -32,12 +32,15 @@ let TraceGatherer;
 /** @type {typeof import('../../config/config.js')['initializeConfig']} */
 let initializeConfig;
 
+const puppeteerMock = {connect: fnAny()};
+
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any>, startInstrumentation: Mock<any>, stopInstrumentation: Mock<any>, startSensitiveInstrumentation: Mock<any>, stopSensitiveInstrumentation:  Mock<any>}} MockGatherer */
 
 describe('NavigationRunner', () => {
   before(async () => {
     mocks = await mockDriverSubmodules();
     mockRunner = await mockRunnerModule();
+    await td.replaceEsm('puppeteer-core', undefined, puppeteerMock);
 
     // Some imports needs to be done dynamically, so that their dependencies will be mocked.
     // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
@@ -534,6 +537,38 @@ describe('NavigationRunner', () => {
           settings: flags,
         },
       });
+    });
+
+    /** @param {string} message */
+    function createUnusablePage(message) {
+      return {target: () => ({createCDPSession: fnAny().mockRejectedValue(new Error(message))})};
+    }
+
+    it('should reuse the only open page when reusePage is set', async () => {
+      const browser = {
+        pages: fnAny().mockResolvedValue([createUnusablePage('Used the open page')]),
+        newPage: fnAny(),
+      };
+      puppeteerMock.connect.mockResolvedValue(browser);
+
+      await runner.navigationGather(undefined, requestedUrl, {flags: {reusePage: true}});
+      const gatherFn = mockRunner.gather.mock.calls[0][0];
+
+      await expect(gatherFn()).rejects.toThrow('Used the open page');
+      expect(browser.newPage).not.toHaveBeenCalled();
+    });
+
+    it('should open a new page when reusePage is set but several pages are open', async () => {
+      const browser = {
+        pages: fnAny().mockResolvedValue([createUnusablePage('a'), createUnusablePage('b')]),
+        newPage: fnAny().mockResolvedValue(createUnusablePage('Used a new page')),
+      };
+      puppeteerMock.connect.mockResolvedValue(browser);
+
+      await runner.navigationGather(undefined, requestedUrl, {flags: {reusePage: true}});
+      const gatherFn = mockRunner.gather.mock.calls[0][0];
+
+      await expect(gatherFn()).rejects.toThrow('Used a new page');
     });
   });
 });
