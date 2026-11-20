@@ -192,6 +192,14 @@ describe('Audit', () => {
       assert.equal(auditResult.title, 'Passing');
     });
 
+    it('uses a result-specific title for both passing and failing scores', () => {
+      for (const score of [0, 1]) {
+        const output = Audit.generateAuditResult(PassOrFailAudit, {score, title: 'Review'});
+        assert.equal(output.title, 'Review');
+        assert.equal(output.score, score);
+      }
+    });
+
     it('chooses the failureTitle if score is failing', () => {
       const auditResult = Audit.generateAuditResult(PassOrFailAudit, {score: 0});
       assert.strictEqual(auditResult.score, 0);
