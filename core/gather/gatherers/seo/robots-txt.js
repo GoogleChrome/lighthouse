@@ -23,7 +23,9 @@ class RobotsTxt extends BaseGatherer {
   async getArtifact(passContext) {
     const {finalDisplayedUrl} = passContext.baseArtifacts.URL;
     const robotsUrl = new URL('/robots.txt', finalDisplayedUrl).href;
-    return passContext.driver.fetcher.fetchResource(robotsUrl)
+    return passContext.driver.fetcher.fetchResource(robotsUrl, {
+      allowFetchFallbackOnCspViolation: true,
+    })
       .catch(err => {
         log.error('RobotsTxt', err);
         return {status: null, content: null, errorMessage: err.message};

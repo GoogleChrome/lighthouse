@@ -17,6 +17,42 @@ beforeEach(() => {
   fetcher = new Fetcher(mockSession.asSession());
 });
 
+describe('.fetchResource', () => {
+  it('does not fall back to the Fetch API by default', async () => {
+    const protocolError = new Error('Protocol error (Network.loadNetworkResource): CSP violation');
+    fetcher._fetchResourceOverProtocol = fnAny().mockRejectedValue(protocolError);
+    fetcher._fetchWithFetchApi = fnAny();
+
+    await expect(fetcher.fetchResource('https://example.com/robots.txt', {timeout: 500}))
+      .rejects.toBe(protocolError);
+    expect(fetcher._fetchWithFetchApi).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the Fetch API for an opted-in CSP violation', async () => {
+    const response = {content: 'User-agent: *\\nAllow: /', status: 200, headers: null};
+    fetcher._fetchResourceOverProtocol = fnAny().mockRejectedValue(
+      new Error('Protocol error (Network.loadNetworkResource): CSP violation'));
+    fetcher._fetchWithFetchApi = fnAny().mockResolvedValue(response);
+
+    await expect(fetcher.fetchResource('https://example.com/robots.txt', {
+      timeout: 500,
+      allowFetchFallbackOnCspViolation: true,
+    })).resolves.toEqual(response);
+    expect(fetcher._fetchWithFetchApi).toHaveBeenCalledWith('https://example.com/robots.txt');
+  });
+
+  it('does not fall back for non-CSP protocol errors', async () => {
+    const protocolError = new Error('Protocol error (Network.loadNetworkResource): Target closed');
+    fetcher._fetchResourceOverProtocol = fnAny().mockRejectedValue(protocolError);
+    fetcher._fetchWithFetchApi = fnAny();
+
+    await expect(fetcher.fetchResource('https://example.com/robots.txt', {
+      allowFetchFallbackOnCspViolation: true,
+    })).rejects.toBe(protocolError);
+    expect(fetcher._fetchWithFetchApi).not.toHaveBeenCalled();
+  });
+});
+
 describe('._readIOStream', () => {
   it('reads contents of stream', async () => {
     mockSession.sendCommand
