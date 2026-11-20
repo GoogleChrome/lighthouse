@@ -266,4 +266,53 @@ describe('Page Functions', () => {
       assert.equal(details.nodeLabel, 'div#parent');
     });
   });
+
+  describe('timing with a frozen Date.now', () => {
+    const originalDateNow = Date.now;
+
+    beforeEach(() => {
+      // Pages may mock Date (e.g. mockdate, fake timers) so time appears to stand still.
+      // Throw after many calls so a regression fails fast instead of looping forever.
+      const frozenNow = originalDateNow();
+      let calls = 0;
+      Date.now = () => {
+        if (++calls > 10_000) throw new Error('Date.now is frozen, time never advances');
+        return frozenNow;
+      };
+    });
+
+    afterEach(() => {
+      Date.now = originalDateNow;
+    });
+
+    it('computeBenchmarkIndex terminates and returns a positive index', () => {
+      const index = pageFunctions.computeBenchmarkIndex();
+      expect(index).toBeGreaterThan(0);
+      expect(Number.isFinite(index)).toBe(true);
+    });
+
+    it('wrapRequestIdleCallback timeRemaining decreases as time passes', () => {
+      let initial = -1;
+      let after = -1;
+      global.window.requestIdleCallback = (cb) => {
+        cb({didTimeout: false, timeRemaining: () => 50});
+        return 1;
+      };
+
+      pageFunctions.wrapRequestIdleCallback(1);
+      global.window.requestIdleCallback((deadline) => {
+        initial = deadline.timeRemaining();
+        const start = performance.now();
+        while (performance.now() - start < 50) {
+          // Busy wait past the shimmed deadline.
+        }
+        after = deadline.timeRemaining();
+      });
+
+      // Shimmed deadline is (50 - 10ms safety allowance) / cpuSlowdownMultiplier.
+      expect(initial).toBeGreaterThan(0);
+      expect(initial).toBeLessThanOrEqual(40);
+      expect(after).toEqual(0);
+    });
+  });
 });

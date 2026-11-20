@@ -178,6 +178,9 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
  *  - 800+ is a high-end Android phone, Galaxy S8, low-end Chromebook, etc
  *  - 125+ is a mid-tier Android phone, Moto G4, etc
  *  - <125 is a budget Android phone, Alcatel Ideal, Galaxy J2, etc
+ *
+ * Timing uses `performance.now()` rather than `Date.now()` because pages may freeze `Date`
+ * (e.g. mockdate or fake timers for deterministic tests), which would make these loops never end.
  * @return {number}
  */
 function computeBenchmarkIndex() {
@@ -188,10 +191,10 @@ function computeBenchmarkIndex() {
    * used a string length of 100000 instead of 10000.
    */
   function benchmarkIndexGC() {
-    const start = Date.now();
+    const start = performance.now();
     let iterations = 0;
 
-    while (Date.now() - start < 500) {
+    while (performance.now() - start < 500) {
       let s = '';
       for (let j = 0; j < 10000; j++) s += 'a';
       if (s.length === 1) throw new Error('will never happen, but prevents compiler optimizations');
@@ -199,7 +202,7 @@ function computeBenchmarkIndex() {
       iterations++;
     }
 
-    const durationInSeconds = (Date.now() - start) / 1000;
+    const durationInSeconds = (performance.now() - start) / 1000;
     return Math.round(iterations / 10 / durationInSeconds);
   }
 
@@ -213,14 +216,14 @@ function computeBenchmarkIndex() {
     const arrB = [];
     for (let i = 0; i < 100000; i++) arrA[i] = arrB[i] = i;
 
-    const start = Date.now();
+    const start = performance.now();
     let iterations = 0;
 
     // Some Intel CPUs have a performance cliff due to unlucky JCC instruction alignment.
-    // Two possible fixes: call Date.now less often, or manually unroll the inner loop a bit.
-    // We'll call Date.now less and only check the duration on every 10th iteration for simplicity.
+    // Two possible fixes: call performance.now less often, or manually unroll the inner loop a bit.
+    // We'll call performance.now less and only check the duration on every 10th iteration for simplicity.
     // See https://bugs.chromium.org/p/v8/issues/detail?id=10954#c1.
-    while (iterations % 10 !== 0 || Date.now() - start < 500) {
+    while (iterations % 10 !== 0 || performance.now() - start < 500) {
       const src = iterations % 2 === 0 ? arrA : arrB;
       const tgt = iterations % 2 === 0 ? arrB : arrA;
 
@@ -229,7 +232,7 @@ function computeBenchmarkIndex() {
       iterations++;
     }
 
-    const durationInSeconds = (Date.now() - start) / 1000;
+    const durationInSeconds = (performance.now() - start) / 1000;
     return Math.round(iterations / 10 / durationInSeconds);
   }
 
@@ -422,13 +425,13 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
      * @type {Parameters<typeof window['requestIdleCallback']>[0]}
      */
     const cbWrap = (deadline) => {
-      const start = Date.now();
+      const start = performance.now();
       // @ts-expect-error - save original on non-standard property.
       deadline.__timeRemaining = deadline.timeRemaining;
       deadline.timeRemaining = () => {
         // @ts-expect-error - access non-standard property.
         const timeRemaining = deadline.__timeRemaining();
-        return Math.min(timeRemaining, Math.max(0, maxExecutionTimeMs - (Date.now() - start))
+        return Math.min(timeRemaining, Math.max(0, maxExecutionTimeMs - (performance.now() - start))
         );
       };
       deadline.timeRemaining.toString = () => {
