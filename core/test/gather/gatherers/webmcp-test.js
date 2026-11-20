@@ -219,4 +219,33 @@ describe('WebMCP Gatherer', () => {
     expect(artifact.tools[0].name).toEqual('declarative_tool');
     expect(artifact.tools[0].nodeDetails).toEqual({snippet: '<form></form>', selector: 'form'});
   });
+
+  it('collects tools in snapshot mode without instrumentation', async () => {
+    const gatherer = new WebMCP();
+    const mockContext = createMockContext();
+    mockContext.gatherMode = 'snapshot';
+    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+
+    mockContext.driver.defaultSession.on.mockEvent('WebMCP.toolsAdded', {
+      tools: [
+        {
+          name: 'existing_tool',
+          description: 'A tool registered before the snapshot',
+          inputSchema: {type: 'object'},
+          frameId: 'F1',
+        },
+      ],
+    });
+
+    mockContext.driver.defaultSession.sendCommand
+      // Yield so the mocked event fires while WebMCP is enabled.
+      .mockResponse('WebMCP.enable', () => setTimeout(0))
+      .mockResponse('WebMCP.disable');
+
+    const artifact = await gatherer.getArtifact(mockContext.asContext());
+
+    expect(artifact.isSupported).toEqual(true);
+    expect(artifact.tools.map(tool => tool.name)).toEqual(['existing_tool']);
+    expect(mockContext.driver.defaultSession.sendCommand).toHaveBeenCalledWith('WebMCP.disable');
+  });
 });

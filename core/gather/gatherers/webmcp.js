@@ -25,7 +25,7 @@ import {pageFunctions} from '../../lib/page-functions.js';
 class WebMCP extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['navigation'],
+    supportedModes: ['navigation', 'snapshot'],
   };
 
   constructor() {
@@ -134,6 +134,13 @@ class WebMCP extends BaseGatherer {
    * @return {Promise<LH.Artifacts['WebMCP']>}
    */
   async getArtifact(context) {
+    if (context.gatherMode === 'snapshot') {
+      // Snapshot mode has no instrumentation phase. `WebMCP.enable` replays
+      // the registered tools.
+      await this.startInstrumentation(context);
+      await this.stopInstrumentation(context);
+    }
+
     const isSupported = await context.driver.executionContext.evaluate(
       () => typeof (/** @type {any} */ (navigator)).modelContext !== 'undefined' ||
         typeof (/** @type {any} */ (document)).modelContext !== 'undefined',
