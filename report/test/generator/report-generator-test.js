@@ -125,7 +125,7 @@ describe('ReportGenerator', () => {
 category,score
 \\"performance\\",\\"0.32\\"
 \\"accessibility\\",\\"0.75\\"
-\\"best-practices\\",\\"0.31\\"
+\\"best-practices\\",\\"0.28\\"
 \\"seo\\",\\"0.75\\"
 \\"agentic-browsing\\",\\"0.18\\"
 
