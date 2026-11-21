@@ -40,7 +40,7 @@ await lighthouse('https://example.com/', {port: 9222}, config);
 | extends | <code>string&#124;undefined</code> |
 | settings | <code>Object&#124;undefined</code> |
 | artifacts | <code>Object[]</code> |
-| audits | <code>string[]</code> |
+| audits | <code>(string&#124;Object)[]</code> |
 | categories | <code>Object&#124;undefined</code> |
 | groups | <code>Object&#124;undefined</code> |
 | plugins | <code>string[]</code> | Includes plugins and their audits. Refer to the [plugin documentation](./plugins.md) for details.|
@@ -99,7 +99,7 @@ The list of artifacts to collect on a single Lighthouse run. This property is re
 | gatherer | `string` | Gatherer used to produce this artifact. Does not need to be unique within the `artifacts` list. |
 | alwaysGather | `boolean` (optional) | If `true`, the artifact will always be collected (provided it supports the gather mode) even if no active audit requires it. |
 
-### `audits: string[]`
+### `audits: (string|Object)[]`
 
 The audits property controls which audits to run and include with your Lighthouse report. See [more examples](#more-examples) to see how to add custom audits to your config.
 
@@ -112,6 +112,21 @@ The audits property controls which audits to run and include with your Lighthous
   ]
 }
 ```
+
+#### Audit options
+
+To configure an audit, use an object with its `path` and an `options` object instead of a path string. For example, this config changes the number of screenshot thumbnails while keeping the other default audits:
+
+```js
+export default {
+  extends: 'lighthouse:default',
+  audits: [
+    {path: 'screenshot-thumbnails', options: {numberOfThumbnails: 10}},
+  ],
+};
+```
+
+When extending a config, options for entries with the same `path` are merged. The audit receives these values through `context.options`, overriding its `defaultOptions`. Supported options depend on the audit; check its implementation for the options it reads.
 
 ### `categories: Object|undefined`
 
