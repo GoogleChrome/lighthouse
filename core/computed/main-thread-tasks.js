@@ -16,8 +16,18 @@ class MainThreadTasks {
    */
   static async compute_(trace, context) {
     const {mainThreadEvents, frames, timestamps} = await ProcessedTrace.request(trace, context);
-    return MainThreadTasks_.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd,
+    const tasks = MainThreadTasks_.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd,
         timestamps.timeOrigin);
+
+    /** @type {Set<LH.Artifacts.TaskNode>} */
+    const beforeNavigation = new Set();
+    // Tasks are sorted with parents before their children.
+    return tasks.filter(task => {
+      const isBeforeNavigation = task.parent ?
+        beforeNavigation.has(task.parent) : task.endTime <= 0;
+      if (isBeforeNavigation) beforeNavigation.add(task);
+      return !isBeforeNavigation;
+    });
   }
 }
 
