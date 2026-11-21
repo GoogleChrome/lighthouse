@@ -55,7 +55,7 @@ async function runA11yChecks() {
       'duplicate-id': {enabled: false},
       'empty-heading': {enabled: true},
       'frame-focusable-content': {enabled: false},
-      'frame-title-unique': {enabled: false},
+      'frame-title-unique': {enabled: true},
       'heading-order': {enabled: true},
       'html-xml-lang-mismatch': {enabled: true},
       'identical-links-same-purpose': {enabled: true},
