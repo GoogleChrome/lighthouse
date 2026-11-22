@@ -124,5 +124,36 @@ describe('Resource summary computed', () => {
         expect(result['third-party'].count).toBe(1);
       });
     });
+
+    describe('when the first party is a known entity', () => {
+      it('counts every domain of the entity as first party', async () => {
+        artifacts = mockArtifacts([
+          {url: 'https://www.reddit.com/', resourceType: 'Document', transferSize: 30},
+          {url: 'https://www.reddit.com/app.js', resourceType: 'Script', transferSize: 10},
+          {url: 'https://www.redditstatic.com/logo.png', resourceType: 'Image', transferSize: 20},
+        ]);
+        context = {computedCache: new Map()};
+
+        const result = await ResourceSummary.request(artifacts, context);
+        // An entity's `domains` already carry the wildcard (e.g. `*.redditstatic.com`),
+        // so every domain it lists is first party.
+        expect(result['third-party'].count).toBe(0);
+        expect(result['third-party'].transferSize).toBe(0);
+      });
+
+      it('only matches whole domain labels', async () => {
+        artifacts = mockArtifacts([
+          {url: 'https://www.reddit.com/', resourceType: 'Document', transferSize: 30},
+          {url: 'https://notreddit.com/script.js', resourceType: 'Script', transferSize: 40},
+          {url: 'https://reddit.com.evil.test/script.js', resourceType: 'Script', transferSize: 80},
+        ]);
+        context = {computedCache: new Map()};
+
+        const result = await ResourceSummary.request(artifacts, context);
+        // Both URLs merely share a suffix with `reddit.com`, so both are third party.
+        expect(result['third-party'].count).toBe(2);
+        expect(result['third-party'].transferSize).toBe(120);
+      });
+    });
   });
 });

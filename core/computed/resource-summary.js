@@ -52,7 +52,7 @@ class ResourceSummary {
       'third-party': {count: 0, resourceSize: 0, transferSize: 0},
     };
     /** @type {ReadonlyArray<string>} */
-    const firstPartyHosts = classifiedEntities.firstParty?.domains.map(domain => `*.${domain}`) ||
+    const firstPartyHosts = classifiedEntities.firstParty?.domains ||
       [`*.${UrlUtils.getRootDomain(URLArtifact.finalDisplayedUrl)}`];
 
     networkRecords.filter(record => {
@@ -77,11 +77,11 @@ class ResourceSummary {
       resourceSummary.total.transferSize += record.transferSize;
 
       const isFirstParty = firstPartyHosts.some((hostExp) => {
-        const url = new URL(record.url);
-        if (hostExp.startsWith('*.')) {
-          return url.hostname.endsWith(hostExp.slice(2));
-        }
-        return url.hostname === hostExp;
+        // Entries are either a bare domain or a `*.` wildcard; both cover the domain
+        // itself and every subdomain of it.
+        const domain = hostExp.startsWith('*.') ? hostExp.slice(2) : hostExp;
+        const {hostname} = new URL(record.url);
+        return hostname === domain || hostname.endsWith(`.${domain}`);
       });
 
       if (!isFirstParty) {
