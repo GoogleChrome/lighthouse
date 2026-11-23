@@ -11,8 +11,7 @@
 
 import {EventEmitter} from 'events';
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import * as LH from '../../../types/lh.js';
 import {NetworkRecorder} from '../../lib/network-recorder.js';
 import {NetworkRequest} from '../../lib/network-request.js';
@@ -120,9 +119,16 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
   /**
    * @return {Array<NetworkRequest>}
    */
-  getInflightRequests() {
+  getRawRecords() {
     if (!this._networkRecorder) return [];
-    return this._networkRecorder.getRawRecords().filter(request => !request.finished);
+    return this._networkRecorder.getRawRecords();
+  }
+
+  /**
+   * @return {Array<NetworkRequest>}
+   */
+  getInflightRequests() {
+    return this.getRawRecords().filter(request => !request.finished);
   }
 
   /**

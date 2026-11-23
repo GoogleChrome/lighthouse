@@ -9,8 +9,7 @@
  * This is done by collecting Chrome console log messages and filtering out the non-error ones.
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {Audit} from './audit.js';
 import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from '../lib/i18n/i18n.js';

@@ -98,7 +98,7 @@ describe('Rect Helpers', () => {
 
   describe('#getBoundingRectWithPadding', () => {
     it('throws an error if no rects are passed in', () => {
-      expect(() => getBoundingRectWithPadding([])).toThrow('No rects');
+      expect(() => getBoundingRectWithPadding([], 0)).toThrow('No rects');
     });
 
     it('pads rect with half minimum size on all sides', () => {

@@ -137,7 +137,9 @@ describe('ConfigPlugin', () => {
       groups: undefined,
       locales: undefined,
     });
-    assert.strictEqual(Object.getOwnPropertyDescriptor(pluginJson, 'audits').get, undefined);
+    const descriptor = Object.getOwnPropertyDescriptor(pluginJson, 'audits');
+    assert.ok(descriptor);
+    assert.strictEqual(descriptor.get, undefined);
   });
 
   describe('`audits` array', () => {
@@ -145,9 +147,12 @@ describe('ConfigPlugin', () => {
       const pluginClone = deepClone(nicePlugin);
       pluginClone.audits.push({path: 'second/audit.js'});
       const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      const audits = /** @type {Array<Extract<LH.Config.AuditJson, {path: string}>>} */ (
+        pluginJson.audits
+      );
 
-      assert.strictEqual(pluginJson.audits[0].path, 'not/a/path/audit.js');
-      assert.strictEqual(pluginJson.audits[1].path, 'second/audit.js');
+      assert.strictEqual(audits[0].path, 'not/a/path/audit.js');
+      assert.strictEqual(audits[1].path, 'second/audit.js');
     });
 
     it('accepts a plugin with no new audits added', () => {
@@ -191,7 +196,7 @@ describe('ConfigPlugin', () => {
   describe('`category`', () => {
     it('correctly adds the category under the plugin\'s name', () => {
       const pluginJson = ConfigPlugin.parsePlugin(nicePlugin, nicePluginName);
-      assert.ok(pluginJson.categories[nicePluginName]);
+      assert.ok(pluginJson.categories?.[nicePluginName]);
     });
 
     it('throws if category is missing', () => {
@@ -273,6 +278,7 @@ describe('ConfigPlugin', () => {
     describe('`category.auditRefs`', () => {
       it('correctly passes through the contained auditRefs', () => {
         const pluginJson = ConfigPlugin.parsePlugin(nicePlugin, nicePluginName);
+        assert.ok(pluginJson.categories);
 
         const auditRefs = pluginJson.categories[nicePluginName].auditRefs;
         assert.deepStrictEqual(auditRefs[0],

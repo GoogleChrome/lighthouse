@@ -140,7 +140,7 @@ class UrlUtils {
 
   /**
    * @param {string} url
-   * @param {{numPathParts: number, preserveQuery: boolean, preserveHost: boolean}=} options
+   * @param {{numPathParts?: number, preserveQuery?: boolean, preserveHost?: boolean}=} options
    * @return {string}
    */
   static getURLDisplayName(url, options) {

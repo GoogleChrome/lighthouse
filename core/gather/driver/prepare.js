@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import * as storage from './storage.js';
 import * as emulation from '../../lib/emulation.js';
 import {pageFunctions} from '../../lib/page-functions.js';

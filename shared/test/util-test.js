@@ -253,5 +253,23 @@ describe('util helpers', () => {
       expect(Util.truncate('aaaaa', 3, '...')).toEqual('...');
       expect(Util.truncate('aaaaa', 1, '...')).toEqual('...');
     });
+
+    it('falls back to code units if Intl.Segmenter is broken', () => {
+      const originalSegmenter = Intl.Segmenter;
+      // @ts-expect-error - simulate a page's broken polyfill.
+      Intl.Segmenter = class {
+        segment() {
+          return {};
+        }
+      };
+
+      try {
+        expect(Util.truncate('aaa', 30)).toEqual('aaa');
+        expect(Util.truncate('aaaaa', 4)).toEqual('aaa…');
+        expect(Util.truncate('aaaaa', 1, '...')).toEqual('...');
+      } finally {
+        Intl.Segmenter = originalSegmenter;
+      }
+    });
   });
 });

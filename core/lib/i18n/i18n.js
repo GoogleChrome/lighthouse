@@ -7,8 +7,7 @@
 import path from 'path';
 import url from 'url';
 
-import log from 'lighthouse-logger';
-
+import log from '../lighthouse-logger.js';
 import {
   getAvailableLocales,
   isIcuMessage,

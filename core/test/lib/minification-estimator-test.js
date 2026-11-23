@@ -155,6 +155,7 @@ describe('minification estimator', () => {
     });
 
     it('should handle strings', () => {
+      /** @type {Array<[string, number]>} */
       const pairs = [
         [`'//123' // ignored`, 7], // single quotes
         [`"//123" // ignored`, 7], // double quotes

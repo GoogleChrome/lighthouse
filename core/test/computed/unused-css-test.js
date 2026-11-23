@@ -11,6 +11,10 @@ import {expect} from 'expect';
 import {UnusedCSS} from '../../computed/unused-css.js';
 
 describe('UnusedCSS computed artifact', () => {
+  /**
+   * @param {string} content
+   * @param {number} length
+   */
   function generate(content, length) {
     const arr = [];
     for (let i = 0; i < length; i++) {
@@ -22,6 +26,10 @@ describe('UnusedCSS computed artifact', () => {
   const preview = UnusedCSS.determineContentPreview;
 
   describe('#determineContentPreview', () => {
+    /**
+     * @param {string} actual
+     * @param {string} expected
+     */
     function assertLinesContained(actual, expected) {
       expected.split('\n').forEach(line => {
         expect(actual).toContain(line.trim());
@@ -84,21 +92,57 @@ describe('UnusedCSS computed artifact', () => {
   });
 
   describe('#mapSheetToResult', () => {
+    /** @typedef {LH.Util.FirstParamType<typeof UnusedCSS.mapSheetToResult>} StyleSheetInfo */
+    /** @type {StyleSheetInfo} */
     let baseSheet;
     const baseUrl = 'http://g.co/';
 
-    function map(overrides, url = baseUrl) {
+    /**
+     * @param {{header?: Partial<LH.Crdp.CSS.CSSStyleSheetHeader>, content?: string, usedRules?: Array<{startOffset: number, endOffset: number}>}} overrides
+     */
+    function map(overrides) {
+      const header = {
+        ...baseSheet.header,
+        ...overrides.header,
+      };
       if (overrides.header?.sourceURL) {
-        overrides.header.sourceURL = baseUrl + overrides.header.sourceURL;
+        header.sourceURL = baseUrl + overrides.header.sourceURL;
       }
-      return UnusedCSS.mapSheetToResult(Object.assign(baseSheet, overrides), url);
+      const usedRules = (overrides.usedRules ?? baseSheet.usedRules).map(r => ({
+        styleSheetId: '1',
+        used: true,
+        ...r,
+      }));
+      const sheet = {
+        ...baseSheet,
+        ...overrides,
+        header,
+        usedRules,
+      };
+      return UnusedCSS.mapSheetToResult(sheet);
     }
 
     beforeEach(() => {
       baseSheet = {
-        header: {sourceURL: baseUrl},
+        header: {
+          styleSheetId: '1',
+          frameId: '1',
+          sourceURL: baseUrl,
+          origin: 'regular',
+          title: '',
+          disabled: false,
+          isInline: false,
+          isMutable: false,
+          isConstructed: false,
+          startLine: 0,
+          startColumn: 0,
+          length: 5,
+          endLine: 0,
+          endColumn: 5,
+        },
         content: 'dummy',
         usedRules: [],
+        networkRecord: undefined,
       };
     });
 
@@ -130,7 +174,7 @@ describe('UnusedCSS computed artifact', () => {
     it('correctly computes url', () => {
       const expectedPreview = 'dummy';
       assert.strictEqual(map({header: {sourceURL: '', isInline: false}}).url, expectedPreview);
-      assert.strictEqual(map({header: {sourceURL: 'a', isInline: true}}, 'http://g.co/a').url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: 'a', isInline: true}}).url, expectedPreview);
       assert.equal(map({header: {sourceURL: 'foobar'}}).url, 'http://g.co/foobar');
     });
   });

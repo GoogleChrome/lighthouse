@@ -5,7 +5,11 @@
  */
 
 
-/** @param {LH.Result} lhr @param {string} auditName */
+/**
+ * @template {{audits: Record<string, {numericValue?: number}>}} T
+ * @param {T} lhr
+ * @param {string} auditName
+ */
 const getNumericValue = (lhr, auditName) => lhr.audits[auditName]?.numericValue || NaN;
 
 /**
@@ -21,7 +25,8 @@ function getMedianValue(numbers) {
 }
 
 /**
- * @param {LH.Result} lhr
+ * @template {{audits: Record<string, {numericValue?: number}>}} T
+ * @param {T} lhr
  * @param {number} medianFcp
  * @param {number} medianInteractive
  */
@@ -41,8 +46,9 @@ function getMedianSortValue(lhr, medianFcp, medianInteractive) {
  * We avoid the median of single measures like the performance score because they can still exhibit
  * outlier behavior at the beginning or end of load.
  *
- * @param {Array<LH.Result>} runs
- * @return {LH.Result}
+ * @template {{audits: Record<string, {numericValue?: number}>}} T
+ * @param {Array<T>} runs
+ * @return {T}
  */
 function computeMedianRun(runs) {
   const missingFcp = runs.some(run =>
@@ -78,8 +84,9 @@ function computeMedianRun(runs) {
 }
 
 /**
- * @param {Array<LH.Result>} runs
- * @return {Array<LH.Result>}
+ * @template {{audits: Record<string, {numericValue?: number}>}} T
+ * @param {Array<T>} runs
+ * @return {Array<T>}
  */
 function filterToValidRuns(runs) {
   return runs

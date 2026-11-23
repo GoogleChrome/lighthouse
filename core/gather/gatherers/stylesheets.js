@@ -8,8 +8,7 @@
  * @fileoverview Collects all stylesheets and their contents.
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import BaseGatherer from '../base-gatherer.js';
 import {Sentry} from '../../lib/sentry.js';
 
@@ -44,6 +43,10 @@ class Stylesheets extends BaseGatherer {
           'Stylesheets',
           `Error fetching content of stylesheet with URL "${event.header.sourceURL}"`
         );
+        // The stylesheet can be removed between `styleSheetAdded` and fetching its text.
+        // This is an expected race, so don't report it.
+        if (/No style sheet with given id/.test(err.protocolError)) return null;
+
         Sentry.captureException(err, {
           tags: {
             gatherer: 'Stylesheets',
@@ -74,7 +77,11 @@ class Stylesheets extends BaseGatherer {
 
     // Force style to recompute.
     // Doesn't appear to be necessary in newer versions of Chrome.
-    await executionContext.evaluate(() => window.getComputedStyle(document.body), {
+    // `document.body` is null for some documents (e.g. XML or SVG).
+    await executionContext.evaluate(() => {
+      const el = document.body || document.documentElement;
+      if (el) window.getComputedStyle(el);
+    }, {
       args: [],
     });
 

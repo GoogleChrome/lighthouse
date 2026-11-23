@@ -21,15 +21,20 @@ describe('Page Functions', () => {
     global.Node = Node;
     global.HTMLElement = HTMLElement;
     global.document = document;
+    // @ts-expect-error - partial mock window
     global.window = {
       HTMLElement, // for getBoundingClientRect fallback.
     };
   });
 
   after(() => {
+    // @ts-expect-error - cleaning up mocked DOM global
     global.ShadowRoot = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.Node = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.window = undefined;
+    // @ts-expect-error - cleaning up mocked DOM global
     global.document = undefined;
   });
 
@@ -196,7 +201,9 @@ describe('Page Functions', () => {
     it('Truncates long text', () => {
       const el = document.createElement('div');
       el.setAttribute('alt', Array(100).fill('a').join(''));
-      assert.equal(pageFunctions.getNodeLabel(el).length, 80);
+      const label = pageFunctions.getNodeLabel(el);
+      assert.ok(label);
+      assert.equal(label.length, 80);
     });
 
     it('Truncates long text containing unicode surrogate pairs', () => {
@@ -225,6 +232,7 @@ describe('Page Functions', () => {
         </section>
       `;
       const img = el.querySelector('img');
+      assert.ok(img);
       // The img is index 1 of section's children (excluding some whitespace only text nodes).
       assert.equal(pageFunctions.getNodePath(img), '0,SECTION,1,IMG');
     });
@@ -253,8 +261,58 @@ describe('Page Functions', () => {
       childEl.id = 'child';
       childEl.className = 'child-el';
       el.append(childEl);
-      const {nodeLabel} = pageFunctions.getNodeDetails(el);
-      assert.equal(nodeLabel, 'div#parent');
+      const details = pageFunctions.getNodeDetails(el);
+      assert.ok(details);
+      assert.equal(details.nodeLabel, 'div#parent');
+    });
+  });
+
+  describe('timing with a frozen Date.now', () => {
+    const originalDateNow = Date.now;
+
+    beforeEach(() => {
+      // Pages may mock Date (e.g. mockdate, fake timers) so time appears to stand still.
+      // Throw after many calls so a regression fails fast instead of looping forever.
+      const frozenNow = originalDateNow();
+      let calls = 0;
+      Date.now = () => {
+        if (++calls > 10_000) throw new Error('Date.now is frozen, time never advances');
+        return frozenNow;
+      };
+    });
+
+    afterEach(() => {
+      Date.now = originalDateNow;
+    });
+
+    it('computeBenchmarkIndex terminates and returns a positive index', () => {
+      const index = pageFunctions.computeBenchmarkIndex();
+      expect(index).toBeGreaterThan(0);
+      expect(Number.isFinite(index)).toBe(true);
+    });
+
+    it('wrapRequestIdleCallback timeRemaining decreases as time passes', () => {
+      let initial = -1;
+      let after = -1;
+      global.window.requestIdleCallback = (cb) => {
+        cb({didTimeout: false, timeRemaining: () => 50});
+        return 1;
+      };
+
+      pageFunctions.wrapRequestIdleCallback(1);
+      global.window.requestIdleCallback((deadline) => {
+        initial = deadline.timeRemaining();
+        const start = performance.now();
+        while (performance.now() - start < 50) {
+          // Busy wait past the shimmed deadline.
+        }
+        after = deadline.timeRemaining();
+      });
+
+      // Shimmed deadline is (50 - 10ms safety allowance) / cpuSlowdownMultiplier.
+      expect(initial).toBeGreaterThan(0);
+      expect(initial).toBeLessThanOrEqual(40);
+      expect(after).toEqual(0);
     });
   });
 });

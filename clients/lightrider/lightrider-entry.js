@@ -6,10 +6,10 @@
 
 import {Buffer} from 'buffer';
 
-import log from 'lighthouse-logger';
 import {CdpBrowser} from 'puppeteer-core/lib/puppeteer/cdp/Browser.js';
 import {Connection as PptrConnection} from 'puppeteer-core/lib/puppeteer/cdp/Connection.js';
 
+import log from '../../core/lib/lighthouse-logger.js';
 import lighthouse, * as api from '../../core/index.js';
 import {navigationGather} from '../../core/gather/navigation-runner.js';
 import {Runner} from '../../core/runner.js';

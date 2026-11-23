@@ -72,6 +72,7 @@ function makeTrace(interactionEventsData) {
       pid,
       tid,
       ts: ts,
+      dur: 0,
       id: `0x${(415583518 + index).toString(16)}`,
       scope: 'devtools.timeline',
       args: {
@@ -93,11 +94,16 @@ function makeTrace(interactionEventsData) {
   return trace;
 }
 
+/** @type {LH.Artifacts.ComputedSettings} */
+const providedSettings = {throttlingMethod: 'provided'};
+/** @type {LH.Artifacts.ComputedSettings} */
+const simulateSettings = {throttlingMethod: 'simulate'};
+
 describe('Metric: Responsiveness', () => {
   it('should return null if there were no interactions', async () => {
     const metricInputData = {
       trace: makeTrace([]),
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const context = {computedCache: new Map()};
     const event = await Responsiveness.request(metricInputData, context);
@@ -115,7 +121,7 @@ describe('Metric: Responsiveness', () => {
       }
       const metricInputData = {
         trace: makeTrace(interactionEvents),
-        settings: {throttlingMethod: 'provided'},
+        settings: providedSettings,
       };
 
       // For a list labeled 1-n, result will be `Math.ceil(0.98 * n)`th element
@@ -127,6 +133,7 @@ describe('Metric: Responsiveness', () => {
 
       const context = {computedCache: new Map()};
       const event = await Responsiveness.request(metricInputData, context);
+      assert(event);
       assert.equal(event.args.data.duration, expectedTiming, `error at ${eventCount} events`);
     }
   });
@@ -152,17 +159,18 @@ describe('Metric: Responsiveness', () => {
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const context = {computedCache: new Map()};
     const event = await Responsiveness.request(metricInputData, context);
+    assert(event);
     expect(event.args.data).toMatchObject({duration: 49, frame: childFrameId});
   });
 
   it('throws on attempting with a simulated timespan', async () => {
     const metricInputData = {
       trace: makeTrace([]),
-      settings: {throttlingMethod: 'simulate'},
+      settings: simulateSettings,
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow();
@@ -178,7 +186,7 @@ describe('Metric: Responsiveness', () => {
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow(`no interaction event found for responsiveness type 'keyboard'`);
@@ -192,12 +200,13 @@ describe('Metric: Responsiveness', () => {
     const interactionEvents = trace.traceEvents.filter(e => e.name === 'EventTiming');
     assert(interactionEvents.length > 0);
     for (const event of interactionEvents) {
+      assert(event.args.data);
       event.args.data.type = 'pointerdown';
     }
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow(`no interaction event found for responsiveness type 'keyboard'`);
@@ -211,12 +220,13 @@ describe('Metric: Responsiveness', () => {
     const interactionEvents = trace.traceEvents.filter(e => e.name === 'EventTiming');
     assert(interactionEvents.length > 0);
     for (const event of interactionEvents) {
+      assert(event.args.data);
       event.args.data.duration = 500;
     }
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow('no interaction event found within 5ms of responsiveness maxDuration (max: 200, closest 500)'); // eslint-disable-line max-len
@@ -230,8 +240,9 @@ describe('Metric: Responsiveness', () => {
     }];
 
     const metricInputData = {
+      // @ts-expect-error - testing invalid interactionType
       trace: makeTrace(interactionEvents),
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow(`unexpected responsiveness interactionType 'brainWave'`);
@@ -245,9 +256,9 @@ describe('Metric: Responsiveness', () => {
     }];
     const trace = makeTrace(interactionEvents);
     const interactionEvent = trace.traceEvents.find(e => {
-      return e.name === 'EventTiming' && e.args.data.duration === maxDuration;
+      return e.name === 'EventTiming' && e.args.data?.duration === maxDuration;
     });
-    assert(interactionEvent);
+    assert(interactionEvent?.args.data);
     const clonedInteractionEvent = JSON.parse(JSON.stringify(interactionEvent));
 
     // Move original event to another frame.
@@ -260,9 +271,10 @@ describe('Metric: Responsiveness', () => {
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const event = await Responsiveness.request(metricInputData, {computedCache: new Map()});
+    assert(event);
     expect(event.args.data).toMatchObject({
       duration: maxDuration + 1,
       nodeId: 55,
@@ -277,9 +289,9 @@ describe('Metric: Responsiveness', () => {
     }];
     const trace = makeTrace(interactionEvents);
     const interactionEvent = trace.traceEvents.find(e => {
-      return e.name === 'EventTiming' && e.args.data.duration === maxDuration;
+      return e.name === 'EventTiming' && e.args.data?.duration === maxDuration;
     });
-    assert(interactionEvent);
+    assert(interactionEvent?.args.data);
     const clonedInteractionEvent = JSON.parse(JSON.stringify(interactionEvent));
 
     // Make original event a mouse event.
@@ -292,9 +304,10 @@ describe('Metric: Responsiveness', () => {
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const event = await Responsiveness.request(metricInputData, {computedCache: new Map()});
+    assert(event);
     expect(event.args.data).toMatchObject({
       duration: maxDuration + 1,
       nodeId: 55,
@@ -309,9 +322,9 @@ describe('Metric: Responsiveness', () => {
     }];
     const trace = makeTrace(interactionEvents);
     const interactionEvent = trace.traceEvents.find(e => {
-      return e.name === 'EventTiming' && e.args.data.duration === maxDuration;
+      return e.name === 'EventTiming' && e.args.data?.duration === maxDuration;
     });
-    assert(interactionEvent);
+    assert(interactionEvent?.args.data);
     const clonedInteractionEvent = JSON.parse(JSON.stringify(interactionEvent));
 
     // Invalidate original event.
@@ -327,9 +340,10 @@ describe('Metric: Responsiveness', () => {
 
     const metricInputData = {
       trace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const event = await Responsiveness.request(metricInputData, {computedCache: new Map()});
+    assert(event);
     expect(event.args.data).toMatchObject({
       duration: maxDuration - 1,
       nodeId: -1,
@@ -339,7 +353,7 @@ describe('Metric: Responsiveness', () => {
   it('evaluates from a real trace', async () => {
     const metricInputData = {
       trace: interactionTrace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const context = {computedCache: new Map()};
     const event = await Responsiveness.request(metricInputData, context);
@@ -360,7 +374,7 @@ describe('Metric: Responsiveness', () => {
   it('evaluates from a real trace with no interaction events', async () => {
     const metricInputData = {
       trace: noInteractionTrace,
-      settings: {throttlingMethod: 'provided'},
+      settings: providedSettings,
     };
     const context = {computedCache: new Map()};
     const event = await Responsiveness.request(metricInputData, context);

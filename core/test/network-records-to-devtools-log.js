@@ -10,6 +10,7 @@ import assert from 'assert/strict';
 import {NetworkRecorder} from '../../core/lib/network-recorder.js';
 
 /** @typedef {import('../../core/lib/network-request.js').NetworkRequest} NetworkRequest */
+/** @typedef {Omit<Partial<NetworkRequest>, 'timing'> & {timing?: Partial<LH.Crdp.Network.ResourceTiming>}} NetworkRequestInput */
 
 const idBase = '127122';
 const exampleUrl = 'https://testingurl.com/';
@@ -444,7 +445,7 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
  * testing. If run from a test runner, verifies that everything in
  * `networkRecords` will be in any network records generated from the output
  * (use `skipVerification` to manually skip this assertion).
- * @param {Array<Partial<NetworkRequest>>} networkRecords
+ * @param {Array<NetworkRequestInput>} networkRecords
  * @param {{skipVerification?: boolean}=} options
  * @return {LH.DevtoolsLog}
  */

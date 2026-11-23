@@ -21,7 +21,7 @@
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number, nodeId?: number, type?: string}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number, nodeId?: number, type?: string}, frame: string}}} LCPCandidateEvent */
 
-import log from 'lighthouse-logger';
+import log from '../lighthouse-logger.js';
 
 const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 

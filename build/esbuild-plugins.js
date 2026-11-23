@@ -13,8 +13,39 @@ import * as acorn from 'acorn';
 import esbuild from 'esbuild';
 
 import {LH_ROOT} from '../shared/root.js';
+import {ARD_VERSION} from '../third-party/ard/ard.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 import {nodeModuleShims} from './plugins/esbuild-node-polyfills.js';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   url?: string,
+ *   version?: string,
+ *   license?: string,
+ *   licenseText?: string,
+ * }} DependencyNotice
+ */
+
+/**
+ * Metadata for vendored directories under `third-party/` that do not have their own `package.json`.
+ * @type {Record<string, {npmPackage: string} | {name: string, url: string, version: string, license: string, licenseFile: string}>}
+ */
+const VENDORED_THIRD_PARTY_DIRS = {
+  'ard': {
+    name: 'ard-spec',
+    url: 'https://github.com/ards-project/ard-spec',
+    version: ARD_VERSION,
+    license: 'Apache-2.0',
+    licenseFile: path.join(LH_ROOT, 'third-party/ard/LICENSE'),
+  },
+  // `third-party/axe/valid-langs.js` is extracted from `axe-core`.
+  'axe': {
+    npmPackage: 'axe-core',
+  },
+};
 
 /**
  * @typedef PartialLoader
@@ -124,7 +155,6 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
   // TODO: really this should use import.meta.resolve, but... that's not a thing yet!
   /** @type {Record<string, string>} */
   const normalizedReplaceMap = {};
-  const require = createRequire(import.meta.url);
   for (const [k, v] of Object.entries(replaceMap)) {
     let resolvedPath = k;
     try {
@@ -457,7 +487,211 @@ function lighthouseShimPlugin(options) {
 }
 
 /**
- * @param {{removeExtraLicenses?: boolean}} options
+ * Returns true if `modulePath` is a virtual/shimmed module in an esbuild plugin namespace
+ * (e.g. `replace-modules:...`, `lh-audit-shim:...`, `lh-gatherer-shim:...`).
+ * @param {string} modulePath
+ * @return {boolean}
+ */
+function isShimmedOrVirtualModule(modulePath) {
+  return /^[a-z][a-z0-9-]+:/.test(modulePath);
+}
+
+/**
+ * @param {unknown} rawUrl
+ * @return {string | undefined}
+ */
+function normalizePackageUrl(rawUrl) {
+  const candidate = rawUrl && typeof rawUrl === 'object' && 'url' in rawUrl ?
+    rawUrl.url :
+    rawUrl;
+  if (!candidate || typeof candidate !== 'string') return undefined;
+
+  const url = candidate.replace(/^git\+/, '').replace(/\.git$/, '');
+  if (url.startsWith('github:')) {
+    return `https://github.com/${url.substring(7)}`;
+  }
+  if (url.startsWith('gitlab:')) {
+    return `https://gitlab.com/${url.substring(7)}`;
+  }
+  if (url.startsWith('bitbucket:')) {
+    return `https://bitbucket.org/${url.substring(10)}`;
+  }
+  if (url.startsWith('ssh://git@github.com/')) {
+    return `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
+  }
+  if (url.startsWith('git://github.com/')) {
+    return `https://github.com/${url.substring('git://github.com/'.length)}`;
+  }
+  if (url.startsWith('git@github.com:')) {
+    return `https://github.com/${url.substring('git@github.com:'.length)}`;
+  }
+  if (!url.startsWith('http')) {
+    const parts = url.split('/');
+    if (parts.length === 2) {
+      return `https://github.com/${url}`;
+    }
+  }
+  return url;
+}
+
+/**
+ * @param {string} packageDir
+ * @return {DependencyNotice}
+ */
+function readPackageNotice(packageDir) {
+  const pkg = JSON.parse(fs.readFileSync(path.join(packageDir, 'package.json'), 'utf-8'));
+  const preferredLicenseFiles = [
+    'LICENSE',
+    'LICENSE.txt',
+    'LICENSE.md',
+    'license.md',
+    'LICENSE.MIT',
+    'LICENSE.APACHE',
+  ];
+
+  let licenseText;
+  for (const fileName of preferredLicenseFiles) {
+    const candidate = path.join(packageDir, fileName);
+    if (fs.existsSync(candidate)) {
+      licenseText = fs.readFileSync(candidate, 'utf-8');
+      break;
+    }
+  }
+  if (!licenseText) {
+    const fallbackFile = fs.readdirSync(packageDir)
+      .find(f => /^licen[sc]e/i.test(f) || /^copying/i.test(f));
+    if (fallbackFile) {
+      licenseText = fs.readFileSync(path.join(packageDir, fallbackFile), 'utf-8');
+    }
+  }
+
+  let license;
+  if (pkg.license) {
+    license = typeof pkg.license === 'object' ? pkg.license?.type : pkg.license;
+  } else if (Array.isArray(pkg.licenses)) {
+    license = pkg.licenses.map((/** @type {any} */ l) => l.type || l).join(', ');
+  }
+
+  return {
+    name: pkg.name ?? 'N/A',
+    url: normalizePackageUrl(pkg.homepage ?? pkg.repository),
+    version: pkg.version,
+    license,
+    licenseText,
+  };
+}
+
+/**
+ * Collects third-party dependency license notices for an esbuild bundle output,
+ * excluding shimmed/virtual modules and tree-shaken inputs.
+ * @param {{
+ *   metafile: import('esbuild').Metafile,
+ *   sources: string[],
+ *   inlinedFilesByImporter?: Map<string, Set<string>>,
+ *   distDir: string,
+ * }} options
+ * @return {DependencyNotice[]}
+ */
+function collectThirdPartyNotices({metafile, sources, inlinedFilesByImporter, distDir}) {
+  const jsOutput = Object.entries(metafile.outputs)
+    .find(([outPath]) => outPath.endsWith('.js'))?.[1];
+
+  /** @type {Set<string>} */
+  const activeOutputInputs = new Set();
+  for (const [inputPath, info] of Object.entries(jsOutput?.inputs ?? {})) {
+    if (isShimmedOrVirtualModule(inputPath)) continue;
+    if (info.bytesInOutput <= 0) continue;
+    activeOutputInputs.add(path.resolve(process.cwd(), inputPath));
+  }
+
+  /** @type {Set<string>} */
+  const paths = new Set(activeOutputInputs);
+  for (const source of sources) {
+    if (isShimmedOrVirtualModule(source)) continue;
+    paths.add(path.resolve(distDir, source));
+  }
+  if (inlinedFilesByImporter) {
+    for (const [importerPath, files] of inlinedFilesByImporter.entries()) {
+      if (!activeOutputInputs.has(path.resolve(importerPath))) continue;
+      for (const file of files) {
+        paths.add(path.resolve(file));
+      }
+    }
+  }
+
+  /** @type {Map<string, DependencyNotice>} */
+  const noticesByName = new Map();
+  /** @type {Set<string>} */
+  const seenPkgDirs = new Set();
+  const thirdPartyRoot = path.join(LH_ROOT, 'third-party');
+
+  for (const resolvedPath of paths) {
+    let dir = fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory() ?
+      resolvedPath :
+      path.dirname(resolvedPath);
+    let pkgJsonPath;
+    while (dir.startsWith(LH_ROOT) && dir !== LH_ROOT) {
+      const candidate = path.join(dir, 'package.json');
+      if (fs.existsSync(candidate)) {
+        pkgJsonPath = candidate;
+        break;
+      }
+      dir = path.dirname(dir);
+    }
+
+    if (pkgJsonPath) {
+      const pkgDir = path.dirname(pkgJsonPath);
+      if (!seenPkgDirs.has(pkgDir)) {
+        seenPkgDirs.add(pkgDir);
+        const notice = readPackageNotice(pkgDir);
+        // We only care about third-party packages (or workspace packages that aren't the root).
+        if (
+          notice.name !== 'N/A' &&
+          notice.name !== 'lighthouse' &&
+          notice.name !== 'legacy-javascript'
+        ) {
+          noticesByName.set(notice.name, notice);
+        }
+      }
+      continue;
+    }
+
+    if (resolvedPath.startsWith(thirdPartyRoot + path.sep)) {
+      const subdir = path.relative(thirdPartyRoot, resolvedPath).split(path.sep)[0];
+      const vendored = VENDORED_THIRD_PARTY_DIRS[subdir];
+      if (!vendored) {
+        throw new Error(
+          `Missing third-party license metadata for vendored directory: third-party/${subdir}`
+        );
+      }
+      if ('npmPackage' in vendored) {
+        if (!noticesByName.has(vendored.npmPackage)) {
+          const npmPkgDir = path.dirname(require.resolve(`${vendored.npmPackage}/package.json`));
+          seenPkgDirs.add(npmPkgDir);
+          noticesByName.set(vendored.npmPackage, readPackageNotice(npmPkgDir));
+        }
+      } else if (!noticesByName.has(vendored.name)) {
+        noticesByName.set(vendored.name, {
+          name: vendored.name,
+          url: vendored.url,
+          version: vendored.version,
+          license: vendored.license,
+          licenseText: fs.readFileSync(vendored.licenseFile, 'utf-8'),
+        });
+      }
+    }
+  }
+
+  return Array.from(noticesByName.keys())
+    .sort()
+    .map(name => /** @type {DependencyNotice} */ (noticesByName.get(name)));
+}
+
+/**
+ * @param {{
+ *   removeExtraLicenses?: boolean,
+ *   inlinedFilesByImporter?: Map<string, Set<string>>,
+ * }} options
  * @return {esbuild.Plugin}
  */
 function postprocess(options = {}) {
@@ -510,101 +744,32 @@ function postprocess(options = {}) {
 
         let allDepsList = '';
         let thirdPartyNoticesText = '';
-        const allDeps = new Set();
 
-        if (result.metafile && result.metafile.inputs) {
-          for (const inputPath of Object.keys(result.metafile.inputs)) {
-            let modulePath = inputPath.replace(/^replace-modules:/, '');
-            if (modulePath.startsWith('node_modules/')) {
-              modulePath = modulePath.slice('node_modules/'.length);
-            } else if (modulePath.includes('/node_modules/')) {
-              modulePath = modulePath.split('/node_modules/').pop() || '';
-            } else {
-              continue;
-            }
+        if (result.metafile && Object.keys(result.metafile.inputs).length > 0) {
+          const sourcemap = mapFile ? JSON.parse(mapFile.text) : {sources: []};
+          const distDir = path.dirname(codeFile.path);
+          const notices = collectThirdPartyNotices({
+            metafile: result.metafile,
+            sources: sourcemap.sources,
+            inlinedFilesByImporter: options.inlinedFilesByImporter,
+            distDir,
+          });
 
-            const pkgNameMatch = modulePath.match(/^(@[^/]+\/[^/]+|[^/]+)/);
-            if (pkgNameMatch) {
-              allDeps.add(pkgNameMatch[1]);
-            }
-          }
-
-          // Hardcode axe-core as it is loaded via fs.readFileSync and doesn't appear in metafile.inputs
-          if (code.includes('Deque Systems') || code.includes('axe-core')) {
-            allDeps.add('axe-core');
-          }
-
-          if (allDeps.size > 0) {
+          if (notices.length > 0) {
             /* eslint-disable max-len */
-            const require = createRequire(import.meta.url);
-            const sortedDeps = Array.from(allDeps).sort();
             allDepsList = 'Bundled Dependencies:\n\n';
             thirdPartyNoticesText = '========================================================================\nThird-Party Software Notices and Licenses\n========================================================================\n\nThe Lighthouse bundle incorporates code from the following third-party\ndependencies under their respective open-source licenses:\n';
 
-            for (const dep of sortedDeps) {
-              let licenseStr = 'Unknown';
-              let repoUrl = '';
-              let versionStr = '';
-              let licenseFullText = '';
-              try {
-                let pkgJsonPath;
-                try {
-                  pkgJsonPath = require.resolve(dep + '/package.json');
-                } catch (e) {
-                  pkgJsonPath = path.resolve(process.cwd(), 'node_modules', dep, 'package.json');
-                }
-                const pkgJson = JSON.parse(await fs.promises.readFile(pkgJsonPath, 'utf8'));
+            for (const dep of notices) {
+              const licenseStr = dep.license ?? 'Unknown';
+              const repoUrl = dep.url ?? '';
+              const versionStr = dep.version ?? '';
+              const licenseFullText = dep.licenseText ?
+                dep.licenseText.replaceAll('\r', '') :
+                '(License text not found)';
 
-                if (pkgJson.version) {
-                  versionStr = pkgJson.version;
-                }
-
-                if (pkgJson.license) {
-                  licenseStr = typeof pkgJson.license === 'string' ? pkgJson.license : pkgJson.license.type;
-                } else if (pkgJson.licenses && Array.isArray(pkgJson.licenses)) {
-                  licenseStr = pkgJson.licenses.map((/** @type {any} */ l) => l.type || l).join(', ');
-                }
-
-                if (pkgJson.repository) {
-                  let url = typeof pkgJson.repository === 'string' ? pkgJson.repository : pkgJson.repository.url;
-                  if (url) {
-                    url = url.replace(/^git\+/, '').replace(/\.git$/, '');
-                    if (url.startsWith('github:')) {
-                      url = `https://github.com/${url.substring(7)}`;
-                    } else if (url.startsWith('gitlab:')) {
-                      url = `https://gitlab.com/${url.substring(7)}`;
-                    } else if (url.startsWith('bitbucket:')) {
-                      url = `https://bitbucket.org/${url.substring(10)}`;
-                    } else if (url.startsWith('ssh://git@github.com/')) {
-                      url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
-                    } else if (url.startsWith('git://github.com/')) {
-                      url = `https://github.com/${url.substring('git://github.com/'.length)}`;
-                    } else if (url.startsWith('git@github.com:')) {
-                      url = `https://github.com/${url.substring('git@github.com:'.length)}`;
-                    } else if (!url.startsWith('http')) {
-                      const parts = url.split('/');
-                      if (parts.length === 2) {
-                        url = `https://github.com/${url}`;
-                      }
-                    }
-                    repoUrl = url;
-                  }
-                }
-
-                const pkgJsonDir = path.dirname(pkgJsonPath);
-                const files = await fs.promises.readdir(pkgJsonDir);
-                const licenseFile = files.find((/** @type {string} */ f) => f.toLowerCase().startsWith('license') || f.toLowerCase() === 'copying');
-                if (licenseFile) {
-                  licenseFullText = await fs.promises.readFile(path.join(pkgJsonDir, licenseFile), 'utf8');
-                } else {
-                  licenseFullText = '(License text not found)';
-                }
-              } catch (e) {
-                licenseFullText = '(License text not found)';
-              }
-
-              allDepsList += `- ${dep}${versionStr ? `@${versionStr}` : ''}: ${licenseStr}${repoUrl ? ` <${repoUrl}>` : ''}\n`;
-              thirdPartyNoticesText += `\n------------------------------------------------------------------------\n${dep}${versionStr ? ` (v${versionStr})` : ''}\nLicense: ${licenseStr}\nURL: ${repoUrl || 'Unknown'}\n------------------------------------------------------------------------\n${licenseFullText}\n`;
+              allDepsList += `- ${dep.name}${versionStr ? `@${versionStr}` : ''}: ${licenseStr}${repoUrl ? ` <${repoUrl}>` : ''}\n`;
+              thirdPartyNoticesText += `\n------------------------------------------------------------------------\n${dep.name}${versionStr ? ` (v${versionStr})` : ''}\nLicense: ${licenseStr}\nURL: ${repoUrl || 'Unknown'}\n------------------------------------------------------------------------\n${licenseFullText}\n`;
             }
             /* eslint-enable max-len */
           }
@@ -636,6 +801,7 @@ export {
   escapeNonAsciiComments,
   umd,
   lighthouseShimPlugin,
+  collectThirdPartyNotices,
   postprocess,
   nodeModuleShims,
 };

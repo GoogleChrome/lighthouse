@@ -12,7 +12,7 @@ import {fnAny} from '../test-utils.js';
 
 /**
  * @template {keyof LH.CrdpCommands} C
- * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | LH.Util.RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
+ * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | LH.Util.RecursivePartial<LH.CrdpCommands[C]['returnType']> | (LH.CrdpCommands[C]['returnType'] extends void ? Record<string, never> : never) | Promise<Error>} MockResponse
  */
 
 /**

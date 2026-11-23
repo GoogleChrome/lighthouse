@@ -250,6 +250,7 @@ describe('.evaluate', () => {
 const URL = globalThis.__nativeURL || globalThis.URL;
 const performance = globalThis.__nativePerformance || globalThis.performance;
 const fetch = globalThis.__nativeFetch || globalThis.fetch;
+const Map = globalThis.__nativeMap || globalThis.Map;
         globalThis.__lighthouseExecutionContextUniqueIdentifier =
           undefined;
 

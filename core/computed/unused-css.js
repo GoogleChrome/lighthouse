@@ -11,7 +11,7 @@ import {estimateCompressedContentSize} from '../lib/script-helpers.js';
 
 const PREVIEW_LENGTH = 100;
 
-/** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
+/** @typedef {LH.Artifacts.CSSStyleSheetInfo & {networkRecord: LH.Artifacts.NetworkRequest|undefined, usedRules: Array<LH.Crdp.CSS.RuleUsage>}} StyleSheetInfo */
 
 class UnusedCSS {
   /**

@@ -324,6 +324,7 @@ class ExecutionContext {
       window.__nativeURL = window.URL;
       window.__nativePerformance = window.performance;
       window.__nativeFetch = window.fetch;
+      window.__nativeMap = window.Map;
       window.__ElementMatches = window.Element.prototype.matches;
       window.__HTMLElementBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect;
     }, {args: []});
@@ -339,6 +340,7 @@ class ExecutionContext {
     'const URL = globalThis.__nativeURL || globalThis.URL',
     'const performance = globalThis.__nativePerformance || globalThis.performance',
     'const fetch = globalThis.__nativeFetch || globalThis.fetch',
+    'const Map = globalThis.__nativeMap || globalThis.Map',
   ].join(';\n');
 
   /**

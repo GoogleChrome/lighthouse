@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as Lantern from '../lib/lantern/lantern.js';
 import * as TraceEngine from '../lib/trace-engine.js';
@@ -21,7 +20,7 @@ import * as LH from '../../types/lh.js';
 class TraceEngineResult {
   /**
    * @param {LH.TraceEvent[]} _traceEvents
-   * @param {LH.Audit.Context['settings']} settings
+   * @param {Partial<LH.Artifacts.ComputedSettings>} settings
    * @param {LH.Artifacts['SourceMaps']} SourceMaps
    * @param {LH.Artifacts['HostDPR']} HostDPR
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
@@ -35,7 +34,12 @@ class TraceEngineResult {
 
     const lanternSettings = {};
     if (settings.throttlingMethod) lanternSettings.throttlingMethod = settings.throttlingMethod;
-    if (settings.throttling) lanternSettings.throttling = settings.throttling;
+    if (settings.throttling) {
+      lanternSettings.throttling = {
+        ...Lantern.Simulation.Constants.throttling.mobileSlow4G,
+        ...settings.throttling,
+      };
+    }
     if (settings.precomputedLanternData) {
       lanternSettings.precomputedLanternData = settings.precomputedLanternData;
     }
@@ -72,15 +76,6 @@ class TraceEngineResult {
     const data = processor.data;
     const insights = processor.insights;
     this.localizeInsights(insights);
-
-    // Release intermediate handler state retained in module-level TraceHandlers singletons
-    // and static Lantern simulation node timings after trace processing completes.
-    for (const handler of Object.values(TraceEngine.TraceHandlers)) {
-      handler.reset();
-    }
-    if (!process.env.LANTERN_DEBUG) {
-      Lantern.Simulation.Simulator.allNodeTimings.clear();
-    }
 
     return {data, insights};
   }
@@ -237,7 +232,7 @@ class TraceEngineResult {
   }
 
   /**
-   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
+   * @param {{trace: LH.Trace, settings: Partial<LH.Artifacts.ComputedSettings>, SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */

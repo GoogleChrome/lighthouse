@@ -9,6 +9,24 @@ import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js
 import {createTestTrace} from '../create-test-trace.js';
 
 describe('DocumentUrls', () => {
+  /**
+   * @param {string} url
+   * @return {LH.Crdp.Page.Frame}
+   */
+  function createFrame(url) {
+    return {
+      id: 'ROOT_FRAME',
+      loaderId: '1',
+      url,
+      domainAndRegistry: 'example.com',
+      securityOrigin: new URL(url).origin,
+      mimeType: 'text/html',
+      secureContextType: 'Secure',
+      crossOriginIsolatedContextType: 'NotIsolated',
+      gatedAPIFeatures: [],
+    };
+  }
+
   it('should resolve redirects', async () => {
     const trace = createTestTrace({frameUrl: 'https://page.example.com/'});
     const devtoolsLog = networkRecordsToDevtoolsLog([
@@ -18,21 +36,19 @@ describe('DocumentUrls', () => {
       {requestId: '1', url: 'https://page.example.com/'},
     ]);
     devtoolsLog.push({
+      targetType: 'page',
       method: 'Page.frameNavigated',
       params: {
-        frame: {
-          id: 'ROOT_FRAME',
-          url: 'https://www.example.com/',
-        },
+        frame: createFrame('https://www.example.com/'),
+        type: 'Navigation',
       },
     });
     devtoolsLog.push({
+      targetType: 'page',
       method: 'Page.frameNavigated',
       params: {
-        frame: {
-          id: 'ROOT_FRAME',
-          url: 'https://page.example.com/',
-        },
+        frame: createFrame('https://page.example.com/'),
+        type: 'Navigation',
       },
     });
 

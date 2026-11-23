@@ -15,7 +15,7 @@ import {TraceEngineResult} from './trace-engine-result.js';
  */
 class NavigationInsights {
   /**
-    * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
+    * @param {{trace: LH.Trace, settings: Partial<LH.Artifacts.ComputedSettings>, SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR']}} data
     * @param {LH.Artifacts.ComputedContext} context
    */
   static async compute_(data, context) {

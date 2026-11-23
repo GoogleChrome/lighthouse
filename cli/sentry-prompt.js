@@ -6,7 +6,8 @@
 
 import Configstore from 'configstore';
 import Confirm from 'enquirer';
-import log from 'lighthouse-logger';
+
+import log from '../core/lib/lighthouse-logger.js';
 
 const MAXIMUM_WAIT_TIME = 20 * 1000;
 

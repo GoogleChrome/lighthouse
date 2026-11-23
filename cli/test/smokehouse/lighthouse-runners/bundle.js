@@ -8,7 +8,7 @@
  * @fileoverview  A runner that launches Chrome and executes Lighthouse via a
  * bundle to test that bundling has produced correct and runnable code.
  * Currently uses `lighthouse-dt-bundle.js`.
- * Runs in a worker to avoid messing up marky's global state.
+ * Runs in a worker to avoid messing up global state.
  */
 
 import fs from 'fs';

@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from './lighthouse-logger.js';
 import {initializeConfig} from '../config/config.js';
 
-/** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
-/** @typedef {import('@sentry/node').NodeClient} NodeClient */
-/** @typedef {import('@sentry/node').NodeOptions} NodeOptions */
-/** @typedef {import('@sentry/node').SeverityLevel} SeverityLevel */
+/** @typedef {import('./sentry-reporter.js').Breadcrumb} Breadcrumb */
+/** @typedef {import('./sentry-reporter.js').EnvironmentData} EnvironmentData */
+/** @typedef {import('./sentry-reporter.js').SeverityLevel} SeverityLevel */
+/** @typedef {import('./sentry-reporter.js').CaptureOptions} CaptureOptions */
 
 const SENTRY_URL = 'https://a6bb0da87ee048cc9ae2a345fc09ab2e:63a7029f46f74265981b7e005e0f69f8@sentry.io/174697';
 
@@ -26,8 +25,8 @@ const noop = () => { };
  */
 const sentryDelegate = {
   init,
-  /** @type {(message: string, level?: SeverityLevel) => void} */
-  captureMessage: noop,
+  /** @type {(message: string, levelOrOpts?: SeverityLevel|CaptureOptions) => Promise<void>} */
+  captureMessage: async () => { },
   /** @type {(breadcrumb: Breadcrumb) => void} */
   captureBreadcrumb: noop,
   /** @type {() => any} */
@@ -43,7 +42,7 @@ const sentryDelegate = {
 
 /**
  * When called, replaces noops with actual Sentry implementation.
- * @param {{url: string, flags: LH.CliFlags, config?: LH.Config, environmentData: NodeOptions}} opts
+ * @param {{url: string, flags: LH.CliFlags, config?: LH.Config, environmentData: EnvironmentData}} opts
  */
 async function init(opts) {
   // If error reporting is disabled, leave the functions as a noop
@@ -57,11 +56,8 @@ async function init(opts) {
   }
 
   try {
-    const Sentry = await import('@sentry/node');
-    Sentry.init({
-      ...opts.environmentData,
-      dsn: SENTRY_URL,
-    });
+    const {createSentryReporter} = await import('./sentry-reporter.js');
+    const Sentry = createSentryReporter(SENTRY_URL, opts.environmentData);
 
     /** @type {LH.Config.Settings | LH.CliFlags} */
     let settings = opts.flags;
@@ -95,15 +91,16 @@ async function init(opts) {
     // Keep a record of exceptions per audit/gatherer so we can just report once
     const sentryExceptionCache = new Map();
     // Special case captureException to return a Promise so we don't process.exit too early
-    sentryDelegate.captureException = async (err, opts = {}) => {
+    sentryDelegate.captureException = async (err, opts) => {
       // Ignore if there wasn't an error
       if (!err) return;
+      opts = opts || {};
 
       // Ignore expected errors
       // @ts-expect-error Non-standard property added to flag error as not needing capturing.
       if (err.expected) return;
 
-      const tags = opts.tags || {};
+      const tags = {...opts.tags};
       if (tags.audit) {
         const key = `audit-${tags.audit}-${err.message}`;
         if (sentryExceptionCache.has(key)) return;
@@ -116,36 +113,31 @@ async function init(opts) {
         sentryExceptionCache.set(key, true);
       }
 
+      /** @type {string[]|undefined} */
+      let fingerprint;
       // @ts-expect-error - properties added to protocol method LighthouseErrors.
       if (err.protocolMethod) {
-        // Protocol errors all share same stack trace, so add more to fingerprint
+        // Protocol errors all share same stack trace, so add more to fingerprint.
+        // Numbers (positions, ids, etc.) are normalized so they don't split one error into
+        // many issues.
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
-        opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
+        const protocolError = String(err.protocolError ?? '').replace(/\d+/g, '<n>');
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
+        fingerprint = ['{{ default }}', err.protocolMethod, protocolError];
 
-        opts.tags = opts.tags || {};
         // @ts-expect-error - properties added to protocol method LighthouseErrors.
-        opts.tags.protocolMethod = err.protocolMethod;
+        tags.protocolMethod = err.protocolMethod;
       }
 
-      Sentry.withScope(scope => {
-        if (opts.level) {
-          // @ts-expect-error - allow any string.
-          scope.setLevel(opts.level);
-        }
-        if (opts.tags) {
-          scope.setTags(opts.tags);
-        }
+      // @ts-expect-error Non-standard property
+      const extra = {...opts.extra, ...err.extra};
 
-        // Add extra details
-        let extra;
-        if (opts.extra) extra = {...opts.extra};
-        // @ts-expect-error Non-standard property
-        if (err.extra) extra = {...extra, ...err.extra};
-        if (extra) {
-          scope.setExtras(extra);
-        }
-
-        Sentry.captureException(err);
+      await Sentry.captureException(err, {
+        // @ts-expect-error - allow any string.
+        level: opts.level,
+        tags,
+        extra,
+        fingerprint,
       });
     };
   } catch (e) {

@@ -31,7 +31,7 @@ class Metrics extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
+   * @param {Pick<LH.Artifacts, 'GatherContext'|'Trace'|'DevtoolsLog'|'URL'|'SourceMaps'|'HostDPR'>} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */

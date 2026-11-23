@@ -532,10 +532,16 @@ declare namespace Artifacts {
 
   type MeasureEntry = LHResult.MeasureEntry;
 
+  type ComputedSettings = Util.ImmutableObject<
+    Pick<Config.Settings, 'throttlingMethod'> &
+    Partial<Omit<Config.Settings, 'throttling'>> &
+    {throttling?: Partial<Config.Settings['throttling']>}
+  >;
+
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Audit.Context['settings'];
+    settings: ComputedSettings;
     gatherContext: Artifacts['GatherContext'];
     simulator: Gatherer.Simulation.Simulator | null;
     URL: Artifacts['URL'];

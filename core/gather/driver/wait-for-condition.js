@@ -6,8 +6,7 @@
 
 /* global window */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {ExecutionContext} from './execution-context.js';
 
@@ -231,9 +230,10 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
   /**
    * @param {ExecutionContext} executionContext
    * @param {() => void} resolve
+   * @param {(err: Error) => void} reject
    * @return {Promise<void>}
    */
-  async function checkForQuiet(executionContext, resolve) {
+  async function checkForQuiet(executionContext, resolve, reject) {
     if (canceled) return;
     const timeSinceLongTask =
       await executionContext.evaluate(
@@ -247,7 +247,8 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
       } else {
         log.verbose('waitFor', `CPU has been idle for ${timeSinceLongTask} ms`);
         const timeToWait = waitForCPUQuiet - timeSinceLongTask;
-        lastTimeout = setTimeout(() => checkForQuiet(executionContext, resolve), timeToWait);
+        lastTimeout = setTimeout(
+          () => checkForQuiet(executionContext, resolve, reject).catch(reject), timeToWait);
       }
     }
   }
@@ -261,7 +262,7 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
   /** @type {Promise<void>} */
   const promise = new Promise((resolve, reject) => {
     executionContext.evaluate(registerPerformanceObserverInPage, {args: [], useIsolation: true})
-      .then(() => checkForQuiet(executionContext, resolve))
+      .then(() => checkForQuiet(executionContext, resolve, reject))
       .catch(reject);
     cancel = () => {
       if (canceled) return;
