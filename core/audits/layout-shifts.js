@@ -12,7 +12,7 @@ import {TraceEngineResult} from '../computed/trace-engine-result.js';
 
 const MAX_LAYOUT_SHIFTS = 15;
 
-/** @typedef {LH.Audit.Details.TableItem & {node?: LH.Audit.Details.NodeValue, score: number, subItems?: {type: 'subitems', items: SubItem[]}}} Item */
+/** @typedef {LH.Audit.Details.TableItem & {node: LH.Audit.Details.NodeValue | LH.Audit.Details.TextValue, score: number, subItems?: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{extra?: LH.Audit.Details.NodeValue | LH.Audit.Details.UrlValue, cause: LH.IcuMessage}} SubItem */
 
 /* eslint-disable max-len */
@@ -121,7 +121,11 @@ class LayoutShifts extends Audit {
       }
 
       items.push({
-        node: biggestImpactElement ? Audit.makeNodeItem(biggestImpactElement.node) : undefined,
+        // The element is missing if the trace didn't name one, or if the page removed it
+        // from the DOM before TraceElements could resolve it. Say so rather than show a blank cell.
+        node: biggestImpactElement ?
+          Audit.makeNodeItem(biggestImpactElement.node) :
+          {type: 'text', value: str_(i18n.UIStrings.elementNotFound)},
         score: event.args.data.weighted_score_delta,
         subItems: subItems.length ? {type: 'subitems', items: subItems} : undefined,
       });

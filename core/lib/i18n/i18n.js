@@ -58,6 +58,8 @@ const UIStrings = {
   columnSource: 'Source',
   /** Label for a column in a data table; entries will be a representation of a DOM element. */
   columnElement: 'Element',
+  /** Text shown in a data table's "Element" column when the element can't be identified, most often because the page removed it from the DOM before Lighthouse could inspect it. */
+  elementNotFound: 'Element not found (it may have been removed from the page)',
   /** Label for a column in a data table; entries will be the number of milliseconds since the page started loading. */
   columnStartTime: 'Start Time',
   /** Label for a column in a data table; entries will be the total number of milliseconds from the start time until the end time. */

@@ -115,7 +115,9 @@ class CLSCulpritsInsight extends Audit {
           const biggestImpactNodeId = TraceElements.getBiggestImpactNodeForShiftEvent(
             event.args.data.impacted_nodes || [], impactByNodeId);
           return {
-            node: makeNodeItemForNodeId(artifacts.TraceElements, biggestImpactNodeId),
+            // See layout-shifts.js: show why the element is missing instead of a blank cell.
+            node: makeNodeItemForNodeId(artifacts.TraceElements, biggestImpactNodeId) ??
+              {type: 'text', value: str_(i18n.UIStrings.elementNotFound)},
             score: event.args.data?.weighted_score_delta,
             subItems: this.getCulpritSubItems(insight, event, artifacts.TraceElements),
           };
