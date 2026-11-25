@@ -238,6 +238,7 @@ const defaultConfig = {
     'accessibility/empty-heading',
     'accessibility/form-field-multiple-labels',
     'accessibility/frame-title',
+    'accessibility/frame-title-unique',
     'accessibility/heading-order',
     'accessibility/html-has-lang',
     'accessibility/html-lang-valid',
@@ -536,6 +537,7 @@ const defaultConfig = {
         {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
         {id: 'form-field-multiple-labels', weight: 3, group: 'a11y-names-labels'}, // Moderate, wcag2a
         {id: 'frame-title', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'frame-title-unique', weight: 0, group: 'a11y-names-labels'}, // Serious, manual review
         {id: 'heading-order', weight: 3, group: 'a11y-navigation'}, // Moderate, best-practice
         {id: 'html-has-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
         {id: 'html-lang-valid', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
