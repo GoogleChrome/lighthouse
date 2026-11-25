@@ -156,4 +156,47 @@ describe('SEO: link text audit', () => {
     const auditResult = LinkTextAudit.audit(artifacts);
     assert.equal(auditResult.score, 1);
   });
+
+  it('fails when link text is a full URL', () => {
+    const invalidHttpsLink = {
+      href: 'https://example.com/otherpage.html',
+      text: 'https://example.com/otherpage.html',
+      rel: '',
+      textLang: 'en',
+    };
+    const invalidHttpLink = {
+      href: 'http://example.com/otherpage.html',
+      text: 'http://example.com/otherpage.html',
+      rel: '',
+      textLang: 'en',
+    };
+    const invalidUrlWithTrailingSlash = {
+      href: 'https://example.com/',
+      text: 'https://example.com/',
+      rel: '',
+      textLang: 'en',
+    };
+    const artifacts = {
+      URL: {
+        finalDisplayedUrl: 'https://example.com/page.html',
+      },
+      AnchorElements: [
+        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: '', textLang: 'en'},
+        invalidHttpsLink,
+        invalidHttpLink,
+        invalidUrlWithTrailingSlash,
+      ],
+    };
+
+    const auditResult = LinkTextAudit.audit(artifacts);
+    assert.equal(auditResult.score, 0);
+    assert.equal(auditResult.details.items.length, 3);
+    assert.equal(auditResult.details.items[0].href, invalidHttpsLink.href);
+    assert.equal(auditResult.details.items[0].text, invalidHttpsLink.text);
+    assert.equal(auditResult.details.items[1].href, invalidHttpLink.href);
+    assert.equal(auditResult.details.items[1].text, invalidHttpLink.text);
+    assert.equal(auditResult.details.items[2].href, invalidUrlWithTrailingSlash.href);
+    assert.equal(auditResult.details.items[2].text, invalidUrlWithTrailingSlash.text);
+  });
 });
+
