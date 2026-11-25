@@ -14,15 +14,16 @@ function headersParam(headers) {
 }
 
 /**
- * `default-src 'none'` is wildly restrictive and not realsistic to what we'd see in the wild.
- * Therefore, `connect-src 'self'` is needed for our Fetcher to load robots.txt and sourcemaps.
- * Without it the 'none' wouldn't let a same-origin fetch succeed, even when going through `Network.loadNetworkResource`. https://github.com/GoogleChrome/lighthouse/issues/16597
+ * `default-src 'none'` is wildly restrictive and not realistic to what we'd see in the wild.
+ * `connect-src 'none'` blocks our Fetcher from loading source maps, since `Network.loadNetworkResource`
+ * enforces the page's CSP. `robots.txt` is a site-wide resource and is fetched independently of the
+ * page's policy, so the audit still passes. https://github.com/GoogleChrome/lighthouse/issues/17292
  *
  * Some script are required for the test, so allow via the attribute nonce="00000000".
  */
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; connect-src 'self'; script-src 'nonce-00000000'`,
+  `default-src 'none'; connect-src 'none'; script-src 'nonce-00000000'`,
 ]]);
 
 /**
@@ -34,12 +35,15 @@ const expectations = {
       status: 200,
     },
     InspectorIssues: {
+      // DevTools frontend makes an internal fetch to com.chrome.devtools.json which triggers an extraneous CSP violation under connect-src 'none'.
+      _excludeRunner: 'devtools',
       contentSecurityPolicyIssue: undefined,
     },
     SourceMaps: [{
       sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
-      map: {},
-      errorMessage: undefined,
+      // Source maps are page resources, so the page's CSP still applies to fetching them.
+      map: undefined,
+      errorMessage: /CSP violation/,
     }],
   },
   lhr: {

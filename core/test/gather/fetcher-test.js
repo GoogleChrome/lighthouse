@@ -6,7 +6,8 @@
 
 import {Fetcher} from '../../gather/fetcher.js';
 import {fnAny} from '../test-utils.js';
-import {createMockSession} from './mock-driver.js';
+import {createMockCdpSession, createMockSession} from './mock-driver.js';
+import {createMockSendCommandFn} from './mock-commands.js';
 
 let mockSession = createMockSession();
 /** @type {Fetcher} */
@@ -173,6 +174,77 @@ describe('._normalizeHeaders', () => {
       'content-type': 'text/html',
       'x-rate-limit': '100',
     });
+  });
+});
+
+describe('fetchResource', () => {
+  /**
+   * @param {LH.Puppeteer.CDPSession|null} cdpSessionToReturn
+   * @param {ReturnType<typeof createMockSendCommandFn>} mockConnectionSend
+   */
+  function createMockConnection(cdpSessionToReturn, mockConnectionSend) {
+    return {
+      send: mockConnectionSend,
+      session: fnAny().mockReturnValue(cdpSessionToReturn),
+
+      /** @return {LH.Puppeteer.Connection} */
+      asConnection() {
+        // @ts-expect-error - We'll rely on the tests passing to know this matches.
+        return this;
+      },
+    };
+  }
+
+  it('fetches site-wide resources from an auxiliary target', async () => {
+    const auxCdpSession = createMockCdpSession('AUX_SESSION');
+    auxCdpSession.send
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'AUX_FRAME'}}})
+      .mockResponse('Network.loadNetworkResource', {
+        resource: {success: true, httpStatusCode: 200, stream: '1'},
+      })
+      .mockResponse('IO.read', {data: 'User-agent: *', eof: true, base64Encoded: false});
+
+    const mockConnectionSend = createMockSendCommandFn()
+      .mockResponse('Target.createTarget', {targetId: 'AUX_TARGET'})
+      .mockResponse('Target.attachToTarget', {sessionId: 'AUX_SESSION'})
+      .mockResponse('Target.closeTarget', {});
+
+    const mockConnection = createMockConnection(auxCdpSession.asCdpSession(), mockConnectionSend);
+    fetcher = new Fetcher(mockSession.asSession(), mockConnection.asConnection());
+
+    const response = await fetcher.fetchResource('https://example.com/robots.txt', {siteWide: true});
+
+    expect(response).toEqual({content: 'User-agent: *', status: 200, headers: null});
+    mockConnectionSend.findInvocation('Target.createTarget');
+    mockConnectionSend.findInvocation('Target.attachToTarget');
+    // The auxiliary target is always closed, even on success.
+    mockConnectionSend.findInvocation('Target.closeTarget');
+    // The fetch should not go through the page's session.
+    const pageInvocations =
+      mockSession.sendCommand.findAllInvocations('Network.loadNetworkResource');
+    expect(pageInvocations).toHaveLength(0);
+  });
+
+  it('fetches site-wide resources via the page context when target creation fails', async () => {
+    const mockConnectionSend = createMockSendCommandFn()
+      .mockResponse('Target.createTarget', () => Promise.reject(new Error('Not supported')));
+
+    const mockConnection = createMockConnection(null, mockConnectionSend);
+    fetcher = new Fetcher(mockSession.asSession(), mockConnection.asConnection());
+
+    mockSession.sendCommand
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'PAGE_FRAME'}}})
+      .mockResponse('Network.loadNetworkResource', {
+        resource: {success: true, httpStatusCode: 200, stream: '1'},
+      })
+      .mockResponse('IO.read', {data: 'User-agent: *', eof: true, base64Encoded: false});
+
+    const response = await fetcher.fetchResource('https://example.com/robots.txt', {siteWide: true});
+
+    expect(response).toEqual({content: 'User-agent: *', status: 200, headers: null});
+    const fallbackInvocations =
+      mockSession.sendCommand.findAllInvocations('Network.loadNetworkResource');
+    expect(fallbackInvocations).toHaveLength(1);
   });
 });
 
