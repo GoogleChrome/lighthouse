@@ -28,7 +28,7 @@ describe('Diagnostics audit', () => {
       numRequests: 66,
       numScripts: 6,
       numStylesheets: 0,
-      numTasks: 547,
+      numTasks: 543,
       numTasksOver10ms: 13,
       numTasksOver25ms: 8,
       numTasksOver50ms: 4,
@@ -37,7 +37,7 @@ describe('Diagnostics audit', () => {
       rtt: 2.6209999923595007,
       throughput: 1628070.200017642,
       totalByteWeight: 234053,
-      totalTaskTime: 1360.2630000000001,
+      totalTaskTime: 1359.7500000000002,
       mainDocumentTransferSize: 5368,
     });
   });

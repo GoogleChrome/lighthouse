@@ -36,7 +36,7 @@ Array [
   Object {
     "scriptParseCompile": 0.022,
     "scripting": 7.619999999999981,
-    "total": 1025.2669999999957,
+    "total": 1024.7539999999958,
     "url": "Unattributable",
   },
   Object {
@@ -98,7 +98,7 @@ Array [
   Object {
     "scriptParseCompile": 0.066,
     "scripting": 22.859999999999943,
-    "total": 3075.8009999999867,
+    "total": 3074.2619999999874,
     "url": "Unattributable",
   },
   Object {
