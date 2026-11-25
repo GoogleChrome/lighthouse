@@ -16,6 +16,10 @@ import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {readJson} from '../../../core/test/test-utils.js';
 import {Globals} from '../../renderer/report-globals.js';
+import AxeAudit from '../../../core/audits/accessibility/axe-audit.js';
+import {Audit} from '../../../core/audits/audit.js';
+import {ReportScoring} from '../../../core/scoring.js';
+import * as format from '../../../shared/localization/format.js';
 
 const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
@@ -43,6 +47,122 @@ describe('CategoryRenderer', () => {
 
   after(() => {
     Globals.i18n = undefined;
+  });
+
+  describe('axe incomplete category results', () => {
+    class ExampleAudit extends AxeAudit {
+      static get meta() {
+        return {id: 'example', title: 'Elements pass', description: 'Example',
+          requiredArtifacts: ['Accessibility']};
+      }
+    }
+    const axeRule = selector => ({id: 'example', nodes: [{
+      node: {selector, snippet: `<div id="${selector.slice(1)}"></div>`}, relatedNodes: [],
+    }]});
+    const renderResult = (violations, incomplete) => {
+      const product = ExampleAudit.audit({Accessibility: {violations, incomplete}});
+      const result = Audit.generateAuditResult(ExampleAudit, product);
+      format.replaceIcuMessages(result, 'en-US');
+      const category = ReportScoring.scoreAllCategories(
+        {accessibility: {title: 'Accessibility', auditRefs: [{id: 'example', weight: 1}]}},
+        {example: result}).accessibility;
+      category.auditRefs[0].result = JSON.parse(JSON.stringify(result));
+      return {result, category, el: renderer.render(category, {})};
+    };
+
+    it('shows incomplete-only as unscored, with the reason in the summary', () => {
+      const {result, category, el} = renderResult([], [axeRule('#review')]);
+      assert.equal(result.scoreDisplayMode, 'informative');
+      assert.equal(category.auditRefs[0].weight, 0);
+      assert.equal(category.score, 0);
+      assert.equal(el.querySelector('.lh-gauge__percentage').textContent, '-');
+      assert.equal(el.querySelector('.lh-gauge__percentage').title, 'Unscored');
+      assert.equal(result.title, 'Accessibility check: example');
+      assert.equal(el.querySelector('#example .lh-audit__title').textContent, result.title);
+      const audit = el.querySelector('#example');
+      assert.ok(audit.classList.contains('lh-audit--informative'));
+      assert.ok(audit.querySelector('.lh-audit__adorn'));
+      const details = audit.querySelector('details');
+      assert.equal(details.open, false);
+      assert.match(details.textContent, /Elements to manually review/);
+      assert.match(details.querySelector('summary').textContent, /needs manual review/i);
+    });
+
+    it('shows a null category score as an error when a weighted audit failed', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      category.score = null;
+      category.auditRefs[0].weight = 1;
+      category.auditRefs[0].result.scoreDisplayMode = 'error';
+      const el = renderer.render(category, {});
+      const gauge = el.querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '');
+      assert.ok(gauge.classList.contains('lh-gauge--error'));
+    });
+
+    it('preserves an error for a null score with a zero-weight error audit', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      category.score = null;
+      category.auditRefs[0].result.scoreDisplayMode = 'error';
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '');
+      assert.ok(gauge.classList.contains('lh-gauge--error'));
+      assert.equal(gauge.title, 'Error!');
+    });
+
+    it('keeps a real weighted failing score at zero', () => {
+      const {category} = renderResult([axeRule('#bad')], [axeRule('#review')]);
+      assert.equal(category.score, 0);
+      assert.equal(category.auditRefs[0].weight, 1);
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '0');
+      assert.ok(!gauge.classList.contains('lh-gauge--error'));
+    });
+
+    it('does not label a zero-score category unscored if an audit has an error', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      category.auditRefs.push({id: 'broken', weight: 0, result: {
+        id: 'broken', title: 'Error', description: 'Error', score: null,
+        scoreDisplayMode: 'error',
+      }});
+      const gauge = renderer.render(category, {}).querySelector('.lh-gauge__percentage');
+      assert.equal(gauge.textContent, '0');
+      assert.notEqual(gauge.title, 'Unscored');
+    });
+
+    it('shows a zero-weight informative category as a neutral 0/0 fraction', () => {
+      const {category} = renderResult([], [axeRule('#review')]);
+      const el = renderer.render(category, {}, {gatherMode: 'snapshot'});
+      assert.equal(el.querySelector('.lh-fraction__content').textContent.trim(), '0/0');
+      assert.ok(el.querySelector('.lh-fraction__wrapper--null'));
+    });
+
+    it('prepares mixed result JSON for the normal category renderer', () => {
+      const {result} = renderResult([axeRule('#bad')], [axeRule('#review')]);
+      const lhr = JSON.parse(JSON.stringify(sampleResultsOrig));
+      lhr.audits.example = JSON.parse(JSON.stringify(result));
+      lhr.categories.accessibility.auditRefs.push({id: 'example', weight: 1});
+      const prepared = ReportUtils.prepareReportResult(lhr);
+      const ref = prepared.categories.accessibility.auditRefs.find(item => item.id === 'example');
+      assert.equal(ref.result.details.type, 'list');
+      assert.equal(ref.result.details.items.length, 2);
+      const el = renderer.renderAudit(ref);
+      assert.equal(el.querySelectorAll('table').length, 2);
+      assert.match(el.textContent, /id="bad"/);
+      assert.match(el.textContent, /id="review"/);
+    });
+
+    it('renders the two mixed tables in the failing audit', () => {
+      const {result, el} = renderResult([axeRule('#bad')], [axeRule('#review')]);
+      assert.equal(result.scoreDisplayMode, 'binary');
+      assert.equal(result.score, 0);
+      const audit = el.querySelector('#example');
+      assert.ok(audit.classList.contains('lh-audit--fail'));
+      assert.equal(audit.querySelectorAll('table').length, 2);
+      assert.match(audit.textContent, /Accessibility violations/);
+      assert.match(audit.textContent, /Needs manual review/);
+      assert.equal(audit.querySelector('details').open, false);
+      assert.match(audit.querySelector('summary').textContent, /needs manual review/i);
+    });
   });
 
   it('renders an audit', () => {
@@ -305,7 +425,7 @@ describe('CategoryRenderer', () => {
       );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
-      assert.equal(gauge.textContent.trim(), '15/20', 'fraction is included');
+      assert.equal(gauge.textContent.trim(), '14/19', 'fraction is included');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const title = score.querySelector('.lh-fraction__label');
@@ -328,7 +448,7 @@ describe('CategoryRenderer', () => {
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
       assert.equal(
         gauge.textContent.trim(),
-        '15/20',
+        '14/19',
         'fraction is included via categoryScoreDisplayMode'
       );
     });
@@ -371,7 +491,8 @@ describe('CategoryRenderer', () => {
       const passedAudits = category.auditRefs.filter(audit =>
           audit.result.scoreDisplayMode !== 'notApplicable' &&
           audit.group !== 'hidden' &&
-          audit.result.score === 1);
+          audit.result.score === 1 &&
+          ReportUtils.showAsPassed(audit.result));
 
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
       const passedAuditsElems = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit');
@@ -493,6 +614,8 @@ describe('CategoryRenderer', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
       categoryClone.auditRefs.filter(audit => audit.result.scoreDisplayMode === 'binary')
         .forEach(audit => audit.result.score = 1);
+      categoryClone.auditRefs.filter(audit => audit.result.scoreDisplayMode === 'informative')
+        .forEach(audit => audit.result.scoreDisplayMode = 'notApplicable');
 
       const auditDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
       const manualClumpEl = auditDOM.querySelector('.lh-clump--manual');

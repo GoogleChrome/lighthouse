@@ -10,6 +10,9 @@ import {getChromePath} from 'chrome-launcher';
 import {ReportGenerator} from '../../generator/report-generator.js';
 import {axeSource} from '../../../core/lib/axe.js';
 import {readJson} from '../../../core/test/test-utils.js';
+import AxeAudit from '../../../core/audits/accessibility/axe-audit.js';
+import {Audit} from '../../../core/audits/audit.js';
+import * as format from '../../../shared/localization/format.js';
 
 const sampleResults = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
@@ -25,6 +28,44 @@ describe('ReportRendererAxe', () => {
 
     after(async () => {
       await browser.close();
+    });
+
+    it('shows manual review in the collapsed audit summary', async () => {
+      class ExampleAudit extends AxeAudit {
+        static get meta() {
+          return {id: 'color-contrast', title: 'Example contrast audit', description: 'Example',
+            requiredArtifacts: ['Accessibility']};
+        }
+      }
+      const node = {node: {selector: '#review', snippet: '<div id="review">Text</div>'},
+        relatedNodes: []};
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      const ref = lhr.categories.accessibility.auditRefs.find(item => item.id === 'color-contrast');
+      const page = await browser.newPage();
+      try {
+        for (const violations of [[], [{id: 'color-contrast', nodes: [node]}]]) {
+          const product = ExampleAudit.audit({Accessibility: {
+            violations, incomplete: [{id: 'color-contrast', nodes: [node]}],
+          }});
+          const result = Audit.generateAuditResult(ExampleAudit, product);
+          format.replaceIcuMessages(result, 'en-US');
+          lhr.audits['color-contrast'] = result;
+          ref.weight = violations.length ? 1 : 0;
+          await page.setContent(ReportGenerator.generateReportHtml(lhr));
+          const audit = await page.waitForSelector('#color-contrast');
+          const state = await audit.evaluate(el => {
+            const details = el.querySelector('details');
+            const label = el.querySelector('.lh-audit__display-text');
+            const rect = label.getBoundingClientRect();
+            return {
+              open: details.open, text: label.textContent, visible: !!(rect.width && rect.height),
+            };
+          });
+          expect(state).toEqual({open: false, text: 'Needs manual review', visible: true});
+        }
+      } finally {
+        await page.close();
+      }
     });
 
     // This test takes 10s on fast hardware, but can take longer in CI.

@@ -19751,10 +19751,11 @@
           },
           "color-contrast": {
             "id": "color-contrast",
-            "title": "Background and foreground colors have a sufficient contrast ratio",
+            "title": "Accessibility check: color-contrast",
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.14/color-contrast).",
             "score": 1,
-            "scoreDisplayMode": "binary",
+            "scoreDisplayMode": "informative",
+            "displayValue": "Needs manual review",
             "details": {
               "type": "table",
               "headings": [
@@ -19765,10 +19766,44 @@
                     "key": "relatedNode",
                     "valueType": "node"
                   },
-                  "label": "Failing Elements"
+                  "label": "Elements to manually review"
                 }
               ],
-              "items": []
+              "items": [
+                {
+                  "node": {
+                    "type": "node",
+                    "lhId": "1-3-TEXTAREA",
+                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,4,LABEL,1,TEXTAREA",
+                    "selector": "div > form.flex > label.mt-4 > textarea.w-full",
+                    "boundingRect": {
+                      "top": 674,
+                      "bottom": 740,
+                      "left": 16,
+                      "right": 396,
+                      "width": 380,
+                      "height": 66
+                    },
+                    "snippet": "<textarea class=\"w-full rounded-md\" name=\"message\" required=\"\">",
+                    "nodeLabel": "div > form.flex > label.mt-4 > textarea.w-full",
+                    "explanation": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+                  }
+                }
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "impact": "serious",
+                "tags": [
+                  "cat.color",
+                  "wcag2aa",
+                  "wcag143",
+                  "TTv5",
+                  "TT13.c",
+                  "EN-301-549",
+                  "EN-9.1.4.3",
+                  "ACT"
+                ]
+              }
             }
           },
           "definition-list": {
@@ -21686,7 +21721,7 @@
               },
               {
                 "id": "color-contrast",
-                "weight": 7,
+                "weight": 0,
                 "group": "a11y-color-contrast"
               },
               {
@@ -25049,7 +25084,6 @@
               "audits[aria-valid-attr-value].details.headings[0].label",
               "audits[aria-valid-attr].details.headings[0].label",
               "audits[button-name].details.headings[0].label",
-              "audits[color-contrast].details.headings[0].label",
               "audits[document-title].details.headings[0].label",
               "audits[heading-order].details.headings[0].label",
               "audits[html-has-lang].details.headings[0].label",
@@ -25205,11 +25239,22 @@
             "core/audits/accessibility/bypass.js | description": [
               "audits.bypass.description"
             ],
-            "core/audits/accessibility/color-contrast.js | title": [
-              "audits[color-contrast].title"
+            "core/audits/accessibility/axe-audit.js | manualReviewTitle": [
+              {
+                "values": {
+                  "ruleId": "color-contrast"
+                },
+                "path": "audits[color-contrast].title"
+              }
             ],
             "core/audits/accessibility/color-contrast.js | description": [
               "audits[color-contrast].description"
+            ],
+            "core/audits/accessibility/axe-audit.js | manualReviewSection": [
+              "audits[color-contrast].displayValue"
+            ],
+            "core/audits/accessibility/axe-audit.js | manualReviewElementsHeader": [
+              "audits[color-contrast].details.headings[0].label"
             ],
             "core/audits/accessibility/definition-list.js | title": [
               "audits[definition-list].title"

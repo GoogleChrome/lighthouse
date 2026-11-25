@@ -391,8 +391,17 @@ export class CategoryRenderer {
       percentageEl.title = Globals.strings.errorLabel;
     }
 
-    // Render a numerical score if the category has applicable audits, or no audits whatsoever.
-    if (category.auditRefs.length === 0 || this.hasApplicableAudits(category)) {
+    // The stored score is 0 when no audits are weighted. For an informative category,
+    // show a neutral value without changing the LHR or masking an error.
+    const unscored = category.score === 0 && category.auditRefs.length > 0 &&
+      category.auditRefs.every(ref => !ref.weight) &&
+      category.auditRefs.some(ref => ref.result.scoreDisplayMode === 'informative') &&
+      !category.auditRefs.some(ref => ref.result.scoreDisplayMode === 'error');
+    if (unscored) {
+      wrapper.classList.add('lh-gauge__wrapper--not-applicable');
+      percentageEl.textContent = '-';
+      percentageEl.title = Globals.strings.unscoredLabel;
+    } else if (category.auditRefs.length === 0 || this.hasApplicableAudits(category)) {
       wrapper.classList.add(`lh-gauge__wrapper--${ReportUtils.calculateRating(category.score)}`);
     } else {
       wrapper.classList.add(`lh-gauge__wrapper--not-applicable`);
