@@ -164,6 +164,36 @@ describe('WebMCP Gatherer', () => {
     expect(artifact.tools.length).toEqual(0);
   });
 
+  it('returns isSupported true when only window.toolManager is defined', async () => {
+    const gatherer = new WebMCP();
+    const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockImplementation(fn => fn());
+    mockContext.driver.defaultSession.sendCommand.mockResponse('WebMCP.enable');
+
+    const hadWindow = 'window' in globalThis;
+    const hadDocument = 'document' in globalThis;
+    const prevWindow = globalThis.window;
+    const prevDocument = globalThis.document;
+    /** @type {any} */ (globalThis).window = {toolManager: {}};
+    /** @type {any} */ (globalThis).document = {};
+    try {
+      await gatherer.startInstrumentation(mockContext.asContext());
+      const artifact = await gatherer.getArtifact(mockContext.asContext());
+      expect(artifact.isSupported).toEqual(true);
+    } finally {
+      if (hadWindow) {
+        globalThis.window = prevWindow;
+      } else {
+        delete (/** @type {any} */ (globalThis)).window;
+      }
+      if (hadDocument) {
+        globalThis.document = prevDocument;
+      } else {
+        delete (/** @type {any} */ (globalThis)).document;
+      }
+    }
+  });
+
   it('returns empty array when no tools are registered', async () => {
     const gatherer = new WebMCP();
     const mockContext = createMockContext();
