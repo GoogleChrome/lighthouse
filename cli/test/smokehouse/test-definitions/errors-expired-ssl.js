@@ -34,7 +34,6 @@ const expectations = {
     finalDisplayedUrl: /(expired.badssl.com|chrome-error)/,
     runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
     runWarnings: [
-      /expired.badssl.*redirected to chrome-error:/,
       /The URL you have provided does not have a valid security certificate. net::ERR_CERT_(DATE|AUTHORITY)_INVALID/,
     ],
     audits: {
