@@ -11,7 +11,7 @@ import {pageFunctions} from '../../lib/page-functions.js';
 class WebMcpSchemaIssues extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['navigation'],
+    supportedModes: ['navigation', 'snapshot'],
   };
 
   constructor() {
@@ -65,6 +65,13 @@ class WebMcpSchemaIssues extends BaseGatherer {
    * @return {Promise<LH.Artifacts.WebMcpSchemaIssue[]>}
    */
   async getArtifact(context) {
+    if (context.gatherMode === 'snapshot') {
+      // Snapshot mode has no instrumentation phase. `Audits.enable` replays
+      // the issues collected so far.
+      await this.startInstrumentation(context);
+      await this.stopInstrumentation(context);
+    }
+
     const session = context.driver.defaultSession;
 
     const promises = this._issues.map(async (issue) => {

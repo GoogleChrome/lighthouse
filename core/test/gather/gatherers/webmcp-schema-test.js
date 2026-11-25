@@ -102,4 +102,39 @@ describe('WebMcpSchemaIssues Gatherer', () => {
 
     assert.equal(artifact.length, 0);
   });
+
+  it('collects issues replayed on enable in snapshot mode', async () => {
+    const gatherer = new WebMcpSchemaIssues();
+
+    const mockSession = /** @type {any} */ ({
+      on: (/** @type {string} */ event, /** @type {Function} */ handler) => {
+        if (event === 'Audits.issueAdded') {
+          mockSession._issueHandler = handler;
+        }
+      },
+      off: (/** @type {string} */ event) => {
+        mockSession._offEvent = event;
+      },
+      sendCommand: async (/** @type {string} */ command) => {
+        if (command !== 'Audits.enable') return {};
+        mockSession._issueHandler({
+          issue: {
+            code: 'GenericIssue',
+            details: {
+              genericIssueDetails: {
+                errorType: 'FormModelContextMissingToolDescription',
+              },
+            },
+          },
+        });
+      },
+    });
+
+    const artifact = await gatherer.getArtifact(
+      /** @type {any} */ ({gatherMode: 'snapshot', driver: {defaultSession: mockSession}}));
+
+    assert.equal(artifact.length, 1);
+    assert.equal(artifact[0].errorType, 'FormModelContextMissingToolDescription');
+    assert.equal(mockSession._offEvent, 'Audits.issueAdded');
+  });
 });
