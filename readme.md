@@ -391,6 +391,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
 
+* **[WebLidar](https://weblidar.com)** — Helps organizations assess and improve their entire website portfolio. It combines Lighthouse audits for performance and accessibility with broader checks for security, SEO and content, and its AI-assisted fixes open pull requests that help teams resolve issues across their websites. 
+
 ## Plugins
 
 * **[lighthouse-plugin-field-performance](https://github.com/treosh/lighthouse-plugin-field-performance)** - a plugin that adds real-user performance metrics for the URL using the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
