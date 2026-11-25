@@ -95,6 +95,7 @@ Configuration:
                                  Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 66.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.  [string] [default: ""]
   --port                         The port to use for the debugging protocol. Use 0 for a random port  [number] [default: 0]
   --hostname                     The hostname to use for the debugging protocol.  [string] [default: "localhost"]
+  --reuse-page                   Run in the page that is already open in the connected browser instead of opening a new one. Only used when the browser has exactly one page open.  [boolean]
   --form-factor                  Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, use --preset=desktop instead.  [string] [choices: "mobile", "desktop"]
   --screenEmulation              Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2
   --emulatedUserAgent            Sets useragent emulation  [string]
