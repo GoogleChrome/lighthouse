@@ -126,4 +126,58 @@ describe('Performance: layout-shifts audit', () => {
     expect(auditResult.displayValue).toBeDisplayString('4 layout shifts found');
     expect(auditResult.details.items).toHaveLength(4);
   });
+
+  it('explains when the shifted element could not be found', async () => {
+    const trace = createTestTrace({});
+    trace.traceEvents.push({
+      // Node 2 has no TraceElement, e.g. because the page removed it from the DOM.
+      args: {
+        data: {
+          had_recent_input: false,
+          is_main_frame: true,
+          weighted_score_delta: 0.3,
+          impacted_nodes: [{
+            node_id: 2,
+            old_rect: [0, 0, 1, 1],
+            new_rect: [0, 0, 2, 2],
+          }],
+        },
+        frame: 'ROOT_FRAME',
+      },
+      name: 'LayoutShift',
+      cat: 'loading',
+    }, {
+      // No impacted nodes at all, so there is no element to look up.
+      args: {
+        data: {
+          had_recent_input: false,
+          is_main_frame: true,
+          weighted_score_delta: 0.1,
+          impacted_nodes: [],
+        },
+        frame: 'ROOT_FRAME',
+      },
+      name: 'LayoutShift',
+      cat: 'loading',
+    });
+
+    const artifacts = {
+      Trace: trace,
+      TraceElements: [],
+      SourceMaps: [],
+      HostDPR: 1,
+    };
+
+    const auditResult = await LayoutShiftsAudit.audit(artifacts, {
+      computedCache: new Map(),
+      settings: {},
+    });
+    expect(auditResult.details.items).toHaveLength(2);
+    for (const item of auditResult.details.items) {
+      expect(item.node.type).toEqual('text');
+      expect(item.node.value)
+        .toBeDisplayString('Element not found (it may have been removed from the page)');
+    }
+    expect(auditResult.details.items.map(item => item.score)).toEqual([0.3, 0.1]);
+  });
 });
