@@ -18,6 +18,7 @@ import * as yargsHelpers from 'yargs/helpers';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
+import {selectTestFiles} from './select-test-files.js';
 
 // Tell gatherer to use 100 quality for FPS tests.
 process.env.LH_FPS_TEST = '1';
@@ -104,16 +105,7 @@ const defaultTestMatches = [
   'viewer/**/*-test.js',
 ];
 
-const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')))
-  .map(pattern => {
-    if (path.isAbsolute(pattern)) {
-      // Allows this to work:
-      //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
-      return path.relative(LH_ROOT, pattern);
-    } else {
-      return pattern;
-    }
-  });
+const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
 
 function getTestFiles() {
   // Collect all the possible test files, based off the provided testMatch glob pattern
@@ -126,9 +118,7 @@ function getTestFiles() {
 
   // If provided, filter the test files using a basic string includes on the absolute path of
   // each test file.
-  let filteredTests = filterFilePatterns.length ?
-    allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
-    allTestFiles;
+  let filteredTests = selectTestFiles(allTestFiles, filterFilePatterns);
 
   let grep;
   if (argv.onlyFailures) {
