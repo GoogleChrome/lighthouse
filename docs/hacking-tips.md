@@ -2,7 +2,6 @@ A few assorted scripts and tips to make hacking on Lighthouse a bit easier
 
 # Eng team resources
 
-* [LH Build Tracker](https://lh-build-tracker.herokuapp.com/builds/limit/100) - plotted results of [build-tracker](../build-tracker.config.js) [data](../.github/workflows/ci.yml#:~:text=buildtracker)
 * [LH PR Tracking](https://paulirish.github.io/lh-pr-tracking/) - stats about open PRs, collected [daily](https://github.com/paulirish/lh-pr-tracking/blob/master/.github/workflows/update-stats.yml).
 
 ## Evaluate Lighthouse's runtime performance
