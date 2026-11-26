@@ -68,6 +68,10 @@ const flags = {logLevel: 'info'};
 await lighthouse('https://example.com', flags);
 ```
 
+## User flows and standalone modes
+
+For multi-step user flow reports and the three Lighthouse modes (navigation, timespan, snapshot), see [User Flows](user-flows.md). That guide also documents the standalone mode runners (`navigation`, `startTimespan`, `snapshot`) for one-shot audits without `startFlow`.
+
 ## Configuration
 In order to extend the Lighthouse configuration programmatically, you need to pass the config object as the 3rd argument. If omitted, a default configuration is used.
 
