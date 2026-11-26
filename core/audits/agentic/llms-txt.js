@@ -16,9 +16,9 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the site's llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This descriptive title is shown when the llms.txt file does not follow community recommendations. */
   failureTitle: 'llms.txt does not follow recommendations',
   /** Description of a Lighthouse audit that tells the user *why* they should have an llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits. */
-  description: 'If your llms.txt file does not follow recommendations, ' +
-    'large language models may not be able to ' +
-    'understand how you want your website to be crawled or used for training. The ' +
+  description: 'An llms.txt file gives large language models a Markdown summary of your site ' +
+    'to use when answering questions about it. If it does not follow recommendations, ' +
+    'models may not be able to use it. The ' +
     '[llms.txt](https://llmstxt.org/) file should be a Markdown file containing at least one H1 header. ' +
     '[Learn more about the llms.txt audit](https://developer.chrome.com/docs/lighthouse/agentic-browsing/llms-txt).',
   /**
@@ -33,6 +33,9 @@ const UIStrings = {
   explanationWithError: 'Fetch of llms.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated. */
   explanation: 'Fetch of llms.txt failed',
+  /** Message indicating that the server returned an HTML page instead of the llms.txt text file, which usually means a server, CDN, or bot protection rule is serving HTML to Lighthouse. Note: "llms.txt" is a canonical filename and should not be translated. */
+  htmlInsteadOfText: 'llms.txt returned an HTML page instead of a text file. Check that your ' +
+    'server, CDN, or bot protection serves the file itself.',
   /** Message indicating that the file is missing a required H1 header. */
   missingH1: 'File is missing a required H1 header (e.g., "# Title").',
   /** Message indicating that the file is suspiciously short. */
@@ -42,6 +45,9 @@ const UIStrings = {
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+
+/** Matches content that starts with an HTML doctype or <html> tag, after an optional BOM. */
+const HTML_DOCUMENT_RE = /^\uFEFF?\s*<(!doctype\s+html|html[\s>])/i;
 
 class LlmsTxt extends Audit {
   /**
@@ -98,6 +104,15 @@ class LlmsTxt extends Audit {
       return {
         score: 0,
         explanation: str_(UIStrings.explanation),
+      };
+    }
+
+    // A server, CDN, or bot protection rule can answer /llms.txt with an HTML page. The
+    // H1 and link checks would then point at the file, when the problem is the response.
+    if (HTML_DOCUMENT_RE.test(content)) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.htmlInsteadOfText),
       };
     }
 

@@ -133,6 +133,35 @@ describe('Agentic: llms.txt audit', () => {
     });
   });
 
+  it('fails with a clear message when llms.txt is an HTML page', () => {
+    const testData = [
+      {status: 200, content: '<!DOCTYPE html><html><head><title>Hi</title></head></html>'},
+      {status: 200, content: '<!doctype html>\n<html lang="en"><body># Not markdown</body></html>'},
+      {status: 200, content: '\uFEFF\n  <html>\n<body>Just a moment...</body></html>'},
+    ];
+
+    testData.forEach(LlmsTxt => {
+      const artifacts = {LlmsTxt};
+
+      const auditResult = LlmsTxtAudit.audit(artifacts);
+      assert.equal(auditResult.score, 0);
+      assert.equal(auditResult.details, undefined);
+      expect(auditResult.explanation).toBeDisplayString(
+        /^llms.txt returned an HTML page instead of a text file/
+      );
+    });
+  });
+
+  it('does not treat Markdown that mentions HTML as an HTML page', () => {
+    const LlmsTxt = {
+      status: 200,
+      content: `# Title\n\nExplains how <html> tags work, with a link [Here](https://example.com).`,
+    };
+
+    const auditResult = LlmsTxtAudit.audit({LlmsTxt});
+    assert.equal(auditResult.score, 1);
+  });
+
   it('not applicable when there is no llms.txt', () => {
     const testData = [
       {
