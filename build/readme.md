@@ -53,4 +53,4 @@ In short, a Lighthouse report is rendered in two ways inside DevTools:
 1. The LighthousePanel presents a report to the user via: the renderer as exported by `bundle.esm.js`. This file has inlined all the CSS and JS necessary to render a report.
 
 2. The Lighthouse report exposes a "Save as HTML" feature: we can't scrape the outerHTML like we normally do, because we render some things a bit
-special for DevTools, and we're not the only thing in that DOM (we would get _all_ of DevTools). So we override the `getReportHtml` function in the renderer [here](undefined/blob/ba1bef52cea582fd2b9eed5b0f18ef739ff2e7b4/front_end/panels/lighthouse/LighthouseReportRenderer.ts#L175) to instead use `Lighthouse.ReportGenerator`, as defined by `report-generator.js`.
+special for DevTools, and we're not the only thing in that DOM (we would get _all_ of DevTools). So we override the `getStandaloneReportHTML` function in the renderer [here](https://github.com/ChromeDevTools/devtools-frontend/blob/4d7576938b566e14191a55a5b65edf0a010345a9/front_end/panels/lighthouse/LighthouseReportRenderer.ts#L294-L297) to instead use `Lighthouse.ReportGenerator`, as defined by `report-generator.js`.
