@@ -2114,9 +2114,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | FencedFrame": {
     "message": "L'API Fenced Frames està obsoleta i se n'ha programat la supressió."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | Fledge": {
-    "message": "L'API Protected Audience està obsoleta i se suprimirà en una versió futura."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
     "message": "getCurrentPosition() i watchPosition() ja no funcionen en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Per obtenir més informació, consulta https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/."
   },
@@ -2134,9 +2131,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
     "message": "El lloc web ha sol·licitat un subrecurs des d'una xarxa a la qual només ha pogut accedir gràcies a la posició privilegiada a la xarxa dels seus usuaris. Aquestes sol·licituds exposen els dispositius i els servidors que no són públics a Internet, amb la qual cosa augmenta el risc de patir una fuita d'informació o un atac de falsificació de sol·licituds entre llocs web (CSRF). Per reduir aquests riscos, Chrome discontinua les sol·licituds a subrecursos que no són públics quan s'inicien des de contexts no segurs i comença a bloquejar-los."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
-    "message": "Al camp dailyUpdateUrl de InterestGroups que s'ha transferit a joinAdInterestGroup() se li ha canviat el nom a updateUrl per reflectir el comportament amb més precisió."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
     "message": "Intl.v8BreakIterator està obsoleta. Substitueix-la per Intl.Segmenter."
@@ -2231,6 +2225,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
     "message": "La restricció DtlsSrtpKeyAgreement s'ha suprimit. Has especificat un valor true per a aquesta restricció, la qual cosa no ha tingut cap efecte, però pots suprimir aquesta restricció per organitzar-te millor."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionCreateDTMFSender": {
+    "message": "RTCPeerConnection.createDTMFSender() està obsolet i se suprimirà. Substitueix-lo per RTCRtpSender.dtmf."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "El mètode getStats() basat en crida de retorn està obsolet i se suprimirà. Utilitza un getStats() que compleixi les especificacions."
   },
@@ -2260,6 +2257,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Les extensions han d'activar l'aïllament d'altres orígens per continuar utilitzant SharedArrayBuffer. Consulta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ViewTransitionPreventSvgFilterPaint": {
+    "message": "Els filtres SVG no es poden aplicar al contingut de transició de visualització, com ara ::view-transition-old() i ::view-transition-new(), perquè pot incloure iframes o connectors d'altres orígens."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebBluetoothRemoteCharacteristicWriteValue": {
     "message": "El mètode BluetoothRemoteGATTCharacteristic.writeValue() està obsolet. Substitueix-lo per writeValueWithResponse() o writeValueWithoutResponse()."
@@ -2292,7 +2292,7 @@
     "message": "Clúster de canvi de disseny als {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
-    "message": "No s'ha detectat cap causant del canvi de disseny"
+    "message": "No s'ha pogut detectar cap causant del canvi de disseny"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
     "message": "No hi ha canvis de disseny"
@@ -2808,7 +2808,7 @@
     "message": "Un reproductor multimèdia estava reproduint contingut en sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
-    "message": "Les pàgines que utilitzen l'API MediaSession i tenen establert un estat de reproducció no són aptes per a la memòria cau endavant/enrere"
+    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurat un estat de reproducció no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
     "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurats gestors d'acció no són aptes per a la memòria cau endavant/enrere"
@@ -2838,7 +2838,7 @@
     "message": "Actualment, les pàgines que utilitzen un worker o un worklet especial no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
-    "message": "El document no s'havia acabat de carregar abans de sortir-ne"
+    "message": "El document no s'havia acabat de carregar abans de sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
     "message": "Hi havia el bàner d'aplicacions en sortir de la pàgina"
@@ -2901,10 +2901,10 @@
     "message": "Actualment, les pàgines que han donat accés de transmissió de contingut multimèdia no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
-    "message": "Actualment, les pàgines que tenen determinats tipus de contingut incrustat (p. ex., PDF) no són aptes per a la memòria cau endavant/enrere"
+    "message": "Actualment, les pàgines que tenen determinats tipus de contingut incrustat (p. ex., PDF) no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
-    "message": "Actualment, les pàgines que utilitzen IdleManager no són aptes per a la memòria cau endavant i enrere"
+    "message": "Actualment, les pàgines que utilitzen IdleManager no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
     "message": "Actualment, les pàgines que tenen una connexió IndexedDB oberta no són aptes per a la memòria cau endavant/enrere"
@@ -2934,13 +2934,13 @@
     "message": "Actualment, les pàgines que utilitzen el bloqueig de teclat no són aptes per a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
-    "message": "La pàgina no s'ha acabat de carregar abans de sortir-ne"
+    "message": "La pàgina no s'ha acabat de carregar abans de sortir de la pàgina"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
     "message": "Les pàgines el recurs principal de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Les pàgines el recurs principal de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere"
+    "message": "Les pàgines el recurs principal de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
     "message": "La navegació s'ha cancel·lat abans que la pàgina es pogués restaurar de la memòria cau endavant/enrere"
@@ -3051,7 +3051,7 @@
     "message": "Un iframe de la pàgina ha començat una navegació que no s'ha completat"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
-    "message": "Les pàgines el subrecurs de les quals té la capçalera cache-control:no-cache no poden entrar a la memòria cau endavant/enrere"
+    "message": "Les pàgines el subrecurs de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
     "message": "Les pàgines el subrecurs de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere"

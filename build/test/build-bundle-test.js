@@ -36,8 +36,12 @@ describe('Main Bundle build', () => {
   after(() => {
     if (fs.existsSync(bundlePath)) fs.unlinkSync(bundlePath);
     if (fs.existsSync(bundlePath + '.map')) fs.unlinkSync(bundlePath + '.map');
+    if (fs.existsSync(bundlePath + '.LEGAL.txt')) fs.unlinkSync(bundlePath + '.LEGAL.txt');
     if (fs.existsSync(minifiedBundlePath)) fs.unlinkSync(minifiedBundlePath);
     if (fs.existsSync(minifiedBundlePath + '.map')) fs.unlinkSync(minifiedBundlePath + '.map');
+    if (fs.existsSync(minifiedBundlePath + '.LEGAL.txt')) {
+      fs.unlinkSync(minifiedBundlePath + '.LEGAL.txt');
+    }
   });
 
   it('bundle exists', () => {
@@ -45,18 +49,52 @@ describe('Main Bundle build', () => {
     expect(fs.existsSync(minifiedBundlePath)).toBe(true);
   });
 
+  it('unminified bundle uses project-relative paths for replace-modules comments', () => {
+    const code = fs.readFileSync(bundlePath, 'utf-8');
+    expect(code).toContain('// replace-modules:report/generator/report-assets.js');
+    expect(code).toContain('// replace-modules:shared/localization/locales.js');
+    expect(code).not.toContain(LH_ROOT);
+  });
+
   it('bundle size is reasonable', () => {
     const code = fs.readFileSync(minifiedBundlePath, 'utf-8');
     expect(code.length).toBeLessThan(3_000_000); // 3 MB
   });
 
-  it('minified bundle contains only ASCII characters', () => {
-    const code = fs.readFileSync(minifiedBundlePath, 'utf-8');
-    let nonAscii = 0;
-    for (let i = 0; i < code.length; i++) {
-      if (code.charCodeAt(i) > 0x7f) nonAscii++;
+  it('bundles contain only ASCII / 1-byte characters', () => {
+    for (const file of [bundlePath, minifiedBundlePath]) {
+      const code = fs.readFileSync(file, 'utf-8');
+      let nonAscii = 0;
+      for (let i = 0; i < code.length; i++) {
+        if (code.charCodeAt(i) > 0x7f) nonAscii++;
+      }
+      expect(nonAscii).toBe(0);
     }
-    expect(nonAscii).toBe(0);
+  });
+
+  describe('licensing', () => {
+    const licensePath = path.join(LH_ROOT, 'dist/LICENSE');
+
+    it('includes bundled dependencies and excludes shimmed modules', () => {
+      const legalTxt = fs.readFileSync(bundlePath + '.LEGAL.txt', 'utf-8');
+      const licenseTxt = fs.readFileSync(licensePath, 'utf-8');
+
+      const expectedDeps = [
+        'ard-spec',
+        'axe-core',
+        'js-library-detector',
+        '@paulirish/trace_engine',
+      ];
+      for (const dep of expectedDeps) {
+        expect(legalTxt).toContain(`- ${dep}@`);
+        expect(licenseTxt).toContain(`${dep} (v`);
+      }
+
+      for (const shimmed of ['puppeteer-core', 'source-map']) {
+        expect(legalTxt).not.toContain(`- ${shimmed}`);
+        expect(licenseTxt).not.toContain(`\n${shimmed} (`);
+      }
+    });
   });
 
   it('bundle can run in a browser', async () => {

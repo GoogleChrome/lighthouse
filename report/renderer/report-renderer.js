@@ -119,6 +119,7 @@ export class ReportRenderer {
     const channel = report.configSettings.channel;
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
     const axeVersion = report.environment.credits?.['axe-core'];
+    const ardVersion = report.environment.credits?.['ard'];
 
     const devicesTooltipTextLines = [
       `${Globals.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}`,
@@ -130,6 +131,9 @@ export class ReportRenderer {
     }
     if (axeVersion) {
       devicesTooltipTextLines.push(`${Globals.strings.runtimeSettingsAxeVersion}: ${axeVersion}`);
+    }
+    if (ardVersion) {
+      devicesTooltipTextLines.push(`${Globals.strings.runtimeSettingsArdVersion}: ${ardVersion}`);
     }
 
     let stopwatchLabel = Globals.strings.runtimeAnalysisWindow;

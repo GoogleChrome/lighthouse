@@ -10,17 +10,75 @@
   --color-gray-600: #757575;
   --color-gray-900: #212121;
 
+  color-scheme: light;
+
+  --background-color: white;
   --control-background-color: #e7f1fe;
+  --control-border-color: #c7c7c7;
+  --control-border-color-active: #a8c7fa;
+  --control-hover-background-color: rgba(0, 0, 0, 0.06);
   --text-color-secondary: #474747;
 
   --text-color: var(--color-gray-900);
   --text-color-active: #2a67ce;
   --text-color-active-secondary: #4484f3c7;
+  --separator-color: rgba(0, 0, 0, 0.1);
+  --tonal-outline-color: #a8c7fa;
+  --drop-zone-background-color: rgba(255, 255, 255, 0.8);
+
+  /* Treemap nodes. Node fill colors are set in main.js. */
+  --node-background-color: white;
+  --node-border-color: rgba(0, 0, 0, 0.2);
+  --node-border-color-subtle: rgba(0, 0, 0, 0.08);
+  --node-hover-outline-color: black;
+
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23474747'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+
+  --unused-stripes: repeating-linear-gradient(
+    -45deg,
+    rgba(220, 54, 46, 0.3) 0 1px,
+    transparent 1px 5px
+  ), rgba(220, 54, 46, 0.08);
+}
+
+/* Dark theme, based on the GM3 / DevTools dark palette. */
+@media (prefers-color-scheme: dark) {
+  .vars {
+    color-scheme: dark;
+
+    --background-color: #1f1f1f;
+    --control-background-color: #004a77;
+    --control-border-color: #5e5e5e;
+    --control-border-color-active: #7cacf8;
+    --control-hover-background-color: rgba(255, 255, 255, 0.08);
+    --text-color-secondary: #c4c7c5;
+
+    --text-color: #e3e3e3;
+    --text-color-active: #c2e7ff;
+    --text-color-active-secondary: #a8c7fa;
+    --separator-color: rgba(255, 255, 255, 0.1);
+    --tonal-outline-color: #4a6a99;
+    --drop-zone-background-color: rgba(31, 31, 31, 0.8);
+
+    --node-background-color: #1f1f1f;
+    --node-border-color: rgba(255, 255, 255, 0.2);
+    --node-border-color-subtle: rgba(255, 255, 255, 0.08);
+    --node-hover-outline-color: white;
+
+    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c4c7c5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+
+    --unused-stripes: repeating-linear-gradient(
+      -45deg,
+      rgba(242, 139, 130, 0.25) 0 1px,
+      transparent 1px 5px
+    ), rgba(242, 139, 130, 0.06);
+  }
 }
 
 body {
   font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   color: var(--text-color);
+  background-color: var(--background-color);
   margin: 0;
   overflow-y: hidden;
   height: 100vh;
@@ -32,13 +90,27 @@ body {
   display: none !important;
 }
 
+.lh-button,
+.lh-header__inputs select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--control-border-color);
+  border-radius: 8px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}
 .lh-button {
-  background: none;
-  color: var(--text-color-active);
-  border: solid 1px #e1e2e5;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .lh-button--active {
   background-color: var(--control-background-color);
+  border-color: var(--control-border-color-active);
+  color: var(--text-color-active);
 }
 
 .lh-text-dim {
@@ -69,6 +141,11 @@ body {
   align-items: center;
   justify-content: space-between;
   grid-area: 1 / 1 / 2 / 3;
+  height: 56px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--separator-color);
+  box-sizing: border-box;
+  gap: 16px;
 }
 .lh-header > div {
   flex: 1;
@@ -82,29 +159,62 @@ body {
 
 .lh-header__url {
   text-align: center;
+  min-width: 0;
+}
+
+.lh-header--url-and-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .lh-header--url {
-  font-weight: bold;
+  color: var(--text-color);
+  font-weight: 500;
   text-decoration: none;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+.lh-header--url:hover {
+  text-decoration: underline;
+}
+
+.lh-header--url-bytes {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .lh-header__inputs {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 8px;
 }
 .lh-header__inputs select {
   width: 12vw;
-  padding: 2px;
-  margin: 2px;
+  min-width: 120px;
+  text-overflow: ellipsis;
+  /* Replace the native arrow with the design's arrow_drop_down icon. */
+  appearance: none;
+  padding-right: 34px;
+  background-image: var(--select-arrow);
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
 }
 
 .lh-header__logotitle {
   display: flex;
   align-items: center;
+  gap: 4px;
   font-size: 16px;
+  line-height: 24px;
+  color: var(--text-color-secondary);
+  white-space: nowrap;
 }
 
 .lh-topbar__logo {
@@ -114,32 +224,81 @@ body {
   flex: none;
 }
 
+.lh-button--back {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+}
+.lh-button--back:hover {
+  background-color: var(--control-hover-background-color);
+}
+
+.lh-header--zoomed .lh-button--back {
+  display: inline-flex;
+}
+.lh-header--zoomed .lh-topbar__logo,
+.lh-header--zoomed .lh-header--title {
+  display: none;
+}
+
 .lh-treemap {
-  margin: 2px;
   grid-area: 2 / 1 / 3 / 2;
+}
+
+.lh-treemap-hint {
+  grid-area: 2 / 1 / 3 / 2;
+  align-self: end;
+  justify-self: start;
+  position: relative;
+  z-index: 2;
+  margin: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  font-size: 12px;
+  line-height: 16px;
+  pointer-events: none;
 }
 
 .lh-table {
   grid-area: 2 / 2 / 3 / 3;
 
   display: grid;
-  grid-template-columns: 4fr 1fr;
-  grid-column-gap: 20px;
-  overflow: scroll;
-  margin: 5px;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 8px;
+  align-content: start;
+  overflow-y: auto;
+  padding: 0 16px 12px;
+  border-left: 1px solid var(--separator-color);
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .lh-table-header {
   grid-column: 1/-1;
-  font-weight: bold;
-  background-color: white;
+  font-weight: 500;
+  background-color: var(--background-color);
   position: sticky;
   top: 0;
 
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+  padding: 12px 0 8px;
+  border-bottom: 1px solid var(--separator-color);
+  margin-bottom: 8px;
+}
+
+.lh-table-header div:first-child {
+  color: var(--text-color-secondary);
 }
 
 .lh-table-row {
@@ -147,129 +306,80 @@ body {
   word-break: break-word;
 }
 
+.lh-table-row div:nth-child(2) {
+  text-align: right;
+  white-space: nowrap;
+}
+
 .lh-table-subrow div:first-child {
-  margin-left: 10px;
-  border-left: 1px solid #A8C7FA;
-  padding-left: 5px;
+  margin-left: 0;
+  border-left: 1px solid var(--tonal-outline-color);
+  padding-left: 8px;
+}
+
+.lh-table-subrow div {
+  padding-top: 4px;
 }
 
 .lh-table-subrow div:nth-child(2) {
-  color: #474747;
+  color: var(--text-color-secondary);
 }
 
 .lh-table-separator {
   grid-column: 1/-1;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
+  border-bottom: 1px solid var(--separator-color);
+  margin: 8px 0;
 }
 
 .lh-coverage-bar {
   grid-column: 1/-1;
-  margin: 10px 0;
-}
-
-.tabulator {
-  /* Better default for unloaded portions of table. */
-  background-color: #f3f3f3;
-  contain: strict;
-}
-
-.lh-coverage-bar {
   display: flex;
-  align-items: center;
-  height: 100%;
-}
-.lh-coverage-bar--used {
-  background-color: #63acbe;
-  width: calc(100% * var(--used) / var(--max));
-  height: 7px;
+  justify-content: flex-end;
+  height: 8px;
+  margin-top: 4px;
+  border: 1px solid var(--node-border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--node-background-color);
 }
 .lh-coverage-bar--unused {
-  background-color: #ee442f;
-  width: calc(100% * var(--unused) / var(--max));
-  height: 7px;
-  margin-left: 2px;
-  background: repeating-linear-gradient(
-          -45deg,
-          hsl(7, 85%, 58%),
-          hsl(7, 85%, 58%) 2px,
-          hsla(7, 80%, 45%, 1) 2px,
-          hsla(7, 80%, 45%, 1) 4px
-  );
+  width: calc(100% * var(--unused) / var(--total));
+  border-left: 1px solid var(--separator-color);
+  background: var(--unused-stripes);
 }
-
-.view-mode {
-  cursor: pointer;
-  border: solid 1px #e1e2e5;
-  box-shadow: 0 0 0 1px #e1e2e5;
-  padding: 5px;
-  font-size: 16px;
-}
-.view-mode input[type='radio']:focus-visible + label {
-  outline: -webkit-focus-ring-color auto 1px;
-}
-.view-mode--disabled {
-  text-decoration: line-through;
-}
-.view-mode:first-child {
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-}
-.view-mode:last-child {
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
-.view-mode--active {
-  background-color: var(--control-background-color);
-  border-color: #d2e3fc;
-}
-.view-mode--active .view-mode__label {
-  color: var(--text-color-active);
-}
-.view-mode--active .view-mode__sublabel {
-  color: var(--text-color-active-secondary);
-}
-
-.view-mode__button {
-  /* Hide the default browser UI. */
-  position: absolute;
-  left: -9999px;
-}
-
-.view-mode label {
-  cursor: pointer;
-}
-
-header {
-  margin: 5px;
+.lh-coverage-bar--unused.lh-coverage-bar--empty {
+  border-left: none;
 }
 
 .webtreemap-node {
   cursor: pointer;
   position: absolute;
-  border: solid 1px #666;
+  border: solid 1px var(--node-border-color);
   border-radius: 2px;
   overflow: hidden;
-  background: white;
+  background: var(--node-background-color);
   transition: left .15s, top .15s, width .15s, height .15s;
 }
 .webtreemap-node--root {
   border: none;
   background-color: transparent !important;
 }
-.webtreemap-node--root > .webtreemap-node {
-  margin: 5px;
-}
 
 .webtreemap-node--hover {
-  outline: 2px solid black;
+  outline: 2px solid var(--node-hover-outline-color);
 }
 
-.lh-treemap--view-mode--all .webtreemap-node {
-  border: none;
+/* A faint border keeps same-colored siblings visually separate. */
+.lh-treemap--view-mode--all:not(.lh-treemap--hover-duplicate) .webtreemap-node {
+  border-color: var(--node-border-color-subtle);
 }
 
-.lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
+/* Duplicate modules are always outlined, in every view mode. */
+.lh-treemap .webtreemap-node.webtreemap-node--duplicate {
+  border: solid 1px var(--text-color);
+}
+
+.lh-treemap--view-mode--unused-bytes .webtreemap-node:not(.webtreemap-node--root)::before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -277,22 +387,25 @@ header {
   content: '';
   display: block;
   width: var(--pctUnused);
-  background: repeating-linear-gradient(
-          -45deg,
-          hsla(0, 0%, 0%, 0),
-          hsla(0, 0%, 0%, 0) 2px,
-          hsla(7, 85%, 56%, 0.3) 2px,
-          hsla(7, 85%, 56%, 0.3) 4px
-  );
+  background: var(--unused-stripes);
+  pointer-events: none;
 }
 
 .webtreemap-caption {
   font-size: 12px;
-  text-align: center;
-  word-break: break-word;
+  line-height: 16px;
+  padding: 2px 6px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color-secondary);
 }
 .webtreemap-caption span {
-  margin: 0 2px;
+  margin-right: 4px;
+}
+.webtreemap-caption .lh-text-dim {
+  opacity: 0.7;
 }
 
 /* Copied from viewer.css */
@@ -311,7 +424,7 @@ header {
 .drop_zone.dropping {
   visibility: visible;
   font-size: var(--heading-font-size);
-  background-color: rgba(255,255,255,0.8);
+  background-color: var(--drop-zone-background-color);
   color: var(--unknown-color);
 }
 .drop_zone.dropping::after {
@@ -325,14 +438,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 .treemap-placeholder {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #555;
+  color: var(--text-color-secondary);
 }
 .treemap-placeholder-inner {
   display: flex;
@@ -340,9 +453,9 @@ header {
   border-radius: 5px;
   padding: 16px;
   max-width: 80vw;
-  border: 2px dashed rgba(0,0,0,0.2);
+  border: 2px dashed var(--node-border-color);
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 .treemap-placeholder-inner.lh-loading {
   filter: blur(2px) grayscale(1);
@@ -370,7 +483,7 @@ header {
 .treemap-placeholder__url {
   padding: 8px;
   width: 100%;
-  border: 1px solid #eee;
+  border: 1px solid var(--separator-color);
   margin-top: 16px;
   display: none;
 }

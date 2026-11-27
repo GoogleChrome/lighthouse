@@ -216,6 +216,53 @@ class ConfigPlugin {
   }
 
   /**
+   * Extract and validate locales JSON added by the plugin.
+   * @param {unknown} localesJson
+   * @param {string} pluginName
+   * @return {NonNullable<LH.Config['locales']>|undefined}
+   */
+  static _parseLocales(localesJson, pluginName) {
+    if (localesJson === undefined) {
+      return undefined;
+    }
+
+    if (!isObjectOfUnknownProperties(localesJson)) {
+      throw new Error(`${pluginName} locales json is not defined as an object.`);
+    }
+
+    /** @type {NonNullable<LH.Config['locales']>} */
+    const parsedLocalesJson = {};
+    for (const [locale, localeMessagesJson] of Object.entries(localesJson)) {
+      if (!isObjectOfUnknownProperties(localeMessagesJson)) {
+        throw new Error(`${pluginName} has a locale (${locale}) not defined as an object.`);
+      }
+
+      /** @type {Record<string, {message: string}>} */
+      const parsedMessages = {};
+      for (const [icuMessageId, messageEntry] of Object.entries(localeMessagesJson)) {
+        if (!isObjectOfUnknownProperties(messageEntry)) {
+          throw new Error(
+            `${pluginName} has a locale message (${icuMessageId}) not defined as an object.`
+          );
+        }
+
+        const {message, ...invalidRest} = messageEntry;
+        assertNoExcessProperties(invalidRest, pluginName, 'locale message');
+
+        if (typeof message !== 'string') {
+          throw new Error(`${pluginName} has an invalid locale message (${icuMessageId}).`);
+        }
+
+        parsedMessages[icuMessageId] = {message};
+      }
+
+      parsedLocalesJson[/** @type {LH.Locale} */ (locale)] = parsedMessages;
+    }
+
+    return parsedLocalesJson;
+  }
+
+  /**
    * Extracts and validates a config from the provided plugin input, throwing
    * if it deviates from the expected object shape.
    * @param {unknown} pluginJson
@@ -233,6 +280,7 @@ class ConfigPlugin {
       audits: pluginAuditsJson,
       category: pluginCategoryJson,
       groups: pluginGroupsJson,
+      locales: pluginLocalesJson,
       ...invalidRest
     } = pluginJson;
 
@@ -244,6 +292,7 @@ class ConfigPlugin {
         [pluginName]: ConfigPlugin._parseCategory(pluginCategoryJson, pluginName),
       },
       groups: ConfigPlugin._parseGroups(pluginGroupsJson, pluginName),
+      locales: ConfigPlugin._parseLocales(pluginLocalesJson, pluginName),
     };
   }
 }

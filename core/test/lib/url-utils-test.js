@@ -15,13 +15,13 @@ describe('UrlUtils', () => {
   it('handles URLs beginning with multiple digits', () => {
     // from https://github.com/GoogleChrome/lighthouse/issues/1186
     const url = 'http://5321212.fls.doubleclick.net/activityi;src=5321212;type=unvsn_un;cat=unvsn_uv;ord=7762287885264.98?';
-    assert.doesNotThrow(_ => new URL(url));
+    assert.doesNotThrow(() => new URL(url));
   });
 
   it('handles URLs with multiple dashes', () => {
     // from https://github.com/GoogleChrome/lighthouse/issues/1972
     const url = 'https://r15---sn-o097znl7.googlevideo.com/generate_204?conn2';
-    assert.doesNotThrow(_ => new URL(url));
+    assert.doesNotThrow(() => new URL(url));
   });
 
   it('safely identifies valid URLs', () => {
@@ -228,6 +228,7 @@ describe('UrlUtils', () => {
     });
 
     it('Elides path parts properly when used with preserveHost', () => {
+      /** @param {string} path */
       const getResult = path => UrlUtils.getURLDisplayName(`http://g.co${path}`, {preserveHost: true});
       assert.equal(getResult('/file.css'), 'g.co/file.css');
       assert.equal(getResult('/img/logo.jpg'), 'g.co/img/logo.jpg');
@@ -262,6 +263,7 @@ describe('UrlUtils', () => {
 
   describe('equalWithExcludedFragments', () => {
     it('correctly checks equality of URLs regardless of fragment', () => {
+      /** @type {Array<[string, string]>} */
       const equalPairs = [
         ['https://example.com/', 'https://example.com/'],
         ['https://example.com/', 'https://example.com/#/login?_k=dt915a'],
@@ -271,6 +273,7 @@ describe('UrlUtils', () => {
     });
 
     it('correctly checks inequality of URLs regardless of fragment', () => {
+      /** @type {Array<[string, string]>} */
       const unequalPairs = [
         ['https://example.com/', 'https://www.example.com/'],
         ['https://example.com/', 'http://example.com/'],
@@ -282,6 +285,7 @@ describe('UrlUtils', () => {
 
     // Bug #1776
     it('rewrites chrome://settings urls', () => {
+      /** @type {[string, string]} */
       const pair = [
         'chrome://settings/',
         'chrome://chrome/settings/',
@@ -291,6 +295,7 @@ describe('UrlUtils', () => {
 
     // https://github.com/GoogleChrome/lighthouse/pull/3941#discussion_r154026009
     it('canonicalizes chrome:// urls without a trailing slash', () => {
+      /** @type {[string, string]} */
       const pair = [
         'chrome://version/',
         'chrome://version',

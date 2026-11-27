@@ -7,7 +7,9 @@
 import assert from 'assert/strict';
 
 import ViewportDimensionsGatherer from '../../../gather/gatherers/viewport-dimensions.js';
+import {createMockContext} from '../../gather/mock-driver.js';
 
+/** @type {ViewportDimensionsGatherer} */
 let gatherer;
 
 describe('ViewportDimensions gatherer', () => {
@@ -17,21 +19,15 @@ describe('ViewportDimensions gatherer', () => {
   });
 
   it('returns an artifact', () => {
-    return gatherer.getArtifact({
-      driver: {
-        executionContext: {
-          async evaluate() {
-            return {
-              innerWidth: 400,
-              outerWidth: 400,
-              innerHeight: 600,
-              outerHeight: 600,
-              devicePixelRatio: 2,
-            };
-          },
-        },
-      },
-    }).then(artifact => {
+    const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate.mockResolvedValue({
+      innerWidth: 400,
+      outerWidth: 400,
+      innerHeight: 600,
+      outerHeight: 600,
+      devicePixelRatio: 2,
+    });
+    return gatherer.getArtifact(mockContext.asContext()).then(artifact => {
       assert.ok(typeof artifact === 'object');
       assert.ok(artifact.outerWidth === 400);
       assert.ok(artifact.innerHeight === 600);

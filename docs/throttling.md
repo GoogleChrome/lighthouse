@@ -1,3 +1,41 @@
+# Throttling in Lighthouse
+
+Lighthouse controls both [network throttling](#network-throttling) and [CPU throttling](#cpu-throttling) together through the `throttlingMethod` setting:
+
+- **`simulate` (default)**: Records an unthrottled page load, then models network latency, throughput, and CPU slowdown mathematically using [Lantern](./lantern.md).
+- **`devtools`**: Applies live request-level network throttling (`Network.emulateNetworkConditions`) and active CPU throttling (`Emulation.setCPUThrottlingRate`) over the Chrome DevTools Protocol (CDP) while the page runs.
+- **`provided`**: Leaves network and CPU unthrottled by Lighthouse so you can supply external packet- or proxy-level throttling.
+
+## DevTools' Lighthouse Panel Throttling
+
+In Chrome DevTools, the **Lighthouse** panel settings (`⚙`) include a **Throttling method** dropdown with two options:
+
+1. **Simulated throttling (default)**: Matches the default setup of PageSpeed Insights and the Lighthouse CLI for faster runs and lower variance.
+   - Because the recorded trace is unthrottled, opening **View Unthrottled Trace** from the report's three-dot menu (`⋮`) opens that unthrottled trace in the **Performance** panel, where timings do not match the scaled metric values in the Lighthouse report.
+1. **DevTools throttling (advanced)**: Slows down network requests and CPU execution in real time during the audit using Lighthouse's fixed presets over CDP.
+   - The report renders a [**View Trace** button](https://developer.chrome.com/blog/new-in-devtools-67/#traces), and the trace timings in the **Performance** panel match Lighthouse's reported metrics.
+
+"DevTools throttling" refers to the CDP throttling mechanism, **not** the throttling dropdowns in other DevTools panels: selecting **DevTools throttling (advanced)** applies Lighthouse's own fixed presets rather than reading the presets selected in the **Network** or **Performance** panels.
+
+### Presets by Device and Throttling Method
+
+| Device | Throttling method | Network throttling | CPU throttling |
+| :--- | :--- | :--- | :--- |
+| **Mobile** | **Simulated throttling (default)** | Simulated Slow 4G (`150 ms` TCP RTT, `1,638.4 Kbps` throughput) | Simulated **4x** slowdown |
+| **Mobile** | **DevTools throttling (advanced)** | Live CDP Slow 4G (`562.5 ms` HTTP RTT, `1,474.56 Kbps` down, `675 Kbps` up) | Active **4x** CDP slowdown (`Emulation.setCPUThrottlingRate`) |
+| **Desktop** | **Simulated throttling (default)** | Simulated broadband (`40 ms` TCP RTT, `10,240 Kbps` throughput) | **1x** (no slowdown) |
+| **Desktop** | **DevTools throttling (advanced)** | **None** (`0` latency and throughput) | **1x** (no slowdown) |
+
+### Behavior by Lighthouse Mode
+
+The [Lighthouse mode](./user-flows.md) you select in the panel also determines how throttling runs:
+
+- **Navigation (default)**: Applies the selected **Throttling method** (`Simulated` or `DevTools`) shown in the table above.
+- **Timespan**: Lantern simulation only supports full page navigations, so Timespan runs switch `Simulated throttling` to live **DevTools throttling** (`4x` active CPU slowdown and live Slow 4G network throttling on Mobile; unthrottled `1x` on Desktop).
+- **Snapshot**: Audits the page in its current DOM state without recording a trace; neither network nor CPU throttling runs.
+
+To customize network throughput, latency, or the CPU slowdown multiplier, run the [Lighthouse CLI](../readme.md#cli-options) instead of the DevTools panel.
+
 # Network Throttling
 
 Lighthouse applies network throttling to emulate the ~85th percentile mobile connection speed even when run on much faster fiber connections.
@@ -24,17 +62,6 @@ Within web performance testing, there are four typical styles of network throttl
 1. **_Packet-level_** throttling tools are able to make the most accurate network simulation. While this approach can model real network conditions most effectively, it also can introduce [more variance](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit) than request-level or simulated throttling. [WebPageTest uses](https://github.com/WPO-Foundation/wptagent/blob/master/docs/remote_trafficshaping.md) packet-level throttling.
 
 Lighthouse, by default, uses simulated throttling as it provides both quick evaluation and minimized variance. However, some may want to experiment with more accurate throttling... [Learn more about these throttling types and how they behave in in different scenarios](https://www.debugbear.com/blog/network-throttling-methods).
-
-## DevTools' Lighthouse Panel Throttling
-
-The Lighthouse panel has a simplified throttling setup:
-
-1. _Simulated throttling_ remains the default setting. This matches the setup of PageSpeed Insights and the Lighthouse CLI default, maintaining cross-tool consistency.
-   - If you click the `View Original Trace` button, the trace values will not match up with Lighthouse's metric results, as the original trace is prior to the simulation.
-1. _DevTools throttling_ is available within the Lighthouse panel settings (⚙): select _DevTools throttling_ from the throttling method dropdown.
-   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developers.google.com/web/updates/2018/04/devtools#traces) will match Lighthouses's numbers.
-
-Of course, CLI users can still control the exact [configuration](../readme.md#cli-options) of throttling.
 
 ## How do I get packet-level throttling?
 

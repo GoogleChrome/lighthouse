@@ -6,27 +6,7 @@ This doc is only relevant to core members.
 
 ### Cadence
 
-We aim to release every 4 week, one day after the [expected Chromium branch point](https://www.chromium.org/developers/calendar). These are Wednesdays.
-
-Major version bumps will be the first release of April and October. The due date and progress of major milestones are tracked in https://github.com/GoogleChrome/lighthouse/milestones.
-
-For example, following this schedule, we will attempt a release on these dates:
-
-* _Sep 6 2023_ (Ships in M119, after M118 branch point)
-* _Oct 4 2023_ (Ships in M120, after M119 branch point)
-* ...
-
-The planned ship dates are added to the internal Lighthouse calendar.
-
-If a release is necessary outside these scheduled dates, we may choose to skip the next scheduled release.
-
-In general, the above release dates are when new versions will be available in npm. Within 2 weeks, it will be reflected in LR / PSI. Some 10 weeks later, it will be available in Stable Chrome.
-
-### Release manager
-
-Release manager is appointed, according to the list below. However, if the appointed manager is absent, the next engineer in line in the list would own it.
-
-    @cjamcl, @adamraine
+We aim to release major version bumps no more than once a year.
 
 ### Versioning
 
@@ -51,14 +31,9 @@ and that no new PRs should be merged until you are done.
 
 ### Lightrider
 
-There is a cron that rolls the latest Lighthouse to the Lightrider canary feed.
-Make sure it has run recently, and there were no errors that require an upstream
-fix in Lighthouse.
+Before starting a release, roll `main` to google3 and validate Lightrider tests continue to pass (or at least fail in expected ways).
 
 For more, see the internal README for updating Lighthouse: go/lightrider-doc-landing
-
-Hold on submitting a CL to Lightrider canary until after cutting a release or
-wait until the next cron run.
 
 ### Open the PR
 
@@ -97,11 +72,6 @@ git push --tags
 yarn deploy-viewer
 yarn deploy-treemap
 ```
-
-### Create a release on GitHub
-
-Go to https://github.com/GoogleChrome/lighthouse/releases and create a new release from the tag.
-Include the changelog.
 
 ### Extensions
 
@@ -156,7 +126,7 @@ From the `chrome-devtools-mcp` repo:
 
 ### Lightrider
 
-Roll to Lightrider canary, and alert LR team that the next version is ready to be rolled to stable.
+Roll to google3.
 
 ### Done
 

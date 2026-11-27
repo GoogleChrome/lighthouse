@@ -16,6 +16,12 @@ const devtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.l
 let requestedUrl = 'http://example.com:3000';
 let mainDocumentUrl = 'http://www.example.com:3000';
 
+/** @type {LH.Artifacts['GatherContext']} */
+const gatherContext = {gatherMode: 'navigation'};
+
+/**
+ * @param {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>} networkRecords
+ */
 function mockData(networkRecords) {
   return {
     settings: JSON.parse(JSON.stringify(defaultSettings)),
@@ -30,13 +36,16 @@ function mockData(networkRecords) {
       mainDocumentUrl,
       finalDisplayedUrl: mainDocumentUrl,
     },
-    gatherContext: {gatherMode: 'navigation'},
+    gatherContext,
     SourceMaps: [],
     HostDPR: 1,
     simulator: null,
   };
 }
 
+/**
+ * @return {Array<import('../../network-records-to-devtools-log.js').NetworkRequestInput>}
+ */
 function mockNetworkRecords() {
   return [{
     requestId: 'NAVIGATION_ID',
@@ -79,7 +88,7 @@ describe('Metrics: TTFB', () => {
       trace,
       devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
-      gatherContext: {gatherMode: 'navigation'},
+      gatherContext,
       SourceMaps: [],
       HostDPR: 1,
       simulator: null,

@@ -189,9 +189,11 @@ describe('format', () => {
       {label: 'relative path', filename: 'core/audits/is-on-https.js'},
       {label: 'absolute path', filename: `${LH_ROOT}/core/audits/is-on-https.js`},
     ].forEach(({label, filename}) => {
-      it(`overwrites existing locale strings: ${label}`, async () => {
+      it(`merges and overwrites existing locale strings: ${label}`, async () => {
         const {UIStrings} = await import('../../../core/audits/is-on-https.js');
         const str_ = i18n.createIcuMessageFn(filename, UIStrings);
+        const customUIStrings = {title: 'Custom audit title'};
+        const customStr_ = i18n.createIcuMessageFn('my-custom-audit.js', customUIStrings);
 
         // To start with, we get back the intended string..
         const origTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
@@ -199,10 +201,13 @@ describe('format', () => {
         const origFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
         expect(origFailureTitle).toEqual('No usa HTTPS');
 
-        // Now we declare and register the new string...
+        // Now we declare and register a custom string and an overridden core string...
         const localeData = {
           'core/audits/is-on-https.js | title': {
             'message': 'new string for es-419 uses https!',
+          },
+          'my-custom-audit.js | title': {
+            'message': 'Título de auditoría personalizada',
           },
         };
         format.registerLocaleData('es-419', localeData);
@@ -210,10 +215,12 @@ describe('format', () => {
         // And confirm that's what is returned
         const newTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
         expect(newTitle).toEqual('new string for es-419 uses https!');
+        const customTitle = format.getFormatted(customStr_(customUIStrings.title), 'es-419');
+        expect(customTitle).toEqual('Título de auditoría personalizada');
 
-        // Meanwhile another string that wasn't set in registerLocaleData just falls back to english
+        // Meanwhile another string that wasn't set in registerLocaleData retains its es-419 translation
         const newFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
-        expect(newFailureTitle).toEqual('Does not use HTTPS');
+        expect(newFailureTitle).toEqual('No usa HTTPS');
 
         // Restore overwritten strings to avoid messing with other tests
         locales['es-419'] = clonedLocales['es-419'];

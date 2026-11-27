@@ -76,7 +76,7 @@ describe('ARD Schema validation (ported from ard-spec)', () => {
     expect(tester.warnings).toEqual([]);
   });
 
-  it('warns, but does not fail, when root contains deprecated collections (ADR-0003)', () => {
+  it('warns, but does not fail, when root contains deprecated collections', () => {
     const manifest = {
       specVersion: '1.0',
       collections: [],
@@ -88,7 +88,9 @@ describe('ARD Schema validation (ported from ard-spec)', () => {
     expect(tester.warnings).toEqual([
       {
         element: 'Root',
-        message: expect.stringContaining('Found \'collections\' at root'),
+        message: 'Found \'collections\' at root. Top-level collections were removed; ARD ' +
+          'ignores unrecognized top-level members, so this does not invalidate the manifest, ' +
+          'but hierarchies should be modeled inside \'entries\'.',
       },
     ]);
   });
@@ -163,6 +165,10 @@ describe('ARD Schema validation (ported from ard-spec)', () => {
       for (const type of [
         'application/ai-catalog+json',
         'APPLICATION/AI-Catalog+JSON',
+        'application/agent-skills+json',
+        'application/agent-skills+md',
+        'application/agent-plugins+zip',
+        'application/agent-plugins+gzip',
         'text/markdown; profile="urn:air:agent-skills"',
         'text/markdown;profile="urn:air:agent-skills"',
       ]) {

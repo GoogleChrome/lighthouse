@@ -12,6 +12,8 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const sampleTrace = readJson('../fixtures/artifacts/iframe/trace.json', import.meta);
 const sampleDevtoolsLog = readJson('../fixtures/artifacts/iframe/devtoolslog.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 describe('PageDependencyGraph computed artifact', () => {
   describe('#compute_', () => {
@@ -30,6 +32,57 @@ describe('PageDependencyGraph computed artifact', () => {
       const dependents = output.getDependents();
       const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
       assert.ok(nodeWithNestedDependents, 'did not link initiators');
+    });
+
+    it('should strip #hash fragments from trace ResourceSendRequest URLs', async () => {
+      const traceWithHash = structuredClone(sampleTrace);
+      const urlArtifact = getURLArtifactFromDevtoolsLog(sampleDevtoolsLog);
+      for (const event of traceWithHash.traceEvents) {
+        if (
+          event.name === 'ResourceSendRequest' &&
+          event.args?.data?.url === urlArtifact.requestedUrl
+        ) {
+          event.args.data.url = `${urlArtifact.requestedUrl}#fragment`;
+        }
+      }
+
+      const context = {computedCache: new Map()};
+      const output = await PageDependencyGraph.request({
+        trace: traceWithHash,
+        devtoolsLog: sampleDevtoolsLog,
+        URL: urlArtifact,
+        SourceMaps: [],
+        HostDPR: 1,
+        settings: {},
+        fromTrace: true,
+      }, context);
+      assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
+      assert.equal(output.type, 'network');
+      assert.equal(output.request.url, urlArtifact.requestedUrl);
+      const dependents = output.getDependents();
+      const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
+      assert.ok(nodeWithNestedDependents, 'did not link initiators');
+    });
+
+    it('should exclude data: URIs from the dependency graph', async () => {
+      const context = {computedCache: new Map()};
+      const output = await PageDependencyGraph.request({
+        trace: pwaTrace,
+        devtoolsLog: pwaDevtoolsLog,
+        URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
+        SourceMaps: [],
+        HostDPR: 1,
+        settings: {},
+        fromTrace: process.env.INTERNAL_LANTERN_USE_TRACE !== undefined,
+      }, context);
+      /** @type {Array<string>} */
+      const dataUrls = [];
+      output.traverse(node => {
+        if (node.type === 'network' && node.request.url.startsWith('data:')) {
+          dataUrls.push(node.request.url);
+        }
+      });
+      assert.deepEqual(dataUrls, []);
     });
   });
 });

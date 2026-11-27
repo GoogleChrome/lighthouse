@@ -12,7 +12,7 @@ import {inlineFs} from './inline-fs.js';
  * @typedef InlineFsPluginOptions
  * @property {boolean} [verbose] If true, turns on verbose logging, e.g. log instances where fs methods could not be inlined.
  * @property {string[]} [ignorePaths] Absoulte paths of files to not process for inlining.
- * @property {Set<string>} [trackedFiles] A set to track all files that are inlined.
+ * @property {Set<string> | Map<string, Set<string>>} [trackedFiles] Tracks inlined file paths (either flat or keyed by importer path).
  */
 
 /**

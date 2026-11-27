@@ -233,6 +233,7 @@ Disallow: / # go away!
 
 Sitemap: https://example.com/sitemap.xml
 License: https://example.com/license.xml
+Agentmap: https://example.com/.well-known/ard.json
 
 User-agent: Yandex
 Host: https://brainly.com

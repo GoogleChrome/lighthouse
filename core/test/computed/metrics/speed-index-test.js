@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {SpeedIndex} from '../../../computed/metrics/speed-index.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
@@ -13,16 +15,19 @@ const trace1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/trace.j
 const devtoolsLog1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/devtoolslog.json.gz', import.meta);
 
 describe('Metrics: Speed Index', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await SpeedIndex.request(
       // eslint-disable-next-line max-len
       {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
-        context);
+      context);
+    assert('optimisticEstimate' in result);
 
     expect({
       timing: Math.round(result.timing),
@@ -37,6 +42,7 @@ Object {
   });
 
   it('should compute a simulated value on a trace on desktop with 1ms durations', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {
       throttlingMethod: 'simulate',
       throttling: {
@@ -60,6 +66,7 @@ Object {
       },
       context
     );
+    assert('optimisticEstimate' in result);
 
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
       // The pre-M145 devtoolsLog lacks `renderBlockingBehavior`, causing CDP mode to fall back
@@ -91,6 +98,7 @@ Object {
   });
 
   it('should compute an observed value (desktop)', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
@@ -108,6 +116,7 @@ Object {
   });
 
   it('should compute an observed value (mobile)', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);

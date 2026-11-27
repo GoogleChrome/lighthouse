@@ -21,8 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 
-import log from 'lighthouse-logger';
-
+import log from '../core/lib/lighthouse-logger.js';
 import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
@@ -132,7 +131,13 @@ async function begin() {
     });
   }
 
-  return runLighthouse(urlsUnderTest, cliFlags, config);
+  try {
+    return await runLighthouse(urlsUnderTest, cliFlags, config);
+  } catch (err) {
+    // Report fatal CLI errors before Node exits (unhandled rejections are reported in run.js).
+    await Sentry.captureException(err, {level: 'fatal'});
+    throw err;
+  }
 }
 
 export {

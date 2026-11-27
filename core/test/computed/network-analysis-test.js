@@ -7,6 +7,7 @@
 import {NetworkAnalysis} from '../../computed/network-analysis.js';
 import {readJson} from '../test-utils.js';
 
+/** @type {LH.DevtoolsLog} */
 const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Network analysis computed', () => {

@@ -58,6 +58,18 @@ describe('DetailsRenderer', () => {
       assert.ok(thumbnails[0].alt, 'did not set alt text');
     });
 
+    it('omits filmstrip thumbnail src for unsafe URLs', () => {
+      const el = renderer.render({
+        type: 'filmstrip',
+        items: [
+          {timing: 1020, data: 'javascript:alert(1)'},
+        ],
+      });
+
+      const thumbnail = el.querySelector('.lh-filmstrip__thumbnail');
+      assert.equal(thumbnail.getAttribute('src'), null);
+    });
+
     it('renders tables', () => {
       const el = renderer.render({
         type: 'table',
@@ -794,6 +806,8 @@ describe('DetailsRenderer', () => {
           const validLinks = rows[0].querySelectorAll('a.lh-report-icon--external');
           assert.equal(validLinks.length, 1);
           assert.equal(validLinks[0].href, 'https://valid.com/');
+          assert.equal(validLinks[0].target, '_blank');
+          assert.equal(validLinks[0].rel, 'noopener');
 
           // Row 1 is invalid.com, should NOT have the external link anchor tag
           assert.deepStrictEqual(

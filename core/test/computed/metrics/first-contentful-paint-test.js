@@ -15,15 +15,18 @@ const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolsl
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: FCP', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
       // eslint-disable-next-line max-len
       {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context);
+    assert('optimisticEstimate' in result);
 
     expect({
       timing: Math.round(result.timing),
@@ -36,7 +39,38 @@ describe('Metrics: FCP', () => {
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
 
+  it('should use the last main-frame navigation when earlier navigations aborted', async () => {
+    const traceWithAbortedNav = structuredClone(trace);
+    const mainNav = traceWithAbortedNav.traceEvents.find(
+      /** @param {LH.TraceEvent} e */ e => e.name === 'navigationStart'
+    );
+    assert.ok(mainNav);
+    const abortedNav = structuredClone(mainNav);
+    abortedNav.ts = mainNav.ts - 1000;
+    abortedNav.args.data = {...abortedNav.args.data, navigationId: 'aborted-initial-nav'};
+    traceWithAbortedNav.traceEvents.unshift(abortedNav);
+
+    /** @type {LH.Artifacts.ComputedSettings} */
+    const settings = {throttlingMethod: 'simulate'};
+    const context = {settings, computedCache: new Map()};
+    const result = await FirstContentfulPaint.request(
+      {
+        trace: traceWithAbortedNav,
+        devtoolsLog,
+        gatherContext,
+        settings,
+        URL,
+        SourceMaps: [],
+        HostDPR: 1,
+        simulator: null,
+      },
+      context);
+
+    assert.equal(Math.round(result.timing), 1107);
+  });
+
   it('should compute an observed value (desktop)', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
@@ -53,6 +87,7 @@ Object {
   });
 
   it('should compute an observed value (mobile)', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(

@@ -66,6 +66,22 @@ describe('SummaryFlowStep', () => {
     ]);
   });
 
+  it('omits href in navigation header for unsafe URLs', async () => {
+    const lhr = JSON.parse(JSON.stringify(flowResult.steps[0].lhr)) as LH.Result;
+    lhr.finalDisplayedUrl = 'javascript:alert(1)';
+
+    const root = render(<SummaryFlowStep
+      lhr={lhr}
+      label="Navigation (1)"
+      hashIndex={0}
+    />, {wrapper});
+
+    const header = root.getByTestId('SummaryNavigationHeader');
+    const urlLink = header.querySelector('a')!;
+    expect(urlLink.textContent).toEqual('javascript:alert(1)');
+    expect(urlLink.getAttribute('href')).toBeNull();
+  });
+
   it('renders timespan step', async () => {
     const root = render(<SummaryFlowStep
       lhr={flowResult.steps[1].lhr}

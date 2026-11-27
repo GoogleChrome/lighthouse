@@ -22,6 +22,58 @@ const outputPath = path.join(LH_ROOT, 'third-party/ard/schema-validator.js');
  */
 const EXPORTED_DEFS = ['ArdManifest', 'ArdEntry'];
 
+/** @type {Array<import('ajv-formats').FormatName>} */
+const FORMATS = ['uri', 'date-time'];
+
+/**
+ * Hand-written port of the `FORMATS` validators from ajv-formats v3.0.1 (full mode), emitted into
+ * the generated module so `ajv-formats` (and `ajv`) are not runtime dependencies.
+ */
+/* eslint-disable max-len */
+const FORMATS_CODE = String.raw`/*! uri and date-time format validators ported from ajv-formats v3.0.1 (full mode).
+ * https://github.com/ajv-validator/ajv-formats - Copyright (c) 2020 Evgeny Poberezkin - MIT License */
+const DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
+const DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const TIME = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
+const NOT_URI_FRAGMENT = /\/|:/;
+const URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
+function isDate(str) {
+  const matches = DATE.exec(str);
+  if (!matches) return false;
+  const year = +matches[1];
+  const month = +matches[2];
+  const day = +matches[3];
+  const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  return month >= 1 && month <= 12 && day >= 1 && day <= (month === 2 && isLeapYear ? 29 : DAYS[month]);
+}
+function isTimeWithTimeZone(str) {
+  const matches = TIME.exec(str);
+  if (!matches) return false;
+  const hr = +matches[1];
+  const min = +matches[2];
+  const sec = +matches[3];
+  const tzSign = matches[5] === '-' ? -1 : 1;
+  const tzH = +(matches[6] || 0);
+  const tzM = +(matches[7] || 0);
+  if (tzH > 23 || tzM > 59 || !matches[4]) return false;
+  if (hr <= 23 && min <= 59 && sec < 60) return true;
+  // leap second
+  const utcMin = min - tzM * tzSign;
+  const utcHr = hr - tzH * tzSign - (utcMin < 0 ? 1 : 0);
+  return (utcHr === 23 || utcHr === -1) && (utcMin === 59 || utcMin === -1) && sec < 61;
+}
+const fullFormats = {
+  'uri': (str) => NOT_URI_FRAGMENT.test(str) && URI.test(str),
+  'date-time': {
+    validate(str) {
+      const dateTime = str.split(/t|\s/i);
+      return dateTime.length === 2 && isDate(dateTime[0]) && isTimeWithTimeZone(dateTime[1]);
+    },
+  },
+};
+`;
+/* eslint-enable max-len */
+
 /**
  * Format standalone code with proper 2-space indentation and formatted schema objects.
  * @param {string} src
@@ -99,7 +151,7 @@ function build() {
       lines: true,
     },
   });
-  addFormats(ajv, ['uri', 'date-time']);
+  addFormats(ajv, FORMATS);
   ajv.addSchema(schema);
 
   /** @type {Record<string, string>} */
@@ -111,14 +163,20 @@ function build() {
   }
   let moduleCode = standaloneCode(ajv, refs);
 
-  // Use ESM import for ajv-formats instead of CommonJS require in standalone code.
-  // Ajv numbers these variables per schema, so match any `formatsN`.
+  // Ajv's standalone code `require`s each format from ajv-formats, numbering the variables per
+  // schema (`formatsN`). Point them at the hand-written `fullFormats` in FORMATS_CODE instead.
   const formatsRequireRe = new RegExp(
     'const (formats\\d+) = require\\("ajv-formats/dist/formats"\\)\\.fullFormats' +
-    '(\\.[\\w$]+|\\["[^"]+"\\]);', 'g');
-  moduleCode = moduleCode.replace(formatsRequireRe, 'const $1 = fullFormats$2;');
-  if (moduleCode.includes('require(')) {
-    throw new Error('Standalone validator still contains a CommonJS require() call.');
+    '(?:\\.([\\w$]+)|\\["([^"]+)"\\]);', 'g');
+  moduleCode = moduleCode.replace(formatsRequireRe, (_, varName, dotName, bracketName) => {
+    const name = dotName ?? bracketName;
+    if (!/** @type {string[]} */ (FORMATS).includes(name)) {
+      throw new Error(`Standalone validator references unsupported format '${name}'`);
+    }
+    return `const ${varName} = fullFormats[${JSON.stringify(name)}];`;
+  });
+  if (moduleCode.includes('require(') || moduleCode.includes('ajv-formats')) {
+    throw new Error('Standalone validator still references a CommonJS require() or ajv-formats.');
   }
 
   const formattedModuleCode = formatCode(moduleCode);
@@ -133,8 +191,7 @@ function build() {
 /* eslint-disable */
 // @ts-nocheck
 
-import {fullFormats} from 'ajv-formats/dist/formats.js';
-
+${FORMATS_CODE}
 `;
 
   fs.writeFileSync(outputPath, banner + formattedModuleCode);

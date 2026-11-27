@@ -6,7 +6,7 @@
  */
 
 import {Audit} from '../core/audits/audit.js';
-import {SharedFlagsSettings, ConfigSettings} from './lhr/settings.js';
+import {SharedFlagsSettings, ConfigSettings, Locale} from './lhr/settings.js';
 import Gatherer from './gatherer.js';
 import {IcuMessage} from './lhr/i18n.js';
 import Result from './lhr/lhr.js';
@@ -26,6 +26,7 @@ interface Config {
   categories?: Record<string, Config.CategoryJson> | null;
   groups?: Record<string, Config.GroupJson> | null;
   plugins?: Array<string>;
+  locales?: Partial<Record<Locale, Record<string, {message: string}>>> | null;
 }
 
 declare namespace Config {
@@ -43,6 +44,7 @@ declare namespace Config {
   interface ArtifactJson {
     id: string;
     gatherer: GathererJson;
+    alwaysGather?: boolean;
   }
 
   type GathererJson = {
@@ -94,6 +96,7 @@ declare namespace Config {
     dependencies?: TDependencies extends Gatherer.DefaultDependenciesKey ?
       undefined :
       Record<Exclude<TDependencies, Gatherer.DefaultDependenciesKey>, {id: string}>;
+    alwaysGather?: boolean;
   }
 
   type ArtifactDefnExpander<TDependencies extends Gatherer.DependencyKey> =
@@ -136,6 +139,8 @@ declare namespace Config {
     category: Config.Category;
     /** Optionally provide more groups in addition to those specified by the base config. */
     groups?: Record<string, Config.GroupJson>;
+    /** Optionally provide locale messages for translating plugin strings. */
+    locales?: Partial<Record<Locale, Record<string, {message: string}>>>;
   }
 
   type Merge = {

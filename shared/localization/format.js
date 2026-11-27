@@ -466,7 +466,10 @@ function getAvailableLocales() {
  * @param {import('./locales').LhlMessages} lhlMessages
  */
 function registerLocaleData(locale, lhlMessages) {
-  LOCALE_MESSAGES[locale] = lhlMessages;
+  LOCALE_MESSAGES[locale] = {
+    ...LOCALE_MESSAGES[locale],
+    ...lhlMessages,
+  };
 }
 
 /**

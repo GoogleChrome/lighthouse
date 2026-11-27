@@ -9,9 +9,12 @@ import {createScript, loadSourceMapFixture} from '../test-utils.js';
 
 describe('JSBundles computed artifact', () => {
   it('collates script element and source map', async () => {
+    /** @type {Pick<LH.Artifacts, 'SourceMaps'|'Scripts'>} */
     const artifacts = {
       SourceMaps: [{
-        scriptId: '1', scriptUrl: 'https://www.example.com/app.js', map: {sources: ['index.js'], mappings: 'AAAA'},
+        scriptId: '1',
+        scriptUrl: 'https://www.example.com/app.js',
+        map: {version: 3, sources: ['index.js'], mappings: 'AAAA'},
       }],
       Scripts: [{scriptId: '1', url: 'https://www.example.com/app.js', content: ''}].map(createScript),
     };
@@ -64,8 +67,9 @@ describe('JSBundles computed artifact', () => {
         "sourceURL": "src/foo.js",
       }
     `);
+    if (!entry) throw new Error('expected entry');
     expect(result.map.sourceLineMapping(
-      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
+      entry.sourceURL ?? '', entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
 
     expect(result.map.sourceLineMapping('bogus', 0, 0)).toBe(null);
   });
@@ -74,6 +78,7 @@ describe('JSBundles computed artifact', () => {
     // This map is from source-map-explorer.
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
     const {map, content} = loadSourceMapFixture('foo.min');
+    // @ts-expect-error - testing null source entry in malformed source map
     map.sources[1] = null;
     const artifacts = {
       SourceMaps: [{scriptId: '1', scriptUrl: 'https://example.com/foo.min.js', map}],
@@ -112,8 +117,9 @@ describe('JSBundles computed artifact', () => {
         "sourceURL": "src/foo.js",
       }
     `);
+    if (!entry) throw new Error('expected entry');
     expect(result.map.sourceLineMapping(
-      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
+      entry.sourceURL ?? '', entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
   });
 
   it('works (complex map)', async () => {
@@ -225,13 +231,17 @@ describe('JSBundles computed artifact', () => {
         "sourceURL": "webpack:///./src/components/compress/index.tsx",
       }
     `);
+    if (!entry) throw new Error('expected entry');
     expect(result.map.sourceLineMapping(
-      entry.sourceURL, entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
+      entry.sourceURL ?? '', entry.sourceLineNumber, entry.sourceColumnNumber)).toBe(entry);
   });
 
   describe('fault tolerance', () => {
+    /** @type {ReturnType<typeof loadSourceMapFixture>} */
     let data;
+    /** @type {LH.Artifacts.RawSourceMap} */
     let map;
+    /** @type {string} */
     let content;
 
     beforeEach(() => {

@@ -9,8 +9,7 @@
  * against the results actually collected from Lighthouse.
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../../core/lib/lighthouse-logger.js';
 import {LocalConsole} from './lib/local-console.js';
 import {chromiumVersionCheck} from './version-check.js';
 

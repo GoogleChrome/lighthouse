@@ -35,10 +35,10 @@ const DEFAULT_CATEGORIES = [{
 
 /** @typedef {{backend: string, selectedCategories: string[], device: string, locale: string}} Settings */
 
-const STORAGE_KEYS = {
+const STORAGE_KEYS = /** @type {const} */ ({
   Categories: 'lighthouse_audits',
   Settings: 'lighthouse_settings',
-};
+});
 
 /**
  * Save currently selected set of category categories to local storage.

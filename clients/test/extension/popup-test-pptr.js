@@ -15,13 +15,13 @@ import {LH_ROOT} from '../../../shared/root.js';
 const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 
 const mockStorage = {
-  [STORAGE_KEYS.Categories]: {
+  [STORAGE_KEYS.Categories]: /** @type {Record<string, boolean>} */ ({
     'performance': true,
     'seo': true,
     'accessibility': false,
     'best-practices': false,
     'agentic-browsing': false,
-  },
+  }),
   [STORAGE_KEYS.Settings]: {
     device: 'mobile',
   },
@@ -30,19 +30,22 @@ const mockStorage = {
 describe('Lighthouse chrome popup', function() {
   console.log('\n✨ Be sure to have recently run this: yarn build-extension');
 
+  /** @type {import('puppeteer-core').Browser} */
   let browser;
+  /** @type {import('puppeteer-core').Page} */
   let page;
+  /** @type {Array<string|Promise<string>>} */
   let pageErrors = [];
 
   async function claimErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await page.bringToFront();
-    await page.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     expect(errors).toHaveLength(0);
   }
@@ -54,13 +57,16 @@ describe('Lighthouse chrome popup', function() {
     });
 
     page = await browser.newPage();
-    page.on('pageerror', e => pageErrors.push(`${e.message} ${e.stack}`));
+    page.on('pageerror', e => {
+      pageErrors.push(`${e instanceof Error ? `${e.message} ${e.stack}` : e}`);
+    });
     page.on('console', (e) => {
-      if (e.type() === 'error' || e.type() === 'warning') {
+      if (e.type() === 'error' || e.type() === 'warn') {
+        /** @param {import('puppeteer-core').JSHandle} jsHandle */
         const describe = (jsHandle) => {
-          return jsHandle.executionContext().evaluate((obj) => {
+          return jsHandle.evaluate((obj) => {
             return JSON.stringify(obj, null, 2);
-          }, jsHandle);
+          });
         };
         const promise = Promise.all(e.args().map(describe)).then(args => {
           return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
@@ -71,7 +77,11 @@ describe('Lighthouse chrome popup', function() {
     await page.evaluateOnNewDocument((mockStorage) => {
       Object.defineProperty(chrome, 'tabs', {
         get: () => ({
-          query: (args, cb) => {
+          /**
+           * @param {unknown} _args
+           * @param {(tabs: Array<{url: string}>) => void} cb
+           */
+          query: (_args, cb) => {
             cb([{
               url: 'http://example.com',
             }]);
@@ -81,7 +91,11 @@ describe('Lighthouse chrome popup', function() {
       Object.defineProperty(chrome, 'storage', {
         get: () => ({
           local: {
-            get: (keys, cb) => cb(mockStorage),
+            /**
+             * @param {unknown} _keys
+             * @param {(items: typeof mockStorage) => void} cb
+             */
+            get: (_keys, cb) => cb(mockStorage),
           },
         }),
       });
@@ -98,7 +112,7 @@ describe('Lighthouse chrome popup', function() {
     }, mockStorage);
 
     await page.goto('file://' + path.join(lighthouseExtensionPath, 'popup.html'), {waitUntil: 'networkidle2'});
-  }, 10 * 1000);
+  });
 
   after(async () => {
     if (browser) {
@@ -133,7 +147,8 @@ describe('Lighthouse chrome popup', function() {
       mockStorage[STORAGE_KEYS.Settings].device,
     ];
 
-    const checkedValues = await page.$$eval('input:checked', els => els.map(e => e.value));
+    const checkedValues = await page.$$eval('input:checked',
+      els => els.map(e => /** @type {HTMLInputElement} */ (e).value));
     for (const key of expectedEnabledValues) {
       expect(checkedValues).toContain(key);
     }

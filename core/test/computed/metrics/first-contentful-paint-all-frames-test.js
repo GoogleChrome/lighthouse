@@ -12,9 +12,11 @@ const trace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.me
 const devtoolsLog = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
 
 describe('Metrics: FCP all frames', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should throw for simulated throttling', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = FirstContentfulPaintAllFrames.request(
@@ -28,6 +30,7 @@ describe('Metrics: FCP all frames', () => {
   });
 
   it('should compute FCP-AF separate from FCP', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
 

@@ -40,7 +40,7 @@ async function getComputationDataParamsFromTrace(data, context) {
   const traceEngineResult = await TraceEngineResult.request(data, context);
   const frameId = traceEngineResult.data.Meta.mainFrameId;
   const navigation =
-    traceEngineResult.data.Meta.mainFrameNavigations[0];
+    traceEngineResult.data.Meta.mainFrameNavigations.at(-1);
   if (!navigation) {
     throw new Error(`Lantern metrics could not be calculated due to missing navigation id`);
   }

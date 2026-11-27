@@ -532,10 +532,16 @@ declare namespace Artifacts {
 
   type MeasureEntry = LHResult.MeasureEntry;
 
+  type ComputedSettings = Util.ImmutableObject<
+    Pick<Config.Settings, 'throttlingMethod'> &
+    Partial<Omit<Config.Settings, 'throttling'>> &
+    {throttling?: Partial<Config.Settings['throttling']>}
+  >;
+
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Audit.Context['settings'];
+    settings: ComputedSettings;
     gatherContext: Artifacts['GatherContext'];
     simulator: Gatherer.Simulation.Simulator | null;
     URL: Artifacts['URL'];
@@ -637,6 +643,8 @@ declare namespace Artifacts {
     domContentLoadedEvt?: TraceEvent;
     /** Whether LCP was invalidated without a new candidate. */
     lcpInvalidated: boolean;
+    /** The URL of the main-frame LCP image from LargestImagePaint::Candidate, if LCP was an image. */
+    lcpImageUrl?: string;
   }
 
   /** Information on a tech stack (e.g. a JS library) used by the page. */

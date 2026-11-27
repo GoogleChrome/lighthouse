@@ -71,7 +71,7 @@ export class CategoryRenderer {
     if (audit.stackPacks) {
       audit.stackPacks.forEach(pack => {
         const packElmImg = this.dom.createElement('img', 'lh-audit__stackpack__img');
-        packElmImg.src = pack.iconDataURL;
+        this.dom.safelySetImageSrc(packElmImg, pack.iconDataURL);
         packElmImg.alt = pack.title;
 
         const snippets = this.dom.convertMarkdownLinkSnippets(pack.description, {
@@ -141,7 +141,7 @@ export class CategoryRenderer {
 
     const imgEl = this.dom.createElement('img', 'lh-final-ss-image');
     const finalScreenshotDataUri = audit.details.data;
-    imgEl.src = finalScreenshotDataUri;
+    this.dom.safelySetImageSrc(imgEl, finalScreenshotDataUri);
     imgEl.alt = audit.title;
 
     const firstCatHeaderEl = this.dom.find('.lh-category .lh-category-header', categoriesEl);

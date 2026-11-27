@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import assert from 'assert/strict';
+import {setTimeout as sleep} from 'timers/promises';
 
 import puppeteer from 'puppeteer';
 import {expect} from 'expect';
@@ -77,9 +78,9 @@ describe('Lighthouse Viewer', () => {
         if (e.location().url.includes('lighthouse-480x318.jpg')) return;
 
         const describe = (jsHandle) => {
-          return jsHandle.executionContext().evaluate((obj) => {
+          return jsHandle.evaluate((obj) => {
             return JSON.stringify(obj, null, 2);
-          }, jsHandle);
+          });
         };
         const promise = Promise.all(e.args().map(describe)).then(args => {
           return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
@@ -97,21 +98,25 @@ describe('Lighthouse Viewer', () => {
   });
 
   async function claimErrors() {
+    await viewerPage.bringToFront();
+    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const theErrors = pageErrors;
     pageErrors = [];
     return await Promise.all(theErrors);
   }
 
   async function ensureNoErrors() {
-    await viewerPage.bringToFront();
-    await viewerPage.evaluate(() => new Promise(window.requestAnimationFrame));
     const errors = await claimErrors();
     if (errors.length) {
       assert.fail('errors from page:\n\n' + errors.map(e => e.toString()).join('\n\n'));
     }
   }
 
-  afterEach(async function() {
+  afterEach(/** @this {Mocha.Context} */ async function() {
+    if (this.currentTest?.state !== 'passed') {
+      pageErrors = [];
+      return;
+    }
     // Tests should call this themselves so the failure is associated with them in the test report,
     // but just in case one is missed it won't hurt to repeat the check here.
     await ensureNoErrors();
@@ -298,7 +303,7 @@ describe('Lighthouse Viewer', () => {
       new Promise((resolve, reject) => setTimeout(reject, 5_000)),
     ]);
     // Give async work some time to happen (ex: SwapLocaleFeature.enable).
-    await new Promise(resolve => setTimeout(resolve, 3_000));
+    await sleep(3_000);
     await ensureNoErrors();
 
     const content = await viewerPage.$eval('main', el => el.textContent);
@@ -500,9 +505,10 @@ describe('Lighthouse Viewer', () => {
 
       // Expected errors.
       const errors = await claimErrors();
-      expect(errors).toHaveLength(2);
+      expect(errors).toHaveLength(3);
       expect(errors[0]).toContain('500 (Internal Server Error)');
       expect(errors[1]).toContain('badPsiResponse error');
+      expect(errors[2]).toContain('badPsiResponse error');
     });
 
     it('should not call out to PSI for crawler user agents', async () => {

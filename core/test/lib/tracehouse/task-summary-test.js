@@ -19,6 +19,7 @@ import {readJson} from '../../test-utils.js';
 const ampTrace = readJson('../../fixtures/traces/amp-m86.trace.json', import.meta);
 const ampDevtoolsLog = readJson('../../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
 
+/** @param {LH.Trace} trace */
 function getTasks(trace) {
   const {mainThreadEvents, frames, timestamps} = TraceProcessor.processTrace(trace);
   return MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd);
@@ -47,6 +48,7 @@ describe('Task Summaries', () => {
     const tasks = getTasks(ampTrace);
     // The exact task doesn't matter.
     const attributableTask = tasks.find(task => task.attributableURLs.length > 1);
+    if (!attributableTask) throw new Error('expected attributableTask');
     const clonableTask = {...attributableTask, parent: undefined, children: []};
     const knownJsUrl = 'https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js';
 

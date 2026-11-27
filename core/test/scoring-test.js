@@ -32,18 +32,35 @@ describe('ReportScoring', () => {
   });
 
   describe('#scoreAllCategories', () => {
+    /**
+     * @param {{score: number|null, scoreDisplayMode?: LH.Audit.Result['scoreDisplayMode']}} partial
+     * @return {LH.RawIcu<LH.Audit.Result>}
+     */
+    function mockAuditResult({score, scoreDisplayMode = 'binary'}) {
+      return {
+        id: 'mock-id',
+        title: 'Mock Title',
+        description: 'Mock Description',
+        score,
+        scoreDisplayMode,
+      };
+    }
+
     it('should score the categories', () => {
+      /** @type {Record<string, LH.RawIcu<LH.Audit.Result>>} */
       const resultsByAuditId = {
-        'my-audit': {score: 0},
-        'my-boolean-audit': {score: 1},
-        'my-scored-audit': {score: 1},
-        'my-failed-audit': {score: 0.2},
-        'my-boolean-failed-audit': {score: 0},
+        'my-audit': mockAuditResult({score: 0}),
+        'my-boolean-audit': mockAuditResult({score: 1}),
+        'my-scored-audit': mockAuditResult({score: 1, scoreDisplayMode: 'numeric'}),
+        'my-failed-audit': mockAuditResult({score: 0.2, scoreDisplayMode: 'numeric'}),
+        'my-boolean-failed-audit': mockAuditResult({score: 0}),
       };
 
+      /** @type {Record<string, LH.Config.Category>} */
       const categories = {
-        categoryA: {auditRefs: [{id: 'my-audit'}]},
+        categoryA: {title: 'Category A', auditRefs: [{id: 'my-audit', weight: 0}]},
         categoryB: {
+          title: 'Category B',
           auditRefs: [
             {id: 'my-boolean-audit', weight: 1},
             {id: 'my-scored-audit', weight: 1},
@@ -62,15 +79,18 @@ describe('ReportScoring', () => {
     });
 
     it('should weight notApplicable audits as 0', () => {
+      /** @type {Record<string, LH.RawIcu<LH.Audit.Result>>} */
       const resultsByAuditId = {
-        'my-boolean-audit': {score: 1, scoreDisplayMode: 'notApplicable'},
-        'my-scored-audit': {score: 1},
-        'my-failed-audit': {score: 0.2, scoreDisplayMode: 'notApplicable'},
-        'my-boolean-failed-audit': {score: 0},
+        'my-boolean-audit': mockAuditResult({score: 1, scoreDisplayMode: 'notApplicable'}),
+        'my-scored-audit': mockAuditResult({score: 1, scoreDisplayMode: 'numeric'}),
+        'my-failed-audit': mockAuditResult({score: 0.2, scoreDisplayMode: 'notApplicable'}),
+        'my-boolean-failed-audit': mockAuditResult({score: 0}),
       };
 
+      /** @type {Record<string, LH.Config.Category>} */
       const categories = {
         categoryA: {
+          title: 'Category A',
           auditRefs: [
             {id: 'my-boolean-audit', weight: 1},
             {id: 'my-scored-audit', weight: 1},

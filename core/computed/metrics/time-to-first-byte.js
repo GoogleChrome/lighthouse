@@ -7,6 +7,7 @@
 import {calculateDocFirstByteTs} from '@paulirish/trace_engine/models/trace/insights/Common.js';
 
 import {Helpers} from '../../lib/trace-engine.js';
+import {throttling} from '../../config/constants.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {NavigationMetric} from './navigation-metric.js';
 import {MainResource} from '../main-resource.js';
@@ -34,7 +35,8 @@ class TimeToFirstByte extends NavigationMetric {
     let roundTrips = 2;
     if (!mainResource.protocol.startsWith('h3')) roundTrips += 1; // TCP
     if (mainResource.parsedURL.scheme === 'https') roundTrips += 1;
-    const estimatedTTFB = data.settings.throttling.rttMs * roundTrips + observedResponseTime;
+    const rttMs = data.settings.throttling?.rttMs ?? throttling.mobileSlow4G.rttMs;
+    const estimatedTTFB = rttMs * roundTrips + observedResponseTime;
 
     const timing = Math.max(observedTTFB, estimatedTTFB);
     return {timing};

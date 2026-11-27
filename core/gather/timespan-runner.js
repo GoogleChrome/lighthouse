@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {Driver} from './driver.js';
 import {Runner} from '../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
 import {enableAsyncStacks, prepareTargetForTimespanMode} from './driver/prepare.js';
+import * as emulation from '../lib/emulation.js';
 import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 import * as i18n from '../lib/i18n/i18n.js';
@@ -87,6 +87,8 @@ async function startTimespanGather(page, options = {}) {
         if (pageNavigationDetected) {
           baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningNavigationDetected));
         }
+
+        await emulation.clearThrottling(driver.defaultSession);
 
         await collectPhaseArtifacts({phase: 'getArtifact', ...phaseOptions});
         await driver.disconnect();

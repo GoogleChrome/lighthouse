@@ -61,11 +61,14 @@ const FlowStepAnimatedThumbnail: FunctionComponent<{
     return () => clearInterval(interval);
   }, [frames.length]);
 
+  const currentFrameData = frames[effectiveFrameIndex].data;
+  const safeSrc = currentFrameData.startsWith('data:image/') ? currentFrameData : undefined;
+
   return (
     <img
       className="FlowStepThumbnail"
       data-testid="FlowStepAnimatedThumbnail"
-      src={frames[effectiveFrameIndex].data}
+      src={safeSrc}
       style={{width, height}}
       alt="Animated screenshots of a page tested by Lighthouse"
     />
@@ -105,7 +108,7 @@ const FlowStepThumbnail: FunctionComponent<{
 
   return <>
     {
-      thumbnail &&
+      thumbnail && thumbnail.startsWith('data:image/') &&
         <img
           className="FlowStepThumbnail"
           src={thumbnail}

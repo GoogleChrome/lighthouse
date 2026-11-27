@@ -1,4 +1,4 @@
-import _import from 'eslint-plugin-import';
+import importX from 'eslint-plugin-import-x';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import js from '@eslint/js';
@@ -136,7 +136,7 @@ export default [{
   rules: googleRules,
 }, {
   plugins: {
-    'import': _import,
+    'import-x': importX,
   },
 
   languageOptions: {
@@ -157,13 +157,13 @@ export default [{
   },
 
   rules: {
-    'import/order': [2, {
+    'import-x/order': [2, {
       'groups': ['builtin', 'external', ['sibling', 'parent'], 'index', 'object', 'type'],
       'newlines-between': 'always',
     }],
 
-    'import/group-exports': 2,
-    'import/exports-last': 2,
+    'import-x/group-exports': 2,
+    'import-x/exports-last': 2,
     'eqeqeq': 2,
     'no-console': 2,
 

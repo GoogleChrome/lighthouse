@@ -8,12 +8,44 @@ import fs from 'fs';
 import path from 'path';
 import {createRequire, builtinModules} from 'module';
 
+import * as acorn from 'acorn';
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
 
 import {LH_ROOT} from '../shared/root.js';
+import {ARD_VERSION} from '../third-party/ard/ard.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 import {nodeModuleShims} from './plugins/esbuild-node-polyfills.js';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   url?: string,
+ *   version?: string,
+ *   license?: string,
+ *   licenseText?: string,
+ * }} DependencyNotice
+ */
+
+/**
+ * Metadata for vendored directories under `third-party/` that do not have their own `package.json`.
+ * @type {Record<string, {npmPackage: string} | {name: string, url: string, version: string, license: string, licenseFile: string}>}
+ */
+const VENDORED_THIRD_PARTY_DIRS = {
+  'ard': {
+    name: 'ard-spec',
+    url: 'https://github.com/ards-project/ard-spec',
+    version: ARD_VERSION,
+    license: 'Apache-2.0',
+    licenseFile: path.join(LH_ROOT, 'third-party/ard/LICENSE'),
+  },
+  // `third-party/axe/valid-langs.js` is extracted from `axe-core`.
+  'axe': {
+    npmPackage: 'axe-core',
+  },
+};
 
 /**
  * @typedef PartialLoader
@@ -92,6 +124,18 @@ function bulkLoader(partialLoaders) {
 }
 
 /**
+ * Converts an absolute path inside LH_ROOT to a POSIX path relative to LH_ROOT.
+ * Leaves bare specifiers and paths outside LH_ROOT unchanged.
+ * @param {string} p
+ * @return {string}
+ */
+function toProjectRelativePath(p) {
+  if (!path.isAbsolute(p)) return p;
+  const rel = path.relative(LH_ROOT, p);
+  return rel.startsWith('..') ? p : rel.replaceAll('\\', '/');
+}
+
+/**
  * Given a module path, replace the contents with the provided text.
  *
  * - If the module is a file on disk, the path MUST be absolute.
@@ -109,34 +153,35 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
   // Allow callers to specifier an unresolved path, but normalize things
   // by resolving those paths now.
   // TODO: really this should use import.meta.resolve, but... that's not a thing yet!
-  const require = createRequire(import.meta.url);
+  /** @type {Record<string, string>} */
+  const normalizedReplaceMap = {};
   for (const [k, v] of Object.entries(replaceMap)) {
+    let resolvedPath = k;
     try {
-      const resolvedPath = require.resolve(k);
-      if (resolvedPath !== k) {
-        replaceMap[resolvedPath] = v;
-        delete replaceMap[k];
-      }
+      resolvedPath = require.resolve(k);
     } catch {}
+    normalizedReplaceMap[toProjectRelativePath(resolvedPath)] = v;
   }
 
   return {
     name: 'replace-modules',
     setup(build) {
-      // Capture modules of interest and resolve them to their absolute paths.
+      // Capture modules of interest and resolve them to their project-relative paths.
       // This handles real-files on disk, and builtin specifiers.
       build.onResolve({filter: /.*/}, (args) => {
-        if (args.path in replaceMap) {
-          return {path: args.path, namespace: 'replace-modules'};
+        const relArgPath = toProjectRelativePath(args.path);
+        if (relArgPath in normalizedReplaceMap) {
+          return {path: relArgPath, namespace: 'replace-modules'};
         }
 
         if (args.path.startsWith('.')) {
           const absPath = path.resolve(args.resolveDir, args.path);
-          if (absPath in replaceMap) {
-            return {path: absPath, namespace: 'replace-modules'};
+          const relPath = toProjectRelativePath(absPath);
+          if (relPath in normalizedReplaceMap) {
+            return {path: relPath, namespace: 'replace-modules'};
           }
-          if ((absPath + '.js') in replaceMap) {
-            return {path: absPath + '.js', namespace: 'replace-modules'};
+          if ((relPath + '.js') in normalizedReplaceMap) {
+            return {path: relPath + '.js', namespace: 'replace-modules'};
           }
           return;
         }
@@ -150,18 +195,20 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
           return;
         }
 
-        // `resolvedPath` is now either an absolute path on disk, or a builtin module (like `url`).
-        if (!(resolvedPath in replaceMap)) return;
+        const relResolvedPath = toProjectRelativePath(resolvedPath);
+        // `relResolvedPath` is now either a project-relative path on disk, or a builtin module (like `url`).
+        if (!(relResolvedPath in normalizedReplaceMap)) return;
 
         // Put everything we see here into our namespace.
-        return {path: resolvedPath, namespace: 'replace-modules'};
+        return {path: relResolvedPath, namespace: 'replace-modules'};
       });
 
-      const modulesNotSeen = new Set(Object.keys(replaceMap));
+      const modulesNotSeen = new Set(Object.keys(normalizedReplaceMap));
       build.onLoad({filter: /.*/, namespace: 'replace-modules'}, async (args) => {
-        // Anything in our namespace is guaranteed to be something in replaceMap.
+        // Anything in our namespace is guaranteed to be something in normalizedReplaceMap.
         modulesNotSeen.delete(args.path);
-        return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+        const resolveDir = path.resolve(LH_ROOT, path.dirname(args.path));
+        return {contents: normalizedReplaceMap[args.path], resolveDir};
       });
 
       // Handle the third case - when a module is created by some other plugin, and the user of this
@@ -169,9 +216,11 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
       build.onLoad({filter: /.*/}, async (args) => {
         // The `onResolve` hook moved all the real modules (builtins and real files on disk) to the `replace-modules`
         // namespace. What remains here are modules that were injected by other plugins. Example: __zlib-lib/inflate
-        if (args.path in replaceMap) {
-          modulesNotSeen.delete(args.path);
-          return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+        const relArgPath = toProjectRelativePath(args.path);
+        if (relArgPath in normalizedReplaceMap) {
+          modulesNotSeen.delete(relArgPath);
+          const resolveDir = path.resolve(LH_ROOT, path.dirname(relArgPath));
+          return {contents: normalizedReplaceMap[relArgPath], resolveDir};
         }
         return null;
       });
@@ -213,6 +262,47 @@ function ignoreBuiltins(opts = {}) {
 }
 
 /**
+ * Escapes non-ASCII characters (`> 0x7f`) inside JS comments as `\uXXXX`.
+ *
+ * Esbuild's `charset: 'ascii'` escapes non-ASCII inside string literals, but
+ * leaves comments, RegExp literals, and tagged template literals untouched.
+ * Escaping comments via an AST parser keeps unminified bundles in 1-byte string
+ * buffers (`<= 0xff`) in Blink/V8 without mutating `RegExp.prototype.source` or
+ * `String.raw` template literals.
+ * @param {string} code
+ * @return {string}
+ */
+function escapeNonAsciiComments(code) {
+  if (!/[\u0080-\uffff]/.test(code)) return code;
+
+  /** @type {Array<{start: number, end: number}>} */
+  const comments = [];
+  acorn.parse(code, {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    onComment: (_isBlock, text, start, end) => {
+      if (/[\u0080-\uffff]/.test(text)) {
+        comments.push({start, end});
+      }
+    },
+  });
+
+  if (comments.length === 0) return code;
+
+  let out = '';
+  let lastIndex = 0;
+  for (const {start, end} of comments) {
+    out += code.slice(lastIndex, start);
+    out += code.slice(start, end).replace(
+      /[\u0080-\uffff]/g,
+      c => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`
+    );
+    lastIndex = end;
+  }
+  return out + code.slice(lastIndex);
+}
+
+/**
  * Currently there is no umd support in esbuild,
  * so we take the output of an iife build and create our own umd bundle.
  * https://github.com/evanw/esbuild/pull/1331
@@ -237,7 +327,7 @@ function generateUMD(iifeCode, moduleName) {
     'root.Lighthouse.ReportGenerator.ReportGenerator = root.Lighthouse.ReportGenerator;' :
     '';
 
-  return `(function(root, factory) {
+  return escapeNonAsciiComments(`(function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else if (typeof module === "object" && module.exports) {
@@ -252,7 +342,7 @@ function generateUMD(iifeCode, moduleName) {
   ${iifeCode.replace('"use strict";\n', '')};
   return umdExports.${moduleLastName} ?? umdExports;
 }));
-`;
+`);
 }
 
 /**
@@ -368,12 +458,12 @@ function lighthouseShimPlugin(options) {
 
         // Resolve to absolute path to ensure we have a consistent base for shimDir
         const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {path: absolutePath, namespace: 'lh-audit-shim'};
+        return {path: toProjectRelativePath(absolutePath), namespace: 'lh-audit-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-audit-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        const shimDir = path.dirname(args.path);
+        const shimDir = path.resolve(LH_ROOT, path.dirname(args.path));
         return {contents: generateAuditShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
 
@@ -384,12 +474,12 @@ function lighthouseShimPlugin(options) {
         if (isIncluded) return;
 
         const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {path: absolutePath, namespace: 'lh-gatherer-shim'};
+        return {path: toProjectRelativePath(absolutePath), namespace: 'lh-gatherer-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-gatherer-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        const shimDir = path.dirname(args.path);
+        const shimDir = path.resolve(LH_ROOT, path.dirname(args.path));
         return {contents: generateGathererShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
     },
@@ -397,14 +487,219 @@ function lighthouseShimPlugin(options) {
 }
 
 /**
- * @param {{removeExtraLicenses?: boolean}} options
+ * Returns true if `modulePath` is a virtual/shimmed module in an esbuild plugin namespace
+ * (e.g. `replace-modules:...`, `lh-audit-shim:...`, `lh-gatherer-shim:...`).
+ * @param {string} modulePath
+ * @return {boolean}
+ */
+function isShimmedOrVirtualModule(modulePath) {
+  return /^[a-z][a-z0-9-]+:/.test(modulePath);
+}
+
+/**
+ * @param {unknown} rawUrl
+ * @return {string | undefined}
+ */
+function normalizePackageUrl(rawUrl) {
+  const candidate = rawUrl && typeof rawUrl === 'object' && 'url' in rawUrl ?
+    rawUrl.url :
+    rawUrl;
+  if (!candidate || typeof candidate !== 'string') return undefined;
+
+  const url = candidate.replace(/^git\+/, '').replace(/\.git$/, '');
+  if (url.startsWith('github:')) {
+    return `https://github.com/${url.substring(7)}`;
+  }
+  if (url.startsWith('gitlab:')) {
+    return `https://gitlab.com/${url.substring(7)}`;
+  }
+  if (url.startsWith('bitbucket:')) {
+    return `https://bitbucket.org/${url.substring(10)}`;
+  }
+  if (url.startsWith('ssh://git@github.com/')) {
+    return `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
+  }
+  if (url.startsWith('git://github.com/')) {
+    return `https://github.com/${url.substring('git://github.com/'.length)}`;
+  }
+  if (url.startsWith('git@github.com:')) {
+    return `https://github.com/${url.substring('git@github.com:'.length)}`;
+  }
+  if (!url.startsWith('http')) {
+    const parts = url.split('/');
+    if (parts.length === 2) {
+      return `https://github.com/${url}`;
+    }
+  }
+  return url;
+}
+
+/**
+ * @param {string} packageDir
+ * @return {DependencyNotice}
+ */
+function readPackageNotice(packageDir) {
+  const pkg = JSON.parse(fs.readFileSync(path.join(packageDir, 'package.json'), 'utf-8'));
+  const preferredLicenseFiles = [
+    'LICENSE',
+    'LICENSE.txt',
+    'LICENSE.md',
+    'license.md',
+    'LICENSE.MIT',
+    'LICENSE.APACHE',
+  ];
+
+  let licenseText;
+  for (const fileName of preferredLicenseFiles) {
+    const candidate = path.join(packageDir, fileName);
+    if (fs.existsSync(candidate)) {
+      licenseText = fs.readFileSync(candidate, 'utf-8');
+      break;
+    }
+  }
+  if (!licenseText) {
+    const fallbackFile = fs.readdirSync(packageDir)
+      .find(f => /^licen[sc]e/i.test(f) || /^copying/i.test(f));
+    if (fallbackFile) {
+      licenseText = fs.readFileSync(path.join(packageDir, fallbackFile), 'utf-8');
+    }
+  }
+
+  let license;
+  if (pkg.license) {
+    license = typeof pkg.license === 'object' ? pkg.license?.type : pkg.license;
+  } else if (Array.isArray(pkg.licenses)) {
+    license = pkg.licenses.map((/** @type {any} */ l) => l.type || l).join(', ');
+  }
+
+  return {
+    name: pkg.name ?? 'N/A',
+    url: normalizePackageUrl(pkg.homepage ?? pkg.repository),
+    version: pkg.version,
+    license,
+    licenseText,
+  };
+}
+
+/**
+ * Collects third-party dependency license notices for an esbuild bundle output,
+ * excluding shimmed/virtual modules and tree-shaken inputs.
+ * @param {{
+ *   metafile: import('esbuild').Metafile,
+ *   sources: string[],
+ *   inlinedFilesByImporter?: Map<string, Set<string>>,
+ *   distDir: string,
+ * }} options
+ * @return {DependencyNotice[]}
+ */
+function collectThirdPartyNotices({metafile, sources, inlinedFilesByImporter, distDir}) {
+  const jsOutput = Object.entries(metafile.outputs)
+    .find(([outPath]) => outPath.endsWith('.js'))?.[1];
+
+  /** @type {Set<string>} */
+  const activeOutputInputs = new Set();
+  for (const [inputPath, info] of Object.entries(jsOutput?.inputs ?? {})) {
+    if (isShimmedOrVirtualModule(inputPath)) continue;
+    if (info.bytesInOutput <= 0) continue;
+    activeOutputInputs.add(path.resolve(process.cwd(), inputPath));
+  }
+
+  /** @type {Set<string>} */
+  const paths = new Set(activeOutputInputs);
+  for (const source of sources) {
+    if (isShimmedOrVirtualModule(source)) continue;
+    paths.add(path.resolve(distDir, source));
+  }
+  if (inlinedFilesByImporter) {
+    for (const [importerPath, files] of inlinedFilesByImporter.entries()) {
+      if (!activeOutputInputs.has(path.resolve(importerPath))) continue;
+      for (const file of files) {
+        paths.add(path.resolve(file));
+      }
+    }
+  }
+
+  /** @type {Map<string, DependencyNotice>} */
+  const noticesByName = new Map();
+  /** @type {Set<string>} */
+  const seenPkgDirs = new Set();
+  const thirdPartyRoot = path.join(LH_ROOT, 'third-party');
+
+  for (const resolvedPath of paths) {
+    let dir = fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory() ?
+      resolvedPath :
+      path.dirname(resolvedPath);
+    let pkgJsonPath;
+    while (dir.startsWith(LH_ROOT) && dir !== LH_ROOT) {
+      const candidate = path.join(dir, 'package.json');
+      if (fs.existsSync(candidate)) {
+        pkgJsonPath = candidate;
+        break;
+      }
+      dir = path.dirname(dir);
+    }
+
+    if (pkgJsonPath) {
+      const pkgDir = path.dirname(pkgJsonPath);
+      if (!seenPkgDirs.has(pkgDir)) {
+        seenPkgDirs.add(pkgDir);
+        const notice = readPackageNotice(pkgDir);
+        // We only care about third-party packages (or workspace packages that aren't the root).
+        if (
+          notice.name !== 'N/A' &&
+          notice.name !== 'lighthouse' &&
+          notice.name !== 'legacy-javascript'
+        ) {
+          noticesByName.set(notice.name, notice);
+        }
+      }
+      continue;
+    }
+
+    if (resolvedPath.startsWith(thirdPartyRoot + path.sep)) {
+      const subdir = path.relative(thirdPartyRoot, resolvedPath).split(path.sep)[0];
+      const vendored = VENDORED_THIRD_PARTY_DIRS[subdir];
+      if (!vendored) {
+        throw new Error(
+          `Missing third-party license metadata for vendored directory: third-party/${subdir}`
+        );
+      }
+      if ('npmPackage' in vendored) {
+        if (!noticesByName.has(vendored.npmPackage)) {
+          const npmPkgDir = path.dirname(require.resolve(`${vendored.npmPackage}/package.json`));
+          seenPkgDirs.add(npmPkgDir);
+          noticesByName.set(vendored.npmPackage, readPackageNotice(npmPkgDir));
+        }
+      } else if (!noticesByName.has(vendored.name)) {
+        noticesByName.set(vendored.name, {
+          name: vendored.name,
+          url: vendored.url,
+          version: vendored.version,
+          license: vendored.license,
+          licenseText: fs.readFileSync(vendored.licenseFile, 'utf-8'),
+        });
+      }
+    }
+  }
+
+  return Array.from(noticesByName.keys())
+    .sort()
+    .map(name => /** @type {DependencyNotice} */ (noticesByName.get(name)));
+}
+
+/**
+ * @param {{
+ *   removeExtraLicenses?: boolean,
+ *   inlinedFilesByImporter?: Map<string, Set<string>>,
+ * }} options
  * @return {esbuild.Plugin}
  */
 function postprocess(options = {}) {
   return {
     name: 'postprocess',
-    setup({onEnd}) {
-      onEnd(async (result) => {
+    setup(build) {
+      build.initialOptions.write = false;
+      build.onEnd(async (result) => {
         if (result.errors.length) return;
 
         const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
@@ -436,103 +731,45 @@ function postprocess(options = {}) {
           code = code.replace(re, replaceFn);
         }
 
+        code = escapeNonAsciiComments(code);
+        const twoByteMatch = /[\u0100-\uffff]/.exec(code);
+        if (twoByteMatch) {
+          const {line, column} = acorn.getLineInfo(code, twoByteMatch.index);
+          const hex = twoByteMatch[0].charCodeAt(0).toString(16).padStart(4, '0');
+          throw new Error(
+            `Unexpected character > 0xff (\\u${hex}) at ${codeFile.path}:${line}:${column}; ` +
+            'this widens the V8 script source buffer to 2-byte UTF-16'
+          );
+        }
+
         let allDepsList = '';
         let thirdPartyNoticesText = '';
-        const allDeps = new Set();
 
-        if (result.metafile && result.metafile.inputs) {
-          for (const inputPath of Object.keys(result.metafile.inputs)) {
-            let modulePath = inputPath;
-            if (modulePath.startsWith('node_modules/')) {
-              modulePath = modulePath.slice('node_modules/'.length);
-            } else if (modulePath.includes('/node_modules/')) {
-              modulePath = modulePath.split('/node_modules/').pop() || '';
-            } else {
-              continue;
-            }
+        if (result.metafile && Object.keys(result.metafile.inputs).length > 0) {
+          const sourcemap = mapFile ? JSON.parse(mapFile.text) : {sources: []};
+          const distDir = path.dirname(codeFile.path);
+          const notices = collectThirdPartyNotices({
+            metafile: result.metafile,
+            sources: sourcemap.sources,
+            inlinedFilesByImporter: options.inlinedFilesByImporter,
+            distDir,
+          });
 
-            const pkgNameMatch = modulePath.match(/^(@[^/]+\/[^/]+|[^/]+)/);
-            if (pkgNameMatch) {
-              allDeps.add(pkgNameMatch[1]);
-            }
-          }
-
-          // Hardcode axe-core as it is loaded via fs.readFileSync and doesn't appear in metafile.inputs
-          if (code.includes('Deque Systems') || code.includes('axe-core')) {
-            allDeps.add('axe-core');
-          }
-
-          if (allDeps.size > 0) {
+          if (notices.length > 0) {
             /* eslint-disable max-len */
-            const require = createRequire(import.meta.url);
-            const sortedDeps = Array.from(allDeps).sort();
             allDepsList = 'Bundled Dependencies:\n\n';
             thirdPartyNoticesText = '========================================================================\nThird-Party Software Notices and Licenses\n========================================================================\n\nThe Lighthouse bundle incorporates code from the following third-party\ndependencies under their respective open-source licenses:\n';
 
-            for (const dep of sortedDeps) {
-              let licenseStr = 'Unknown';
-              let repoUrl = '';
-              let versionStr = '';
-              let licenseFullText = '';
-              try {
-                let pkgJsonPath;
-                try {
-                  pkgJsonPath = require.resolve(dep + '/package.json');
-                } catch (e) {
-                  pkgJsonPath = path.resolve(process.cwd(), 'node_modules', dep, 'package.json');
-                }
-                const pkgJson = JSON.parse(await fs.promises.readFile(pkgJsonPath, 'utf8'));
+            for (const dep of notices) {
+              const licenseStr = dep.license ?? 'Unknown';
+              const repoUrl = dep.url ?? '';
+              const versionStr = dep.version ?? '';
+              const licenseFullText = dep.licenseText ?
+                dep.licenseText.replaceAll('\r', '') :
+                '(License text not found)';
 
-                if (pkgJson.version) {
-                  versionStr = pkgJson.version;
-                }
-
-                if (pkgJson.license) {
-                  licenseStr = typeof pkgJson.license === 'string' ? pkgJson.license : pkgJson.license.type;
-                } else if (pkgJson.licenses && Array.isArray(pkgJson.licenses)) {
-                  licenseStr = pkgJson.licenses.map((/** @type {any} */ l) => l.type || l).join(', ');
-                }
-
-                if (pkgJson.repository) {
-                  let url = typeof pkgJson.repository === 'string' ? pkgJson.repository : pkgJson.repository.url;
-                  if (url) {
-                    url = url.replace(/^git\+/, '').replace(/\.git$/, '');
-                    if (url.startsWith('github:')) {
-                      url = `https://github.com/${url.substring(7)}`;
-                    } else if (url.startsWith('gitlab:')) {
-                      url = `https://gitlab.com/${url.substring(7)}`;
-                    } else if (url.startsWith('bitbucket:')) {
-                      url = `https://bitbucket.org/${url.substring(10)}`;
-                    } else if (url.startsWith('ssh://git@github.com/')) {
-                      url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
-                    } else if (url.startsWith('git://github.com/')) {
-                      url = `https://github.com/${url.substring('git://github.com/'.length)}`;
-                    } else if (url.startsWith('git@github.com:')) {
-                      url = `https://github.com/${url.substring('git@github.com:'.length)}`;
-                    } else if (!url.startsWith('http')) {
-                      const parts = url.split('/');
-                      if (parts.length === 2) {
-                        url = `https://github.com/${url}`;
-                      }
-                    }
-                    repoUrl = url;
-                  }
-                }
-
-                const pkgJsonDir = path.dirname(pkgJsonPath);
-                const files = await fs.promises.readdir(pkgJsonDir);
-                const licenseFile = files.find((/** @type {string} */ f) => f.toLowerCase().startsWith('license') || f.toLowerCase() === 'copying');
-                if (licenseFile) {
-                  licenseFullText = await fs.promises.readFile(path.join(pkgJsonDir, licenseFile), 'utf8');
-                } else {
-                  licenseFullText = '(License text not found)';
-                }
-              } catch (e) {
-                licenseFullText = '(License text not found)';
-              }
-
-              allDepsList += `- ${dep}${versionStr ? `@${versionStr}` : ''}: ${licenseStr}${repoUrl ? ` <${repoUrl}>` : ''}\n`;
-              thirdPartyNoticesText += `\n------------------------------------------------------------------------\n${dep}${versionStr ? ` (v${versionStr})` : ''}\nLicense: ${licenseStr}\nURL: ${repoUrl || 'Unknown'}\n------------------------------------------------------------------------\n${licenseFullText}\n`;
+              allDepsList += `- ${dep.name}${versionStr ? `@${versionStr}` : ''}: ${licenseStr}${repoUrl ? ` <${repoUrl}>` : ''}\n`;
+              thirdPartyNoticesText += `\n------------------------------------------------------------------------\n${dep.name}${versionStr ? ` (v${versionStr})` : ''}\nLicense: ${licenseStr}\nURL: ${repoUrl || 'Unknown'}\n------------------------------------------------------------------------\n${licenseFullText}\n`;
             }
             /* eslint-enable max-len */
           }
@@ -561,8 +798,10 @@ export {
   bulkLoader,
   replaceModules,
   ignoreBuiltins,
+  escapeNonAsciiComments,
   umd,
   lighthouseShimPlugin,
+  collectThirdPartyNotices,
   postprocess,
   nodeModuleShims,
 };

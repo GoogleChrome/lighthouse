@@ -29,8 +29,7 @@
 
 import assert from 'assert/strict';
 
-import log from 'lighthouse-logger';
-
+import log from '../../../core/lib/lighthouse-logger.js';
 import {runLighthouse as cliLighthouseRunner} from './lighthouse-runners/cli.js';
 import {getAssertionReport} from './report-assert.js';
 import {LocalConsole} from './lib/local-console.js';

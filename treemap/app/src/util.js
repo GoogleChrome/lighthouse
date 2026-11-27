@@ -29,6 +29,11 @@ const UIStrings = {
   allLabel: 'All',
   /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
   duplicateModulesLabel: 'Duplicate modules',
+  /**
+   * @description Hint shown while hovering a duplicate module (a javascript file included more than once by a web page) when the user has zoomed in and some copies of that module are not visible. "{count}" is replaced with the number of hidden copies.
+   * @example {2} count
+   */
+  duplicateModuleHiddenCopiesLabel: 'Copies outside this view: {count}',
 };
 
 class TreemapUtil {
@@ -149,6 +154,17 @@ class TreemapUtil {
    */
   static hsl(h, s, l) {
     return `hsl(${h}, ${s}%, ${l}%)`;
+  }
+
+  /**
+   * @param {unknown} object
+   * @return {string}
+   */
+  static sanitizeJson(object) {
+    return JSON.stringify(object)
+      .replace(/</g, '\\u003c') // replaces script tags and HTML comments
+      .replace(/\u2028/g, '\\u2028') // replaces line separators
+      .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
   }
 }
 

@@ -177,6 +177,7 @@ describe('TBTImpactTasks', () => {
           startTime: task.startTime * linearScale,
           endTime: task.endTime * linearScale,
           duration: task.duration * linearScale,
+          queuedTime: 0,
         });
       }
 
@@ -270,7 +271,7 @@ describe('TBTImpactTasks', () => {
         expect(totalSelfImpact).toBeCloseTo(3195.07, 2);
       } else {
         expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
-        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999673`);
+        expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999727`);
       }
 
       // Only tasks with no children should have a `selfTbtImpact` that equals `tbtImpact` if

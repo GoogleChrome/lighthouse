@@ -6,6 +6,7 @@
 
 import {generateTraceEvents, createTraceString} from '../../lib/timing-trace-saver.js';
 
+/** @type {LH.Artifacts.MeasureEntry[]} */
 const mockEntries = [{
   startTime: 650,
   name: 'lh:init:config',
@@ -41,11 +42,14 @@ describe('generateTraceEvents', () => {
 
 describe('createTraceString', () => {
   it('creates a real trace', () => {
-    const jsonStr = createTraceString({
+    const lhr = {
       timing: {
         entries: mockEntries,
+        total: 1000,
       },
-    });
+    };
+    const jsonStr = createTraceString(lhr);
+    /** @type {LH.Trace} */
     const traceJson = JSON.parse(jsonStr);
     const eventsWithoutMetadata = traceJson.traceEvents.filter(e => e.cat !== '__metadata');
     expect(eventsWithoutMetadata).toMatchSnapshot();

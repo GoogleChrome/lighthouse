@@ -16,8 +16,8 @@ import url from 'url';
 
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
-import log from 'lighthouse-logger';
 
+import log from '../../../../core/lib/lighthouse-logger.js';
 import {runSmokehouse, getShardedDefinitions, DEFAULT_RETRIES, DEFAULT_CONCURRENT_RUNS} from '../smokehouse.js';
 import {updateTestDefnFormat} from './back-compat-util.js';
 import {LH_ROOT} from '../../../../shared/root.js';

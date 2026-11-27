@@ -15,6 +15,7 @@ const mockRunLighthouse = fnAny();
 const mockGetFlags = fnAny();
 const mockAskPermission = fnAny();
 const mockSentryInit = fnAny();
+const mockSentryCaptureException = fnAny();
 const mockLoggerSetLevel = fnAny();
 
 describe('CLI bin', function() {
@@ -33,9 +34,12 @@ describe('CLI bin', function() {
     await td.replaceEsm('../../../core/lib/sentry.js', {
       Sentry: {
         init: mockSentryInit,
+        captureException: mockSentryCaptureException,
       },
     });
-    await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
+    await td.replaceEsm('../../../core/lib/lighthouse-logger.js', undefined, {
+      setLevel: mockLoggerSetLevel,
+    });
     bin = await import('../../bin.js');
   });
 
@@ -52,6 +56,7 @@ describe('CLI bin', function() {
     mockLoggerSetLevel.mockReset();
     mockRunLighthouse.mockReset();
     mockSentryInit.mockReset();
+    mockSentryCaptureException.mockReset();
     mockRunLighthouse.mockResolvedValue({});
     cliFlags = {
       _: ['http://example.com'],
@@ -208,6 +213,14 @@ describe('CLI bin', function() {
       await bin.begin();
 
       expect(mockSentryInit).not.toHaveBeenCalled();
+    });
+
+    it('should report fatal errors', async () => {
+      const error = new Error('fatal');
+      mockRunLighthouse.mockRejectedValue(error);
+      await expect(bin.begin()).rejects.toBe(error);
+
+      expect(mockSentryCaptureException).toHaveBeenCalledWith(error, {level: 'fatal'});
     });
   });
 });

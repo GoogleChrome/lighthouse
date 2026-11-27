@@ -10,8 +10,10 @@
  * and the Lighthouse-specific adaptations.
  */
 
-import log from 'lighthouse-logger';
+import log from '../../core/lib/lighthouse-logger.js';
 import {ArdManifest as validateArdManifest, ArdEntry as validateArdEntry} from './schema-validator.js';
+
+const ARD_VERSION = '0.91 (f073b1e)';
 
 // Strict URN Regex matching urn:air:<publisher>:<namespace>:<agent-name>
 const URN_REGEX = /^urn:air:([a-zA-Z0-9.-]+)(?::([a-zA-Z0-9._:-]+))?:([a-zA-Z0-9._-]+)$/;
@@ -73,9 +75,13 @@ const STANDARD_MEDIA_TYPES = [
     "application/agent-card+json",
     "application/a2a-agent-card+json",
     "application/mcp-server-card+json",
+    "application/agent-skills+json",
+    "application/agent-skills+md",
     "application/agent-skills+zip",
     "application/agent-skills+gzip",
     'text/markdown; profile="urn:air:agent-skills"',
+    "application/agent-plugins+zip",
+    "application/agent-plugins+gzip",
     "application/ai-registry",
     "application/ai-registry+json",
 ];
@@ -425,11 +431,11 @@ class ConformanceTester {
 
         // Top-level deprecated property check
         if ("collections" in root) {
-            this.add_warning("Found 'collections' at root. Top-level collections were removed in ADR-0003; ARD ignores unrecognized top-level members, so this does not invalidate the manifest, but hierarchies should be modeled inside 'entries'.", 'Root');
+            this.add_warning("Found 'collections' at root. Top-level collections were removed; ARD ignores unrecognized top-level members, so this does not invalidate the manifest, but hierarchies should be modeled inside 'entries'.", 'Root');
         }
 
         return this.errors.length === 0;
     }
 }
 
-export { ConformanceTester, classify_media_type };
+export { ARD_VERSION, ConformanceTester, classify_media_type };

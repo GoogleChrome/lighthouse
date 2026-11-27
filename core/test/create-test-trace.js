@@ -28,7 +28,7 @@ const lcpImageUrl = 'http://www.example.com/image.png';
  * @property {number} [traceEnd]
  * @property {Array<TopLevelTaskDef>} [topLevelTasks]
  * @property {Array<ChildFrame>} [childFrames] Add a child frame with a known `frame` id for easy insertion of child frame events.
- * @property {Array<NetworkRequest>=} networkRecords
+ * @property {Array<import('./network-records-to-devtools-log.js').NetworkRequestInput>=} networkRecords
  */
 
 /**

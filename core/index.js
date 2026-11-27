@@ -11,6 +11,7 @@ import {ReportGenerator} from '../report/generator/report-generator.js';
 import {startTimespanGather} from './gather/timespan-runner.js';
 import {snapshotGather} from './gather/snapshot-runner.js';
 import {navigationGather} from './gather/navigation-runner.js';
+import * as i18n from './lib/i18n/i18n.js';
 import * as LH from '../types/lh.js';
 
 /*
@@ -131,4 +132,5 @@ export {
   auditFlowArtifacts,
   getAuditList,
   traceCategories,
+  i18n,
 };

@@ -349,6 +349,11 @@ async function mergePlugins(config, configDir, flags) {
   const flagPlugins = flags?.plugins || [];
   const pluginNames = new Set([...configPlugins, ...flagPlugins]);
 
+  const configLocales = config.locales;
+  if (configLocales) {
+    delete config.locales;
+  }
+
   for (const pluginName of pluginNames) {
     validation.assertValidPluginName(config, pluginName);
 
@@ -360,6 +365,10 @@ async function mergePlugins(config, configDir, flags) {
     const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
     config = mergeConfigFragment(config, pluginJson);
+  }
+
+  if (configLocales) {
+    config.locales = mergeConfigFragment(config.locales, configLocales);
   }
 
   return config;

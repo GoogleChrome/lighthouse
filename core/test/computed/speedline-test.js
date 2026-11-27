@@ -15,6 +15,7 @@ const threeFrameTrace = readJson('../fixtures/traces/threeframes-blank_content_m
 describe('Speedline gatherer', () => {
   it('returns an error message on faulty trace data', () => {
     const context = {computedCache: new Map()};
+    // @ts-expect-error - testing faulty non-array traceEvents
     return Speedline.request({traceEvents: {boo: 'ya'}}, context).then(_ => {
       assert.fail(true, true, 'Invalid trace did not throw exception in speedline');
     }, err => {
@@ -24,7 +25,9 @@ describe('Speedline gatherer', () => {
   });
 
   it('throws when no frames', () => {
-    const traceWithNoFrames = pwaTrace.filter(evt => evt.name !== 'Screenshot');
+    const traceWithNoFrames = pwaTrace.filter(
+      /** @param {LH.TraceEvent} evt */ evt => evt.name !== 'Screenshot'
+    );
     const context = {computedCache: new Map()};
     return Speedline.request({traceEvents: traceWithNoFrames}, context).then(_ => {
       assert.ok(false, 'Invalid trace did not throw exception in speedline');
@@ -39,7 +42,7 @@ describe('Speedline gatherer', () => {
       assert.equal(speedline.perceptualSpeedIndex, undefined);
       assert.equal(Math.floor(speedline.speedIndex), 549);
     });
-  }, 10000);
+  });
 
   it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', () => {
     const context = {computedCache: new Map()};
@@ -47,7 +50,7 @@ describe('Speedline gatherer', () => {
       assert.equal(speedline.perceptualSpeedIndex, undefined);
       assert.equal(Math.floor(speedline.speedIndex), 2040);
     });
-  }, 10000);
+  });
 
   it('does not change order of events in traces', () => {
     // Use fresh trace in case it has been altered by other require()s.
@@ -62,7 +65,7 @@ describe('Speedline gatherer', () => {
           assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
         }
       });
-  }, 10000);
+  });
 
   it('only retains the frame getters used by Lighthouse', async () => {
     const context = {computedCache: new Map()};

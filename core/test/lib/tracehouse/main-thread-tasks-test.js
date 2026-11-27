@@ -858,6 +858,57 @@ describe('Main Thread Tasks', () => {
     ]);
   });
 
+  it('should extend ancestors when swapping a child that starts <1ms before its parent', () => {
+    /*
+    An artistic rendering of the below trace:
+    ████████████████TaskA██████████████
+            █████████TaskB███████████████████
+           ████████TaskC█████████
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 25e3 + 50, args}, // this is invalid, but happens in practice
+      {ph: 'B', name: 'TaskC', pid, tid, ts: baseTs + 25e3, args},
+      {ph: 'E', name: 'TaskC', pid, tid, ts: baseTs + 60e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 100e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 110e3, args}, // ends after TaskA
+    ];
+
+    traceEvents.filter(evt => !evt.cat).forEach(evt => {
+      evt.cat = 'devtools.timeline';
+      evt.args = evt.args || args;
+    });
+
+    const tasks = run({traceEvents});
+    const [taskA, taskB, taskC] = tasks;
+    expect(tasks).toHaveLength(3);
+    expect(taskA).toMatchObject({
+      parent: undefined,
+      children: [taskB],
+      startTime: 0,
+      endTime: 110,
+      duration: 110,
+      selfTime: 25,
+    });
+    expect(taskB).toMatchObject({
+      parent: taskA,
+      children: [taskC],
+      startTime: 25,
+      endTime: 110,
+      duration: 85,
+      selfTime: 50,
+    });
+    expect(taskC).toMatchObject({
+      parent: taskB,
+      children: [],
+      startTime: 25,
+      endTime: 60,
+      duration: 35,
+      selfTime: 35,
+    });
+  });
+
   // Invalid sets of events.
   // All of these should have `traceEnd` pushed out to avoid falling into one of our mitigation scenarios.
   const invalidEventSets = [

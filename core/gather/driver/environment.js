@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import log from '../../lib/lighthouse-logger.js';
 import * as constants from '../../config/constants.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import * as i18n from '../../lib/i18n/i18n.js';

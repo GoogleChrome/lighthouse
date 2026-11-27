@@ -130,7 +130,7 @@ class Responsiveness {
   }
 
   /**
-   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
+   * @param {{trace: LH.Trace, settings: LH.Artifacts.ComputedSettings}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<EventTimingEvent|null>}
    */

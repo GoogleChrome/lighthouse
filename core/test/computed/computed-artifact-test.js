@@ -37,9 +37,11 @@ describe('ComputedArtifact base class', () => {
   });
 
   it('caches by strict equality on key list if provided', async () => {
+    /** @type {Array<'x'>} */
     const keys = ['x'];
     let computeCounter = 0;
     class RawTestComputedArtifact {
+      /** @param {{x: number}} dependencies */
       static async compute_(dependencies) {
         assert.deepEqual(Object.keys(dependencies), keys);
         return computeCounter++;
@@ -51,15 +53,18 @@ describe('ComputedArtifact base class', () => {
     };
 
     const TestComputedArtifact = makeComputedArtifact(RawTestComputedArtifact, keys);
+    // @ts-expect-error - testing extra property `y` is ignored by cache key filter
     let result = await TestComputedArtifact.request({x: 1, y: 100}, context);
     assert.equal(result, 0);
 
+    // @ts-expect-error - testing extra property `test` is ignored by cache key filter
     result = await TestComputedArtifact.request({x: 2, test: 'me'}, context);
     assert.equal(result, 1);
 
     result = await TestComputedArtifact.request({x: 1}, context);
     assert.equal(result, 0);
 
+    // @ts-expect-error - testing extra property `light` is ignored by cache key filter
     result = await TestComputedArtifact.request({x: 2, light: 'house'}, context);
     assert.equal(result, 1);
     assert.equal(computeCounter, 2);

@@ -41,6 +41,15 @@ describe('MCP Bundle build', () => {
     expect(fs.existsSync(bundlePath)).toBe(true);
   });
 
+  it('bundle contains only 1-byte characters (<= 0xff)', () => {
+    const code = fs.readFileSync(bundlePath, 'utf-8');
+    let twoByteCount = 0;
+    for (let i = 0; i < code.length; i++) {
+      if (code.charCodeAt(i) > 0xff) twoByteCount++;
+    }
+    expect(twoByteCount).toBe(0);
+  });
+
   it('bundle has correct exports', async () => {
     const mcpBundle = await import(bundlePath);
     expect(typeof mcpBundle.navigation).toBe('function');
@@ -52,21 +61,43 @@ describe('MCP Bundle build', () => {
     const noticesPath = path.join(LH_ROOT, 'dist/LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES');
 
     it('contains licenses for specific key dependencies', () => {
-      if (!fs.existsSync(noticesPath)) {
-        console.warn('Skipping licensing test as notices file is missing');
-        return;
-      }
+      expect(fs.existsSync(noticesPath)).toBe(true);
 
       const content = fs.readFileSync(noticesPath, 'utf-8');
+      expect(content).toContain('Name: ard-spec');
+      expect(content).toContain('URL: https://github.com/ards-project/ard-spec');
       expect(content).toContain('Name: axe-core');
       expect(content).toContain('URL: https://www.deque.com/axe/');
       expect(content).toContain('License: MPL-2.0');
       expect(content).toContain('Name: js-library-detector');
       expect(content).toContain('License: MIT');
-      expect(content).toContain('Name: lighthouse-logger');
-      expect(content).toContain('License: Apache-2.0');
+      expect(content).toContain('Name: debug');
       expect(content).toContain('Name: tldts-core');
       expect(content).toContain('Name: @paulirish/trace_engine');
+    });
+
+    it('excludes shimmed-out dependencies', () => {
+      const content = fs.readFileSync(noticesPath, 'utf-8');
+      expect(content).not.toContain('Name: puppeteer-core');
+      expect(content).not.toContain('Name: source-map');
+      expect(content).not.toContain('Name: speedline-core');
+    });
+
+    it('includes non-empty license text for every listed dependency', () => {
+      const content = fs.readFileSync(noticesPath, 'utf-8');
+      const divider = '\n\n-------------------- DEPENDENCY DIVIDER --------------------\n\n';
+      const blocks = content.split(divider);
+      expect(blocks.length).toBeGreaterThanOrEqual(15);
+
+      for (const block of blocks) {
+        const lines = block.split('\n');
+        expect(lines[0]).toMatch(/^Name: \S+/);
+        expect(lines[1]).toMatch(/^URL: \S+/);
+        expect(lines[2]).toMatch(/^Version: .+/);
+        expect(lines[3]).toMatch(/^License: (?!N\/A)\S+/);
+        const licenseBody = lines.slice(5).join('\n').trim();
+        expect(licenseBody.length).toBeGreaterThan(100);
+      }
     });
 
     it('contains licenses for ALL packages found in the bundle sourcemap', () => {
@@ -74,11 +105,18 @@ describe('MCP Bundle build', () => {
       const notices = fs.readFileSync(noticesPath, 'utf8');
 
       const pkgNames = new Set(map.sources
+        .filter((/** @type {string} */ s) => !/^[a-z][a-z0-9-]+:/.test(s))
         .map((/** @type {string} */ s) => s.match(/node_modules\/((?:@[^/]+\/)?[^/]+)/)?.[1])
-        .filter((/** @type {string|undefined} */ name) => name && name !== 'lighthouse'));
+        .filter((/** @type {string|undefined} */ name) => name && name !== 'lighthouse')
+        // Some deps ship sourcemaps with sources pointing outside their package dir (e.g.
+        // @formatjs/fast-memoize has `"sources": ["../index.ts"]`), producing phantom paths like
+        // `node_modules/@formatjs/index.ts`. Only keep names that are real packages.
+        .filter((/** @type {string} */ name) =>
+          fs.existsSync(path.join(LH_ROOT, 'node_modules', name, 'package.json'))));
 
       for (const name of pkgNames) expect(notices).toContain(`Name: ${name}`);
-      expect(pkgNames.size).toBeGreaterThanOrEqual(15);
+      // Sanity check that the sourcemap scan found packages at all, not an exact count.
+      expect(pkgNames.size).toBeGreaterThanOrEqual(10);
     });
   });
 

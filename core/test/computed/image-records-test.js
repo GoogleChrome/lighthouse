@@ -17,8 +17,8 @@ function mockRequest(partial = {}) {
 }
 
 /**
- * @param {Partial<LH.Artifacts.ImageElement>=} partial
- * @return {LH.Artifacts.ImageElement}
+ * @param {Partial<LH.Artifacts.ImageElementRecord>=} partial
+ * @return {LH.Artifacts.ImageElementRecord}
  */
 function mockElement(partial = {}) {
   return {

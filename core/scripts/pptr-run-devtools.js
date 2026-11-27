@@ -24,6 +24,7 @@
 import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
+import {setTimeout as sleep} from 'timers/promises';
 
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
@@ -111,7 +112,7 @@ async function waitForFunction(session, fn, deps) {
         console.error(err);
         console.error('Retrying...');
       }
-      await new Promise(r => setTimeout(r, 500));
+      await sleep(500);
     } finally {
       ++iterations;
     }
@@ -172,16 +173,10 @@ async function waitForLighthouseReady() {
 
   const targetManager = TargetManager.TargetManager.instance();
   if (targetManager.primaryPageTarget() === null) {
-    if (targetManager?.observeTargets) {
-      await new Promise(resolve => targetManager.observeTargets({
-        targetAdded: resolve,
-        targetRemoved: () => {},
-      }));
-    } else {
-      while (targetManager.primaryPageTarget() === null) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-    }
+    await new Promise(resolve => targetManager.observeTargets({
+      targetAdded: resolve,
+      targetRemoved: () => {},
+    }));
   }
 
   // Ensure the emulation model is ready before Lighthouse starts by enabling device emulation.
@@ -212,9 +207,7 @@ async function runLighthouse() {
   const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
   const panel = LighthousePanel.LighthousePanel.instance();
 
-  // TODO(https://github.com/GoogleChrome/lighthouse/issues/17428): Remove JSON.stringify workaround
-  // once https://chromium-review.googlesource.com/c/v8/v8/+/8640371 rolls into Chrome ToT.
-  /** @type {Promise<string>} */
+  /** @type {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>} */
   const resultPromise = new Promise((resolve, reject) => {
     const methodName = panel.__proto__.buildReportUI ? 'buildReportUI' : '_buildReportUI';
     addSniffer(
@@ -224,7 +217,7 @@ async function runLighthouse() {
        * @param {LH.Result} lhr
        * @param {LH.Artifacts} artifacts
        */
-      (lhr, artifacts) => resolve(JSON.stringify({lhr, artifacts}))
+      (lhr, artifacts) => resolve({lhr, artifacts})
     );
 
     addSniffer(
@@ -363,9 +356,7 @@ async function testUrlFromDevtools(url, options = {}) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
 
-    const resultJson = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
-    /** @type {{lhr: LH.Result, artifacts: LH.Artifacts}} */
-    const result = JSON.parse(resultJson);
+    const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
 
     return {...result, logs};
   } catch (err) {

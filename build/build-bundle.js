@@ -107,7 +107,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     // This module is imported dynamically in a function we never use, so safe to ignore:
     // https://github.com/puppeteer/puppeteer/blob/35f9c6d1e699ea37e89ef3bbb7940f5599df4724/packages/puppeteer-core/src/api/Page.ts#L2365-L2369
     'puppeteer-core/lib/esm/puppeteer/node/ScreenRecorder.js',
-    '@sentry/node',
+    `${LH_ROOT}/core/lib/sentry-reporter.js`,
     'source-map',
   ];
 
@@ -131,6 +131,9 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   for (const modulePath of modulesToIgnore) {
     shimsObj[modulePath] = 'export default {}';
   }
+
+  /** @type {Map<string, Set<string>>} */
+  const inlinedFilesByImporter = new Map();
 
   await esbuild.build({
     entryPoints: [entryPath],
@@ -157,7 +160,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     inject: ['./build/process-global.js'],
     alias: {
       'debug': require.resolve('debug/src/browser.js'),
-      'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
     },
     /** @type {esbuild.Plugin[]} */
     plugins: [
@@ -173,6 +175,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         // resolved eventually.
         plugins.partialLoaders.inlineFs({
           verbose: Boolean(process.env.DEBUG),
+          trackedFiles: inlinedFilesByImporter,
         }),
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
@@ -190,7 +193,10 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      plugins.postprocess({removeExtraLicenses: true}),
+      plugins.postprocess({
+        removeExtraLicenses: true,
+        inlinedFilesByImporter,
+      }),
     ],
   });
 }

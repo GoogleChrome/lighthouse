@@ -15,17 +15,6 @@ const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 const SourceMaps = [];
 
 /**
- * Simple wrapper to just coerce return type to LanternMetric.
- * @param {LH.Artifacts.MetricComputationDataInput} data
- * @param {LH.Artifacts.ComputedContext} context
- * @return {Promise<LH.Artifacts.LanternMetric>}
- */
-async function getResult(data, context) {
-  const result = await Interactive.request(data, context);
-  return /** @type {LH.Artifacts.LanternMetric} */ (result);
-}
-
-/**
  * @param {Array<Partial<LH.Artifacts.NetworkRequest> & {start: number, end: number}>} partialRecords
  * @param {number} timeOrigin
  * @return {LH.Artifacts.NetworkRequest[]}
@@ -51,12 +40,12 @@ describe('Metrics: TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
-    const settings = /** @type {LH.Config.Settings} */ (
-      {throttlingMethod: 'simulate'}
-    );
+    /** @type {LH.Artifacts.ComputedSettings} */
+    const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
+    const result = await Interactive.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
+    assert('optimisticEstimate' in result);
 
     const summary = {
       timing: Math.round(result.timing),
@@ -65,42 +54,28 @@ describe('Metrics: TTI', () => {
       optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
       pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     };
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      // Trace Engine's NetworkRequestsHandler skips 2 `data:image/svg+xml` requests present in
-      // the devtoolsLog, reducing `pessimisticNodeTimings` from 31 to 29 with no effect on timing.
-      expect(summary).toEqual({
-        optimistic: 1107,
-        optimisticNodeTimings: 14,
-        pessimistic: 1134,
-        pessimisticNodeTimings: 29,
-        timing: 1122,
-      });
-    } else {
-      expect(summary).toMatchSnapshot();
-    }
+    expect(summary).toMatchSnapshot();
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
 
   it('should compute an observed value (desktop)', async () => {
-    const settings = /** @type {LH.Config.Settings} */ (
-      {throttlingMethod: 'provided', formFactor: 'desktop'}
-    );
+    /** @type {LH.Artifacts.ComputedSettings} */
+    const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
+    const result = await Interactive.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
     assert.equal(Math.round(result.timing), 224);
     assert.equal(result.timestamp, 376406205074);
   });
 
   it('should compute an observed value (mobile)', async () => {
-    const settings = /** @type {LH.Config.Settings} */ (
-      {throttlingMethod: 'provided', formFactor: 'mobile'}
-    );
+    /** @type {LH.Artifacts.ComputedSettings} */
+    const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     // eslint-disable-next-line max-len
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
+    const result = await Interactive.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, HostDPR: 1, simulator: null}, context);
 
     assert.equal(Math.round(result.timing), 224);
     assert.equal(result.timestamp, 376406205074);

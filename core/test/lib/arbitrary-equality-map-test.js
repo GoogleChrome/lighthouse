@@ -48,7 +48,7 @@ describe('ArbitraryEqualityMap', () => {
       const i = j % 100;
       assert.equal(map.get({i}), i);
     }
-  }, 1000);
+  }).timeout(1000);
 
   it('is fast for expected usage', () => {
     const map = new ArbitraryEqualityMap();
@@ -59,7 +59,7 @@ describe('ArbitraryEqualityMap', () => {
     for (let i = 0; i < 10000; i++) {
       assert.equal(map.get([trace, {x: i % 2}]), i % 2 ? 'bar' : 'foo');
     }
-  }, 1000);
+  }).timeout(1000);
 
   it('deepEquals compares various types accurately', () => {
     const {deepEquals} = ArbitraryEqualityMap;
@@ -96,16 +96,21 @@ describe('ArbitraryEqualityMap', () => {
       false
     );
 
+    /** @type {{name: string, self?: unknown}} */
     const cyclicA = {name: 'a'};
     cyclicA.self = cyclicA;
+    /** @type {{name: string, self?: unknown}} */
     const cyclicB = {name: 'a'};
     cyclicB.self = cyclicB;
     assert.equal(deepEquals(cyclicA, cyclicB), true);
 
+    /** @type {{x?: unknown, y?: unknown}} */
     const multiCyclicA = {};
     multiCyclicA.x = multiCyclicA;
     multiCyclicA.y = multiCyclicA;
+    /** @type {{x?: unknown, y?: unknown}} */
     const multiCyclicB1 = {};
+    /** @type {{x?: unknown, y?: unknown}} */
     const multiCyclicB2 = {};
     multiCyclicB1.x = multiCyclicB2;
     multiCyclicB1.y = multiCyclicB1;

@@ -198,7 +198,7 @@ async function buildBundle(entryPath, distPath) {
   };
 
   const modulesToIgnore = [
-    '@sentry/node',
+    `${LH_ROOT}/core/lib/sentry-reporter.js`,
     'source-map',
     'puppeteer-core',
   ];
@@ -250,14 +250,16 @@ async function buildBundle(entryPath, distPath) {
     export const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
   `;
 
-  const inlinedFiles = new Set();
+  /** @type {Map<string, Set<string>>} */
+  const inlinedFilesByImporter = new Map();
 
   const result = await esbuild.build({
     entryPoints: [entryPath],
     outfile: distPath,
     write: false,
     format: 'esm',
-    charset: 'utf8',
+    // Escape non-ASCII characters so V8 keeps the bundle in a 1-byte string buffer.
+    charset: 'ascii',
     bundle: true,
     minify: false,
     treeShaking: true,
@@ -271,7 +273,6 @@ async function buildBundle(entryPath, distPath) {
     legalComments: 'inline',
     alias: {
       'debug': require.resolve('debug/src/browser.js'),
-      'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
     },
     /** @type {esbuild.Plugin[]} */
     plugins: [
@@ -285,7 +286,7 @@ async function buildBundle(entryPath, distPath) {
       plugins.bulkLoader([
         plugins.partialLoaders.inlineFs({
           verbose: Boolean(process.env.DEBUG),
-          trackedFiles: inlinedFiles,
+          trackedFiles: inlinedFilesByImporter,
         }),
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
@@ -298,7 +299,9 @@ async function buildBundle(entryPath, distPath) {
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
       ]),
-      plugins.postprocess(),
+      plugins.postprocess({
+        inlinedFilesByImporter,
+      }),
     ],
   });
 
@@ -309,7 +312,7 @@ async function buildBundle(entryPath, distPath) {
   generateThirdPartyNotices({
     metafile: result.metafile,
     sources: sourcemap.sources,
-    inlinedFiles,
+    inlinedFilesByImporter,
     distDir,
   });
 }
@@ -318,102 +321,36 @@ async function buildBundle(entryPath, distPath) {
  * @param {{
  *   metafile: import('esbuild').Metafile,
  *   sources: string[],
- *   inlinedFiles: Set<string>,
+ *   inlinedFilesByImporter: Map<string, Set<string>>,
  *   distDir: string
  * }} options
  */
-function generateThirdPartyNotices({metafile, sources, inlinedFiles, distDir}) {
-  const paths = new Set([
-    ...Object.keys(metafile.inputs),
-    ...sources.map(s => path.resolve(distDir, s)),
-    ...Array.from(inlinedFiles).map(s => path.resolve(distDir, s)),
-  ]);
-  const nodeModules = new Map();
-  for (let filePath of paths) {
-    if (filePath.startsWith('replace-modules:')) {
-      filePath = filePath.replace('replace-modules:', '');
-    }
-
-    // Find the closest package.json
-    let dir = path.dirname(path.resolve(LH_ROOT, filePath));
-    let pkgJsonPath;
-    while (dir.startsWith(LH_ROOT) && dir !== LH_ROOT) {
-      const candidate = path.join(dir, 'package.json');
-      if (fs.existsSync(candidate)) {
-        pkgJsonPath = candidate;
-        break;
-      }
-      dir = path.dirname(dir);
-    }
-
-    if (pkgJsonPath) {
-      const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
-      // We only care about third party packages (or workspace packages that aren't the root)
-      if (pkg.name && pkg.name !== 'lighthouse') {
-        nodeModules.set(pkg.name, path.dirname(pkgJsonPath));
-      }
-    }
-  }
+function generateThirdPartyNotices({metafile, sources, inlinedFilesByImporter, distDir}) {
+  const notices = plugins.collectThirdPartyNotices({
+    metafile,
+    sources,
+    inlinedFilesByImporter,
+    distDir,
+  });
 
   const divider =
-               '\n\n-------------------- DEPENDENCY DIVIDER --------------------\n\n';
+    '\n\n-------------------- DEPENDENCY DIVIDER --------------------\n\n';
 
-  const stringifiedDependencies = Array.from(
-    nodeModules.keys()
-  ).sort().map(name => {
-    const nodeModulePath = nodeModules.get(name);
-    const dependency = JSON.parse(
-      fs.readFileSync(path.join(nodeModulePath, 'package.json'), 'utf-8'));
-    const licenseFilePaths = [
-      path.join(nodeModulePath, 'LICENSE'),
-      path.join(nodeModulePath, 'LICENSE.txt'),
-      path.join(nodeModulePath, 'LICENSE.md'),
-      path.join(nodeModulePath, 'license.md'),
-      path.join(nodeModulePath, 'LICENSE.MIT'),
-      path.join(nodeModulePath, 'LICENSE.APACHE'),
-    ];
-    for (const licenseFile of licenseFilePaths) {
-      if (fs.existsSync(licenseFile)) {
-        dependency.licenseText = fs.readFileSync(licenseFile, 'utf-8');
-        break;
+  const stringifiedDependencies = notices
+    .map(dependency => {
+      const parts = [
+        `Name: ${dependency.name}`,
+        `URL: ${dependency.url ?? 'N/A'}`,
+        `Version: ${dependency.version ?? 'N/A'}`,
+        `License: ${dependency.license ?? 'N/A'}`,
+      ];
+      if (dependency.licenseText) {
+        parts.push('');
+        parts.push(dependency.licenseText.replaceAll('\r', ''));
       }
-    }
-    const parts = [];
-    parts.push(`Name: ${dependency.name ?? 'N/A'}`);
-    let url = dependency.homepage ?? dependency.repository;
-    if (url && typeof url === 'object') {
-      url = url.url;
-    }
-    if (url && typeof url === 'string') {
-      url = url.replace(/^git\+/, '').replace(/\.git$/, '');
-      if (url.startsWith('github:')) {
-        url = `https://github.com/${url.substring(7)}`;
-      } else if (url.startsWith('gitlab:')) {
-        url = `https://gitlab.com/${url.substring(7)}`;
-      } else if (url.startsWith('bitbucket:')) {
-        url = `https://bitbucket.org/${url.substring(10)}`;
-      } else if (url.startsWith('ssh://git@github.com/')) {
-        url = `https://github.com/${url.substring('ssh://git@github.com/'.length)}`;
-      } else if (url.startsWith('git://github.com/')) {
-        url = `https://github.com/${url.substring('git://github.com/'.length)}`;
-      } else if (url.startsWith('git@github.com:')) {
-        url = `https://github.com/${url.substring('git@github.com:'.length)}`;
-      } else if (!url.startsWith('http')) {
-        const parts = url.split('/');
-        if (parts.length === 2) {
-          url = `https://github.com/${url}`;
-        }
-      }
-    }
-    parts.push(`URL: ${url ?? 'N/A'}`);
-    parts.push(`Version: ${dependency.version ?? 'N/A'}`);
-    parts.push(`License: ${dependency.license ?? 'N/A'}`);
-    if (dependency.licenseText) {
-      parts.push('');
-      parts.push(dependency.licenseText.replaceAll('\r', ''));
-    }
-    return parts.join('\n');
-  }).join(divider);
+      return parts.join('\n');
+    })
+    .join(divider);
 
   fs.writeFileSync(
     path.join(distDir, 'LIGHTHOUSE_MCP_BUNDLE_THIRD_PARTY_NOTICES'), stringifiedDependencies);

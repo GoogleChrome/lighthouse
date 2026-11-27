@@ -6,8 +6,7 @@
 
 import path from 'path';
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import * as LH from '../../types/lh.js';
 import {Runner} from '../runner.js';
 import defaultConfig from './default-config.js';
@@ -167,6 +166,7 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
       id: artifactJson.id,
       gatherer,
       dependencies: resolveArtifactDependencies(artifactJson, gatherer, artifactDefnsBySymbol),
+      alwaysGather: artifactJson.alwaysGather,
     };
 
     const symbol = artifact.gatherer.instance.meta.symbol;
@@ -242,6 +242,14 @@ async function initializeConfig(gatherMode, config, flags = {}) {
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
   configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, flags);
+
+  if (configWorkingCopy.locales) {
+    for (const [locale, lhlMessages] of Object.entries(configWorkingCopy.locales)) {
+      if (lhlMessages) {
+        format.registerLocaleData(/** @type {LH.Locale} */ (locale), lhlMessages);
+      }
+    }
+  }
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, flags);
   overrideSettingsForGatherMode(settings, gatherMode);

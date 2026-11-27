@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {TotalBlockingTime} from '../../../computed/metrics/total-blocking-time.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
@@ -15,9 +17,11 @@ const cnnDevtoolsLog = readJson('../../fixtures/artifacts/cnn/devtoolslog.json.g
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: TotalBlockingTime', () => {
+  /** @type {LH.Artifacts['GatherContext']} */
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
@@ -25,6 +29,7 @@ describe('Metrics: TotalBlockingTime', () => {
       {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context
     );
+    assert('optimisticEstimate' in result);
 
     expect({
       timing: Math.round(result.timing),
@@ -40,6 +45,7 @@ describe('Metrics: TotalBlockingTime', () => {
   });
 
   it('should compute an observed value', async () => {
+    /** @type {LH.Artifacts.ComputedSettings} */
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(

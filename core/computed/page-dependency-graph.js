@@ -13,7 +13,7 @@ import {TraceEngineResult} from './trace-engine-result.js';
 
 class PageDependencyGraph {
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR'], fromTrace: boolean}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: Partial<LH.Artifacts.ComputedSettings>, URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], HostDPR: LH.Artifacts['HostDPR'], fromTrace: boolean}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Gatherer.Simulation.GraphNode>}
    */
@@ -36,7 +36,10 @@ class PageDependencyGraph {
       return graph;
     }
 
-    const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
+    // Exclude data: URIs to match TraceEngine's NetworkRequestsHandler.
+    const lanternRequests = networkRecords
+      .filter(record => !record.url.startsWith('data:'))
+      .map(NetworkRequest.asLanternNetworkRequest);
     return Lantern.Graph.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }

@@ -6,8 +6,7 @@
 
 import EventEmitter from 'events';
 
-import log from 'lighthouse-logger';
-
+import log from '../lib/lighthouse-logger.js';
 import {LighthouseError} from '../lib/lh-error.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.

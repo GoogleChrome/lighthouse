@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 import {createRequire} from 'module';
 
-import lighthouse, {getAuditList, traceCategories} from '../index.js';
+import lighthouse, {getAuditList, traceCategories, i18n} from '../index.js';
 import {LH_ROOT} from '../../shared/root.js';
 import {readJson} from './test-utils.js';
 import * as publicTypes from '../../types.js';
@@ -44,6 +44,13 @@ describe('Module Tests', function() {
     assert.notEqual(lighthouseTraceCategories.length, 0);
   });
 
+  it('should expose i18n utilities', function() {
+    assert.equal(typeof i18n.createIcuMessageFn, 'function');
+    assert.equal(typeof i18n.registerLocaleData, 'function');
+    assert.equal(typeof i18n.lookupLocale, 'function');
+    assert.equal(typeof i18n.UIStrings, 'object');
+  });
+
   describe('lighthouse', () => {
     it('should throw an error when the first parameter is not defined', async () => {
       const resultPromise = lighthouse();
@@ -56,11 +63,13 @@ describe('Module Tests', function() {
     });
 
     it('should throw an error when the first parameter is not a string', async () => {
+      // @ts-expect-error - testing invalid url parameter
       const resultPromise = lighthouse({});
       await expect(resultPromise).rejects.toThrow();
     });
 
     it('should throw an error when the second parameter is not an object', async () => {
+      // @ts-expect-error - testing invalid flags parameter
       const resultPromise = lighthouse('chrome://version', 'flags');
       await expect(resultPromise).rejects.toThrow();
     });
@@ -72,6 +81,7 @@ describe('Module Tests', function() {
 
     it('should throw an error when the config contains incorrect audits', async () => {
       const resultPromise = lighthouse('chrome://version', {}, {
+        // @ts-expect-error - testing invalid legacy config property
         passes: [{
           gatherers: [
             'scripts',
@@ -109,6 +119,8 @@ describe('Module Tests', function() {
         audits: [],
       });
 
+      assert.ok(result);
+      assert.ok(typeof result.report === 'string', 'did not create html report');
       assert.ok(/<html/.test(result.report), 'did not create html report');
       assert.ok(result.artifacts.ViewportDimensions, 'did not set artifacts');
       assert.ok(result.lhr.lighthouseVersion);
@@ -129,6 +141,7 @@ describe('Module Tests', function() {
         },
         audits: [],
       });
+      assert.ok(result);
       assert.equal(result.lhr.configSettings.channel, 'node');
     });
 
@@ -142,6 +155,7 @@ describe('Module Tests', function() {
         },
         audits: [],
       });
+      assert.ok(result);
       assert.equal(result.lhr.configSettings.channel, 'custom');
     });
   });

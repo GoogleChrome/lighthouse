@@ -4,22 +4,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {EntityClassification} from '../../computed/entity-classification.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
+/**
+ * @param {Array<import('../network-records-to-devtools-log.js').NetworkRequestInput>} networkRecords
+ */
 function mockArtifacts(networkRecords) {
+  const url = networkRecords[0].url ?? '';
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+    /** @type {Partial<LH.Artifacts['URL']>} */
     URL: {
-      requestedUrl: networkRecords[0].url,
-      mainDocumentUrl: networkRecords[0].url,
-      finalDisplayedUrl: networkRecords[0].url,
+      requestedUrl: url,
+      mainDocumentUrl: url,
+      finalDisplayedUrl: url,
     },
   };
 }
 
 describe('Entity Classification computed artifact', () => {
+  /** @type {ReturnType<typeof mockArtifacts>} */
   let artifacts;
+  /** @type {LH.Artifacts.ComputedContext} */
   let context;
 
   beforeEach(() => {
@@ -59,7 +68,7 @@ describe('Entity Classification computed artifact', () => {
 
     const entities = Array.from(result.urlsByEntity.keys()).map(e => e.name);
     // Make sure first party is correctly identified.
-    expect(result.firstParty).not.toBeFalsy();
+    assert.ok(result.firstParty);
     expect(result.firstParty.name).toBe('example.com');
     // Make sure all entities were identified..
     expect(entities).toEqual(['example.com', 'third-party.com']);
@@ -73,7 +82,7 @@ describe('Entity Classification computed artifact', () => {
     const result = await EntityClassification.request(artifacts, context);
     const entities = Array.from(result.urlsByEntity.keys()).map(e => e.name);
     // Make sure first party is correctly identified.
-    expect(result.firstParty).not.toBeFalsy();
+    assert.ok(result.firstParty);
     expect(result.firstParty.name).toBe('example.com');
     // Make sure all entities were identified.
     expect(entities).toEqual(['example.com', 'third-party.com']);
@@ -99,7 +108,7 @@ describe('Entity Classification computed artifact', () => {
     const result = await EntityClassification.request(artifacts, context);
     const entities = Array.from(result.urlsByEntity.keys()).map(e => e.name);
     // Make sure first party is not identified.
-    expect(result.firstParty).not.toBeFalsy();
+    assert.ok(result.firstParty);
     expect(result.firstParty.name).toBe('third-party.com');
     // Make sure all entities were identified.
     expect(entities).toEqual(['example.com', 'third-party.com']);
@@ -118,6 +127,7 @@ describe('Entity Classification computed artifact', () => {
     const result = await EntityClassification.request(artifacts, context);
     const entities = Array.from(result.urlsByEntity.keys()).map(e => e.name);
     // Make sure first party is identified.
+    assert.ok(result.firstParty);
     expect(result.firstParty.name).toBe('third-party.com');
     // Make sure only valid network urls with a domain is recognized.
     expect(entities).toEqual(['third-party.com']);
@@ -139,9 +149,12 @@ describe('Entity Classification computed artifact', () => {
 
     // Inject an executionContextCreated entry to resolve extension names
     artifacts.devtoolsLog.push({
+      targetType: 'page',
       method: 'Runtime.executionContextCreated',
       params: {
         context: {
+          id: 1,
+          uniqueId: '1',
           origin: 'chrome-extension://abcdefghijklmnopqrstuvwxyz',
           name: 'Sample Chrome Extension',
         },
@@ -151,6 +164,7 @@ describe('Entity Classification computed artifact', () => {
     const result = await EntityClassification.request(artifacts, context);
     const entities = Array.from(result.urlsByEntity.keys()).map(e => e.name);
     // Make sure first party is identified.
+    assert.ok(result.firstParty);
     expect(result.firstParty.name).toBe('third-party.com');
     // Make sure only valid network urls with a domain is recognized.
     expect(entities).toEqual(['third-party.com', 'Sample Chrome Extension',

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import assert from 'assert/strict';
+
 import {CumulativeLayoutShift} from '../../../computed/metrics/cumulative-layout-shift.js';
 import {createTestTrace} from '../../create-test-trace.js';
 import {readJson} from '../../test-utils.js';
@@ -82,12 +84,14 @@ describe('Metrics: CLS', () => {
 
       const trace = createTestTrace({traceEnd: 30_000, childFrames});
       const navigationStartEvt = trace.traceEvents.find(e => e.name === 'navigationStart');
+      assert.ok(navigationStartEvt);
       const mainFrameId = navigationStartEvt.args.frame;
 
       let mainCumulativeScore = 0;
       let childCumulativeScore = 0;
 
       /* eslint-disable camelcase */
+      /** @type {LH.TraceEvent[]} */
       const shiftEvents = shiftEventsData.map(data => {
         const {
           score,
@@ -109,6 +113,7 @@ describe('Metrics: CLS', () => {
           pid: 1111,
           tid: 222,
           ts: ts,
+          dur: 0,
           args: {
             frame: is_main_frame ? mainFrameId : childFrameId,
             data: {
@@ -338,7 +343,11 @@ describe('Metrics: CLS', () => {
         // Viewport event 1
         trace.traceEvents.push({
           name: 'viewport',
+          ph: 'I',
+          pid: 1111,
+          tid: 222,
           ts: 251_000,
+          dur: 0,
           cat: 'loading',
           args: {
             data: {
@@ -350,7 +359,11 @@ describe('Metrics: CLS', () => {
         // Viewport event 2
         trace.traceEvents.push({
           name: 'viewport',
+          ph: 'I',
+          pid: 1111,
+          tid: 222,
           ts: 1_751_000,
+          dur: 0,
           cat: 'loading',
           args: {
             data: {
@@ -386,25 +399,30 @@ describe('Metrics: CLS', () => {
 
       it('ignores layout shift data from other tabs', async () => {
         const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const mainFrame = trace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
+        const navigationStartEvt = trace.traceEvents.find(e => e.name === 'navigationStart');
+        assert.ok(navigationStartEvt);
+        const mainFrame = navigationStartEvt.args.frame;
         const childFrame = 'CHILDFRAME';
         const otherMainFrame = 'ANOTHERTABOPEN';
         const cat = 'loading,rail,devtools.timeline';
-        trace.traceEvents.push(
+        const baseEvt = {ph: /** @type {'I'} */ ('I'), pid: 1111, tid: 222, ts: 100_000, dur: 0};
+        /** @type {LH.TraceEvent[]} */
+        const extraEvents = [
           /* eslint-disable max-len */
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
-          {name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
-          {name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
-          {name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
+          {...baseEvt, name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
+          {...baseEvt, name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
           // Following two not used because of `had_recent_input: true`.
-          {name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: true, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
-          {name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: true, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: true, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: childFrame, data: {had_recent_input: true, score: 1, weighted_score_delta: 1, is_main_frame: false}}},
           // Following two not used because part of another frame tree.
-          {name: 'LayoutShift', cat, args: {frame: otherMainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
-          {name: 'LayoutShift', cat, args: {frame: otherMainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}}
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: otherMainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
+          {...baseEvt, name: 'LayoutShift', cat, args: {frame: otherMainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
           /* eslint-enable max-len */
-        );
+        ];
+        trace.traceEvents.push(...extraEvents);
         const result = await CumulativeLayoutShift.request(trace, context);
         expect(result).toMatchObject({
           cumulativeLayoutShift: 3,
@@ -483,9 +501,30 @@ describe('Metrics: CLS', () => {
   });
 
   describe('getImpactByNodeId', () => {
+    /** @typedef {LH.Util.FirstParamType<typeof CumulativeLayoutShift.getImpactByNodeId>[number]} LayoutShiftEvent */
+    /**
+     * @param {Omit<LayoutShiftEvent, 'event'>} partial
+     * @return {LayoutShiftEvent}
+     */
+    function mockShiftEvent(partial) {
+      return {
+        ...partial,
+        event: {
+          name: 'LayoutShift',
+          cat: 'loading',
+          ph: 'I',
+          pid: 1111,
+          tid: 222,
+          ts: partial.ts,
+          dur: 0,
+          args: {},
+        },
+      };
+    }
+
     it('combines scores for the same nodeId across multiple shift events', () => {
       const layoutShiftEvents = [
-        {
+        mockShiftEvent({
           ts: 1_000_000,
           isMainFrame: true,
           weightedScore: 1,
@@ -501,8 +540,8 @@ describe('Metrics: CLS', () => {
               old_rect: [0, 100, 200, 100],
             },
           ],
-        },
-        {
+        }),
+        mockShiftEvent({
           ts: 2_000_000,
           isMainFrame: true,
           weightedScore: 0.3,
@@ -513,7 +552,7 @@ describe('Metrics: CLS', () => {
               old_rect: [0, 0, 200, 200],
             },
           ],
-        },
+        }),
       ];
 
       const impactByNodeId = CumulativeLayoutShift.getImpactByNodeId(layoutShiftEvents);
@@ -525,7 +564,7 @@ describe('Metrics: CLS', () => {
 
     it('ignores events with no impacted nodes', () => {
       const layoutShiftEvents = [
-        {
+        mockShiftEvent({
           ts: 1_000_000,
           isMainFrame: true,
           weightedScore: 1,
@@ -541,12 +580,12 @@ describe('Metrics: CLS', () => {
               old_rect: [0, 100, 200, 100],
             },
           ],
-        },
-        {
+        }),
+        mockShiftEvent({
           ts: 2_000_000,
           isMainFrame: true,
           weightedScore: 0.3,
-        },
+        }),
       ];
 
       const impactByNodeId = CumulativeLayoutShift.getImpactByNodeId(layoutShiftEvents);
@@ -558,7 +597,7 @@ describe('Metrics: CLS', () => {
 
     it('ignores malformed impacted nodes', () => {
       const layoutShiftEvents = [
-        {
+        mockShiftEvent({
           ts: 1_000_000,
           isMainFrame: true,
           weightedScore: 1,
@@ -575,8 +614,8 @@ describe('Metrics: CLS', () => {
               old_rect: [0, 100, 200, 100],
             },
           ],
-        },
-        {
+        }),
+        mockShiftEvent({
           ts: 2_000_000,
           isMainFrame: true,
           weightedScore: 0.3,
@@ -587,7 +626,7 @@ describe('Metrics: CLS', () => {
               old_rect: [0, 0, 200, 200],
             },
           ],
-        },
+        }),
       ];
 
       const impactByNodeId = CumulativeLayoutShift.getImpactByNodeId(layoutShiftEvents);
