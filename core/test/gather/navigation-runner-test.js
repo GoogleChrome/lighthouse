@@ -448,7 +448,13 @@ describe('NavigationRunner', () => {
       // @ts-expect-error mock config
       resolvedConfig.artifacts.find(artifact => artifact.id === 'Timespan').id = 'Trace';
       gatherers.timespan.getArtifact = fnAny().mockResolvedValue({
-        traceEvents: [{name: 'SoftNavigationStart'}, {name: 'SoftNavigationStart'}],
+        traceEvents: [
+          {name: 'TracingStartedInBrowser', args: {data: {frames: [
+            {frame: 'ROOT', processId: 1},
+          ]}}},
+          {name: 'SoftNavigationStart', args: {frame: 'ROOT'}},
+          {name: 'SoftNavigationStart', args: {frame: 'ROOT'}},
+        ],
       });
 
       await runner._navigation({
@@ -463,6 +469,34 @@ describe('NavigationRunner', () => {
       expect(baseArtifacts.LighthouseRunWarnings).toHaveLength(1);
       expect(baseArtifacts.LighthouseRunWarnings[0])
         .toBeDisplayString(/Multiple soft navigations were detected/);
+    });
+
+    it('ignores soft navigations of other frames for the warning', async () => {
+      const {resolvedConfig, gatherers} = createMockConfig();
+      resolvedConfig.settings.softNavigation = true;
+      // @ts-expect-error mock config
+      resolvedConfig.artifacts.find(artifact => artifact.id === 'Timespan').id = 'Trace';
+      gatherers.timespan.getArtifact = fnAny().mockResolvedValue({
+        traceEvents: [
+          {name: 'TracingStartedInBrowser', args: {data: {frames: [
+            {frame: 'ROOT', processId: 1},
+            {frame: 'CHILD', parent: 'ROOT', processId: 1},
+          ]}}},
+          {name: 'SoftNavigationStart', args: {frame: 'ROOT'}},
+          {name: 'SoftNavigationStart', args: {frame: 'CHILD'}},
+        ],
+      });
+
+      await runner._navigation({
+        driver,
+        page,
+        resolvedConfig,
+        requestor,
+        computedCache,
+        baseArtifacts,
+      });
+
+      expect(baseArtifacts.LighthouseRunWarnings).toHaveLength(0);
     });
 
     it('cleans up throttling before getArtifact', async () => {

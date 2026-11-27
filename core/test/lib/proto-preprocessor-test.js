@@ -56,6 +56,7 @@ Array [
   "usePassiveGathering",
   "disableFullPageScreenshot",
   "skipAboutBlank",
+  "softNavigation",
   "blankPage",
   "ignoreStatusCode",
   "locale",

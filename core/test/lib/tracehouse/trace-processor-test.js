@@ -52,7 +52,7 @@ function createSoftNavigationTrace(events, options = {}) {
 }
 
 /**
- * @param {{ts: number, navigationId: number, firstContentfulPaint?: number, url?: string}} options
+ * @param {{ts: number, navigationId: number, firstContentfulPaint?: number, url?: string, urlChangeTime?: number}} options
  * @return {LH.TraceEvent}
  */
 function softNavigationStartEvent(options) {
@@ -71,6 +71,7 @@ function softNavigationStartEvent(options) {
         performanceTimelineNavigationId: options.navigationId,
         softNavContextId: options.navigationId,
         timeOrigin: options.ts,
+        urlChangeTime: options.urlChangeTime,
       },
     }),
   };
@@ -642,6 +643,7 @@ describe('TraceProcessor', () => {
             navigationId: 7,
             firstContentfulPaint: 1_080_000,
             url: 'https://example.com/cart',
+            urlChangeTime: 1_020_000,
           }),
           softNavigationLcpEvent({ts: 1_090_000, navigationId: 7}),
           lastLcpEvent,
@@ -656,20 +658,36 @@ describe('TraceProcessor', () => {
           firstContentfulPaintAllFrames: 80,
           largestContentfulPaint: 100,
           largestContentfulPaintAllFrames: 100,
-          load: undefined,
-          domContentLoaded: undefined,
+          // The document was already loaded, so these are at the URL change.
+          load: 20,
+          domContentLoaded: 20,
           traceEnd: processedTrace.timings.traceEnd,
         });
         expect(navigation.timestamps).toMatchObject({
           timeOrigin: 1_000_000,
           firstContentfulPaint: 1_080_000,
           largestContentfulPaint: 1_100_000,
+          load: 1_020_000,
+          domContentLoaded: 1_020_000,
         });
         expect(navigation.firstContentfulPaintEvt).toBe(processedTrace.timeOriginEvt);
         expect(navigation.largestContentfulPaintEvt).toMatchObject({ts: lastLcpEvent.ts});
-        expect(navigation.loadEvt).toBeUndefined();
-        expect(navigation.domContentLoadedEvt).toBeUndefined();
+        expect(navigation.loadEvt).toBe(processedTrace.timeOriginEvt);
+        expect(navigation.domContentLoadedEvt).toBe(processedTrace.timeOriginEvt);
         expect(navigation.lcpInvalidated).toEqual(false);
+      });
+
+      it('places load and DOMContentLoaded at the start without a URL change time', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({
+            ts: 1_000_000, navigationId: 1, firstContentfulPaint: 1_050_000,
+          }),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+        const navigation = TraceProcessor.processNavigation(processedTrace);
+
+        expect(navigation.timings.load).toEqual(0);
+        expect(navigation.timings.domContentLoaded).toEqual(0);
       });
 
       it('measures only the first soft navigation', () => {

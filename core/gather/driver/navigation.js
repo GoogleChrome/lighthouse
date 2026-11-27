@@ -9,6 +9,7 @@ import {
   waitForFullyLoaded,
   waitForFrameNavigated,
   waitForSoftNavigation,
+  waitForSoftNavigationFcp,
   waitForUserToContinue,
 } from './wait-for-condition.js';
 import * as constants from '../../config/constants.js';
@@ -60,7 +61,9 @@ function resolveWaitForFullyLoadedOptions(options) {
   if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
   if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
 
-  if (!options.waitUntil.includes('fcp')) maxFCPMs = undefined;
+  if (!options.waitUntil.includes('fcp') && !options.waitUntil.includes('softNavigation')) {
+    maxFCPMs = undefined;
+  }
 
   return {
     pauseAfterFcpMs,
@@ -96,6 +99,24 @@ async function gotoURL(driver, requestor, options) {
   await session.sendCommand('Page.enable');
   await session.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
 
+  const waitForNavigated = options.waitUntil.includes('navigated');
+  const waitForLoad = options.waitUntil.includes('load');
+  const waitForFcp = options.waitUntil.includes('fcp');
+  const waitForSoftNav = options.waitUntil.includes('softNavigation');
+
+  /** @type {Awaited<ReturnType<typeof waitForSoftNavigationFcp>>|undefined} */
+  let resolveOnSoftNavigationFcp;
+  if (waitForSoftNav) {
+    if (waitForLoad || waitForNavigated || waitForFcp) {
+      throw new Error('Cannot wait for a soft navigation and a page load at the same time');
+    }
+    // The paint of a soft navigation is observed in the page, so the observer has to be in place
+    // before the requestor triggers the soft navigation.
+    const {pauseAfterFcpMs, maxWaitForFcpMs} = resolveWaitForFullyLoadedOptions(options);
+    resolveOnSoftNavigationFcp = await waitForSoftNavigationFcp(driver, pauseAfterFcpMs,
+      maxWaitForFcpMs ?? constants.defaultSettings.maxWaitForFcp);
+  }
+
   let waitForNavigationTriggered;
   if (typeof requestor === 'string') {
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413
@@ -104,11 +125,6 @@ async function gotoURL(driver, requestor, options) {
   } else {
     waitForNavigationTriggered = requestor();
   }
-
-  const waitForNavigated = options.waitUntil.includes('navigated');
-  const waitForLoad = options.waitUntil.includes('load');
-  const waitForFcp = options.waitUntil.includes('fcp');
-  const waitForSoftNav = options.waitUntil.includes('softNavigation');
 
   /** @type {Array<Promise<{timedOut: boolean}>>} */
   const waitConditionPromises = [];
@@ -136,13 +152,11 @@ async function gotoURL(driver, requestor, options) {
       .catch(() => ({timedOut: false})));
   }
 
-  if (waitForSoftNav) {
-    if (waitForLoad || waitForNavigated) {
-      throw new Error('Cannot wait for a soft navigation and a page load at the same time');
-    }
+  if (resolveOnSoftNavigationFcp) {
     const waitOptions = resolveWaitForFullyLoadedOptions(options);
     waitConditionPromises.push(
-      waitForSoftNavigation(session, networkMonitor, waitOptions, options.signal)
+      waitForSoftNavigation(session, networkMonitor, resolveOnSoftNavigationFcp, waitOptions,
+        options.signal)
         .then(result => {
           softNavigationUrl = result.url;
           return {timedOut: result.timedOut};

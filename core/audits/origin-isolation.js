@@ -133,6 +133,9 @@ class OriginIsolation extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    // A soft navigation has no document request, so there is no document response to audit.
+    if (context.settings?.softNavigation) return {score: null, notApplicable: true};
+
     const coopHeaders = await this.getRawCoop(artifacts, context);
     const {score, results} = this.constructResults(coopHeaders);
 

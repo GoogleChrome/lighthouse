@@ -342,13 +342,21 @@ Array [
       expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(erroredAudits).toHaveLength(0);
 
-      // Audits that depend on the main document request are not run for a soft navigation.
-      expect(lhr.audits).not.toHaveProperty('server-response-time');
-      expect(lhr.audits).not.toHaveProperty('speed-index');
+      // A soft navigation has no document request, so audits of the document response don't apply.
+      expect(lhr.audits['server-response-time'].scoreDisplayMode).toEqual('notApplicable');
+      expect(lhr.audits['redirects'].scoreDisplayMode).toEqual('notApplicable');
 
-      // Check that soft navigation metrics were computed.
-      expect(Number.isFinite(lhr.audits['first-contentful-paint'].numericValue)).toBe(true);
-      expect(Number.isFinite(lhr.audits['largest-contentful-paint'].numericValue)).toBe(true);
+      // Check that soft navigation metrics were computed, from the soft navigation.
+      const metricIds = [
+        'first-contentful-paint',
+        'largest-contentful-paint',
+        'speed-index',
+        'interactive',
+        'total-blocking-time',
+      ];
+      for (const id of metricIds) {
+        expect(Number.isFinite(lhr.audits[id].numericValue)).toBe(true);
+      }
       expect(lhr.categories.performance.score).not.toBeNull();
     });
 

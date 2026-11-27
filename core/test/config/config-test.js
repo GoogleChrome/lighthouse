@@ -102,44 +102,19 @@ describe('Config', () => {
     });
   });
 
-  it('should filter audits that need a document request for a soft navigation', async () => {
-    const {resolvedConfig} = await initializeConfig(
-      'navigation',
-      undefined,
-      {softNavigation: true}
-    );
+  it('should not filter the config for a soft navigation', async () => {
+    const {resolvedConfig: softNavigationConfig} =
+      await initializeConfig('navigation', undefined, {softNavigation: true});
+    const {resolvedConfig: pageLoadConfig} = await initializeConfig('navigation');
 
-    const auditIds = resolvedConfig.audits?.map(audit => audit.implementation.meta.id) || [];
-    expect(auditIds).toEqual(expect.arrayContaining([
-      'first-contentful-paint',
-      'largest-contentful-paint',
-      'cumulative-layout-shift',
-      'total-blocking-time',
-    ]));
-    expect(auditIds).not.toContain('speed-index');
-    expect(auditIds).not.toContain('interactive');
-    expect(auditIds).not.toContain('server-response-time');
-    expect(auditIds).not.toContain('redirects');
-    // Audits of the page state need artifacts that are only gathered for a snapshot or page load.
-    expect(auditIds).not.toContain('csp-xss');
-    expect(auditIds).not.toContain('charset');
-    expect(auditIds).not.toContain('color-contrast');
-
-    const artifactIds = resolvedConfig.artifacts?.map(artifact => artifact.id) || [];
-    expect(artifactIds).toEqual(expect.arrayContaining(['Trace', 'DevtoolsLog', 'SourceMaps']));
-    expect(artifactIds).not.toContain('MainDocumentContent');
-    expect(artifactIds).not.toContain('MetaElements');
-
-    const performanceAuditIds =
-      resolvedConfig.categories?.performance.auditRefs.map(ref => ref.id) || [];
-    expect(performanceAuditIds).toContain('first-contentful-paint');
-    expect(performanceAuditIds).not.toContain('speed-index');
-
-    // Categories that don't support timespan mode don't apply to a soft navigation either.
-    expect(Object.keys(resolvedConfig.categories || {})).toEqual([
-      'performance',
-      'best-practices',
-    ]);
+    // Audits that need the document request report themselves as not applicable instead.
+    /** @param {LH.Config.ResolvedConfig} resolvedConfig */
+    const getIds = resolvedConfig => ({
+      artifacts: resolvedConfig.artifacts?.map(artifact => artifact.id),
+      audits: resolvedConfig.audits?.map(audit => audit.implementation.meta.id),
+      categories: Object.keys(resolvedConfig.categories || {}),
+    });
+    expect(getIds(softNavigationConfig)).toEqual(getIds(pageLoadConfig));
   });
 
   it('should ensure minimum quiet thresholds when throttlingMethod is devtools', async () => {

@@ -84,7 +84,7 @@ export type ScreenEmulationSettings = {
   /**
    * EXPERIMENTAL. If set to true, the navigation is expected to be a soft navigation (a same-document
    * navigation triggered by user interaction) instead of a full page load. Requires a callback
-   * requestor and Chrome 149 or newer. Audits that depend on the main document request are skipped.
+   * requestor and Chrome 149 or newer. Audits of the document response are not applicable.
    */
   softNavigation?: boolean;
   /** If set to true, gatherers should avoid any behavior that may be destructive to the page state. (e.g. extra navigations, resizing the viewport) */

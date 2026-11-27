@@ -20,7 +20,7 @@
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number, nodeId?: number, type?: string}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number, nodeId?: number, type?: string}, frame: string}}} LCPCandidateEvent */
-/** @typedef {LH.TraceEvent & {name: 'SoftNavigationStart', args: {context: {URL?: string, firstContentfulPaint?: number, performanceTimelineNavigationId?: number, softNavContextId?: number, timeOrigin: number}}}} SoftNavigationStartEvent */
+/** @typedef {LH.TraceEvent & {name: 'SoftNavigationStart', args: {frame?: string, context: {URL?: string, firstContentfulPaint?: number, performanceTimelineNavigationId?: number, softNavContextId?: number, timeOrigin: number, urlChangeTime?: number}}}} SoftNavigationStartEvent */
 /** @typedef {LH.TraceEvent & {name: 'largestContentfulPaint::CandidateForSoftNavigation', args: {data: {performanceTimelineNavigationId?: number}}}} SoftNavigationLCPCandidateEvent */
 
 import log from '../lighthouse-logger.js';
@@ -958,7 +958,11 @@ class TraceProcessor {
    * Chrome reports the soft navigation's first contentful paint on the `SoftNavigationStart` event
    * itself and its LCP candidates as `largestContentfulPaint::CandidateForSoftNavigation` events,
    * correlated by `performanceTimelineNavigationId`. The soft navigation is observed until the next
-   * one starts. There is no first paint, load or DOMContentLoaded for a soft navigation.
+   * one starts.
+   *
+   * There is no first paint, load or DOMContentLoaded for a soft navigation. The document was
+   * already loaded, so DOMContentLoaded and load are placed at the URL change. That is what lets the
+   * page load implementations of TTI, TBT and Speed Index measure a soft navigation unchanged.
    *
    * @param {LH.Artifacts.ProcessedTrace} processedTrace
    * @return {LH.Artifacts.ProcessedNavigation}
@@ -990,6 +994,9 @@ class TraceProcessor {
       })
       .at(-1);
 
+    // The URL change commits the soft navigation; Chrome records it on the start event.
+    const urlChangeTs = Math.max(context.urlChangeTime ?? timeOriginEvt.ts, timeOriginEvt.ts);
+
     /** @param {number} ts */
     const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
@@ -1003,8 +1010,8 @@ class TraceProcessor {
         firstContentfulPaintAllFrames: getTiming(firstContentfulPaintTs),
         largestContentfulPaint: maybeGetTiming(largestContentfulPaintEvt?.ts),
         largestContentfulPaintAllFrames: maybeGetTiming(largestContentfulPaintEvt?.ts),
-        load: undefined,
-        domContentLoaded: undefined,
+        load: getTiming(urlChangeTs),
+        domContentLoaded: getTiming(urlChangeTs),
         traceEnd: timings.traceEnd,
       },
       timestamps: {
@@ -1014,8 +1021,8 @@ class TraceProcessor {
         firstContentfulPaintAllFrames: firstContentfulPaintTs,
         largestContentfulPaint: largestContentfulPaintEvt?.ts,
         largestContentfulPaintAllFrames: largestContentfulPaintEvt?.ts,
-        load: undefined,
-        domContentLoaded: undefined,
+        load: urlChangeTs,
+        domContentLoaded: urlChangeTs,
         traceEnd: timestamps.traceEnd,
       },
       firstPaintEvt: undefined,
@@ -1024,8 +1031,9 @@ class TraceProcessor {
       firstContentfulPaintAllFramesEvt: softNavigationStartEvt,
       largestContentfulPaintEvt,
       largestContentfulPaintAllFramesEvt: largestContentfulPaintEvt,
-      loadEvt: undefined,
-      domContentLoadedEvt: undefined,
+      // Likewise, the start event carries the time of the URL change.
+      loadEvt: softNavigationStartEvt,
+      domContentLoadedEvt: softNavigationStartEvt,
       lcpInvalidated: false,
     };
   }

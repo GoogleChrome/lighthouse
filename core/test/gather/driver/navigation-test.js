@@ -6,6 +6,7 @@
 
 import {createMockDriver} from '../mock-driver.js';
 import {
+  fnAny,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   timers,
@@ -231,22 +232,44 @@ describe('.gotoURL', () => {
     await loadPromise;
   });
 
+  /**
+   * Mocks the page's report of the soft navigation's paint.
+   * @return {{report: (reported: boolean) => void}}
+   */
+  function mockSoftNavigationReport() {
+    const control = {report: (/** @type {boolean} */ _) => {}};
+    mockDriver._executionContext.evaluate.mockImplementation(fn => {
+      if (fn.name !== 'softNavigationReportedInPage') return Promise.resolve();
+      return new Promise(resolve => control.report = resolve);
+    });
+    return control;
+  }
+
   it('waits for a soft navigation', async () => {
     mockDriver.defaultSession.on = mockDriver.defaultSession.once;
     mockDriver.defaultSession.sendCommand
       .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
     await driver.networkMonitor.enable();
+    const softNavigation = mockSoftNavigationReport();
 
-    const requestor = () => Promise.resolve();
+    const requestor = fnAny().mockResolvedValue(undefined);
     const url = 'https://www.example.com/next';
 
     const loadPromise = makePromiseInspectable(gotoURL(driver, requestor, {
       waitUntil: ['softNavigation'],
+      pauseAfterFcpMs: 0,
+      pauseAfterLoadMs: 0,
       cpuQuietThresholdMs: 0,
       networkQuietThresholdMs: 0,
     }));
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).not.toBeDone('Did not wait for the soft navigation');
+
+    // The page observes the paint before the soft navigation is triggered.
+    const evaluate = mockDriver._executionContext.evaluate;
+    expect(evaluate.mock.calls[0][0].name).toEqual('observeSoftNavigationInPage');
+    expect(evaluate.mock.invocationCallOrder[0])
+      .toBeLessThan(requestor.mock.invocationCallOrder[0]);
 
     const [listener] = mockDriver.defaultSession.on.getListeners('Page.navigatedWithinDocument');
     // Navigations within child frames are not the soft navigation under test.
@@ -255,6 +278,10 @@ describe('.gotoURL', () => {
     expect(loadPromise).not.toBeDone('Did not wait for the main frame');
 
     listener({frameId: 'MAIN', url});
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for the paint');
+
+    softNavigation.report(true);
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone('Did not resolve after the soft navigation');
 
@@ -268,6 +295,7 @@ describe('.gotoURL', () => {
         .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
       mockDriver.url.mockResolvedValue('https://www.example.com/current');
       await driver.networkMonitor.enable();
+      mockSoftNavigationReport();
 
       const requestor = () => Promise.resolve();
 

@@ -23,6 +23,7 @@ import {getPageLoadError} from '../lib/navigation-error.js';
 import Trace from './gatherers/trace.js';
 import DevtoolsLog from './gatherers/devtools-log.js';
 import {NetworkRecords} from '../computed/network-records.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 /* eslint-disable max-len */
@@ -212,8 +213,17 @@ async function _computeNavigationResult(
 function _getSoftNavigationWarnings(trace) {
   // The trace artifact is an Error when its collection failed.
   if (!trace || !Array.isArray(trace.traceEvents)) return [];
-  const softNavigationCount =
-    trace.traceEvents.filter(event => event.name === 'SoftNavigationStart').length;
+  // Only the soft navigations of the main frame count, as only they can be measured.
+  let frameId;
+  try {
+    frameId = TraceProcessor.findMainFrameIds(trace.traceEvents).frameId;
+  } catch {
+    // Trace processing reports a trace without a main frame.
+    return [];
+  }
+  const softNavigationCount = trace.traceEvents.filter(event => {
+    return event.name === 'SoftNavigationStart' && event.args.frame === frameId;
+  }).length;
   if (softNavigationCount > 1) return [str_(UIStrings.warningMultipleSoftNavigations)];
   return [];
 }

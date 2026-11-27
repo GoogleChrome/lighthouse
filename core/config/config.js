@@ -17,11 +17,7 @@ import {
   throwInvalidArtifactDependency,
   assertValidConfig,
 } from './validation.js';
-import {
-  filterConfigByGatherMode,
-  filterConfigByExplicitFilters,
-  filterConfigForSoftNavigation,
-} from './filters.js';
+import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
 import {
   deepCloneConfigJson,
   resolveSettings,
@@ -192,7 +188,8 @@ function overrideSettingsForGatherMode(settings, gatherMode) {
   }
 
   if (gatherMode === 'navigation' && settings.softNavigation) {
-    // A soft navigation has no document request to build a dependency graph from.
+    // Lantern roots its dependency graph at the document request, which a soft navigation does not
+    // have, so it can't simulate one yet.
     if (settings.throttlingMethod === 'simulate') {
       settings.throttlingMethod = 'devtools';
     }
@@ -269,9 +266,6 @@ async function initializeConfig(gatherMode, config, flags = {}) {
   assertValidConfig(resolvedConfig);
 
   resolvedConfig = filterConfigByGatherMode(resolvedConfig, gatherMode);
-  if (gatherMode === 'navigation' && settings.softNavigation) {
-    resolvedConfig = filterConfigForSoftNavigation(resolvedConfig);
-  }
   resolvedConfig = filterConfigByExplicitFilters(resolvedConfig, settings);
 
   log.timeEnd(status);

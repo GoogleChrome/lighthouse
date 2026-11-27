@@ -613,38 +613,166 @@ async function waitForFullyLoaded(session, networkMonitor, options, signal) {
   return cleanupFn();
 }
 
+/* c8 ignore start */
+
+/**
+ * This function is executed in the page itself, in an isolated world, which a same-document
+ * navigation keeps.
+ *
+ * Starts observing the next soft navigation. Chrome reports a `soft-navigation` performance entry
+ * once the soft navigation has its first contentful paint. The observation ends with the first
+ * report, after `timeoutMs`, or when it is stopped.
+ * @param {number} timeoutMs
+ */
+function observeSoftNavigationInPage(timeoutMs) {
+  let stop = () => {};
+  /** @type {Promise<boolean>} */
+  const reported = new Promise(resolve => {
+    // A browser that cannot report soft navigations must not hold the navigation back.
+    if (!window.PerformanceObserver.supportedEntryTypes.includes('soft-navigation')) {
+      resolve(false);
+      return;
+    }
+    const observer = new window.PerformanceObserver(() => finish(true));
+    const timeout = setTimeout(() => finish(false), timeoutMs);
+    /** @param {boolean} detected */
+    function finish(detected) {
+      observer.disconnect();
+      clearTimeout(timeout);
+      resolve(detected);
+    }
+    stop = () => finish(false);
+    observer.observe({type: 'soft-navigation'});
+  });
+  window.__lighthouseSoftNavigation = {reported, stop};
+}
+
+/**
+ * This function is executed in the page itself, in the isolated world of
+ * `observeSoftNavigationInPage`.
+ *
+ * Resolves when the observation ends, with whether a soft navigation was reported.
+ * @return {Promise<boolean>|boolean}
+ */
+function softNavigationReportedInPage() {
+  return window.__lighthouseSoftNavigation?.reported ?? false;
+}
+
+/**
+ * This function is executed in the page itself, in the isolated world of
+ * `observeSoftNavigationInPage`.
+ */
+function stopObservingSoftNavigationInPage() {
+  window.__lighthouseSoftNavigation?.stop();
+  delete window.__lighthouseSoftNavigation;
+}
+
+/* c8 ignore stop */
+
+/**
+ * Starts observing the soft navigation that is about to be triggered, and returns a promise that
+ * resolves `pauseAfterFcpMs` ms after its first contentful paint.
+ *
+ * Chrome has no FCP lifecycle event for a soft navigation. Its paint is observed in the page
+ * instead, so this has to be called before the soft navigation is triggered.
+ *
+ * Resolves without the pause when Chrome cannot report soft navigations, or reports none within
+ * `maxWaitForFcpMs`. The trace then has no soft navigation, which trace processing reports as
+ * NO_SOFT_NAVIGATION.
+ * @param {LH.Gatherer.Driver} driver
+ * @param {number} pauseAfterFcpMs
+ * @param {number} maxWaitForFcpMs
+ * @return {Promise<CancellableWait>}
+ */
+async function waitForSoftNavigationFcp(driver, pauseAfterFcpMs, maxWaitForFcpMs) {
+  const {executionContext} = driver;
+  await executionContext.evaluate(observeSoftNavigationInPage, {
+    args: [maxWaitForFcpMs],
+    useIsolation: true,
+  });
+
+  let canceled = false;
+  /** @type {NodeJS.Timeout|undefined} */
+  let pauseTimeout;
+  /** @type {() => void} */
+  let rejectOnCancel = () => {};
+
+  /** @type {Promise<void>} */
+  const promise = new Promise((resolve, reject) => {
+    rejectOnCancel = () => reject(new Error('Wait for soft navigation FCP canceled'));
+
+    driver.defaultSession.setNextProtocolTimeout(maxWaitForFcpMs + 5000);
+    executionContext.evaluate(softNavigationReportedInPage, {args: [], useIsolation: true})
+      // The isolated world is gone when the page loaded a new document.
+      .catch(() => false)
+      .then(reported => {
+        if (canceled) return;
+        if (!reported) {
+          log.warn('waitFor', 'No soft navigation was reported by the page');
+          resolve();
+          return;
+        }
+        pauseTimeout = setTimeout(resolve, pauseAfterFcpMs);
+      });
+  });
+
+  const cancel = () => {
+    if (canceled) return;
+    canceled = true;
+    pauseTimeout && clearTimeout(pauseTimeout);
+    rejectOnCancel();
+    void executionContext.evaluate(stopObservingSoftNavigationInPage, {
+      args: [],
+      useIsolation: true,
+    }).catch(() => {});
+  };
+
+  return {promise, cancel};
+}
+
 /**
  * Returns a promise that resolves when:
  * - All of the following conditions have been met:
- *    - the main frame has navigated within the same document (a soft navigation).
+ *    - the soft navigation has had its first contentful paint, and pauseAfterFcpMs have passed
+ *      (resolveOnFcp, from `waitForSoftNavigationFcp`).
+ *    - the main frame has navigated within the same document, and pauseAfterLoadMs have passed.
  *    - networkQuietThresholdMs milliseconds have passed since the last network request that exceeded
  *      2 inflight requests (network-2-quiet has been reached).
  *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
  * - maxWaitForLoadedMs milliseconds have passed.
- * A soft navigation has no load event or FCP lifecycle event, so network and CPU quiet stand in for
- * them. Resolves with the URL the main frame navigated to, when it was observed.
+ *
+ * These are the conditions of `waitForFullyLoaded`, for a page that is already loaded: the URL
+ * change stands in for the load event, as it does for DOMContentLoaded and load when the trace is
+ * processed. Resolves with the URL the main frame navigated to, when it was observed.
  * @param {LH.Gatherer.ProtocolSession} session
  * @param {NetworkMonitor} networkMonitor
+ * @param {CancellableWait} resolveOnFcp
  * @param {WaitOptions} options
  * @param {AbortSignal} [signal]
  * @return {Promise<{timedOut: boolean, url?: string}>}
  */
-async function waitForSoftNavigation(session, networkMonitor, options, signal) {
-  const {networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitForLoadedMs} = options;
+async function waitForSoftNavigation(session, networkMonitor, resolveOnFcp, options, signal) {
+  const {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs, maxWaitForLoadedMs} =
+    options;
   const waitFunctions = options._waitForTestOverrides || DEFAULT_WAIT_FUNCTIONS;
   const {waitForNetworkIdle, waitForCPUIdle} = waitFunctions;
   const waitForNavigatedWithinDocumentFn =
     waitFunctions.waitForNavigatedWithinDocument || waitForNavigatedWithinDocument;
   /** @type {NodeJS.Timeout|undefined} */
   let maxTimeoutHandle;
+  /** @type {NodeJS.Timeout|undefined} */
+  let pauseAfterLoadHandle;
   /** @type {string|undefined} */
   let url;
 
-  // Listener for the same-document navigation of the main frame.
+  // Listener for the same-document navigation of the main frame. Resolves pauseAfterLoadMs ms after it.
   const resolveOnNavigatedWithinDocument = waitForNavigatedWithinDocumentFn(session);
-  resolveOnNavigatedWithinDocument.promise.then(navigatedUrl => {
+  const resolveOnUrlChange = resolveOnNavigatedWithinDocument.promise.then(navigatedUrl => {
     url = navigatedUrl;
-  }).catch(() => {});
+    return new Promise(resolve => {
+      pauseAfterLoadHandle = setTimeout(resolve, pauseAfterLoadMs);
+    });
+  });
   // General network listener. Resolves when the network has been 2-idle for networkQuietThresholdMs.
   // The document was loaded long ago, so DCL is treated as already fired.
   const resolveOnNetworkIdle = waitForNetworkIdle(session, networkMonitor, {
@@ -667,7 +795,8 @@ async function waitForSoftNavigation(session, networkMonitor, options, signal) {
 
   /** @type {Promise<() => Promise<{timedOut: boolean, url?: string}>>} */
   const navigatedPromise = Promise.all([
-    resolveOnNavigatedWithinDocument.promise,
+    resolveOnFcp.promise,
+    resolveOnUrlChange,
     resolveOnNetworkIdle.promise,
     resolveOnCriticalNetworkIdle.promise,
   ]).then(() => {
@@ -676,7 +805,7 @@ async function waitForSoftNavigation(session, networkMonitor, options, signal) {
   }).then(() => {
     /** @return {Promise<{timedOut: boolean, url?: string}>} */
     const cleanupFn = async function() {
-      log.verbose('waitFor', 'navigated within document and network considered idle');
+      log.verbose('waitFor', 'soft navigation painted and network considered idle');
       return {timedOut: false, url};
     };
 
@@ -724,6 +853,8 @@ async function waitForSoftNavigation(session, networkMonitor, options, signal) {
 
   signal?.removeEventListener('abort', onAbort);
   maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
+  pauseAfterLoadHandle && clearTimeout(pauseAfterLoadHandle);
+  resolveOnFcp.cancel();
   resolveOnNavigatedWithinDocument.cancel();
   resolveOnNetworkIdle.cancel();
   resolveOnCriticalNetworkIdle.cancel();
@@ -766,5 +897,6 @@ export {
   waitForFullyLoaded,
   waitForNavigatedWithinDocument,
   waitForSoftNavigation,
+  waitForSoftNavigationFcp,
   waitForUserToContinue,
 };

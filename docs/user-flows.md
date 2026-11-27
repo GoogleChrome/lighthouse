@@ -91,20 +91,18 @@ await flow.navigate(async () => {
 await flow.startNavigation({softNavigation: true});
 await page.click('a.checkout-link');
 await flow.endNavigation();
-
-// Audit the state of the page after the soft navigation separately.
-await flow.snapshot();
 ```
 
 Chrome detects a soft navigation when a user interaction changes the URL and paints new content. An interaction that pushes the same URL again, or that does not update the URL, is not a soft navigation. Chrome 149 or newer is required.
 
 What to expect from a soft navigation step:
 
-- The step is a navigation report named "Soft navigation report" by default, with a Performance score. First Contentful Paint and Largest Contentful Paint are measured from the interaction; there is no Speed Index or Time to Interactive.
-- Only the audits that also work in a timespan run, so the report has the Performance and Best Practices categories. Audits that depend on the main document request, such as server response time or redirects, are skipped, as are audits of the resulting page state. Pair the step with a snapshot for accessibility and SEO.
+- The step is a navigation report named "Soft navigation report" by default, with a Performance score. Metrics are measured from the interaction that started the soft navigation. The document was already loaded, so DOMContentLoaded and load count as happening at the URL change, and Speed Index, Time to Interactive and Total Blocking Time are computed as they are for a page load.
+- Lighthouse waits for Chrome to report the soft navigation's first contentful paint, then `pauseAfterFcpMs`, and for the network and CPU to go quiet, as it does for a page load.
+- The step runs the same audits as a page load. Audits of the document response, such as server response time, redirects, security headers, HTTP status code and crawlability, are not applicable, since a soft navigation requests no document. Audits of the page state look at the page after the soft navigation.
 - Simulated throttling is replaced with DevTools throttling, and the page is never reset to `about:blank` or cleared of storage before the step.
 - Trigger a single soft navigation per step. If several are detected, only the first one is measured and the report carries a warning.
-- If no soft navigation is detected, Lighthouse waits for `maxWaitForLoad`, then the step completes with a `NO_SOFT_NAVIGATION` error on the metrics and the flow continues. Without the `softNavigation` flag, a callback that performs a soft navigation fails with `NO_FCP` after `maxWaitForFcp`, since Lighthouse waits for a page load that never comes.
+- If no soft navigation is detected, Lighthouse waits for at most `maxWaitForLoad`, then the step completes with a `NO_SOFT_NAVIGATION` error on the metrics and the flow continues. Without the `softNavigation` flag, a callback that performs a soft navigation fails with `NO_FCP` after `maxWaitForFcp`, since Lighthouse waits for a page load that never comes.
 
 ### Timespan
 

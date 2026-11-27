@@ -31,6 +31,9 @@ class Diagnostics extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    // A soft navigation has no document request, so there is no document response to audit.
+    if (context.settings?.softNavigation) return {score: null, notApplicable: true};
+
     const trace = artifacts.Trace;
     const devtoolsLog = artifacts.DevtoolsLog;
     const tasks = await MainThreadTasks.request(trace, context);

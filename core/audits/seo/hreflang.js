@@ -70,9 +70,13 @@ class Hreflang extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {LH.Audit.Product}
    */
-  static audit({LinkElements}) {
+  static audit({LinkElements}, context) {
+    // A soft navigation has no document request, so there is no document response to audit.
+    if (context.settings?.softNavigation) return {score: null, notApplicable: true};
+
     /** @type {InvalidHreflang[]} */
     const invalidHreflangs = [];
 

@@ -24,6 +24,9 @@ class MainDocumentContent extends BaseGatherer {
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */
   async getArtifact(context) {
+    // A soft navigation has no document response, so there is no content to read.
+    if (context.settings.softNavigation) return '';
+
     const devtoolsLog = context.dependencies.DevtoolsLog;
     const mainResource =
       await MainResource.request({devtoolsLog, URL: context.baseArtifacts.URL}, context);
