@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import HreflangAudit from '../../../audits/seo/hreflang.js';
 
 const node = {};
+const context = {settings: {}};
 
 describe('SEO: Document has valid hreflang code', () => {
   it('fails when the language code provided in hreflang via link element is invalid', () => {
@@ -22,7 +23,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
 
-    const {score, details} = HreflangAudit.audit(artifacts);
+    const {score, details} = HreflangAudit.audit(artifacts, context);
     assert.equal(score, 0);
     assert.equal(details.items.length, 5);
   });
@@ -42,7 +43,7 @@ describe('SEO: Document has valid hreflang code', () => {
         ],
       };
 
-      const {score} = HreflangAudit.audit(artifacts);
+      const {score} = HreflangAudit.audit(artifacts, context);
       assert.equal(score, 1);
     }
   });
@@ -64,14 +65,14 @@ describe('SEO: Document has valid hreflang code', () => {
         ],
       };
 
-      const {score} = HreflangAudit.audit(artifacts);
+      const {score} = HreflangAudit.audit(artifacts, context);
       assert.equal(score, 1);
       inHead = !inHead;
     }
   });
 
   it('succeeds when there are no rel=alternate link elements nor headers', () => {
-    assert.equal(HreflangAudit.audit({LinkElements: []}).score, 1);
+    assert.equal(HreflangAudit.audit({LinkElements: []}, context).score, 1);
   });
 
   it('returns all failing items', () => {
@@ -84,7 +85,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
 
-    const {score, details} = HreflangAudit.audit(artifacts);
+    const {score, details} = HreflangAudit.audit(artifacts, context);
     assert.equal(score, 0);
     assert.equal(details.items.length, 4);
   });
@@ -97,7 +98,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
 
-    const {score, details} = HreflangAudit.audit(artifacts);
+    const {score, details} = HreflangAudit.audit(artifacts, context);
     assert.equal(score, 0);
     assert.equal(details.items.length, 2);
   });
@@ -110,7 +111,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
 
-    const {score} = HreflangAudit.audit(artifacts);
+    const {score} = HreflangAudit.audit(artifacts, context);
     assert.equal(score, 0);
   });
 
@@ -124,7 +125,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
 
-    const {details: {items}} = HreflangAudit.audit(artifacts);
+    const {details: {items}} = HreflangAudit.audit(artifacts, context);
 
     assert.equal(items.length, 3);
     assert.equal(items[0].subItems.items.length, 2);

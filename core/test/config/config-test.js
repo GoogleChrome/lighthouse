@@ -75,6 +75,48 @@ describe('Config', () => {
     });
   });
 
+  it('should override settings for a soft navigation', async () => {
+    const {resolvedConfig} = await initializeConfig(
+      'navigation',
+      undefined,
+      {softNavigation: true, throttlingMethod: 'simulate'}
+    );
+
+    expect(resolvedConfig.settings).toMatchObject({
+      throttlingMethod: 'devtools',
+      skipAboutBlank: true,
+      disableStorageReset: true,
+    });
+  });
+
+  it('should ignore softNavigation outside of navigation mode', async () => {
+    const {resolvedConfig} = await initializeConfig(
+      'timespan',
+      undefined,
+      {softNavigation: true}
+    );
+
+    expect(resolvedConfig.settings).toMatchObject({
+      skipAboutBlank: false,
+      disableStorageReset: false,
+    });
+  });
+
+  it('should not filter the config for a soft navigation', async () => {
+    const {resolvedConfig: softNavigationConfig} =
+      await initializeConfig('navigation', undefined, {softNavigation: true});
+    const {resolvedConfig: pageLoadConfig} = await initializeConfig('navigation');
+
+    // Audits that need the document request report themselves as not applicable instead.
+    /** @param {LH.Config.ResolvedConfig} resolvedConfig */
+    const getIds = resolvedConfig => ({
+      artifacts: resolvedConfig.artifacts?.map(artifact => artifact.id),
+      audits: resolvedConfig.audits?.map(audit => audit.implementation.meta.id),
+      categories: Object.keys(resolvedConfig.categories || {}),
+    });
+    expect(getIds(softNavigationConfig)).toEqual(getIds(pageLoadConfig));
+  });
+
   it('should ensure minimum quiet thresholds when throttlingMethod is devtools', async () => {
     gatherMode = 'navigation';
     const config = {

@@ -314,6 +314,52 @@ Array [
       expect(Number.isFinite(lhr.audits['first-contentful-paint'].numericValue)).toBe(true);
     });
 
+    it('should compute soft navigation results with callback requestor', async () => {
+      const {page, serverBaseUrl} = state;
+      const softNavigationUrl = `${serverBaseUrl}/soft-navigation.html?page=next`;
+      await page.goto(`${serverBaseUrl}/soft-navigation.html`, {waitUntil: 'networkidle0'});
+
+      const requestor = jestMock.fn(async () => {
+        await page.click('#soft-nav-link');
+      });
+
+      const result = await api.navigation(page, requestor, {flags: {softNavigation: true}});
+      if (!result) throw new Error('Lighthouse failed to produce a result');
+
+      expect(requestor).toHaveBeenCalled();
+
+      const {lhr, artifacts} = result;
+      state.saveTrace(artifacts.Trace);
+      expect(artifacts.URL).toEqual({
+        requestedUrl: softNavigationUrl,
+        mainDocumentUrl: softNavigationUrl,
+        finalDisplayedUrl: softNavigationUrl,
+      });
+      expect(lhr.runtimeError).toBeUndefined();
+      expect(lhr.runWarnings).toEqual([]);
+
+      const {auditResults, erroredAudits} = getAuditsBreakdown(lhr);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
+      expect(erroredAudits).toHaveLength(0);
+
+      // A soft navigation has no document request, so audits of the document response don't apply.
+      expect(lhr.audits['server-response-time'].scoreDisplayMode).toEqual('notApplicable');
+      expect(lhr.audits['redirects'].scoreDisplayMode).toEqual('notApplicable');
+
+      // Check that soft navigation metrics were computed, from the soft navigation.
+      const metricIds = [
+        'first-contentful-paint',
+        'largest-contentful-paint',
+        'speed-index',
+        'interactive',
+        'total-blocking-time',
+      ];
+      for (const id of metricIds) {
+        expect(Number.isFinite(lhr.audits[id].numericValue)).toBe(true);
+      }
+      expect(lhr.categories.performance.score).not.toBeNull();
+    });
+
     it('should compute results with callback requestor', async () => {
       const {page, serverBaseUrl} = state;
       const requestedUrl = `${serverBaseUrl}/?redirect=/index.html`;

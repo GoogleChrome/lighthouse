@@ -44,6 +44,9 @@ class HTTPStatusCode extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    // A soft navigation has no document request, so there is no document response to audit.
+    if (context.settings?.softNavigation) return {score: null, notApplicable: true};
+
     const devtoolsLog = artifacts.DevtoolsLog;
     const URL = artifacts.URL;
     const mainResource = await MainResource.request({devtoolsLog, URL}, context);

@@ -6,6 +6,8 @@
 
 import {ProcessedNavigation} from '../../computed/processed-navigation.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
+import {createTestTrace} from '../create-test-trace.js';
 import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
@@ -13,6 +15,28 @@ const noFCPtrace = readJson('../fixtures/traces/airhorner_no_fcp.json', import.m
 const noNavStartTrace = readJson('../fixtures/traces/no_navstart_event.json', import.meta);
 
 describe('ProcessedTrace', () => {
+  it('throws NO_SOFT_NAVIGATION when a soft navigation was expected but not found', async () => {
+    const trace = createTestTrace({topLevelTasks: [{ts: 1200, duration: 10}]});
+    const {pid, tid} = trace.traceEvents[0];
+    // The document loaded before tracing started, so none of its load events are in the trace.
+    const loadEventNames = ['navigationStart', 'domContentLoadedEventEnd', 'firstContentfulPaint'];
+    trace.traceEvents = trace.traceEvents.filter(event => !loadEventNames.includes(event.name));
+    trace.traceEvents.push({
+      name: 'clock_sync',
+      cat: 'loading',
+      ph: 'I',
+      pid,
+      tid,
+      ts: 500_000,
+      dur: 0,
+      args: {sync_id: TraceProcessor.SOFT_NAVIGATION_MARKER_ID},
+    });
+
+    const context = {computedCache: new Map()};
+    await expect(ProcessedNavigation.request(trace, context))
+      .rejects.toMatchObject({code: 'NO_SOFT_NAVIGATION'});
+  });
+
   it('computes the artifact', async () => {
     const context = {computedCache: new Map()};
     const processedNavigation = await ProcessedNavigation.request(pwaTrace, context);

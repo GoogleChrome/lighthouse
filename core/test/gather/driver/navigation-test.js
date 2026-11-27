@@ -6,6 +6,7 @@
 
 import {createMockDriver} from '../mock-driver.js';
 import {
+  fnAny,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   timers,
@@ -229,6 +230,103 @@ describe('.gotoURL', () => {
     expect(loadPromise).toBeDone('Did not resolve after fcp');
 
     await loadPromise;
+  });
+
+  /**
+   * Mocks the page's report of the soft navigation's paint.
+   * @return {{report: (reported: boolean) => void}}
+   */
+  function mockSoftNavigationReport() {
+    const control = {report: (/** @type {boolean} */ _) => {}};
+    mockDriver._executionContext.evaluate.mockImplementation(fn => {
+      if (fn.name !== 'softNavigationReportedInPage') return Promise.resolve();
+      return new Promise(resolve => control.report = resolve);
+    });
+    return control;
+  }
+
+  it('waits for a soft navigation', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+    mockDriver.defaultSession.sendCommand
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
+    await driver.networkMonitor.enable();
+    const softNavigation = mockSoftNavigationReport();
+
+    const requestor = fnAny().mockResolvedValue(undefined);
+    const url = 'https://www.example.com/next';
+
+    const loadPromise = makePromiseInspectable(gotoURL(driver, requestor, {
+      waitUntil: ['softNavigation'],
+      pauseAfterFcpMs: 0,
+      pauseAfterLoadMs: 0,
+      cpuQuietThresholdMs: 0,
+      networkQuietThresholdMs: 0,
+    }));
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for the soft navigation');
+
+    // The page observes the paint before the soft navigation is triggered.
+    const evaluate = mockDriver._executionContext.evaluate;
+    expect(evaluate.mock.calls[0][0].name).toEqual('observeSoftNavigationInPage');
+    expect(evaluate.mock.invocationCallOrder[0])
+      .toBeLessThan(requestor.mock.invocationCallOrder[0]);
+
+    const [listener] = mockDriver.defaultSession.on.getListeners('Page.navigatedWithinDocument');
+    // Navigations within child frames are not the soft navigation under test.
+    listener({frameId: 'CHILD', url: 'https://www.example.com/iframe'});
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for the main frame');
+
+    listener({frameId: 'MAIN', url});
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for the paint');
+
+    softNavigation.report(true);
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).toBeDone('Did not resolve after the soft navigation');
+
+    expect(await loadPromise).toEqual({requestedUrl: url, mainDocumentUrl: url, warnings: []});
+  });
+
+  it('continues on the current URL if no soft navigation is observed before the timeout',
+    async () => {
+      mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+      mockDriver.defaultSession.sendCommand
+        .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'MAIN'}}});
+      mockDriver.url.mockResolvedValue('https://www.example.com/current');
+      await driver.networkMonitor.enable();
+      mockSoftNavigationReport();
+
+      const requestor = () => Promise.resolve();
+
+      const loadPromise = makePromiseInspectable(gotoURL(driver, requestor, {
+        waitUntil: ['softNavigation'],
+        maxWaitForLoad: 1000,
+        cpuQuietThresholdMs: 0,
+        networkQuietThresholdMs: 0,
+      }));
+      await flushAllTimersAndMicrotasks();
+      timers.advanceTimersByTime(1001);
+      await flushAllTimersAndMicrotasks();
+
+      const results = await loadPromise;
+      expect(results.requestedUrl).toEqual('https://www.example.com/current');
+      expect(results.mainDocumentUrl).toEqual('https://www.example.com/current');
+      expect(results.warnings).toHaveLength(1);
+      expect(results.warnings[0]).toBeDisplayString(/loaded too slowly/);
+    });
+
+  it('throws when asked to wait for a soft navigation and a page load', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once;
+    await driver.networkMonitor.enable();
+
+    const loadPromise = gotoURL(driver, () => Promise.resolve(), {
+      waitUntil: ['softNavigation', 'load'],
+    });
+
+    await expect(loadPromise).rejects.toThrow(
+      'Cannot wait for a soft navigation and a page load at the same time'
+    );
   });
 
   it('throws when asked to wait for FCP without waiting for load', async () => {

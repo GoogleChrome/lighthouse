@@ -186,6 +186,17 @@ function overrideSettingsForGatherMode(settings, gatherMode) {
       settings.throttlingMethod = 'devtools';
     }
   }
+
+  if (gatherMode === 'navigation' && settings.softNavigation) {
+    // Lantern roots its dependency graph at the document request, which a soft navigation does not
+    // have, so it can't simulate one yet.
+    if (settings.throttlingMethod === 'simulate') {
+      settings.throttlingMethod = 'devtools';
+    }
+    // The page under test must keep its state, so it can't be reset before the run.
+    settings.skipAboutBlank = true;
+    settings.disableStorageReset = true;
+  }
 }
 
 /**

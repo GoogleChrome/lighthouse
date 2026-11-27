@@ -30,6 +30,9 @@ declare global {
 
     /** Injected into the page when the `--debug` flag is used. */
     continueLighthouseRun(): void;
+
+    /** Used to observe the paint of a soft navigation, in an isolated world. */
+    __lighthouseSoftNavigation?: {reported: Promise<boolean>, stop: () => void};
   }
 }
 

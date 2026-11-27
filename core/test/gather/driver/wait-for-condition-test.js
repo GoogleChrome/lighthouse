@@ -292,6 +292,246 @@ describe('waitForFullyLoaded()', () => {
   });
 });
 
+describe('waitForSoftNavigation()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
+  let session;
+  let networkMonitor;
+  /** @type {ReturnType<typeof createMockWaitForFn>} */
+  let waitForSoftNavigationFcp;
+  /** @type {import('../../../gather/driver/wait-for-condition.js').WaitOptions} */
+  let options;
+
+  beforeEach(() => {
+    session = {sendCommand: fnAny().mockResolvedValue(), setNextProtocolTimeout: fnAny()};
+    networkMonitor = {getInflightRequests: fnAny().mockReturnValue([])};
+    waitForSoftNavigationFcp = createMockWaitForFn();
+
+    options = {
+      pauseAfterFcpMs: 0,
+      pauseAfterLoadMs: 0,
+      networkQuietThresholdMs: 5000,
+      cpuQuietThresholdMs: 5000,
+      maxWaitForLoadedMs: 60000,
+      maxWaitForFcpMs: undefined,
+      _waitForTestOverrides: {
+        waitForFcp: createMockWaitForFn(),
+        waitForLoadEvent: createMockWaitForFn(),
+        waitForNetworkIdle: createMockMultipleInvocationWaitForFn(),
+        waitForCPUIdle: createMockWaitForFn(),
+        waitForNavigatedWithinDocument: createMockWaitForFn(),
+      },
+    };
+  });
+
+  /** @param {AbortSignal} [signal] */
+  function waitForSoftNavigation(signal) {
+    return makePromiseInspectable(wait.waitForSoftNavigation(
+      session, networkMonitor, waitForSoftNavigationFcp(), options, signal));
+  }
+
+  it('should wait for the paint, the navigation and network idle, then CPU idle', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = waitForSoftNavigation();
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for anything');
+
+    overrides.waitForNetworkIdle.waitForCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for the navigation');
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for the paint');
+    expect(overrides.waitForCPUIdle).not.toHaveBeenCalled();
+
+    waitForSoftNavigationFcp.mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for CPU idle');
+    expect(overrides.waitForCPUIdle).toHaveBeenCalled();
+
+    overrides.waitForCPUIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(await waitPromise).toEqual({timedOut: false, url: 'https://example.com/next'});
+  });
+
+  it('should not wait for a load event or an FCP lifecycle event', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = waitForSoftNavigation();
+
+    waitForSoftNavigationFcp.mockResolve();
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    overrides.waitForNetworkIdle.waitForCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    overrides.waitForCPUIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+
+    expect(waitPromise).toBeDone('Waited for something else');
+    expect(overrides.waitForLoadEvent).not.toHaveBeenCalled();
+    expect(overrides.waitForFcp).not.toHaveBeenCalled();
+  });
+
+  it('should pause after the URL change as it would after load', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    options.pauseAfterLoadMs = 3000;
+    const waitPromise = waitForSoftNavigation();
+
+    waitForSoftNavigationFcp.mockResolve();
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    overrides.waitForNetworkIdle.waitForCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks(2000);
+    expect(overrides.waitForCPUIdle).not.toHaveBeenCalled();
+
+    await flushAllTimersAndMicrotasks(1100);
+    expect(overrides.waitForCPUIdle).toHaveBeenCalled();
+    overrides.waitForCPUIdle.mockResolve();
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after the pause');
+  });
+
+  it('should treat DOMContentLoaded as already fired for network idle', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = waitForSoftNavigation();
+
+    const networkIdleCalls = overrides.waitForNetworkIdle.waitForCalls;
+    expect(networkIdleCalls).toHaveLength(2);
+    for (const call of networkIdleCalls) {
+      expect(call.arguments[2]).toMatchObject({pretendDCLAlreadyFired: true});
+    }
+
+    waitForSoftNavigationFcp.mockResolve();
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    networkIdleCalls.forEach(call => call.mockResolve());
+    await flushAllTimersAndMicrotasks();
+    overrides.waitForCPUIdle.mockResolve();
+    await waitPromise;
+  });
+
+  it('should time out but keep the URL when the navigation was observed', async () => {
+    const overrides = /** @type {any} */ (options._waitForTestOverrides);
+    const waitPromise = waitForSoftNavigation();
+
+    overrides.waitForNavigatedWithinDocument.mockResolve('https://example.com/next');
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for the paint and network idle');
+
+    timers.advanceTimersByTime(60001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not wait for timeout');
+    // Check that we cancelled all our listeners
+    expect(waitForSoftNavigationFcp.getMockCancelFn()).toHaveBeenCalled();
+    expect(overrides.waitForNavigatedWithinDocument.getMockCancelFn()).toHaveBeenCalled();
+    for (const result of overrides.waitForNetworkIdle.mock.results) {
+      expect(result.value.cancel).toHaveBeenCalled();
+    }
+
+    expect(await waitPromise).toEqual({timedOut: true, url: 'https://example.com/next'});
+  });
+
+  it('should time out without a URL when no navigation was observed', async () => {
+    const waitPromise = waitForSoftNavigation();
+
+    timers.advanceTimersByTime(60001);
+    await flushAllTimersAndMicrotasks();
+
+    expect(await waitPromise).toEqual({timedOut: true, url: undefined});
+  });
+
+  it('should stop waiting and cancel the paint listener when aborted', async () => {
+    const controller = new AbortController();
+    const waitPromise = waitForSoftNavigation(controller.signal);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone();
+
+    controller.abort();
+    await flushAllTimersAndMicrotasks();
+
+    expect(await waitPromise).toEqual({timedOut: false, url: undefined});
+    expect(waitForSoftNavigationFcp.getMockCancelFn()).toHaveBeenCalled();
+  });
+});
+
+describe('waitForSoftNavigationFcp()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
+  /** @type {{executionContext: {evaluate: ReturnType<typeof fnAny>}, defaultSession: {setNextProtocolTimeout: ReturnType<typeof fnAny>}}} */
+  let driver;
+  /** @type {(reported: boolean) => void} */
+  let reportSoftNavigation;
+
+  beforeEach(() => {
+    reportSoftNavigation = () => {
+      throw new Error('The page was not asked whether a soft navigation was reported');
+    };
+    driver = {
+      executionContext: {
+        evaluate: fnAny().mockImplementation(fn => {
+          if (fn.name !== 'softNavigationReportedInPage') return Promise.resolve();
+          return new Promise(resolve => reportSoftNavigation = resolve);
+        }),
+      },
+      defaultSession: {setNextProtocolTimeout: fnAny()},
+    };
+  });
+
+  /**
+   * @param {number} pauseAfterFcpMs
+   * @param {number} maxWaitForFcpMs
+   */
+  async function waitForSoftNavigationFcp(pauseAfterFcpMs, maxWaitForFcpMs) {
+    // @ts-expect-error - only the parts of the driver that are used are mocked.
+    return await wait.waitForSoftNavigationFcp(driver, pauseAfterFcpMs, maxWaitForFcpMs);
+  }
+
+  it('should observe the page in an isolated world before it returns', async () => {
+    await waitForSoftNavigationFcp(0, 30000);
+
+    const [observeCall] = driver.executionContext.evaluate.mock.calls;
+    expect(observeCall[0].name).toEqual('observeSoftNavigationInPage');
+    expect(observeCall[1]).toEqual({args: [30000], useIsolation: true});
+  });
+
+  it('should resolve pauseAfterFcpMs after the page reports a soft navigation', async () => {
+    const {promise} = await waitForSoftNavigationFcp(500, 30000);
+    const waitPromise = makePromiseInspectable(promise);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Did not wait for the soft navigation');
+
+    reportSoftNavigation(true);
+    await flushAllTimersAndMicrotasks(250);
+    expect(waitPromise).not.toBeDone('Did not pause after the paint');
+
+    await flushAllTimersAndMicrotasks(300);
+    expect(waitPromise).toBeDone('Did not resolve after the pause');
+  });
+
+  it('should resolve without the pause when the page reports no soft navigation', async () => {
+    const {promise} = await waitForSoftNavigationFcp(5000, 30000);
+    const waitPromise = makePromiseInspectable(promise);
+
+    reportSoftNavigation(false);
+    await flushAllTimersAndMicrotasks(10);
+    expect(waitPromise).toBeDone('Waited for the pause');
+  });
+
+  it('should stop observing the page when canceled', async () => {
+    const {promise, cancel} = await waitForSoftNavigationFcp(0, 30000);
+    const waitPromise = makePromiseInspectable(promise);
+
+    cancel();
+    await flushAllTimersAndMicrotasks(1);
+
+    await expect(waitPromise).rejects.toThrow('Wait for soft navigation FCP canceled');
+    const lastCall = driver.executionContext.evaluate.mock.calls.at(-1);
+    expect(lastCall[0].name).toEqual('stopObservingSoftNavigationInPage');
+  });
+});
+
 describe('waitForFcp()', () => {
   before(() => timers.useFakeTimers());
   after(() => timers.dispose());

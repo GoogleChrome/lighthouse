@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
-import {createTestTrace} from '../../create-test-trace.js';
+import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
@@ -17,6 +17,84 @@ const timespanTrace = readJson('../../fixtures/traces/timespan-trace-m91.json', 
 const noNavStartTrace = readJson('../../fixtures/traces/no_navstart_event.json', import.meta);
 const backgroundTabTrace = readJson('../../fixtures/traces/backgrounded-tab-missing-paints.json', import.meta);
 const lcpTrace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
+
+/**
+ * Creates a trace of a page that had already loaded when tracing started, as in a soft navigation
+ * run, with the given events appended.
+ * @param {Array<LH.TraceEvent>} events
+ * @param {{marker?: boolean}} [options]
+ * @return {LH.Trace}
+ */
+function createSoftNavigationTrace(events, options = {}) {
+  const {marker = true} = options;
+  const trace = createTestTrace({topLevelTasks: [{ts: 1200, duration: 10}]});
+  const {pid, tid} = trace.traceEvents[0];
+
+  // The document loaded before tracing started, so none of its load events are in the trace.
+  const loadEventNames = ['navigationStart', 'domContentLoadedEventEnd', 'firstContentfulPaint'];
+  trace.traceEvents = trace.traceEvents.filter(event => !loadEventNames.includes(event.name));
+
+  if (marker) {
+    trace.traceEvents.push({
+      name: 'clock_sync',
+      cat: 'loading',
+      ph: 'I',
+      pid,
+      tid,
+      ts: 500_000,
+      dur: 0,
+      args: {sync_id: TraceProcessor.SOFT_NAVIGATION_MARKER_ID},
+    });
+  }
+
+  trace.traceEvents.push(...events.map(event => ({...event, pid, tid})));
+  return trace;
+}
+
+/**
+ * @param {{ts: number, navigationId: number, firstContentfulPaint?: number, url?: string, urlChangeTime?: number}} options
+ * @return {LH.TraceEvent}
+ */
+function softNavigationStartEvent(options) {
+  return {
+    name: 'SoftNavigationStart',
+    cat: 'loading',
+    ph: 'I',
+    pid: 0,
+    tid: 0,
+    ts: options.ts,
+    args: /** @type {LH.TraceEvent['args']} */ ({
+      frame: rootFrame,
+      context: {
+        URL: options.url,
+        firstContentfulPaint: options.firstContentfulPaint,
+        performanceTimelineNavigationId: options.navigationId,
+        softNavContextId: options.navigationId,
+        timeOrigin: options.ts,
+        urlChangeTime: options.urlChangeTime,
+      },
+    }),
+  };
+}
+
+/**
+ * @param {{ts: number, navigationId: number}} options
+ * @return {LH.TraceEvent}
+ */
+function softNavigationLcpEvent(options) {
+  return {
+    name: 'largestContentfulPaint::CandidateForSoftNavigation',
+    cat: 'loading',
+    ph: 'I',
+    pid: 0,
+    tid: 0,
+    ts: options.ts,
+    args: /** @type {LH.TraceEvent['args']} */ ({
+      frame: rootFrame,
+      data: {performanceTimelineNavigationId: options.navigationId},
+    }),
+  };
+}
 const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 const pidChangeTrace = readJson('../../fixtures/traces/pid-change.json', import.meta);
@@ -503,6 +581,166 @@ describe('TraceProcessor', () => {
         });
 
         expect(trace.timestamps.timeOrigin).toEqual(260759206050);
+      });
+
+      it('supports softNavigationStart', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({ts: 1_000_000, navigationId: 1}),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace, {
+          timeOriginDeterminationMethod: 'softNavigationStart',
+        });
+
+        expect(processedTrace.timeOriginEvt.name).toEqual('SoftNavigationStart');
+        expect(processedTrace.timestamps.timeOrigin).toEqual(1_000_000);
+      });
+
+      it('falls back to the soft navigation marker when no soft navigation was detected', () => {
+        const trace = createSoftNavigationTrace([]);
+        const processedTrace = TraceProcessor.processTrace(trace, {
+          timeOriginDeterminationMethod: 'softNavigationStart',
+        });
+
+        expect(processedTrace.timeOriginEvt.name).toEqual('clock_sync');
+        expect(processedTrace.timestamps.timeOrigin).toEqual(500_000);
+      });
+
+      it('throws for softNavigationStart without a marker or soft navigation', () => {
+        const trace = createSoftNavigationTrace([], {marker: false});
+
+        expect(() => TraceProcessor.processTrace(trace, {
+          timeOriginDeterminationMethod: 'softNavigationStart',
+        })).toThrow('No SoftNavigationStart event found');
+      });
+
+      it('automatically uses the first soft navigation after the soft navigation marker', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({ts: 100_000, navigationId: 1}),
+          softNavigationStartEvent({ts: 1_000_000, navigationId: 2}),
+          softNavigationStartEvent({ts: 2_000_000, navigationId: 3}),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+
+        expect(processedTrace.timeOriginEvt.name).toEqual('SoftNavigationStart');
+        expect(processedTrace.timestamps.timeOrigin).toEqual(1_000_000);
+      });
+
+      it('automatically prefers a navigationStart over a soft navigation', () => {
+        const trace = createTestTrace({});
+        trace.traceEvents.push(softNavigationStartEvent({ts: 1_000_000, navigationId: 1}));
+        const processedTrace = TraceProcessor.processTrace(trace);
+
+        expect(processedTrace.timeOriginEvt.name).toEqual('navigationStart');
+      });
+    });
+
+    describe('.processNavigation() - soft navigation', () => {
+      it('computes FCP and LCP relative to the soft navigation start', () => {
+        const lastLcpEvent = softNavigationLcpEvent({ts: 1_100_000, navigationId: 7});
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({
+            ts: 1_000_000,
+            navigationId: 7,
+            firstContentfulPaint: 1_080_000,
+            url: 'https://example.com/cart',
+            urlChangeTime: 1_020_000,
+          }),
+          softNavigationLcpEvent({ts: 1_090_000, navigationId: 7}),
+          lastLcpEvent,
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+        const navigation = TraceProcessor.processNavigation(processedTrace);
+
+        expect(navigation.timings).toEqual({
+          timeOrigin: 0,
+          firstPaint: undefined,
+          firstContentfulPaint: 80,
+          firstContentfulPaintAllFrames: 80,
+          largestContentfulPaint: 100,
+          largestContentfulPaintAllFrames: 100,
+          // The document was already loaded, so these are at the URL change.
+          load: 20,
+          domContentLoaded: 20,
+          traceEnd: processedTrace.timings.traceEnd,
+        });
+        expect(navigation.timestamps).toMatchObject({
+          timeOrigin: 1_000_000,
+          firstContentfulPaint: 1_080_000,
+          largestContentfulPaint: 1_100_000,
+          load: 1_020_000,
+          domContentLoaded: 1_020_000,
+        });
+        expect(navigation.firstContentfulPaintEvt).toBe(processedTrace.timeOriginEvt);
+        expect(navigation.largestContentfulPaintEvt).toMatchObject({ts: lastLcpEvent.ts});
+        expect(navigation.loadEvt).toBe(processedTrace.timeOriginEvt);
+        expect(navigation.domContentLoadedEvt).toBe(processedTrace.timeOriginEvt);
+        expect(navigation.lcpInvalidated).toEqual(false);
+      });
+
+      it('places load and DOMContentLoaded at the start without a URL change time', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({
+            ts: 1_000_000, navigationId: 1, firstContentfulPaint: 1_050_000,
+          }),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+        const navigation = TraceProcessor.processNavigation(processedTrace);
+
+        expect(navigation.timings.load).toEqual(0);
+        expect(navigation.timings.domContentLoaded).toEqual(0);
+      });
+
+      it('measures only the first soft navigation', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({
+            ts: 1_000_000, navigationId: 1, firstContentfulPaint: 1_050_000,
+          }),
+          softNavigationLcpEvent({ts: 1_090_000, navigationId: 1}),
+          softNavigationStartEvent({
+            ts: 2_000_000, navigationId: 2, firstContentfulPaint: 2_050_000,
+          }),
+          // A late candidate for the first navigation after the second one started.
+          softNavigationLcpEvent({ts: 2_010_000, navigationId: 1}),
+          softNavigationLcpEvent({ts: 2_090_000, navigationId: 2}),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+        const navigation = TraceProcessor.processNavigation(processedTrace);
+
+        expect(navigation.timestamps.timeOrigin).toEqual(1_000_000);
+        expect(navigation.timings.firstContentfulPaint).toEqual(50);
+        expect(navigation.timings.largestContentfulPaint).toEqual(90);
+      });
+
+      it('ignores LCP candidates of other soft navigations', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({
+            ts: 1_000_000, navigationId: 1, firstContentfulPaint: 1_050_000,
+          }),
+          softNavigationLcpEvent({ts: 1_090_000, navigationId: 2}),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+        const navigation = TraceProcessor.processNavigation(processedTrace);
+
+        expect(navigation.timings.largestContentfulPaint).toBeUndefined();
+        expect(navigation.largestContentfulPaintEvt).toBeUndefined();
+      });
+
+      it('throws when the soft navigation has no FCP', () => {
+        const trace = createSoftNavigationTrace([
+          softNavigationStartEvent({ts: 1_000_000, navigationId: 1}),
+        ]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+
+        expect(() => TraceProcessor.processNavigation(processedTrace))
+          .toThrow('No FirstContentfulPaint event found');
+      });
+
+      it('throws when a soft navigation was expected but not detected', () => {
+        const trace = createSoftNavigationTrace([]);
+        const processedTrace = TraceProcessor.processTrace(trace);
+
+        expect(() => TraceProcessor.processNavigation(processedTrace))
+          .toThrow('No SoftNavigationStart event found');
       });
     });
 

@@ -169,7 +169,10 @@ class LinkElements extends BaseGatherer {
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
     const fromDOM = await LinkElements.getLinkElementsInDOM(context);
-    const fromHeaders = await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
+    // A soft navigation has no document response, so its links only come from the DOM.
+    const fromHeaders = context.settings.softNavigation ?
+      [] :
+      await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
     const linkElements = fromDOM.concat(fromHeaders);
 
     for (const link of linkElements) {

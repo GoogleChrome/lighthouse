@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<style>
+  main { min-height: 60vh; }
+  main img { width: 300px; height: 300px; }
+</style>
+</head>
+<body>
+  <nav>
+    <!-- Clicking this link performs a soft navigation instead of a full page load. -->
+    <a id="soft-nav-link" href="/soft-navigation.html?page=next">Go to the next page</a>
+  </nav>
+
+  <main>
+    <h1>Soft navigation start</h1>
+    <p>This page updates its URL and content on click without loading a new document.</p>
+  </main>
+
+  <script>
+    document.getElementById('soft-nav-link').addEventListener('click', event => {
+      event.preventDefault();
+      history.pushState({}, '', event.currentTarget.href);
+
+      const main = document.querySelector('main');
+      main.innerHTML = '';
+      const heading = document.createElement('h1');
+      heading.textContent = 'Soft navigation complete';
+      const image = document.createElement('img');
+      image.alt = 'Lighthouse icon';
+      image.src = '/launcher-icon-4x.png?' + Date.now();
+      main.append(heading, image);
+    });
+  </script>
+</body>
+</html>
