@@ -137,7 +137,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: { status: number | null, content: string | null, errorMessage?: string };
   /** Information on fetching and the content of the /llm.txt file. */
-  LlmsTxt: { status: number | null, content: string | null, errorMessage?: string };
+  LlmsTxt: { status: number | null, content: string | null, headers?: Record<string, string> | null, errorMessage?: string };
   /** Information on discovering, fetching, and the content of the Agentic Resource Discovery (ARD) manifest. */
   AgentResourceDiscovery: {
     status: number | null;
