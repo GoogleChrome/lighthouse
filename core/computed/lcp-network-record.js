@@ -44,12 +44,15 @@ class LCPNetworkRecord {
     const lcpUrl = lcpImagePaintEvent?.args.data?.imageUrl;
     if (!lcpUrl || lcpUrl.startsWith('data:')) return;
 
+    // processedNavigation.timestamps.largestContentfulPaint is in microseconds; networkRequestTime is in milliseconds.
+    const lcpTimestampMs = (processedNavigation.timestamps.largestContentfulPaint || 0) / 1000;
+
     const candidates = networkRecords.filter(record => {
       return record.url === lcpUrl &&
           record.finished &&
           // Same frame as LCP trace event.
           record.frameId === lcpImagePaintEvent.args.frame &&
-          record.networkRequestTime < (processedNavigation.timestamps.largestContentfulPaint || 0);
+          record.networkRequestTime < lcpTimestampMs;
     }).map(record => {
       // Follow any redirects to find the real image request.
       while (record.redirectDestination) {

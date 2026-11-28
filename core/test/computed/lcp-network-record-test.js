@@ -169,6 +169,20 @@ describe('LCPNetworkRecord', () => {
     expect(result.requestId).toEqual('4');
   });
 
+  it('ignores records requested after LCP', async () => {
+    const networkRecords = mockNetworkRecords();
+    const record = networkRecords.find(r => r.resourceType === 'Image');
+    if (!record) throw new Error('expected record');
+    // largestContentfulPaint is 4500ms (4_500_000us in the trace).
+    record.networkRequestTime = 4600;
+    record.networkEndTime = 4800;
+
+    const data = mockData(networkRecords);
+
+    const result = await LCPNetworkRecord.request(data, {computedCache: new Map()});
+    expect(result).toBeUndefined();
+  });
+
   it('throws if there was no LCP', async () => {
     const networkRecords = mockNetworkRecords();
     const data = mockData(networkRecords);
