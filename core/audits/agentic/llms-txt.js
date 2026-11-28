@@ -32,9 +32,10 @@ const UIStrings = {
   explanationWithError: 'Fetch of llms.txt failed: {error}',
   /** Explanatory message stating that there was a failure in an audit caused by Lighthouse not being able to download the llms.txt file for the site.  Note: "llms.txt" is a canonical filename and should not be translated. */
   explanation: 'Fetch of llms.txt failed',
-  /** Message indicating that the server returned an HTML page (for example, a bot challenge) instead of the llms.txt file. Note: "llms.txt" is a canonical filename and should not be translated. */
-  htmlResponse: 'Received an HTML page instead of the llms.txt file. Check that your server ' +
-    'or CDN returns the file itself, not a catch-all page or a bot challenge.',
+  /** Message indicating that the server returned an HTML page instead of the llms.txt file, for example a fallback page that the server shows for any unknown URL when the file does not exist, or a page from a CDN or bot protection service that checks whether the visitor is a human. Note: "llms.txt" is a canonical filename and should not be translated. */
+  htmlResponse: 'Received an HTML page instead of the llms.txt file. The server may have ' +
+    'returned a fallback page because the file is missing, or a CDN or bot protection may ' +
+    'have served a challenge page instead.',
   /** Message indicating that the file is missing a required H1 header. */
   missingH1: 'File is missing a required H1 header (e.g., "# Title").',
   /** Message indicating that the file is suspiciously short. */
